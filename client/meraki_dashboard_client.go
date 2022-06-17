@@ -10,17 +10,17 @@ import (
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 
-	"github.com/go-swagger/go-swagger/client/appliance"
-	"github.com/go-swagger/go-swagger/client/camera"
-	"github.com/go-swagger/go-swagger/client/cellular_gateway"
-	"github.com/go-swagger/go-swagger/client/devices"
-	"github.com/go-swagger/go-swagger/client/insight"
-	"github.com/go-swagger/go-swagger/client/networks"
-	"github.com/go-swagger/go-swagger/client/organizations"
-	"github.com/go-swagger/go-swagger/client/sensor"
-	"github.com/go-swagger/go-swagger/client/sm"
-	"github.com/go-swagger/go-swagger/client/switch_operations"
-	"github.com/go-swagger/go-swagger/client/wireless"
+	"github.com/kentik/dashboard-api-golang/client/appliance"
+	"github.com/kentik/dashboard-api-golang/client/camera"
+	"github.com/kentik/dashboard-api-golang/client/cellular_gateway"
+	"github.com/kentik/dashboard-api-golang/client/devices"
+	"github.com/kentik/dashboard-api-golang/client/insight"
+	"github.com/kentik/dashboard-api-golang/client/networks"
+	"github.com/kentik/dashboard-api-golang/client/organizations"
+	"github.com/kentik/dashboard-api-golang/client/sensor"
+	"github.com/kentik/dashboard-api-golang/client/sm"
+	"github.com/kentik/dashboard-api-golang/client/switch_operations"
+	"github.com/kentik/dashboard-api-golang/client/wireless"
 )
 
 // Default meraki dashboard HTTP client.
