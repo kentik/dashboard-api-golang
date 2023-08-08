@@ -32,7 +32,7 @@ func (o *UpdateNetworkSwitchQosRulesOrderReader) ReadResponse(response runtime.C
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/switch/qosRules/order] updateNetworkSwitchQosRulesOrder", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewUpdateNetworkSwitchQosRulesOrderOK() *UpdateNetworkSwitchQosRulesOrderOK
 	return &UpdateNetworkSwitchQosRulesOrderOK{}
 }
 
-/* UpdateNetworkSwitchQosRulesOrderOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSwitchQosRulesOrderOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *UpdateNetworkSwitchQosRulesOrderOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network switch qos rules order o k response
+func (o *UpdateNetworkSwitchQosRulesOrderOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSwitchQosRulesOrderOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/switch/qosRules/order][%d] updateNetworkSwitchQosRulesOrderOK  %+v", 200, o.Payload)
 }
@@ -96,7 +102,8 @@ func (o *UpdateNetworkSwitchQosRulesOrderOK) readResponse(response runtime.Clien
 	return nil
 }
 
-/*UpdateNetworkSwitchQosRulesOrderBody update network switch qos rules order body
+/*
+UpdateNetworkSwitchQosRulesOrderBody update network switch qos rules order body
 // Example: {"ruleIds":["1284392014819","2983092129865"]}
 swagger:model UpdateNetworkSwitchQosRulesOrderBody
 */

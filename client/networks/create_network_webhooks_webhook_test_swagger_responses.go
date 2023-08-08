@@ -33,7 +33,7 @@ func (o *CreateNetworkWebhooksWebhookTestReader) ReadResponse(response runtime.C
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/webhooks/webhookTests] createNetworkWebhooksWebhookTest", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewCreateNetworkWebhooksWebhookTestCreated() *CreateNetworkWebhooksWebhookT
 	return &CreateNetworkWebhooksWebhookTestCreated{}
 }
 
-/* CreateNetworkWebhooksWebhookTestCreated describes a response with status code 201, with default header values.
+/*
+CreateNetworkWebhooksWebhookTestCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *CreateNetworkWebhooksWebhookTestCreated) IsCode(code int) bool {
 	return code == 201
 }
 
+// Code gets the status code for the create network webhooks webhook test created response
+func (o *CreateNetworkWebhooksWebhookTestCreated) Code() int {
+	return 201
+}
+
 func (o *CreateNetworkWebhooksWebhookTestCreated) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/webhooks/webhookTests][%d] createNetworkWebhooksWebhookTestCreated  %+v", 201, o.Payload)
 }
@@ -99,7 +105,8 @@ func (o *CreateNetworkWebhooksWebhookTestCreated) readResponse(response runtime.
 	return nil
 }
 
-/*CreateNetworkWebhooksWebhookTestBody create network webhooks webhook test body
+/*
+CreateNetworkWebhooksWebhookTestBody create network webhooks webhook test body
 // Example: {"alertTypeId":"power_supply_down","payloadTemplateId":"wpt_00001","payloadTemplateName":"Payload Template","sharedSecret":"shhh","url":"https://www.example.com/path"}
 swagger:model CreateNetworkWebhooksWebhookTestBody
 */
@@ -168,7 +175,8 @@ func (o *CreateNetworkWebhooksWebhookTestBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*CreateNetworkWebhooksWebhookTestCreatedBody create network webhooks webhook test created body
+/*
+CreateNetworkWebhooksWebhookTestCreatedBody create network webhooks webhook test created body
 swagger:model CreateNetworkWebhooksWebhookTestCreatedBody
 */
 type CreateNetworkWebhooksWebhookTestCreatedBody struct {
@@ -177,7 +185,7 @@ type CreateNetworkWebhooksWebhookTestCreatedBody struct {
 	ID string `json:"id,omitempty"`
 
 	// Current status of the webhook delivery
-	// Enum: [abandoned delivered retrying enqueued processing]
+	// Enum: [abandoned delivered enqueued processing retrying]
 	Status string `json:"status,omitempty"`
 
 	// URL where the webhook was delivered
@@ -202,7 +210,7 @@ var createNetworkWebhooksWebhookTestCreatedBodyTypeStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["abandoned","delivered","retrying","enqueued","processing"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["abandoned","delivered","enqueued","processing","retrying"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -218,14 +226,14 @@ const (
 	// CreateNetworkWebhooksWebhookTestCreatedBodyStatusDelivered captures enum value "delivered"
 	CreateNetworkWebhooksWebhookTestCreatedBodyStatusDelivered string = "delivered"
 
-	// CreateNetworkWebhooksWebhookTestCreatedBodyStatusRetrying captures enum value "retrying"
-	CreateNetworkWebhooksWebhookTestCreatedBodyStatusRetrying string = "retrying"
-
 	// CreateNetworkWebhooksWebhookTestCreatedBodyStatusEnqueued captures enum value "enqueued"
 	CreateNetworkWebhooksWebhookTestCreatedBodyStatusEnqueued string = "enqueued"
 
 	// CreateNetworkWebhooksWebhookTestCreatedBodyStatusProcessing captures enum value "processing"
 	CreateNetworkWebhooksWebhookTestCreatedBodyStatusProcessing string = "processing"
+
+	// CreateNetworkWebhooksWebhookTestCreatedBodyStatusRetrying captures enum value "retrying"
+	CreateNetworkWebhooksWebhookTestCreatedBodyStatusRetrying string = "retrying"
 )
 
 // prop value enum

@@ -32,7 +32,7 @@ func (o *CreateNetworkSwitchStackRoutingStaticRouteReader) ReadResponse(response
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/switch/stacks/{switchStackId}/routing/staticRoutes] createNetworkSwitchStackRoutingStaticRoute", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewCreateNetworkSwitchStackRoutingStaticRouteCreated() *CreateNetworkSwitch
 	return &CreateNetworkSwitchStackRoutingStaticRouteCreated{}
 }
 
-/* CreateNetworkSwitchStackRoutingStaticRouteCreated describes a response with status code 201, with default header values.
+/*
+CreateNetworkSwitchStackRoutingStaticRouteCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *CreateNetworkSwitchStackRoutingStaticRouteCreated) IsCode(code int) boo
 	return code == 201
 }
 
+// Code gets the status code for the create network switch stack routing static route created response
+func (o *CreateNetworkSwitchStackRoutingStaticRouteCreated) Code() int {
+	return 201
+}
+
 func (o *CreateNetworkSwitchStackRoutingStaticRouteCreated) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/switch/stacks/{switchStackId}/routing/staticRoutes][%d] createNetworkSwitchStackRoutingStaticRouteCreated  %+v", 201, o.Payload)
 }
@@ -96,7 +102,8 @@ func (o *CreateNetworkSwitchStackRoutingStaticRouteCreated) readResponse(respons
 	return nil
 }
 
-/*CreateNetworkSwitchStackRoutingStaticRouteBody create network switch stack routing static route body
+/*
+CreateNetworkSwitchStackRoutingStaticRouteBody create network switch stack routing static route body
 // Example: {"advertiseViaOspfEnabled":false,"name":"My route","nextHopIp":"1.2.3.4","preferOverOspfRoutesEnabled":false,"subnet":"192.168.1.0/24"}
 swagger:model CreateNetworkSwitchStackRoutingStaticRouteBody
 */

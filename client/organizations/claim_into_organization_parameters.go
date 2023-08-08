@@ -52,17 +52,22 @@ func NewClaimIntoOrganizationParamsWithHTTPClient(client *http.Client) *ClaimInt
 	}
 }
 
-/* ClaimIntoOrganizationParams contains all the parameters to send to the API endpoint
-   for the claim into organization operation.
+/*
+ClaimIntoOrganizationParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the claim into organization operation.
+
+	Typically these are written to a http.Request.
 */
 type ClaimIntoOrganizationParams struct {
 
 	// ClaimIntoOrganization.
 	ClaimIntoOrganization ClaimIntoOrganizationBody
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

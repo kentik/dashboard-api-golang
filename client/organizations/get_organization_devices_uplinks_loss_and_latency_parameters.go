@@ -53,10 +53,12 @@ func NewGetOrganizationDevicesUplinksLossAndLatencyParamsWithHTTPClient(client *
 	}
 }
 
-/* GetOrganizationDevicesUplinksLossAndLatencyParams contains all the parameters to send to the API endpoint
-   for the get organization devices uplinks loss and latency operation.
+/*
+GetOrganizationDevicesUplinksLossAndLatencyParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization devices uplinks loss and latency operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationDevicesUplinksLossAndLatencyParams struct {
 
@@ -66,12 +68,15 @@ type GetOrganizationDevicesUplinksLossAndLatencyParams struct {
 	*/
 	IP *string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	/* T0.
 
-	   The beginning of the timespan for the data. The maximum lookback period is 365 days from today.
+	   The beginning of the timespan for the data. The maximum lookback period is 60 days from today.
 	*/
 	T0 *string
 
@@ -91,7 +96,7 @@ type GetOrganizationDevicesUplinksLossAndLatencyParams struct {
 
 	/* Uplink.
 
-	   Optional filter for a specific WAN uplink. Valid uplinks are wan1, wan2, cellular. Default will return all uplinks.
+	   Optional filter for a specific WAN uplink. Valid uplinks are wan1, wan2, wan3, cellular. Default will return all uplinks.
 	*/
 	Uplink *string
 

@@ -33,7 +33,7 @@ func (o *UpdateNetworkSwitchMtuReader) ReadResponse(response runtime.ClientRespo
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/switch/mtu] updateNetworkSwitchMtu", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateNetworkSwitchMtuOK() *UpdateNetworkSwitchMtuOK {
 	return &UpdateNetworkSwitchMtuOK{}
 }
 
-/* UpdateNetworkSwitchMtuOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSwitchMtuOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateNetworkSwitchMtuOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network switch mtu o k response
+func (o *UpdateNetworkSwitchMtuOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSwitchMtuOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/switch/mtu][%d] updateNetworkSwitchMtuOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateNetworkSwitchMtuOK) readResponse(response runtime.ClientResponse,
 	return nil
 }
 
-/*UpdateNetworkSwitchMtuBody update network switch mtu body
+/*
+UpdateNetworkSwitchMtuBody update network switch mtu body
 // Example: {"defaultMtuSize":9578,"overrides":[{"mtuSize":1500,"switches":["Q234-ABCD-0001","Q234-ABCD-0002","Q234-ABCD-0003"]},{"mtuSize":1600,"switchProfiles":["1284392014819","2983092129865"]}]}
 swagger:model UpdateNetworkSwitchMtuBody
 */
@@ -106,7 +113,7 @@ type UpdateNetworkSwitchMtuBody struct {
 	// MTU size for the entire network. Default value is 9578.
 	DefaultMtuSize int64 `json:"defaultMtuSize,omitempty"`
 
-	// Override MTU size for individual switches or switch profiles. An empty array will clear overrides.
+	// Override MTU size for individual switches or switch templates. An empty array will clear overrides.
 	Overrides []*UpdateNetworkSwitchMtuParamsBodyOverridesItems0 `json:"overrides"`
 }
 
@@ -169,6 +176,11 @@ func (o *UpdateNetworkSwitchMtuBody) contextValidateOverrides(ctx context.Contex
 	for i := 0; i < len(o.Overrides); i++ {
 
 		if o.Overrides[i] != nil {
+
+			if swag.IsZero(o.Overrides[i]) { // not required
+				return nil
+			}
+
 			if err := o.Overrides[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkSwitchMtu" + "." + "overrides" + "." + strconv.Itoa(i))
@@ -202,16 +214,17 @@ func (o *UpdateNetworkSwitchMtuBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateNetworkSwitchMtuParamsBodyOverridesItems0 update network switch mtu params body overrides items0
+/*
+UpdateNetworkSwitchMtuParamsBodyOverridesItems0 update network switch mtu params body overrides items0
 swagger:model UpdateNetworkSwitchMtuParamsBodyOverridesItems0
 */
 type UpdateNetworkSwitchMtuParamsBodyOverridesItems0 struct {
 
-	// MTU size for the switches or switch profiles.
+	// MTU size for the switches or switch templates.
 	// Required: true
 	MtuSize *int64 `json:"mtuSize"`
 
-	// List of switch profile IDs. Applicable only for template network.
+	// List of switch template IDs. Applicable only for template network.
 	SwitchProfiles []string `json:"switchProfiles"`
 
 	// List of switch serials. Applicable only for switch network.

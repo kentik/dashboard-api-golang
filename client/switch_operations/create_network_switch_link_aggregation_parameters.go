@@ -52,17 +52,22 @@ func NewCreateNetworkSwitchLinkAggregationParamsWithHTTPClient(client *http.Clie
 	}
 }
 
-/* CreateNetworkSwitchLinkAggregationParams contains all the parameters to send to the API endpoint
-   for the create network switch link aggregation operation.
+/*
+CreateNetworkSwitchLinkAggregationParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create network switch link aggregation operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateNetworkSwitchLinkAggregationParams struct {
 
 	// CreateNetworkSwitchLinkAggregation.
 	CreateNetworkSwitchLinkAggregation CreateNetworkSwitchLinkAggregationBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

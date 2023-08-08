@@ -52,17 +52,22 @@ func NewCreateDeviceLiveToolsPingDeviceParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* CreateDeviceLiveToolsPingDeviceParams contains all the parameters to send to the API endpoint
-   for the create device live tools ping device operation.
+/*
+CreateDeviceLiveToolsPingDeviceParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create device live tools ping device operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateDeviceLiveToolsPingDeviceParams struct {
 
 	// CreateDeviceLiveToolsPingDevice.
 	CreateDeviceLiveToolsPingDevice CreateDeviceLiveToolsPingDeviceBody
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	timeout    time.Duration

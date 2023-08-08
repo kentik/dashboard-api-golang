@@ -53,14 +53,19 @@ func NewGetDeviceClientsParamsWithHTTPClient(client *http.Client) *GetDeviceClie
 	}
 }
 
-/* GetDeviceClientsParams contains all the parameters to send to the API endpoint
-   for the get device clients operation.
+/*
+GetDeviceClientsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get device clients operation.
+
+	Typically these are written to a http.Request.
 */
 type GetDeviceClientsParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	/* T0.

@@ -53,10 +53,12 @@ func NewGetNetworkBluetoothClientsParamsWithHTTPClient(client *http.Client) *Get
 	}
 }
 
-/* GetNetworkBluetoothClientsParams contains all the parameters to send to the API endpoint
-   for the get network bluetooth clients operation.
+/*
+GetNetworkBluetoothClientsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network bluetooth clients operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkBluetoothClientsParams struct {
 
@@ -72,7 +74,10 @@ type GetNetworkBluetoothClientsParams struct {
 	*/
 	IncludeConnectivityHistory *bool
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* PerPage.

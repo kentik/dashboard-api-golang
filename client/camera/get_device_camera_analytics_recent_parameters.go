@@ -52,10 +52,12 @@ func NewGetDeviceCameraAnalyticsRecentParamsWithHTTPClient(client *http.Client) 
 	}
 }
 
-/* GetDeviceCameraAnalyticsRecentParams contains all the parameters to send to the API endpoint
-   for the get device camera analytics recent operation.
+/*
+GetDeviceCameraAnalyticsRecentParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get device camera analytics recent operation.
+
+	Typically these are written to a http.Request.
 */
 type GetDeviceCameraAnalyticsRecentParams struct {
 
@@ -65,7 +67,10 @@ type GetDeviceCameraAnalyticsRecentParams struct {
 	*/
 	ObjectType *string
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	timeout    time.Duration

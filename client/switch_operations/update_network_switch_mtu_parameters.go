@@ -52,14 +52,19 @@ func NewUpdateNetworkSwitchMtuParamsWithHTTPClient(client *http.Client) *UpdateN
 	}
 }
 
-/* UpdateNetworkSwitchMtuParams contains all the parameters to send to the API endpoint
-   for the update network switch mtu operation.
+/*
+UpdateNetworkSwitchMtuParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network switch mtu operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkSwitchMtuParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkSwitchMtu.

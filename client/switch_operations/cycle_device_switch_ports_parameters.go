@@ -52,17 +52,22 @@ func NewCycleDeviceSwitchPortsParamsWithHTTPClient(client *http.Client) *CycleDe
 	}
 }
 
-/* CycleDeviceSwitchPortsParams contains all the parameters to send to the API endpoint
-   for the cycle device switch ports operation.
+/*
+CycleDeviceSwitchPortsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the cycle device switch ports operation.
+
+	Typically these are written to a http.Request.
 */
 type CycleDeviceSwitchPortsParams struct {
 
 	// CycleDeviceSwitchPorts.
 	CycleDeviceSwitchPorts CycleDeviceSwitchPortsBody
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	timeout    time.Duration

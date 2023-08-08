@@ -52,17 +52,25 @@ func NewGetNetworkSwitchAccessPolicyParamsWithHTTPClient(client *http.Client) *G
 	}
 }
 
-/* GetNetworkSwitchAccessPolicyParams contains all the parameters to send to the API endpoint
-   for the get network switch access policy operation.
+/*
+GetNetworkSwitchAccessPolicyParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network switch access policy operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSwitchAccessPolicyParams struct {
 
-	// AccessPolicyNumber.
+	/* AccessPolicyNumber.
+
+	   Access policy number
+	*/
 	AccessPolicyNumber string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

@@ -52,17 +52,25 @@ func NewGetNetworkWebhooksHTTPServerParamsWithHTTPClient(client *http.Client) *G
 	}
 }
 
-/* GetNetworkWebhooksHTTPServerParams contains all the parameters to send to the API endpoint
-   for the get network webhooks Http server operation.
+/*
+GetNetworkWebhooksHTTPServerParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network webhooks Http server operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkWebhooksHTTPServerParams struct {
 
-	// HTTPServerID.
+	/* HTTPServerID.
+
+	   Http server ID
+	*/
 	HTTPServerID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

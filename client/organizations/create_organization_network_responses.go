@@ -34,7 +34,7 @@ func (o *CreateOrganizationNetworkReader) ReadResponse(response runtime.ClientRe
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /organizations/{organizationId}/networks] createOrganizationNetwork", response, response.Code())
 	}
 }
 
@@ -43,12 +43,13 @@ func NewCreateOrganizationNetworkCreated() *CreateOrganizationNetworkCreated {
 	return &CreateOrganizationNetworkCreated{}
 }
 
-/* CreateOrganizationNetworkCreated describes a response with status code 201, with default header values.
+/*
+CreateOrganizationNetworkCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
 type CreateOrganizationNetworkCreated struct {
-	Payload interface{}
+	Payload *CreateOrganizationNetworkCreatedBody
 }
 
 // IsSuccess returns true when this create organization network created response has a 2xx status code
@@ -76,6 +77,11 @@ func (o *CreateOrganizationNetworkCreated) IsCode(code int) bool {
 	return code == 201
 }
 
+// Code gets the status code for the create organization network created response
+func (o *CreateOrganizationNetworkCreated) Code() int {
+	return 201
+}
+
 func (o *CreateOrganizationNetworkCreated) Error() string {
 	return fmt.Sprintf("[POST /organizations/{organizationId}/networks][%d] createOrganizationNetworkCreated  %+v", 201, o.Payload)
 }
@@ -84,22 +90,25 @@ func (o *CreateOrganizationNetworkCreated) String() string {
 	return fmt.Sprintf("[POST /organizations/{organizationId}/networks][%d] createOrganizationNetworkCreated  %+v", 201, o.Payload)
 }
 
-func (o *CreateOrganizationNetworkCreated) GetPayload() interface{} {
+func (o *CreateOrganizationNetworkCreated) GetPayload() *CreateOrganizationNetworkCreatedBody {
 	return o.Payload
 }
 
 func (o *CreateOrganizationNetworkCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(CreateOrganizationNetworkCreatedBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*CreateOrganizationNetworkBody create organization network body
-// Example: {"name":"Long Island Office","notes":"Combined network for Long Island Office","productTypes":["appliance","switch","camera"],"tags":["tag1","tag2"],"timeZone":"America/Los_Angeles"}
+/*
+CreateOrganizationNetworkBody create organization network body
+// Example: {"copyFromNetworkId":"N_24329156","name":"Main Office","notes":"Additional description of the network","productTypes":["appliance","switch","wireless"],"tags":["tag1","tag2"],"timeZone":"America/Los_Angeles"}
 swagger:model CreateOrganizationNetworkBody
 */
 type CreateOrganizationNetworkBody struct {
@@ -114,7 +123,7 @@ type CreateOrganizationNetworkBody struct {
 	// Add any notes or additional information about this network here.
 	Notes string `json:"notes,omitempty"`
 
-	// The product type(s) of the new network. Valid types are wireless, appliance, switch, systemsManager, camera, cellularGateway, sensor, environmental. If more than one type is included, the network will be a combined network.
+	// The product type(s) of the new network. If more than one type is included, the network will be a combined network.
 	// Required: true
 	ProductTypes []string `json:"productTypes"`
 
@@ -156,7 +165,7 @@ var createOrganizationNetworkBodyProductTypesItemsEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["wireless","appliance","switch","systemsManager","camera","cellularGateway","sensor","environmental"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["appliance","camera","cellularGateway","cloudGateway","sensor","switch","systemsManager","wireless"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -205,6 +214,71 @@ func (o *CreateOrganizationNetworkBody) MarshalBinary() ([]byte, error) {
 // UnmarshalBinary interface implementation
 func (o *CreateOrganizationNetworkBody) UnmarshalBinary(b []byte) error {
 	var res CreateOrganizationNetworkBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateOrganizationNetworkCreatedBody create organization network created body
+swagger:model CreateOrganizationNetworkCreatedBody
+*/
+type CreateOrganizationNetworkCreatedBody struct {
+
+	// Enrollment string for the network
+	EnrollmentString string `json:"enrollmentString,omitempty"`
+
+	// Network ID
+	ID string `json:"id,omitempty"`
+
+	// If the network is bound to a config template
+	IsBoundToConfigTemplate bool `json:"isBoundToConfigTemplate,omitempty"`
+
+	// Network name
+	Name string `json:"name,omitempty"`
+
+	// Notes for the network
+	Notes string `json:"notes,omitempty"`
+
+	// Organization ID
+	OrganizationID string `json:"organizationId,omitempty"`
+
+	// List of the product types that the network supports
+	ProductTypes []string `json:"productTypes"`
+
+	// Network tags
+	Tags []string `json:"tags"`
+
+	// Timezone of the network
+	TimeZone string `json:"timeZone,omitempty"`
+
+	// URL to the network Dashboard UI
+	URL string `json:"url,omitempty"`
+}
+
+// Validate validates this create organization network created body
+func (o *CreateOrganizationNetworkCreatedBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this create organization network created body based on context it is used
+func (o *CreateOrganizationNetworkCreatedBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateOrganizationNetworkCreatedBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateOrganizationNetworkCreatedBody) UnmarshalBinary(b []byte) error {
+	var res CreateOrganizationNetworkCreatedBody
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

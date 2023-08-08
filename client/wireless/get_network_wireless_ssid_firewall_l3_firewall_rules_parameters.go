@@ -52,17 +52,25 @@ func NewGetNetworkWirelessSsidFirewallL3FirewallRulesParamsWithHTTPClient(client
 	}
 }
 
-/* GetNetworkWirelessSsidFirewallL3FirewallRulesParams contains all the parameters to send to the API endpoint
-   for the get network wireless ssid firewall l3 firewall rules operation.
+/*
+GetNetworkWirelessSsidFirewallL3FirewallRulesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network wireless ssid firewall l3 firewall rules operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkWirelessSsidFirewallL3FirewallRulesParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// Number.
+	/* Number.
+
+	   Number
+	*/
 	Number string
 
 	timeout    time.Duration

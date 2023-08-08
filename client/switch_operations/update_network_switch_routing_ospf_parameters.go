@@ -52,14 +52,19 @@ func NewUpdateNetworkSwitchRoutingOspfParamsWithHTTPClient(client *http.Client) 
 	}
 }
 
-/* UpdateNetworkSwitchRoutingOspfParams contains all the parameters to send to the API endpoint
-   for the update network switch routing ospf operation.
+/*
+UpdateNetworkSwitchRoutingOspfParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network switch routing ospf operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkSwitchRoutingOspfParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkSwitchRoutingOspf.

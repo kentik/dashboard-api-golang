@@ -52,14 +52,19 @@ func NewUpdateNetworkApplianceTrafficShapingUplinkSelectionParamsWithHTTPClient(
 	}
 }
 
-/* UpdateNetworkApplianceTrafficShapingUplinkSelectionParams contains all the parameters to send to the API endpoint
-   for the update network appliance traffic shaping uplink selection operation.
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network appliance traffic shaping uplink selection operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkApplianceTrafficShapingUplinkSelectionParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkApplianceTrafficShapingUplinkSelection.

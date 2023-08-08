@@ -32,7 +32,7 @@ func (o *BindNetworkReader) ReadResponse(response runtime.ClientResponse, consum
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/bind] bindNetwork", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewBindNetworkOK() *BindNetworkOK {
 	return &BindNetworkOK{}
 }
 
-/* BindNetworkOK describes a response with status code 200, with default header values.
+/*
+BindNetworkOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *BindNetworkOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the bind network o k response
+func (o *BindNetworkOK) Code() int {
+	return 200
+}
+
 func (o *BindNetworkOK) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/bind][%d] bindNetworkOK  %+v", 200, o.Payload)
 }
@@ -96,7 +102,8 @@ func (o *BindNetworkOK) readResponse(response runtime.ClientResponse, consumer r
 	return nil
 }
 
-/*BindNetworkBody bind network body
+/*
+BindNetworkBody bind network body
 // Example: {"autoBind":false,"configTemplateId":"N_23952905"}
 swagger:model BindNetworkBody
 */

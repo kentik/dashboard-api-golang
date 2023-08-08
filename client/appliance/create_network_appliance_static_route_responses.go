@@ -32,7 +32,7 @@ func (o *CreateNetworkApplianceStaticRouteReader) ReadResponse(response runtime.
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/appliance/staticRoutes] createNetworkApplianceStaticRoute", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewCreateNetworkApplianceStaticRouteCreated() *CreateNetworkApplianceStatic
 	return &CreateNetworkApplianceStaticRouteCreated{}
 }
 
-/* CreateNetworkApplianceStaticRouteCreated describes a response with status code 201, with default header values.
+/*
+CreateNetworkApplianceStaticRouteCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *CreateNetworkApplianceStaticRouteCreated) IsCode(code int) bool {
 	return code == 201
 }
 
+// Code gets the status code for the create network appliance static route created response
+func (o *CreateNetworkApplianceStaticRouteCreated) Code() int {
+	return 201
+}
+
 func (o *CreateNetworkApplianceStaticRouteCreated) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/appliance/staticRoutes][%d] createNetworkApplianceStaticRouteCreated  %+v", 201, o.Payload)
 }
@@ -96,7 +102,8 @@ func (o *CreateNetworkApplianceStaticRouteCreated) readResponse(response runtime
 	return nil
 }
 
-/*CreateNetworkApplianceStaticRouteBody create network appliance static route body
+/*
+CreateNetworkApplianceStaticRouteBody create network appliance static route body
 // Example: {"gatewayIp":"1.2.3.5","name":"My route","subnet":"192.168.1.0/24"}
 swagger:model CreateNetworkApplianceStaticRouteBody
 */

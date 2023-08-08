@@ -52,17 +52,22 @@ func NewCloneOrganizationParamsWithHTTPClient(client *http.Client) *CloneOrganiz
 	}
 }
 
-/* CloneOrganizationParams contains all the parameters to send to the API endpoint
-   for the clone organization operation.
+/*
+CloneOrganizationParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the clone organization operation.
+
+	Typically these are written to a http.Request.
 */
 type CloneOrganizationParams struct {
 
 	// CloneOrganization.
 	CloneOrganization CloneOrganizationBody
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

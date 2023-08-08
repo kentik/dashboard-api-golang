@@ -52,17 +52,25 @@ func NewGetOrganizationAdaptivePolicyACLParamsWithHTTPClient(client *http.Client
 	}
 }
 
-/* GetOrganizationAdaptivePolicyACLParams contains all the parameters to send to the API endpoint
-   for the get organization adaptive policy Acl operation.
+/*
+GetOrganizationAdaptivePolicyACLParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization adaptive policy Acl operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationAdaptivePolicyACLParams struct {
 
-	// ID.
-	ID string
+	/* ACLID.
 
-	// OrganizationID.
+	   Acl ID
+	*/
+	ACLID string
+
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration
@@ -118,15 +126,15 @@ func (o *GetOrganizationAdaptivePolicyACLParams) SetHTTPClient(client *http.Clie
 	o.HTTPClient = client
 }
 
-// WithID adds the id to the get organization adaptive policy Acl params
-func (o *GetOrganizationAdaptivePolicyACLParams) WithID(id string) *GetOrganizationAdaptivePolicyACLParams {
-	o.SetID(id)
+// WithACLID adds the aCLID to the get organization adaptive policy Acl params
+func (o *GetOrganizationAdaptivePolicyACLParams) WithACLID(aCLID string) *GetOrganizationAdaptivePolicyACLParams {
+	o.SetACLID(aCLID)
 	return o
 }
 
-// SetID adds the id to the get organization adaptive policy Acl params
-func (o *GetOrganizationAdaptivePolicyACLParams) SetID(id string) {
-	o.ID = id
+// SetACLID adds the aclId to the get organization adaptive policy Acl params
+func (o *GetOrganizationAdaptivePolicyACLParams) SetACLID(aCLID string) {
+	o.ACLID = aCLID
 }
 
 // WithOrganizationID adds the organizationID to the get organization adaptive policy Acl params
@@ -148,8 +156,8 @@ func (o *GetOrganizationAdaptivePolicyACLParams) WriteToRequest(r runtime.Client
 	}
 	var res []error
 
-	// path param id
-	if err := r.SetPathParam("id", o.ID); err != nil {
+	// path param aclId
+	if err := r.SetPathParam("aclId", o.ACLID); err != nil {
 		return err
 	}
 

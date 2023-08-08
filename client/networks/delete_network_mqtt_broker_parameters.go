@@ -52,17 +52,25 @@ func NewDeleteNetworkMqttBrokerParamsWithHTTPClient(client *http.Client) *Delete
 	}
 }
 
-/* DeleteNetworkMqttBrokerParams contains all the parameters to send to the API endpoint
-   for the delete network mqtt broker operation.
+/*
+DeleteNetworkMqttBrokerParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete network mqtt broker operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteNetworkMqttBrokerParams struct {
 
-	// MqttBrokerID.
+	/* MqttBrokerID.
+
+	   Mqtt broker ID
+	*/
 	MqttBrokerID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

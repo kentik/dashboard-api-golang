@@ -30,7 +30,7 @@ func (o *GetNetworkSmDeviceDesktopLogsReader) ReadResponse(response runtime.Clie
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/sm/devices/{deviceId}/desktopLogs] getNetworkSmDeviceDesktopLogs", response, response.Code())
 	}
 }
 
@@ -39,7 +39,8 @@ func NewGetNetworkSmDeviceDesktopLogsOK() *GetNetworkSmDeviceDesktopLogsOK {
 	return &GetNetworkSmDeviceDesktopLogsOK{}
 }
 
-/* GetNetworkSmDeviceDesktopLogsOK describes a response with status code 200, with default header values.
+/*
+GetNetworkSmDeviceDesktopLogsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -77,6 +78,11 @@ func (o *GetNetworkSmDeviceDesktopLogsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network sm device desktop logs o k response
+func (o *GetNetworkSmDeviceDesktopLogsOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkSmDeviceDesktopLogsOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/sm/devices/{deviceId}/desktopLogs][%d] getNetworkSmDeviceDesktopLogsOK  %+v", 200, o.Payload)
 }
@@ -106,7 +112,8 @@ func (o *GetNetworkSmDeviceDesktopLogsOK) readResponse(response runtime.ClientRe
 	return nil
 }
 
-/*GetNetworkSmDeviceDesktopLogsOKBodyItems0 get network sm device desktop logs o k body items0
+/*
+GetNetworkSmDeviceDesktopLogsOKBodyItems0 get network sm device desktop logs o k body items0
 swagger:model GetNetworkSmDeviceDesktopLogsOKBodyItems0
 */
 type GetNetworkSmDeviceDesktopLogsOKBodyItems0 struct {

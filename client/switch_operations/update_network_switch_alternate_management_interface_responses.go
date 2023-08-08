@@ -34,7 +34,7 @@ func (o *UpdateNetworkSwitchAlternateManagementInterfaceReader) ReadResponse(res
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/switch/alternateManagementInterface] updateNetworkSwitchAlternateManagementInterface", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewUpdateNetworkSwitchAlternateManagementInterfaceOK() *UpdateNetworkSwitch
 	return &UpdateNetworkSwitchAlternateManagementInterfaceOK{}
 }
 
-/* UpdateNetworkSwitchAlternateManagementInterfaceOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSwitchAlternateManagementInterfaceOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *UpdateNetworkSwitchAlternateManagementInterfaceOK) IsCode(code int) boo
 	return code == 200
 }
 
+// Code gets the status code for the update network switch alternate management interface o k response
+func (o *UpdateNetworkSwitchAlternateManagementInterfaceOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSwitchAlternateManagementInterfaceOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/switch/alternateManagementInterface][%d] updateNetworkSwitchAlternateManagementInterfaceOK  %+v", 200, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *UpdateNetworkSwitchAlternateManagementInterfaceOK) readResponse(respons
 	return nil
 }
 
-/*UpdateNetworkSwitchAlternateManagementInterfaceBody update network switch alternate management interface body
+/*
+UpdateNetworkSwitchAlternateManagementInterfaceBody update network switch alternate management interface body
 // Example: {"enabled":true,"protocols":["radius","snmp","syslog"],"switches":[{"alternateManagementIp":"1.2.3.4","gateway":"1.2.3.5","serial":"Q234-ABCD-5678","subnetMask":"255.255.255.0"}],"vlanId":100}
 swagger:model UpdateNetworkSwitchAlternateManagementInterfaceBody
 */
@@ -216,6 +223,11 @@ func (o *UpdateNetworkSwitchAlternateManagementInterfaceBody) contextValidateSwi
 	for i := 0; i < len(o.Switches); i++ {
 
 		if o.Switches[i] != nil {
+
+			if swag.IsZero(o.Switches[i]) { // not required
+				return nil
+			}
+
 			if err := o.Switches[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkSwitchAlternateManagementInterface" + "." + "switches" + "." + strconv.Itoa(i))
@@ -249,7 +261,8 @@ func (o *UpdateNetworkSwitchAlternateManagementInterfaceBody) UnmarshalBinary(b 
 	return nil
 }
 
-/*UpdateNetworkSwitchAlternateManagementInterfaceParamsBodySwitchesItems0 update network switch alternate management interface params body switches items0
+/*
+UpdateNetworkSwitchAlternateManagementInterfaceParamsBodySwitchesItems0 update network switch alternate management interface params body switches items0
 swagger:model UpdateNetworkSwitchAlternateManagementInterfaceParamsBodySwitchesItems0
 */
 type UpdateNetworkSwitchAlternateManagementInterfaceParamsBodySwitchesItems0 struct {

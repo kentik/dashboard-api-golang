@@ -33,7 +33,7 @@ func (o *UpdateNetworkApplianceFirewallFirewalledServiceReader) ReadResponse(res
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/appliance/firewall/firewalledServices/{service}] updateNetworkApplianceFirewallFirewalledService", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateNetworkApplianceFirewallFirewalledServiceOK() *UpdateNetworkApplia
 	return &UpdateNetworkApplianceFirewallFirewalledServiceOK{}
 }
 
-/* UpdateNetworkApplianceFirewallFirewalledServiceOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkApplianceFirewallFirewalledServiceOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateNetworkApplianceFirewallFirewalledServiceOK) IsCode(code int) boo
 	return code == 200
 }
 
+// Code gets the status code for the update network appliance firewall firewalled service o k response
+func (o *UpdateNetworkApplianceFirewallFirewalledServiceOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkApplianceFirewallFirewalledServiceOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/appliance/firewall/firewalledServices/{service}][%d] updateNetworkApplianceFirewallFirewalledServiceOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateNetworkApplianceFirewallFirewalledServiceOK) readResponse(respons
 	return nil
 }
 
-/*UpdateNetworkApplianceFirewallFirewalledServiceBody update network appliance firewall firewalled service body
+/*
+UpdateNetworkApplianceFirewallFirewalledServiceBody update network appliance firewall firewalled service body
 // Example: {"access":"restricted","allowedIps":["123.123.123.1"]}
 swagger:model UpdateNetworkApplianceFirewallFirewalledServiceBody
 */

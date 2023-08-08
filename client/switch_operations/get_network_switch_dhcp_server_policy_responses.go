@@ -6,11 +6,16 @@ package switch_operations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // GetNetworkSwitchDhcpServerPolicyReader is a Reader for the GetNetworkSwitchDhcpServerPolicy structure.
@@ -28,7 +33,7 @@ func (o *GetNetworkSwitchDhcpServerPolicyReader) ReadResponse(response runtime.C
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/switch/dhcpServerPolicy] getNetworkSwitchDhcpServerPolicy", response, response.Code())
 	}
 }
 
@@ -37,12 +42,13 @@ func NewGetNetworkSwitchDhcpServerPolicyOK() *GetNetworkSwitchDhcpServerPolicyOK
 	return &GetNetworkSwitchDhcpServerPolicyOK{}
 }
 
-/* GetNetworkSwitchDhcpServerPolicyOK describes a response with status code 200, with default header values.
+/*
+GetNetworkSwitchDhcpServerPolicyOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkSwitchDhcpServerPolicyOK struct {
-	Payload interface{}
+	Payload *GetNetworkSwitchDhcpServerPolicyOKBody
 }
 
 // IsSuccess returns true when this get network switch dhcp server policy o k response has a 2xx status code
@@ -70,6 +76,11 @@ func (o *GetNetworkSwitchDhcpServerPolicyOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network switch dhcp server policy o k response
+func (o *GetNetworkSwitchDhcpServerPolicyOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkSwitchDhcpServerPolicyOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/switch/dhcpServerPolicy][%d] getNetworkSwitchDhcpServerPolicyOK  %+v", 200, o.Payload)
 }
@@ -78,16 +89,395 @@ func (o *GetNetworkSwitchDhcpServerPolicyOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/switch/dhcpServerPolicy][%d] getNetworkSwitchDhcpServerPolicyOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkSwitchDhcpServerPolicyOK) GetPayload() interface{} {
+func (o *GetNetworkSwitchDhcpServerPolicyOK) GetPayload() *GetNetworkSwitchDhcpServerPolicyOKBody {
 	return o.Payload
 }
 
 func (o *GetNetworkSwitchDhcpServerPolicyOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetNetworkSwitchDhcpServerPolicyOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkSwitchDhcpServerPolicyOKBody get network switch dhcp server policy o k body
+swagger:model GetNetworkSwitchDhcpServerPolicyOKBody
+*/
+type GetNetworkSwitchDhcpServerPolicyOKBody struct {
+
+	// alerts
+	Alerts *GetNetworkSwitchDhcpServerPolicyOKBodyAlerts `json:"alerts,omitempty"`
+
+	// List the MAC addresses of DHCP servers to permit on the network when defaultPolicy is set
+	//       to block.An empty array will clear the entries.
+	AllowedServers []string `json:"allowedServers"`
+
+	// arp inspection
+	ArpInspection *GetNetworkSwitchDhcpServerPolicyOKBodyArpInspection `json:"arpInspection,omitempty"`
+
+	// List the MAC addresses of DHCP servers to block on the network when defaultPolicy is set
+	//       to allow.An empty array will clear the entries.
+	BlockedServers []string `json:"blockedServers"`
+
+	// 'allow' or 'block' new DHCP servers. Default value is 'allow'.
+	// Enum: [allow block]
+	DefaultPolicy string `json:"defaultPolicy,omitempty"`
+}
+
+// Validate validates this get network switch dhcp server policy o k body
+func (o *GetNetworkSwitchDhcpServerPolicyOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateAlerts(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateArpInspection(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateDefaultPolicy(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkSwitchDhcpServerPolicyOKBody) validateAlerts(formats strfmt.Registry) error {
+	if swag.IsZero(o.Alerts) { // not required
+		return nil
+	}
+
+	if o.Alerts != nil {
+		if err := o.Alerts.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkSwitchDhcpServerPolicyOK" + "." + "alerts")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkSwitchDhcpServerPolicyOK" + "." + "alerts")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSwitchDhcpServerPolicyOKBody) validateArpInspection(formats strfmt.Registry) error {
+	if swag.IsZero(o.ArpInspection) { // not required
+		return nil
+	}
+
+	if o.ArpInspection != nil {
+		if err := o.ArpInspection.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkSwitchDhcpServerPolicyOK" + "." + "arpInspection")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkSwitchDhcpServerPolicyOK" + "." + "arpInspection")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+var getNetworkSwitchDhcpServerPolicyOKBodyTypeDefaultPolicyPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["allow","block"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getNetworkSwitchDhcpServerPolicyOKBodyTypeDefaultPolicyPropEnum = append(getNetworkSwitchDhcpServerPolicyOKBodyTypeDefaultPolicyPropEnum, v)
+	}
+}
+
+const (
+
+	// GetNetworkSwitchDhcpServerPolicyOKBodyDefaultPolicyAllow captures enum value "allow"
+	GetNetworkSwitchDhcpServerPolicyOKBodyDefaultPolicyAllow string = "allow"
+
+	// GetNetworkSwitchDhcpServerPolicyOKBodyDefaultPolicyBlock captures enum value "block"
+	GetNetworkSwitchDhcpServerPolicyOKBodyDefaultPolicyBlock string = "block"
+)
+
+// prop value enum
+func (o *GetNetworkSwitchDhcpServerPolicyOKBody) validateDefaultPolicyEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getNetworkSwitchDhcpServerPolicyOKBodyTypeDefaultPolicyPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetNetworkSwitchDhcpServerPolicyOKBody) validateDefaultPolicy(formats strfmt.Registry) error {
+	if swag.IsZero(o.DefaultPolicy) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateDefaultPolicyEnum("getNetworkSwitchDhcpServerPolicyOK"+"."+"defaultPolicy", "body", o.DefaultPolicy); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network switch dhcp server policy o k body based on the context it is used
+func (o *GetNetworkSwitchDhcpServerPolicyOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateAlerts(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateArpInspection(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkSwitchDhcpServerPolicyOKBody) contextValidateAlerts(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Alerts != nil {
+
+		if swag.IsZero(o.Alerts) { // not required
+			return nil
+		}
+
+		if err := o.Alerts.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkSwitchDhcpServerPolicyOK" + "." + "alerts")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkSwitchDhcpServerPolicyOK" + "." + "alerts")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSwitchDhcpServerPolicyOKBody) contextValidateArpInspection(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ArpInspection != nil {
+
+		if swag.IsZero(o.ArpInspection) { // not required
+			return nil
+		}
+
+		if err := o.ArpInspection.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkSwitchDhcpServerPolicyOK" + "." + "arpInspection")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkSwitchDhcpServerPolicyOK" + "." + "arpInspection")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchDhcpServerPolicyOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchDhcpServerPolicyOKBody) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchDhcpServerPolicyOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSwitchDhcpServerPolicyOKBodyAlerts Email alert settings for DHCP servers
+swagger:model GetNetworkSwitchDhcpServerPolicyOKBodyAlerts
+*/
+type GetNetworkSwitchDhcpServerPolicyOKBodyAlerts struct {
+
+	// email
+	Email *GetNetworkSwitchDhcpServerPolicyOKBodyAlertsEmail `json:"email,omitempty"`
+}
+
+// Validate validates this get network switch dhcp server policy o k body alerts
+func (o *GetNetworkSwitchDhcpServerPolicyOKBodyAlerts) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateEmail(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkSwitchDhcpServerPolicyOKBodyAlerts) validateEmail(formats strfmt.Registry) error {
+	if swag.IsZero(o.Email) { // not required
+		return nil
+	}
+
+	if o.Email != nil {
+		if err := o.Email.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkSwitchDhcpServerPolicyOK" + "." + "alerts" + "." + "email")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkSwitchDhcpServerPolicyOK" + "." + "alerts" + "." + "email")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network switch dhcp server policy o k body alerts based on the context it is used
+func (o *GetNetworkSwitchDhcpServerPolicyOKBodyAlerts) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateEmail(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkSwitchDhcpServerPolicyOKBodyAlerts) contextValidateEmail(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Email != nil {
+
+		if swag.IsZero(o.Email) { // not required
+			return nil
+		}
+
+		if err := o.Email.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkSwitchDhcpServerPolicyOK" + "." + "alerts" + "." + "email")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkSwitchDhcpServerPolicyOK" + "." + "alerts" + "." + "email")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchDhcpServerPolicyOKBodyAlerts) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchDhcpServerPolicyOKBodyAlerts) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchDhcpServerPolicyOKBodyAlerts
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSwitchDhcpServerPolicyOKBodyAlertsEmail Alert settings for DHCP servers
+swagger:model GetNetworkSwitchDhcpServerPolicyOKBodyAlertsEmail
+*/
+type GetNetworkSwitchDhcpServerPolicyOKBodyAlertsEmail struct {
+
+	// When enabled, send an email if a new DHCP server is seen. Default value is false.
+	Enabled bool `json:"enabled,omitempty"`
+}
+
+// Validate validates this get network switch dhcp server policy o k body alerts email
+func (o *GetNetworkSwitchDhcpServerPolicyOKBodyAlertsEmail) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network switch dhcp server policy o k body alerts email based on context it is used
+func (o *GetNetworkSwitchDhcpServerPolicyOKBodyAlertsEmail) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchDhcpServerPolicyOKBodyAlertsEmail) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchDhcpServerPolicyOKBodyAlertsEmail) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchDhcpServerPolicyOKBodyAlertsEmail
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSwitchDhcpServerPolicyOKBodyArpInspection Dynamic ARP Inspection settings
+swagger:model GetNetworkSwitchDhcpServerPolicyOKBodyArpInspection
+*/
+type GetNetworkSwitchDhcpServerPolicyOKBodyArpInspection struct {
+
+	// Enable or disable Dynamic ARP Inspection on the network. Default value is false.
+	Enabled bool `json:"enabled,omitempty"`
+}
+
+// Validate validates this get network switch dhcp server policy o k body arp inspection
+func (o *GetNetworkSwitchDhcpServerPolicyOKBodyArpInspection) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network switch dhcp server policy o k body arp inspection based on context it is used
+func (o *GetNetworkSwitchDhcpServerPolicyOKBodyArpInspection) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchDhcpServerPolicyOKBodyArpInspection) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchDhcpServerPolicyOKBodyArpInspection) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchDhcpServerPolicyOKBodyArpInspection
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

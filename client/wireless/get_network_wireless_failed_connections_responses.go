@@ -32,7 +32,7 @@ func (o *GetNetworkWirelessFailedConnectionsReader) ReadResponse(response runtim
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/wireless/failedConnections] getNetworkWirelessFailedConnections", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewGetNetworkWirelessFailedConnectionsOK() *GetNetworkWirelessFailedConnect
 	return &GetNetworkWirelessFailedConnectionsOK{}
 }
 
-/* GetNetworkWirelessFailedConnectionsOK describes a response with status code 200, with default header values.
+/*
+GetNetworkWirelessFailedConnectionsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *GetNetworkWirelessFailedConnectionsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network wireless failed connections o k response
+func (o *GetNetworkWirelessFailedConnectionsOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkWirelessFailedConnectionsOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/wireless/failedConnections][%d] getNetworkWirelessFailedConnectionsOK  %+v", 200, o.Payload)
 }
@@ -96,7 +102,8 @@ func (o *GetNetworkWirelessFailedConnectionsOK) readResponse(response runtime.Cl
 	return nil
 }
 
-/*GetNetworkWirelessFailedConnectionsOKBodyItems0 get network wireless failed connections o k body items0
+/*
+GetNetworkWirelessFailedConnectionsOKBodyItems0 get network wireless failed connections o k body items0
 swagger:model GetNetworkWirelessFailedConnectionsOKBodyItems0
 */
 type GetNetworkWirelessFailedConnectionsOKBodyItems0 struct {

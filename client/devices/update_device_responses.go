@@ -30,7 +30,7 @@ func (o *UpdateDeviceReader) ReadResponse(response runtime.ClientResponse, consu
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /devices/{serial}] updateDevice", response, response.Code())
 	}
 }
 
@@ -39,7 +39,8 @@ func NewUpdateDeviceOK() *UpdateDeviceOK {
 	return &UpdateDeviceOK{}
 }
 
-/* UpdateDeviceOK describes a response with status code 200, with default header values.
+/*
+UpdateDeviceOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -72,6 +73,11 @@ func (o *UpdateDeviceOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update device o k response
+func (o *UpdateDeviceOK) Code() int {
+	return 200
+}
+
 func (o *UpdateDeviceOK) Error() string {
 	return fmt.Sprintf("[PUT /devices/{serial}][%d] updateDeviceOK  %+v", 200, o.Payload)
 }
@@ -94,7 +100,8 @@ func (o *UpdateDeviceOK) readResponse(response runtime.ClientResponse, consumer 
 	return nil
 }
 
-/*UpdateDeviceBody update device body
+/*
+UpdateDeviceBody update device body
 // Example: {"lat":37.4180951010362,"lng":-122.098531723022,"mac":"00:11:22:33:44:55","name":"My AP","serial":"Q234-ABCD-5678","tags":["recently-added"]}
 swagger:model UpdateDeviceBody
 */
@@ -121,7 +128,7 @@ type UpdateDeviceBody struct {
 	// The notes for the device. String. Limited to 255 characters.
 	Notes string `json:"notes,omitempty"`
 
-	// The ID of a switch profile to bind to the device (for available switch profiles, see the 'Switch Profiles' endpoint). Use null to unbind the switch device from the current profile. For a device to be bindable to a switch profile, it must (1) be a switch, and (2) belong to a network that is bound to a configuration template.
+	// The ID of a switch template to bind to the device (for available switch templates, see the 'Switch Templates' endpoint). Use null to unbind the switch device from the current profile. For a device to be bindable to a switch template, it must (1) be a switch, and (2) belong to a network that is bound to a configuration template.
 	SwitchProfileID string `json:"switchProfileId,omitempty"`
 
 	// The list of tags of a device

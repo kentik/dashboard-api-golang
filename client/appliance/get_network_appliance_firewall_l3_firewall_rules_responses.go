@@ -28,7 +28,7 @@ func (o *GetNetworkApplianceFirewallL3FirewallRulesReader) ReadResponse(response
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/appliance/firewall/l3FirewallRules] getNetworkApplianceFirewallL3FirewallRules", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetNetworkApplianceFirewallL3FirewallRulesOK() *GetNetworkApplianceFirew
 	return &GetNetworkApplianceFirewallL3FirewallRulesOK{}
 }
 
-/* GetNetworkApplianceFirewallL3FirewallRulesOK describes a response with status code 200, with default header values.
+/*
+GetNetworkApplianceFirewallL3FirewallRulesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetNetworkApplianceFirewallL3FirewallRulesOK) IsServerError() bool {
 // IsCode returns true when this get network appliance firewall l3 firewall rules o k response a status code equal to that given
 func (o *GetNetworkApplianceFirewallL3FirewallRulesOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get network appliance firewall l3 firewall rules o k response
+func (o *GetNetworkApplianceFirewallL3FirewallRulesOK) Code() int {
+	return 200
 }
 
 func (o *GetNetworkApplianceFirewallL3FirewallRulesOK) Error() string {

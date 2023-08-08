@@ -30,7 +30,7 @@ func (o *UpdateNetworkCellularGatewaySubnetPoolReader) ReadResponse(response run
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/cellularGateway/subnetPool] updateNetworkCellularGatewaySubnetPool", response, response.Code())
 	}
 }
 
@@ -39,7 +39,8 @@ func NewUpdateNetworkCellularGatewaySubnetPoolOK() *UpdateNetworkCellularGateway
 	return &UpdateNetworkCellularGatewaySubnetPoolOK{}
 }
 
-/* UpdateNetworkCellularGatewaySubnetPoolOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkCellularGatewaySubnetPoolOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -72,6 +73,11 @@ func (o *UpdateNetworkCellularGatewaySubnetPoolOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network cellular gateway subnet pool o k response
+func (o *UpdateNetworkCellularGatewaySubnetPoolOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkCellularGatewaySubnetPoolOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/cellularGateway/subnetPool][%d] updateNetworkCellularGatewaySubnetPoolOK  %+v", 200, o.Payload)
 }
@@ -94,7 +100,8 @@ func (o *UpdateNetworkCellularGatewaySubnetPoolOK) readResponse(response runtime
 	return nil
 }
 
-/*UpdateNetworkCellularGatewaySubnetPoolBody update network cellular gateway subnet pool body
+/*
+UpdateNetworkCellularGatewaySubnetPoolBody update network cellular gateway subnet pool body
 // Example: {"cidr":"192.168.0.0/16","deploymentMode":"routed","mask":24}
 swagger:model UpdateNetworkCellularGatewaySubnetPoolBody
 */

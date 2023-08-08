@@ -52,17 +52,25 @@ func NewDeleteNetworkSmTargetGroupParamsWithHTTPClient(client *http.Client) *Del
 	}
 }
 
-/* DeleteNetworkSmTargetGroupParams contains all the parameters to send to the API endpoint
-   for the delete network sm target group operation.
+/*
+DeleteNetworkSmTargetGroupParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete network sm target group operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteNetworkSmTargetGroupParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// TargetGroupID.
+	/* TargetGroupID.
+
+	   Target group ID
+	*/
 	TargetGroupID string
 
 	timeout    time.Duration

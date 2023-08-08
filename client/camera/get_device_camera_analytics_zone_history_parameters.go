@@ -53,10 +53,12 @@ func NewGetDeviceCameraAnalyticsZoneHistoryParamsWithHTTPClient(client *http.Cli
 	}
 }
 
-/* GetDeviceCameraAnalyticsZoneHistoryParams contains all the parameters to send to the API endpoint
-   for the get device camera analytics zone history operation.
+/*
+GetDeviceCameraAnalyticsZoneHistoryParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get device camera analytics zone history operation.
+
+	Typically these are written to a http.Request.
 */
 type GetDeviceCameraAnalyticsZoneHistoryParams struct {
 
@@ -72,7 +74,10 @@ type GetDeviceCameraAnalyticsZoneHistoryParams struct {
 	*/
 	Resolution *int64
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	/* T0.
@@ -95,7 +100,10 @@ type GetDeviceCameraAnalyticsZoneHistoryParams struct {
 	*/
 	Timespan *float32
 
-	// ZoneID.
+	/* ZoneID.
+
+	   Zone ID
+	*/
 	ZoneID string
 
 	timeout    time.Duration

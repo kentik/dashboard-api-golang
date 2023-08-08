@@ -53,10 +53,12 @@ func NewGetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDeviceParamsWithH
 	}
 }
 
-/* GetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDeviceParams contains all the parameters to send to the API endpoint
-   for the get network switch dhcp server policy arp inspection warnings by device operation.
+/*
+GetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDeviceParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network switch dhcp server policy arp inspection warnings by device operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDeviceParams struct {
 
@@ -66,7 +68,10 @@ type GetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDeviceParams struct 
 	*/
 	EndingBefore *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* PerPage.

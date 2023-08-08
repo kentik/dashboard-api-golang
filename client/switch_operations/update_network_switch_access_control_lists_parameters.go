@@ -52,14 +52,19 @@ func NewUpdateNetworkSwitchAccessControlListsParamsWithHTTPClient(client *http.C
 	}
 }
 
-/* UpdateNetworkSwitchAccessControlListsParams contains all the parameters to send to the API endpoint
-   for the update network switch access control lists operation.
+/*
+UpdateNetworkSwitchAccessControlListsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network switch access control lists operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkSwitchAccessControlListsParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkSwitchAccessControlLists.

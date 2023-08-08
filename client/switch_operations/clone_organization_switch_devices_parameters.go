@@ -52,17 +52,22 @@ func NewCloneOrganizationSwitchDevicesParamsWithHTTPClient(client *http.Client) 
 	}
 }
 
-/* CloneOrganizationSwitchDevicesParams contains all the parameters to send to the API endpoint
-   for the clone organization switch devices operation.
+/*
+CloneOrganizationSwitchDevicesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the clone organization switch devices operation.
+
+	Typically these are written to a http.Request.
 */
 type CloneOrganizationSwitchDevicesParams struct {
 
 	// CloneOrganizationSwitchDevices.
 	CloneOrganizationSwitchDevices CloneOrganizationSwitchDevicesBody
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

@@ -6,11 +6,16 @@ package wireless
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // GetNetworkWirelessSsidSplashSettingsReader is a Reader for the GetNetworkWirelessSsidSplashSettings structure.
@@ -28,7 +33,7 @@ func (o *GetNetworkWirelessSsidSplashSettingsReader) ReadResponse(response runti
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/wireless/ssids/{number}/splash/settings] getNetworkWirelessSsidSplashSettings", response, response.Code())
 	}
 }
 
@@ -37,12 +42,13 @@ func NewGetNetworkWirelessSsidSplashSettingsOK() *GetNetworkWirelessSsidSplashSe
 	return &GetNetworkWirelessSsidSplashSettingsOK{}
 }
 
-/* GetNetworkWirelessSsidSplashSettingsOK describes a response with status code 200, with default header values.
+/*
+GetNetworkWirelessSsidSplashSettingsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkWirelessSsidSplashSettingsOK struct {
-	Payload interface{}
+	Payload *GetNetworkWirelessSsidSplashSettingsOKBody
 }
 
 // IsSuccess returns true when this get network wireless ssid splash settings o k response has a 2xx status code
@@ -70,6 +76,11 @@ func (o *GetNetworkWirelessSsidSplashSettingsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network wireless ssid splash settings o k response
+func (o *GetNetworkWirelessSsidSplashSettingsOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkWirelessSsidSplashSettingsOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/wireless/ssids/{number}/splash/settings][%d] getNetworkWirelessSsidSplashSettingsOK  %+v", 200, o.Payload)
 }
@@ -78,16 +89,1046 @@ func (o *GetNetworkWirelessSsidSplashSettingsOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/wireless/ssids/{number}/splash/settings][%d] getNetworkWirelessSsidSplashSettingsOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkWirelessSsidSplashSettingsOK) GetPayload() interface{} {
+func (o *GetNetworkWirelessSsidSplashSettingsOK) GetPayload() *GetNetworkWirelessSsidSplashSettingsOKBody {
 	return o.Payload
 }
 
 func (o *GetNetworkWirelessSsidSplashSettingsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetNetworkWirelessSsidSplashSettingsOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkWirelessSsidSplashSettingsOKBody get network wireless ssid splash settings o k body
+swagger:model GetNetworkWirelessSsidSplashSettingsOKBody
+*/
+type GetNetworkWirelessSsidSplashSettingsOKBody struct {
+
+	// Whether or not to allow simultaneous logins from different devices.
+	AllowSimultaneousLogins bool `json:"allowSimultaneousLogins,omitempty"`
+
+	// billing
+	Billing *GetNetworkWirelessSsidSplashSettingsOKBodyBilling `json:"billing,omitempty"`
+
+	// How restricted allowing traffic should be. If true, all traffic types are blocked until the splash page is acknowledged. If false, all non-HTTP traffic is allowed before the splash page is acknowledged.
+	BlockAllTrafficBeforeSignOn bool `json:"blockAllTrafficBeforeSignOn,omitempty"`
+
+	// How login attempts should be handled when the controller is unreachable.
+	ControllerDisconnectionBehavior string `json:"controllerDisconnectionBehavior,omitempty"`
+
+	// guest sponsorship
+	GuestSponsorship *GetNetworkWirelessSsidSplashSettingsOKBodyGuestSponsorship `json:"guestSponsorship,omitempty"`
+
+	// The custom redirect URL where the users will go after the splash page.
+	RedirectURL string `json:"redirectUrl,omitempty"`
+
+	// self registration
+	SelfRegistration *GetNetworkWirelessSsidSplashSettingsOKBodySelfRegistration `json:"selfRegistration,omitempty"`
+
+	// sentry enrollment
+	SentryEnrollment *GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollment `json:"sentryEnrollment,omitempty"`
+
+	// splash image
+	SplashImage *GetNetworkWirelessSsidSplashSettingsOKBodySplashImage `json:"splashImage,omitempty"`
+
+	// splash logo
+	SplashLogo *GetNetworkWirelessSsidSplashSettingsOKBodySplashLogo `json:"splashLogo,omitempty"`
+
+	// The type of splash page for this SSID
+	SplashPage string `json:"splashPage,omitempty"`
+
+	// splash prepaid front
+	SplashPrepaidFront *GetNetworkWirelessSsidSplashSettingsOKBodySplashPrepaidFront `json:"splashPrepaidFront,omitempty"`
+
+	// Splash timeout in minutes.
+	SplashTimeout int64 `json:"splashTimeout,omitempty"`
+
+	// The custom splash URL of the click-through splash page.
+	SplashURL string `json:"splashUrl,omitempty"`
+
+	// SSID number
+	SsidNumber int64 `json:"ssidNumber,omitempty"`
+
+	// The Boolean indicating whether the the user will be redirected to the custom redirect URL after the splash page.
+	UseRedirectURL bool `json:"useRedirectUrl,omitempty"`
+
+	// Boolean indicating whether the users will be redirected to the custom splash url
+	UseSplashURL bool `json:"useSplashUrl,omitempty"`
+
+	// The welcome message for the users on the splash page.
+	WelcomeMessage string `json:"welcomeMessage,omitempty"`
+}
+
+// Validate validates this get network wireless ssid splash settings o k body
+func (o *GetNetworkWirelessSsidSplashSettingsOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBilling(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateGuestSponsorship(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSelfRegistration(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSentryEnrollment(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSplashImage(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSplashLogo(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSplashPrepaidFront(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidSplashSettingsOKBody) validateBilling(formats strfmt.Registry) error {
+	if swag.IsZero(o.Billing) { // not required
+		return nil
+	}
+
+	if o.Billing != nil {
+		if err := o.Billing.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "billing")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "billing")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidSplashSettingsOKBody) validateGuestSponsorship(formats strfmt.Registry) error {
+	if swag.IsZero(o.GuestSponsorship) { // not required
+		return nil
+	}
+
+	if o.GuestSponsorship != nil {
+		if err := o.GuestSponsorship.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "guestSponsorship")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "guestSponsorship")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidSplashSettingsOKBody) validateSelfRegistration(formats strfmt.Registry) error {
+	if swag.IsZero(o.SelfRegistration) { // not required
+		return nil
+	}
+
+	if o.SelfRegistration != nil {
+		if err := o.SelfRegistration.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "selfRegistration")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "selfRegistration")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidSplashSettingsOKBody) validateSentryEnrollment(formats strfmt.Registry) error {
+	if swag.IsZero(o.SentryEnrollment) { // not required
+		return nil
+	}
+
+	if o.SentryEnrollment != nil {
+		if err := o.SentryEnrollment.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "sentryEnrollment")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "sentryEnrollment")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidSplashSettingsOKBody) validateSplashImage(formats strfmt.Registry) error {
+	if swag.IsZero(o.SplashImage) { // not required
+		return nil
+	}
+
+	if o.SplashImage != nil {
+		if err := o.SplashImage.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "splashImage")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "splashImage")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidSplashSettingsOKBody) validateSplashLogo(formats strfmt.Registry) error {
+	if swag.IsZero(o.SplashLogo) { // not required
+		return nil
+	}
+
+	if o.SplashLogo != nil {
+		if err := o.SplashLogo.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "splashLogo")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "splashLogo")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidSplashSettingsOKBody) validateSplashPrepaidFront(formats strfmt.Registry) error {
+	if swag.IsZero(o.SplashPrepaidFront) { // not required
+		return nil
+	}
+
+	if o.SplashPrepaidFront != nil {
+		if err := o.SplashPrepaidFront.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "splashPrepaidFront")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "splashPrepaidFront")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network wireless ssid splash settings o k body based on the context it is used
+func (o *GetNetworkWirelessSsidSplashSettingsOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBilling(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateGuestSponsorship(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateSelfRegistration(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateSentryEnrollment(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateSplashImage(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateSplashLogo(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateSplashPrepaidFront(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidSplashSettingsOKBody) contextValidateBilling(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Billing != nil {
+
+		if swag.IsZero(o.Billing) { // not required
+			return nil
+		}
+
+		if err := o.Billing.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "billing")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "billing")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidSplashSettingsOKBody) contextValidateGuestSponsorship(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.GuestSponsorship != nil {
+
+		if swag.IsZero(o.GuestSponsorship) { // not required
+			return nil
+		}
+
+		if err := o.GuestSponsorship.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "guestSponsorship")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "guestSponsorship")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidSplashSettingsOKBody) contextValidateSelfRegistration(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.SelfRegistration != nil {
+
+		if swag.IsZero(o.SelfRegistration) { // not required
+			return nil
+		}
+
+		if err := o.SelfRegistration.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "selfRegistration")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "selfRegistration")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidSplashSettingsOKBody) contextValidateSentryEnrollment(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.SentryEnrollment != nil {
+
+		if swag.IsZero(o.SentryEnrollment) { // not required
+			return nil
+		}
+
+		if err := o.SentryEnrollment.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "sentryEnrollment")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "sentryEnrollment")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidSplashSettingsOKBody) contextValidateSplashImage(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.SplashImage != nil {
+
+		if swag.IsZero(o.SplashImage) { // not required
+			return nil
+		}
+
+		if err := o.SplashImage.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "splashImage")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "splashImage")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidSplashSettingsOKBody) contextValidateSplashLogo(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.SplashLogo != nil {
+
+		if swag.IsZero(o.SplashLogo) { // not required
+			return nil
+		}
+
+		if err := o.SplashLogo.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "splashLogo")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "splashLogo")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidSplashSettingsOKBody) contextValidateSplashPrepaidFront(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.SplashPrepaidFront != nil {
+
+		if swag.IsZero(o.SplashPrepaidFront) { // not required
+			return nil
+		}
+
+		if err := o.SplashPrepaidFront.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "splashPrepaidFront")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "splashPrepaidFront")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidSplashSettingsOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidSplashSettingsOKBody) UnmarshalBinary(b []byte) error {
+	var res GetNetworkWirelessSsidSplashSettingsOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkWirelessSsidSplashSettingsOKBodyBilling Details associated with billing splash
+swagger:model GetNetworkWirelessSsidSplashSettingsOKBodyBilling
+*/
+type GetNetworkWirelessSsidSplashSettingsOKBodyBilling struct {
+
+	// free access
+	FreeAccess *GetNetworkWirelessSsidSplashSettingsOKBodyBillingFreeAccess `json:"freeAccess,omitempty"`
+
+	// Whether or not billing uses the fast login prepaid access option.
+	PrepaidAccessFastLoginEnabled bool `json:"prepaidAccessFastLoginEnabled,omitempty"`
+
+	// The email address that reeceives replies from clients
+	ReplyToEmailAddress string `json:"replyToEmailAddress,omitempty"`
+}
+
+// Validate validates this get network wireless ssid splash settings o k body billing
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodyBilling) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateFreeAccess(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodyBilling) validateFreeAccess(formats strfmt.Registry) error {
+	if swag.IsZero(o.FreeAccess) { // not required
+		return nil
+	}
+
+	if o.FreeAccess != nil {
+		if err := o.FreeAccess.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "billing" + "." + "freeAccess")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "billing" + "." + "freeAccess")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network wireless ssid splash settings o k body billing based on the context it is used
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodyBilling) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateFreeAccess(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodyBilling) contextValidateFreeAccess(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.FreeAccess != nil {
+
+		if swag.IsZero(o.FreeAccess) { // not required
+			return nil
+		}
+
+		if err := o.FreeAccess.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "billing" + "." + "freeAccess")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "billing" + "." + "freeAccess")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodyBilling) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodyBilling) UnmarshalBinary(b []byte) error {
+	var res GetNetworkWirelessSsidSplashSettingsOKBodyBilling
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkWirelessSsidSplashSettingsOKBodyBillingFreeAccess Details associated with a free access plan with limits
+swagger:model GetNetworkWirelessSsidSplashSettingsOKBodyBillingFreeAccess
+*/
+type GetNetworkWirelessSsidSplashSettingsOKBodyBillingFreeAccess struct {
+
+	// How long a device can use a network for free.
+	DurationInMinutes int64 `json:"durationInMinutes,omitempty"`
+
+	// Whether or not free access is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+}
+
+// Validate validates this get network wireless ssid splash settings o k body billing free access
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodyBillingFreeAccess) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network wireless ssid splash settings o k body billing free access based on context it is used
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodyBillingFreeAccess) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodyBillingFreeAccess) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodyBillingFreeAccess) UnmarshalBinary(b []byte) error {
+	var res GetNetworkWirelessSsidSplashSettingsOKBodyBillingFreeAccess
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkWirelessSsidSplashSettingsOKBodyGuestSponsorship Details associated with guest sponsored splash
+swagger:model GetNetworkWirelessSsidSplashSettingsOKBodyGuestSponsorship
+*/
+type GetNetworkWirelessSsidSplashSettingsOKBodyGuestSponsorship struct {
+
+	// Duration in minutes of sponsored guest authorization.
+	DurationInMinutes int64 `json:"durationInMinutes,omitempty"`
+
+	// Whether or not guests can specify how much time they are requesting.
+	GuestCanRequestTimeframe bool `json:"guestCanRequestTimeframe,omitempty"`
+}
+
+// Validate validates this get network wireless ssid splash settings o k body guest sponsorship
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodyGuestSponsorship) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network wireless ssid splash settings o k body guest sponsorship based on context it is used
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodyGuestSponsorship) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodyGuestSponsorship) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodyGuestSponsorship) UnmarshalBinary(b []byte) error {
+	var res GetNetworkWirelessSsidSplashSettingsOKBodyGuestSponsorship
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkWirelessSsidSplashSettingsOKBodySelfRegistration Self-registration for splash with Meraki authentication.
+swagger:model GetNetworkWirelessSsidSplashSettingsOKBodySelfRegistration
+*/
+type GetNetworkWirelessSsidSplashSettingsOKBodySelfRegistration struct {
+
+	// How created user accounts should be authorized.
+	// Enum: [admin auto self_email]
+	AuthorizationType string `json:"authorizationType,omitempty"`
+
+	// Whether or not to allow users to create their own account on the network.
+	Enabled bool `json:"enabled,omitempty"`
+}
+
+// Validate validates this get network wireless ssid splash settings o k body self registration
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySelfRegistration) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateAuthorizationType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var getNetworkWirelessSsidSplashSettingsOKBodySelfRegistrationTypeAuthorizationTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["admin","auto","self_email"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getNetworkWirelessSsidSplashSettingsOKBodySelfRegistrationTypeAuthorizationTypePropEnum = append(getNetworkWirelessSsidSplashSettingsOKBodySelfRegistrationTypeAuthorizationTypePropEnum, v)
+	}
+}
+
+const (
+
+	// GetNetworkWirelessSsidSplashSettingsOKBodySelfRegistrationAuthorizationTypeAdmin captures enum value "admin"
+	GetNetworkWirelessSsidSplashSettingsOKBodySelfRegistrationAuthorizationTypeAdmin string = "admin"
+
+	// GetNetworkWirelessSsidSplashSettingsOKBodySelfRegistrationAuthorizationTypeAuto captures enum value "auto"
+	GetNetworkWirelessSsidSplashSettingsOKBodySelfRegistrationAuthorizationTypeAuto string = "auto"
+
+	// GetNetworkWirelessSsidSplashSettingsOKBodySelfRegistrationAuthorizationTypeSelfEmail captures enum value "self_email"
+	GetNetworkWirelessSsidSplashSettingsOKBodySelfRegistrationAuthorizationTypeSelfEmail string = "self_email"
+)
+
+// prop value enum
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySelfRegistration) validateAuthorizationTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getNetworkWirelessSsidSplashSettingsOKBodySelfRegistrationTypeAuthorizationTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySelfRegistration) validateAuthorizationType(formats strfmt.Registry) error {
+	if swag.IsZero(o.AuthorizationType) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateAuthorizationTypeEnum("getNetworkWirelessSsidSplashSettingsOK"+"."+"selfRegistration"+"."+"authorizationType", "body", o.AuthorizationType); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this get network wireless ssid splash settings o k body self registration based on context it is used
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySelfRegistration) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySelfRegistration) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySelfRegistration) UnmarshalBinary(b []byte) error {
+	var res GetNetworkWirelessSsidSplashSettingsOKBodySelfRegistration
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollment Systems Manager sentry enrollment splash settings.
+swagger:model GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollment
+*/
+type GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollment struct {
+
+	// The system types that the Sentry enforces.
+	EnforcedSystems []string `json:"enforcedSystems"`
+
+	// The strength of the enforcement of selected system types.
+	// Enum: [click-through focused strict]
+	Strength string `json:"strength,omitempty"`
+
+	// systems manager network
+	SystemsManagerNetwork *GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollmentSystemsManagerNetwork `json:"systemsManagerNetwork,omitempty"`
+}
+
+// Validate validates this get network wireless ssid splash settings o k body sentry enrollment
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollment) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateStrength(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSystemsManagerNetwork(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var getNetworkWirelessSsidSplashSettingsOKBodySentryEnrollmentTypeStrengthPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["click-through","focused","strict"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getNetworkWirelessSsidSplashSettingsOKBodySentryEnrollmentTypeStrengthPropEnum = append(getNetworkWirelessSsidSplashSettingsOKBodySentryEnrollmentTypeStrengthPropEnum, v)
+	}
+}
+
+const (
+
+	// GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollmentStrengthClickDashThrough captures enum value "click-through"
+	GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollmentStrengthClickDashThrough string = "click-through"
+
+	// GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollmentStrengthFocused captures enum value "focused"
+	GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollmentStrengthFocused string = "focused"
+
+	// GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollmentStrengthStrict captures enum value "strict"
+	GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollmentStrengthStrict string = "strict"
+)
+
+// prop value enum
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollment) validateStrengthEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getNetworkWirelessSsidSplashSettingsOKBodySentryEnrollmentTypeStrengthPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollment) validateStrength(formats strfmt.Registry) error {
+	if swag.IsZero(o.Strength) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateStrengthEnum("getNetworkWirelessSsidSplashSettingsOK"+"."+"sentryEnrollment"+"."+"strength", "body", o.Strength); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollment) validateSystemsManagerNetwork(formats strfmt.Registry) error {
+	if swag.IsZero(o.SystemsManagerNetwork) { // not required
+		return nil
+	}
+
+	if o.SystemsManagerNetwork != nil {
+		if err := o.SystemsManagerNetwork.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "sentryEnrollment" + "." + "systemsManagerNetwork")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "sentryEnrollment" + "." + "systemsManagerNetwork")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network wireless ssid splash settings o k body sentry enrollment based on the context it is used
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollment) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateSystemsManagerNetwork(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollment) contextValidateSystemsManagerNetwork(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.SystemsManagerNetwork != nil {
+
+		if swag.IsZero(o.SystemsManagerNetwork) { // not required
+			return nil
+		}
+
+		if err := o.SystemsManagerNetwork.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "sentryEnrollment" + "." + "systemsManagerNetwork")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkWirelessSsidSplashSettingsOK" + "." + "sentryEnrollment" + "." + "systemsManagerNetwork")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollment) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollment) UnmarshalBinary(b []byte) error {
+	var res GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollment
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollmentSystemsManagerNetwork Systems Manager network targeted for sentry enrollment.
+swagger:model GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollmentSystemsManagerNetwork
+*/
+type GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollmentSystemsManagerNetwork struct {
+
+	// The network ID of the Systems Manager network.
+	ID string `json:"id,omitempty"`
+}
+
+// Validate validates this get network wireless ssid splash settings o k body sentry enrollment systems manager network
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollmentSystemsManagerNetwork) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network wireless ssid splash settings o k body sentry enrollment systems manager network based on context it is used
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollmentSystemsManagerNetwork) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollmentSystemsManagerNetwork) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollmentSystemsManagerNetwork) UnmarshalBinary(b []byte) error {
+	var res GetNetworkWirelessSsidSplashSettingsOKBodySentryEnrollmentSystemsManagerNetwork
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkWirelessSsidSplashSettingsOKBodySplashImage The image used in the splash page.
+swagger:model GetNetworkWirelessSsidSplashSettingsOKBodySplashImage
+*/
+type GetNetworkWirelessSsidSplashSettingsOKBodySplashImage struct {
+
+	// The extension of the image file.
+	Extension string `json:"extension,omitempty"`
+
+	// The MD5 value of the image file.
+	Md5 string `json:"md5,omitempty"`
+}
+
+// Validate validates this get network wireless ssid splash settings o k body splash image
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySplashImage) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network wireless ssid splash settings o k body splash image based on context it is used
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySplashImage) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySplashImage) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySplashImage) UnmarshalBinary(b []byte) error {
+	var res GetNetworkWirelessSsidSplashSettingsOKBodySplashImage
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkWirelessSsidSplashSettingsOKBodySplashLogo The logo used in the splash page.
+swagger:model GetNetworkWirelessSsidSplashSettingsOKBodySplashLogo
+*/
+type GetNetworkWirelessSsidSplashSettingsOKBodySplashLogo struct {
+
+	// The extension of the logo file.
+	Extension string `json:"extension,omitempty"`
+
+	// The MD5 value of the logo file.
+	Md5 string `json:"md5,omitempty"`
+}
+
+// Validate validates this get network wireless ssid splash settings o k body splash logo
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySplashLogo) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network wireless ssid splash settings o k body splash logo based on context it is used
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySplashLogo) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySplashLogo) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySplashLogo) UnmarshalBinary(b []byte) error {
+	var res GetNetworkWirelessSsidSplashSettingsOKBodySplashLogo
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkWirelessSsidSplashSettingsOKBodySplashPrepaidFront The prepaid front image used in the splash page.
+swagger:model GetNetworkWirelessSsidSplashSettingsOKBodySplashPrepaidFront
+*/
+type GetNetworkWirelessSsidSplashSettingsOKBodySplashPrepaidFront struct {
+
+	// The extension of the prepaid front image file.
+	Extension string `json:"extension,omitempty"`
+
+	// The MD5 value of the prepaid front image file.
+	Md5 string `json:"md5,omitempty"`
+}
+
+// Validate validates this get network wireless ssid splash settings o k body splash prepaid front
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySplashPrepaidFront) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network wireless ssid splash settings o k body splash prepaid front based on context it is used
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySplashPrepaidFront) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySplashPrepaidFront) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidSplashSettingsOKBodySplashPrepaidFront) UnmarshalBinary(b []byte) error {
+	var res GetNetworkWirelessSsidSplashSettingsOKBodySplashPrepaidFront
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

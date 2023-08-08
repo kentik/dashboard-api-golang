@@ -34,7 +34,7 @@ func (o *ClaimIntoOrganizationInventoryReader) ReadResponse(response runtime.Cli
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /organizations/{organizationId}/inventory/claim] claimIntoOrganizationInventory", response, response.Code())
 	}
 }
 
@@ -43,12 +43,13 @@ func NewClaimIntoOrganizationInventoryOK() *ClaimIntoOrganizationInventoryOK {
 	return &ClaimIntoOrganizationInventoryOK{}
 }
 
-/* ClaimIntoOrganizationInventoryOK describes a response with status code 200, with default header values.
+/*
+ClaimIntoOrganizationInventoryOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type ClaimIntoOrganizationInventoryOK struct {
-	Payload interface{}
+	Payload *ClaimIntoOrganizationInventoryOKBody
 }
 
 // IsSuccess returns true when this claim into organization inventory o k response has a 2xx status code
@@ -76,6 +77,11 @@ func (o *ClaimIntoOrganizationInventoryOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the claim into organization inventory o k response
+func (o *ClaimIntoOrganizationInventoryOK) Code() int {
+	return 200
+}
+
 func (o *ClaimIntoOrganizationInventoryOK) Error() string {
 	return fmt.Sprintf("[POST /organizations/{organizationId}/inventory/claim][%d] claimIntoOrganizationInventoryOK  %+v", 200, o.Payload)
 }
@@ -84,21 +90,24 @@ func (o *ClaimIntoOrganizationInventoryOK) String() string {
 	return fmt.Sprintf("[POST /organizations/{organizationId}/inventory/claim][%d] claimIntoOrganizationInventoryOK  %+v", 200, o.Payload)
 }
 
-func (o *ClaimIntoOrganizationInventoryOK) GetPayload() interface{} {
+func (o *ClaimIntoOrganizationInventoryOK) GetPayload() *ClaimIntoOrganizationInventoryOKBody {
 	return o.Payload
 }
 
 func (o *ClaimIntoOrganizationInventoryOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(ClaimIntoOrganizationInventoryOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*ClaimIntoOrganizationInventoryBody claim into organization inventory body
+/*
+ClaimIntoOrganizationInventoryBody claim into organization inventory body
 // Example: {"licenses":[{"key":"Z2XXXXXXXXXX","mode":"addDevices"}],"orders":["4CXXXXXXX"],"serials":["Q234-ABCD-5678"]}
 swagger:model ClaimIntoOrganizationInventoryBody
 */
@@ -173,6 +182,11 @@ func (o *ClaimIntoOrganizationInventoryBody) contextValidateLicenses(ctx context
 	for i := 0; i < len(o.Licenses); i++ {
 
 		if o.Licenses[i] != nil {
+
+			if swag.IsZero(o.Licenses[i]) { // not required
+				return nil
+			}
+
 			if err := o.Licenses[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("claimIntoOrganizationInventory" + "." + "licenses" + "." + strconv.Itoa(i))
@@ -206,7 +220,162 @@ func (o *ClaimIntoOrganizationInventoryBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*ClaimIntoOrganizationInventoryParamsBodyLicensesItems0 claim into organization inventory params body licenses items0
+/*
+ClaimIntoOrganizationInventoryOKBody claim into organization inventory o k body
+swagger:model ClaimIntoOrganizationInventoryOKBody
+*/
+type ClaimIntoOrganizationInventoryOKBody struct {
+
+	// The licenses claimed
+	Licenses []*ClaimIntoOrganizationInventoryOKBodyLicensesItems0 `json:"licenses"`
+
+	// The numbers of the orders claimed
+	Orders []string `json:"orders"`
+
+	// The serials of the devices claimed
+	Serials []string `json:"serials"`
+}
+
+// Validate validates this claim into organization inventory o k body
+func (o *ClaimIntoOrganizationInventoryOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateLicenses(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *ClaimIntoOrganizationInventoryOKBody) validateLicenses(formats strfmt.Registry) error {
+	if swag.IsZero(o.Licenses) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Licenses); i++ {
+		if swag.IsZero(o.Licenses[i]) { // not required
+			continue
+		}
+
+		if o.Licenses[i] != nil {
+			if err := o.Licenses[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("claimIntoOrganizationInventoryOK" + "." + "licenses" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("claimIntoOrganizationInventoryOK" + "." + "licenses" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this claim into organization inventory o k body based on the context it is used
+func (o *ClaimIntoOrganizationInventoryOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateLicenses(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *ClaimIntoOrganizationInventoryOKBody) contextValidateLicenses(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Licenses); i++ {
+
+		if o.Licenses[i] != nil {
+
+			if swag.IsZero(o.Licenses[i]) { // not required
+				return nil
+			}
+
+			if err := o.Licenses[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("claimIntoOrganizationInventoryOK" + "." + "licenses" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("claimIntoOrganizationInventoryOK" + "." + "licenses" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *ClaimIntoOrganizationInventoryOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *ClaimIntoOrganizationInventoryOKBody) UnmarshalBinary(b []byte) error {
+	var res ClaimIntoOrganizationInventoryOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+ClaimIntoOrganizationInventoryOKBodyLicensesItems0 claim into organization inventory o k body licenses items0
+swagger:model ClaimIntoOrganizationInventoryOKBodyLicensesItems0
+*/
+type ClaimIntoOrganizationInventoryOKBodyLicensesItems0 struct {
+
+	// The key of the license
+	Key string `json:"key,omitempty"`
+
+	// The mode of the license
+	Mode string `json:"mode,omitempty"`
+}
+
+// Validate validates this claim into organization inventory o k body licenses items0
+func (o *ClaimIntoOrganizationInventoryOKBodyLicensesItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this claim into organization inventory o k body licenses items0 based on context it is used
+func (o *ClaimIntoOrganizationInventoryOKBodyLicensesItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *ClaimIntoOrganizationInventoryOKBodyLicensesItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *ClaimIntoOrganizationInventoryOKBodyLicensesItems0) UnmarshalBinary(b []byte) error {
+	var res ClaimIntoOrganizationInventoryOKBodyLicensesItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+ClaimIntoOrganizationInventoryParamsBodyLicensesItems0 claim into organization inventory params body licenses items0
 swagger:model ClaimIntoOrganizationInventoryParamsBodyLicensesItems0
 */
 type ClaimIntoOrganizationInventoryParamsBodyLicensesItems0 struct {

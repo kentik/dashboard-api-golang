@@ -52,17 +52,22 @@ func NewCheckinNetworkSmDevicesParamsWithHTTPClient(client *http.Client) *Checki
 	}
 }
 
-/* CheckinNetworkSmDevicesParams contains all the parameters to send to the API endpoint
-   for the checkin network sm devices operation.
+/*
+CheckinNetworkSmDevicesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the checkin network sm devices operation.
+
+	Typically these are written to a http.Request.
 */
 type CheckinNetworkSmDevicesParams struct {
 
 	// CheckinNetworkSmDevices.
 	CheckinNetworkSmDevices CheckinNetworkSmDevicesBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

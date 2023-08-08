@@ -52,17 +52,22 @@ func NewMoveOrganizationLicensesSeatsParamsWithHTTPClient(client *http.Client) *
 	}
 }
 
-/* MoveOrganizationLicensesSeatsParams contains all the parameters to send to the API endpoint
-   for the move organization licenses seats operation.
+/*
+MoveOrganizationLicensesSeatsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the move organization licenses seats operation.
+
+	Typically these are written to a http.Request.
 */
 type MoveOrganizationLicensesSeatsParams struct {
 
 	// MoveOrganizationLicensesSeats.
 	MoveOrganizationLicensesSeats MoveOrganizationLicensesSeatsBody
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

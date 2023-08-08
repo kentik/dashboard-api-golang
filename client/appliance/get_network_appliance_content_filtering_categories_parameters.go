@@ -52,14 +52,19 @@ func NewGetNetworkApplianceContentFilteringCategoriesParamsWithHTTPClient(client
 	}
 }
 
-/* GetNetworkApplianceContentFilteringCategoriesParams contains all the parameters to send to the API endpoint
-   for the get network appliance content filtering categories operation.
+/*
+GetNetworkApplianceContentFilteringCategoriesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network appliance content filtering categories operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkApplianceContentFilteringCategoriesParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

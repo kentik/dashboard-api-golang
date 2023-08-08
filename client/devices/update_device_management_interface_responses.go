@@ -33,7 +33,7 @@ func (o *UpdateDeviceManagementInterfaceReader) ReadResponse(response runtime.Cl
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /devices/{serial}/managementInterface] updateDeviceManagementInterface", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateDeviceManagementInterfaceOK() *UpdateDeviceManagementInterfaceOK {
 	return &UpdateDeviceManagementInterfaceOK{}
 }
 
-/* UpdateDeviceManagementInterfaceOK describes a response with status code 200, with default header values.
+/*
+UpdateDeviceManagementInterfaceOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateDeviceManagementInterfaceOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update device management interface o k response
+func (o *UpdateDeviceManagementInterfaceOK) Code() int {
+	return 200
+}
+
 func (o *UpdateDeviceManagementInterfaceOK) Error() string {
 	return fmt.Sprintf("[PUT /devices/{serial}/managementInterface][%d] updateDeviceManagementInterfaceOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateDeviceManagementInterfaceOK) readResponse(response runtime.Client
 	return nil
 }
 
-/*UpdateDeviceManagementInterfaceBody update device management interface body
+/*
+UpdateDeviceManagementInterfaceBody update device management interface body
 // Example: {"wan1":{"staticDns":["1.2.3.2","1.2.3.3"],"staticGatewayIp":"1.2.3.1","staticIp":"1.2.3.4","staticSubnetMask":"255.255.255.0","usingStaticIp":true,"vlan":7,"wanEnabled":"not configured"},"wan2":{"usingStaticIp":false,"vlan":2,"wanEnabled":"enabled"}}
 swagger:model UpdateDeviceManagementInterfaceBody
 */
@@ -187,6 +194,11 @@ func (o *UpdateDeviceManagementInterfaceBody) ContextValidate(ctx context.Contex
 func (o *UpdateDeviceManagementInterfaceBody) contextValidateWan1(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Wan1 != nil {
+
+		if swag.IsZero(o.Wan1) { // not required
+			return nil
+		}
+
 		if err := o.Wan1.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateDeviceManagementInterface" + "." + "wan1")
@@ -203,6 +215,11 @@ func (o *UpdateDeviceManagementInterfaceBody) contextValidateWan1(ctx context.Co
 func (o *UpdateDeviceManagementInterfaceBody) contextValidateWan2(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Wan2 != nil {
+
+		if swag.IsZero(o.Wan2) { // not required
+			return nil
+		}
+
 		if err := o.Wan2.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateDeviceManagementInterface" + "." + "wan2")
@@ -234,7 +251,8 @@ func (o *UpdateDeviceManagementInterfaceBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateDeviceManagementInterfaceParamsBodyWan1 WAN 1 settings
+/*
+UpdateDeviceManagementInterfaceParamsBodyWan1 WAN 1 settings
 swagger:model UpdateDeviceManagementInterfaceParamsBodyWan1
 */
 type UpdateDeviceManagementInterfaceParamsBodyWan1 struct {
@@ -258,7 +276,7 @@ type UpdateDeviceManagementInterfaceParamsBodyWan1 struct {
 	Vlan int64 `json:"vlan,omitempty"`
 
 	// Enable or disable the interface (only for MX devices). Valid values are 'enabled', 'disabled', and 'not configured'.
-	// Enum: [enabled disabled not configured]
+	// Enum: [disabled enabled not configured]
 	WanEnabled string `json:"wanEnabled,omitempty"`
 }
 
@@ -280,7 +298,7 @@ var updateDeviceManagementInterfaceParamsBodyWan1TypeWanEnabledPropEnum []interf
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["enabled","disabled","not configured"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["disabled","enabled","not configured"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -290,11 +308,11 @@ func init() {
 
 const (
 
-	// UpdateDeviceManagementInterfaceParamsBodyWan1WanEnabledEnabled captures enum value "enabled"
-	UpdateDeviceManagementInterfaceParamsBodyWan1WanEnabledEnabled string = "enabled"
-
 	// UpdateDeviceManagementInterfaceParamsBodyWan1WanEnabledDisabled captures enum value "disabled"
 	UpdateDeviceManagementInterfaceParamsBodyWan1WanEnabledDisabled string = "disabled"
+
+	// UpdateDeviceManagementInterfaceParamsBodyWan1WanEnabledEnabled captures enum value "enabled"
+	UpdateDeviceManagementInterfaceParamsBodyWan1WanEnabledEnabled string = "enabled"
 
 	// UpdateDeviceManagementInterfaceParamsBodyWan1WanEnabledNotConfigured captures enum value "not configured"
 	UpdateDeviceManagementInterfaceParamsBodyWan1WanEnabledNotConfigured string = "not configured"
@@ -344,7 +362,8 @@ func (o *UpdateDeviceManagementInterfaceParamsBodyWan1) UnmarshalBinary(b []byte
 	return nil
 }
 
-/*UpdateDeviceManagementInterfaceParamsBodyWan2 WAN 2 settings (only for MX devices)
+/*
+UpdateDeviceManagementInterfaceParamsBodyWan2 WAN 2 settings (only for MX devices)
 swagger:model UpdateDeviceManagementInterfaceParamsBodyWan2
 */
 type UpdateDeviceManagementInterfaceParamsBodyWan2 struct {
@@ -368,7 +387,7 @@ type UpdateDeviceManagementInterfaceParamsBodyWan2 struct {
 	Vlan int64 `json:"vlan,omitempty"`
 
 	// Enable or disable the interface (only for MX devices). Valid values are 'enabled', 'disabled', and 'not configured'.
-	// Enum: [enabled disabled not configured]
+	// Enum: [disabled enabled not configured]
 	WanEnabled string `json:"wanEnabled,omitempty"`
 }
 
@@ -390,7 +409,7 @@ var updateDeviceManagementInterfaceParamsBodyWan2TypeWanEnabledPropEnum []interf
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["enabled","disabled","not configured"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["disabled","enabled","not configured"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -400,11 +419,11 @@ func init() {
 
 const (
 
-	// UpdateDeviceManagementInterfaceParamsBodyWan2WanEnabledEnabled captures enum value "enabled"
-	UpdateDeviceManagementInterfaceParamsBodyWan2WanEnabledEnabled string = "enabled"
-
 	// UpdateDeviceManagementInterfaceParamsBodyWan2WanEnabledDisabled captures enum value "disabled"
 	UpdateDeviceManagementInterfaceParamsBodyWan2WanEnabledDisabled string = "disabled"
+
+	// UpdateDeviceManagementInterfaceParamsBodyWan2WanEnabledEnabled captures enum value "enabled"
+	UpdateDeviceManagementInterfaceParamsBodyWan2WanEnabledEnabled string = "enabled"
 
 	// UpdateDeviceManagementInterfaceParamsBodyWan2WanEnabledNotConfigured captures enum value "not configured"
 	UpdateDeviceManagementInterfaceParamsBodyWan2WanEnabledNotConfigured string = "not configured"

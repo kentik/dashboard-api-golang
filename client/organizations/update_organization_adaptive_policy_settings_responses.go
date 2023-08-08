@@ -30,7 +30,7 @@ func (o *UpdateOrganizationAdaptivePolicySettingsReader) ReadResponse(response r
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /organizations/{organizationId}/adaptivePolicy/settings] updateOrganizationAdaptivePolicySettings", response, response.Code())
 	}
 }
 
@@ -39,7 +39,8 @@ func NewUpdateOrganizationAdaptivePolicySettingsOK() *UpdateOrganizationAdaptive
 	return &UpdateOrganizationAdaptivePolicySettingsOK{}
 }
 
-/* UpdateOrganizationAdaptivePolicySettingsOK describes a response with status code 200, with default header values.
+/*
+UpdateOrganizationAdaptivePolicySettingsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -72,6 +73,11 @@ func (o *UpdateOrganizationAdaptivePolicySettingsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update organization adaptive policy settings o k response
+func (o *UpdateOrganizationAdaptivePolicySettingsOK) Code() int {
+	return 200
+}
+
 func (o *UpdateOrganizationAdaptivePolicySettingsOK) Error() string {
 	return fmt.Sprintf("[PUT /organizations/{organizationId}/adaptivePolicy/settings][%d] updateOrganizationAdaptivePolicySettingsOK  %+v", 200, o.Payload)
 }
@@ -94,7 +100,8 @@ func (o *UpdateOrganizationAdaptivePolicySettingsOK) readResponse(response runti
 	return nil
 }
 
-/*UpdateOrganizationAdaptivePolicySettingsBody update organization adaptive policy settings body
+/*
+UpdateOrganizationAdaptivePolicySettingsBody update organization adaptive policy settings body
 // Example: {"enabledNetworks":["L_11111111","L_22222222","N_33333333","L_44444444"]}
 swagger:model UpdateOrganizationAdaptivePolicySettingsBody
 */

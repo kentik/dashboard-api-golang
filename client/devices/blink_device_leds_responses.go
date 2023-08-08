@@ -30,7 +30,7 @@ func (o *BlinkDeviceLedsReader) ReadResponse(response runtime.ClientResponse, co
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /devices/{serial}/blinkLeds] blinkDeviceLeds", response, response.Code())
 	}
 }
 
@@ -39,12 +39,13 @@ func NewBlinkDeviceLedsAccepted() *BlinkDeviceLedsAccepted {
 	return &BlinkDeviceLedsAccepted{}
 }
 
-/* BlinkDeviceLedsAccepted describes a response with status code 202, with default header values.
+/*
+BlinkDeviceLedsAccepted describes a response with status code 202, with default header values.
 
 Successful operation
 */
 type BlinkDeviceLedsAccepted struct {
-	Payload interface{}
+	Payload *BlinkDeviceLedsAcceptedBody
 }
 
 // IsSuccess returns true when this blink device leds accepted response has a 2xx status code
@@ -72,6 +73,11 @@ func (o *BlinkDeviceLedsAccepted) IsCode(code int) bool {
 	return code == 202
 }
 
+// Code gets the status code for the blink device leds accepted response
+func (o *BlinkDeviceLedsAccepted) Code() int {
+	return 202
+}
+
 func (o *BlinkDeviceLedsAccepted) Error() string {
 	return fmt.Sprintf("[POST /devices/{serial}/blinkLeds][%d] blinkDeviceLedsAccepted  %+v", 202, o.Payload)
 }
@@ -80,21 +86,68 @@ func (o *BlinkDeviceLedsAccepted) String() string {
 	return fmt.Sprintf("[POST /devices/{serial}/blinkLeds][%d] blinkDeviceLedsAccepted  %+v", 202, o.Payload)
 }
 
-func (o *BlinkDeviceLedsAccepted) GetPayload() interface{} {
+func (o *BlinkDeviceLedsAccepted) GetPayload() *BlinkDeviceLedsAcceptedBody {
 	return o.Payload
 }
 
 func (o *BlinkDeviceLedsAccepted) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(BlinkDeviceLedsAcceptedBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*BlinkDeviceLedsBody blink device leds body
+/*
+BlinkDeviceLedsAcceptedBody blink device leds accepted body
+swagger:model BlinkDeviceLedsAcceptedBody
+*/
+type BlinkDeviceLedsAcceptedBody struct {
+
+	// The duration in seconds. Will be between 5 and 120. Default is 20 seconds
+	Duration int64 `json:"duration,omitempty"`
+
+	// The duty cycle as the percent active. Will be between 10 and 90. Default is 50
+	Duty int64 `json:"duty,omitempty"`
+
+	// The period in milliseconds. Will be between 100 and 1000. Default is 160 milliseconds
+	Period int64 `json:"period,omitempty"`
+}
+
+// Validate validates this blink device leds accepted body
+func (o *BlinkDeviceLedsAcceptedBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this blink device leds accepted body based on context it is used
+func (o *BlinkDeviceLedsAcceptedBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *BlinkDeviceLedsAcceptedBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *BlinkDeviceLedsAcceptedBody) UnmarshalBinary(b []byte) error {
+	var res BlinkDeviceLedsAcceptedBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+BlinkDeviceLedsBody blink device leds body
 // Example: {"duration":20,"duty":50,"period":160}
 swagger:model BlinkDeviceLedsBody
 */

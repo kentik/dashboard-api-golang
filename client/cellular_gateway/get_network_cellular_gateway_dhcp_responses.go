@@ -6,11 +6,16 @@ package cellular_gateway
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // GetNetworkCellularGatewayDhcpReader is a Reader for the GetNetworkCellularGatewayDhcp structure.
@@ -28,7 +33,7 @@ func (o *GetNetworkCellularGatewayDhcpReader) ReadResponse(response runtime.Clie
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/cellularGateway/dhcp] getNetworkCellularGatewayDhcp", response, response.Code())
 	}
 }
 
@@ -37,12 +42,13 @@ func NewGetNetworkCellularGatewayDhcpOK() *GetNetworkCellularGatewayDhcpOK {
 	return &GetNetworkCellularGatewayDhcpOK{}
 }
 
-/* GetNetworkCellularGatewayDhcpOK describes a response with status code 200, with default header values.
+/*
+GetNetworkCellularGatewayDhcpOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkCellularGatewayDhcpOK struct {
-	Payload interface{}
+	Payload *GetNetworkCellularGatewayDhcpOKBody
 }
 
 // IsSuccess returns true when this get network cellular gateway dhcp o k response has a 2xx status code
@@ -70,6 +76,11 @@ func (o *GetNetworkCellularGatewayDhcpOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network cellular gateway dhcp o k response
+func (o *GetNetworkCellularGatewayDhcpOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkCellularGatewayDhcpOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/cellularGateway/dhcp][%d] getNetworkCellularGatewayDhcpOK  %+v", 200, o.Payload)
 }
@@ -78,16 +89,179 @@ func (o *GetNetworkCellularGatewayDhcpOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/cellularGateway/dhcp][%d] getNetworkCellularGatewayDhcpOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkCellularGatewayDhcpOK) GetPayload() interface{} {
+func (o *GetNetworkCellularGatewayDhcpOK) GetPayload() *GetNetworkCellularGatewayDhcpOKBody {
 	return o.Payload
 }
 
 func (o *GetNetworkCellularGatewayDhcpOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetNetworkCellularGatewayDhcpOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkCellularGatewayDhcpOKBody get network cellular gateway dhcp o k body
+swagger:model GetNetworkCellularGatewayDhcpOKBody
+*/
+type GetNetworkCellularGatewayDhcpOKBody struct {
+
+	// DHCP Lease time for all MG in the network.
+	// Enum: [1 day 1 hour 1 week 12 hours 30 minutes 4 hours]
+	DhcpLeaseTime string `json:"dhcpLeaseTime,omitempty"`
+
+	// List of fixed IPs representing the the DNS Name servers when the mode is 'custom'.
+	DNSCustomNameservers []string `json:"dnsCustomNameservers"`
+
+	// DNS name servers mode for all MG in the network.
+	// Enum: [custom google_dns opendns upstream_dns]
+	DNSNameservers string `json:"dnsNameservers,omitempty"`
+}
+
+// Validate validates this get network cellular gateway dhcp o k body
+func (o *GetNetworkCellularGatewayDhcpOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateDhcpLeaseTime(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateDNSNameservers(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var getNetworkCellularGatewayDhcpOKBodyTypeDhcpLeaseTimePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["1 day","1 hour","1 week","12 hours","30 minutes","4 hours"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getNetworkCellularGatewayDhcpOKBodyTypeDhcpLeaseTimePropEnum = append(getNetworkCellularGatewayDhcpOKBodyTypeDhcpLeaseTimePropEnum, v)
+	}
+}
+
+const (
+
+	// GetNetworkCellularGatewayDhcpOKBodyDhcpLeaseTimeNr1Day captures enum value "1 day"
+	GetNetworkCellularGatewayDhcpOKBodyDhcpLeaseTimeNr1Day string = "1 day"
+
+	// GetNetworkCellularGatewayDhcpOKBodyDhcpLeaseTimeNr1Hour captures enum value "1 hour"
+	GetNetworkCellularGatewayDhcpOKBodyDhcpLeaseTimeNr1Hour string = "1 hour"
+
+	// GetNetworkCellularGatewayDhcpOKBodyDhcpLeaseTimeNr1Week captures enum value "1 week"
+	GetNetworkCellularGatewayDhcpOKBodyDhcpLeaseTimeNr1Week string = "1 week"
+
+	// GetNetworkCellularGatewayDhcpOKBodyDhcpLeaseTimeNr12Hours captures enum value "12 hours"
+	GetNetworkCellularGatewayDhcpOKBodyDhcpLeaseTimeNr12Hours string = "12 hours"
+
+	// GetNetworkCellularGatewayDhcpOKBodyDhcpLeaseTimeNr30Minutes captures enum value "30 minutes"
+	GetNetworkCellularGatewayDhcpOKBodyDhcpLeaseTimeNr30Minutes string = "30 minutes"
+
+	// GetNetworkCellularGatewayDhcpOKBodyDhcpLeaseTimeNr4Hours captures enum value "4 hours"
+	GetNetworkCellularGatewayDhcpOKBodyDhcpLeaseTimeNr4Hours string = "4 hours"
+)
+
+// prop value enum
+func (o *GetNetworkCellularGatewayDhcpOKBody) validateDhcpLeaseTimeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getNetworkCellularGatewayDhcpOKBodyTypeDhcpLeaseTimePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetNetworkCellularGatewayDhcpOKBody) validateDhcpLeaseTime(formats strfmt.Registry) error {
+	if swag.IsZero(o.DhcpLeaseTime) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateDhcpLeaseTimeEnum("getNetworkCellularGatewayDhcpOK"+"."+"dhcpLeaseTime", "body", o.DhcpLeaseTime); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var getNetworkCellularGatewayDhcpOKBodyTypeDNSNameserversPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["custom","google_dns","opendns","upstream_dns"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getNetworkCellularGatewayDhcpOKBodyTypeDNSNameserversPropEnum = append(getNetworkCellularGatewayDhcpOKBodyTypeDNSNameserversPropEnum, v)
+	}
+}
+
+const (
+
+	// GetNetworkCellularGatewayDhcpOKBodyDNSNameserversCustom captures enum value "custom"
+	GetNetworkCellularGatewayDhcpOKBodyDNSNameserversCustom string = "custom"
+
+	// GetNetworkCellularGatewayDhcpOKBodyDNSNameserversGoogleDNS captures enum value "google_dns"
+	GetNetworkCellularGatewayDhcpOKBodyDNSNameserversGoogleDNS string = "google_dns"
+
+	// GetNetworkCellularGatewayDhcpOKBodyDNSNameserversOpendns captures enum value "opendns"
+	GetNetworkCellularGatewayDhcpOKBodyDNSNameserversOpendns string = "opendns"
+
+	// GetNetworkCellularGatewayDhcpOKBodyDNSNameserversUpstreamDNS captures enum value "upstream_dns"
+	GetNetworkCellularGatewayDhcpOKBodyDNSNameserversUpstreamDNS string = "upstream_dns"
+)
+
+// prop value enum
+func (o *GetNetworkCellularGatewayDhcpOKBody) validateDNSNameserversEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getNetworkCellularGatewayDhcpOKBodyTypeDNSNameserversPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetNetworkCellularGatewayDhcpOKBody) validateDNSNameservers(formats strfmt.Registry) error {
+	if swag.IsZero(o.DNSNameservers) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateDNSNameserversEnum("getNetworkCellularGatewayDhcpOK"+"."+"dnsNameservers", "body", o.DNSNameservers); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this get network cellular gateway dhcp o k body based on context it is used
+func (o *GetNetworkCellularGatewayDhcpOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkCellularGatewayDhcpOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkCellularGatewayDhcpOKBody) UnmarshalBinary(b []byte) error {
+	var res GetNetworkCellularGatewayDhcpOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

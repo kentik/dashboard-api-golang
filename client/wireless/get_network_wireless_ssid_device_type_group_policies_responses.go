@@ -28,7 +28,7 @@ func (o *GetNetworkWirelessSsidDeviceTypeGroupPoliciesReader) ReadResponse(respo
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/wireless/ssids/{number}/deviceTypeGroupPolicies] getNetworkWirelessSsidDeviceTypeGroupPolicies", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetNetworkWirelessSsidDeviceTypeGroupPoliciesOK() *GetNetworkWirelessSsi
 	return &GetNetworkWirelessSsidDeviceTypeGroupPoliciesOK{}
 }
 
-/* GetNetworkWirelessSsidDeviceTypeGroupPoliciesOK describes a response with status code 200, with default header values.
+/*
+GetNetworkWirelessSsidDeviceTypeGroupPoliciesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetNetworkWirelessSsidDeviceTypeGroupPoliciesOK) IsServerError() bool {
 // IsCode returns true when this get network wireless ssid device type group policies o k response a status code equal to that given
 func (o *GetNetworkWirelessSsidDeviceTypeGroupPoliciesOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get network wireless ssid device type group policies o k response
+func (o *GetNetworkWirelessSsidDeviceTypeGroupPoliciesOK) Code() int {
+	return 200
 }
 
 func (o *GetNetworkWirelessSsidDeviceTypeGroupPoliciesOK) Error() string {

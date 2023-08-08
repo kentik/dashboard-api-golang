@@ -53,10 +53,12 @@ func NewGetNetworkClientsUsageHistoriesParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* GetNetworkClientsUsageHistoriesParams contains all the parameters to send to the API endpoint
-   for the get network clients usage histories operation.
+/*
+GetNetworkClientsUsageHistoriesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network clients usage histories operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkClientsUsageHistoriesParams struct {
 
@@ -72,7 +74,10 @@ type GetNetworkClientsUsageHistoriesParams struct {
 	*/
 	EndingBefore *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* PerPage.

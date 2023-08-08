@@ -52,17 +52,25 @@ func NewGetNetworkSmDeviceNetworkAdaptersParamsWithHTTPClient(client *http.Clien
 	}
 }
 
-/* GetNetworkSmDeviceNetworkAdaptersParams contains all the parameters to send to the API endpoint
-   for the get network sm device network adapters operation.
+/*
+GetNetworkSmDeviceNetworkAdaptersParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network sm device network adapters operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSmDeviceNetworkAdaptersParams struct {
 
-	// DeviceID.
+	/* DeviceID.
+
+	   Device ID
+	*/
 	DeviceID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

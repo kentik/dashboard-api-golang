@@ -6,10 +6,15 @@ package networks
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
+	"io"
+	"strconv"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // DeleteNetworkFloorPlanReader is a Reader for the DeleteNetworkFloorPlan structure.
@@ -27,7 +32,7 @@ func (o *DeleteNetworkFloorPlanReader) ReadResponse(response runtime.ClientRespo
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[DELETE /networks/{networkId}/floorPlans/{floorPlanId}] deleteNetworkFloorPlan", response, response.Code())
 	}
 }
 
@@ -36,11 +41,13 @@ func NewDeleteNetworkFloorPlanNoContent() *DeleteNetworkFloorPlanNoContent {
 	return &DeleteNetworkFloorPlanNoContent{}
 }
 
-/* DeleteNetworkFloorPlanNoContent describes a response with status code 204, with default header values.
+/*
+DeleteNetworkFloorPlanNoContent describes a response with status code 204, with default header values.
 
 Successful operation
 */
 type DeleteNetworkFloorPlanNoContent struct {
+	Payload *DeleteNetworkFloorPlanNoContentBody
 }
 
 // IsSuccess returns true when this delete network floor plan no content response has a 2xx status code
@@ -68,15 +75,697 @@ func (o *DeleteNetworkFloorPlanNoContent) IsCode(code int) bool {
 	return code == 204
 }
 
+// Code gets the status code for the delete network floor plan no content response
+func (o *DeleteNetworkFloorPlanNoContent) Code() int {
+	return 204
+}
+
 func (o *DeleteNetworkFloorPlanNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /networks/{networkId}/floorPlans/{floorPlanId}][%d] deleteNetworkFloorPlanNoContent ", 204)
+	return fmt.Sprintf("[DELETE /networks/{networkId}/floorPlans/{floorPlanId}][%d] deleteNetworkFloorPlanNoContent  %+v", 204, o.Payload)
 }
 
 func (o *DeleteNetworkFloorPlanNoContent) String() string {
-	return fmt.Sprintf("[DELETE /networks/{networkId}/floorPlans/{floorPlanId}][%d] deleteNetworkFloorPlanNoContent ", 204)
+	return fmt.Sprintf("[DELETE /networks/{networkId}/floorPlans/{floorPlanId}][%d] deleteNetworkFloorPlanNoContent  %+v", 204, o.Payload)
+}
+
+func (o *DeleteNetworkFloorPlanNoContent) GetPayload() *DeleteNetworkFloorPlanNoContentBody {
+	return o.Payload
 }
 
 func (o *DeleteNetworkFloorPlanNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(DeleteNetworkFloorPlanNoContentBody)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+/*
+DeleteNetworkFloorPlanNoContentBody delete network floor plan no content body
+swagger:model DeleteNetworkFloorPlanNoContentBody
+*/
+type DeleteNetworkFloorPlanNoContentBody struct {
+
+	// bottom left corner
+	BottomLeftCorner *DeleteNetworkFloorPlanNoContentBodyBottomLeftCorner `json:"bottomLeftCorner,omitempty"`
+
+	// bottom right corner
+	BottomRightCorner *DeleteNetworkFloorPlanNoContentBodyBottomRightCorner `json:"bottomRightCorner,omitempty"`
+
+	// center
+	Center *DeleteNetworkFloorPlanNoContentBodyCenter `json:"center,omitempty"`
+
+	// List of devices for the floorplan
+	Devices []*DeleteNetworkFloorPlanNoContentBodyDevicesItems0 `json:"devices"`
+
+	// Floor plan ID
+	FloorPlanID string `json:"floorPlanId,omitempty"`
+
+	// The height of your floor plan.
+	Height float32 `json:"height,omitempty"`
+
+	// The format type of the image.
+	ImageExtension string `json:"imageExtension,omitempty"`
+
+	// The file contents (a base 64 encoded string) of your new image. Supported formats are PNG, GIF, and JPG. Note that all images are saved as PNG files, regardless of the format they are uploaded in. If you upload a new image, and you do NOT specify any new geolocation fields ('center, 'topLeftCorner', etc), the floor plan will be recentered with no rotation in order to maintain the aspect ratio of your new image.
+	// Format: byte
+	ImageMd5 strfmt.Base64 `json:"imageMd5,omitempty"`
+
+	// The url link for the floor plan image.
+	ImageURL string `json:"imageUrl,omitempty"`
+
+	// The time the image url link will expire.
+	ImageURLExpiresAt string `json:"imageUrlExpiresAt,omitempty"`
+
+	// The name of your floor plan.
+	Name string `json:"name,omitempty"`
+
+	// top left corner
+	TopLeftCorner *DeleteNetworkFloorPlanNoContentBodyTopLeftCorner `json:"topLeftCorner,omitempty"`
+
+	// top right corner
+	TopRightCorner *DeleteNetworkFloorPlanNoContentBodyTopRightCorner `json:"topRightCorner,omitempty"`
+
+	// The width of your floor plan.
+	Width float32 `json:"width,omitempty"`
+}
+
+// Validate validates this delete network floor plan no content body
+func (o *DeleteNetworkFloorPlanNoContentBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBottomLeftCorner(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateBottomRightCorner(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateCenter(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateDevices(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTopLeftCorner(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTopRightCorner(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *DeleteNetworkFloorPlanNoContentBody) validateBottomLeftCorner(formats strfmt.Registry) error {
+	if swag.IsZero(o.BottomLeftCorner) { // not required
+		return nil
+	}
+
+	if o.BottomLeftCorner != nil {
+		if err := o.BottomLeftCorner.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "bottomLeftCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "bottomLeftCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *DeleteNetworkFloorPlanNoContentBody) validateBottomRightCorner(formats strfmt.Registry) error {
+	if swag.IsZero(o.BottomRightCorner) { // not required
+		return nil
+	}
+
+	if o.BottomRightCorner != nil {
+		if err := o.BottomRightCorner.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "bottomRightCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "bottomRightCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *DeleteNetworkFloorPlanNoContentBody) validateCenter(formats strfmt.Registry) error {
+	if swag.IsZero(o.Center) { // not required
+		return nil
+	}
+
+	if o.Center != nil {
+		if err := o.Center.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "center")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "center")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *DeleteNetworkFloorPlanNoContentBody) validateDevices(formats strfmt.Registry) error {
+	if swag.IsZero(o.Devices) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Devices); i++ {
+		if swag.IsZero(o.Devices[i]) { // not required
+			continue
+		}
+
+		if o.Devices[i] != nil {
+			if err := o.Devices[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "devices" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "devices" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *DeleteNetworkFloorPlanNoContentBody) validateTopLeftCorner(formats strfmt.Registry) error {
+	if swag.IsZero(o.TopLeftCorner) { // not required
+		return nil
+	}
+
+	if o.TopLeftCorner != nil {
+		if err := o.TopLeftCorner.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "topLeftCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "topLeftCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *DeleteNetworkFloorPlanNoContentBody) validateTopRightCorner(formats strfmt.Registry) error {
+	if swag.IsZero(o.TopRightCorner) { // not required
+		return nil
+	}
+
+	if o.TopRightCorner != nil {
+		if err := o.TopRightCorner.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "topRightCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "topRightCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this delete network floor plan no content body based on the context it is used
+func (o *DeleteNetworkFloorPlanNoContentBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBottomLeftCorner(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateBottomRightCorner(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateCenter(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateDevices(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateTopLeftCorner(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateTopRightCorner(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *DeleteNetworkFloorPlanNoContentBody) contextValidateBottomLeftCorner(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.BottomLeftCorner != nil {
+
+		if swag.IsZero(o.BottomLeftCorner) { // not required
+			return nil
+		}
+
+		if err := o.BottomLeftCorner.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "bottomLeftCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "bottomLeftCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *DeleteNetworkFloorPlanNoContentBody) contextValidateBottomRightCorner(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.BottomRightCorner != nil {
+
+		if swag.IsZero(o.BottomRightCorner) { // not required
+			return nil
+		}
+
+		if err := o.BottomRightCorner.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "bottomRightCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "bottomRightCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *DeleteNetworkFloorPlanNoContentBody) contextValidateCenter(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Center != nil {
+
+		if swag.IsZero(o.Center) { // not required
+			return nil
+		}
+
+		if err := o.Center.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "center")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "center")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *DeleteNetworkFloorPlanNoContentBody) contextValidateDevices(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Devices); i++ {
+
+		if o.Devices[i] != nil {
+
+			if swag.IsZero(o.Devices[i]) { // not required
+				return nil
+			}
+
+			if err := o.Devices[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "devices" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "devices" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *DeleteNetworkFloorPlanNoContentBody) contextValidateTopLeftCorner(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.TopLeftCorner != nil {
+
+		if swag.IsZero(o.TopLeftCorner) { // not required
+			return nil
+		}
+
+		if err := o.TopLeftCorner.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "topLeftCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "topLeftCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *DeleteNetworkFloorPlanNoContentBody) contextValidateTopRightCorner(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.TopRightCorner != nil {
+
+		if swag.IsZero(o.TopRightCorner) { // not required
+			return nil
+		}
+
+		if err := o.TopRightCorner.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "topRightCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("deleteNetworkFloorPlanNoContent" + "." + "topRightCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *DeleteNetworkFloorPlanNoContentBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *DeleteNetworkFloorPlanNoContentBody) UnmarshalBinary(b []byte) error {
+	var res DeleteNetworkFloorPlanNoContentBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+DeleteNetworkFloorPlanNoContentBodyBottomLeftCorner The longitude and latitude of the bottom left corner of your floor plan.
+swagger:model DeleteNetworkFloorPlanNoContentBodyBottomLeftCorner
+*/
+type DeleteNetworkFloorPlanNoContentBodyBottomLeftCorner struct {
+
+	// Latitude
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude
+	Lng float32 `json:"lng,omitempty"`
+}
+
+// Validate validates this delete network floor plan no content body bottom left corner
+func (o *DeleteNetworkFloorPlanNoContentBodyBottomLeftCorner) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this delete network floor plan no content body bottom left corner based on context it is used
+func (o *DeleteNetworkFloorPlanNoContentBodyBottomLeftCorner) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *DeleteNetworkFloorPlanNoContentBodyBottomLeftCorner) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *DeleteNetworkFloorPlanNoContentBodyBottomLeftCorner) UnmarshalBinary(b []byte) error {
+	var res DeleteNetworkFloorPlanNoContentBodyBottomLeftCorner
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+DeleteNetworkFloorPlanNoContentBodyBottomRightCorner The longitude and latitude of the bottom right corner of your floor plan.
+swagger:model DeleteNetworkFloorPlanNoContentBodyBottomRightCorner
+*/
+type DeleteNetworkFloorPlanNoContentBodyBottomRightCorner struct {
+
+	// Latitude
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude
+	Lng float32 `json:"lng,omitempty"`
+}
+
+// Validate validates this delete network floor plan no content body bottom right corner
+func (o *DeleteNetworkFloorPlanNoContentBodyBottomRightCorner) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this delete network floor plan no content body bottom right corner based on context it is used
+func (o *DeleteNetworkFloorPlanNoContentBodyBottomRightCorner) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *DeleteNetworkFloorPlanNoContentBodyBottomRightCorner) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *DeleteNetworkFloorPlanNoContentBodyBottomRightCorner) UnmarshalBinary(b []byte) error {
+	var res DeleteNetworkFloorPlanNoContentBodyBottomRightCorner
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+DeleteNetworkFloorPlanNoContentBodyCenter The longitude and latitude of the center of your floor plan. The 'center' or two adjacent corners (e.g. 'topLeftCorner' and 'bottomLeftCorner') must be specified. If 'center' is specified, the floor plan is placed over that point with no rotation. If two adjacent corners are specified, the floor plan is rotated to line up with the two specified points. The aspect ratio of the floor plan's image is preserved regardless of which corners/center are specified. (This means if that more than two corners are specified, only two corners may be used to preserve the floor plan's aspect ratio.). No two points can have the same latitude, longitude pair.
+swagger:model DeleteNetworkFloorPlanNoContentBodyCenter
+*/
+type DeleteNetworkFloorPlanNoContentBodyCenter struct {
+
+	// Latitude
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude
+	Lng float32 `json:"lng,omitempty"`
+}
+
+// Validate validates this delete network floor plan no content body center
+func (o *DeleteNetworkFloorPlanNoContentBodyCenter) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this delete network floor plan no content body center based on context it is used
+func (o *DeleteNetworkFloorPlanNoContentBodyCenter) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *DeleteNetworkFloorPlanNoContentBodyCenter) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *DeleteNetworkFloorPlanNoContentBodyCenter) UnmarshalBinary(b []byte) error {
+	var res DeleteNetworkFloorPlanNoContentBodyCenter
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+DeleteNetworkFloorPlanNoContentBodyDevicesItems0 delete network floor plan no content body devices items0
+swagger:model DeleteNetworkFloorPlanNoContentBodyDevicesItems0
+*/
+type DeleteNetworkFloorPlanNoContentBodyDevicesItems0 struct {
+
+	// Physical address of the device
+	Address string `json:"address,omitempty"`
+
+	// Firmware version of the device
+	Firmware string `json:"firmware,omitempty"`
+
+	// LAN IP address of the device
+	LanIP string `json:"lanIp,omitempty"`
+
+	// Latitude of the device
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude of the device
+	Lng float32 `json:"lng,omitempty"`
+
+	// MAC address of the device
+	Mac string `json:"mac,omitempty"`
+
+	// Model of the device
+	Model string `json:"model,omitempty"`
+
+	// Name of the device
+	Name string `json:"name,omitempty"`
+
+	// ID of the network the device belongs to
+	NetworkID string `json:"networkId,omitempty"`
+
+	// Notes for the device, limited to 255 characters
+	Notes string `json:"notes,omitempty"`
+
+	// Product type of the device
+	ProductType string `json:"productType,omitempty"`
+
+	// Serial number of the device
+	Serial string `json:"serial,omitempty"`
+
+	// List of tags assigned to the device
+	Tags []string `json:"tags"`
+}
+
+// Validate validates this delete network floor plan no content body devices items0
+func (o *DeleteNetworkFloorPlanNoContentBodyDevicesItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this delete network floor plan no content body devices items0 based on context it is used
+func (o *DeleteNetworkFloorPlanNoContentBodyDevicesItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *DeleteNetworkFloorPlanNoContentBodyDevicesItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *DeleteNetworkFloorPlanNoContentBodyDevicesItems0) UnmarshalBinary(b []byte) error {
+	var res DeleteNetworkFloorPlanNoContentBodyDevicesItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+DeleteNetworkFloorPlanNoContentBodyTopLeftCorner The longitude and latitude of the top left corner of your floor plan.
+swagger:model DeleteNetworkFloorPlanNoContentBodyTopLeftCorner
+*/
+type DeleteNetworkFloorPlanNoContentBodyTopLeftCorner struct {
+
+	// Latitude
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude
+	Lng float32 `json:"lng,omitempty"`
+}
+
+// Validate validates this delete network floor plan no content body top left corner
+func (o *DeleteNetworkFloorPlanNoContentBodyTopLeftCorner) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this delete network floor plan no content body top left corner based on context it is used
+func (o *DeleteNetworkFloorPlanNoContentBodyTopLeftCorner) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *DeleteNetworkFloorPlanNoContentBodyTopLeftCorner) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *DeleteNetworkFloorPlanNoContentBodyTopLeftCorner) UnmarshalBinary(b []byte) error {
+	var res DeleteNetworkFloorPlanNoContentBodyTopLeftCorner
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+DeleteNetworkFloorPlanNoContentBodyTopRightCorner The longitude and latitude of the top right corner of your floor plan.
+swagger:model DeleteNetworkFloorPlanNoContentBodyTopRightCorner
+*/
+type DeleteNetworkFloorPlanNoContentBodyTopRightCorner struct {
+
+	// Latitude
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude
+	Lng float32 `json:"lng,omitempty"`
+}
+
+// Validate validates this delete network floor plan no content body top right corner
+func (o *DeleteNetworkFloorPlanNoContentBodyTopRightCorner) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this delete network floor plan no content body top right corner based on context it is used
+func (o *DeleteNetworkFloorPlanNoContentBodyTopRightCorner) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *DeleteNetworkFloorPlanNoContentBodyTopRightCorner) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *DeleteNetworkFloorPlanNoContentBodyTopRightCorner) UnmarshalBinary(b []byte) error {
+	var res DeleteNetworkFloorPlanNoContentBodyTopRightCorner
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

@@ -32,7 +32,7 @@ func (o *CreateOrganizationInsightMonitoredMediaServerReader) ReadResponse(respo
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /organizations/{organizationId}/insight/monitoredMediaServers] createOrganizationInsightMonitoredMediaServer", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewCreateOrganizationInsightMonitoredMediaServerCreated() *CreateOrganizati
 	return &CreateOrganizationInsightMonitoredMediaServerCreated{}
 }
 
-/* CreateOrganizationInsightMonitoredMediaServerCreated describes a response with status code 201, with default header values.
+/*
+CreateOrganizationInsightMonitoredMediaServerCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *CreateOrganizationInsightMonitoredMediaServerCreated) IsCode(code int) 
 	return code == 201
 }
 
+// Code gets the status code for the create organization insight monitored media server created response
+func (o *CreateOrganizationInsightMonitoredMediaServerCreated) Code() int {
+	return 201
+}
+
 func (o *CreateOrganizationInsightMonitoredMediaServerCreated) Error() string {
 	return fmt.Sprintf("[POST /organizations/{organizationId}/insight/monitoredMediaServers][%d] createOrganizationInsightMonitoredMediaServerCreated  %+v", 201, o.Payload)
 }
@@ -96,7 +102,8 @@ func (o *CreateOrganizationInsightMonitoredMediaServerCreated) readResponse(resp
 	return nil
 }
 
-/*CreateOrganizationInsightMonitoredMediaServerBody create organization insight monitored media server body
+/*
+CreateOrganizationInsightMonitoredMediaServerBody create organization insight monitored media server body
 // Example: {"address":"123.123.123.1","bestEffortMonitoringEnabled":true,"name":"Sample VoIP Provider"}
 swagger:model CreateOrganizationInsightMonitoredMediaServerBody
 */

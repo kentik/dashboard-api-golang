@@ -30,7 +30,7 @@ func (o *GetNetworkSmDeviceCellularUsageHistoryReader) ReadResponse(response run
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/sm/devices/{deviceId}/cellularUsageHistory] getNetworkSmDeviceCellularUsageHistory", response, response.Code())
 	}
 }
 
@@ -39,7 +39,8 @@ func NewGetNetworkSmDeviceCellularUsageHistoryOK() *GetNetworkSmDeviceCellularUs
 	return &GetNetworkSmDeviceCellularUsageHistoryOK{}
 }
 
-/* GetNetworkSmDeviceCellularUsageHistoryOK describes a response with status code 200, with default header values.
+/*
+GetNetworkSmDeviceCellularUsageHistoryOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -72,6 +73,11 @@ func (o *GetNetworkSmDeviceCellularUsageHistoryOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network sm device cellular usage history o k response
+func (o *GetNetworkSmDeviceCellularUsageHistoryOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkSmDeviceCellularUsageHistoryOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/sm/devices/{deviceId}/cellularUsageHistory][%d] getNetworkSmDeviceCellularUsageHistoryOK  %+v", 200, o.Payload)
 }
@@ -94,7 +100,8 @@ func (o *GetNetworkSmDeviceCellularUsageHistoryOK) readResponse(response runtime
 	return nil
 }
 
-/*GetNetworkSmDeviceCellularUsageHistoryOKBodyItems0 get network sm device cellular usage history o k body items0
+/*
+GetNetworkSmDeviceCellularUsageHistoryOKBodyItems0 get network sm device cellular usage history o k body items0
 swagger:model GetNetworkSmDeviceCellularUsageHistoryOKBodyItems0
 */
 type GetNetworkSmDeviceCellularUsageHistoryOKBodyItems0 struct {

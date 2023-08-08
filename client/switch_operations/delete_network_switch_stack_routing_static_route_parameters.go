@@ -52,20 +52,31 @@ func NewDeleteNetworkSwitchStackRoutingStaticRouteParamsWithHTTPClient(client *h
 	}
 }
 
-/* DeleteNetworkSwitchStackRoutingStaticRouteParams contains all the parameters to send to the API endpoint
-   for the delete network switch stack routing static route operation.
+/*
+DeleteNetworkSwitchStackRoutingStaticRouteParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete network switch stack routing static route operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteNetworkSwitchStackRoutingStaticRouteParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// StaticRouteID.
+	/* StaticRouteID.
+
+	   Static route ID
+	*/
 	StaticRouteID string
 
-	// SwitchStackID.
+	/* SwitchStackID.
+
+	   Switch stack ID
+	*/
 	SwitchStackID string
 
 	timeout    time.Duration

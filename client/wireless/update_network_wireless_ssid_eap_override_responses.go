@@ -31,7 +31,7 @@ func (o *UpdateNetworkWirelessSsidEapOverrideReader) ReadResponse(response runti
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/wireless/ssids/{number}/eapOverride] updateNetworkWirelessSsidEapOverride", response, response.Code())
 	}
 }
 
@@ -40,12 +40,13 @@ func NewUpdateNetworkWirelessSsidEapOverrideOK() *UpdateNetworkWirelessSsidEapOv
 	return &UpdateNetworkWirelessSsidEapOverrideOK{}
 }
 
-/* UpdateNetworkWirelessSsidEapOverrideOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkWirelessSsidEapOverrideOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateNetworkWirelessSsidEapOverrideOK struct {
-	Payload interface{}
+	Payload *UpdateNetworkWirelessSsidEapOverrideOKBody
 }
 
 // IsSuccess returns true when this update network wireless ssid eap override o k response has a 2xx status code
@@ -73,6 +74,11 @@ func (o *UpdateNetworkWirelessSsidEapOverrideOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network wireless ssid eap override o k response
+func (o *UpdateNetworkWirelessSsidEapOverrideOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkWirelessSsidEapOverrideOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/wireless/ssids/{number}/eapOverride][%d] updateNetworkWirelessSsidEapOverrideOK  %+v", 200, o.Payload)
 }
@@ -81,22 +87,25 @@ func (o *UpdateNetworkWirelessSsidEapOverrideOK) String() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/wireless/ssids/{number}/eapOverride][%d] updateNetworkWirelessSsidEapOverrideOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateNetworkWirelessSsidEapOverrideOK) GetPayload() interface{} {
+func (o *UpdateNetworkWirelessSsidEapOverrideOK) GetPayload() *UpdateNetworkWirelessSsidEapOverrideOKBody {
 	return o.Payload
 }
 
 func (o *UpdateNetworkWirelessSsidEapOverrideOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateNetworkWirelessSsidEapOverrideOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidEapOverrideBody update network wireless ssid eap override body
-// Example: {}
+/*
+UpdateNetworkWirelessSsidEapOverrideBody update network wireless ssid eap override body
+// Example: {"eapolKey":{"retries":5,"timeoutInMs":5000},"identity":{"retries":5,"timeout":5},"maxRetries":5,"timeout":5}
 swagger:model UpdateNetworkWirelessSsidEapOverrideBody
 */
 type UpdateNetworkWirelessSsidEapOverrideBody struct {
@@ -191,6 +200,11 @@ func (o *UpdateNetworkWirelessSsidEapOverrideBody) ContextValidate(ctx context.C
 func (o *UpdateNetworkWirelessSsidEapOverrideBody) contextValidateEapolKey(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.EapolKey != nil {
+
+		if swag.IsZero(o.EapolKey) { // not required
+			return nil
+		}
+
 		if err := o.EapolKey.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessSsidEapOverride" + "." + "eapolKey")
@@ -207,6 +221,11 @@ func (o *UpdateNetworkWirelessSsidEapOverrideBody) contextValidateEapolKey(ctx c
 func (o *UpdateNetworkWirelessSsidEapOverrideBody) contextValidateIdentity(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Identity != nil {
+
+		if swag.IsZero(o.Identity) { // not required
+			return nil
+		}
+
 		if err := o.Identity.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessSsidEapOverride" + "." + "identity")
@@ -238,7 +257,243 @@ func (o *UpdateNetworkWirelessSsidEapOverrideBody) UnmarshalBinary(b []byte) err
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidEapOverrideParamsBodyEapolKey EAPOL Key settings.
+/*
+UpdateNetworkWirelessSsidEapOverrideOKBody update network wireless ssid eap override o k body
+swagger:model UpdateNetworkWirelessSsidEapOverrideOKBody
+*/
+type UpdateNetworkWirelessSsidEapOverrideOKBody struct {
+
+	// eapol key
+	EapolKey *UpdateNetworkWirelessSsidEapOverrideOKBodyEapolKey `json:"eapolKey,omitempty"`
+
+	// identity
+	Identity *UpdateNetworkWirelessSsidEapOverrideOKBodyIdentity `json:"identity,omitempty"`
+
+	// Maximum number of general EAP retries.
+	MaxRetries int64 `json:"maxRetries,omitempty"`
+
+	// General EAP timeout in seconds.
+	Timeout int64 `json:"timeout,omitempty"`
+}
+
+// Validate validates this update network wireless ssid eap override o k body
+func (o *UpdateNetworkWirelessSsidEapOverrideOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateEapolKey(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateIdentity(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSsidEapOverrideOKBody) validateEapolKey(formats strfmt.Registry) error {
+	if swag.IsZero(o.EapolKey) { // not required
+		return nil
+	}
+
+	if o.EapolKey != nil {
+		if err := o.EapolKey.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessSsidEapOverrideOK" + "." + "eapolKey")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessSsidEapOverrideOK" + "." + "eapolKey")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSsidEapOverrideOKBody) validateIdentity(formats strfmt.Registry) error {
+	if swag.IsZero(o.Identity) { // not required
+		return nil
+	}
+
+	if o.Identity != nil {
+		if err := o.Identity.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessSsidEapOverrideOK" + "." + "identity")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessSsidEapOverrideOK" + "." + "identity")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless ssid eap override o k body based on the context it is used
+func (o *UpdateNetworkWirelessSsidEapOverrideOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateEapolKey(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateIdentity(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSsidEapOverrideOKBody) contextValidateEapolKey(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.EapolKey != nil {
+
+		if swag.IsZero(o.EapolKey) { // not required
+			return nil
+		}
+
+		if err := o.EapolKey.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessSsidEapOverrideOK" + "." + "eapolKey")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessSsidEapOverrideOK" + "." + "eapolKey")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSsidEapOverrideOKBody) contextValidateIdentity(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Identity != nil {
+
+		if swag.IsZero(o.Identity) { // not required
+			return nil
+		}
+
+		if err := o.Identity.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessSsidEapOverrideOK" + "." + "identity")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessSsidEapOverrideOK" + "." + "identity")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessSsidEapOverrideOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessSsidEapOverrideOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessSsidEapOverrideOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessSsidEapOverrideOKBodyEapolKey EAPOL Key settings.
+swagger:model UpdateNetworkWirelessSsidEapOverrideOKBodyEapolKey
+*/
+type UpdateNetworkWirelessSsidEapOverrideOKBodyEapolKey struct {
+
+	// Maximum number of EAPOL key retries.
+	Retries int64 `json:"retries,omitempty"`
+
+	// EAPOL Key timeout in milliseconds.
+	TimeoutInMs int64 `json:"timeoutInMs,omitempty"`
+}
+
+// Validate validates this update network wireless ssid eap override o k body eapol key
+func (o *UpdateNetworkWirelessSsidEapOverrideOKBodyEapolKey) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless ssid eap override o k body eapol key based on context it is used
+func (o *UpdateNetworkWirelessSsidEapOverrideOKBodyEapolKey) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessSsidEapOverrideOKBodyEapolKey) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessSsidEapOverrideOKBodyEapolKey) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessSsidEapOverrideOKBodyEapolKey
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessSsidEapOverrideOKBodyIdentity EAP settings for identity requests.
+swagger:model UpdateNetworkWirelessSsidEapOverrideOKBodyIdentity
+*/
+type UpdateNetworkWirelessSsidEapOverrideOKBodyIdentity struct {
+
+	// Maximum number of EAP retries.
+	Retries int64 `json:"retries,omitempty"`
+
+	// EAP timeout in seconds.
+	Timeout int64 `json:"timeout,omitempty"`
+}
+
+// Validate validates this update network wireless ssid eap override o k body identity
+func (o *UpdateNetworkWirelessSsidEapOverrideOKBodyIdentity) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless ssid eap override o k body identity based on context it is used
+func (o *UpdateNetworkWirelessSsidEapOverrideOKBodyIdentity) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessSsidEapOverrideOKBodyIdentity) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessSsidEapOverrideOKBodyIdentity) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessSsidEapOverrideOKBodyIdentity
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessSsidEapOverrideParamsBodyEapolKey EAPOL Key settings.
 swagger:model UpdateNetworkWirelessSsidEapOverrideParamsBodyEapolKey
 */
 type UpdateNetworkWirelessSsidEapOverrideParamsBodyEapolKey struct {
@@ -278,7 +533,8 @@ func (o *UpdateNetworkWirelessSsidEapOverrideParamsBodyEapolKey) UnmarshalBinary
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidEapOverrideParamsBodyIdentity EAP settings for identity requests.
+/*
+UpdateNetworkWirelessSsidEapOverrideParamsBodyIdentity EAP settings for identity requests.
 swagger:model UpdateNetworkWirelessSsidEapOverrideParamsBodyIdentity
 */
 type UpdateNetworkWirelessSsidEapOverrideParamsBodyIdentity struct {

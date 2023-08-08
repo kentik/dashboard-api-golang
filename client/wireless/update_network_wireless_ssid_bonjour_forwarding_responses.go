@@ -34,7 +34,7 @@ func (o *UpdateNetworkWirelessSsidBonjourForwardingReader) ReadResponse(response
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/wireless/ssids/{number}/bonjourForwarding] updateNetworkWirelessSsidBonjourForwarding", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewUpdateNetworkWirelessSsidBonjourForwardingOK() *UpdateNetworkWirelessSsi
 	return &UpdateNetworkWirelessSsidBonjourForwardingOK{}
 }
 
-/* UpdateNetworkWirelessSsidBonjourForwardingOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkWirelessSsidBonjourForwardingOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *UpdateNetworkWirelessSsidBonjourForwardingOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network wireless ssid bonjour forwarding o k response
+func (o *UpdateNetworkWirelessSsidBonjourForwardingOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkWirelessSsidBonjourForwardingOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/wireless/ssids/{number}/bonjourForwarding][%d] updateNetworkWirelessSsidBonjourForwardingOK  %+v", 200, o.Payload)
 }
@@ -98,14 +104,18 @@ func (o *UpdateNetworkWirelessSsidBonjourForwardingOK) readResponse(response run
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidBonjourForwardingBody update network wireless ssid bonjour forwarding body
-// Example: {"enabled":true,"rules":[{"description":"A simple bonjour rule","services":["All Services"],"vlanId":"1"}]}
+/*
+UpdateNetworkWirelessSsidBonjourForwardingBody update network wireless ssid bonjour forwarding body
+// Example: {"enabled":true,"exception":{"enabled":true},"rules":[{"description":"A simple bonjour rule","services":["All Services"],"vlanId":"1"}]}
 swagger:model UpdateNetworkWirelessSsidBonjourForwardingBody
 */
 type UpdateNetworkWirelessSsidBonjourForwardingBody struct {
 
 	// If true, Bonjour forwarding is enabled on this SSID.
 	Enabled bool `json:"enabled,omitempty"`
+
+	// exception
+	Exception *UpdateNetworkWirelessSsidBonjourForwardingParamsBodyException `json:"exception,omitempty"`
 
 	// List of bonjour forwarding rules.
 	Rules []*UpdateNetworkWirelessSsidBonjourForwardingParamsBodyRulesItems0 `json:"rules"`
@@ -115,6 +125,10 @@ type UpdateNetworkWirelessSsidBonjourForwardingBody struct {
 func (o *UpdateNetworkWirelessSsidBonjourForwardingBody) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := o.validateException(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := o.validateRules(formats); err != nil {
 		res = append(res, err)
 	}
@@ -122,6 +136,25 @@ func (o *UpdateNetworkWirelessSsidBonjourForwardingBody) Validate(formats strfmt
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSsidBonjourForwardingBody) validateException(formats strfmt.Registry) error {
+	if swag.IsZero(o.Exception) { // not required
+		return nil
+	}
+
+	if o.Exception != nil {
+		if err := o.Exception.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessSsidBonjourForwarding" + "." + "exception")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessSsidBonjourForwarding" + "." + "exception")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -155,6 +188,10 @@ func (o *UpdateNetworkWirelessSsidBonjourForwardingBody) validateRules(formats s
 func (o *UpdateNetworkWirelessSsidBonjourForwardingBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
+	if err := o.contextValidateException(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := o.contextValidateRules(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -165,11 +202,37 @@ func (o *UpdateNetworkWirelessSsidBonjourForwardingBody) ContextValidate(ctx con
 	return nil
 }
 
+func (o *UpdateNetworkWirelessSsidBonjourForwardingBody) contextValidateException(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Exception != nil {
+
+		if swag.IsZero(o.Exception) { // not required
+			return nil
+		}
+
+		if err := o.Exception.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessSsidBonjourForwarding" + "." + "exception")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessSsidBonjourForwarding" + "." + "exception")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (o *UpdateNetworkWirelessSsidBonjourForwardingBody) contextValidateRules(ctx context.Context, formats strfmt.Registry) error {
 
 	for i := 0; i < len(o.Rules); i++ {
 
 		if o.Rules[i] != nil {
+
+			if swag.IsZero(o.Rules[i]) { // not required
+				return nil
+			}
+
 			if err := o.Rules[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkWirelessSsidBonjourForwarding" + "." + "rules" + "." + strconv.Itoa(i))
@@ -203,7 +266,46 @@ func (o *UpdateNetworkWirelessSsidBonjourForwardingBody) UnmarshalBinary(b []byt
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidBonjourForwardingParamsBodyRulesItems0 update network wireless ssid bonjour forwarding params body rules items0
+/*
+UpdateNetworkWirelessSsidBonjourForwardingParamsBodyException Bonjour forwarding exception
+swagger:model UpdateNetworkWirelessSsidBonjourForwardingParamsBodyException
+*/
+type UpdateNetworkWirelessSsidBonjourForwardingParamsBodyException struct {
+
+	// If true, Bonjour forwarding exception is enabled on this SSID. Exception is required to enable L2 isolation and Bonjour forwarding to work together.
+	Enabled bool `json:"enabled,omitempty"`
+}
+
+// Validate validates this update network wireless ssid bonjour forwarding params body exception
+func (o *UpdateNetworkWirelessSsidBonjourForwardingParamsBodyException) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless ssid bonjour forwarding params body exception based on context it is used
+func (o *UpdateNetworkWirelessSsidBonjourForwardingParamsBodyException) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessSsidBonjourForwardingParamsBodyException) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessSsidBonjourForwardingParamsBodyException) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessSsidBonjourForwardingParamsBodyException
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessSsidBonjourForwardingParamsBodyRulesItems0 update network wireless ssid bonjour forwarding params body rules items0
 swagger:model UpdateNetworkWirelessSsidBonjourForwardingParamsBodyRulesItems0
 */
 type UpdateNetworkWirelessSsidBonjourForwardingParamsBodyRulesItems0 struct {
@@ -242,7 +344,7 @@ var updateNetworkWirelessSsidBonjourForwardingParamsBodyRulesItems0ServicesItems
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["All Services","AirPlay","AFP","BitTorrent","FTP","iChat","iTunes","Printers","Samba","Scanners","SSH"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["AFP","AirPlay","All Services","BitTorrent","FTP","Printers","SSH","Samba","Scanners","iChat","iTunes"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

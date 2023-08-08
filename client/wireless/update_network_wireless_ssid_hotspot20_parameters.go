@@ -52,17 +52,25 @@ func NewUpdateNetworkWirelessSsidHotspot20ParamsWithHTTPClient(client *http.Clie
 	}
 }
 
-/* UpdateNetworkWirelessSsidHotspot20Params contains all the parameters to send to the API endpoint
-   for the update network wireless ssid hotspot20 operation.
+/*
+UpdateNetworkWirelessSsidHotspot20Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network wireless ssid hotspot20 operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkWirelessSsidHotspot20Params struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// Number.
+	/* Number.
+
+	   Number
+	*/
 	Number string
 
 	// UpdateNetworkWirelessSsidHotspot20.

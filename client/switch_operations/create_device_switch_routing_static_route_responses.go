@@ -32,7 +32,7 @@ func (o *CreateDeviceSwitchRoutingStaticRouteReader) ReadResponse(response runti
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /devices/{serial}/switch/routing/staticRoutes] createDeviceSwitchRoutingStaticRoute", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewCreateDeviceSwitchRoutingStaticRouteCreated() *CreateDeviceSwitchRouting
 	return &CreateDeviceSwitchRoutingStaticRouteCreated{}
 }
 
-/* CreateDeviceSwitchRoutingStaticRouteCreated describes a response with status code 201, with default header values.
+/*
+CreateDeviceSwitchRoutingStaticRouteCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *CreateDeviceSwitchRoutingStaticRouteCreated) IsCode(code int) bool {
 	return code == 201
 }
 
+// Code gets the status code for the create device switch routing static route created response
+func (o *CreateDeviceSwitchRoutingStaticRouteCreated) Code() int {
+	return 201
+}
+
 func (o *CreateDeviceSwitchRoutingStaticRouteCreated) Error() string {
 	return fmt.Sprintf("[POST /devices/{serial}/switch/routing/staticRoutes][%d] createDeviceSwitchRoutingStaticRouteCreated  %+v", 201, o.Payload)
 }
@@ -96,7 +102,8 @@ func (o *CreateDeviceSwitchRoutingStaticRouteCreated) readResponse(response runt
 	return nil
 }
 
-/*CreateDeviceSwitchRoutingStaticRouteBody create device switch routing static route body
+/*
+CreateDeviceSwitchRoutingStaticRouteBody create device switch routing static route body
 // Example: {"advertiseViaOspfEnabled":false,"name":"My route","nextHopIp":"1.2.3.4","preferOverOspfRoutesEnabled":false,"subnet":"192.168.1.0/24"}
 swagger:model CreateDeviceSwitchRoutingStaticRouteBody
 */

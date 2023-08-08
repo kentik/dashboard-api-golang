@@ -32,7 +32,7 @@ func (o *CycleDeviceSwitchPortsReader) ReadResponse(response runtime.ClientRespo
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /devices/{serial}/switch/ports/cycle] cycleDeviceSwitchPorts", response, response.Code())
 	}
 }
 
@@ -41,12 +41,13 @@ func NewCycleDeviceSwitchPortsOK() *CycleDeviceSwitchPortsOK {
 	return &CycleDeviceSwitchPortsOK{}
 }
 
-/* CycleDeviceSwitchPortsOK describes a response with status code 200, with default header values.
+/*
+CycleDeviceSwitchPortsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type CycleDeviceSwitchPortsOK struct {
-	Payload interface{}
+	Payload *CycleDeviceSwitchPortsOKBody
 }
 
 // IsSuccess returns true when this cycle device switch ports o k response has a 2xx status code
@@ -74,6 +75,11 @@ func (o *CycleDeviceSwitchPortsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the cycle device switch ports o k response
+func (o *CycleDeviceSwitchPortsOK) Code() int {
+	return 200
+}
+
 func (o *CycleDeviceSwitchPortsOK) Error() string {
 	return fmt.Sprintf("[POST /devices/{serial}/switch/ports/cycle][%d] cycleDeviceSwitchPortsOK  %+v", 200, o.Payload)
 }
@@ -82,27 +88,30 @@ func (o *CycleDeviceSwitchPortsOK) String() string {
 	return fmt.Sprintf("[POST /devices/{serial}/switch/ports/cycle][%d] cycleDeviceSwitchPortsOK  %+v", 200, o.Payload)
 }
 
-func (o *CycleDeviceSwitchPortsOK) GetPayload() interface{} {
+func (o *CycleDeviceSwitchPortsOK) GetPayload() *CycleDeviceSwitchPortsOKBody {
 	return o.Payload
 }
 
 func (o *CycleDeviceSwitchPortsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(CycleDeviceSwitchPortsOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*CycleDeviceSwitchPortsBody cycle device switch ports body
+/*
+CycleDeviceSwitchPortsBody cycle device switch ports body
 // Example: {"ports":["1","2-5","1_MA-MOD-8X10G_1","1_MA-MOD-8X10G_2-1_MA-MOD-8X10G_8"]}
 swagger:model CycleDeviceSwitchPortsBody
 */
 type CycleDeviceSwitchPortsBody struct {
 
-	// List of switch ports. Example: [1, 2-5, 1_MA-MOD-8X10G_1, 1_MA-MOD-8X10G_2-1_MA-MOD-8X10G_8]
+	// List of switch ports
 	// Required: true
 	Ports []string `json:"ports"`
 }
@@ -146,6 +155,44 @@ func (o *CycleDeviceSwitchPortsBody) MarshalBinary() ([]byte, error) {
 // UnmarshalBinary interface implementation
 func (o *CycleDeviceSwitchPortsBody) UnmarshalBinary(b []byte) error {
 	var res CycleDeviceSwitchPortsBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CycleDeviceSwitchPortsOKBody cycle device switch ports o k body
+swagger:model CycleDeviceSwitchPortsOKBody
+*/
+type CycleDeviceSwitchPortsOKBody struct {
+
+	// List of switch ports
+	Ports []string `json:"ports"`
+}
+
+// Validate validates this cycle device switch ports o k body
+func (o *CycleDeviceSwitchPortsOKBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this cycle device switch ports o k body based on context it is used
+func (o *CycleDeviceSwitchPortsOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CycleDeviceSwitchPortsOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CycleDeviceSwitchPortsOKBody) UnmarshalBinary(b []byte) error {
+	var res CycleDeviceSwitchPortsOKBody
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

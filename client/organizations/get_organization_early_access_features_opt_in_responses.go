@@ -28,7 +28,7 @@ func (o *GetOrganizationEarlyAccessFeaturesOptInReader) ReadResponse(response ru
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/earlyAccess/features/optIns/{optInId}] getOrganizationEarlyAccessFeaturesOptIn", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetOrganizationEarlyAccessFeaturesOptInOK() *GetOrganizationEarlyAccessF
 	return &GetOrganizationEarlyAccessFeaturesOptInOK{}
 }
 
-/* GetOrganizationEarlyAccessFeaturesOptInOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationEarlyAccessFeaturesOptInOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetOrganizationEarlyAccessFeaturesOptInOK) IsServerError() bool {
 // IsCode returns true when this get organization early access features opt in o k response a status code equal to that given
 func (o *GetOrganizationEarlyAccessFeaturesOptInOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get organization early access features opt in o k response
+func (o *GetOrganizationEarlyAccessFeaturesOptInOK) Code() int {
+	return 200
 }
 
 func (o *GetOrganizationEarlyAccessFeaturesOptInOK) Error() string {

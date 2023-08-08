@@ -52,17 +52,25 @@ func NewUpdateNetworkSwitchPortScheduleParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* UpdateNetworkSwitchPortScheduleParams contains all the parameters to send to the API endpoint
-   for the update network switch port schedule operation.
+/*
+UpdateNetworkSwitchPortScheduleParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network switch port schedule operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkSwitchPortScheduleParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// PortScheduleID.
+	/* PortScheduleID.
+
+	   Port schedule ID
+	*/
 	PortScheduleID string
 
 	// UpdateNetworkSwitchPortSchedule.

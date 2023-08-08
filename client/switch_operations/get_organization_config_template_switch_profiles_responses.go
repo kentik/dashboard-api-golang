@@ -6,11 +6,13 @@ package switch_operations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetOrganizationConfigTemplateSwitchProfilesReader is a Reader for the GetOrganizationConfigTemplateSwitchProfiles structure.
@@ -28,7 +30,7 @@ func (o *GetOrganizationConfigTemplateSwitchProfilesReader) ReadResponse(respons
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/configTemplates/{configTemplateId}/switch/profiles] getOrganizationConfigTemplateSwitchProfiles", response, response.Code())
 	}
 }
 
@@ -37,12 +39,13 @@ func NewGetOrganizationConfigTemplateSwitchProfilesOK() *GetOrganizationConfigTe
 	return &GetOrganizationConfigTemplateSwitchProfilesOK{}
 }
 
-/* GetOrganizationConfigTemplateSwitchProfilesOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationConfigTemplateSwitchProfilesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetOrganizationConfigTemplateSwitchProfilesOK struct {
-	Payload []interface{}
+	Payload []*GetOrganizationConfigTemplateSwitchProfilesOKBodyItems0
 }
 
 // IsSuccess returns true when this get organization config template switch profiles o k response has a 2xx status code
@@ -70,6 +73,11 @@ func (o *GetOrganizationConfigTemplateSwitchProfilesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get organization config template switch profiles o k response
+func (o *GetOrganizationConfigTemplateSwitchProfilesOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationConfigTemplateSwitchProfilesOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/configTemplates/{configTemplateId}/switch/profiles][%d] getOrganizationConfigTemplateSwitchProfilesOK  %+v", 200, o.Payload)
 }
@@ -78,7 +86,7 @@ func (o *GetOrganizationConfigTemplateSwitchProfilesOK) String() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/configTemplates/{configTemplateId}/switch/profiles][%d] getOrganizationConfigTemplateSwitchProfilesOK  %+v", 200, o.Payload)
 }
 
-func (o *GetOrganizationConfigTemplateSwitchProfilesOK) GetPayload() []interface{} {
+func (o *GetOrganizationConfigTemplateSwitchProfilesOK) GetPayload() []*GetOrganizationConfigTemplateSwitchProfilesOKBodyItems0 {
 	return o.Payload
 }
 
@@ -89,5 +97,49 @@ func (o *GetOrganizationConfigTemplateSwitchProfilesOK) readResponse(response ru
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetOrganizationConfigTemplateSwitchProfilesOKBodyItems0 get organization config template switch profiles o k body items0
+swagger:model GetOrganizationConfigTemplateSwitchProfilesOKBodyItems0
+*/
+type GetOrganizationConfigTemplateSwitchProfilesOKBodyItems0 struct {
+
+	// Switch model
+	Model string `json:"model,omitempty"`
+
+	// Switch template name
+	Name string `json:"name,omitempty"`
+
+	// Switch template id
+	SwitchProfileID string `json:"switchProfileId,omitempty"`
+}
+
+// Validate validates this get organization config template switch profiles o k body items0
+func (o *GetOrganizationConfigTemplateSwitchProfilesOKBodyItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get organization config template switch profiles o k body items0 based on context it is used
+func (o *GetOrganizationConfigTemplateSwitchProfilesOKBodyItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetOrganizationConfigTemplateSwitchProfilesOKBodyItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetOrganizationConfigTemplateSwitchProfilesOKBodyItems0) UnmarshalBinary(b []byte) error {
+	var res GetOrganizationConfigTemplateSwitchProfilesOKBodyItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

@@ -27,7 +27,7 @@ func (o *DeleteNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerReader) Re
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[DELETE /networks/{networkId}/switch/dhcpServerPolicy/arpInspection/trustedServers/{trustedServerId}] deleteNetworkSwitchDhcpServerPolicyArpInspectionTrustedServer", response, response.Code())
 	}
 }
 
@@ -36,7 +36,8 @@ func NewDeleteNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerNoContent()
 	return &DeleteNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerNoContent{}
 }
 
-/* DeleteNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerNoContent describes a response with status code 204, with default header values.
+/*
+DeleteNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerNoContent describes a response with status code 204, with default header values.
 
 Successful operation
 */
@@ -66,6 +67,11 @@ func (o *DeleteNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerNoContent)
 // IsCode returns true when this delete network switch dhcp server policy arp inspection trusted server no content response a status code equal to that given
 func (o *DeleteNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerNoContent) IsCode(code int) bool {
 	return code == 204
+}
+
+// Code gets the status code for the delete network switch dhcp server policy arp inspection trusted server no content response
+func (o *DeleteNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerNoContent) Code() int {
+	return 204
 }
 
 func (o *DeleteNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerNoContent) Error() string {

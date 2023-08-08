@@ -30,7 +30,7 @@ func (o *UpdateNetworkAppliancePortReader) ReadResponse(response runtime.ClientR
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/appliance/ports/{portId}] updateNetworkAppliancePort", response, response.Code())
 	}
 }
 
@@ -39,12 +39,13 @@ func NewUpdateNetworkAppliancePortOK() *UpdateNetworkAppliancePortOK {
 	return &UpdateNetworkAppliancePortOK{}
 }
 
-/* UpdateNetworkAppliancePortOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkAppliancePortOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateNetworkAppliancePortOK struct {
-	Payload interface{}
+	Payload *UpdateNetworkAppliancePortOKBody
 }
 
 // IsSuccess returns true when this update network appliance port o k response has a 2xx status code
@@ -72,6 +73,11 @@ func (o *UpdateNetworkAppliancePortOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network appliance port o k response
+func (o *UpdateNetworkAppliancePortOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkAppliancePortOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/appliance/ports/{portId}][%d] updateNetworkAppliancePortOK  %+v", 200, o.Payload)
 }
@@ -80,22 +86,25 @@ func (o *UpdateNetworkAppliancePortOK) String() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/appliance/ports/{portId}][%d] updateNetworkAppliancePortOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateNetworkAppliancePortOK) GetPayload() interface{} {
+func (o *UpdateNetworkAppliancePortOK) GetPayload() *UpdateNetworkAppliancePortOKBody {
 	return o.Payload
 }
 
 func (o *UpdateNetworkAppliancePortOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateNetworkAppliancePortOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateNetworkAppliancePortBody update network appliance port body
-// Example: {"accessPolicy":"open","dropUntaggedTraffic":false,"enabled":true,"type":"access","vlan":3}
+/*
+UpdateNetworkAppliancePortBody update network appliance port body
+// Example: {"accessPolicy":"open","allowedVlans":"all","dropUntaggedTraffic":false,"enabled":true,"type":"access","vlan":3}
 swagger:model UpdateNetworkAppliancePortBody
 */
 type UpdateNetworkAppliancePortBody struct {
@@ -140,6 +149,62 @@ func (o *UpdateNetworkAppliancePortBody) MarshalBinary() ([]byte, error) {
 // UnmarshalBinary interface implementation
 func (o *UpdateNetworkAppliancePortBody) UnmarshalBinary(b []byte) error {
 	var res UpdateNetworkAppliancePortBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkAppliancePortOKBody update network appliance port o k body
+swagger:model UpdateNetworkAppliancePortOKBody
+*/
+type UpdateNetworkAppliancePortOKBody struct {
+
+	// The name of the policy. Only applicable to Access ports.
+	AccessPolicy string `json:"accessPolicy,omitempty"`
+
+	// Comma-delimited list of the VLAN ID's allowed on the port, or 'all' to permit all VLAN's on the port.
+	AllowedVlans string `json:"allowedVlans,omitempty"`
+
+	// Whether the trunk port can drop all untagged traffic.
+	DropUntaggedTraffic bool `json:"dropUntaggedTraffic,omitempty"`
+
+	// The status of the port
+	Enabled bool `json:"enabled,omitempty"`
+
+	// Number of the port
+	Number int64 `json:"number,omitempty"`
+
+	// The type of the port: 'access' or 'trunk'.
+	Type string `json:"type,omitempty"`
+
+	// Native VLAN when the port is in Trunk mode. Access VLAN when the port is in Access mode.
+	Vlan int64 `json:"vlan,omitempty"`
+}
+
+// Validate validates this update network appliance port o k body
+func (o *UpdateNetworkAppliancePortOKBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network appliance port o k body based on context it is used
+func (o *UpdateNetworkAppliancePortOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkAppliancePortOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkAppliancePortOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkAppliancePortOKBody
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

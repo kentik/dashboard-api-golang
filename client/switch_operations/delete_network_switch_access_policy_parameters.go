@@ -52,17 +52,25 @@ func NewDeleteNetworkSwitchAccessPolicyParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* DeleteNetworkSwitchAccessPolicyParams contains all the parameters to send to the API endpoint
-   for the delete network switch access policy operation.
+/*
+DeleteNetworkSwitchAccessPolicyParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete network switch access policy operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteNetworkSwitchAccessPolicyParams struct {
 
-	// AccessPolicyNumber.
+	/* AccessPolicyNumber.
+
+	   Access policy number
+	*/
 	AccessPolicyNumber string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

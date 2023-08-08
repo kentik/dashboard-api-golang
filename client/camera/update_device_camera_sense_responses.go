@@ -31,7 +31,7 @@ func (o *UpdateDeviceCameraSenseReader) ReadResponse(response runtime.ClientResp
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /devices/{serial}/camera/sense] updateDeviceCameraSense", response, response.Code())
 	}
 }
 
@@ -40,7 +40,8 @@ func NewUpdateDeviceCameraSenseOK() *UpdateDeviceCameraSenseOK {
 	return &UpdateDeviceCameraSenseOK{}
 }
 
-/* UpdateDeviceCameraSenseOK describes a response with status code 200, with default header values.
+/*
+UpdateDeviceCameraSenseOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -73,6 +74,11 @@ func (o *UpdateDeviceCameraSenseOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update device camera sense o k response
+func (o *UpdateDeviceCameraSenseOK) Code() int {
+	return 200
+}
+
 func (o *UpdateDeviceCameraSenseOK) Error() string {
 	return fmt.Sprintf("[PUT /devices/{serial}/camera/sense][%d] updateDeviceCameraSenseOK  %+v", 200, o.Payload)
 }
@@ -95,7 +101,8 @@ func (o *UpdateDeviceCameraSenseOK) readResponse(response runtime.ClientResponse
 	return nil
 }
 
-/*UpdateDeviceCameraSenseBody update device camera sense body
+/*
+UpdateDeviceCameraSenseBody update device camera sense body
 // Example: {"audioDetection":{"enabled":false},"mqttBrokerId":"1234","senseEnabled":true}
 swagger:model UpdateDeviceCameraSenseBody
 */
@@ -164,6 +171,11 @@ func (o *UpdateDeviceCameraSenseBody) ContextValidate(ctx context.Context, forma
 func (o *UpdateDeviceCameraSenseBody) contextValidateAudioDetection(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.AudioDetection != nil {
+
+		if swag.IsZero(o.AudioDetection) { // not required
+			return nil
+		}
+
 		if err := o.AudioDetection.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateDeviceCameraSense" + "." + "audioDetection")
@@ -195,7 +207,8 @@ func (o *UpdateDeviceCameraSenseBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateDeviceCameraSenseParamsBodyAudioDetection The details of the audio detection config.
+/*
+UpdateDeviceCameraSenseParamsBodyAudioDetection The details of the audio detection config.
 swagger:model UpdateDeviceCameraSenseParamsBodyAudioDetection
 */
 type UpdateDeviceCameraSenseParamsBodyAudioDetection struct {

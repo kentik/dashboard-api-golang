@@ -52,17 +52,25 @@ func NewUpdateOrganizationEarlyAccessFeaturesOptInParamsWithHTTPClient(client *h
 	}
 }
 
-/* UpdateOrganizationEarlyAccessFeaturesOptInParams contains all the parameters to send to the API endpoint
-   for the update organization early access features opt in operation.
+/*
+UpdateOrganizationEarlyAccessFeaturesOptInParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update organization early access features opt in operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateOrganizationEarlyAccessFeaturesOptInParams struct {
 
-	// OptInID.
+	/* OptInID.
+
+	   Opt in ID
+	*/
 	OptInID string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	// UpdateOrganizationEarlyAccessFeaturesOptIn.

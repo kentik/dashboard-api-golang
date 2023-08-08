@@ -33,7 +33,7 @@ func (o *UpdateNetworkCameraWirelessProfileReader) ReadResponse(response runtime
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/camera/wirelessProfiles/{wirelessProfileId}] updateNetworkCameraWirelessProfile", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateNetworkCameraWirelessProfileOK() *UpdateNetworkCameraWirelessProfi
 	return &UpdateNetworkCameraWirelessProfileOK{}
 }
 
-/* UpdateNetworkCameraWirelessProfileOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkCameraWirelessProfileOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateNetworkCameraWirelessProfileOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network camera wireless profile o k response
+func (o *UpdateNetworkCameraWirelessProfileOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkCameraWirelessProfileOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/camera/wirelessProfiles/{wirelessProfileId}][%d] updateNetworkCameraWirelessProfileOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateNetworkCameraWirelessProfileOK) readResponse(response runtime.Cli
 	return nil
 }
 
-/*UpdateNetworkCameraWirelessProfileBody update network camera wireless profile body
+/*
+UpdateNetworkCameraWirelessProfileBody update network camera wireless profile body
 // Example: {}
 swagger:model UpdateNetworkCameraWirelessProfileBody
 */
@@ -190,6 +197,11 @@ func (o *UpdateNetworkCameraWirelessProfileBody) ContextValidate(ctx context.Con
 func (o *UpdateNetworkCameraWirelessProfileBody) contextValidateIdentity(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Identity != nil {
+
+		if swag.IsZero(o.Identity) { // not required
+			return nil
+		}
+
 		if err := o.Identity.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkCameraWirelessProfile" + "." + "identity")
@@ -206,6 +218,11 @@ func (o *UpdateNetworkCameraWirelessProfileBody) contextValidateIdentity(ctx con
 func (o *UpdateNetworkCameraWirelessProfileBody) contextValidateSsid(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Ssid != nil {
+
+		if swag.IsZero(o.Ssid) { // not required
+			return nil
+		}
+
 		if err := o.Ssid.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkCameraWirelessProfile" + "." + "ssid")
@@ -237,7 +254,8 @@ func (o *UpdateNetworkCameraWirelessProfileBody) UnmarshalBinary(b []byte) error
 	return nil
 }
 
-/*UpdateNetworkCameraWirelessProfileParamsBodyIdentity The identity of the wireless profile. Required for creating wireless profiles in 8021x-radius auth mode.
+/*
+UpdateNetworkCameraWirelessProfileParamsBodyIdentity The identity of the wireless profile. Required for creating wireless profiles in 8021x-radius auth mode.
 swagger:model UpdateNetworkCameraWirelessProfileParamsBodyIdentity
 */
 type UpdateNetworkCameraWirelessProfileParamsBodyIdentity struct {
@@ -277,13 +295,14 @@ func (o *UpdateNetworkCameraWirelessProfileParamsBodyIdentity) UnmarshalBinary(b
 	return nil
 }
 
-/*UpdateNetworkCameraWirelessProfileParamsBodySsid The details of the SSID config.
+/*
+UpdateNetworkCameraWirelessProfileParamsBodySsid The details of the SSID config.
 swagger:model UpdateNetworkCameraWirelessProfileParamsBodySsid
 */
 type UpdateNetworkCameraWirelessProfileParamsBodySsid struct {
 
 	// The auth mode of the SSID. It can be set to ('psk', '8021x-radius').
-	// Enum: [psk 8021x-radius]
+	// Enum: [8021x-radius psk]
 	AuthMode string `json:"authMode,omitempty"`
 
 	// The encryption mode of the SSID. It can be set to ('wpa', 'wpa-eap'). With 'wpa' mode, the authMode should be 'psk' and with 'wpa-eap' the authMode should be '8021x-radius'
@@ -314,7 +333,7 @@ var updateNetworkCameraWirelessProfileParamsBodySsidTypeAuthModePropEnum []inter
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["psk","8021x-radius"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["8021x-radius","psk"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -324,11 +343,11 @@ func init() {
 
 const (
 
-	// UpdateNetworkCameraWirelessProfileParamsBodySsidAuthModePsk captures enum value "psk"
-	UpdateNetworkCameraWirelessProfileParamsBodySsidAuthModePsk string = "psk"
-
 	// UpdateNetworkCameraWirelessProfileParamsBodySsidAuthModeNr8021xDashRadius captures enum value "8021x-radius"
 	UpdateNetworkCameraWirelessProfileParamsBodySsidAuthModeNr8021xDashRadius string = "8021x-radius"
+
+	// UpdateNetworkCameraWirelessProfileParamsBodySsidAuthModePsk captures enum value "psk"
+	UpdateNetworkCameraWirelessProfileParamsBodySsidAuthModePsk string = "psk"
 )
 
 // prop value enum

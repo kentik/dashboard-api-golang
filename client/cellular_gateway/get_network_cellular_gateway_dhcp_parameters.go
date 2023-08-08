@@ -52,14 +52,19 @@ func NewGetNetworkCellularGatewayDhcpParamsWithHTTPClient(client *http.Client) *
 	}
 }
 
-/* GetNetworkCellularGatewayDhcpParams contains all the parameters to send to the API endpoint
-   for the get network cellular gateway dhcp operation.
+/*
+GetNetworkCellularGatewayDhcpParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network cellular gateway dhcp operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkCellularGatewayDhcpParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

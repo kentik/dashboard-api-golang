@@ -34,7 +34,7 @@ func (o *CreateOrganizationAdminReader) ReadResponse(response runtime.ClientResp
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /organizations/{organizationId}/admins] createOrganizationAdmin", response, response.Code())
 	}
 }
 
@@ -43,12 +43,13 @@ func NewCreateOrganizationAdminCreated() *CreateOrganizationAdminCreated {
 	return &CreateOrganizationAdminCreated{}
 }
 
-/* CreateOrganizationAdminCreated describes a response with status code 201, with default header values.
+/*
+CreateOrganizationAdminCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
 type CreateOrganizationAdminCreated struct {
-	Payload interface{}
+	Payload *CreateOrganizationAdminCreatedBody
 }
 
 // IsSuccess returns true when this create organization admin created response has a 2xx status code
@@ -76,6 +77,11 @@ func (o *CreateOrganizationAdminCreated) IsCode(code int) bool {
 	return code == 201
 }
 
+// Code gets the status code for the create organization admin created response
+func (o *CreateOrganizationAdminCreated) Code() int {
+	return 201
+}
+
 func (o *CreateOrganizationAdminCreated) Error() string {
 	return fmt.Sprintf("[POST /organizations/{organizationId}/admins][%d] createOrganizationAdminCreated  %+v", 201, o.Payload)
 }
@@ -84,28 +90,31 @@ func (o *CreateOrganizationAdminCreated) String() string {
 	return fmt.Sprintf("[POST /organizations/{organizationId}/admins][%d] createOrganizationAdminCreated  %+v", 201, o.Payload)
 }
 
-func (o *CreateOrganizationAdminCreated) GetPayload() interface{} {
+func (o *CreateOrganizationAdminCreated) GetPayload() *CreateOrganizationAdminCreatedBody {
 	return o.Payload
 }
 
 func (o *CreateOrganizationAdminCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(CreateOrganizationAdminCreatedBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*CreateOrganizationAdminBody create organization admin body
-// Example: {"email":"miles@meraki.com","name":"Miles Meraki","orgAccess":"none","tags":[{"access":"read-only","tag":"west"}]}
+/*
+CreateOrganizationAdminBody create organization admin body
+// Example: {"authenticationMethod":"Email","email":"miles@meraki.com","name":"Miles Meraki","networks":[{"access":"full","id":"N_24329156"}],"orgAccess":"none","tags":[{"access":"read-only","tag":"west"}]}
 swagger:model CreateOrganizationAdminBody
 */
 type CreateOrganizationAdminBody struct {
 
 	// The method of authentication the user will use to sign in to the Meraki dashboard. Can be one of 'Email' or 'Cisco SecureX Sign-On'. The default is Email authentication
-	// Enum: [Email Cisco SecureX Sign-On]
+	// Enum: [Cisco SecureX Sign-On Email]
 	AuthenticationMethod string `json:"authenticationMethod,omitempty"`
 
 	// The email of the dashboard administrator. This attribute can not be updated.
@@ -121,7 +130,7 @@ type CreateOrganizationAdminBody struct {
 
 	// The privilege of the dashboard administrator on the organization. Can be one of 'full', 'read-only', 'enterprise' or 'none'
 	// Required: true
-	// Enum: [full read-only enterprise none]
+	// Enum: [enterprise full none read-only]
 	OrgAccess *string `json:"orgAccess"`
 
 	// The list of tags that the dashboard administrator has privileges on
@@ -166,7 +175,7 @@ var createOrganizationAdminBodyTypeAuthenticationMethodPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Email","Cisco SecureX Sign-On"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Cisco SecureX Sign-On","Email"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -176,11 +185,11 @@ func init() {
 
 const (
 
-	// CreateOrganizationAdminBodyAuthenticationMethodEmail captures enum value "Email"
-	CreateOrganizationAdminBodyAuthenticationMethodEmail string = "Email"
-
 	// CreateOrganizationAdminBodyAuthenticationMethodCiscoSecureXSignDashOn captures enum value "Cisco SecureX Sign-On"
 	CreateOrganizationAdminBodyAuthenticationMethodCiscoSecureXSignDashOn string = "Cisco SecureX Sign-On"
+
+	// CreateOrganizationAdminBodyAuthenticationMethodEmail captures enum value "Email"
+	CreateOrganizationAdminBodyAuthenticationMethodEmail string = "Email"
 )
 
 // prop value enum
@@ -252,7 +261,7 @@ var createOrganizationAdminBodyTypeOrgAccessPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["full","read-only","enterprise","none"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["enterprise","full","none","read-only"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -262,17 +271,17 @@ func init() {
 
 const (
 
-	// CreateOrganizationAdminBodyOrgAccessFull captures enum value "full"
-	CreateOrganizationAdminBodyOrgAccessFull string = "full"
-
-	// CreateOrganizationAdminBodyOrgAccessReadDashOnly captures enum value "read-only"
-	CreateOrganizationAdminBodyOrgAccessReadDashOnly string = "read-only"
-
 	// CreateOrganizationAdminBodyOrgAccessEnterprise captures enum value "enterprise"
 	CreateOrganizationAdminBodyOrgAccessEnterprise string = "enterprise"
 
+	// CreateOrganizationAdminBodyOrgAccessFull captures enum value "full"
+	CreateOrganizationAdminBodyOrgAccessFull string = "full"
+
 	// CreateOrganizationAdminBodyOrgAccessNone captures enum value "none"
 	CreateOrganizationAdminBodyOrgAccessNone string = "none"
+
+	// CreateOrganizationAdminBodyOrgAccessReadDashOnly captures enum value "read-only"
+	CreateOrganizationAdminBodyOrgAccessReadDashOnly string = "read-only"
 )
 
 // prop value enum
@@ -346,6 +355,11 @@ func (o *CreateOrganizationAdminBody) contextValidateNetworks(ctx context.Contex
 	for i := 0; i < len(o.Networks); i++ {
 
 		if o.Networks[i] != nil {
+
+			if swag.IsZero(o.Networks[i]) { // not required
+				return nil
+			}
+
 			if err := o.Networks[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("createOrganizationAdmin" + "." + "networks" + "." + strconv.Itoa(i))
@@ -366,6 +380,11 @@ func (o *CreateOrganizationAdminBody) contextValidateTags(ctx context.Context, f
 	for i := 0; i < len(o.Tags); i++ {
 
 		if o.Tags[i] != nil {
+
+			if swag.IsZero(o.Tags[i]) { // not required
+				return nil
+			}
+
 			if err := o.Tags[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("createOrganizationAdmin" + "." + "tags" + "." + strconv.Itoa(i))
@@ -399,14 +418,462 @@ func (o *CreateOrganizationAdminBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*CreateOrganizationAdminParamsBodyNetworksItems0 create organization admin params body networks items0
+/*
+CreateOrganizationAdminCreatedBody create organization admin created body
+swagger:model CreateOrganizationAdminCreatedBody
+*/
+type CreateOrganizationAdminCreatedBody struct {
+
+	// Status of the admin's account
+	// Enum: [locked ok pending unverified]
+	AccountStatus string `json:"accountStatus,omitempty"`
+
+	// Admin's authentication method
+	// Enum: [Cisco SecureX Sign-On Email]
+	AuthenticationMethod string `json:"authenticationMethod,omitempty"`
+
+	// Admin's email address
+	Email string `json:"email,omitempty"`
+
+	// Indicates whether the admin has an API key
+	HasAPIKey bool `json:"hasApiKey,omitempty"`
+
+	// Admin's ID
+	ID string `json:"id,omitempty"`
+
+	// Time when the admin was last active
+	// Format: date-time
+	LastActive strfmt.DateTime `json:"lastActive,omitempty"`
+
+	// Admin's username
+	Name string `json:"name,omitempty"`
+
+	// Admin network access information
+	Networks []*CreateOrganizationAdminCreatedBodyNetworksItems0 `json:"networks"`
+
+	// Admin's level of access to the organization
+	// Enum: [enterprise full none read-only]
+	OrgAccess string `json:"orgAccess,omitempty"`
+
+	// Admin tag information
+	Tags []*CreateOrganizationAdminCreatedBodyTagsItems0 `json:"tags"`
+
+	// Indicates whether two-factor authentication is enabled
+	TwoFactorAuthEnabled bool `json:"twoFactorAuthEnabled,omitempty"`
+}
+
+// Validate validates this create organization admin created body
+func (o *CreateOrganizationAdminCreatedBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateAccountStatus(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateAuthenticationMethod(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateLastActive(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNetworks(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateOrgAccess(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTags(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var createOrganizationAdminCreatedBodyTypeAccountStatusPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["locked","ok","pending","unverified"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createOrganizationAdminCreatedBodyTypeAccountStatusPropEnum = append(createOrganizationAdminCreatedBodyTypeAccountStatusPropEnum, v)
+	}
+}
+
+const (
+
+	// CreateOrganizationAdminCreatedBodyAccountStatusLocked captures enum value "locked"
+	CreateOrganizationAdminCreatedBodyAccountStatusLocked string = "locked"
+
+	// CreateOrganizationAdminCreatedBodyAccountStatusOk captures enum value "ok"
+	CreateOrganizationAdminCreatedBodyAccountStatusOk string = "ok"
+
+	// CreateOrganizationAdminCreatedBodyAccountStatusPending captures enum value "pending"
+	CreateOrganizationAdminCreatedBodyAccountStatusPending string = "pending"
+
+	// CreateOrganizationAdminCreatedBodyAccountStatusUnverified captures enum value "unverified"
+	CreateOrganizationAdminCreatedBodyAccountStatusUnverified string = "unverified"
+)
+
+// prop value enum
+func (o *CreateOrganizationAdminCreatedBody) validateAccountStatusEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, createOrganizationAdminCreatedBodyTypeAccountStatusPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CreateOrganizationAdminCreatedBody) validateAccountStatus(formats strfmt.Registry) error {
+	if swag.IsZero(o.AccountStatus) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateAccountStatusEnum("createOrganizationAdminCreated"+"."+"accountStatus", "body", o.AccountStatus); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var createOrganizationAdminCreatedBodyTypeAuthenticationMethodPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Cisco SecureX Sign-On","Email"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createOrganizationAdminCreatedBodyTypeAuthenticationMethodPropEnum = append(createOrganizationAdminCreatedBodyTypeAuthenticationMethodPropEnum, v)
+	}
+}
+
+const (
+
+	// CreateOrganizationAdminCreatedBodyAuthenticationMethodCiscoSecureXSignDashOn captures enum value "Cisco SecureX Sign-On"
+	CreateOrganizationAdminCreatedBodyAuthenticationMethodCiscoSecureXSignDashOn string = "Cisco SecureX Sign-On"
+
+	// CreateOrganizationAdminCreatedBodyAuthenticationMethodEmail captures enum value "Email"
+	CreateOrganizationAdminCreatedBodyAuthenticationMethodEmail string = "Email"
+)
+
+// prop value enum
+func (o *CreateOrganizationAdminCreatedBody) validateAuthenticationMethodEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, createOrganizationAdminCreatedBodyTypeAuthenticationMethodPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CreateOrganizationAdminCreatedBody) validateAuthenticationMethod(formats strfmt.Registry) error {
+	if swag.IsZero(o.AuthenticationMethod) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateAuthenticationMethodEnum("createOrganizationAdminCreated"+"."+"authenticationMethod", "body", o.AuthenticationMethod); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *CreateOrganizationAdminCreatedBody) validateLastActive(formats strfmt.Registry) error {
+	if swag.IsZero(o.LastActive) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("createOrganizationAdminCreated"+"."+"lastActive", "body", "date-time", o.LastActive.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *CreateOrganizationAdminCreatedBody) validateNetworks(formats strfmt.Registry) error {
+	if swag.IsZero(o.Networks) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Networks); i++ {
+		if swag.IsZero(o.Networks[i]) { // not required
+			continue
+		}
+
+		if o.Networks[i] != nil {
+			if err := o.Networks[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("createOrganizationAdminCreated" + "." + "networks" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("createOrganizationAdminCreated" + "." + "networks" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+var createOrganizationAdminCreatedBodyTypeOrgAccessPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["enterprise","full","none","read-only"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createOrganizationAdminCreatedBodyTypeOrgAccessPropEnum = append(createOrganizationAdminCreatedBodyTypeOrgAccessPropEnum, v)
+	}
+}
+
+const (
+
+	// CreateOrganizationAdminCreatedBodyOrgAccessEnterprise captures enum value "enterprise"
+	CreateOrganizationAdminCreatedBodyOrgAccessEnterprise string = "enterprise"
+
+	// CreateOrganizationAdminCreatedBodyOrgAccessFull captures enum value "full"
+	CreateOrganizationAdminCreatedBodyOrgAccessFull string = "full"
+
+	// CreateOrganizationAdminCreatedBodyOrgAccessNone captures enum value "none"
+	CreateOrganizationAdminCreatedBodyOrgAccessNone string = "none"
+
+	// CreateOrganizationAdminCreatedBodyOrgAccessReadDashOnly captures enum value "read-only"
+	CreateOrganizationAdminCreatedBodyOrgAccessReadDashOnly string = "read-only"
+)
+
+// prop value enum
+func (o *CreateOrganizationAdminCreatedBody) validateOrgAccessEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, createOrganizationAdminCreatedBodyTypeOrgAccessPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CreateOrganizationAdminCreatedBody) validateOrgAccess(formats strfmt.Registry) error {
+	if swag.IsZero(o.OrgAccess) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateOrgAccessEnum("createOrganizationAdminCreated"+"."+"orgAccess", "body", o.OrgAccess); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *CreateOrganizationAdminCreatedBody) validateTags(formats strfmt.Registry) error {
+	if swag.IsZero(o.Tags) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Tags); i++ {
+		if swag.IsZero(o.Tags[i]) { // not required
+			continue
+		}
+
+		if o.Tags[i] != nil {
+			if err := o.Tags[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("createOrganizationAdminCreated" + "." + "tags" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("createOrganizationAdminCreated" + "." + "tags" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this create organization admin created body based on the context it is used
+func (o *CreateOrganizationAdminCreatedBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateNetworks(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateTags(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateOrganizationAdminCreatedBody) contextValidateNetworks(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Networks); i++ {
+
+		if o.Networks[i] != nil {
+
+			if swag.IsZero(o.Networks[i]) { // not required
+				return nil
+			}
+
+			if err := o.Networks[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("createOrganizationAdminCreated" + "." + "networks" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("createOrganizationAdminCreated" + "." + "networks" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *CreateOrganizationAdminCreatedBody) contextValidateTags(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Tags); i++ {
+
+		if o.Tags[i] != nil {
+
+			if swag.IsZero(o.Tags[i]) { // not required
+				return nil
+			}
+
+			if err := o.Tags[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("createOrganizationAdminCreated" + "." + "tags" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("createOrganizationAdminCreated" + "." + "tags" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateOrganizationAdminCreatedBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateOrganizationAdminCreatedBody) UnmarshalBinary(b []byte) error {
+	var res CreateOrganizationAdminCreatedBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateOrganizationAdminCreatedBodyNetworksItems0 create organization admin created body networks items0
+swagger:model CreateOrganizationAdminCreatedBodyNetworksItems0
+*/
+type CreateOrganizationAdminCreatedBodyNetworksItems0 struct {
+
+	// Admin's level of access to the network
+	Access string `json:"access,omitempty"`
+
+	// Network ID
+	ID string `json:"id,omitempty"`
+}
+
+// Validate validates this create organization admin created body networks items0
+func (o *CreateOrganizationAdminCreatedBodyNetworksItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this create organization admin created body networks items0 based on context it is used
+func (o *CreateOrganizationAdminCreatedBodyNetworksItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateOrganizationAdminCreatedBodyNetworksItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateOrganizationAdminCreatedBodyNetworksItems0) UnmarshalBinary(b []byte) error {
+	var res CreateOrganizationAdminCreatedBodyNetworksItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateOrganizationAdminCreatedBodyTagsItems0 create organization admin created body tags items0
+swagger:model CreateOrganizationAdminCreatedBodyTagsItems0
+*/
+type CreateOrganizationAdminCreatedBodyTagsItems0 struct {
+
+	// Access level for the tag
+	Access string `json:"access,omitempty"`
+
+	// Tag value
+	Tag string `json:"tag,omitempty"`
+}
+
+// Validate validates this create organization admin created body tags items0
+func (o *CreateOrganizationAdminCreatedBodyTagsItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this create organization admin created body tags items0 based on context it is used
+func (o *CreateOrganizationAdminCreatedBodyTagsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateOrganizationAdminCreatedBodyTagsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateOrganizationAdminCreatedBodyTagsItems0) UnmarshalBinary(b []byte) error {
+	var res CreateOrganizationAdminCreatedBodyTagsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateOrganizationAdminParamsBodyNetworksItems0 create organization admin params body networks items0
 swagger:model CreateOrganizationAdminParamsBodyNetworksItems0
 */
 type CreateOrganizationAdminParamsBodyNetworksItems0 struct {
 
 	// The privilege of the dashboard administrator on the network. Can be one of 'full', 'read-only', 'guest-ambassador' or 'monitor-only'
 	// Required: true
-	// Enum: [full read-only guest-ambassador monitor-only]
 	Access *string `json:"access"`
 
 	// The network ID
@@ -432,49 +899,9 @@ func (o *CreateOrganizationAdminParamsBodyNetworksItems0) Validate(formats strfm
 	return nil
 }
 
-var createOrganizationAdminParamsBodyNetworksItems0TypeAccessPropEnum []interface{}
-
-func init() {
-	var res []string
-	if err := json.Unmarshal([]byte(`["full","read-only","guest-ambassador","monitor-only"]`), &res); err != nil {
-		panic(err)
-	}
-	for _, v := range res {
-		createOrganizationAdminParamsBodyNetworksItems0TypeAccessPropEnum = append(createOrganizationAdminParamsBodyNetworksItems0TypeAccessPropEnum, v)
-	}
-}
-
-const (
-
-	// CreateOrganizationAdminParamsBodyNetworksItems0AccessFull captures enum value "full"
-	CreateOrganizationAdminParamsBodyNetworksItems0AccessFull string = "full"
-
-	// CreateOrganizationAdminParamsBodyNetworksItems0AccessReadDashOnly captures enum value "read-only"
-	CreateOrganizationAdminParamsBodyNetworksItems0AccessReadDashOnly string = "read-only"
-
-	// CreateOrganizationAdminParamsBodyNetworksItems0AccessGuestDashAmbassador captures enum value "guest-ambassador"
-	CreateOrganizationAdminParamsBodyNetworksItems0AccessGuestDashAmbassador string = "guest-ambassador"
-
-	// CreateOrganizationAdminParamsBodyNetworksItems0AccessMonitorDashOnly captures enum value "monitor-only"
-	CreateOrganizationAdminParamsBodyNetworksItems0AccessMonitorDashOnly string = "monitor-only"
-)
-
-// prop value enum
-func (o *CreateOrganizationAdminParamsBodyNetworksItems0) validateAccessEnum(path, location string, value string) error {
-	if err := validate.EnumCase(path, location, value, createOrganizationAdminParamsBodyNetworksItems0TypeAccessPropEnum, true); err != nil {
-		return err
-	}
-	return nil
-}
-
 func (o *CreateOrganizationAdminParamsBodyNetworksItems0) validateAccess(formats strfmt.Registry) error {
 
 	if err := validate.Required("access", "body", o.Access); err != nil {
-		return err
-	}
-
-	// value enum
-	if err := o.validateAccessEnum("access", "body", *o.Access); err != nil {
 		return err
 	}
 
@@ -513,14 +940,15 @@ func (o *CreateOrganizationAdminParamsBodyNetworksItems0) UnmarshalBinary(b []by
 	return nil
 }
 
-/*CreateOrganizationAdminParamsBodyTagsItems0 create organization admin params body tags items0
+/*
+CreateOrganizationAdminParamsBodyTagsItems0 create organization admin params body tags items0
 swagger:model CreateOrganizationAdminParamsBodyTagsItems0
 */
 type CreateOrganizationAdminParamsBodyTagsItems0 struct {
 
 	// The privilege of the dashboard administrator on the tag. Can be one of 'full', 'read-only', 'guest-ambassador' or 'monitor-only'
 	// Required: true
-	// Enum: [full read-only guest-ambassador monitor-only]
+	// Enum: [full guest-ambassador monitor-only read-only]
 	Access *string `json:"access"`
 
 	// The name of the tag
@@ -550,7 +978,7 @@ var createOrganizationAdminParamsBodyTagsItems0TypeAccessPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["full","read-only","guest-ambassador","monitor-only"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["full","guest-ambassador","monitor-only","read-only"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -563,14 +991,14 @@ const (
 	// CreateOrganizationAdminParamsBodyTagsItems0AccessFull captures enum value "full"
 	CreateOrganizationAdminParamsBodyTagsItems0AccessFull string = "full"
 
-	// CreateOrganizationAdminParamsBodyTagsItems0AccessReadDashOnly captures enum value "read-only"
-	CreateOrganizationAdminParamsBodyTagsItems0AccessReadDashOnly string = "read-only"
-
 	// CreateOrganizationAdminParamsBodyTagsItems0AccessGuestDashAmbassador captures enum value "guest-ambassador"
 	CreateOrganizationAdminParamsBodyTagsItems0AccessGuestDashAmbassador string = "guest-ambassador"
 
 	// CreateOrganizationAdminParamsBodyTagsItems0AccessMonitorDashOnly captures enum value "monitor-only"
 	CreateOrganizationAdminParamsBodyTagsItems0AccessMonitorDashOnly string = "monitor-only"
+
+	// CreateOrganizationAdminParamsBodyTagsItems0AccessReadDashOnly captures enum value "read-only"
+	CreateOrganizationAdminParamsBodyTagsItems0AccessReadDashOnly string = "read-only"
 )
 
 // prop value enum

@@ -52,20 +52,28 @@ func NewUpdateNetworkCameraWirelessProfileParamsWithHTTPClient(client *http.Clie
 	}
 }
 
-/* UpdateNetworkCameraWirelessProfileParams contains all the parameters to send to the API endpoint
-   for the update network camera wireless profile operation.
+/*
+UpdateNetworkCameraWirelessProfileParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network camera wireless profile operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkCameraWirelessProfileParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkCameraWirelessProfile.
 	UpdateNetworkCameraWirelessProfile UpdateNetworkCameraWirelessProfileBody
 
-	// WirelessProfileID.
+	/* WirelessProfileID.
+
+	   Wireless profile ID
+	*/
 	WirelessProfileID string
 
 	timeout    time.Duration

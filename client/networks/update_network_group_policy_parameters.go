@@ -52,17 +52,25 @@ func NewUpdateNetworkGroupPolicyParamsWithHTTPClient(client *http.Client) *Updat
 	}
 }
 
-/* UpdateNetworkGroupPolicyParams contains all the parameters to send to the API endpoint
-   for the update network group policy operation.
+/*
+UpdateNetworkGroupPolicyParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network group policy operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkGroupPolicyParams struct {
 
-	// GroupPolicyID.
+	/* GroupPolicyID.
+
+	   Group policy ID
+	*/
 	GroupPolicyID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkGroupPolicy.

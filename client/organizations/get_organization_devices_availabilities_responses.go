@@ -33,7 +33,7 @@ func (o *GetOrganizationDevicesAvailabilitiesReader) ReadResponse(response runti
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/devices/availabilities] getOrganizationDevicesAvailabilities", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewGetOrganizationDevicesAvailabilitiesOK() *GetOrganizationDevicesAvailabi
 	return &GetOrganizationDevicesAvailabilitiesOK{}
 }
 
-/* GetOrganizationDevicesAvailabilitiesOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationDevicesAvailabilitiesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -80,6 +81,11 @@ func (o *GetOrganizationDevicesAvailabilitiesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get organization devices availabilities o k response
+func (o *GetOrganizationDevicesAvailabilitiesOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationDevicesAvailabilitiesOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/devices/availabilities][%d] getOrganizationDevicesAvailabilitiesOK  %+v", 200, o.Payload)
 }
@@ -109,7 +115,8 @@ func (o *GetOrganizationDevicesAvailabilitiesOK) readResponse(response runtime.C
 	return nil
 }
 
-/*GetOrganizationDevicesAvailabilitiesOKBodyItems0 get organization devices availabilities o k body items0
+/*
+GetOrganizationDevicesAvailabilitiesOKBodyItems0 get organization devices availabilities o k body items0
 swagger:model GetOrganizationDevicesAvailabilitiesOKBodyItems0
 */
 type GetOrganizationDevicesAvailabilitiesOKBodyItems0 struct {
@@ -124,14 +131,14 @@ type GetOrganizationDevicesAvailabilitiesOKBodyItems0 struct {
 	Network *GetOrganizationDevicesAvailabilitiesOKBodyItems0Network `json:"network,omitempty"`
 
 	// Device product type.
-	// Enum: [wireless appliance switch systemsManager camera cellularGateway sensor]
+	// Enum: [appliance camera cellularGateway cloudGateway sensor switch systemsManager wireless]
 	ProductType string `json:"productType,omitempty"`
 
 	// The device serial number.
 	Serial string `json:"serial,omitempty"`
 
 	// Status of the device. Possible values are: online, alerting, offline, dormant.
-	// Enum: [online alerting offline dormant]
+	// Enum: [alerting dormant offline online]
 	Status string `json:"status,omitempty"`
 
 	// List of custom tags for the device.
@@ -183,7 +190,7 @@ var getOrganizationDevicesAvailabilitiesOKBodyItems0TypeProductTypePropEnum []in
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["wireless","appliance","switch","systemsManager","camera","cellularGateway","sensor"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["appliance","camera","cellularGateway","cloudGateway","sensor","switch","systemsManager","wireless"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -193,17 +200,8 @@ func init() {
 
 const (
 
-	// GetOrganizationDevicesAvailabilitiesOKBodyItems0ProductTypeWireless captures enum value "wireless"
-	GetOrganizationDevicesAvailabilitiesOKBodyItems0ProductTypeWireless string = "wireless"
-
 	// GetOrganizationDevicesAvailabilitiesOKBodyItems0ProductTypeAppliance captures enum value "appliance"
 	GetOrganizationDevicesAvailabilitiesOKBodyItems0ProductTypeAppliance string = "appliance"
-
-	// GetOrganizationDevicesAvailabilitiesOKBodyItems0ProductTypeSwitch captures enum value "switch"
-	GetOrganizationDevicesAvailabilitiesOKBodyItems0ProductTypeSwitch string = "switch"
-
-	// GetOrganizationDevicesAvailabilitiesOKBodyItems0ProductTypeSystemsManager captures enum value "systemsManager"
-	GetOrganizationDevicesAvailabilitiesOKBodyItems0ProductTypeSystemsManager string = "systemsManager"
 
 	// GetOrganizationDevicesAvailabilitiesOKBodyItems0ProductTypeCamera captures enum value "camera"
 	GetOrganizationDevicesAvailabilitiesOKBodyItems0ProductTypeCamera string = "camera"
@@ -211,8 +209,20 @@ const (
 	// GetOrganizationDevicesAvailabilitiesOKBodyItems0ProductTypeCellularGateway captures enum value "cellularGateway"
 	GetOrganizationDevicesAvailabilitiesOKBodyItems0ProductTypeCellularGateway string = "cellularGateway"
 
+	// GetOrganizationDevicesAvailabilitiesOKBodyItems0ProductTypeCloudGateway captures enum value "cloudGateway"
+	GetOrganizationDevicesAvailabilitiesOKBodyItems0ProductTypeCloudGateway string = "cloudGateway"
+
 	// GetOrganizationDevicesAvailabilitiesOKBodyItems0ProductTypeSensor captures enum value "sensor"
 	GetOrganizationDevicesAvailabilitiesOKBodyItems0ProductTypeSensor string = "sensor"
+
+	// GetOrganizationDevicesAvailabilitiesOKBodyItems0ProductTypeSwitch captures enum value "switch"
+	GetOrganizationDevicesAvailabilitiesOKBodyItems0ProductTypeSwitch string = "switch"
+
+	// GetOrganizationDevicesAvailabilitiesOKBodyItems0ProductTypeSystemsManager captures enum value "systemsManager"
+	GetOrganizationDevicesAvailabilitiesOKBodyItems0ProductTypeSystemsManager string = "systemsManager"
+
+	// GetOrganizationDevicesAvailabilitiesOKBodyItems0ProductTypeWireless captures enum value "wireless"
+	GetOrganizationDevicesAvailabilitiesOKBodyItems0ProductTypeWireless string = "wireless"
 )
 
 // prop value enum
@@ -240,7 +250,7 @@ var getOrganizationDevicesAvailabilitiesOKBodyItems0TypeStatusPropEnum []interfa
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["online","alerting","offline","dormant"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["alerting","dormant","offline","online"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -250,17 +260,17 @@ func init() {
 
 const (
 
-	// GetOrganizationDevicesAvailabilitiesOKBodyItems0StatusOnline captures enum value "online"
-	GetOrganizationDevicesAvailabilitiesOKBodyItems0StatusOnline string = "online"
-
 	// GetOrganizationDevicesAvailabilitiesOKBodyItems0StatusAlerting captures enum value "alerting"
 	GetOrganizationDevicesAvailabilitiesOKBodyItems0StatusAlerting string = "alerting"
+
+	// GetOrganizationDevicesAvailabilitiesOKBodyItems0StatusDormant captures enum value "dormant"
+	GetOrganizationDevicesAvailabilitiesOKBodyItems0StatusDormant string = "dormant"
 
 	// GetOrganizationDevicesAvailabilitiesOKBodyItems0StatusOffline captures enum value "offline"
 	GetOrganizationDevicesAvailabilitiesOKBodyItems0StatusOffline string = "offline"
 
-	// GetOrganizationDevicesAvailabilitiesOKBodyItems0StatusDormant captures enum value "dormant"
-	GetOrganizationDevicesAvailabilitiesOKBodyItems0StatusDormant string = "dormant"
+	// GetOrganizationDevicesAvailabilitiesOKBodyItems0StatusOnline captures enum value "online"
+	GetOrganizationDevicesAvailabilitiesOKBodyItems0StatusOnline string = "online"
 )
 
 // prop value enum
@@ -301,6 +311,11 @@ func (o *GetOrganizationDevicesAvailabilitiesOKBodyItems0) ContextValidate(ctx c
 func (o *GetOrganizationDevicesAvailabilitiesOKBodyItems0) contextValidateNetwork(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Network != nil {
+
+		if swag.IsZero(o.Network) { // not required
+			return nil
+		}
+
 		if err := o.Network.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("network")
@@ -332,7 +347,8 @@ func (o *GetOrganizationDevicesAvailabilitiesOKBodyItems0) UnmarshalBinary(b []b
 	return nil
 }
 
-/*GetOrganizationDevicesAvailabilitiesOKBodyItems0Network Network info.
+/*
+GetOrganizationDevicesAvailabilitiesOKBodyItems0Network Network info.
 swagger:model GetOrganizationDevicesAvailabilitiesOKBodyItems0Network
 */
 type GetOrganizationDevicesAvailabilitiesOKBodyItems0Network struct {

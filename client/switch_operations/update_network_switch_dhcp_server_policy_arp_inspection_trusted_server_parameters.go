@@ -52,17 +52,25 @@ func NewUpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerParamsWithH
 	}
 }
 
-/* UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerParams contains all the parameters to send to the API endpoint
-   for the update network switch dhcp server policy arp inspection trusted server operation.
+/*
+UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network switch dhcp server policy arp inspection trusted server operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// TrustedServerID.
+	/* TrustedServerID.
+
+	   Trusted server ID
+	*/
 	TrustedServerID string
 
 	// UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServer.

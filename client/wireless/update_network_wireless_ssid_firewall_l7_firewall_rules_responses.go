@@ -34,7 +34,7 @@ func (o *UpdateNetworkWirelessSsidFirewallL7FirewallRulesReader) ReadResponse(re
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/wireless/ssids/{number}/firewall/l7FirewallRules] updateNetworkWirelessSsidFirewallL7FirewallRules", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewUpdateNetworkWirelessSsidFirewallL7FirewallRulesOK() *UpdateNetworkWirel
 	return &UpdateNetworkWirelessSsidFirewallL7FirewallRulesOK{}
 }
 
-/* UpdateNetworkWirelessSsidFirewallL7FirewallRulesOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkWirelessSsidFirewallL7FirewallRulesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *UpdateNetworkWirelessSsidFirewallL7FirewallRulesOK) IsCode(code int) bo
 	return code == 200
 }
 
+// Code gets the status code for the update network wireless ssid firewall l7 firewall rules o k response
+func (o *UpdateNetworkWirelessSsidFirewallL7FirewallRulesOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkWirelessSsidFirewallL7FirewallRulesOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/wireless/ssids/{number}/firewall/l7FirewallRules][%d] updateNetworkWirelessSsidFirewallL7FirewallRulesOK  %+v", 200, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *UpdateNetworkWirelessSsidFirewallL7FirewallRulesOK) readResponse(respon
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidFirewallL7FirewallRulesBody update network wireless ssid firewall l7 firewall rules body
+/*
+UpdateNetworkWirelessSsidFirewallL7FirewallRulesBody update network wireless ssid firewall l7 firewall rules body
 // Example: {"rules":[{"policy":"deny","type":"host","value":"google.com"},{"policy":"deny","type":"port","value":"23"},{"policy":"deny","type":"ipRange","value":"10.11.12.00/24"},{"policy":"deny","type":"ipRange","value":"10.11.12.00/24:5555"}]}
 swagger:model UpdateNetworkWirelessSsidFirewallL7FirewallRulesBody
 */
@@ -167,6 +174,11 @@ func (o *UpdateNetworkWirelessSsidFirewallL7FirewallRulesBody) contextValidateRu
 	for i := 0; i < len(o.Rules); i++ {
 
 		if o.Rules[i] != nil {
+
+			if swag.IsZero(o.Rules[i]) { // not required
+				return nil
+			}
+
 			if err := o.Rules[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkWirelessSsidFirewallL7FirewallRules" + "." + "rules" + "." + strconv.Itoa(i))
@@ -200,7 +212,8 @@ func (o *UpdateNetworkWirelessSsidFirewallL7FirewallRulesBody) UnmarshalBinary(b
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidFirewallL7FirewallRulesParamsBodyRulesItems0 update network wireless ssid firewall l7 firewall rules params body rules items0
+/*
+UpdateNetworkWirelessSsidFirewallL7FirewallRulesParamsBodyRulesItems0 update network wireless ssid firewall l7 firewall rules params body rules items0
 swagger:model UpdateNetworkWirelessSsidFirewallL7FirewallRulesParamsBodyRulesItems0
 */
 type UpdateNetworkWirelessSsidFirewallL7FirewallRulesParamsBodyRulesItems0 struct {
@@ -210,7 +223,7 @@ type UpdateNetworkWirelessSsidFirewallL7FirewallRulesParamsBodyRulesItems0 struc
 	Policy string `json:"policy,omitempty"`
 
 	// Type of the L7 firewall rule. One of: 'application', 'applicationCategory', 'host', 'port', 'ipRange'
-	// Enum: [application applicationCategory host port ipRange]
+	// Enum: [application applicationCategory host ipRange port]
 	Type string `json:"type,omitempty"`
 
 	// The value of what needs to get blocked. Format of the value varies depending on type of the firewall rule selected.
@@ -278,7 +291,7 @@ var updateNetworkWirelessSsidFirewallL7FirewallRulesParamsBodyRulesItems0TypeTyp
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["application","applicationCategory","host","port","ipRange"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["application","applicationCategory","host","ipRange","port"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -297,11 +310,11 @@ const (
 	// UpdateNetworkWirelessSsidFirewallL7FirewallRulesParamsBodyRulesItems0TypeHost captures enum value "host"
 	UpdateNetworkWirelessSsidFirewallL7FirewallRulesParamsBodyRulesItems0TypeHost string = "host"
 
-	// UpdateNetworkWirelessSsidFirewallL7FirewallRulesParamsBodyRulesItems0TypePort captures enum value "port"
-	UpdateNetworkWirelessSsidFirewallL7FirewallRulesParamsBodyRulesItems0TypePort string = "port"
-
 	// UpdateNetworkWirelessSsidFirewallL7FirewallRulesParamsBodyRulesItems0TypeIPRange captures enum value "ipRange"
 	UpdateNetworkWirelessSsidFirewallL7FirewallRulesParamsBodyRulesItems0TypeIPRange string = "ipRange"
+
+	// UpdateNetworkWirelessSsidFirewallL7FirewallRulesParamsBodyRulesItems0TypePort captures enum value "port"
+	UpdateNetworkWirelessSsidFirewallL7FirewallRulesParamsBodyRulesItems0TypePort string = "port"
 )
 
 // prop value enum

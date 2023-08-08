@@ -52,17 +52,25 @@ func NewDeleteOrganizationAlertsProfileParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* DeleteOrganizationAlertsProfileParams contains all the parameters to send to the API endpoint
-   for the delete organization alerts profile operation.
+/*
+DeleteOrganizationAlertsProfileParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete organization alerts profile operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteOrganizationAlertsProfileParams struct {
 
-	// AlertConfigID.
+	/* AlertConfigID.
+
+	   Alert config ID
+	*/
 	AlertConfigID string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

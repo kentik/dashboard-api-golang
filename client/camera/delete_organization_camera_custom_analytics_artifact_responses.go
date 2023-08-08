@@ -27,7 +27,7 @@ func (o *DeleteOrganizationCameraCustomAnalyticsArtifactReader) ReadResponse(res
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[DELETE /organizations/{organizationId}/camera/customAnalytics/artifacts/{artifactId}] deleteOrganizationCameraCustomAnalyticsArtifact", response, response.Code())
 	}
 }
 
@@ -36,7 +36,8 @@ func NewDeleteOrganizationCameraCustomAnalyticsArtifactNoContent() *DeleteOrgani
 	return &DeleteOrganizationCameraCustomAnalyticsArtifactNoContent{}
 }
 
-/* DeleteOrganizationCameraCustomAnalyticsArtifactNoContent describes a response with status code 204, with default header values.
+/*
+DeleteOrganizationCameraCustomAnalyticsArtifactNoContent describes a response with status code 204, with default header values.
 
 Successful operation
 */
@@ -66,6 +67,11 @@ func (o *DeleteOrganizationCameraCustomAnalyticsArtifactNoContent) IsServerError
 // IsCode returns true when this delete organization camera custom analytics artifact no content response a status code equal to that given
 func (o *DeleteOrganizationCameraCustomAnalyticsArtifactNoContent) IsCode(code int) bool {
 	return code == 204
+}
+
+// Code gets the status code for the delete organization camera custom analytics artifact no content response
+func (o *DeleteOrganizationCameraCustomAnalyticsArtifactNoContent) Code() int {
+	return 204
 }
 
 func (o *DeleteOrganizationCameraCustomAnalyticsArtifactNoContent) Error() string {

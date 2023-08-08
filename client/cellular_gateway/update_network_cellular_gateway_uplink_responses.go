@@ -31,7 +31,7 @@ func (o *UpdateNetworkCellularGatewayUplinkReader) ReadResponse(response runtime
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/cellularGateway/uplink] updateNetworkCellularGatewayUplink", response, response.Code())
 	}
 }
 
@@ -40,7 +40,8 @@ func NewUpdateNetworkCellularGatewayUplinkOK() *UpdateNetworkCellularGatewayUpli
 	return &UpdateNetworkCellularGatewayUplinkOK{}
 }
 
-/* UpdateNetworkCellularGatewayUplinkOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkCellularGatewayUplinkOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -73,6 +74,11 @@ func (o *UpdateNetworkCellularGatewayUplinkOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network cellular gateway uplink o k response
+func (o *UpdateNetworkCellularGatewayUplinkOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkCellularGatewayUplinkOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/cellularGateway/uplink][%d] updateNetworkCellularGatewayUplinkOK  %+v", 200, o.Payload)
 }
@@ -95,8 +101,9 @@ func (o *UpdateNetworkCellularGatewayUplinkOK) readResponse(response runtime.Cli
 	return nil
 }
 
-/*UpdateNetworkCellularGatewayUplinkBody update network cellular gateway uplink body
-// Example: {}
+/*
+UpdateNetworkCellularGatewayUplinkBody update network cellular gateway uplink body
+// Example: {"bandwidthLimits":{"limitDown":1000,"limitUp":1000}}
 swagger:model UpdateNetworkCellularGatewayUplinkBody
 */
 type UpdateNetworkCellularGatewayUplinkBody struct {
@@ -155,6 +162,11 @@ func (o *UpdateNetworkCellularGatewayUplinkBody) ContextValidate(ctx context.Con
 func (o *UpdateNetworkCellularGatewayUplinkBody) contextValidateBandwidthLimits(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.BandwidthLimits != nil {
+
+		if swag.IsZero(o.BandwidthLimits) { // not required
+			return nil
+		}
+
 		if err := o.BandwidthLimits.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkCellularGatewayUplink" + "." + "bandwidthLimits")
@@ -186,7 +198,8 @@ func (o *UpdateNetworkCellularGatewayUplinkBody) UnmarshalBinary(b []byte) error
 	return nil
 }
 
-/*UpdateNetworkCellularGatewayUplinkParamsBodyBandwidthLimits The bandwidth settings for the 'cellular' uplink
+/*
+UpdateNetworkCellularGatewayUplinkParamsBodyBandwidthLimits The bandwidth settings for the 'cellular' uplink
 swagger:model UpdateNetworkCellularGatewayUplinkParamsBodyBandwidthLimits
 */
 type UpdateNetworkCellularGatewayUplinkParamsBodyBandwidthLimits struct {

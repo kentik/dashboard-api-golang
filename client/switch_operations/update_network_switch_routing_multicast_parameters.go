@@ -52,14 +52,19 @@ func NewUpdateNetworkSwitchRoutingMulticastParamsWithHTTPClient(client *http.Cli
 	}
 }
 
-/* UpdateNetworkSwitchRoutingMulticastParams contains all the parameters to send to the API endpoint
-   for the update network switch routing multicast operation.
+/*
+UpdateNetworkSwitchRoutingMulticastParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network switch routing multicast operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkSwitchRoutingMulticastParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkSwitchRoutingMulticast.

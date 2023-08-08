@@ -52,14 +52,19 @@ func NewGetNetworkCameraSchedulesParamsWithHTTPClient(client *http.Client) *GetN
 	}
 }
 
-/* GetNetworkCameraSchedulesParams contains all the parameters to send to the API endpoint
-   for the get network camera schedules operation.
+/*
+GetNetworkCameraSchedulesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network camera schedules operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkCameraSchedulesParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

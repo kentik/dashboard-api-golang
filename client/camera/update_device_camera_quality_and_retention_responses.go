@@ -33,7 +33,7 @@ func (o *UpdateDeviceCameraQualityAndRetentionReader) ReadResponse(response runt
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /devices/{serial}/camera/qualityAndRetention] updateDeviceCameraQualityAndRetention", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateDeviceCameraQualityAndRetentionOK() *UpdateDeviceCameraQualityAndR
 	return &UpdateDeviceCameraQualityAndRetentionOK{}
 }
 
-/* UpdateDeviceCameraQualityAndRetentionOK describes a response with status code 200, with default header values.
+/*
+UpdateDeviceCameraQualityAndRetentionOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateDeviceCameraQualityAndRetentionOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update device camera quality and retention o k response
+func (o *UpdateDeviceCameraQualityAndRetentionOK) Code() int {
+	return 200
+}
+
 func (o *UpdateDeviceCameraQualityAndRetentionOK) Error() string {
 	return fmt.Sprintf("[PUT /devices/{serial}/camera/qualityAndRetention][%d] updateDeviceCameraQualityAndRetentionOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateDeviceCameraQualityAndRetentionOK) readResponse(response runtime.
 	return nil
 }
 
-/*UpdateDeviceCameraQualityAndRetentionBody update device camera quality and retention body
+/*
+UpdateDeviceCameraQualityAndRetentionBody update device camera quality and retention body
 // Example: {"audioRecordingEnabled":false,"motionBasedRetentionEnabled":false,"motionDetectorVersion":2,"profileId":"1234","quality":"Standard","resolution":"1280x720","restrictedBandwidthModeEnabled":false}
 swagger:model UpdateDeviceCameraQualityAndRetentionBody
 */
@@ -117,11 +124,11 @@ type UpdateDeviceCameraQualityAndRetentionBody struct {
 	ProfileID string `json:"profileId,omitempty"`
 
 	// Quality of the camera. Can be one of 'Standard', 'High' or 'Enhanced'. Not all qualities are supported by every camera model.
-	// Enum: [Standard High Enhanced]
+	// Enum: [Enhanced High Standard]
 	Quality string `json:"quality,omitempty"`
 
-	// Resolution of the camera. Can be one of '1280x720', '1920x1080', '1080x1080' or '2058x2058'. Not all resolutions are supported by every camera model.
-	// Enum: [1280x720 1920x1080 1080x1080 2058x2058]
+	// Resolution of the camera. Can be one of '1280x720', '1920x1080', '1080x1080', '2058x2058', '2112x2112', '2880x2880', '2688x1512' or '3840x2160'.Not all resolutions are supported by every camera model.
+	// Enum: [1080x1080 1280x720 1920x1080 2058x2058 2112x2112 2688x1512 2880x2880 3840x2160]
 	Resolution string `json:"resolution,omitempty"`
 
 	// Boolean indicating if restricted bandwidth is enabled(true) or disabled(false) on the camera. This setting does not apply to MV2 cameras.
@@ -187,7 +194,7 @@ var updateDeviceCameraQualityAndRetentionBodyTypeQualityPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Standard","High","Enhanced"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Enhanced","High","Standard"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -197,14 +204,14 @@ func init() {
 
 const (
 
-	// UpdateDeviceCameraQualityAndRetentionBodyQualityStandard captures enum value "Standard"
-	UpdateDeviceCameraQualityAndRetentionBodyQualityStandard string = "Standard"
+	// UpdateDeviceCameraQualityAndRetentionBodyQualityEnhanced captures enum value "Enhanced"
+	UpdateDeviceCameraQualityAndRetentionBodyQualityEnhanced string = "Enhanced"
 
 	// UpdateDeviceCameraQualityAndRetentionBodyQualityHigh captures enum value "High"
 	UpdateDeviceCameraQualityAndRetentionBodyQualityHigh string = "High"
 
-	// UpdateDeviceCameraQualityAndRetentionBodyQualityEnhanced captures enum value "Enhanced"
-	UpdateDeviceCameraQualityAndRetentionBodyQualityEnhanced string = "Enhanced"
+	// UpdateDeviceCameraQualityAndRetentionBodyQualityStandard captures enum value "Standard"
+	UpdateDeviceCameraQualityAndRetentionBodyQualityStandard string = "Standard"
 )
 
 // prop value enum
@@ -232,7 +239,7 @@ var updateDeviceCameraQualityAndRetentionBodyTypeResolutionPropEnum []interface{
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["1280x720","1920x1080","1080x1080","2058x2058"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["1080x1080","1280x720","1920x1080","2058x2058","2112x2112","2688x1512","2880x2880","3840x2160"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -242,17 +249,29 @@ func init() {
 
 const (
 
+	// UpdateDeviceCameraQualityAndRetentionBodyResolutionNr1080x1080 captures enum value "1080x1080"
+	UpdateDeviceCameraQualityAndRetentionBodyResolutionNr1080x1080 string = "1080x1080"
+
 	// UpdateDeviceCameraQualityAndRetentionBodyResolutionNr1280x720 captures enum value "1280x720"
 	UpdateDeviceCameraQualityAndRetentionBodyResolutionNr1280x720 string = "1280x720"
 
 	// UpdateDeviceCameraQualityAndRetentionBodyResolutionNr1920x1080 captures enum value "1920x1080"
 	UpdateDeviceCameraQualityAndRetentionBodyResolutionNr1920x1080 string = "1920x1080"
 
-	// UpdateDeviceCameraQualityAndRetentionBodyResolutionNr1080x1080 captures enum value "1080x1080"
-	UpdateDeviceCameraQualityAndRetentionBodyResolutionNr1080x1080 string = "1080x1080"
-
 	// UpdateDeviceCameraQualityAndRetentionBodyResolutionNr2058x2058 captures enum value "2058x2058"
 	UpdateDeviceCameraQualityAndRetentionBodyResolutionNr2058x2058 string = "2058x2058"
+
+	// UpdateDeviceCameraQualityAndRetentionBodyResolutionNr2112x2112 captures enum value "2112x2112"
+	UpdateDeviceCameraQualityAndRetentionBodyResolutionNr2112x2112 string = "2112x2112"
+
+	// UpdateDeviceCameraQualityAndRetentionBodyResolutionNr2688x1512 captures enum value "2688x1512"
+	UpdateDeviceCameraQualityAndRetentionBodyResolutionNr2688x1512 string = "2688x1512"
+
+	// UpdateDeviceCameraQualityAndRetentionBodyResolutionNr2880x2880 captures enum value "2880x2880"
+	UpdateDeviceCameraQualityAndRetentionBodyResolutionNr2880x2880 string = "2880x2880"
+
+	// UpdateDeviceCameraQualityAndRetentionBodyResolutionNr3840x2160 captures enum value "3840x2160"
+	UpdateDeviceCameraQualityAndRetentionBodyResolutionNr3840x2160 string = "3840x2160"
 )
 
 // prop value enum

@@ -52,14 +52,19 @@ func NewGetDeviceCameraVideoSettingsParamsWithHTTPClient(client *http.Client) *G
 	}
 }
 
-/* GetDeviceCameraVideoSettingsParams contains all the parameters to send to the API endpoint
-   for the get device camera video settings operation.
+/*
+GetDeviceCameraVideoSettingsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get device camera video settings operation.
+
+	Typically these are written to a http.Request.
 */
 type GetDeviceCameraVideoSettingsParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	timeout    time.Duration

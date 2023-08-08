@@ -52,14 +52,19 @@ func NewUpdateNetworkSwitchAlternateManagementInterfaceParamsWithHTTPClient(clie
 	}
 }
 
-/* UpdateNetworkSwitchAlternateManagementInterfaceParams contains all the parameters to send to the API endpoint
-   for the update network switch alternate management interface operation.
+/*
+UpdateNetworkSwitchAlternateManagementInterfaceParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network switch alternate management interface operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkSwitchAlternateManagementInterfaceParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkSwitchAlternateManagementInterface.

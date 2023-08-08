@@ -6,11 +6,15 @@ package switch_operations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
+	"strconv"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetNetworkSwitchStackRoutingInterfaceDhcpReader is a Reader for the GetNetworkSwitchStackRoutingInterfaceDhcp structure.
@@ -28,7 +32,7 @@ func (o *GetNetworkSwitchStackRoutingInterfaceDhcpReader) ReadResponse(response 
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/switch/stacks/{switchStackId}/routing/interfaces/{interfaceId}/dhcp] getNetworkSwitchStackRoutingInterfaceDhcp", response, response.Code())
 	}
 }
 
@@ -37,12 +41,13 @@ func NewGetNetworkSwitchStackRoutingInterfaceDhcpOK() *GetNetworkSwitchStackRout
 	return &GetNetworkSwitchStackRoutingInterfaceDhcpOK{}
 }
 
-/* GetNetworkSwitchStackRoutingInterfaceDhcpOK describes a response with status code 200, with default header values.
+/*
+GetNetworkSwitchStackRoutingInterfaceDhcpOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkSwitchStackRoutingInterfaceDhcpOK struct {
-	Payload interface{}
+	Payload *GetNetworkSwitchStackRoutingInterfaceDhcpOKBody
 }
 
 // IsSuccess returns true when this get network switch stack routing interface dhcp o k response has a 2xx status code
@@ -70,6 +75,11 @@ func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network switch stack routing interface dhcp o k response
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/switch/stacks/{switchStackId}/routing/interfaces/{interfaceId}/dhcp][%d] getNetworkSwitchStackRoutingInterfaceDhcpOK  %+v", 200, o.Payload)
 }
@@ -78,16 +88,402 @@ func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/switch/stacks/{switchStackId}/routing/interfaces/{interfaceId}/dhcp][%d] getNetworkSwitchStackRoutingInterfaceDhcpOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOK) GetPayload() interface{} {
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOK) GetPayload() *GetNetworkSwitchStackRoutingInterfaceDhcpOKBody {
 	return o.Payload
 }
 
 func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetNetworkSwitchStackRoutingInterfaceDhcpOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkSwitchStackRoutingInterfaceDhcpOKBody get network switch stack routing interface dhcp o k body
+swagger:model GetNetworkSwitchStackRoutingInterfaceDhcpOKBody
+*/
+type GetNetworkSwitchStackRoutingInterfaceDhcpOKBody struct {
+
+	// The PXE boot server file name for the DHCP server running on the switch stack interface
+	BootFileName string `json:"bootFileName,omitempty"`
+
+	// The PXE boot server IP for the DHCP server running on the switch stack interface
+	BootNextServer string `json:"bootNextServer,omitempty"`
+
+	// Enable DHCP boot options to provide PXE boot options configs for the dhcp server running on the switch stack interface
+	BootOptionsEnabled bool `json:"bootOptionsEnabled,omitempty"`
+
+	// The DHCP lease time config for the dhcp server running on the switch stack interface ('30 minutes', '1 hour', '4 hours', '12 hours', '1 day' or '1 week')
+	DhcpLeaseTime string `json:"dhcpLeaseTime,omitempty"`
+
+	// The DHCP mode options for the switch stack interface ('dhcpDisabled', 'dhcpRelay' or 'dhcpServer')
+	DhcpMode string `json:"dhcpMode,omitempty"`
+
+	// Array of DHCP options consisting of code, type and value for the DHCP server running on the switch stack interface
+	DhcpOptions []*GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyDhcpOptionsItems0 `json:"dhcpOptions"`
+
+	// The DHCP name server IPs when DHCP name server option is 'custom'
+	DNSCustomNameservers []string `json:"dnsCustomNameservers"`
+
+	// The DHCP name server option for the dhcp server running on the switch stack interface ('googlePublicDns', 'openDns' or 'custom')
+	DNSNameserversOption string `json:"dnsNameserversOption,omitempty"`
+
+	// Array of DHCP reserved IP assignments for the DHCP server running on the switch stack interface
+	FixedIPAssignments []*GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyFixedIPAssignmentsItems0 `json:"fixedIpAssignments"`
+
+	// Array of DHCP reserved IP assignments for the DHCP server running on the switch stack interface
+	ReservedIPRanges []*GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyReservedIPRangesItems0 `json:"reservedIpRanges"`
+}
+
+// Validate validates this get network switch stack routing interface dhcp o k body
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateDhcpOptions(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateFixedIPAssignments(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateReservedIPRanges(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOKBody) validateDhcpOptions(formats strfmt.Registry) error {
+	if swag.IsZero(o.DhcpOptions) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.DhcpOptions); i++ {
+		if swag.IsZero(o.DhcpOptions[i]) { // not required
+			continue
+		}
+
+		if o.DhcpOptions[i] != nil {
+			if err := o.DhcpOptions[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkSwitchStackRoutingInterfaceDhcpOK" + "." + "dhcpOptions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkSwitchStackRoutingInterfaceDhcpOK" + "." + "dhcpOptions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOKBody) validateFixedIPAssignments(formats strfmt.Registry) error {
+	if swag.IsZero(o.FixedIPAssignments) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.FixedIPAssignments); i++ {
+		if swag.IsZero(o.FixedIPAssignments[i]) { // not required
+			continue
+		}
+
+		if o.FixedIPAssignments[i] != nil {
+			if err := o.FixedIPAssignments[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkSwitchStackRoutingInterfaceDhcpOK" + "." + "fixedIpAssignments" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkSwitchStackRoutingInterfaceDhcpOK" + "." + "fixedIpAssignments" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOKBody) validateReservedIPRanges(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReservedIPRanges) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.ReservedIPRanges); i++ {
+		if swag.IsZero(o.ReservedIPRanges[i]) { // not required
+			continue
+		}
+
+		if o.ReservedIPRanges[i] != nil {
+			if err := o.ReservedIPRanges[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkSwitchStackRoutingInterfaceDhcpOK" + "." + "reservedIpRanges" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkSwitchStackRoutingInterfaceDhcpOK" + "." + "reservedIpRanges" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network switch stack routing interface dhcp o k body based on the context it is used
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateDhcpOptions(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateFixedIPAssignments(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateReservedIPRanges(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOKBody) contextValidateDhcpOptions(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.DhcpOptions); i++ {
+
+		if o.DhcpOptions[i] != nil {
+
+			if swag.IsZero(o.DhcpOptions[i]) { // not required
+				return nil
+			}
+
+			if err := o.DhcpOptions[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkSwitchStackRoutingInterfaceDhcpOK" + "." + "dhcpOptions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkSwitchStackRoutingInterfaceDhcpOK" + "." + "dhcpOptions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOKBody) contextValidateFixedIPAssignments(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.FixedIPAssignments); i++ {
+
+		if o.FixedIPAssignments[i] != nil {
+
+			if swag.IsZero(o.FixedIPAssignments[i]) { // not required
+				return nil
+			}
+
+			if err := o.FixedIPAssignments[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkSwitchStackRoutingInterfaceDhcpOK" + "." + "fixedIpAssignments" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkSwitchStackRoutingInterfaceDhcpOK" + "." + "fixedIpAssignments" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOKBody) contextValidateReservedIPRanges(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.ReservedIPRanges); i++ {
+
+		if o.ReservedIPRanges[i] != nil {
+
+			if swag.IsZero(o.ReservedIPRanges[i]) { // not required
+				return nil
+			}
+
+			if err := o.ReservedIPRanges[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkSwitchStackRoutingInterfaceDhcpOK" + "." + "reservedIpRanges" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkSwitchStackRoutingInterfaceDhcpOK" + "." + "reservedIpRanges" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOKBody) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchStackRoutingInterfaceDhcpOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyDhcpOptionsItems0 get network switch stack routing interface dhcp o k body dhcp options items0
+swagger:model GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyDhcpOptionsItems0
+*/
+type GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyDhcpOptionsItems0 struct {
+
+	// The code for DHCP option which should be from 2 to 254
+	Code string `json:"code,omitempty"`
+
+	// The type of the DHCP option which should be one of ('text', 'ip', 'integer' or 'hex')
+	Type string `json:"type,omitempty"`
+
+	// The value of the DHCP option
+	Value string `json:"value,omitempty"`
+}
+
+// Validate validates this get network switch stack routing interface dhcp o k body dhcp options items0
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyDhcpOptionsItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network switch stack routing interface dhcp o k body dhcp options items0 based on context it is used
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyDhcpOptionsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyDhcpOptionsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyDhcpOptionsItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyDhcpOptionsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyFixedIPAssignmentsItems0 get network switch stack routing interface dhcp o k body fixed IP assignments items0
+swagger:model GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyFixedIPAssignmentsItems0
+*/
+type GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyFixedIPAssignmentsItems0 struct {
+
+	// The IP address of the client which has fixed IP address assigned to it
+	IP string `json:"ip,omitempty"`
+
+	// The MAC address of the client which has fixed IP address
+	Mac string `json:"mac,omitempty"`
+
+	// The name of the client which has fixed IP address
+	Name string `json:"name,omitempty"`
+}
+
+// Validate validates this get network switch stack routing interface dhcp o k body fixed IP assignments items0
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyFixedIPAssignmentsItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network switch stack routing interface dhcp o k body fixed IP assignments items0 based on context it is used
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyFixedIPAssignmentsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyFixedIPAssignmentsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyFixedIPAssignmentsItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyFixedIPAssignmentsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyReservedIPRangesItems0 get network switch stack routing interface dhcp o k body reserved IP ranges items0
+swagger:model GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyReservedIPRangesItems0
+*/
+type GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyReservedIPRangesItems0 struct {
+
+	// The comment for the reserved IP range
+	Comment string `json:"comment,omitempty"`
+
+	// The ending IP address of the reserved IP range
+	End string `json:"end,omitempty"`
+
+	// The starting IP address of the reserved IP range
+	Start string `json:"start,omitempty"`
+}
+
+// Validate validates this get network switch stack routing interface dhcp o k body reserved IP ranges items0
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyReservedIPRangesItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network switch stack routing interface dhcp o k body reserved IP ranges items0 based on context it is used
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyReservedIPRangesItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyReservedIPRangesItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyReservedIPRangesItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchStackRoutingInterfaceDhcpOKBodyReservedIPRangesItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

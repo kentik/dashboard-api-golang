@@ -52,20 +52,31 @@ func NewDeleteNetworkWirelessSsidIdentityPskParamsWithHTTPClient(client *http.Cl
 	}
 }
 
-/* DeleteNetworkWirelessSsidIdentityPskParams contains all the parameters to send to the API endpoint
-   for the delete network wireless ssid identity psk operation.
+/*
+DeleteNetworkWirelessSsidIdentityPskParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete network wireless ssid identity psk operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteNetworkWirelessSsidIdentityPskParams struct {
 
-	// IdentityPskID.
+	/* IdentityPskID.
+
+	   Identity psk ID
+	*/
 	IdentityPskID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// Number.
+	/* Number.
+
+	   Number
+	*/
 	Number string
 
 	timeout    time.Duration

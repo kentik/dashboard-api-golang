@@ -32,7 +32,7 @@ func (o *MoveOrganizationLicensesSeatsReader) ReadResponse(response runtime.Clie
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /organizations/{organizationId}/licenses/moveSeats] moveOrganizationLicensesSeats", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewMoveOrganizationLicensesSeatsOK() *MoveOrganizationLicensesSeatsOK {
 	return &MoveOrganizationLicensesSeatsOK{}
 }
 
-/* MoveOrganizationLicensesSeatsOK describes a response with status code 200, with default header values.
+/*
+MoveOrganizationLicensesSeatsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *MoveOrganizationLicensesSeatsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the move organization licenses seats o k response
+func (o *MoveOrganizationLicensesSeatsOK) Code() int {
+	return 200
+}
+
 func (o *MoveOrganizationLicensesSeatsOK) Error() string {
 	return fmt.Sprintf("[POST /organizations/{organizationId}/licenses/moveSeats][%d] moveOrganizationLicensesSeatsOK  %+v", 200, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *MoveOrganizationLicensesSeatsOK) readResponse(response runtime.ClientRe
 	return nil
 }
 
-/*MoveOrganizationLicensesSeatsBody move organization licenses seats body
+/*
+MoveOrganizationLicensesSeatsBody move organization licenses seats body
 // Example: {"destOrganizationId":"2930418","licenseId":"1234","seatCount":20}
 swagger:model MoveOrganizationLicensesSeatsBody
 */
@@ -189,7 +196,8 @@ func (o *MoveOrganizationLicensesSeatsBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*MoveOrganizationLicensesSeatsOKBody move organization licenses seats o k body
+/*
+MoveOrganizationLicensesSeatsOKBody move organization licenses seats o k body
 swagger:model MoveOrganizationLicensesSeatsOKBody
 */
 type MoveOrganizationLicensesSeatsOKBody struct {

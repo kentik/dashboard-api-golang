@@ -6,11 +6,17 @@ package appliance
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+	"encoding/json"
 	"fmt"
 	"io"
+	"strconv"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // GetNetworkApplianceSingleLanReader is a Reader for the GetNetworkApplianceSingleLan structure.
@@ -28,7 +34,7 @@ func (o *GetNetworkApplianceSingleLanReader) ReadResponse(response runtime.Clien
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/appliance/singleLan] getNetworkApplianceSingleLan", response, response.Code())
 	}
 }
 
@@ -37,12 +43,13 @@ func NewGetNetworkApplianceSingleLanOK() *GetNetworkApplianceSingleLanOK {
 	return &GetNetworkApplianceSingleLanOK{}
 }
 
-/* GetNetworkApplianceSingleLanOK describes a response with status code 200, with default header values.
+/*
+GetNetworkApplianceSingleLanOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkApplianceSingleLanOK struct {
-	Payload interface{}
+	Payload *GetNetworkApplianceSingleLanOKBody
 }
 
 // IsSuccess returns true when this get network appliance single lan o k response has a 2xx status code
@@ -70,6 +77,11 @@ func (o *GetNetworkApplianceSingleLanOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network appliance single lan o k response
+func (o *GetNetworkApplianceSingleLanOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkApplianceSingleLanOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/appliance/singleLan][%d] getNetworkApplianceSingleLanOK  %+v", 200, o.Payload)
 }
@@ -78,16 +90,517 @@ func (o *GetNetworkApplianceSingleLanOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/appliance/singleLan][%d] getNetworkApplianceSingleLanOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkApplianceSingleLanOK) GetPayload() interface{} {
+func (o *GetNetworkApplianceSingleLanOK) GetPayload() *GetNetworkApplianceSingleLanOKBody {
 	return o.Payload
 }
 
 func (o *GetNetworkApplianceSingleLanOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetNetworkApplianceSingleLanOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkApplianceSingleLanOKBody get network appliance single lan o k body
+swagger:model GetNetworkApplianceSingleLanOKBody
+*/
+type GetNetworkApplianceSingleLanOKBody struct {
+
+	// The local IP of the appliance on the single LAN
+	ApplianceIP string `json:"applianceIp,omitempty"`
+
+	// ipv6
+	IPV6 *GetNetworkApplianceSingleLanOKBodyIPV6 `json:"ipv6,omitempty"`
+
+	// mandatory dhcp
+	MandatoryDhcp *GetNetworkApplianceSingleLanOKBodyMandatoryDhcp `json:"mandatoryDhcp,omitempty"`
+
+	// The subnet of the single LAN
+	Subnet string `json:"subnet,omitempty"`
+}
+
+// Validate validates this get network appliance single lan o k body
+func (o *GetNetworkApplianceSingleLanOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateIPV6(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateMandatoryDhcp(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkApplianceSingleLanOKBody) validateIPV6(formats strfmt.Registry) error {
+	if swag.IsZero(o.IPV6) { // not required
+		return nil
+	}
+
+	if o.IPV6 != nil {
+		if err := o.IPV6.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkApplianceSingleLanOK" + "." + "ipv6")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkApplianceSingleLanOK" + "." + "ipv6")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkApplianceSingleLanOKBody) validateMandatoryDhcp(formats strfmt.Registry) error {
+	if swag.IsZero(o.MandatoryDhcp) { // not required
+		return nil
+	}
+
+	if o.MandatoryDhcp != nil {
+		if err := o.MandatoryDhcp.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkApplianceSingleLanOK" + "." + "mandatoryDhcp")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkApplianceSingleLanOK" + "." + "mandatoryDhcp")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network appliance single lan o k body based on the context it is used
+func (o *GetNetworkApplianceSingleLanOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateIPV6(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateMandatoryDhcp(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkApplianceSingleLanOKBody) contextValidateIPV6(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.IPV6 != nil {
+
+		if swag.IsZero(o.IPV6) { // not required
+			return nil
+		}
+
+		if err := o.IPV6.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkApplianceSingleLanOK" + "." + "ipv6")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkApplianceSingleLanOK" + "." + "ipv6")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkApplianceSingleLanOKBody) contextValidateMandatoryDhcp(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.MandatoryDhcp != nil {
+
+		if swag.IsZero(o.MandatoryDhcp) { // not required
+			return nil
+		}
+
+		if err := o.MandatoryDhcp.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkApplianceSingleLanOK" + "." + "mandatoryDhcp")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkApplianceSingleLanOK" + "." + "mandatoryDhcp")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkApplianceSingleLanOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkApplianceSingleLanOKBody) UnmarshalBinary(b []byte) error {
+	var res GetNetworkApplianceSingleLanOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkApplianceSingleLanOKBodyIPV6 IPv6 configuration on the single LAN
+swagger:model GetNetworkApplianceSingleLanOKBodyIPV6
+*/
+type GetNetworkApplianceSingleLanOKBodyIPV6 struct {
+
+	// Enable IPv6 on single LAN
+	Enabled bool `json:"enabled,omitempty"`
+
+	// Prefix assignments on the single LAN
+	PrefixAssignments []*GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0 `json:"prefixAssignments"`
+}
+
+// Validate validates this get network appliance single lan o k body IP v6
+func (o *GetNetworkApplianceSingleLanOKBodyIPV6) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validatePrefixAssignments(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkApplianceSingleLanOKBodyIPV6) validatePrefixAssignments(formats strfmt.Registry) error {
+	if swag.IsZero(o.PrefixAssignments) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.PrefixAssignments); i++ {
+		if swag.IsZero(o.PrefixAssignments[i]) { // not required
+			continue
+		}
+
+		if o.PrefixAssignments[i] != nil {
+			if err := o.PrefixAssignments[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkApplianceSingleLanOK" + "." + "ipv6" + "." + "prefixAssignments" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkApplianceSingleLanOK" + "." + "ipv6" + "." + "prefixAssignments" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network appliance single lan o k body IP v6 based on the context it is used
+func (o *GetNetworkApplianceSingleLanOKBodyIPV6) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidatePrefixAssignments(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkApplianceSingleLanOKBodyIPV6) contextValidatePrefixAssignments(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.PrefixAssignments); i++ {
+
+		if o.PrefixAssignments[i] != nil {
+
+			if swag.IsZero(o.PrefixAssignments[i]) { // not required
+				return nil
+			}
+
+			if err := o.PrefixAssignments[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkApplianceSingleLanOK" + "." + "ipv6" + "." + "prefixAssignments" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkApplianceSingleLanOK" + "." + "ipv6" + "." + "prefixAssignments" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkApplianceSingleLanOKBodyIPV6) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkApplianceSingleLanOKBodyIPV6) UnmarshalBinary(b []byte) error {
+	var res GetNetworkApplianceSingleLanOKBodyIPV6
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0 get network appliance single lan o k body IP v6 prefix assignments items0
+swagger:model GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0
+*/
+type GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0 struct {
+
+	// Auto assign a /64 prefix from the origin to the single LAN
+	Autonomous bool `json:"autonomous,omitempty"`
+
+	// origin
+	Origin *GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0Origin `json:"origin,omitempty"`
+
+	// Manual configuration of the IPv6 Appliance IP
+	StaticApplianceIp6 string `json:"staticApplianceIp6,omitempty"`
+
+	// Manual configuration of a /64 prefix on the single LAN
+	StaticPrefix string `json:"staticPrefix,omitempty"`
+}
+
+// Validate validates this get network appliance single lan o k body IP v6 prefix assignments items0
+func (o *GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateOrigin(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0) validateOrigin(formats strfmt.Registry) error {
+	if swag.IsZero(o.Origin) { // not required
+		return nil
+	}
+
+	if o.Origin != nil {
+		if err := o.Origin.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("origin")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("origin")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network appliance single lan o k body IP v6 prefix assignments items0 based on the context it is used
+func (o *GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateOrigin(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0) contextValidateOrigin(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Origin != nil {
+
+		if swag.IsZero(o.Origin) { // not required
+			return nil
+		}
+
+		if err := o.Origin.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("origin")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("origin")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0Origin The origin of the prefix
+swagger:model GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0Origin
+*/
+type GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0Origin struct {
+
+	// Interfaces associated with the prefix
+	Interfaces []string `json:"interfaces"`
+
+	// Type of the origin
+	// Enum: [independent internet]
+	Type string `json:"type,omitempty"`
+}
+
+// Validate validates this get network appliance single lan o k body IP v6 prefix assignments items0 origin
+func (o *GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0Origin) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var getNetworkApplianceSingleLanOKBodyIpV6PrefixAssignmentsItems0OriginTypeTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["independent","internet"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getNetworkApplianceSingleLanOKBodyIpV6PrefixAssignmentsItems0OriginTypeTypePropEnum = append(getNetworkApplianceSingleLanOKBodyIpV6PrefixAssignmentsItems0OriginTypeTypePropEnum, v)
+	}
+}
+
+const (
+
+	// GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0OriginTypeIndependent captures enum value "independent"
+	GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0OriginTypeIndependent string = "independent"
+
+	// GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0OriginTypeInternet captures enum value "internet"
+	GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0OriginTypeInternet string = "internet"
+)
+
+// prop value enum
+func (o *GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0Origin) validateTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getNetworkApplianceSingleLanOKBodyIpV6PrefixAssignmentsItems0OriginTypeTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0Origin) validateType(formats strfmt.Registry) error {
+	if swag.IsZero(o.Type) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateTypeEnum("origin"+"."+"type", "body", o.Type); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this get network appliance single lan o k body IP v6 prefix assignments items0 origin based on context it is used
+func (o *GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0Origin) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0Origin) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0Origin) UnmarshalBinary(b []byte) error {
+	var res GetNetworkApplianceSingleLanOKBodyIPV6PrefixAssignmentsItems0Origin
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkApplianceSingleLanOKBodyMandatoryDhcp Mandatory DHCP will enforce that clients connecting to this single LAN must use the IP address assigned by the DHCP server. Clients who use a static IP address won't be able to associate. Only available on firmware versions 17.0 and above
+swagger:model GetNetworkApplianceSingleLanOKBodyMandatoryDhcp
+*/
+type GetNetworkApplianceSingleLanOKBodyMandatoryDhcp struct {
+
+	// Enable Mandatory DHCP on single LAN.
+	Enabled bool `json:"enabled,omitempty"`
+}
+
+// Validate validates this get network appliance single lan o k body mandatory dhcp
+func (o *GetNetworkApplianceSingleLanOKBodyMandatoryDhcp) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network appliance single lan o k body mandatory dhcp based on context it is used
+func (o *GetNetworkApplianceSingleLanOKBodyMandatoryDhcp) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkApplianceSingleLanOKBodyMandatoryDhcp) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkApplianceSingleLanOKBodyMandatoryDhcp) UnmarshalBinary(b []byte) error {
+	var res GetNetworkApplianceSingleLanOKBodyMandatoryDhcp
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

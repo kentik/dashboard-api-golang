@@ -6,11 +6,13 @@ package organizations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetOrganizationSamlIdpReader is a Reader for the GetOrganizationSamlIdp structure.
@@ -28,7 +30,7 @@ func (o *GetOrganizationSamlIdpReader) ReadResponse(response runtime.ClientRespo
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/saml/idps/{idpId}] getOrganizationSamlIdp", response, response.Code())
 	}
 }
 
@@ -37,12 +39,13 @@ func NewGetOrganizationSamlIdpOK() *GetOrganizationSamlIdpOK {
 	return &GetOrganizationSamlIdpOK{}
 }
 
-/* GetOrganizationSamlIdpOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationSamlIdpOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetOrganizationSamlIdpOK struct {
-	Payload interface{}
+	Payload *GetOrganizationSamlIdpOKBody
 }
 
 // IsSuccess returns true when this get organization saml idp o k response has a 2xx status code
@@ -70,6 +73,11 @@ func (o *GetOrganizationSamlIdpOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get organization saml idp o k response
+func (o *GetOrganizationSamlIdpOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationSamlIdpOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/saml/idps/{idpId}][%d] getOrganizationSamlIdpOK  %+v", 200, o.Payload)
 }
@@ -78,16 +86,65 @@ func (o *GetOrganizationSamlIdpOK) String() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/saml/idps/{idpId}][%d] getOrganizationSamlIdpOK  %+v", 200, o.Payload)
 }
 
-func (o *GetOrganizationSamlIdpOK) GetPayload() interface{} {
+func (o *GetOrganizationSamlIdpOK) GetPayload() *GetOrganizationSamlIdpOKBody {
 	return o.Payload
 }
 
 func (o *GetOrganizationSamlIdpOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetOrganizationSamlIdpOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetOrganizationSamlIdpOKBody get organization saml idp o k body
+swagger:model GetOrganizationSamlIdpOKBody
+*/
+type GetOrganizationSamlIdpOKBody struct {
+
+	// URL that is consuming SAML Identity Provider (IdP)
+	ConsumerURL string `json:"consumerUrl,omitempty"`
+
+	// ID associated with the SAML Identity Provider (IdP)
+	IdpID string `json:"idpId,omitempty"`
+
+	// Dashboard will redirect users to this URL when they sign out.
+	SloLogoutURL string `json:"sloLogoutUrl,omitempty"`
+
+	// Fingerprint (SHA1) of the SAML certificate provided by your Identity Provider (IdP). This will be used for encryption / validation.
+	X509certSha1Fingerprint string `json:"x509certSha1Fingerprint,omitempty"`
+}
+
+// Validate validates this get organization saml idp o k body
+func (o *GetOrganizationSamlIdpOKBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get organization saml idp o k body based on context it is used
+func (o *GetOrganizationSamlIdpOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetOrganizationSamlIdpOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetOrganizationSamlIdpOKBody) UnmarshalBinary(b []byte) error {
+	var res GetOrganizationSamlIdpOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

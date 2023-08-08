@@ -30,7 +30,7 @@ func (o *CreateNetworkSmTargetGroupReader) ReadResponse(response runtime.ClientR
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/sm/targetGroups] createNetworkSmTargetGroup", response, response.Code())
 	}
 }
 
@@ -39,7 +39,8 @@ func NewCreateNetworkSmTargetGroupCreated() *CreateNetworkSmTargetGroupCreated {
 	return &CreateNetworkSmTargetGroupCreated{}
 }
 
-/* CreateNetworkSmTargetGroupCreated describes a response with status code 201, with default header values.
+/*
+CreateNetworkSmTargetGroupCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
@@ -72,6 +73,11 @@ func (o *CreateNetworkSmTargetGroupCreated) IsCode(code int) bool {
 	return code == 201
 }
 
+// Code gets the status code for the create network sm target group created response
+func (o *CreateNetworkSmTargetGroupCreated) Code() int {
+	return 201
+}
+
 func (o *CreateNetworkSmTargetGroupCreated) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/sm/targetGroups][%d] createNetworkSmTargetGroupCreated  %+v", 201, o.Payload)
 }
@@ -94,7 +100,8 @@ func (o *CreateNetworkSmTargetGroupCreated) readResponse(response runtime.Client
 	return nil
 }
 
-/*CreateNetworkSmTargetGroupBody create network sm target group body
+/*
+CreateNetworkSmTargetGroupBody create network sm target group body
 // Example: {"name":"My target group","scope":"none","tags":"[]","type":"devices"}
 swagger:model CreateNetworkSmTargetGroupBody
 */

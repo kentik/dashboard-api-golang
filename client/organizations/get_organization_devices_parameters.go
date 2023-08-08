@@ -53,10 +53,12 @@ func NewGetOrganizationDevicesParamsWithHTTPClient(client *http.Client) *GetOrga
 	}
 }
 
-/* GetOrganizationDevicesParams contains all the parameters to send to the API endpoint
-   for the get organization devices operation.
+/*
+GetOrganizationDevicesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization devices operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationDevicesParams struct {
 
@@ -108,7 +110,10 @@ type GetOrganizationDevicesParams struct {
 	*/
 	NetworkIds []string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	/* PerPage.
@@ -119,7 +124,7 @@ type GetOrganizationDevicesParams struct {
 
 	/* ProductTypes.
 
-	   Optional parameter to filter devices by product type. Valid types are wireless, appliance, switch, systemsManager, camera, cellularGateway, and sensor.
+	   Optional parameter to filter devices by product type. Valid types are wireless, appliance, switch, systemsManager, camera, cellularGateway, sensor, and cloudGateway.
 	*/
 	ProductTypes []string
 

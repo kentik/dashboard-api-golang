@@ -6,11 +6,15 @@ package switch_operations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // GetDeviceSwitchRoutingStaticRouteReader is a Reader for the GetDeviceSwitchRoutingStaticRoute structure.
@@ -28,7 +32,7 @@ func (o *GetDeviceSwitchRoutingStaticRouteReader) ReadResponse(response runtime.
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /devices/{serial}/switch/routing/staticRoutes/{staticRouteId}] getDeviceSwitchRoutingStaticRoute", response, response.Code())
 	}
 }
 
@@ -37,12 +41,13 @@ func NewGetDeviceSwitchRoutingStaticRouteOK() *GetDeviceSwitchRoutingStaticRoute
 	return &GetDeviceSwitchRoutingStaticRouteOK{}
 }
 
-/* GetDeviceSwitchRoutingStaticRouteOK describes a response with status code 200, with default header values.
+/*
+GetDeviceSwitchRoutingStaticRouteOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetDeviceSwitchRoutingStaticRouteOK struct {
-	Payload interface{}
+	Payload *GetDeviceSwitchRoutingStaticRouteOKBody
 }
 
 // IsSuccess returns true when this get device switch routing static route o k response has a 2xx status code
@@ -70,6 +75,11 @@ func (o *GetDeviceSwitchRoutingStaticRouteOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get device switch routing static route o k response
+func (o *GetDeviceSwitchRoutingStaticRouteOK) Code() int {
+	return 200
+}
+
 func (o *GetDeviceSwitchRoutingStaticRouteOK) Error() string {
 	return fmt.Sprintf("[GET /devices/{serial}/switch/routing/staticRoutes/{staticRouteId}][%d] getDeviceSwitchRoutingStaticRouteOK  %+v", 200, o.Payload)
 }
@@ -78,16 +88,104 @@ func (o *GetDeviceSwitchRoutingStaticRouteOK) String() string {
 	return fmt.Sprintf("[GET /devices/{serial}/switch/routing/staticRoutes/{staticRouteId}][%d] getDeviceSwitchRoutingStaticRouteOK  %+v", 200, o.Payload)
 }
 
-func (o *GetDeviceSwitchRoutingStaticRouteOK) GetPayload() interface{} {
+func (o *GetDeviceSwitchRoutingStaticRouteOK) GetPayload() *GetDeviceSwitchRoutingStaticRouteOKBody {
 	return o.Payload
 }
 
 func (o *GetDeviceSwitchRoutingStaticRouteOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetDeviceSwitchRoutingStaticRouteOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetDeviceSwitchRoutingStaticRouteOKBody get device switch routing static route o k body
+swagger:model GetDeviceSwitchRoutingStaticRouteOKBody
+*/
+type GetDeviceSwitchRoutingStaticRouteOKBody struct {
+
+	// Option to advertise static routes via OSPF
+	AdvertiseViaOspfEnabled bool `json:"advertiseViaOspfEnabled,omitempty"`
+
+	// The name or description of the layer 3 static route
+	Name string `json:"name,omitempty"`
+
+	//  The IP address of the router to which traffic for this destination network should be sent
+	// Required: true
+	NextHopIP *string `json:"nextHopIp"`
+
+	// Option to prefer static routes over OSPF routes
+	PreferOverOspfRoutesEnabled bool `json:"preferOverOspfRoutesEnabled,omitempty"`
+
+	// The identifier of a layer 3 static route
+	StaticRouteID string `json:"staticRouteId,omitempty"`
+
+	// The IP address of the subnetwork specified in CIDR notation (ex. 1.2.3.0/24)
+	// Required: true
+	Subnet *string `json:"subnet"`
+}
+
+// Validate validates this get device switch routing static route o k body
+func (o *GetDeviceSwitchRoutingStaticRouteOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateNextHopIP(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSubnet(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetDeviceSwitchRoutingStaticRouteOKBody) validateNextHopIP(formats strfmt.Registry) error {
+
+	if err := validate.Required("getDeviceSwitchRoutingStaticRouteOK"+"."+"nextHopIp", "body", o.NextHopIP); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *GetDeviceSwitchRoutingStaticRouteOKBody) validateSubnet(formats strfmt.Registry) error {
+
+	if err := validate.Required("getDeviceSwitchRoutingStaticRouteOK"+"."+"subnet", "body", o.Subnet); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this get device switch routing static route o k body based on context it is used
+func (o *GetDeviceSwitchRoutingStaticRouteOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetDeviceSwitchRoutingStaticRouteOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetDeviceSwitchRoutingStaticRouteOKBody) UnmarshalBinary(b []byte) error {
+	var res GetDeviceSwitchRoutingStaticRouteOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

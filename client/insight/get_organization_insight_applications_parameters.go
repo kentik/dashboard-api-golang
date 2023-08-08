@@ -52,14 +52,19 @@ func NewGetOrganizationInsightApplicationsParamsWithHTTPClient(client *http.Clie
 	}
 }
 
-/* GetOrganizationInsightApplicationsParams contains all the parameters to send to the API endpoint
-   for the get organization insight applications operation.
+/*
+GetOrganizationInsightApplicationsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization insight applications operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationInsightApplicationsParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

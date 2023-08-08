@@ -52,17 +52,25 @@ func NewDeleteNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerParamsWithH
 	}
 }
 
-/* DeleteNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerParams contains all the parameters to send to the API endpoint
-   for the delete network switch dhcp server policy arp inspection trusted server operation.
+/*
+DeleteNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete network switch dhcp server policy arp inspection trusted server operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// TrustedServerID.
+	/* TrustedServerID.
+
+	   Trusted server ID
+	*/
 	TrustedServerID string
 
 	timeout    time.Duration

@@ -52,17 +52,22 @@ func NewCombineOrganizationNetworksParamsWithHTTPClient(client *http.Client) *Co
 	}
 }
 
-/* CombineOrganizationNetworksParams contains all the parameters to send to the API endpoint
-   for the combine organization networks operation.
+/*
+CombineOrganizationNetworksParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the combine organization networks operation.
+
+	Typically these are written to a http.Request.
 */
 type CombineOrganizationNetworksParams struct {
 
 	// CombineOrganizationNetworks.
 	CombineOrganizationNetworks CombineOrganizationNetworksBody
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

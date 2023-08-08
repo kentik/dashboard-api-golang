@@ -33,7 +33,7 @@ func (o *UpdateNetworkApplianceSecurityIntrusionReader) ReadResponse(response ru
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/appliance/security/intrusion] updateNetworkApplianceSecurityIntrusion", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateNetworkApplianceSecurityIntrusionOK() *UpdateNetworkApplianceSecur
 	return &UpdateNetworkApplianceSecurityIntrusionOK{}
 }
 
-/* UpdateNetworkApplianceSecurityIntrusionOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkApplianceSecurityIntrusionOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateNetworkApplianceSecurityIntrusionOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network appliance security intrusion o k response
+func (o *UpdateNetworkApplianceSecurityIntrusionOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkApplianceSecurityIntrusionOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/appliance/security/intrusion][%d] updateNetworkApplianceSecurityIntrusionOK  %+v", 200, o.Payload)
 }
@@ -97,18 +103,19 @@ func (o *UpdateNetworkApplianceSecurityIntrusionOK) readResponse(response runtim
 	return nil
 }
 
-/*UpdateNetworkApplianceSecurityIntrusionBody update network appliance security intrusion body
+/*
+UpdateNetworkApplianceSecurityIntrusionBody update network appliance security intrusion body
 // Example: {"idsRulesets":"balanced","mode":"prevention","protectedNetworks":{"excludedCidr":["10.0.0.0/8","127.0.0.0/8"],"includedCidr":["10.0.0.0/8","127.0.0.0/8","169.254.0.0/16","172.16.0.0/12"],"useDefault":false}}
 swagger:model UpdateNetworkApplianceSecurityIntrusionBody
 */
 type UpdateNetworkApplianceSecurityIntrusionBody struct {
 
 	// Set the detection ruleset 'connectivity'/'balanced'/'security' (optional - omitting will leave current config unchanged). Default value is 'balanced' if none currently saved
-	// Enum: [connectivity balanced security]
+	// Enum: [balanced connectivity security]
 	IdsRulesets string `json:"idsRulesets,omitempty"`
 
 	// Set mode to 'disabled'/'detection'/'prevention' (optional - omitting will leave current config unchanged)
-	// Enum: [prevention detection disabled]
+	// Enum: [detection disabled prevention]
 	Mode string `json:"mode,omitempty"`
 
 	// protected networks
@@ -141,7 +148,7 @@ var updateNetworkApplianceSecurityIntrusionBodyTypeIdsRulesetsPropEnum []interfa
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["connectivity","balanced","security"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["balanced","connectivity","security"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -151,11 +158,11 @@ func init() {
 
 const (
 
-	// UpdateNetworkApplianceSecurityIntrusionBodyIdsRulesetsConnectivity captures enum value "connectivity"
-	UpdateNetworkApplianceSecurityIntrusionBodyIdsRulesetsConnectivity string = "connectivity"
-
 	// UpdateNetworkApplianceSecurityIntrusionBodyIdsRulesetsBalanced captures enum value "balanced"
 	UpdateNetworkApplianceSecurityIntrusionBodyIdsRulesetsBalanced string = "balanced"
+
+	// UpdateNetworkApplianceSecurityIntrusionBodyIdsRulesetsConnectivity captures enum value "connectivity"
+	UpdateNetworkApplianceSecurityIntrusionBodyIdsRulesetsConnectivity string = "connectivity"
 
 	// UpdateNetworkApplianceSecurityIntrusionBodyIdsRulesetsSecurity captures enum value "security"
 	UpdateNetworkApplianceSecurityIntrusionBodyIdsRulesetsSecurity string = "security"
@@ -186,7 +193,7 @@ var updateNetworkApplianceSecurityIntrusionBodyTypeModePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["prevention","detection","disabled"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["detection","disabled","prevention"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -196,14 +203,14 @@ func init() {
 
 const (
 
-	// UpdateNetworkApplianceSecurityIntrusionBodyModePrevention captures enum value "prevention"
-	UpdateNetworkApplianceSecurityIntrusionBodyModePrevention string = "prevention"
-
 	// UpdateNetworkApplianceSecurityIntrusionBodyModeDetection captures enum value "detection"
 	UpdateNetworkApplianceSecurityIntrusionBodyModeDetection string = "detection"
 
 	// UpdateNetworkApplianceSecurityIntrusionBodyModeDisabled captures enum value "disabled"
 	UpdateNetworkApplianceSecurityIntrusionBodyModeDisabled string = "disabled"
+
+	// UpdateNetworkApplianceSecurityIntrusionBodyModePrevention captures enum value "prevention"
+	UpdateNetworkApplianceSecurityIntrusionBodyModePrevention string = "prevention"
 )
 
 // prop value enum
@@ -263,6 +270,11 @@ func (o *UpdateNetworkApplianceSecurityIntrusionBody) ContextValidate(ctx contex
 func (o *UpdateNetworkApplianceSecurityIntrusionBody) contextValidateProtectedNetworks(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.ProtectedNetworks != nil {
+
+		if swag.IsZero(o.ProtectedNetworks) { // not required
+			return nil
+		}
+
 		if err := o.ProtectedNetworks.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkApplianceSecurityIntrusion" + "." + "protectedNetworks")
@@ -294,7 +306,8 @@ func (o *UpdateNetworkApplianceSecurityIntrusionBody) UnmarshalBinary(b []byte) 
 	return nil
 }
 
-/*UpdateNetworkApplianceSecurityIntrusionParamsBodyProtectedNetworks Set the included/excluded networks from the intrusion engine (optional - omitting will leave current config unchanged). This is available only in 'passthrough' mode
+/*
+UpdateNetworkApplianceSecurityIntrusionParamsBodyProtectedNetworks Set the included/excluded networks from the intrusion engine (optional - omitting will leave current config unchanged). This is available only in 'passthrough' mode
 swagger:model UpdateNetworkApplianceSecurityIntrusionParamsBodyProtectedNetworks
 */
 type UpdateNetworkApplianceSecurityIntrusionParamsBodyProtectedNetworks struct {

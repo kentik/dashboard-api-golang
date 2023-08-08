@@ -52,15 +52,23 @@ func NewUnbindNetworkParamsWithHTTPClient(client *http.Client) *UnbindNetworkPar
 	}
 }
 
-/* UnbindNetworkParams contains all the parameters to send to the API endpoint
-   for the unbind network operation.
+/*
+UnbindNetworkParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the unbind network operation.
+
+	Typically these are written to a http.Request.
 */
 type UnbindNetworkParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
+
+	// UnbindNetwork.
+	UnbindNetwork UnbindNetworkBody
 
 	timeout    time.Duration
 	Context    context.Context
@@ -126,6 +134,17 @@ func (o *UnbindNetworkParams) SetNetworkID(networkID string) {
 	o.NetworkID = networkID
 }
 
+// WithUnbindNetwork adds the unbindNetwork to the unbind network params
+func (o *UnbindNetworkParams) WithUnbindNetwork(unbindNetwork UnbindNetworkBody) *UnbindNetworkParams {
+	o.SetUnbindNetwork(unbindNetwork)
+	return o
+}
+
+// SetUnbindNetwork adds the unbindNetwork to the unbind network params
+func (o *UnbindNetworkParams) SetUnbindNetwork(unbindNetwork UnbindNetworkBody) {
+	o.UnbindNetwork = unbindNetwork
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *UnbindNetworkParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -136,6 +155,9 @@ func (o *UnbindNetworkParams) WriteToRequest(r runtime.ClientRequest, reg strfmt
 
 	// path param networkId
 	if err := r.SetPathParam("networkId", o.NetworkID); err != nil {
+		return err
+	}
+	if err := r.SetBodyParam(o.UnbindNetwork); err != nil {
 		return err
 	}
 

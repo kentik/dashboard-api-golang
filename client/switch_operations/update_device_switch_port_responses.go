@@ -33,7 +33,7 @@ func (o *UpdateDeviceSwitchPortReader) ReadResponse(response runtime.ClientRespo
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /devices/{serial}/switch/ports/{portId}] updateDeviceSwitchPort", response, response.Code())
 	}
 }
 
@@ -42,12 +42,13 @@ func NewUpdateDeviceSwitchPortOK() *UpdateDeviceSwitchPortOK {
 	return &UpdateDeviceSwitchPortOK{}
 }
 
-/* UpdateDeviceSwitchPortOK describes a response with status code 200, with default header values.
+/*
+UpdateDeviceSwitchPortOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateDeviceSwitchPortOK struct {
-	Payload interface{}
+	Payload *UpdateDeviceSwitchPortOKBody
 }
 
 // IsSuccess returns true when this update device switch port o k response has a 2xx status code
@@ -75,6 +76,11 @@ func (o *UpdateDeviceSwitchPortOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update device switch port o k response
+func (o *UpdateDeviceSwitchPortOK) Code() int {
+	return 200
+}
+
 func (o *UpdateDeviceSwitchPortOK) Error() string {
 	return fmt.Sprintf("[PUT /devices/{serial}/switch/ports/{portId}][%d] updateDeviceSwitchPortOK  %+v", 200, o.Payload)
 }
@@ -83,31 +89,34 @@ func (o *UpdateDeviceSwitchPortOK) String() string {
 	return fmt.Sprintf("[PUT /devices/{serial}/switch/ports/{portId}][%d] updateDeviceSwitchPortOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateDeviceSwitchPortOK) GetPayload() interface{} {
+func (o *UpdateDeviceSwitchPortOK) GetPayload() *UpdateDeviceSwitchPortOKBody {
 	return o.Payload
 }
 
 func (o *UpdateDeviceSwitchPortOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateDeviceSwitchPortOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateDeviceSwitchPortBody update device switch port body
-// Example: {"accessPolicyType":"Sticky MAC allow list","adaptivePolicyGroupId":"123","enabled":true,"isolationEnabled":false,"linkNegotiation":"Auto negotiate","linkNegotiationCapabilities":["Auto negotiate","1 Gigabit full duplex (auto)"],"name":"My switch port","peerSgtCapable":false,"poeEnabled":true,"portScheduleId":"1234","rstpEnabled":true,"stickyMacAllowList":["34:56:fe:ce:8e:b0","34:56:fe:ce:8e:b1"],"stickyMacAllowListLimit":5,"stormControlEnabled":true,"stpGuard":"disabled","tags":["tag1","tag2"],"type":"access","udld":"Alert only","vlan":10,"voiceVlan":20}
+/*
+UpdateDeviceSwitchPortBody update device switch port body
+// Example: {"accessPolicyNumber":2,"accessPolicyType":"Sticky MAC allow list","adaptivePolicyGroupId":"123","allowedVlans":"1,3,5-10","daiTrusted":false,"enabled":true,"flexibleStackingEnabled":true,"isolationEnabled":false,"linkNegotiation":"Auto negotiate","macAllowList":["34:56:fe:ce:8e:b0","34:56:fe:ce:8e:b1"],"name":"My switch port","peerSgtCapable":false,"poeEnabled":true,"portScheduleId":"1234","profile":{"enabled":false,"id":"1284392014819","iname":"iname"},"rstpEnabled":true,"stickyMacAllowList":["34:56:fe:ce:8e:b0","34:56:fe:ce:8e:b1"],"stickyMacAllowListLimit":5,"stormControlEnabled":true,"stpGuard":"disabled","tags":["tag1","tag2"],"type":"access","udld":"Alert only","vlan":10,"voiceVlan":20}
 swagger:model UpdateDeviceSwitchPortBody
 */
 type UpdateDeviceSwitchPortBody struct {
 
-	// The number of a custom access policy to configure on the switch port. Only applicable when 'accessPolicyType' is 'Custom access policy'
+	// The number of a custom access policy to configure on the switch port. Only applicable when 'accessPolicyType' is 'Custom access policy'.
 	AccessPolicyNumber int64 `json:"accessPolicyNumber,omitempty"`
 
-	// The type of the access policy of the switch port. Only applicable to access ports. Can be one of 'Open', 'Custom access policy', 'MAC allow list' or 'Sticky MAC allow list'
-	// Enum: [Open Custom access policy MAC allow list Sticky MAC allow list]
+	// The type of the access policy of the switch port. Only applicable to access ports. Can be one of 'Open', 'Custom access policy', 'MAC allow list' or 'Sticky MAC allow list'.
+	// Enum: [Custom access policy MAC allow list Open Sticky MAC allow list]
 	AccessPolicyType string `json:"accessPolicyType,omitempty"`
 
 	// The adaptive policy group ID that will be used to tag traffic through this switch port. This ID must pre-exist during the configuration, else needs to be created using adaptivePolicy/groups API. Cannot be applied to a port on a switch bound to profile.
@@ -116,56 +125,60 @@ type UpdateDeviceSwitchPortBody struct {
 	// The VLANs allowed on the switch port. Only applicable to trunk ports.
 	AllowedVlans string `json:"allowedVlans,omitempty"`
 
-	// The status of the switch port
+	// If true, ARP packets for this port will be considered trusted, and Dynamic ARP Inspection will allow the traffic.
+	DaiTrusted bool `json:"daiTrusted,omitempty"`
+
+	// The status of the switch port.
 	Enabled bool `json:"enabled,omitempty"`
 
 	// For supported switches (e.g. MS420/MS425), whether or not the port has flexible stacking enabled.
 	FlexibleStackingEnabled bool `json:"flexibleStackingEnabled,omitempty"`
 
-	// The isolation status of the switch port
+	// The isolation status of the switch port.
 	IsolationEnabled bool `json:"isolationEnabled,omitempty"`
 
-	// The link speed for the switch port
+	// The link speed for the switch port.
 	LinkNegotiation string `json:"linkNegotiation,omitempty"`
 
-	// Only devices with MAC addresses specified in this list will have access to this port. Up to 20 MAC addresses can be defined. Only applicable when 'accessPolicyType' is 'MAC allow list'
+	// Only devices with MAC addresses specified in this list will have access to this port. Up to 20 MAC addresses can be defined. Only applicable when 'accessPolicyType' is 'MAC allow list'.
 	MacAllowList []string `json:"macAllowList"`
 
-	// The name of the switch port
+	// The name of the switch port.
 	Name string `json:"name,omitempty"`
 
-	// If true, Peer SGT is enabled for traffic through this switch port. Applicable to trunk port only, not access port.
-	// Cannot be applied to a port on a switch bound to profile.
-	//
+	// If true, Peer SGT is enabled for traffic through this switch port. Applicable to trunk port only, not access port. Cannot be applied to a port on a switch bound to profile.
 	PeerSgtCapable bool `json:"peerSgtCapable,omitempty"`
 
-	// The PoE status of the switch port
+	// The PoE status of the switch port.
 	PoeEnabled bool `json:"poeEnabled,omitempty"`
 
 	// The ID of the port schedule. A value of null will clear the port schedule.
 	PortScheduleID string `json:"portScheduleId,omitempty"`
 
-	// The rapid spanning tree protocol status
+	// profile
+	Profile *UpdateDeviceSwitchPortParamsBodyProfile `json:"profile,omitempty"`
+
+	// The rapid spanning tree protocol status.
 	RstpEnabled bool `json:"rstpEnabled,omitempty"`
 
-	// The initial list of MAC addresses for sticky Mac allow list. Only applicable when 'accessPolicyType' is 'Sticky MAC allow list'
+	// The initial list of MAC addresses for sticky Mac allow list. Only applicable when 'accessPolicyType' is 'Sticky MAC allow list'.
 	StickyMacAllowList []string `json:"stickyMacAllowList"`
 
-	// The maximum number of MAC addresses for sticky MAC allow list. Only applicable when 'accessPolicyType' is 'Sticky MAC allow list'
+	// The maximum number of MAC addresses for sticky MAC allow list. Only applicable when 'accessPolicyType' is 'Sticky MAC allow list'.
 	StickyMacAllowListLimit int64 `json:"stickyMacAllowListLimit,omitempty"`
 
-	// The storm control status of the switch port
+	// The storm control status of the switch port.
 	StormControlEnabled bool `json:"stormControlEnabled,omitempty"`
 
-	// The state of the STP guard ('disabled', 'root guard', 'bpdu guard' or 'loop guard')
-	// Enum: [disabled root guard bpdu guard loop guard]
+	// The state of the STP guard ('disabled', 'root guard', 'bpdu guard' or 'loop guard').
+	// Enum: [bpdu guard disabled loop guard root guard]
 	StpGuard string `json:"stpGuard,omitempty"`
 
-	// The list of tags of the switch port
+	// The list of tags of the switch port.
 	Tags []string `json:"tags"`
 
-	// The type of the switch port ('trunk' or 'access')
-	// Enum: [trunk access]
+	// The type of the switch port ('trunk' or 'access').
+	// Enum: [access trunk]
 	Type string `json:"type,omitempty"`
 
 	// The action to take when Unidirectional Link is detected (Alert only, Enforce). Default configuration is Alert only.
@@ -184,6 +197,10 @@ func (o *UpdateDeviceSwitchPortBody) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := o.validateAccessPolicyType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateProfile(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -209,7 +226,7 @@ var updateDeviceSwitchPortBodyTypeAccessPolicyTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Open","Custom access policy","MAC allow list","Sticky MAC allow list"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Custom access policy","MAC allow list","Open","Sticky MAC allow list"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -219,14 +236,14 @@ func init() {
 
 const (
 
-	// UpdateDeviceSwitchPortBodyAccessPolicyTypeOpen captures enum value "Open"
-	UpdateDeviceSwitchPortBodyAccessPolicyTypeOpen string = "Open"
-
 	// UpdateDeviceSwitchPortBodyAccessPolicyTypeCustomAccessPolicy captures enum value "Custom access policy"
 	UpdateDeviceSwitchPortBodyAccessPolicyTypeCustomAccessPolicy string = "Custom access policy"
 
 	// UpdateDeviceSwitchPortBodyAccessPolicyTypeMACAllowList captures enum value "MAC allow list"
 	UpdateDeviceSwitchPortBodyAccessPolicyTypeMACAllowList string = "MAC allow list"
+
+	// UpdateDeviceSwitchPortBodyAccessPolicyTypeOpen captures enum value "Open"
+	UpdateDeviceSwitchPortBodyAccessPolicyTypeOpen string = "Open"
 
 	// UpdateDeviceSwitchPortBodyAccessPolicyTypeStickyMACAllowList captures enum value "Sticky MAC allow list"
 	UpdateDeviceSwitchPortBodyAccessPolicyTypeStickyMACAllowList string = "Sticky MAC allow list"
@@ -253,11 +270,30 @@ func (o *UpdateDeviceSwitchPortBody) validateAccessPolicyType(formats strfmt.Reg
 	return nil
 }
 
+func (o *UpdateDeviceSwitchPortBody) validateProfile(formats strfmt.Registry) error {
+	if swag.IsZero(o.Profile) { // not required
+		return nil
+	}
+
+	if o.Profile != nil {
+		if err := o.Profile.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateDeviceSwitchPort" + "." + "profile")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateDeviceSwitchPort" + "." + "profile")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 var updateDeviceSwitchPortBodyTypeStpGuardPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["disabled","root guard","bpdu guard","loop guard"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["bpdu guard","disabled","loop guard","root guard"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -267,17 +303,17 @@ func init() {
 
 const (
 
-	// UpdateDeviceSwitchPortBodyStpGuardDisabled captures enum value "disabled"
-	UpdateDeviceSwitchPortBodyStpGuardDisabled string = "disabled"
-
-	// UpdateDeviceSwitchPortBodyStpGuardRootGuard captures enum value "root guard"
-	UpdateDeviceSwitchPortBodyStpGuardRootGuard string = "root guard"
-
 	// UpdateDeviceSwitchPortBodyStpGuardBpduGuard captures enum value "bpdu guard"
 	UpdateDeviceSwitchPortBodyStpGuardBpduGuard string = "bpdu guard"
 
+	// UpdateDeviceSwitchPortBodyStpGuardDisabled captures enum value "disabled"
+	UpdateDeviceSwitchPortBodyStpGuardDisabled string = "disabled"
+
 	// UpdateDeviceSwitchPortBodyStpGuardLoopGuard captures enum value "loop guard"
 	UpdateDeviceSwitchPortBodyStpGuardLoopGuard string = "loop guard"
+
+	// UpdateDeviceSwitchPortBodyStpGuardRootGuard captures enum value "root guard"
+	UpdateDeviceSwitchPortBodyStpGuardRootGuard string = "root guard"
 )
 
 // prop value enum
@@ -305,7 +341,7 @@ var updateDeviceSwitchPortBodyTypeTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["trunk","access"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["access","trunk"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -315,11 +351,11 @@ func init() {
 
 const (
 
-	// UpdateDeviceSwitchPortBodyTypeTrunk captures enum value "trunk"
-	UpdateDeviceSwitchPortBodyTypeTrunk string = "trunk"
-
 	// UpdateDeviceSwitchPortBodyTypeAccess captures enum value "access"
 	UpdateDeviceSwitchPortBodyTypeAccess string = "access"
+
+	// UpdateDeviceSwitchPortBodyTypeTrunk captures enum value "trunk"
+	UpdateDeviceSwitchPortBodyTypeTrunk string = "trunk"
 )
 
 // prop value enum
@@ -385,8 +421,38 @@ func (o *UpdateDeviceSwitchPortBody) validateUdld(formats strfmt.Registry) error
 	return nil
 }
 
-// ContextValidate validates this update device switch port body based on context it is used
+// ContextValidate validate this update device switch port body based on the context it is used
 func (o *UpdateDeviceSwitchPortBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateProfile(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateDeviceSwitchPortBody) contextValidateProfile(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Profile != nil {
+
+		if swag.IsZero(o.Profile) { // not required
+			return nil
+		}
+
+		if err := o.Profile.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateDeviceSwitchPort" + "." + "profile")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateDeviceSwitchPort" + "." + "profile")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -401,6 +467,468 @@ func (o *UpdateDeviceSwitchPortBody) MarshalBinary() ([]byte, error) {
 // UnmarshalBinary interface implementation
 func (o *UpdateDeviceSwitchPortBody) UnmarshalBinary(b []byte) error {
 	var res UpdateDeviceSwitchPortBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateDeviceSwitchPortOKBody update device switch port o k body
+swagger:model UpdateDeviceSwitchPortOKBody
+*/
+type UpdateDeviceSwitchPortOKBody struct {
+
+	// The number of a custom access policy to configure on the switch port. Only applicable when 'accessPolicyType' is 'Custom access policy'.
+	AccessPolicyNumber int64 `json:"accessPolicyNumber,omitempty"`
+
+	// The type of the access policy of the switch port. Only applicable to access ports. Can be one of 'Open', 'Custom access policy', 'MAC allow list' or 'Sticky MAC allow list'.
+	// Enum: [Custom access policy MAC allow list Open Sticky MAC allow list]
+	AccessPolicyType string `json:"accessPolicyType,omitempty"`
+
+	// The adaptive policy group ID that will be used to tag traffic through this switch port. This ID must pre-exist during the configuration, else needs to be created using adaptivePolicy/groups API. Cannot be applied to a port on a switch bound to profile.
+	AdaptivePolicyGroupID string `json:"adaptivePolicyGroupId,omitempty"`
+
+	// The VLANs allowed on the switch port. Only applicable to trunk ports.
+	AllowedVlans string `json:"allowedVlans,omitempty"`
+
+	// If true, ARP packets for this port will be considered trusted, and Dynamic ARP Inspection will allow the traffic.
+	DaiTrusted bool `json:"daiTrusted,omitempty"`
+
+	// The status of the switch port.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// For supported switches (e.g. MS420/MS425), whether or not the port has flexible stacking enabled.
+	FlexibleStackingEnabled bool `json:"flexibleStackingEnabled,omitempty"`
+
+	// The isolation status of the switch port.
+	IsolationEnabled bool `json:"isolationEnabled,omitempty"`
+
+	// The link speed for the switch port.
+	LinkNegotiation string `json:"linkNegotiation,omitempty"`
+
+	// Available link speeds for the switch port.
+	LinkNegotiationCapabilities []string `json:"linkNegotiationCapabilities"`
+
+	// Only devices with MAC addresses specified in this list will have access to this port. Up to 20 MAC addresses can be defined. Only applicable when 'accessPolicyType' is 'MAC allow list'.
+	MacAllowList []string `json:"macAllowList"`
+
+	// The name of the switch port.
+	Name string `json:"name,omitempty"`
+
+	// If true, Peer SGT is enabled for traffic through this switch port. Applicable to trunk port only, not access port. Cannot be applied to a port on a switch bound to profile.
+	PeerSgtCapable bool `json:"peerSgtCapable,omitempty"`
+
+	// The PoE status of the switch port.
+	PoeEnabled bool `json:"poeEnabled,omitempty"`
+
+	// The identifier of the switch port.
+	PortID string `json:"portId,omitempty"`
+
+	// The ID of the port schedule. A value of null will clear the port schedule.
+	PortScheduleID string `json:"portScheduleId,omitempty"`
+
+	// profile
+	Profile *UpdateDeviceSwitchPortOKBodyProfile `json:"profile,omitempty"`
+
+	// The rapid spanning tree protocol status.
+	RstpEnabled bool `json:"rstpEnabled,omitempty"`
+
+	// The initial list of MAC addresses for sticky Mac allow list. Only applicable when 'accessPolicyType' is 'Sticky MAC allow list'.
+	StickyMacAllowList []string `json:"stickyMacAllowList"`
+
+	// The maximum number of MAC addresses for sticky MAC allow list. Only applicable when 'accessPolicyType' is 'Sticky MAC allow list'.
+	StickyMacAllowListLimit int64 `json:"stickyMacAllowListLimit,omitempty"`
+
+	// The storm control status of the switch port.
+	StormControlEnabled bool `json:"stormControlEnabled,omitempty"`
+
+	// The state of the STP guard ('disabled', 'root guard', 'bpdu guard' or 'loop guard').
+	// Enum: [bpdu guard disabled loop guard root guard]
+	StpGuard string `json:"stpGuard,omitempty"`
+
+	// The list of tags of the switch port.
+	Tags []string `json:"tags"`
+
+	// The type of the switch port ('trunk' or 'access').
+	// Enum: [access trunk]
+	Type string `json:"type,omitempty"`
+
+	// The action to take when Unidirectional Link is detected (Alert only, Enforce). Default configuration is Alert only.
+	// Enum: [Alert only Enforce]
+	Udld string `json:"udld,omitempty"`
+
+	// The VLAN of the switch port. A null value will clear the value set for trunk ports.
+	Vlan int64 `json:"vlan,omitempty"`
+
+	// The voice VLAN of the switch port. Only applicable to access ports.
+	VoiceVlan int64 `json:"voiceVlan,omitempty"`
+}
+
+// Validate validates this update device switch port o k body
+func (o *UpdateDeviceSwitchPortOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateAccessPolicyType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateProfile(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateStpGuard(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateUdld(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateDeviceSwitchPortOKBodyTypeAccessPolicyTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Custom access policy","MAC allow list","Open","Sticky MAC allow list"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateDeviceSwitchPortOKBodyTypeAccessPolicyTypePropEnum = append(updateDeviceSwitchPortOKBodyTypeAccessPolicyTypePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateDeviceSwitchPortOKBodyAccessPolicyTypeCustomAccessPolicy captures enum value "Custom access policy"
+	UpdateDeviceSwitchPortOKBodyAccessPolicyTypeCustomAccessPolicy string = "Custom access policy"
+
+	// UpdateDeviceSwitchPortOKBodyAccessPolicyTypeMACAllowList captures enum value "MAC allow list"
+	UpdateDeviceSwitchPortOKBodyAccessPolicyTypeMACAllowList string = "MAC allow list"
+
+	// UpdateDeviceSwitchPortOKBodyAccessPolicyTypeOpen captures enum value "Open"
+	UpdateDeviceSwitchPortOKBodyAccessPolicyTypeOpen string = "Open"
+
+	// UpdateDeviceSwitchPortOKBodyAccessPolicyTypeStickyMACAllowList captures enum value "Sticky MAC allow list"
+	UpdateDeviceSwitchPortOKBodyAccessPolicyTypeStickyMACAllowList string = "Sticky MAC allow list"
+)
+
+// prop value enum
+func (o *UpdateDeviceSwitchPortOKBody) validateAccessPolicyTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateDeviceSwitchPortOKBodyTypeAccessPolicyTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateDeviceSwitchPortOKBody) validateAccessPolicyType(formats strfmt.Registry) error {
+	if swag.IsZero(o.AccessPolicyType) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateAccessPolicyTypeEnum("updateDeviceSwitchPortOK"+"."+"accessPolicyType", "body", o.AccessPolicyType); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateDeviceSwitchPortOKBody) validateProfile(formats strfmt.Registry) error {
+	if swag.IsZero(o.Profile) { // not required
+		return nil
+	}
+
+	if o.Profile != nil {
+		if err := o.Profile.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateDeviceSwitchPortOK" + "." + "profile")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateDeviceSwitchPortOK" + "." + "profile")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+var updateDeviceSwitchPortOKBodyTypeStpGuardPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["bpdu guard","disabled","loop guard","root guard"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateDeviceSwitchPortOKBodyTypeStpGuardPropEnum = append(updateDeviceSwitchPortOKBodyTypeStpGuardPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateDeviceSwitchPortOKBodyStpGuardBpduGuard captures enum value "bpdu guard"
+	UpdateDeviceSwitchPortOKBodyStpGuardBpduGuard string = "bpdu guard"
+
+	// UpdateDeviceSwitchPortOKBodyStpGuardDisabled captures enum value "disabled"
+	UpdateDeviceSwitchPortOKBodyStpGuardDisabled string = "disabled"
+
+	// UpdateDeviceSwitchPortOKBodyStpGuardLoopGuard captures enum value "loop guard"
+	UpdateDeviceSwitchPortOKBodyStpGuardLoopGuard string = "loop guard"
+
+	// UpdateDeviceSwitchPortOKBodyStpGuardRootGuard captures enum value "root guard"
+	UpdateDeviceSwitchPortOKBodyStpGuardRootGuard string = "root guard"
+)
+
+// prop value enum
+func (o *UpdateDeviceSwitchPortOKBody) validateStpGuardEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateDeviceSwitchPortOKBodyTypeStpGuardPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateDeviceSwitchPortOKBody) validateStpGuard(formats strfmt.Registry) error {
+	if swag.IsZero(o.StpGuard) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateStpGuardEnum("updateDeviceSwitchPortOK"+"."+"stpGuard", "body", o.StpGuard); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var updateDeviceSwitchPortOKBodyTypeTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["access","trunk"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateDeviceSwitchPortOKBodyTypeTypePropEnum = append(updateDeviceSwitchPortOKBodyTypeTypePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateDeviceSwitchPortOKBodyTypeAccess captures enum value "access"
+	UpdateDeviceSwitchPortOKBodyTypeAccess string = "access"
+
+	// UpdateDeviceSwitchPortOKBodyTypeTrunk captures enum value "trunk"
+	UpdateDeviceSwitchPortOKBodyTypeTrunk string = "trunk"
+)
+
+// prop value enum
+func (o *UpdateDeviceSwitchPortOKBody) validateTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateDeviceSwitchPortOKBodyTypeTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateDeviceSwitchPortOKBody) validateType(formats strfmt.Registry) error {
+	if swag.IsZero(o.Type) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateTypeEnum("updateDeviceSwitchPortOK"+"."+"type", "body", o.Type); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var updateDeviceSwitchPortOKBodyTypeUdldPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Alert only","Enforce"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateDeviceSwitchPortOKBodyTypeUdldPropEnum = append(updateDeviceSwitchPortOKBodyTypeUdldPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateDeviceSwitchPortOKBodyUdldAlertOnly captures enum value "Alert only"
+	UpdateDeviceSwitchPortOKBodyUdldAlertOnly string = "Alert only"
+
+	// UpdateDeviceSwitchPortOKBodyUdldEnforce captures enum value "Enforce"
+	UpdateDeviceSwitchPortOKBodyUdldEnforce string = "Enforce"
+)
+
+// prop value enum
+func (o *UpdateDeviceSwitchPortOKBody) validateUdldEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateDeviceSwitchPortOKBodyTypeUdldPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateDeviceSwitchPortOKBody) validateUdld(formats strfmt.Registry) error {
+	if swag.IsZero(o.Udld) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateUdldEnum("updateDeviceSwitchPortOK"+"."+"udld", "body", o.Udld); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update device switch port o k body based on the context it is used
+func (o *UpdateDeviceSwitchPortOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateProfile(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateDeviceSwitchPortOKBody) contextValidateProfile(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Profile != nil {
+
+		if swag.IsZero(o.Profile) { // not required
+			return nil
+		}
+
+		if err := o.Profile.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateDeviceSwitchPortOK" + "." + "profile")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateDeviceSwitchPortOK" + "." + "profile")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateDeviceSwitchPortOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateDeviceSwitchPortOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateDeviceSwitchPortOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateDeviceSwitchPortOKBodyProfile Profile attributes
+swagger:model UpdateDeviceSwitchPortOKBodyProfile
+*/
+type UpdateDeviceSwitchPortOKBodyProfile struct {
+
+	// When enabled, override this port's configuration with a port profile.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// When enabled, the ID of the port profile used to override the port's configuration.
+	ID string `json:"id,omitempty"`
+
+	// When enabled, the IName of the profile.
+	Iname string `json:"iname,omitempty"`
+}
+
+// Validate validates this update device switch port o k body profile
+func (o *UpdateDeviceSwitchPortOKBodyProfile) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update device switch port o k body profile based on context it is used
+func (o *UpdateDeviceSwitchPortOKBodyProfile) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateDeviceSwitchPortOKBodyProfile) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateDeviceSwitchPortOKBodyProfile) UnmarshalBinary(b []byte) error {
+	var res UpdateDeviceSwitchPortOKBodyProfile
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateDeviceSwitchPortParamsBodyProfile Profile attributes
+swagger:model UpdateDeviceSwitchPortParamsBodyProfile
+*/
+type UpdateDeviceSwitchPortParamsBodyProfile struct {
+
+	// When enabled, override this port's configuration with a port profile.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// When enabled, the ID of the port profile used to override the port's configuration.
+	ID string `json:"id,omitempty"`
+
+	// When enabled, the IName of the profile.
+	Iname string `json:"iname,omitempty"`
+}
+
+// Validate validates this update device switch port params body profile
+func (o *UpdateDeviceSwitchPortParamsBodyProfile) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update device switch port params body profile based on context it is used
+func (o *UpdateDeviceSwitchPortParamsBodyProfile) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateDeviceSwitchPortParamsBodyProfile) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateDeviceSwitchPortParamsBodyProfile) UnmarshalBinary(b []byte) error {
+	var res UpdateDeviceSwitchPortParamsBodyProfile
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

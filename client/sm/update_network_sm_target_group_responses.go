@@ -30,7 +30,7 @@ func (o *UpdateNetworkSmTargetGroupReader) ReadResponse(response runtime.ClientR
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/sm/targetGroups/{targetGroupId}] updateNetworkSmTargetGroup", response, response.Code())
 	}
 }
 
@@ -39,7 +39,8 @@ func NewUpdateNetworkSmTargetGroupOK() *UpdateNetworkSmTargetGroupOK {
 	return &UpdateNetworkSmTargetGroupOK{}
 }
 
-/* UpdateNetworkSmTargetGroupOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSmTargetGroupOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -72,6 +73,11 @@ func (o *UpdateNetworkSmTargetGroupOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network sm target group o k response
+func (o *UpdateNetworkSmTargetGroupOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSmTargetGroupOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/sm/targetGroups/{targetGroupId}][%d] updateNetworkSmTargetGroupOK  %+v", 200, o.Payload)
 }
@@ -94,7 +100,8 @@ func (o *UpdateNetworkSmTargetGroupOK) readResponse(response runtime.ClientRespo
 	return nil
 }
 
-/*UpdateNetworkSmTargetGroupBody update network sm target group body
+/*
+UpdateNetworkSmTargetGroupBody update network sm target group body
 // Example: {"name":"My target group","scope":"none","tags":"[]","type":"devices"}
 swagger:model UpdateNetworkSmTargetGroupBody
 */

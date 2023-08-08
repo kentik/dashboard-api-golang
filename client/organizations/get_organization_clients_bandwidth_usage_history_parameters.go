@@ -53,14 +53,19 @@ func NewGetOrganizationClientsBandwidthUsageHistoryParamsWithHTTPClient(client *
 	}
 }
 
-/* GetOrganizationClientsBandwidthUsageHistoryParams contains all the parameters to send to the API endpoint
-   for the get organization clients bandwidth usage history operation.
+/*
+GetOrganizationClientsBandwidthUsageHistoryParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization clients bandwidth usage history operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationClientsBandwidthUsageHistoryParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	/* T0.

@@ -52,17 +52,22 @@ func NewCreateNetworkWebhooksHTTPServerParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* CreateNetworkWebhooksHTTPServerParams contains all the parameters to send to the API endpoint
-   for the create network webhooks Http server operation.
+/*
+CreateNetworkWebhooksHTTPServerParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create network webhooks Http server operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateNetworkWebhooksHTTPServerParams struct {
 
 	// CreateNetworkWebhooksHTTPServer.
 	CreateNetworkWebhooksHTTPServer CreateNetworkWebhooksHTTPServerBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

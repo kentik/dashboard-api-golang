@@ -32,7 +32,7 @@ func (o *MoveNetworkSmDevicesReader) ReadResponse(response runtime.ClientRespons
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/sm/devices/move] moveNetworkSmDevices", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewMoveNetworkSmDevicesOK() *MoveNetworkSmDevicesOK {
 	return &MoveNetworkSmDevicesOK{}
 }
 
-/* MoveNetworkSmDevicesOK describes a response with status code 200, with default header values.
+/*
+MoveNetworkSmDevicesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *MoveNetworkSmDevicesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the move network sm devices o k response
+func (o *MoveNetworkSmDevicesOK) Code() int {
+	return 200
+}
+
 func (o *MoveNetworkSmDevicesOK) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/sm/devices/move][%d] moveNetworkSmDevicesOK  %+v", 200, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *MoveNetworkSmDevicesOK) readResponse(response runtime.ClientResponse, c
 	return nil
 }
 
-/*MoveNetworkSmDevicesBody move network sm devices body
+/*
+MoveNetworkSmDevicesBody move network sm devices body
 // Example: {"ids":["1284392014819","2983092129865"],"newNetwork":"1284392014819","scope":["withAny","tag1","tag2"],"serials":["Q234-ABCD-0001","Q234-ABCD-0002","Q234-ABCD-0003"],"wifiMacs":["00:11:22:33:44:55"]}
 swagger:model MoveNetworkSmDevicesBody
 */
@@ -167,7 +174,8 @@ func (o *MoveNetworkSmDevicesBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*MoveNetworkSmDevicesOKBody move network sm devices o k body
+/*
+MoveNetworkSmDevicesOKBody move network sm devices o k body
 swagger:model MoveNetworkSmDevicesOKBody
 */
 type MoveNetworkSmDevicesOKBody struct {

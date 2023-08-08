@@ -52,14 +52,19 @@ func NewUpdateNetworkCellularGatewayConnectivityMonitoringDestinationsParamsWith
 	}
 }
 
-/* UpdateNetworkCellularGatewayConnectivityMonitoringDestinationsParams contains all the parameters to send to the API endpoint
-   for the update network cellular gateway connectivity monitoring destinations operation.
+/*
+UpdateNetworkCellularGatewayConnectivityMonitoringDestinationsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network cellular gateway connectivity monitoring destinations operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkCellularGatewayConnectivityMonitoringDestinationsParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkCellularGatewayConnectivityMonitoringDestinations.

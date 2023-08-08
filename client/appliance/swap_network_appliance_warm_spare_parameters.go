@@ -52,14 +52,19 @@ func NewSwapNetworkApplianceWarmSpareParamsWithHTTPClient(client *http.Client) *
 	}
 }
 
-/* SwapNetworkApplianceWarmSpareParams contains all the parameters to send to the API endpoint
-   for the swap network appliance warm spare operation.
+/*
+SwapNetworkApplianceWarmSpareParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the swap network appliance warm spare operation.
+
+	Typically these are written to a http.Request.
 */
 type SwapNetworkApplianceWarmSpareParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

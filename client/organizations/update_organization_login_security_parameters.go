@@ -52,14 +52,19 @@ func NewUpdateOrganizationLoginSecurityParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* UpdateOrganizationLoginSecurityParams contains all the parameters to send to the API endpoint
-   for the update organization login security operation.
+/*
+UpdateOrganizationLoginSecurityParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update organization login security operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateOrganizationLoginSecurityParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	// UpdateOrganizationLoginSecurity.

@@ -53,10 +53,12 @@ func NewGetOrganizationDevicesStatusesParamsWithHTTPClient(client *http.Client) 
 	}
 }
 
-/* GetOrganizationDevicesStatusesParams contains all the parameters to send to the API endpoint
-   for the get organization devices statuses operation.
+/*
+GetOrganizationDevicesStatusesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization devices statuses operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationDevicesStatusesParams struct {
 
@@ -78,7 +80,10 @@ type GetOrganizationDevicesStatusesParams struct {
 	*/
 	NetworkIds []string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	/* PerPage.
@@ -89,7 +94,7 @@ type GetOrganizationDevicesStatusesParams struct {
 
 	/* ProductTypes.
 
-	   An optional parameter to filter device statuses by product type. Valid types are wireless, appliance, switch, systemsManager, camera, cellularGateway, and sensor.
+	   An optional parameter to filter device statuses by product type. Valid types are wireless, appliance, switch, systemsManager, camera, cellularGateway, sensor, and cloudGateway.
 	*/
 	ProductTypes []string
 

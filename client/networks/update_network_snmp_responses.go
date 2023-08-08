@@ -34,7 +34,7 @@ func (o *UpdateNetworkSnmpReader) ReadResponse(response runtime.ClientResponse, 
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/snmp] updateNetworkSnmp", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewUpdateNetworkSnmpOK() *UpdateNetworkSnmpOK {
 	return &UpdateNetworkSnmpOK{}
 }
 
-/* UpdateNetworkSnmpOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSnmpOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *UpdateNetworkSnmpOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network snmp o k response
+func (o *UpdateNetworkSnmpOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSnmpOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/snmp][%d] updateNetworkSnmpOK  %+v", 200, o.Payload)
 }
@@ -98,14 +104,15 @@ func (o *UpdateNetworkSnmpOK) readResponse(response runtime.ClientResponse, cons
 	return nil
 }
 
-/*UpdateNetworkSnmpBody update network snmp body
+/*
+UpdateNetworkSnmpBody update network snmp body
 // Example: {"access":"users","users":[{"passphrase":"hunter2","username":"AzureDiamond"}]}
 swagger:model UpdateNetworkSnmpBody
 */
 type UpdateNetworkSnmpBody struct {
 
 	// The type of SNMP access. Can be one of 'none' (disabled), 'community' (V1/V2c), or 'users' (V3).
-	// Enum: [none community users]
+	// Enum: [community none users]
 	Access string `json:"access,omitempty"`
 
 	// The SNMP community string. Only relevant if 'access' is set to 'community'.
@@ -137,7 +144,7 @@ var updateNetworkSnmpBodyTypeAccessPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["none","community","users"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["community","none","users"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -147,11 +154,11 @@ func init() {
 
 const (
 
-	// UpdateNetworkSnmpBodyAccessNone captures enum value "none"
-	UpdateNetworkSnmpBodyAccessNone string = "none"
-
 	// UpdateNetworkSnmpBodyAccessCommunity captures enum value "community"
 	UpdateNetworkSnmpBodyAccessCommunity string = "community"
+
+	// UpdateNetworkSnmpBodyAccessNone captures enum value "none"
+	UpdateNetworkSnmpBodyAccessNone string = "none"
 
 	// UpdateNetworkSnmpBodyAccessUsers captures enum value "users"
 	UpdateNetworkSnmpBodyAccessUsers string = "users"
@@ -223,6 +230,11 @@ func (o *UpdateNetworkSnmpBody) contextValidateUsers(ctx context.Context, format
 	for i := 0; i < len(o.Users); i++ {
 
 		if o.Users[i] != nil {
+
+			if swag.IsZero(o.Users[i]) { // not required
+				return nil
+			}
+
 			if err := o.Users[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkSnmp" + "." + "users" + "." + strconv.Itoa(i))
@@ -256,7 +268,8 @@ func (o *UpdateNetworkSnmpBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateNetworkSnmpParamsBodyUsersItems0 update network snmp params body users items0
+/*
+UpdateNetworkSnmpParamsBodyUsersItems0 update network snmp params body users items0
 swagger:model UpdateNetworkSnmpParamsBodyUsersItems0
 */
 type UpdateNetworkSnmpParamsBodyUsersItems0 struct {

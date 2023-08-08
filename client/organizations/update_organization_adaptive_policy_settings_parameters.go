@@ -52,14 +52,19 @@ func NewUpdateOrganizationAdaptivePolicySettingsParamsWithHTTPClient(client *htt
 	}
 }
 
-/* UpdateOrganizationAdaptivePolicySettingsParams contains all the parameters to send to the API endpoint
-   for the update organization adaptive policy settings operation.
+/*
+UpdateOrganizationAdaptivePolicySettingsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update organization adaptive policy settings operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateOrganizationAdaptivePolicySettingsParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	// UpdateOrganizationAdaptivePolicySettings.

@@ -33,7 +33,7 @@ func (o *UpdateNetworkSwitchRoutingMulticastReader) ReadResponse(response runtim
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/switch/routing/multicast] updateNetworkSwitchRoutingMulticast", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateNetworkSwitchRoutingMulticastOK() *UpdateNetworkSwitchRoutingMulti
 	return &UpdateNetworkSwitchRoutingMulticastOK{}
 }
 
-/* UpdateNetworkSwitchRoutingMulticastOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSwitchRoutingMulticastOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateNetworkSwitchRoutingMulticastOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network switch routing multicast o k response
+func (o *UpdateNetworkSwitchRoutingMulticastOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSwitchRoutingMulticastOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/switch/routing/multicast][%d] updateNetworkSwitchRoutingMulticastOK  %+v", 200, o.Payload)
 }
@@ -97,8 +103,9 @@ func (o *UpdateNetworkSwitchRoutingMulticastOK) readResponse(response runtime.Cl
 	return nil
 }
 
-/*UpdateNetworkSwitchRoutingMulticastBody update network switch routing multicast body
-// Example: {"defaultSettings":{"floodUnknownMulticastTrafficEnabled":true,"igmpSnoopingEnabled":true},"overrides":[{"floodUnknownMulticastTrafficEnabled":true,"igmpSnoopingEnabled":true,"switches":["Q234-ABCD-0001","Q234-ABCD-0002","Q234-ABCD-0003"]},{"floodUnknownMulticastTrafficEnabled":true,"igmpSnoopingEnabled":true,"stacks":["789102","123456","129102"]}]}
+/*
+UpdateNetworkSwitchRoutingMulticastBody update network switch routing multicast body
+// Example: {"defaultSettings":{"floodUnknownMulticastTrafficEnabled":true,"igmpSnoopingEnabled":true},"overrides":[{"floodUnknownMulticastTrafficEnabled":true,"igmpSnoopingEnabled":true,"switches":["Q234-ABCD-0001","Q234-ABCD-0002","Q234-ABCD-0003"]},{"floodUnknownMulticastTrafficEnabled":true,"igmpSnoopingEnabled":true,"stacks":["789102","123456","129102"]},{"floodUnknownMulticastTrafficEnabled":true,"igmpSnoopingEnabled":true,"switchProfiles":["1234","4567"]}]}
 swagger:model UpdateNetworkSwitchRoutingMulticastBody
 */
 type UpdateNetworkSwitchRoutingMulticastBody struct {
@@ -194,6 +201,11 @@ func (o *UpdateNetworkSwitchRoutingMulticastBody) ContextValidate(ctx context.Co
 func (o *UpdateNetworkSwitchRoutingMulticastBody) contextValidateDefaultSettings(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.DefaultSettings != nil {
+
+		if swag.IsZero(o.DefaultSettings) { // not required
+			return nil
+		}
+
 		if err := o.DefaultSettings.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchRoutingMulticast" + "." + "defaultSettings")
@@ -212,6 +224,11 @@ func (o *UpdateNetworkSwitchRoutingMulticastBody) contextValidateOverrides(ctx c
 	for i := 0; i < len(o.Overrides); i++ {
 
 		if o.Overrides[i] != nil {
+
+			if swag.IsZero(o.Overrides[i]) { // not required
+				return nil
+			}
+
 			if err := o.Overrides[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkSwitchRoutingMulticast" + "." + "overrides" + "." + strconv.Itoa(i))
@@ -245,7 +262,8 @@ func (o *UpdateNetworkSwitchRoutingMulticastBody) UnmarshalBinary(b []byte) erro
 	return nil
 }
 
-/*UpdateNetworkSwitchRoutingMulticastParamsBodyDefaultSettings Default multicast setting for entire network. IGMP snooping and Flood unknown multicast traffic settings are enabled by default.
+/*
+UpdateNetworkSwitchRoutingMulticastParamsBodyDefaultSettings Default multicast setting for entire network. IGMP snooping and Flood unknown multicast traffic settings are enabled by default.
 swagger:model UpdateNetworkSwitchRoutingMulticastParamsBodyDefaultSettings
 */
 type UpdateNetworkSwitchRoutingMulticastParamsBodyDefaultSettings struct {
@@ -285,23 +303,24 @@ func (o *UpdateNetworkSwitchRoutingMulticastParamsBodyDefaultSettings) Unmarshal
 	return nil
 }
 
-/*UpdateNetworkSwitchRoutingMulticastParamsBodyOverridesItems0 update network switch routing multicast params body overrides items0
+/*
+UpdateNetworkSwitchRoutingMulticastParamsBodyOverridesItems0 update network switch routing multicast params body overrides items0
 swagger:model UpdateNetworkSwitchRoutingMulticastParamsBodyOverridesItems0
 */
 type UpdateNetworkSwitchRoutingMulticastParamsBodyOverridesItems0 struct {
 
-	// Flood unknown multicast traffic setting for switches, switch stacks or switch profiles
+	// Flood unknown multicast traffic setting for switches, switch stacks or switch templates
 	// Required: true
 	FloodUnknownMulticastTrafficEnabled *bool `json:"floodUnknownMulticastTrafficEnabled"`
 
-	// IGMP snooping setting for switches, switch stacks or switch profiles
+	// IGMP snooping setting for switches, switch stacks or switch templates
 	// Required: true
 	IgmpSnoopingEnabled *bool `json:"igmpSnoopingEnabled"`
 
 	// List of switch stack ids for non-template network
 	Stacks []string `json:"stacks"`
 
-	// List of switch profiles ids for template network
+	// List of switch templates ids for template network
 	SwitchProfiles []string `json:"switchProfiles"`
 
 	// List of switch serials for non-template network

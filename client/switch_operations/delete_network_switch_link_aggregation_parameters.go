@@ -52,17 +52,25 @@ func NewDeleteNetworkSwitchLinkAggregationParamsWithHTTPClient(client *http.Clie
 	}
 }
 
-/* DeleteNetworkSwitchLinkAggregationParams contains all the parameters to send to the API endpoint
-   for the delete network switch link aggregation operation.
+/*
+DeleteNetworkSwitchLinkAggregationParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete network switch link aggregation operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteNetworkSwitchLinkAggregationParams struct {
 
-	// LinkAggregationID.
+	/* LinkAggregationID.
+
+	   Link aggregation ID
+	*/
 	LinkAggregationID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

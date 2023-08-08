@@ -31,7 +31,7 @@ func (o *UpdateNetworkWebhooksHTTPServerReader) ReadResponse(response runtime.Cl
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/webhooks/httpServers/{httpServerId}] updateNetworkWebhooksHttpServer", response, response.Code())
 	}
 }
 
@@ -40,7 +40,8 @@ func NewUpdateNetworkWebhooksHTTPServerOK() *UpdateNetworkWebhooksHTTPServerOK {
 	return &UpdateNetworkWebhooksHTTPServerOK{}
 }
 
-/* UpdateNetworkWebhooksHTTPServerOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkWebhooksHTTPServerOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -73,6 +74,11 @@ func (o *UpdateNetworkWebhooksHTTPServerOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network webhooks Http server o k response
+func (o *UpdateNetworkWebhooksHTTPServerOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkWebhooksHTTPServerOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/webhooks/httpServers/{httpServerId}][%d] updateNetworkWebhooksHttpServerOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateNetworkWebhooksHTTPServerOK) readResponse(response runtime.Client
 	return nil
 }
 
-/*UpdateNetworkWebhooksHTTPServerBody update network webhooks HTTP server body
+/*
+UpdateNetworkWebhooksHTTPServerBody update network webhooks HTTP server body
 // Example: {"name":"Example Webhook Server","payloadTemplate":{"payloadTemplateId":"wpt_00001"},"sharedSecret":"shhh"}
 swagger:model UpdateNetworkWebhooksHTTPServerBody
 */
@@ -163,6 +170,11 @@ func (o *UpdateNetworkWebhooksHTTPServerBody) ContextValidate(ctx context.Contex
 func (o *UpdateNetworkWebhooksHTTPServerBody) contextValidatePayloadTemplate(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.PayloadTemplate != nil {
+
+		if swag.IsZero(o.PayloadTemplate) { // not required
+			return nil
+		}
+
 		if err := o.PayloadTemplate.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWebhooksHttpServer" + "." + "payloadTemplate")
@@ -194,7 +206,8 @@ func (o *UpdateNetworkWebhooksHTTPServerBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateNetworkWebhooksHTTPServerOKBody update network webhooks HTTP server o k body
+/*
+UpdateNetworkWebhooksHTTPServerOKBody update network webhooks HTTP server o k body
 swagger:model UpdateNetworkWebhooksHTTPServerOKBody
 */
 type UpdateNetworkWebhooksHTTPServerOKBody struct {
@@ -266,6 +279,11 @@ func (o *UpdateNetworkWebhooksHTTPServerOKBody) ContextValidate(ctx context.Cont
 func (o *UpdateNetworkWebhooksHTTPServerOKBody) contextValidatePayloadTemplate(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.PayloadTemplate != nil {
+
+		if swag.IsZero(o.PayloadTemplate) { // not required
+			return nil
+		}
+
 		if err := o.PayloadTemplate.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWebhooksHttpServerOK" + "." + "payloadTemplate")
@@ -297,7 +315,8 @@ func (o *UpdateNetworkWebhooksHTTPServerOKBody) UnmarshalBinary(b []byte) error 
 	return nil
 }
 
-/*UpdateNetworkWebhooksHTTPServerOKBodyPayloadTemplate The payload template to use when posting data to the HTTP server.
+/*
+UpdateNetworkWebhooksHTTPServerOKBodyPayloadTemplate The payload template to use when posting data to the HTTP server.
 swagger:model UpdateNetworkWebhooksHTTPServerOKBodyPayloadTemplate
 */
 type UpdateNetworkWebhooksHTTPServerOKBodyPayloadTemplate struct {
@@ -337,12 +356,13 @@ func (o *UpdateNetworkWebhooksHTTPServerOKBodyPayloadTemplate) UnmarshalBinary(b
 	return nil
 }
 
-/*UpdateNetworkWebhooksHTTPServerParamsBodyPayloadTemplate The payload template to use when posting data to the HTTP server.
+/*
+UpdateNetworkWebhooksHTTPServerParamsBodyPayloadTemplate The payload template to use when posting data to the HTTP server.
 swagger:model UpdateNetworkWebhooksHTTPServerParamsBodyPayloadTemplate
 */
 type UpdateNetworkWebhooksHTTPServerParamsBodyPayloadTemplate struct {
 
-	// The ID of the payload template. Defaults to 'wpt_00001' for the Meraki template. For Webex, use 'wpt_00002'; for Slack, use 'wpt_00003'; for Microsoft Teams, use 'wpt_00004'.
+	// The ID of the payload template. Defaults to 'wpt_00001' for the Meraki template. For Meraki-included templates: for the Webex (included) template use 'wpt_00002'; for the Slack (included) template use 'wpt_00003'; for the Microsoft Teams (included) template use 'wpt_00004'; for the ServiceNow (included) template use 'wpt_00006'
 	PayloadTemplateID string `json:"payloadTemplateId,omitempty"`
 }
 

@@ -53,10 +53,12 @@ func NewGetOrganizationDevicesAvailabilitiesParamsWithHTTPClient(client *http.Cl
 	}
 }
 
-/* GetOrganizationDevicesAvailabilitiesParams contains all the parameters to send to the API endpoint
-   for the get organization devices availabilities operation.
+/*
+GetOrganizationDevicesAvailabilitiesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization devices availabilities operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationDevicesAvailabilitiesParams struct {
 
@@ -72,7 +74,10 @@ type GetOrganizationDevicesAvailabilitiesParams struct {
 	*/
 	NetworkIds []string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	/* PerPage.

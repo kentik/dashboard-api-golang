@@ -52,17 +52,25 @@ func NewUpdateNetworkClientPolicyParamsWithHTTPClient(client *http.Client) *Upda
 	}
 }
 
-/* UpdateNetworkClientPolicyParams contains all the parameters to send to the API endpoint
-   for the update network client policy operation.
+/*
+UpdateNetworkClientPolicyParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network client policy operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkClientPolicyParams struct {
 
-	// ClientID.
+	/* ClientID.
+
+	   Client ID
+	*/
 	ClientID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkClientPolicy.

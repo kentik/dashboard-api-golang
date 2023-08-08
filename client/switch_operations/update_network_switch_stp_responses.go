@@ -33,7 +33,7 @@ func (o *UpdateNetworkSwitchStpReader) ReadResponse(response runtime.ClientRespo
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/switch/stp] updateNetworkSwitchStp", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateNetworkSwitchStpOK() *UpdateNetworkSwitchStpOK {
 	return &UpdateNetworkSwitchStpOK{}
 }
 
-/* UpdateNetworkSwitchStpOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSwitchStpOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateNetworkSwitchStpOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network switch stp o k response
+func (o *UpdateNetworkSwitchStpOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSwitchStpOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/switch/stp][%d] updateNetworkSwitchStpOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateNetworkSwitchStpOK) readResponse(response runtime.ClientResponse,
 	return nil
 }
 
-/*UpdateNetworkSwitchStpBody update network switch stp body
+/*
+UpdateNetworkSwitchStpBody update network switch stp body
 // Example: {"rstpEnabled":true,"stpBridgePriority":[{"stpPriority":4096,"switches":["Q234-ABCD-0001","Q234-ABCD-0002","Q234-ABCD-0003"]},{"stacks":["789102","123456","129102"],"stpPriority":28672}]}
 swagger:model UpdateNetworkSwitchStpBody
 */
@@ -106,7 +113,7 @@ type UpdateNetworkSwitchStpBody struct {
 	// The spanning tree protocol status in network
 	RstpEnabled bool `json:"rstpEnabled,omitempty"`
 
-	// STP bridge priority for switches/stacks or switch profiles. An empty array will clear the STP bridge priority settings.
+	// STP bridge priority for switches/stacks or switch templates. An empty array will clear the STP bridge priority settings.
 	StpBridgePriority []*UpdateNetworkSwitchStpParamsBodyStpBridgePriorityItems0 `json:"stpBridgePriority"`
 }
 
@@ -169,6 +176,11 @@ func (o *UpdateNetworkSwitchStpBody) contextValidateStpBridgePriority(ctx contex
 	for i := 0; i < len(o.StpBridgePriority); i++ {
 
 		if o.StpBridgePriority[i] != nil {
+
+			if swag.IsZero(o.StpBridgePriority[i]) { // not required
+				return nil
+			}
+
 			if err := o.StpBridgePriority[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkSwitchStp" + "." + "stpBridgePriority" + "." + strconv.Itoa(i))
@@ -202,7 +214,8 @@ func (o *UpdateNetworkSwitchStpBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateNetworkSwitchStpParamsBodyStpBridgePriorityItems0 update network switch stp params body stp bridge priority items0
+/*
+UpdateNetworkSwitchStpParamsBodyStpBridgePriorityItems0 update network switch stp params body stp bridge priority items0
 swagger:model UpdateNetworkSwitchStpParamsBodyStpBridgePriorityItems0
 */
 type UpdateNetworkSwitchStpParamsBodyStpBridgePriorityItems0 struct {
@@ -210,11 +223,11 @@ type UpdateNetworkSwitchStpParamsBodyStpBridgePriorityItems0 struct {
 	// List of stack IDs
 	Stacks []string `json:"stacks"`
 
-	// STP priority for switch, stacks, or switch profiles
+	// STP priority for switch, stacks, or switch templates
 	// Required: true
 	StpPriority *int64 `json:"stpPriority"`
 
-	// List of switch profile IDs
+	// List of switch template IDs
 	SwitchProfiles []string `json:"switchProfiles"`
 
 	// List of switch serial numbers

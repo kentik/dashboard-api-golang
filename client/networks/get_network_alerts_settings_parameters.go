@@ -52,14 +52,19 @@ func NewGetNetworkAlertsSettingsParamsWithHTTPClient(client *http.Client) *GetNe
 	}
 }
 
-/* GetNetworkAlertsSettingsParams contains all the parameters to send to the API endpoint
-   for the get network alerts settings operation.
+/*
+GetNetworkAlertsSettingsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network alerts settings operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkAlertsSettingsParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

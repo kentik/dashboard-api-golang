@@ -52,20 +52,28 @@ func NewCreateNetworkWirelessSsidIdentityPskParamsWithHTTPClient(client *http.Cl
 	}
 }
 
-/* CreateNetworkWirelessSsidIdentityPskParams contains all the parameters to send to the API endpoint
-   for the create network wireless ssid identity psk operation.
+/*
+CreateNetworkWirelessSsidIdentityPskParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create network wireless ssid identity psk operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateNetworkWirelessSsidIdentityPskParams struct {
 
 	// CreateNetworkWirelessSsidIdentityPsk.
 	CreateNetworkWirelessSsidIdentityPsk CreateNetworkWirelessSsidIdentityPskBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// Number.
+	/* Number.
+
+	   Number
+	*/
 	Number string
 
 	timeout    time.Duration

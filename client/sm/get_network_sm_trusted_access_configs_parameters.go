@@ -53,10 +53,12 @@ func NewGetNetworkSmTrustedAccessConfigsParamsWithHTTPClient(client *http.Client
 	}
 }
 
-/* GetNetworkSmTrustedAccessConfigsParams contains all the parameters to send to the API endpoint
-   for the get network sm trusted access configs operation.
+/*
+GetNetworkSmTrustedAccessConfigsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network sm trusted access configs operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSmTrustedAccessConfigsParams struct {
 
@@ -66,7 +68,10 @@ type GetNetworkSmTrustedAccessConfigsParams struct {
 	*/
 	EndingBefore *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* PerPage.

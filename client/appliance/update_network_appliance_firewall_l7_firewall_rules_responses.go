@@ -34,7 +34,7 @@ func (o *UpdateNetworkApplianceFirewallL7FirewallRulesReader) ReadResponse(respo
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/appliance/firewall/l7FirewallRules] updateNetworkApplianceFirewallL7FirewallRules", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewUpdateNetworkApplianceFirewallL7FirewallRulesOK() *UpdateNetworkApplianc
 	return &UpdateNetworkApplianceFirewallL7FirewallRulesOK{}
 }
 
-/* UpdateNetworkApplianceFirewallL7FirewallRulesOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkApplianceFirewallL7FirewallRulesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *UpdateNetworkApplianceFirewallL7FirewallRulesOK) IsCode(code int) bool 
 	return code == 200
 }
 
+// Code gets the status code for the update network appliance firewall l7 firewall rules o k response
+func (o *UpdateNetworkApplianceFirewallL7FirewallRulesOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkApplianceFirewallL7FirewallRulesOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/appliance/firewall/l7FirewallRules][%d] updateNetworkApplianceFirewallL7FirewallRulesOK  %+v", 200, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *UpdateNetworkApplianceFirewallL7FirewallRulesOK) readResponse(response 
 	return nil
 }
 
-/*UpdateNetworkApplianceFirewallL7FirewallRulesBody update network appliance firewall l7 firewall rules body
+/*
+UpdateNetworkApplianceFirewallL7FirewallRulesBody update network appliance firewall l7 firewall rules body
 // Example: {"rules":[{"policy":"deny","type":"host","value":"google.com"},{"policy":"deny","type":"port","value":"23"},{"policy":"deny","type":"ipRange","value":"10.11.12.00/24"},{"policy":"deny","type":"ipRange","value":"10.11.12.00/24:5555"}]}
 swagger:model UpdateNetworkApplianceFirewallL7FirewallRulesBody
 */
@@ -167,6 +174,11 @@ func (o *UpdateNetworkApplianceFirewallL7FirewallRulesBody) contextValidateRules
 	for i := 0; i < len(o.Rules); i++ {
 
 		if o.Rules[i] != nil {
+
+			if swag.IsZero(o.Rules[i]) { // not required
+				return nil
+			}
+
 			if err := o.Rules[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkApplianceFirewallL7FirewallRules" + "." + "rules" + "." + strconv.Itoa(i))
@@ -200,7 +212,8 @@ func (o *UpdateNetworkApplianceFirewallL7FirewallRulesBody) UnmarshalBinary(b []
 	return nil
 }
 
-/*UpdateNetworkApplianceFirewallL7FirewallRulesParamsBodyRulesItems0 update network appliance firewall l7 firewall rules params body rules items0
+/*
+UpdateNetworkApplianceFirewallL7FirewallRulesParamsBodyRulesItems0 update network appliance firewall l7 firewall rules params body rules items0
 swagger:model UpdateNetworkApplianceFirewallL7FirewallRulesParamsBodyRulesItems0
 */
 type UpdateNetworkApplianceFirewallL7FirewallRulesParamsBodyRulesItems0 struct {
@@ -210,7 +223,7 @@ type UpdateNetworkApplianceFirewallL7FirewallRulesParamsBodyRulesItems0 struct {
 	Policy string `json:"policy,omitempty"`
 
 	// Type of the L7 rule. One of: 'application', 'applicationCategory', 'host', 'port', 'ipRange'
-	// Enum: [application applicationCategory host port ipRange]
+	// Enum: [application applicationCategory host ipRange port]
 	Type string `json:"type,omitempty"`
 
 	// The 'value' of what you want to block. Format of 'value' varies depending on type of the rule. The application categories and application ids can be retrieved from the the 'MX L7 application categories' endpoint. The countries follow the two-letter ISO 3166-1 alpha-2 format.
@@ -278,7 +291,7 @@ var updateNetworkApplianceFirewallL7FirewallRulesParamsBodyRulesItems0TypeTypePr
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["application","applicationCategory","host","port","ipRange"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["application","applicationCategory","host","ipRange","port"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -297,11 +310,11 @@ const (
 	// UpdateNetworkApplianceFirewallL7FirewallRulesParamsBodyRulesItems0TypeHost captures enum value "host"
 	UpdateNetworkApplianceFirewallL7FirewallRulesParamsBodyRulesItems0TypeHost string = "host"
 
-	// UpdateNetworkApplianceFirewallL7FirewallRulesParamsBodyRulesItems0TypePort captures enum value "port"
-	UpdateNetworkApplianceFirewallL7FirewallRulesParamsBodyRulesItems0TypePort string = "port"
-
 	// UpdateNetworkApplianceFirewallL7FirewallRulesParamsBodyRulesItems0TypeIPRange captures enum value "ipRange"
 	UpdateNetworkApplianceFirewallL7FirewallRulesParamsBodyRulesItems0TypeIPRange string = "ipRange"
+
+	// UpdateNetworkApplianceFirewallL7FirewallRulesParamsBodyRulesItems0TypePort captures enum value "port"
+	UpdateNetworkApplianceFirewallL7FirewallRulesParamsBodyRulesItems0TypePort string = "port"
 )
 
 // prop value enum

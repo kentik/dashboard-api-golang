@@ -52,14 +52,19 @@ func NewGetNetworkApplianceFirewallCellularFirewallRulesParamsWithHTTPClient(cli
 	}
 }
 
-/* GetNetworkApplianceFirewallCellularFirewallRulesParams contains all the parameters to send to the API endpoint
-   for the get network appliance firewall cellular firewall rules operation.
+/*
+GetNetworkApplianceFirewallCellularFirewallRulesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network appliance firewall cellular firewall rules operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkApplianceFirewallCellularFirewallRulesParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

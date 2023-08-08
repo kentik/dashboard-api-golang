@@ -30,7 +30,7 @@ func (o *UpdateDeviceCameraVideoSettingsReader) ReadResponse(response runtime.Cl
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /devices/{serial}/camera/video/settings] updateDeviceCameraVideoSettings", response, response.Code())
 	}
 }
 
@@ -39,7 +39,8 @@ func NewUpdateDeviceCameraVideoSettingsOK() *UpdateDeviceCameraVideoSettingsOK {
 	return &UpdateDeviceCameraVideoSettingsOK{}
 }
 
-/* UpdateDeviceCameraVideoSettingsOK describes a response with status code 200, with default header values.
+/*
+UpdateDeviceCameraVideoSettingsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -72,6 +73,11 @@ func (o *UpdateDeviceCameraVideoSettingsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update device camera video settings o k response
+func (o *UpdateDeviceCameraVideoSettingsOK) Code() int {
+	return 200
+}
+
 func (o *UpdateDeviceCameraVideoSettingsOK) Error() string {
 	return fmt.Sprintf("[PUT /devices/{serial}/camera/video/settings][%d] updateDeviceCameraVideoSettingsOK  %+v", 200, o.Payload)
 }
@@ -94,7 +100,8 @@ func (o *UpdateDeviceCameraVideoSettingsOK) readResponse(response runtime.Client
 	return nil
 }
 
-/*UpdateDeviceCameraVideoSettingsBody update device camera video settings body
+/*
+UpdateDeviceCameraVideoSettingsBody update device camera video settings body
 // Example: {"externalRtspEnabled":true}
 swagger:model UpdateDeviceCameraVideoSettingsBody
 */

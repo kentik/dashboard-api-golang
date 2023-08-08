@@ -33,7 +33,7 @@ func (o *UpdateNetworkWirelessBluetoothSettingsReader) ReadResponse(response run
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/wireless/bluetooth/settings] updateNetworkWirelessBluetoothSettings", response, response.Code())
 	}
 }
 
@@ -42,12 +42,13 @@ func NewUpdateNetworkWirelessBluetoothSettingsOK() *UpdateNetworkWirelessBluetoo
 	return &UpdateNetworkWirelessBluetoothSettingsOK{}
 }
 
-/* UpdateNetworkWirelessBluetoothSettingsOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkWirelessBluetoothSettingsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateNetworkWirelessBluetoothSettingsOK struct {
-	Payload interface{}
+	Payload *UpdateNetworkWirelessBluetoothSettingsOKBody
 }
 
 // IsSuccess returns true when this update network wireless bluetooth settings o k response has a 2xx status code
@@ -75,6 +76,11 @@ func (o *UpdateNetworkWirelessBluetoothSettingsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network wireless bluetooth settings o k response
+func (o *UpdateNetworkWirelessBluetoothSettingsOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkWirelessBluetoothSettingsOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/wireless/bluetooth/settings][%d] updateNetworkWirelessBluetoothSettingsOK  %+v", 200, o.Payload)
 }
@@ -83,40 +89,43 @@ func (o *UpdateNetworkWirelessBluetoothSettingsOK) String() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/wireless/bluetooth/settings][%d] updateNetworkWirelessBluetoothSettingsOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateNetworkWirelessBluetoothSettingsOK) GetPayload() interface{} {
+func (o *UpdateNetworkWirelessBluetoothSettingsOK) GetPayload() *UpdateNetworkWirelessBluetoothSettingsOKBody {
 	return o.Payload
 }
 
 func (o *UpdateNetworkWirelessBluetoothSettingsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateNetworkWirelessBluetoothSettingsOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateNetworkWirelessBluetoothSettingsBody update network wireless bluetooth settings body
-// Example: {"advertisingEnabled":true,"major":1,"majorMinorAssignmentMode":"Non-unique","scanningEnabled":true,"uuid":"00000000-0000-0000-000-000000000000"}
+/*
+UpdateNetworkWirelessBluetoothSettingsBody update network wireless bluetooth settings body
+// Example: {"advertisingEnabled":true,"major":1,"majorMinorAssignmentMode":"Non-unique","minor":1,"scanningEnabled":true,"uuid":"00000000-0000-0000-000-000000000000"}
 swagger:model UpdateNetworkWirelessBluetoothSettingsBody
 */
 type UpdateNetworkWirelessBluetoothSettingsBody struct {
 
-	// Whether APs will advertise beacons. (true, false)
+	// Whether APs will advertise beacons.
 	AdvertisingEnabled bool `json:"advertisingEnabled,omitempty"`
 
 	// The major number to be used in the beacon identifier. Only valid in 'Non-unique' mode.
 	Major int64 `json:"major,omitempty"`
 
 	// The way major and minor number should be assigned to nodes in the network. ('Unique', 'Non-unique')
-	// Enum: [Unique Non-unique]
+	// Enum: [Non-unique Unique]
 	MajorMinorAssignmentMode string `json:"majorMinorAssignmentMode,omitempty"`
 
 	// The minor number to be used in the beacon identifier. Only valid in 'Non-unique' mode.
 	Minor int64 `json:"minor,omitempty"`
 
-	// Whether APs will scan for Bluetooth enabled clients. (true, false)
+	// Whether APs will scan for Bluetooth enabled clients.
 	ScanningEnabled bool `json:"scanningEnabled,omitempty"`
 
 	// The UUID to be used in the beacon identifier.
@@ -141,7 +150,7 @@ var updateNetworkWirelessBluetoothSettingsBodyTypeMajorMinorAssignmentModePropEn
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Unique","Non-unique"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Non-unique","Unique"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -151,11 +160,11 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessBluetoothSettingsBodyMajorMinorAssignmentModeUnique captures enum value "Unique"
-	UpdateNetworkWirelessBluetoothSettingsBodyMajorMinorAssignmentModeUnique string = "Unique"
-
 	// UpdateNetworkWirelessBluetoothSettingsBodyMajorMinorAssignmentModeNonDashUnique captures enum value "Non-unique"
 	UpdateNetworkWirelessBluetoothSettingsBodyMajorMinorAssignmentModeNonDashUnique string = "Non-unique"
+
+	// UpdateNetworkWirelessBluetoothSettingsBodyMajorMinorAssignmentModeUnique captures enum value "Unique"
+	UpdateNetworkWirelessBluetoothSettingsBodyMajorMinorAssignmentModeUnique string = "Unique"
 )
 
 // prop value enum
@@ -195,6 +204,62 @@ func (o *UpdateNetworkWirelessBluetoothSettingsBody) MarshalBinary() ([]byte, er
 // UnmarshalBinary interface implementation
 func (o *UpdateNetworkWirelessBluetoothSettingsBody) UnmarshalBinary(b []byte) error {
 	var res UpdateNetworkWirelessBluetoothSettingsBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessBluetoothSettingsOKBody update network wireless bluetooth settings o k body
+swagger:model UpdateNetworkWirelessBluetoothSettingsOKBody
+*/
+type UpdateNetworkWirelessBluetoothSettingsOKBody struct {
+
+	// Whether APs will advertise beacons.
+	AdvertisingEnabled bool `json:"advertisingEnabled,omitempty"`
+
+	// Whether ESL is enabled on this network.
+	EslEnabled bool `json:"eslEnabled,omitempty"`
+
+	// The major number to be used in the beacon identifier. Only valid in 'Non-unique' mode.
+	Major int64 `json:"major,omitempty"`
+
+	// The way major and minor number should be assigned to nodes in the network. ('Unique', 'Non-unique')
+	MajorMinorAssignmentMode string `json:"majorMinorAssignmentMode,omitempty"`
+
+	// The minor number to be used in the beacon identifier. Only valid in 'Non-unique' mode.
+	Minor int64 `json:"minor,omitempty"`
+
+	// Whether APs will scan for Bluetooth enabled clients.
+	ScanningEnabled bool `json:"scanningEnabled,omitempty"`
+
+	// The UUID to be used in the beacon identifier.
+	UUID string `json:"uuid,omitempty"`
+}
+
+// Validate validates this update network wireless bluetooth settings o k body
+func (o *UpdateNetworkWirelessBluetoothSettingsOKBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless bluetooth settings o k body based on context it is used
+func (o *UpdateNetworkWirelessBluetoothSettingsOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessBluetoothSettingsOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessBluetoothSettingsOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessBluetoothSettingsOKBody
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

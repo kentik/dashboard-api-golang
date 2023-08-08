@@ -52,14 +52,19 @@ func NewGetNetworkSwitchPortSchedulesParamsWithHTTPClient(client *http.Client) *
 	}
 }
 
-/* GetNetworkSwitchPortSchedulesParams contains all the parameters to send to the API endpoint
-   for the get network switch port schedules operation.
+/*
+GetNetworkSwitchPortSchedulesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network switch port schedules operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSwitchPortSchedulesParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

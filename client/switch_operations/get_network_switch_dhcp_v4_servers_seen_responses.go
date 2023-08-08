@@ -34,7 +34,7 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenReader) ReadResponse(response runtime.
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/switch/dhcp/v4/servers/seen] getNetworkSwitchDhcpV4ServersSeen", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewGetNetworkSwitchDhcpV4ServersSeenOK() *GetNetworkSwitchDhcpV4ServersSeen
 	return &GetNetworkSwitchDhcpV4ServersSeenOK{}
 }
 
-/* GetNetworkSwitchDhcpV4ServersSeenOK describes a response with status code 200, with default header values.
+/*
+GetNetworkSwitchDhcpV4ServersSeenOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -81,6 +82,11 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network switch dhcp v4 servers seen o k response
+func (o *GetNetworkSwitchDhcpV4ServersSeenOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkSwitchDhcpV4ServersSeenOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/switch/dhcp/v4/servers/seen][%d] getNetworkSwitchDhcpV4ServersSeenOK  %+v", 200, o.Payload)
 }
@@ -110,12 +116,13 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOK) readResponse(response runtime.Clie
 	return nil
 }
 
-/*GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0 get network switch dhcp v4 servers seen o k body items0
+/*
+GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0 get network switch dhcp v4 servers seen o k body items0
 swagger:model GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0
 */
 type GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0 struct {
 
-	// Client id of the DHCPv4 server if available.
+	// Client id of the server if available.
 	ClientID string `json:"clientId,omitempty"`
 
 	// device
@@ -124,10 +131,10 @@ type GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0 struct {
 	// ipv4
 	IPV4 *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0IPV4 `json:"ipv4,omitempty"`
 
-	// Whether the DHCPv4 server is allowed or blocked. Always true for configured servers.
+	// Whether the server is allowed or blocked. Always true for configured servers.
 	IsAllowed bool `json:"isAllowed,omitempty"`
 
-	// Whether the DHCPv4 server is configured.
+	// Whether the server is configured.
 	IsConfigured bool `json:"isConfigured,omitempty"`
 
 	// last ack
@@ -136,21 +143,21 @@ type GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0 struct {
 	// last packet
 	LastPacket *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacket `json:"lastPacket,omitempty"`
 
-	// Last time the DHCPv4 server was seen.
+	// Last time the server was seen.
 	// Format: date-time
 	LastSeenAt strfmt.DateTime `json:"lastSeenAt,omitempty"`
 
-	// Mac address of the DHCPv4 server.
+	// Mac address of the server.
 	Mac string `json:"mac,omitempty"`
 
-	// Devices that saw the DHCPv4 server.
+	// Devices that saw the server.
 	SeenBy []*GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0SeenByItems0 `json:"seenBy"`
 
-	// DHCPv4 server type. Can be a 'device', 'stack', or 'discovered' (i.e client).
-	// Enum: [device stack discovered]
+	// server type. Can be a 'device', 'stack', or 'discovered' (i.e client).
+	// Enum: [device discovered stack]
 	Type string `json:"type,omitempty"`
 
-	// Vlan id of the DHCPv4 server.
+	// Vlan id of the server.
 	Vlan int64 `json:"vlan,omitempty"`
 }
 
@@ -310,7 +317,7 @@ var getNetworkSwitchDhcpV4ServersSeenOKBodyItems0TypeTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["device","stack","discovered"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["device","discovered","stack"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -323,11 +330,11 @@ const (
 	// GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0TypeDevice captures enum value "device"
 	GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0TypeDevice string = "device"
 
-	// GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0TypeStack captures enum value "stack"
-	GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0TypeStack string = "stack"
-
 	// GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0TypeDiscovered captures enum value "discovered"
 	GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0TypeDiscovered string = "discovered"
+
+	// GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0TypeStack captures enum value "stack"
+	GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0TypeStack string = "stack"
 )
 
 // prop value enum
@@ -384,6 +391,11 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0) ContextValidate(ctx cont
 func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0) contextValidateDevice(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Device != nil {
+
+		if swag.IsZero(o.Device) { // not required
+			return nil
+		}
+
 		if err := o.Device.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("device")
@@ -400,6 +412,11 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0) contextValidateDevice(ct
 func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0) contextValidateIPV4(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.IPV4 != nil {
+
+		if swag.IsZero(o.IPV4) { // not required
+			return nil
+		}
+
 		if err := o.IPV4.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("ipv4")
@@ -416,6 +433,11 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0) contextValidateIPV4(ctx 
 func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0) contextValidateLastAck(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.LastAck != nil {
+
+		if swag.IsZero(o.LastAck) { // not required
+			return nil
+		}
+
 		if err := o.LastAck.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("lastAck")
@@ -432,6 +454,11 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0) contextValidateLastAck(c
 func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0) contextValidateLastPacket(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.LastPacket != nil {
+
+		if swag.IsZero(o.LastPacket) { // not required
+			return nil
+		}
+
 		if err := o.LastPacket.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("lastPacket")
@@ -450,6 +477,11 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0) contextValidateSeenBy(ct
 	for i := 0; i < len(o.SeenBy); i++ {
 
 		if o.SeenBy[i] != nil {
+
+			if swag.IsZero(o.SeenBy[i]) { // not required
+				return nil
+			}
+
 			if err := o.SeenBy[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("seenBy" + "." + strconv.Itoa(i))
@@ -483,7 +515,8 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0) UnmarshalBinary(b []byte
 	return nil
 }
 
-/*GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0Device Attributes of the DHCPv4 server when it's a device.
+/*
+GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0Device Attributes of the server when it's a device.
 swagger:model GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0Device
 */
 type GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0Device struct {
@@ -551,6 +584,11 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0Device) ContextValidate(ct
 func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0Device) contextValidateInterface(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Interface != nil {
+
+		if swag.IsZero(o.Interface) { // not required
+			return nil
+		}
+
 		if err := o.Interface.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("device" + "." + "interface")
@@ -582,7 +620,8 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0Device) UnmarshalBinary(b 
 	return nil
 }
 
-/*GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0DeviceInterface Interface attributes of the DHCPv4 server. Only for configured servers.
+/*
+GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0DeviceInterface Interface attributes of the server. Only for configured servers.
 swagger:model GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0DeviceInterface
 */
 type GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0DeviceInterface struct {
@@ -622,18 +661,19 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0DeviceInterface) Unmarshal
 	return nil
 }
 
-/*GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0IPV4 IPv4 attributes of the DHCPv4 server.
+/*
+GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0IPV4 IPv4 attributes of the server.
 swagger:model GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0IPV4
 */
 type GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0IPV4 struct {
 
-	// IPv4 address of the DHCPv4 server.
+	// IPv4 address of the server.
 	Address string `json:"address,omitempty"`
 
-	// IPv4 gateway address of the DHCPv4 server.
+	// IPv4 gateway address of the server.
 	Gateway string `json:"gateway,omitempty"`
 
-	// Subnet of the DHCPv4 server.
+	// Subnet of the server.
 	Subnet string `json:"subnet,omitempty"`
 }
 
@@ -665,7 +705,8 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0IPV4) UnmarshalBinary(b []
 	return nil
 }
 
-/*GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastAck Attributes of the DHCPv4 server's last ack.
+/*
+GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastAck Attributes of the server's last ack.
 swagger:model GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastAck
 */
 type GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastAck struct {
@@ -673,7 +714,7 @@ type GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastAck struct {
 	// ipv4
 	IPV4 *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastAckIPV4 `json:"ipv4,omitempty"`
 
-	// Last time the DHCPv4 server was acked.
+	// Last time the server was acked.
 	// Format: date-time
 	Ts strfmt.DateTime `json:"ts,omitempty"`
 }
@@ -744,6 +785,11 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastAck) ContextValidate(c
 func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastAck) contextValidateIPV4(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.IPV4 != nil {
+
+		if swag.IsZero(o.IPV4) { // not required
+			return nil
+		}
+
 		if err := o.IPV4.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("lastAck" + "." + "ipv4")
@@ -775,7 +821,8 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastAck) UnmarshalBinary(b
 	return nil
 }
 
-/*GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastAckIPV4 IPv4 attributes of the last ack.
+/*
+GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastAckIPV4 IPv4 attributes of the last ack.
 swagger:model GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastAckIPV4
 */
 type GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastAckIPV4 struct {
@@ -812,7 +859,8 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastAckIPV4) UnmarshalBina
 	return nil
 }
 
-/*GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacket Last packet the DHCPv4 server received.
+/*
+GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacket Last packet the server received.
 swagger:model GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacket
 */
 type GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacket struct {
@@ -1024,6 +1072,11 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacket) ContextValidat
 func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacket) contextValidateDestination(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Destination != nil {
+
+		if swag.IsZero(o.Destination) { // not required
+			return nil
+		}
+
 		if err := o.Destination.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("lastPacket" + "." + "destination")
@@ -1040,6 +1093,11 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacket) contextValidat
 func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacket) contextValidateEthernet(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Ethernet != nil {
+
+		if swag.IsZero(o.Ethernet) { // not required
+			return nil
+		}
+
 		if err := o.Ethernet.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("lastPacket" + "." + "ethernet")
@@ -1056,6 +1114,11 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacket) contextValidat
 func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacket) contextValidateFields(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Fields != nil {
+
+		if swag.IsZero(o.Fields) { // not required
+			return nil
+		}
+
 		if err := o.Fields.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("lastPacket" + "." + "fields")
@@ -1072,6 +1135,11 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacket) contextValidat
 func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacket) contextValidateIP(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.IP != nil {
+
+		if swag.IsZero(o.IP) { // not required
+			return nil
+		}
+
 		if err := o.IP.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("lastPacket" + "." + "ip")
@@ -1088,6 +1156,11 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacket) contextValidat
 func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacket) contextValidateSource(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Source != nil {
+
+		if swag.IsZero(o.Source) { // not required
+			return nil
+		}
+
 		if err := o.Source.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("lastPacket" + "." + "source")
@@ -1104,6 +1177,11 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacket) contextValidat
 func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacket) contextValidateUDP(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.UDP != nil {
+
+		if swag.IsZero(o.UDP) { // not required
+			return nil
+		}
+
 		if err := o.UDP.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("lastPacket" + "." + "udp")
@@ -1135,7 +1213,8 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacket) UnmarshalBinar
 	return nil
 }
 
-/*GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketDestination Destination of the packet.
+/*
+GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketDestination Destination of the packet.
 swagger:model GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketDestination
 */
 type GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketDestination struct {
@@ -1200,6 +1279,11 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketDestination) Con
 func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketDestination) contextValidateIPV4(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.IPV4 != nil {
+
+		if swag.IsZero(o.IPV4) { // not required
+			return nil
+		}
+
 		if err := o.IPV4.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("lastPacket" + "." + "destination" + "." + "ipv4")
@@ -1231,7 +1315,8 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketDestination) Unm
 	return nil
 }
 
-/*GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketDestinationIPV4 Destination ipv4 attributes of the packet.
+/*
+GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketDestinationIPV4 Destination ipv4 attributes of the packet.
 swagger:model GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketDestinationIPV4
 */
 type GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketDestinationIPV4 struct {
@@ -1268,7 +1353,8 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketDestinationIPV4)
 	return nil
 }
 
-/*GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketEthernet Additional ethernet attributes of the packet.
+/*
+GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketEthernet Additional ethernet attributes of the packet.
 swagger:model GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketEthernet
 */
 type GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketEthernet struct {
@@ -1305,7 +1391,8 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketEthernet) Unmars
 	return nil
 }
 
-/*GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketFields DHCP-specific fields of the packet.
+/*
+GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketFields DHCP-specific fields of the packet.
 swagger:model GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketFields
 */
 type GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketFields struct {
@@ -1415,6 +1502,11 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketFields) contextV
 	for i := 0; i < len(o.Options); i++ {
 
 		if o.Options[i] != nil {
+
+			if swag.IsZero(o.Options[i]) { // not required
+				return nil
+			}
+
 			if err := o.Options[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("lastPacket" + "." + "fields" + "." + "options" + "." + strconv.Itoa(i))
@@ -1448,7 +1540,8 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketFields) Unmarsha
 	return nil
 }
 
-/*GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketFieldsOptionsItems0 get network switch dhcp v4 servers seen o k body items0 last packet fields options items0
+/*
+GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketFieldsOptionsItems0 get network switch dhcp v4 servers seen o k body items0 last packet fields options items0
 swagger:model GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketFieldsOptionsItems0
 */
 type GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketFieldsOptionsItems0 struct {
@@ -1488,7 +1581,8 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketFieldsOptionsIte
 	return nil
 }
 
-/*GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketIP Additional IP attributes of the packet.
+/*
+GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketIP Additional IP attributes of the packet.
 swagger:model GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketIP
 */
 type GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketIP struct {
@@ -1603,6 +1697,11 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketIP) ContextValid
 func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketIP) contextValidateDscp(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Dscp != nil {
+
+		if swag.IsZero(o.Dscp) { // not required
+			return nil
+		}
+
 		if err := o.Dscp.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("lastPacket" + "." + "ip" + "." + "dscp")
@@ -1634,7 +1733,8 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketIP) UnmarshalBin
 	return nil
 }
 
-/*GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketIPDscp DSCP attributes of the packet.
+/*
+GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketIPDscp DSCP attributes of the packet.
 swagger:model GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketIPDscp
 */
 type GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketIPDscp struct {
@@ -1674,7 +1774,8 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketIPDscp) Unmarsha
 	return nil
 }
 
-/*GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketSource Source of the packet.
+/*
+GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketSource Source of the packet.
 swagger:model GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketSource
 */
 type GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketSource struct {
@@ -1739,6 +1840,11 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketSource) ContextV
 func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketSource) contextValidateIPV4(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.IPV4 != nil {
+
+		if swag.IsZero(o.IPV4) { // not required
+			return nil
+		}
+
 		if err := o.IPV4.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("lastPacket" + "." + "source" + "." + "ipv4")
@@ -1770,7 +1876,8 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketSource) Unmarsha
 	return nil
 }
 
-/*GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketSourceIPV4 Source ipv4 attributes of the packet.
+/*
+GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketSourceIPV4 Source ipv4 attributes of the packet.
 swagger:model GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketSourceIPV4
 */
 type GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketSourceIPV4 struct {
@@ -1807,7 +1914,8 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketSourceIPV4) Unma
 	return nil
 }
 
-/*GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketUDP UDP attributes of the packet.
+/*
+GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketUDP UDP attributes of the packet.
 swagger:model GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketUDP
 */
 type GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketUDP struct {
@@ -1847,7 +1955,8 @@ func (o *GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0LastPacketUDP) UnmarshalBi
 	return nil
 }
 
-/*GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0SeenByItems0 get network switch dhcp v4 servers seen o k body items0 seen by items0
+/*
+GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0SeenByItems0 get network switch dhcp v4 servers seen o k body items0 seen by items0
 swagger:model GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0SeenByItems0
 */
 type GetNetworkSwitchDhcpV4ServersSeenOKBodyItems0SeenByItems0 struct {

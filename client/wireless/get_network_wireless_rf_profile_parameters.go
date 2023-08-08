@@ -52,17 +52,25 @@ func NewGetNetworkWirelessRfProfileParamsWithHTTPClient(client *http.Client) *Ge
 	}
 }
 
-/* GetNetworkWirelessRfProfileParams contains all the parameters to send to the API endpoint
-   for the get network wireless rf profile operation.
+/*
+GetNetworkWirelessRfProfileParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network wireless rf profile operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkWirelessRfProfileParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// RfProfileID.
+	/* RfProfileID.
+
+	   Rf profile ID
+	*/
 	RfProfileID string
 
 	timeout    time.Duration

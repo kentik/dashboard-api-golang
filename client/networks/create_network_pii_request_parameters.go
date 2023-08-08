@@ -52,17 +52,22 @@ func NewCreateNetworkPiiRequestParamsWithHTTPClient(client *http.Client) *Create
 	}
 }
 
-/* CreateNetworkPiiRequestParams contains all the parameters to send to the API endpoint
-   for the create network pii request operation.
+/*
+CreateNetworkPiiRequestParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create network pii request operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateNetworkPiiRequestParams struct {
 
 	// CreateNetworkPiiRequest.
 	CreateNetworkPiiRequest CreateNetworkPiiRequestBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

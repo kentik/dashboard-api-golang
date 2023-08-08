@@ -32,7 +32,7 @@ func (o *GetNetworkSyslogServersReader) ReadResponse(response runtime.ClientResp
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/syslogServers] getNetworkSyslogServers", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewGetNetworkSyslogServersOK() *GetNetworkSyslogServersOK {
 	return &GetNetworkSyslogServersOK{}
 }
 
-/* GetNetworkSyslogServersOK describes a response with status code 200, with default header values.
+/*
+GetNetworkSyslogServersOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *GetNetworkSyslogServersOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network syslog servers o k response
+func (o *GetNetworkSyslogServersOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkSyslogServersOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/syslogServers][%d] getNetworkSyslogServersOK  %+v", 200, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *GetNetworkSyslogServersOK) readResponse(response runtime.ClientResponse
 	return nil
 }
 
-/*GetNetworkSyslogServersOKBody get network syslog servers o k body
+/*
+GetNetworkSyslogServersOKBody get network syslog servers o k body
 swagger:model GetNetworkSyslogServersOKBody
 */
 type GetNetworkSyslogServersOKBody struct {
@@ -166,6 +173,11 @@ func (o *GetNetworkSyslogServersOKBody) contextValidateServers(ctx context.Conte
 	for i := 0; i < len(o.Servers); i++ {
 
 		if o.Servers[i] != nil {
+
+			if swag.IsZero(o.Servers[i]) { // not required
+				return nil
+			}
+
 			if err := o.Servers[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("getNetworkSyslogServersOK" + "." + "servers" + "." + strconv.Itoa(i))
@@ -199,7 +211,8 @@ func (o *GetNetworkSyslogServersOKBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*GetNetworkSyslogServersOKBodyServersItems0 get network syslog servers o k body servers items0
+/*
+GetNetworkSyslogServersOKBodyServersItems0 get network syslog servers o k body servers items0
 swagger:model GetNetworkSyslogServersOKBodyServersItems0
 */
 type GetNetworkSyslogServersOKBodyServersItems0 struct {

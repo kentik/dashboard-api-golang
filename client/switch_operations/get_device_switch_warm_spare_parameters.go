@@ -52,14 +52,19 @@ func NewGetDeviceSwitchWarmSpareParamsWithHTTPClient(client *http.Client) *GetDe
 	}
 }
 
-/* GetDeviceSwitchWarmSpareParams contains all the parameters to send to the API endpoint
-   for the get device switch warm spare operation.
+/*
+GetDeviceSwitchWarmSpareParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get device switch warm spare operation.
+
+	Typically these are written to a http.Request.
 */
 type GetDeviceSwitchWarmSpareParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	timeout    time.Duration

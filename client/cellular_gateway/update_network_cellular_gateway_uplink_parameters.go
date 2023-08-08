@@ -52,14 +52,19 @@ func NewUpdateNetworkCellularGatewayUplinkParamsWithHTTPClient(client *http.Clie
 	}
 }
 
-/* UpdateNetworkCellularGatewayUplinkParams contains all the parameters to send to the API endpoint
-   for the update network cellular gateway uplink operation.
+/*
+UpdateNetworkCellularGatewayUplinkParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network cellular gateway uplink operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkCellularGatewayUplinkParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkCellularGatewayUplink.

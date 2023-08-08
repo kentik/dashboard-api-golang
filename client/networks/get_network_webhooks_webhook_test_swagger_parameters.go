@@ -52,17 +52,25 @@ func NewGetNetworkWebhooksWebhookTestParamsWithHTTPClient(client *http.Client) *
 	}
 }
 
-/* GetNetworkWebhooksWebhookTestParams contains all the parameters to send to the API endpoint
-   for the get network webhooks webhook test operation.
+/*
+GetNetworkWebhooksWebhookTestParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network webhooks webhook test operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkWebhooksWebhookTestParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// WebhookTestID.
+	/* WebhookTestID.
+
+	   Webhook test ID
+	*/
 	WebhookTestID string
 
 	timeout    time.Duration

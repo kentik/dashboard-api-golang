@@ -52,17 +52,25 @@ func NewGetNetworkClientSplashAuthorizationStatusParamsWithHTTPClient(client *ht
 	}
 }
 
-/* GetNetworkClientSplashAuthorizationStatusParams contains all the parameters to send to the API endpoint
-   for the get network client splash authorization status operation.
+/*
+GetNetworkClientSplashAuthorizationStatusParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network client splash authorization status operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkClientSplashAuthorizationStatusParams struct {
 
-	// ClientID.
+	/* ClientID.
+
+	   Client ID
+	*/
 	ClientID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

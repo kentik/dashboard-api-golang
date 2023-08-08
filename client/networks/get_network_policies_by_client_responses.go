@@ -32,7 +32,7 @@ func (o *GetNetworkPoliciesByClientReader) ReadResponse(response runtime.ClientR
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/policies/byClient] getNetworkPoliciesByClient", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewGetNetworkPoliciesByClientOK() *GetNetworkPoliciesByClientOK {
 	return &GetNetworkPoliciesByClientOK{}
 }
 
-/* GetNetworkPoliciesByClientOK describes a response with status code 200, with default header values.
+/*
+GetNetworkPoliciesByClientOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -79,6 +80,11 @@ func (o *GetNetworkPoliciesByClientOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network policies by client o k response
+func (o *GetNetworkPoliciesByClientOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkPoliciesByClientOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/policies/byClient][%d] getNetworkPoliciesByClientOK  %+v", 200, o.Payload)
 }
@@ -108,7 +114,8 @@ func (o *GetNetworkPoliciesByClientOK) readResponse(response runtime.ClientRespo
 	return nil
 }
 
-/*GetNetworkPoliciesByClientOKBodyItems0 get network policies by client o k body items0
+/*
+GetNetworkPoliciesByClientOKBodyItems0 get network policies by client o k body items0
 swagger:model GetNetworkPoliciesByClientOKBodyItems0
 */
 type GetNetworkPoliciesByClientOKBodyItems0 struct {
@@ -182,6 +189,11 @@ func (o *GetNetworkPoliciesByClientOKBodyItems0) contextValidateAssigned(ctx con
 	for i := 0; i < len(o.Assigned); i++ {
 
 		if o.Assigned[i] != nil {
+
+			if swag.IsZero(o.Assigned[i]) { // not required
+				return nil
+			}
+
 			if err := o.Assigned[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("assigned" + "." + strconv.Itoa(i))
@@ -215,10 +227,14 @@ func (o *GetNetworkPoliciesByClientOKBodyItems0) UnmarshalBinary(b []byte) error
 	return nil
 }
 
-/*GetNetworkPoliciesByClientOKBodyItems0AssignedItems0 get network policies by client o k body items0 assigned items0
+/*
+GetNetworkPoliciesByClientOKBodyItems0AssignedItems0 get network policies by client o k body items0 assigned items0
 swagger:model GetNetworkPoliciesByClientOKBodyItems0AssignedItems0
 */
 type GetNetworkPoliciesByClientOKBodyItems0AssignedItems0 struct {
+
+	// id of policy
+	GroupPolicyID string `json:"groupPolicyId,omitempty"`
 
 	// name of policy
 	Name string `json:"name,omitempty"`
@@ -289,6 +305,11 @@ func (o *GetNetworkPoliciesByClientOKBodyItems0AssignedItems0) contextValidateSs
 	for i := 0; i < len(o.Ssid); i++ {
 
 		if o.Ssid[i] != nil {
+
+			if swag.IsZero(o.Ssid[i]) { // not required
+				return nil
+			}
+
 			if err := o.Ssid[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("ssid" + "." + strconv.Itoa(i))
@@ -322,7 +343,8 @@ func (o *GetNetworkPoliciesByClientOKBodyItems0AssignedItems0) UnmarshalBinary(b
 	return nil
 }
 
-/*GetNetworkPoliciesByClientOKBodyItems0AssignedItems0SsidItems0 get network policies by client o k body items0 assigned items0 ssid items0
+/*
+GetNetworkPoliciesByClientOKBodyItems0AssignedItems0SsidItems0 get network policies by client o k body items0 assigned items0 ssid items0
 swagger:model GetNetworkPoliciesByClientOKBodyItems0AssignedItems0SsidItems0
 */
 type GetNetworkPoliciesByClientOKBodyItems0AssignedItems0SsidItems0 struct {

@@ -52,14 +52,19 @@ func NewCreateDeviceApplianceVmxAuthenticationTokenParamsWithHTTPClient(client *
 	}
 }
 
-/* CreateDeviceApplianceVmxAuthenticationTokenParams contains all the parameters to send to the API endpoint
-   for the create device appliance vmx authentication token operation.
+/*
+CreateDeviceApplianceVmxAuthenticationTokenParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create device appliance vmx authentication token operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateDeviceApplianceVmxAuthenticationTokenParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	timeout    time.Duration

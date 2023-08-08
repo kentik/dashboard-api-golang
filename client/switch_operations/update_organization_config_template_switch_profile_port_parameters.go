@@ -52,23 +52,37 @@ func NewUpdateOrganizationConfigTemplateSwitchProfilePortParamsWithHTTPClient(cl
 	}
 }
 
-/* UpdateOrganizationConfigTemplateSwitchProfilePortParams contains all the parameters to send to the API endpoint
-   for the update organization config template switch profile port operation.
+/*
+UpdateOrganizationConfigTemplateSwitchProfilePortParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update organization config template switch profile port operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateOrganizationConfigTemplateSwitchProfilePortParams struct {
 
-	// ConfigTemplateID.
+	/* ConfigTemplateID.
+
+	   Config template ID
+	*/
 	ConfigTemplateID string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
-	// PortID.
+	/* PortID.
+
+	   Port ID
+	*/
 	PortID string
 
-	// ProfileID.
+	/* ProfileID.
+
+	   Profile ID
+	*/
 	ProfileID string
 
 	// UpdateOrganizationConfigTemplateSwitchProfilePort.

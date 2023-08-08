@@ -6,11 +6,13 @@ package organizations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetOrganizationDevicesReader is a Reader for the GetOrganizationDevices structure.
@@ -28,7 +30,7 @@ func (o *GetOrganizationDevicesReader) ReadResponse(response runtime.ClientRespo
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/devices] getOrganizationDevices", response, response.Code())
 	}
 }
 
@@ -37,7 +39,8 @@ func NewGetOrganizationDevicesOK() *GetOrganizationDevicesOK {
 	return &GetOrganizationDevicesOK{}
 }
 
-/* GetOrganizationDevicesOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationDevicesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -47,7 +50,7 @@ type GetOrganizationDevicesOK struct {
 	 */
 	Link string
 
-	Payload []interface{}
+	Payload []*GetOrganizationDevicesOKBodyItems0
 }
 
 // IsSuccess returns true when this get organization devices o k response has a 2xx status code
@@ -75,6 +78,11 @@ func (o *GetOrganizationDevicesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get organization devices o k response
+func (o *GetOrganizationDevicesOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationDevicesOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/devices][%d] getOrganizationDevicesOK  %+v", 200, o.Payload)
 }
@@ -83,7 +91,7 @@ func (o *GetOrganizationDevicesOK) String() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/devices][%d] getOrganizationDevicesOK  %+v", 200, o.Payload)
 }
 
-func (o *GetOrganizationDevicesOK) GetPayload() []interface{} {
+func (o *GetOrganizationDevicesOK) GetPayload() []*GetOrganizationDevicesOKBodyItems0 {
 	return o.Payload
 }
 
@@ -101,5 +109,79 @@ func (o *GetOrganizationDevicesOK) readResponse(response runtime.ClientResponse,
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetOrganizationDevicesOKBodyItems0 get organization devices o k body items0
+swagger:model GetOrganizationDevicesOKBodyItems0
+*/
+type GetOrganizationDevicesOKBodyItems0 struct {
+
+	// Physical address of the device
+	Address string `json:"address,omitempty"`
+
+	// Firmware version of the device
+	Firmware string `json:"firmware,omitempty"`
+
+	// LAN IP address of the device
+	LanIP string `json:"lanIp,omitempty"`
+
+	// Latitude of the device
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude of the device
+	Lng float32 `json:"lng,omitempty"`
+
+	// MAC address of the device
+	Mac string `json:"mac,omitempty"`
+
+	// Model of the device
+	Model string `json:"model,omitempty"`
+
+	// Name of the device
+	Name string `json:"name,omitempty"`
+
+	// ID of the network the device belongs to
+	NetworkID string `json:"networkId,omitempty"`
+
+	// Notes for the device, limited to 255 characters
+	Notes string `json:"notes,omitempty"`
+
+	// Product type of the device
+	ProductType string `json:"productType,omitempty"`
+
+	// Serial number of the device
+	Serial string `json:"serial,omitempty"`
+
+	// List of tags assigned to the device
+	Tags []string `json:"tags"`
+}
+
+// Validate validates this get organization devices o k body items0
+func (o *GetOrganizationDevicesOKBodyItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get organization devices o k body items0 based on context it is used
+func (o *GetOrganizationDevicesOKBodyItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetOrganizationDevicesOKBodyItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetOrganizationDevicesOKBodyItems0) UnmarshalBinary(b []byte) error {
+	var res GetOrganizationDevicesOKBodyItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

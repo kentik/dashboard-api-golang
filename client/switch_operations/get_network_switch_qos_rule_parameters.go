@@ -52,17 +52,25 @@ func NewGetNetworkSwitchQosRuleParamsWithHTTPClient(client *http.Client) *GetNet
 	}
 }
 
-/* GetNetworkSwitchQosRuleParams contains all the parameters to send to the API endpoint
-   for the get network switch qos rule operation.
+/*
+GetNetworkSwitchQosRuleParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network switch qos rule operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSwitchQosRuleParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// QosRuleID.
+	/* QosRuleID.
+
+	   Qos rule ID
+	*/
 	QosRuleID string
 
 	timeout    time.Duration

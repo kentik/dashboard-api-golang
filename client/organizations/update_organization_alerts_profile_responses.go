@@ -33,7 +33,7 @@ func (o *UpdateOrganizationAlertsProfileReader) ReadResponse(response runtime.Cl
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /organizations/{organizationId}/alerts/profiles/{alertConfigId}] updateOrganizationAlertsProfile", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateOrganizationAlertsProfileOK() *UpdateOrganizationAlertsProfileOK {
 	return &UpdateOrganizationAlertsProfileOK{}
 }
 
-/* UpdateOrganizationAlertsProfileOK describes a response with status code 200, with default header values.
+/*
+UpdateOrganizationAlertsProfileOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateOrganizationAlertsProfileOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update organization alerts profile o k response
+func (o *UpdateOrganizationAlertsProfileOK) Code() int {
+	return 200
+}
+
 func (o *UpdateOrganizationAlertsProfileOK) Error() string {
 	return fmt.Sprintf("[PUT /organizations/{organizationId}/alerts/profiles/{alertConfigId}][%d] updateOrganizationAlertsProfileOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateOrganizationAlertsProfileOK) readResponse(response runtime.Client
 	return nil
 }
 
-/*UpdateOrganizationAlertsProfileBody update organization alerts profile body
+/*
+UpdateOrganizationAlertsProfileBody update organization alerts profile body
 // Example: {"enabled":true}
 swagger:model UpdateOrganizationAlertsProfileBody
 */
@@ -119,7 +126,7 @@ type UpdateOrganizationAlertsProfileBody struct {
 	Recipients *UpdateOrganizationAlertsProfileParamsBodyRecipients `json:"recipients,omitempty"`
 
 	// The alert type
-	// Enum: [voipJitter voipPacketLoss voipMos wanLatency wanPacketLoss wanUtilization wanStatus appOutage]
+	// Enum: [appOutage voipJitter voipMos voipPacketLoss wanLatency wanPacketLoss wanStatus wanUtilization]
 	Type string `json:"type,omitempty"`
 }
 
@@ -187,7 +194,7 @@ var updateOrganizationAlertsProfileBodyTypeTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["voipJitter","voipPacketLoss","voipMos","wanLatency","wanPacketLoss","wanUtilization","wanStatus","appOutage"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["appOutage","voipJitter","voipMos","voipPacketLoss","wanLatency","wanPacketLoss","wanStatus","wanUtilization"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -197,14 +204,17 @@ func init() {
 
 const (
 
+	// UpdateOrganizationAlertsProfileBodyTypeAppOutage captures enum value "appOutage"
+	UpdateOrganizationAlertsProfileBodyTypeAppOutage string = "appOutage"
+
 	// UpdateOrganizationAlertsProfileBodyTypeVoipJitter captures enum value "voipJitter"
 	UpdateOrganizationAlertsProfileBodyTypeVoipJitter string = "voipJitter"
 
-	// UpdateOrganizationAlertsProfileBodyTypeVoipPacketLoss captures enum value "voipPacketLoss"
-	UpdateOrganizationAlertsProfileBodyTypeVoipPacketLoss string = "voipPacketLoss"
-
 	// UpdateOrganizationAlertsProfileBodyTypeVoipMos captures enum value "voipMos"
 	UpdateOrganizationAlertsProfileBodyTypeVoipMos string = "voipMos"
+
+	// UpdateOrganizationAlertsProfileBodyTypeVoipPacketLoss captures enum value "voipPacketLoss"
+	UpdateOrganizationAlertsProfileBodyTypeVoipPacketLoss string = "voipPacketLoss"
 
 	// UpdateOrganizationAlertsProfileBodyTypeWanLatency captures enum value "wanLatency"
 	UpdateOrganizationAlertsProfileBodyTypeWanLatency string = "wanLatency"
@@ -212,14 +222,11 @@ const (
 	// UpdateOrganizationAlertsProfileBodyTypeWanPacketLoss captures enum value "wanPacketLoss"
 	UpdateOrganizationAlertsProfileBodyTypeWanPacketLoss string = "wanPacketLoss"
 
-	// UpdateOrganizationAlertsProfileBodyTypeWanUtilization captures enum value "wanUtilization"
-	UpdateOrganizationAlertsProfileBodyTypeWanUtilization string = "wanUtilization"
-
 	// UpdateOrganizationAlertsProfileBodyTypeWanStatus captures enum value "wanStatus"
 	UpdateOrganizationAlertsProfileBodyTypeWanStatus string = "wanStatus"
 
-	// UpdateOrganizationAlertsProfileBodyTypeAppOutage captures enum value "appOutage"
-	UpdateOrganizationAlertsProfileBodyTypeAppOutage string = "appOutage"
+	// UpdateOrganizationAlertsProfileBodyTypeWanUtilization captures enum value "wanUtilization"
+	UpdateOrganizationAlertsProfileBodyTypeWanUtilization string = "wanUtilization"
 )
 
 // prop value enum
@@ -264,6 +271,11 @@ func (o *UpdateOrganizationAlertsProfileBody) ContextValidate(ctx context.Contex
 func (o *UpdateOrganizationAlertsProfileBody) contextValidateAlertCondition(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.AlertCondition != nil {
+
+		if swag.IsZero(o.AlertCondition) { // not required
+			return nil
+		}
+
 		if err := o.AlertCondition.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateOrganizationAlertsProfile" + "." + "alertCondition")
@@ -280,6 +292,11 @@ func (o *UpdateOrganizationAlertsProfileBody) contextValidateAlertCondition(ctx 
 func (o *UpdateOrganizationAlertsProfileBody) contextValidateRecipients(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Recipients != nil {
+
+		if swag.IsZero(o.Recipients) { // not required
+			return nil
+		}
+
 		if err := o.Recipients.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateOrganizationAlertsProfile" + "." + "recipients")
@@ -311,7 +328,8 @@ func (o *UpdateOrganizationAlertsProfileBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateOrganizationAlertsProfileParamsBodyAlertCondition The conditions that determine if the alert triggers
+/*
+UpdateOrganizationAlertsProfileParamsBodyAlertCondition The conditions that determine if the alert triggers
 swagger:model UpdateOrganizationAlertsProfileParamsBodyAlertCondition
 */
 type UpdateOrganizationAlertsProfileParamsBodyAlertCondition struct {
@@ -322,8 +340,8 @@ type UpdateOrganizationAlertsProfileParamsBodyAlertCondition struct {
 	// The total duration in seconds that the threshold should be crossed before alerting
 	Duration int64 `json:"duration,omitempty"`
 
-	// The uplink observed for the alert.  interface must be one of the following: wan1, wan2, cellular
-	// Enum: [wan1 wan2 cellular]
+	// The uplink observed for the alert.  interface must be one of the following: wan1, wan2, wan3, cellular
+	// Enum: [cellular wan1 wan2 wan3]
 	Interface string `json:"interface,omitempty"`
 
 	// The threshold the metric must cross to be valid for alerting. Used only for VoIP Jitter alerts.
@@ -360,7 +378,7 @@ var updateOrganizationAlertsProfileParamsBodyAlertConditionTypeInterfacePropEnum
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["wan1","wan2","cellular"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["cellular","wan1","wan2","wan3"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -370,14 +388,17 @@ func init() {
 
 const (
 
+	// UpdateOrganizationAlertsProfileParamsBodyAlertConditionInterfaceCellular captures enum value "cellular"
+	UpdateOrganizationAlertsProfileParamsBodyAlertConditionInterfaceCellular string = "cellular"
+
 	// UpdateOrganizationAlertsProfileParamsBodyAlertConditionInterfaceWan1 captures enum value "wan1"
 	UpdateOrganizationAlertsProfileParamsBodyAlertConditionInterfaceWan1 string = "wan1"
 
 	// UpdateOrganizationAlertsProfileParamsBodyAlertConditionInterfaceWan2 captures enum value "wan2"
 	UpdateOrganizationAlertsProfileParamsBodyAlertConditionInterfaceWan2 string = "wan2"
 
-	// UpdateOrganizationAlertsProfileParamsBodyAlertConditionInterfaceCellular captures enum value "cellular"
-	UpdateOrganizationAlertsProfileParamsBodyAlertConditionInterfaceCellular string = "cellular"
+	// UpdateOrganizationAlertsProfileParamsBodyAlertConditionInterfaceWan3 captures enum value "wan3"
+	UpdateOrganizationAlertsProfileParamsBodyAlertConditionInterfaceWan3 string = "wan3"
 )
 
 // prop value enum
@@ -424,7 +445,8 @@ func (o *UpdateOrganizationAlertsProfileParamsBodyAlertCondition) UnmarshalBinar
 	return nil
 }
 
-/*UpdateOrganizationAlertsProfileParamsBodyRecipients List of recipients that will recieve the alert.
+/*
+UpdateOrganizationAlertsProfileParamsBodyRecipients List of recipients that will recieve the alert.
 swagger:model UpdateOrganizationAlertsProfileParamsBodyRecipients
 */
 type UpdateOrganizationAlertsProfileParamsBodyRecipients struct {

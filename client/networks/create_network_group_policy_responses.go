@@ -34,7 +34,7 @@ func (o *CreateNetworkGroupPolicyReader) ReadResponse(response runtime.ClientRes
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/groupPolicies] createNetworkGroupPolicy", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewCreateNetworkGroupPolicyCreated() *CreateNetworkGroupPolicyCreated {
 	return &CreateNetworkGroupPolicyCreated{}
 }
 
-/* CreateNetworkGroupPolicyCreated describes a response with status code 201, with default header values.
+/*
+CreateNetworkGroupPolicyCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *CreateNetworkGroupPolicyCreated) IsCode(code int) bool {
 	return code == 201
 }
 
+// Code gets the status code for the create network group policy created response
+func (o *CreateNetworkGroupPolicyCreated) Code() int {
+	return 201
+}
+
 func (o *CreateNetworkGroupPolicyCreated) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/groupPolicies][%d] createNetworkGroupPolicyCreated  %+v", 201, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *CreateNetworkGroupPolicyCreated) readResponse(response runtime.ClientRe
 	return nil
 }
 
-/*CreateNetworkGroupPolicyBody create network group policy body
+/*
+CreateNetworkGroupPolicyBody create network group policy body
 // Example: {"bandwidth":{"bandwidthLimits":{"limitDown":1000000,"limitUp":1000000},"settings":"custom"},"bonjourForwarding":{"rules":[{"description":"A simple bonjour rule","services":["All Services"],"vlanId":"1"}],"settings":"custom"},"contentFiltering":{"allowedUrlPatterns":{"patterns":[],"settings":"network default"},"blockedUrlCategories":{"categories":["meraki:contentFiltering/category/1","meraki:contentFiltering/category/7"],"settings":"override"},"blockedUrlPatterns":{"patterns":["http://www.example.com","http://www.betting.com"],"settings":"append"}},"firewallAndTrafficShaping":{"l3FirewallRules":[{"comment":"Allow TCP traffic to subnet with HTTP servers.","destCidr":"192.168.1.0/24","destPort":"443","policy":"allow","protocol":"tcp"}],"l7FirewallRules":[{"policy":"deny","type":"host","value":"google.com"},{"policy":"deny","type":"port","value":"23"},{"policy":"deny","type":"ipRange","value":"10.11.12.00/24"},{"policy":"deny","type":"ipRange","value":"10.11.12.00/24:5555"}],"settings":"custom","trafficShapingRules":[{"definitions":[{"type":"host","value":"google.com"},{"type":"port","value":"9090"},{"type":"ipRange","value":"192.1.0.0"},{"type":"ipRange","value":"192.1.0.0/16"},{"type":"ipRange","value":"10.1.0.0/16:80"},{"type":"localNet","value":"192.168.0.0/16"}],"dscpTagValue":0,"pcpTagValue":0,"perClientBandwidthLimits":{"bandwidthLimits":{"limitDown":1000000,"limitUp":1000000},"settings":"custom"}}]},"name":"No video streaming","scheduling":{"enabled":true,"friday":{"active":true,"from":"9:00","to":"17:00"},"monday":{"active":true,"from":"9:00","to":"17:00"},"saturday":{"active":false,"from":"0:00","to":"24:00"},"sunday":{"active":false,"from":"0:00","to":"24:00"},"thursday":{"active":true,"from":"9:00","to":"17:00"},"tuesday":{"active":true,"from":"9:00","to":"17:00"},"wednesday":{"active":true,"from":"9:00","to":"17:00"}},"splashAuthSettings":"bypass","vlanTagging":{"settings":"custom","vlanId":"1"}}
 swagger:model CreateNetworkGroupPolicyBody
 */
@@ -124,7 +131,7 @@ type CreateNetworkGroupPolicyBody struct {
 	Scheduling *CreateNetworkGroupPolicyParamsBodyScheduling `json:"scheduling,omitempty"`
 
 	// Whether clients bound to your policy will bypass splash authorization or behave according to the network's rules. Can be one of 'network default' or 'bypass'. Only available if your network has a wireless configuration.
-	// Enum: [network default bypass]
+	// Enum: [bypass network default]
 	SplashAuthSettings string `json:"splashAuthSettings,omitempty"`
 
 	// vlan tagging
@@ -281,7 +288,7 @@ var createNetworkGroupPolicyBodyTypeSplashAuthSettingsPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["network default","bypass"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["bypass","network default"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -291,11 +298,11 @@ func init() {
 
 const (
 
-	// CreateNetworkGroupPolicyBodySplashAuthSettingsNetworkDefault captures enum value "network default"
-	CreateNetworkGroupPolicyBodySplashAuthSettingsNetworkDefault string = "network default"
-
 	// CreateNetworkGroupPolicyBodySplashAuthSettingsBypass captures enum value "bypass"
 	CreateNetworkGroupPolicyBodySplashAuthSettingsBypass string = "bypass"
+
+	// CreateNetworkGroupPolicyBodySplashAuthSettingsNetworkDefault captures enum value "network default"
+	CreateNetworkGroupPolicyBodySplashAuthSettingsNetworkDefault string = "network default"
 )
 
 // prop value enum
@@ -375,6 +382,11 @@ func (o *CreateNetworkGroupPolicyBody) ContextValidate(ctx context.Context, form
 func (o *CreateNetworkGroupPolicyBody) contextValidateBandwidth(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Bandwidth != nil {
+
+		if swag.IsZero(o.Bandwidth) { // not required
+			return nil
+		}
+
 		if err := o.Bandwidth.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkGroupPolicy" + "." + "bandwidth")
@@ -391,6 +403,11 @@ func (o *CreateNetworkGroupPolicyBody) contextValidateBandwidth(ctx context.Cont
 func (o *CreateNetworkGroupPolicyBody) contextValidateBonjourForwarding(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.BonjourForwarding != nil {
+
+		if swag.IsZero(o.BonjourForwarding) { // not required
+			return nil
+		}
+
 		if err := o.BonjourForwarding.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkGroupPolicy" + "." + "bonjourForwarding")
@@ -407,6 +424,11 @@ func (o *CreateNetworkGroupPolicyBody) contextValidateBonjourForwarding(ctx cont
 func (o *CreateNetworkGroupPolicyBody) contextValidateContentFiltering(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.ContentFiltering != nil {
+
+		if swag.IsZero(o.ContentFiltering) { // not required
+			return nil
+		}
+
 		if err := o.ContentFiltering.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkGroupPolicy" + "." + "contentFiltering")
@@ -423,6 +445,11 @@ func (o *CreateNetworkGroupPolicyBody) contextValidateContentFiltering(ctx conte
 func (o *CreateNetworkGroupPolicyBody) contextValidateFirewallAndTrafficShaping(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.FirewallAndTrafficShaping != nil {
+
+		if swag.IsZero(o.FirewallAndTrafficShaping) { // not required
+			return nil
+		}
+
 		if err := o.FirewallAndTrafficShaping.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkGroupPolicy" + "." + "firewallAndTrafficShaping")
@@ -439,6 +466,11 @@ func (o *CreateNetworkGroupPolicyBody) contextValidateFirewallAndTrafficShaping(
 func (o *CreateNetworkGroupPolicyBody) contextValidateScheduling(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Scheduling != nil {
+
+		if swag.IsZero(o.Scheduling) { // not required
+			return nil
+		}
+
 		if err := o.Scheduling.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkGroupPolicy" + "." + "scheduling")
@@ -455,6 +487,11 @@ func (o *CreateNetworkGroupPolicyBody) contextValidateScheduling(ctx context.Con
 func (o *CreateNetworkGroupPolicyBody) contextValidateVlanTagging(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.VlanTagging != nil {
+
+		if swag.IsZero(o.VlanTagging) { // not required
+			return nil
+		}
+
 		if err := o.VlanTagging.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkGroupPolicy" + "." + "vlanTagging")
@@ -486,7 +523,8 @@ func (o *CreateNetworkGroupPolicyBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodyBandwidth     The bandwidth settings for clients bound to your group policy.
+/*
+CreateNetworkGroupPolicyParamsBodyBandwidth     The bandwidth settings for clients bound to your group policy.
 //
 swagger:model CreateNetworkGroupPolicyParamsBodyBandwidth
 */
@@ -496,7 +534,7 @@ type CreateNetworkGroupPolicyParamsBodyBandwidth struct {
 	BandwidthLimits *CreateNetworkGroupPolicyParamsBodyBandwidthBandwidthLimits `json:"bandwidthLimits,omitempty"`
 
 	// How bandwidth limits are enforced. Can be 'network default', 'ignore' or 'custom'.
-	// Enum: [network default ignore custom]
+	// Enum: [custom ignore network default]
 	Settings string `json:"settings,omitempty"`
 }
 
@@ -541,7 +579,7 @@ var createNetworkGroupPolicyParamsBodyBandwidthTypeSettingsPropEnum []interface{
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["network default","ignore","custom"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["custom","ignore","network default"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -551,14 +589,14 @@ func init() {
 
 const (
 
-	// CreateNetworkGroupPolicyParamsBodyBandwidthSettingsNetworkDefault captures enum value "network default"
-	CreateNetworkGroupPolicyParamsBodyBandwidthSettingsNetworkDefault string = "network default"
+	// CreateNetworkGroupPolicyParamsBodyBandwidthSettingsCustom captures enum value "custom"
+	CreateNetworkGroupPolicyParamsBodyBandwidthSettingsCustom string = "custom"
 
 	// CreateNetworkGroupPolicyParamsBodyBandwidthSettingsIgnore captures enum value "ignore"
 	CreateNetworkGroupPolicyParamsBodyBandwidthSettingsIgnore string = "ignore"
 
-	// CreateNetworkGroupPolicyParamsBodyBandwidthSettingsCustom captures enum value "custom"
-	CreateNetworkGroupPolicyParamsBodyBandwidthSettingsCustom string = "custom"
+	// CreateNetworkGroupPolicyParamsBodyBandwidthSettingsNetworkDefault captures enum value "network default"
+	CreateNetworkGroupPolicyParamsBodyBandwidthSettingsNetworkDefault string = "network default"
 )
 
 // prop value enum
@@ -599,6 +637,11 @@ func (o *CreateNetworkGroupPolicyParamsBodyBandwidth) ContextValidate(ctx contex
 func (o *CreateNetworkGroupPolicyParamsBodyBandwidth) contextValidateBandwidthLimits(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.BandwidthLimits != nil {
+
+		if swag.IsZero(o.BandwidthLimits) { // not required
+			return nil
+		}
+
 		if err := o.BandwidthLimits.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkGroupPolicy" + "." + "bandwidth" + "." + "bandwidthLimits")
@@ -630,7 +673,8 @@ func (o *CreateNetworkGroupPolicyParamsBodyBandwidth) UnmarshalBinary(b []byte) 
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodyBandwidthBandwidthLimits The bandwidth limits object, specifying upload and download speed for clients bound to the group policy. These are only enforced if 'settings' is set to 'custom'.
+/*
+CreateNetworkGroupPolicyParamsBodyBandwidthBandwidthLimits The bandwidth limits object, specifying upload and download speed for clients bound to the group policy. These are only enforced if 'settings' is set to 'custom'.
 swagger:model CreateNetworkGroupPolicyParamsBodyBandwidthBandwidthLimits
 */
 type CreateNetworkGroupPolicyParamsBodyBandwidthBandwidthLimits struct {
@@ -670,7 +714,8 @@ func (o *CreateNetworkGroupPolicyParamsBodyBandwidthBandwidthLimits) UnmarshalBi
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodyBonjourForwarding The Bonjour settings for your group policy. Only valid if your network has a wireless configuration.
+/*
+CreateNetworkGroupPolicyParamsBodyBonjourForwarding The Bonjour settings for your group policy. Only valid if your network has a wireless configuration.
 swagger:model CreateNetworkGroupPolicyParamsBodyBonjourForwarding
 */
 type CreateNetworkGroupPolicyParamsBodyBonjourForwarding struct {
@@ -679,7 +724,7 @@ type CreateNetworkGroupPolicyParamsBodyBonjourForwarding struct {
 	Rules []*CreateNetworkGroupPolicyParamsBodyBonjourForwardingRulesItems0 `json:"rules"`
 
 	// How Bonjour rules are applied. Can be 'network default', 'ignore' or 'custom'.
-	// Enum: [network default ignore custom]
+	// Enum: [custom ignore network default]
 	Settings string `json:"settings,omitempty"`
 }
 
@@ -731,7 +776,7 @@ var createNetworkGroupPolicyParamsBodyBonjourForwardingTypeSettingsPropEnum []in
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["network default","ignore","custom"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["custom","ignore","network default"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -741,14 +786,14 @@ func init() {
 
 const (
 
-	// CreateNetworkGroupPolicyParamsBodyBonjourForwardingSettingsNetworkDefault captures enum value "network default"
-	CreateNetworkGroupPolicyParamsBodyBonjourForwardingSettingsNetworkDefault string = "network default"
+	// CreateNetworkGroupPolicyParamsBodyBonjourForwardingSettingsCustom captures enum value "custom"
+	CreateNetworkGroupPolicyParamsBodyBonjourForwardingSettingsCustom string = "custom"
 
 	// CreateNetworkGroupPolicyParamsBodyBonjourForwardingSettingsIgnore captures enum value "ignore"
 	CreateNetworkGroupPolicyParamsBodyBonjourForwardingSettingsIgnore string = "ignore"
 
-	// CreateNetworkGroupPolicyParamsBodyBonjourForwardingSettingsCustom captures enum value "custom"
-	CreateNetworkGroupPolicyParamsBodyBonjourForwardingSettingsCustom string = "custom"
+	// CreateNetworkGroupPolicyParamsBodyBonjourForwardingSettingsNetworkDefault captures enum value "network default"
+	CreateNetworkGroupPolicyParamsBodyBonjourForwardingSettingsNetworkDefault string = "network default"
 )
 
 // prop value enum
@@ -791,6 +836,11 @@ func (o *CreateNetworkGroupPolicyParamsBodyBonjourForwarding) contextValidateRul
 	for i := 0; i < len(o.Rules); i++ {
 
 		if o.Rules[i] != nil {
+
+			if swag.IsZero(o.Rules[i]) { // not required
+				return nil
+			}
+
 			if err := o.Rules[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("createNetworkGroupPolicy" + "." + "bonjourForwarding" + "." + "rules" + "." + strconv.Itoa(i))
@@ -824,7 +874,8 @@ func (o *CreateNetworkGroupPolicyParamsBodyBonjourForwarding) UnmarshalBinary(b 
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodyBonjourForwardingRulesItems0 create network group policy params body bonjour forwarding rules items0
+/*
+CreateNetworkGroupPolicyParamsBodyBonjourForwardingRulesItems0 create network group policy params body bonjour forwarding rules items0
 swagger:model CreateNetworkGroupPolicyParamsBodyBonjourForwardingRulesItems0
 */
 type CreateNetworkGroupPolicyParamsBodyBonjourForwardingRulesItems0 struct {
@@ -863,7 +914,7 @@ var createNetworkGroupPolicyParamsBodyBonjourForwardingRulesItems0ServicesItemsE
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["All Services","AirPlay","AFP","BitTorrent","FTP","iChat","iTunes","Printers","Samba","Scanners","SSH"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["AFP","AirPlay","All Services","BitTorrent","FTP","Printers","SSH","Samba","Scanners","iChat","iTunes"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -928,7 +979,8 @@ func (o *CreateNetworkGroupPolicyParamsBodyBonjourForwardingRulesItems0) Unmarsh
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodyContentFiltering The content filtering settings for your group policy
+/*
+CreateNetworkGroupPolicyParamsBodyContentFiltering The content filtering settings for your group policy
 swagger:model CreateNetworkGroupPolicyParamsBodyContentFiltering
 */
 type CreateNetworkGroupPolicyParamsBodyContentFiltering struct {
@@ -1047,6 +1099,11 @@ func (o *CreateNetworkGroupPolicyParamsBodyContentFiltering) ContextValidate(ctx
 func (o *CreateNetworkGroupPolicyParamsBodyContentFiltering) contextValidateAllowedURLPatterns(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.AllowedURLPatterns != nil {
+
+		if swag.IsZero(o.AllowedURLPatterns) { // not required
+			return nil
+		}
+
 		if err := o.AllowedURLPatterns.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkGroupPolicy" + "." + "contentFiltering" + "." + "allowedUrlPatterns")
@@ -1063,6 +1120,11 @@ func (o *CreateNetworkGroupPolicyParamsBodyContentFiltering) contextValidateAllo
 func (o *CreateNetworkGroupPolicyParamsBodyContentFiltering) contextValidateBlockedURLCategories(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.BlockedURLCategories != nil {
+
+		if swag.IsZero(o.BlockedURLCategories) { // not required
+			return nil
+		}
+
 		if err := o.BlockedURLCategories.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkGroupPolicy" + "." + "contentFiltering" + "." + "blockedUrlCategories")
@@ -1079,6 +1141,11 @@ func (o *CreateNetworkGroupPolicyParamsBodyContentFiltering) contextValidateBloc
 func (o *CreateNetworkGroupPolicyParamsBodyContentFiltering) contextValidateBlockedURLPatterns(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.BlockedURLPatterns != nil {
+
+		if swag.IsZero(o.BlockedURLPatterns) { // not required
+			return nil
+		}
+
 		if err := o.BlockedURLPatterns.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkGroupPolicy" + "." + "contentFiltering" + "." + "blockedUrlPatterns")
@@ -1110,7 +1177,8 @@ func (o *CreateNetworkGroupPolicyParamsBodyContentFiltering) UnmarshalBinary(b [
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodyContentFilteringAllowedURLPatterns Settings for allowed URL patterns
+/*
+CreateNetworkGroupPolicyParamsBodyContentFilteringAllowedURLPatterns Settings for allowed URL patterns
 swagger:model CreateNetworkGroupPolicyParamsBodyContentFilteringAllowedURLPatterns
 */
 type CreateNetworkGroupPolicyParamsBodyContentFilteringAllowedURLPatterns struct {
@@ -1119,7 +1187,7 @@ type CreateNetworkGroupPolicyParamsBodyContentFilteringAllowedURLPatterns struct
 	Patterns []string `json:"patterns"`
 
 	// How URL patterns are applied. Can be 'network default', 'append' or 'override'.
-	// Enum: [network default append override]
+	// Enum: [append network default override]
 	Settings string `json:"settings,omitempty"`
 }
 
@@ -1141,7 +1209,7 @@ var createNetworkGroupPolicyParamsBodyContentFilteringAllowedUrlPatternsTypeSett
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["network default","append","override"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["append","network default","override"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1151,11 +1219,11 @@ func init() {
 
 const (
 
-	// CreateNetworkGroupPolicyParamsBodyContentFilteringAllowedURLPatternsSettingsNetworkDefault captures enum value "network default"
-	CreateNetworkGroupPolicyParamsBodyContentFilteringAllowedURLPatternsSettingsNetworkDefault string = "network default"
-
 	// CreateNetworkGroupPolicyParamsBodyContentFilteringAllowedURLPatternsSettingsAppend captures enum value "append"
 	CreateNetworkGroupPolicyParamsBodyContentFilteringAllowedURLPatternsSettingsAppend string = "append"
+
+	// CreateNetworkGroupPolicyParamsBodyContentFilteringAllowedURLPatternsSettingsNetworkDefault captures enum value "network default"
+	CreateNetworkGroupPolicyParamsBodyContentFilteringAllowedURLPatternsSettingsNetworkDefault string = "network default"
 
 	// CreateNetworkGroupPolicyParamsBodyContentFilteringAllowedURLPatternsSettingsOverride captures enum value "override"
 	CreateNetworkGroupPolicyParamsBodyContentFilteringAllowedURLPatternsSettingsOverride string = "override"
@@ -1205,7 +1273,8 @@ func (o *CreateNetworkGroupPolicyParamsBodyContentFilteringAllowedURLPatterns) U
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLCategories Settings for blocked URL categories
+/*
+CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLCategories Settings for blocked URL categories
 swagger:model CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLCategories
 */
 type CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLCategories struct {
@@ -1214,7 +1283,7 @@ type CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLCategories stru
 	Categories []string `json:"categories"`
 
 	// How URL categories are applied. Can be 'network default', 'append' or 'override'.
-	// Enum: [network default append override]
+	// Enum: [append network default override]
 	Settings string `json:"settings,omitempty"`
 }
 
@@ -1236,7 +1305,7 @@ var createNetworkGroupPolicyParamsBodyContentFilteringBlockedUrlCategoriesTypeSe
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["network default","append","override"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["append","network default","override"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1246,11 +1315,11 @@ func init() {
 
 const (
 
-	// CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLCategoriesSettingsNetworkDefault captures enum value "network default"
-	CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLCategoriesSettingsNetworkDefault string = "network default"
-
 	// CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLCategoriesSettingsAppend captures enum value "append"
 	CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLCategoriesSettingsAppend string = "append"
+
+	// CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLCategoriesSettingsNetworkDefault captures enum value "network default"
+	CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLCategoriesSettingsNetworkDefault string = "network default"
 
 	// CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLCategoriesSettingsOverride captures enum value "override"
 	CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLCategoriesSettingsOverride string = "override"
@@ -1300,7 +1369,8 @@ func (o *CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLCategories)
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLPatterns Settings for blocked URL patterns
+/*
+CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLPatterns Settings for blocked URL patterns
 swagger:model CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLPatterns
 */
 type CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLPatterns struct {
@@ -1309,7 +1379,7 @@ type CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLPatterns struct
 	Patterns []string `json:"patterns"`
 
 	// How URL patterns are applied. Can be 'network default', 'append' or 'override'.
-	// Enum: [network default append override]
+	// Enum: [append network default override]
 	Settings string `json:"settings,omitempty"`
 }
 
@@ -1331,7 +1401,7 @@ var createNetworkGroupPolicyParamsBodyContentFilteringBlockedUrlPatternsTypeSett
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["network default","append","override"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["append","network default","override"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1341,11 +1411,11 @@ func init() {
 
 const (
 
-	// CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLPatternsSettingsNetworkDefault captures enum value "network default"
-	CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLPatternsSettingsNetworkDefault string = "network default"
-
 	// CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLPatternsSettingsAppend captures enum value "append"
 	CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLPatternsSettingsAppend string = "append"
+
+	// CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLPatternsSettingsNetworkDefault captures enum value "network default"
+	CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLPatternsSettingsNetworkDefault string = "network default"
 
 	// CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLPatternsSettingsOverride captures enum value "override"
 	CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLPatternsSettingsOverride string = "override"
@@ -1395,7 +1465,8 @@ func (o *CreateNetworkGroupPolicyParamsBodyContentFilteringBlockedURLPatterns) U
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShaping     The firewall and traffic shaping rules and settings for your policy.
+/*
+CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShaping     The firewall and traffic shaping rules and settings for your policy.
 //
 swagger:model CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShaping
 */
@@ -1408,7 +1479,7 @@ type CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShaping struct {
 	L7FirewallRules []*CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingL7FirewallRulesItems0 `json:"l7FirewallRules"`
 
 	// How firewall and traffic shaping rules are enforced. Can be 'network default', 'ignore' or 'custom'.
-	// Enum: [network default ignore custom]
+	// Enum: [custom ignore network default]
 	Settings string `json:"settings,omitempty"`
 
 	//     An array of traffic shaping rules. Rules are applied in the order that
@@ -1500,7 +1571,7 @@ var createNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTypeSettingsPropE
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["network default","ignore","custom"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["custom","ignore","network default"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1510,14 +1581,14 @@ func init() {
 
 const (
 
-	// CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingSettingsNetworkDefault captures enum value "network default"
-	CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingSettingsNetworkDefault string = "network default"
+	// CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingSettingsCustom captures enum value "custom"
+	CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingSettingsCustom string = "custom"
 
 	// CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingSettingsIgnore captures enum value "ignore"
 	CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingSettingsIgnore string = "ignore"
 
-	// CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingSettingsCustom captures enum value "custom"
-	CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingSettingsCustom string = "custom"
+	// CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingSettingsNetworkDefault captures enum value "network default"
+	CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingSettingsNetworkDefault string = "network default"
 )
 
 // prop value enum
@@ -1594,6 +1665,11 @@ func (o *CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShaping) contextVal
 	for i := 0; i < len(o.L3FirewallRules); i++ {
 
 		if o.L3FirewallRules[i] != nil {
+
+			if swag.IsZero(o.L3FirewallRules[i]) { // not required
+				return nil
+			}
+
 			if err := o.L3FirewallRules[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("createNetworkGroupPolicy" + "." + "firewallAndTrafficShaping" + "." + "l3FirewallRules" + "." + strconv.Itoa(i))
@@ -1614,6 +1690,11 @@ func (o *CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShaping) contextVal
 	for i := 0; i < len(o.L7FirewallRules); i++ {
 
 		if o.L7FirewallRules[i] != nil {
+
+			if swag.IsZero(o.L7FirewallRules[i]) { // not required
+				return nil
+			}
+
 			if err := o.L7FirewallRules[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("createNetworkGroupPolicy" + "." + "firewallAndTrafficShaping" + "." + "l7FirewallRules" + "." + strconv.Itoa(i))
@@ -1634,6 +1715,11 @@ func (o *CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShaping) contextVal
 	for i := 0; i < len(o.TrafficShapingRules); i++ {
 
 		if o.TrafficShapingRules[i] != nil {
+
+			if swag.IsZero(o.TrafficShapingRules[i]) { // not required
+				return nil
+			}
+
 			if err := o.TrafficShapingRules[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("createNetworkGroupPolicy" + "." + "firewallAndTrafficShaping" + "." + "trafficShapingRules" + "." + strconv.Itoa(i))
@@ -1667,7 +1753,8 @@ func (o *CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShaping) UnmarshalB
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingL3FirewallRulesItems0 create network group policy params body firewall and traffic shaping l3 firewall rules items0
+/*
+CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingL3FirewallRulesItems0 create network group policy params body firewall and traffic shaping l3 firewall rules items0
 swagger:model CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingL3FirewallRulesItems0
 */
 type CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingL3FirewallRulesItems0 struct {
@@ -1763,7 +1850,8 @@ func (o *CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingL3FirewallRu
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingL7FirewallRulesItems0 create network group policy params body firewall and traffic shaping l7 firewall rules items0
+/*
+CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingL7FirewallRulesItems0 create network group policy params body firewall and traffic shaping l7 firewall rules items0
 swagger:model CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingL7FirewallRulesItems0
 */
 type CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingL7FirewallRulesItems0 struct {
@@ -1773,7 +1861,7 @@ type CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingL7FirewallRulesI
 	Policy string `json:"policy,omitempty"`
 
 	// Type of the L7 Rule. Must be 'application', 'applicationCategory', 'host', 'port' or 'ipRange'
-	// Enum: [application applicationCategory host port ipRange]
+	// Enum: [application applicationCategory host ipRange port]
 	Type string `json:"type,omitempty"`
 
 	// The 'value' of what you want to block. If 'type' is 'host', 'port' or 'ipRange', 'value' must be a string matching either a hostname (e.g. somewhere.com), a port (e.g. 8080), or an IP range (e.g. 192.1.0.0/16). If 'type' is 'application' or 'applicationCategory', then 'value' must be an object with an ID for the application.
@@ -1841,7 +1929,7 @@ var createNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingL7FirewallRulesIt
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["application","applicationCategory","host","port","ipRange"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["application","applicationCategory","host","ipRange","port"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1860,11 +1948,11 @@ const (
 	// CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingL7FirewallRulesItems0TypeHost captures enum value "host"
 	CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingL7FirewallRulesItems0TypeHost string = "host"
 
-	// CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingL7FirewallRulesItems0TypePort captures enum value "port"
-	CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingL7FirewallRulesItems0TypePort string = "port"
-
 	// CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingL7FirewallRulesItems0TypeIPRange captures enum value "ipRange"
 	CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingL7FirewallRulesItems0TypeIPRange string = "ipRange"
+
+	// CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingL7FirewallRulesItems0TypePort captures enum value "port"
+	CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingL7FirewallRulesItems0TypePort string = "port"
 )
 
 // prop value enum
@@ -1911,7 +1999,8 @@ func (o *CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingL7FirewallRu
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0 create network group policy params body firewall and traffic shaping traffic shaping rules items0
+/*
+CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0 create network group policy params body firewall and traffic shaping traffic shaping rules items0
 swagger:model CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0
 */
 type CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0 struct {
@@ -2027,6 +2116,11 @@ func (o *CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapi
 	for i := 0; i < len(o.Definitions); i++ {
 
 		if o.Definitions[i] != nil {
+
+			if swag.IsZero(o.Definitions[i]) { // not required
+				return nil
+			}
+
 			if err := o.Definitions[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("definitions" + "." + strconv.Itoa(i))
@@ -2045,6 +2139,11 @@ func (o *CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapi
 func (o *CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0) contextValidatePerClientBandwidthLimits(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.PerClientBandwidthLimits != nil {
+
+		if swag.IsZero(o.PerClientBandwidthLimits) { // not required
+			return nil
+		}
+
 		if err := o.PerClientBandwidthLimits.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("perClientBandwidthLimits")
@@ -2076,14 +2175,15 @@ func (o *CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapi
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0DefinitionsItems0 create network group policy params body firewall and traffic shaping traffic shaping rules items0 definitions items0
+/*
+CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0DefinitionsItems0 create network group policy params body firewall and traffic shaping traffic shaping rules items0 definitions items0
 swagger:model CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0DefinitionsItems0
 */
 type CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0DefinitionsItems0 struct {
 
 	// The type of definition. Can be one of 'application', 'applicationCategory', 'host', 'port', 'ipRange' or 'localNet'.
 	// Required: true
-	// Enum: [application applicationCategory host port ipRange localNet]
+	// Enum: [application applicationCategory host ipRange localNet port]
 	Type *string `json:"type"`
 
 	//     If "type" is 'host', 'port', 'ipRange' or 'localNet', then "value" must be a string, matching either
@@ -2121,7 +2221,7 @@ var createNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRul
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["application","applicationCategory","host","port","ipRange","localNet"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["application","applicationCategory","host","ipRange","localNet","port"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -2140,14 +2240,14 @@ const (
 	// CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0DefinitionsItems0TypeHost captures enum value "host"
 	CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0DefinitionsItems0TypeHost string = "host"
 
-	// CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0DefinitionsItems0TypePort captures enum value "port"
-	CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0DefinitionsItems0TypePort string = "port"
-
 	// CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0DefinitionsItems0TypeIPRange captures enum value "ipRange"
 	CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0DefinitionsItems0TypeIPRange string = "ipRange"
 
 	// CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0DefinitionsItems0TypeLocalNet captures enum value "localNet"
 	CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0DefinitionsItems0TypeLocalNet string = "localNet"
+
+	// CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0DefinitionsItems0TypePort captures enum value "port"
+	CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0DefinitionsItems0TypePort string = "port"
 )
 
 // prop value enum
@@ -2204,7 +2304,8 @@ func (o *CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapi
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0PerClientBandwidthLimits     An object describing the bandwidth settings for your rule.
+/*
+CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0PerClientBandwidthLimits     An object describing the bandwidth settings for your rule.
 //
 swagger:model CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0PerClientBandwidthLimits
 */
@@ -2267,6 +2368,11 @@ func (o *CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapi
 func (o *CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0PerClientBandwidthLimits) contextValidateBandwidthLimits(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.BandwidthLimits != nil {
+
+		if swag.IsZero(o.BandwidthLimits) { // not required
+			return nil
+		}
+
 		if err := o.BandwidthLimits.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("perClientBandwidthLimits" + "." + "bandwidthLimits")
@@ -2298,7 +2404,8 @@ func (o *CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapi
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0PerClientBandwidthLimitsBandwidthLimits The bandwidth limits object, specifying the upload ('limitUp') and download ('limitDown') speed in Kbps. These are only enforced if 'settings' is set to 'custom'.
+/*
+CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0PerClientBandwidthLimitsBandwidthLimits The bandwidth limits object, specifying the upload ('limitUp') and download ('limitDown') speed in Kbps. These are only enforced if 'settings' is set to 'custom'.
 swagger:model CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0PerClientBandwidthLimitsBandwidthLimits
 */
 type CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapingRulesItems0PerClientBandwidthLimitsBandwidthLimits struct {
@@ -2338,7 +2445,8 @@ func (o *CreateNetworkGroupPolicyParamsBodyFirewallAndTrafficShapingTrafficShapi
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodyScheduling     The schedule for the group policy. Schedules are applied to days of the week.
+/*
+CreateNetworkGroupPolicyParamsBodyScheduling     The schedule for the group policy. Schedules are applied to days of the week.
 //
 swagger:model CreateNetworkGroupPolicyParamsBodyScheduling
 */
@@ -2581,6 +2689,11 @@ func (o *CreateNetworkGroupPolicyParamsBodyScheduling) ContextValidate(ctx conte
 func (o *CreateNetworkGroupPolicyParamsBodyScheduling) contextValidateFriday(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Friday != nil {
+
+		if swag.IsZero(o.Friday) { // not required
+			return nil
+		}
+
 		if err := o.Friday.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkGroupPolicy" + "." + "scheduling" + "." + "friday")
@@ -2597,6 +2710,11 @@ func (o *CreateNetworkGroupPolicyParamsBodyScheduling) contextValidateFriday(ctx
 func (o *CreateNetworkGroupPolicyParamsBodyScheduling) contextValidateMonday(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Monday != nil {
+
+		if swag.IsZero(o.Monday) { // not required
+			return nil
+		}
+
 		if err := o.Monday.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkGroupPolicy" + "." + "scheduling" + "." + "monday")
@@ -2613,6 +2731,11 @@ func (o *CreateNetworkGroupPolicyParamsBodyScheduling) contextValidateMonday(ctx
 func (o *CreateNetworkGroupPolicyParamsBodyScheduling) contextValidateSaturday(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Saturday != nil {
+
+		if swag.IsZero(o.Saturday) { // not required
+			return nil
+		}
+
 		if err := o.Saturday.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkGroupPolicy" + "." + "scheduling" + "." + "saturday")
@@ -2629,6 +2752,11 @@ func (o *CreateNetworkGroupPolicyParamsBodyScheduling) contextValidateSaturday(c
 func (o *CreateNetworkGroupPolicyParamsBodyScheduling) contextValidateSunday(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Sunday != nil {
+
+		if swag.IsZero(o.Sunday) { // not required
+			return nil
+		}
+
 		if err := o.Sunday.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkGroupPolicy" + "." + "scheduling" + "." + "sunday")
@@ -2645,6 +2773,11 @@ func (o *CreateNetworkGroupPolicyParamsBodyScheduling) contextValidateSunday(ctx
 func (o *CreateNetworkGroupPolicyParamsBodyScheduling) contextValidateThursday(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Thursday != nil {
+
+		if swag.IsZero(o.Thursday) { // not required
+			return nil
+		}
+
 		if err := o.Thursday.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkGroupPolicy" + "." + "scheduling" + "." + "thursday")
@@ -2661,6 +2794,11 @@ func (o *CreateNetworkGroupPolicyParamsBodyScheduling) contextValidateThursday(c
 func (o *CreateNetworkGroupPolicyParamsBodyScheduling) contextValidateTuesday(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Tuesday != nil {
+
+		if swag.IsZero(o.Tuesday) { // not required
+			return nil
+		}
+
 		if err := o.Tuesday.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkGroupPolicy" + "." + "scheduling" + "." + "tuesday")
@@ -2677,6 +2815,11 @@ func (o *CreateNetworkGroupPolicyParamsBodyScheduling) contextValidateTuesday(ct
 func (o *CreateNetworkGroupPolicyParamsBodyScheduling) contextValidateWednesday(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Wednesday != nil {
+
+		if swag.IsZero(o.Wednesday) { // not required
+			return nil
+		}
+
 		if err := o.Wednesday.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkGroupPolicy" + "." + "scheduling" + "." + "wednesday")
@@ -2708,7 +2851,8 @@ func (o *CreateNetworkGroupPolicyParamsBodyScheduling) UnmarshalBinary(b []byte)
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodySchedulingFriday The schedule object for Friday.
+/*
+CreateNetworkGroupPolicyParamsBodySchedulingFriday The schedule object for Friday.
 swagger:model CreateNetworkGroupPolicyParamsBodySchedulingFriday
 */
 type CreateNetworkGroupPolicyParamsBodySchedulingFriday struct {
@@ -2751,7 +2895,8 @@ func (o *CreateNetworkGroupPolicyParamsBodySchedulingFriday) UnmarshalBinary(b [
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodySchedulingMonday The schedule object for Monday.
+/*
+CreateNetworkGroupPolicyParamsBodySchedulingMonday The schedule object for Monday.
 swagger:model CreateNetworkGroupPolicyParamsBodySchedulingMonday
 */
 type CreateNetworkGroupPolicyParamsBodySchedulingMonday struct {
@@ -2794,7 +2939,8 @@ func (o *CreateNetworkGroupPolicyParamsBodySchedulingMonday) UnmarshalBinary(b [
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodySchedulingSaturday The schedule object for Saturday.
+/*
+CreateNetworkGroupPolicyParamsBodySchedulingSaturday The schedule object for Saturday.
 swagger:model CreateNetworkGroupPolicyParamsBodySchedulingSaturday
 */
 type CreateNetworkGroupPolicyParamsBodySchedulingSaturday struct {
@@ -2837,7 +2983,8 @@ func (o *CreateNetworkGroupPolicyParamsBodySchedulingSaturday) UnmarshalBinary(b
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodySchedulingSunday The schedule object for Sunday.
+/*
+CreateNetworkGroupPolicyParamsBodySchedulingSunday The schedule object for Sunday.
 swagger:model CreateNetworkGroupPolicyParamsBodySchedulingSunday
 */
 type CreateNetworkGroupPolicyParamsBodySchedulingSunday struct {
@@ -2880,7 +3027,8 @@ func (o *CreateNetworkGroupPolicyParamsBodySchedulingSunday) UnmarshalBinary(b [
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodySchedulingThursday The schedule object for Thursday.
+/*
+CreateNetworkGroupPolicyParamsBodySchedulingThursday The schedule object for Thursday.
 swagger:model CreateNetworkGroupPolicyParamsBodySchedulingThursday
 */
 type CreateNetworkGroupPolicyParamsBodySchedulingThursday struct {
@@ -2923,7 +3071,8 @@ func (o *CreateNetworkGroupPolicyParamsBodySchedulingThursday) UnmarshalBinary(b
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodySchedulingTuesday The schedule object for Tuesday.
+/*
+CreateNetworkGroupPolicyParamsBodySchedulingTuesday The schedule object for Tuesday.
 swagger:model CreateNetworkGroupPolicyParamsBodySchedulingTuesday
 */
 type CreateNetworkGroupPolicyParamsBodySchedulingTuesday struct {
@@ -2966,7 +3115,8 @@ func (o *CreateNetworkGroupPolicyParamsBodySchedulingTuesday) UnmarshalBinary(b 
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodySchedulingWednesday The schedule object for Wednesday.
+/*
+CreateNetworkGroupPolicyParamsBodySchedulingWednesday The schedule object for Wednesday.
 swagger:model CreateNetworkGroupPolicyParamsBodySchedulingWednesday
 */
 type CreateNetworkGroupPolicyParamsBodySchedulingWednesday struct {
@@ -3009,13 +3159,14 @@ func (o *CreateNetworkGroupPolicyParamsBodySchedulingWednesday) UnmarshalBinary(
 	return nil
 }
 
-/*CreateNetworkGroupPolicyParamsBodyVlanTagging The VLAN tagging settings for your group policy. Only available if your network has a wireless configuration.
+/*
+CreateNetworkGroupPolicyParamsBodyVlanTagging The VLAN tagging settings for your group policy. Only available if your network has a wireless configuration.
 swagger:model CreateNetworkGroupPolicyParamsBodyVlanTagging
 */
 type CreateNetworkGroupPolicyParamsBodyVlanTagging struct {
 
 	// How VLAN tagging is applied. Can be 'network default', 'ignore' or 'custom'.
-	// Enum: [network default ignore custom]
+	// Enum: [custom ignore network default]
 	Settings string `json:"settings,omitempty"`
 
 	// The ID of the vlan you want to tag. This only applies if 'settings' is set to 'custom'.
@@ -3040,7 +3191,7 @@ var createNetworkGroupPolicyParamsBodyVlanTaggingTypeSettingsPropEnum []interfac
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["network default","ignore","custom"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["custom","ignore","network default"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -3050,14 +3201,14 @@ func init() {
 
 const (
 
-	// CreateNetworkGroupPolicyParamsBodyVlanTaggingSettingsNetworkDefault captures enum value "network default"
-	CreateNetworkGroupPolicyParamsBodyVlanTaggingSettingsNetworkDefault string = "network default"
+	// CreateNetworkGroupPolicyParamsBodyVlanTaggingSettingsCustom captures enum value "custom"
+	CreateNetworkGroupPolicyParamsBodyVlanTaggingSettingsCustom string = "custom"
 
 	// CreateNetworkGroupPolicyParamsBodyVlanTaggingSettingsIgnore captures enum value "ignore"
 	CreateNetworkGroupPolicyParamsBodyVlanTaggingSettingsIgnore string = "ignore"
 
-	// CreateNetworkGroupPolicyParamsBodyVlanTaggingSettingsCustom captures enum value "custom"
-	CreateNetworkGroupPolicyParamsBodyVlanTaggingSettingsCustom string = "custom"
+	// CreateNetworkGroupPolicyParamsBodyVlanTaggingSettingsNetworkDefault captures enum value "network default"
+	CreateNetworkGroupPolicyParamsBodyVlanTaggingSettingsNetworkDefault string = "network default"
 )
 
 // prop value enum

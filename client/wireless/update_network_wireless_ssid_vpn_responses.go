@@ -34,7 +34,7 @@ func (o *UpdateNetworkWirelessSsidVpnReader) ReadResponse(response runtime.Clien
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/wireless/ssids/{number}/vpn] updateNetworkWirelessSsidVpn", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewUpdateNetworkWirelessSsidVpnOK() *UpdateNetworkWirelessSsidVpnOK {
 	return &UpdateNetworkWirelessSsidVpnOK{}
 }
 
-/* UpdateNetworkWirelessSsidVpnOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkWirelessSsidVpnOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *UpdateNetworkWirelessSsidVpnOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network wireless ssid vpn o k response
+func (o *UpdateNetworkWirelessSsidVpnOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkWirelessSsidVpnOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/wireless/ssids/{number}/vpn][%d] updateNetworkWirelessSsidVpnOK  %+v", 200, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *UpdateNetworkWirelessSsidVpnOK) readResponse(response runtime.ClientRes
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidVpnBody update network wireless ssid vpn body
+/*
+UpdateNetworkWirelessSsidVpnBody update network wireless ssid vpn body
 // Example: {"concentrator":{"name":"some concentrator name","networkId":"N_123","vlanId":44},"failover":{"heartbeatInterval":10,"idleTimeout":30,"requestIp":"1.1.1.1"},"splitTunnel":{"enabled":true,"rules":[{"comment":"split tunnel rule 1","destCidr":"1.1.1.1/32","destPort":"any","policy":"allow","protocol":"Any"},{"comment":"split tunnel rule 2","destCidr":"foo.com","destPort":"any","policy":"deny"}]}}
 swagger:model UpdateNetworkWirelessSsidVpnBody
 */
@@ -218,6 +225,11 @@ func (o *UpdateNetworkWirelessSsidVpnBody) ContextValidate(ctx context.Context, 
 func (o *UpdateNetworkWirelessSsidVpnBody) contextValidateConcentrator(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Concentrator != nil {
+
+		if swag.IsZero(o.Concentrator) { // not required
+			return nil
+		}
+
 		if err := o.Concentrator.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessSsidVpn" + "." + "concentrator")
@@ -234,6 +246,11 @@ func (o *UpdateNetworkWirelessSsidVpnBody) contextValidateConcentrator(ctx conte
 func (o *UpdateNetworkWirelessSsidVpnBody) contextValidateFailover(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Failover != nil {
+
+		if swag.IsZero(o.Failover) { // not required
+			return nil
+		}
+
 		if err := o.Failover.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessSsidVpn" + "." + "failover")
@@ -250,6 +267,11 @@ func (o *UpdateNetworkWirelessSsidVpnBody) contextValidateFailover(ctx context.C
 func (o *UpdateNetworkWirelessSsidVpnBody) contextValidateSplitTunnel(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.SplitTunnel != nil {
+
+		if swag.IsZero(o.SplitTunnel) { // not required
+			return nil
+		}
+
 		if err := o.SplitTunnel.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessSsidVpn" + "." + "splitTunnel")
@@ -281,7 +303,8 @@ func (o *UpdateNetworkWirelessSsidVpnBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidVpnParamsBodyConcentrator The VPN concentrator settings for this SSID.
+/*
+UpdateNetworkWirelessSsidVpnParamsBodyConcentrator The VPN concentrator settings for this SSID.
 swagger:model UpdateNetworkWirelessSsidVpnParamsBodyConcentrator
 */
 type UpdateNetworkWirelessSsidVpnParamsBodyConcentrator struct {
@@ -321,7 +344,8 @@ func (o *UpdateNetworkWirelessSsidVpnParamsBodyConcentrator) UnmarshalBinary(b [
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidVpnParamsBodyFailover Secondary VPN concentrator settings. This is only used when two VPN concentrators are configured on the SSID.
+/*
+UpdateNetworkWirelessSsidVpnParamsBodyFailover Secondary VPN concentrator settings. This is only used when two VPN concentrators are configured on the SSID.
 swagger:model UpdateNetworkWirelessSsidVpnParamsBodyFailover
 */
 type UpdateNetworkWirelessSsidVpnParamsBodyFailover struct {
@@ -364,7 +388,8 @@ func (o *UpdateNetworkWirelessSsidVpnParamsBodyFailover) UnmarshalBinary(b []byt
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidVpnParamsBodySplitTunnel The VPN split tunnel settings for this SSID.
+/*
+UpdateNetworkWirelessSsidVpnParamsBodySplitTunnel The VPN split tunnel settings for this SSID.
 swagger:model UpdateNetworkWirelessSsidVpnParamsBodySplitTunnel
 */
 type UpdateNetworkWirelessSsidVpnParamsBodySplitTunnel struct {
@@ -435,6 +460,11 @@ func (o *UpdateNetworkWirelessSsidVpnParamsBodySplitTunnel) contextValidateRules
 	for i := 0; i < len(o.Rules); i++ {
 
 		if o.Rules[i] != nil {
+
+			if swag.IsZero(o.Rules[i]) { // not required
+				return nil
+			}
+
 			if err := o.Rules[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkWirelessSsidVpn" + "." + "splitTunnel" + "." + "rules" + "." + strconv.Itoa(i))
@@ -468,7 +498,8 @@ func (o *UpdateNetworkWirelessSsidVpnParamsBodySplitTunnel) UnmarshalBinary(b []
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidVpnParamsBodySplitTunnelRulesItems0 update network wireless ssid vpn params body split tunnel rules items0
+/*
+UpdateNetworkWirelessSsidVpnParamsBodySplitTunnelRulesItems0 update network wireless ssid vpn params body split tunnel rules items0
 swagger:model UpdateNetworkWirelessSsidVpnParamsBodySplitTunnelRulesItems0
 */
 type UpdateNetworkWirelessSsidVpnParamsBodySplitTunnelRulesItems0 struct {

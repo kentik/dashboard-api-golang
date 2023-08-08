@@ -32,7 +32,7 @@ func (o *CreateOrganizationConfigTemplateReader) ReadResponse(response runtime.C
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /organizations/{organizationId}/configTemplates] createOrganizationConfigTemplate", response, response.Code())
 	}
 }
 
@@ -41,12 +41,13 @@ func NewCreateOrganizationConfigTemplateCreated() *CreateOrganizationConfigTempl
 	return &CreateOrganizationConfigTemplateCreated{}
 }
 
-/* CreateOrganizationConfigTemplateCreated describes a response with status code 201, with default header values.
+/*
+CreateOrganizationConfigTemplateCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
 type CreateOrganizationConfigTemplateCreated struct {
-	Payload interface{}
+	Payload *CreateOrganizationConfigTemplateCreatedBody
 }
 
 // IsSuccess returns true when this create organization config template created response has a 2xx status code
@@ -74,6 +75,11 @@ func (o *CreateOrganizationConfigTemplateCreated) IsCode(code int) bool {
 	return code == 201
 }
 
+// Code gets the status code for the create organization config template created response
+func (o *CreateOrganizationConfigTemplateCreated) Code() int {
+	return 201
+}
+
 func (o *CreateOrganizationConfigTemplateCreated) Error() string {
 	return fmt.Sprintf("[POST /organizations/{organizationId}/configTemplates][%d] createOrganizationConfigTemplateCreated  %+v", 201, o.Payload)
 }
@@ -82,22 +88,25 @@ func (o *CreateOrganizationConfigTemplateCreated) String() string {
 	return fmt.Sprintf("[POST /organizations/{organizationId}/configTemplates][%d] createOrganizationConfigTemplateCreated  %+v", 201, o.Payload)
 }
 
-func (o *CreateOrganizationConfigTemplateCreated) GetPayload() interface{} {
+func (o *CreateOrganizationConfigTemplateCreated) GetPayload() *CreateOrganizationConfigTemplateCreatedBody {
 	return o.Payload
 }
 
 func (o *CreateOrganizationConfigTemplateCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(CreateOrganizationConfigTemplateCreatedBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*CreateOrganizationConfigTemplateBody create organization config template body
-// Example: {"name":"My config template","timeZone":"America/Los_Angeles"}
+/*
+CreateOrganizationConfigTemplateBody create organization config template body
+// Example: {"copyFromNetworkId":"N_24329156","name":"My config template","timeZone":"America/Los_Angeles"}
 swagger:model CreateOrganizationConfigTemplateBody
 */
 type CreateOrganizationConfigTemplateBody struct {
@@ -152,6 +161,53 @@ func (o *CreateOrganizationConfigTemplateBody) MarshalBinary() ([]byte, error) {
 // UnmarshalBinary interface implementation
 func (o *CreateOrganizationConfigTemplateBody) UnmarshalBinary(b []byte) error {
 	var res CreateOrganizationConfigTemplateBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateOrganizationConfigTemplateCreatedBody create organization config template created body
+swagger:model CreateOrganizationConfigTemplateCreatedBody
+*/
+type CreateOrganizationConfigTemplateCreatedBody struct {
+
+	// The ID of the network or config template to copy configuration from
+	ID string `json:"id,omitempty"`
+
+	// The name of the configuration template
+	Name string `json:"name,omitempty"`
+
+	// The product types of the configuration template
+	ProductTypes []string `json:"productTypes"`
+
+	// The timezone of the configuration template. For a list of allowed timezones, please see the 'TZ' column in the table in <a target='_blank' href='https://en.wikipedia.org/wiki/List_of_tz_database_time_zones'>this article</a>. Not applicable if copying from existing network or template
+	TimeZone string `json:"timeZone,omitempty"`
+}
+
+// Validate validates this create organization config template created body
+func (o *CreateOrganizationConfigTemplateCreatedBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this create organization config template created body based on context it is used
+func (o *CreateOrganizationConfigTemplateCreatedBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateOrganizationConfigTemplateCreatedBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateOrganizationConfigTemplateCreatedBody) UnmarshalBinary(b []byte) error {
+	var res CreateOrganizationConfigTemplateCreatedBody
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

@@ -6,11 +6,15 @@ package devices
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
+	"strconv"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetDeviceLiveToolsPingReader is a Reader for the GetDeviceLiveToolsPing structure.
@@ -28,7 +32,7 @@ func (o *GetDeviceLiveToolsPingReader) ReadResponse(response runtime.ClientRespo
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /devices/{serial}/liveTools/ping/{id}] getDeviceLiveToolsPing", response, response.Code())
 	}
 }
 
@@ -37,12 +41,13 @@ func NewGetDeviceLiveToolsPingOK() *GetDeviceLiveToolsPingOK {
 	return &GetDeviceLiveToolsPingOK{}
 }
 
-/* GetDeviceLiveToolsPingOK describes a response with status code 200, with default header values.
+/*
+GetDeviceLiveToolsPingOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetDeviceLiveToolsPingOK struct {
-	Payload interface{}
+	Payload *GetDeviceLiveToolsPingOKBody
 }
 
 // IsSuccess returns true when this get device live tools ping o k response has a 2xx status code
@@ -70,6 +75,11 @@ func (o *GetDeviceLiveToolsPingOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get device live tools ping o k response
+func (o *GetDeviceLiveToolsPingOK) Code() int {
+	return 200
+}
+
 func (o *GetDeviceLiveToolsPingOK) Error() string {
 	return fmt.Sprintf("[GET /devices/{serial}/liveTools/ping/{id}][%d] getDeviceLiveToolsPingOK  %+v", 200, o.Payload)
 }
@@ -78,16 +88,559 @@ func (o *GetDeviceLiveToolsPingOK) String() string {
 	return fmt.Sprintf("[GET /devices/{serial}/liveTools/ping/{id}][%d] getDeviceLiveToolsPingOK  %+v", 200, o.Payload)
 }
 
-func (o *GetDeviceLiveToolsPingOK) GetPayload() interface{} {
+func (o *GetDeviceLiveToolsPingOK) GetPayload() *GetDeviceLiveToolsPingOKBody {
 	return o.Payload
 }
 
 func (o *GetDeviceLiveToolsPingOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetDeviceLiveToolsPingOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetDeviceLiveToolsPingOKBody get device live tools ping o k body
+swagger:model GetDeviceLiveToolsPingOKBody
+*/
+type GetDeviceLiveToolsPingOKBody struct {
+
+	// Id to check the status of your ping request.
+	PingID string `json:"pingId,omitempty"`
+
+	// request
+	Request *GetDeviceLiveToolsPingOKBodyRequest `json:"request,omitempty"`
+
+	// results
+	Results *GetDeviceLiveToolsPingOKBodyResults `json:"results,omitempty"`
+
+	// Status of the ping request.
+	Status string `json:"status,omitempty"`
+
+	// GET this url to check the status of your ping request.
+	URL string `json:"url,omitempty"`
+}
+
+// Validate validates this get device live tools ping o k body
+func (o *GetDeviceLiveToolsPingOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateRequest(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateResults(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetDeviceLiveToolsPingOKBody) validateRequest(formats strfmt.Registry) error {
+	if swag.IsZero(o.Request) { // not required
+		return nil
+	}
+
+	if o.Request != nil {
+		if err := o.Request.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getDeviceLiveToolsPingOK" + "." + "request")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getDeviceLiveToolsPingOK" + "." + "request")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetDeviceLiveToolsPingOKBody) validateResults(formats strfmt.Registry) error {
+	if swag.IsZero(o.Results) { // not required
+		return nil
+	}
+
+	if o.Results != nil {
+		if err := o.Results.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getDeviceLiveToolsPingOK" + "." + "results")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getDeviceLiveToolsPingOK" + "." + "results")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get device live tools ping o k body based on the context it is used
+func (o *GetDeviceLiveToolsPingOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateRequest(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateResults(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetDeviceLiveToolsPingOKBody) contextValidateRequest(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Request != nil {
+
+		if swag.IsZero(o.Request) { // not required
+			return nil
+		}
+
+		if err := o.Request.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getDeviceLiveToolsPingOK" + "." + "request")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getDeviceLiveToolsPingOK" + "." + "request")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetDeviceLiveToolsPingOKBody) contextValidateResults(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Results != nil {
+
+		if swag.IsZero(o.Results) { // not required
+			return nil
+		}
+
+		if err := o.Results.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getDeviceLiveToolsPingOK" + "." + "results")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getDeviceLiveToolsPingOK" + "." + "results")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetDeviceLiveToolsPingOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetDeviceLiveToolsPingOKBody) UnmarshalBinary(b []byte) error {
+	var res GetDeviceLiveToolsPingOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetDeviceLiveToolsPingOKBodyRequest Ping request parameters
+swagger:model GetDeviceLiveToolsPingOKBodyRequest
+*/
+type GetDeviceLiveToolsPingOKBodyRequest struct {
+
+	// Number of pings to send
+	Count int64 `json:"count,omitempty"`
+
+	// Device serial number
+	Serial string `json:"serial,omitempty"`
+
+	// IP address or FQDN to ping
+	Target string `json:"target,omitempty"`
+}
+
+// Validate validates this get device live tools ping o k body request
+func (o *GetDeviceLiveToolsPingOKBodyRequest) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get device live tools ping o k body request based on context it is used
+func (o *GetDeviceLiveToolsPingOKBodyRequest) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetDeviceLiveToolsPingOKBodyRequest) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetDeviceLiveToolsPingOKBodyRequest) UnmarshalBinary(b []byte) error {
+	var res GetDeviceLiveToolsPingOKBodyRequest
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetDeviceLiveToolsPingOKBodyResults Results of the ping request.
+swagger:model GetDeviceLiveToolsPingOKBodyResults
+*/
+type GetDeviceLiveToolsPingOKBodyResults struct {
+
+	// latencies
+	Latencies *GetDeviceLiveToolsPingOKBodyResultsLatencies `json:"latencies,omitempty"`
+
+	// loss
+	Loss *GetDeviceLiveToolsPingOKBodyResultsLoss `json:"loss,omitempty"`
+
+	// Number of packets received
+	Received int64 `json:"received,omitempty"`
+
+	// Received packets
+	Replies []*GetDeviceLiveToolsPingOKBodyResultsRepliesItems0 `json:"replies"`
+
+	// Number of packets sent
+	Sent int64 `json:"sent,omitempty"`
+}
+
+// Validate validates this get device live tools ping o k body results
+func (o *GetDeviceLiveToolsPingOKBodyResults) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateLatencies(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateLoss(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateReplies(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetDeviceLiveToolsPingOKBodyResults) validateLatencies(formats strfmt.Registry) error {
+	if swag.IsZero(o.Latencies) { // not required
+		return nil
+	}
+
+	if o.Latencies != nil {
+		if err := o.Latencies.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getDeviceLiveToolsPingOK" + "." + "results" + "." + "latencies")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getDeviceLiveToolsPingOK" + "." + "results" + "." + "latencies")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetDeviceLiveToolsPingOKBodyResults) validateLoss(formats strfmt.Registry) error {
+	if swag.IsZero(o.Loss) { // not required
+		return nil
+	}
+
+	if o.Loss != nil {
+		if err := o.Loss.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getDeviceLiveToolsPingOK" + "." + "results" + "." + "loss")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getDeviceLiveToolsPingOK" + "." + "results" + "." + "loss")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetDeviceLiveToolsPingOKBodyResults) validateReplies(formats strfmt.Registry) error {
+	if swag.IsZero(o.Replies) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Replies); i++ {
+		if swag.IsZero(o.Replies[i]) { // not required
+			continue
+		}
+
+		if o.Replies[i] != nil {
+			if err := o.Replies[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getDeviceLiveToolsPingOK" + "." + "results" + "." + "replies" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getDeviceLiveToolsPingOK" + "." + "results" + "." + "replies" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get device live tools ping o k body results based on the context it is used
+func (o *GetDeviceLiveToolsPingOKBodyResults) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateLatencies(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateLoss(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateReplies(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetDeviceLiveToolsPingOKBodyResults) contextValidateLatencies(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Latencies != nil {
+
+		if swag.IsZero(o.Latencies) { // not required
+			return nil
+		}
+
+		if err := o.Latencies.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getDeviceLiveToolsPingOK" + "." + "results" + "." + "latencies")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getDeviceLiveToolsPingOK" + "." + "results" + "." + "latencies")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetDeviceLiveToolsPingOKBodyResults) contextValidateLoss(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Loss != nil {
+
+		if swag.IsZero(o.Loss) { // not required
+			return nil
+		}
+
+		if err := o.Loss.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getDeviceLiveToolsPingOK" + "." + "results" + "." + "loss")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getDeviceLiveToolsPingOK" + "." + "results" + "." + "loss")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetDeviceLiveToolsPingOKBodyResults) contextValidateReplies(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Replies); i++ {
+
+		if o.Replies[i] != nil {
+
+			if swag.IsZero(o.Replies[i]) { // not required
+				return nil
+			}
+
+			if err := o.Replies[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getDeviceLiveToolsPingOK" + "." + "results" + "." + "replies" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getDeviceLiveToolsPingOK" + "." + "results" + "." + "replies" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetDeviceLiveToolsPingOKBodyResults) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetDeviceLiveToolsPingOKBodyResults) UnmarshalBinary(b []byte) error {
+	var res GetDeviceLiveToolsPingOKBodyResults
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetDeviceLiveToolsPingOKBodyResultsLatencies Packet latency stats
+swagger:model GetDeviceLiveToolsPingOKBodyResultsLatencies
+*/
+type GetDeviceLiveToolsPingOKBodyResultsLatencies struct {
+
+	// Average latency
+	Average float32 `json:"average,omitempty"`
+
+	// Maximum latency
+	Maximum float32 `json:"maximum,omitempty"`
+
+	// Minimum latency
+	Minimum float32 `json:"minimum,omitempty"`
+}
+
+// Validate validates this get device live tools ping o k body results latencies
+func (o *GetDeviceLiveToolsPingOKBodyResultsLatencies) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get device live tools ping o k body results latencies based on context it is used
+func (o *GetDeviceLiveToolsPingOKBodyResultsLatencies) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetDeviceLiveToolsPingOKBodyResultsLatencies) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetDeviceLiveToolsPingOKBodyResultsLatencies) UnmarshalBinary(b []byte) error {
+	var res GetDeviceLiveToolsPingOKBodyResultsLatencies
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetDeviceLiveToolsPingOKBodyResultsLoss Lost packets
+swagger:model GetDeviceLiveToolsPingOKBodyResultsLoss
+*/
+type GetDeviceLiveToolsPingOKBodyResultsLoss struct {
+
+	// Percentage of packets lost
+	Percentage float32 `json:"percentage,omitempty"`
+}
+
+// Validate validates this get device live tools ping o k body results loss
+func (o *GetDeviceLiveToolsPingOKBodyResultsLoss) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get device live tools ping o k body results loss based on context it is used
+func (o *GetDeviceLiveToolsPingOKBodyResultsLoss) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetDeviceLiveToolsPingOKBodyResultsLoss) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetDeviceLiveToolsPingOKBodyResultsLoss) UnmarshalBinary(b []byte) error {
+	var res GetDeviceLiveToolsPingOKBodyResultsLoss
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetDeviceLiveToolsPingOKBodyResultsRepliesItems0 get device live tools ping o k body results replies items0
+swagger:model GetDeviceLiveToolsPingOKBodyResultsRepliesItems0
+*/
+type GetDeviceLiveToolsPingOKBodyResultsRepliesItems0 struct {
+
+	// Latency of the packet in milliseconds
+	Latency float32 `json:"latency,omitempty"`
+
+	// Sequence ID of the packet
+	SequenceID int64 `json:"sequenceId,omitempty"`
+
+	// Size of the packet in bytes
+	Size int64 `json:"size,omitempty"`
+}
+
+// Validate validates this get device live tools ping o k body results replies items0
+func (o *GetDeviceLiveToolsPingOKBodyResultsRepliesItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get device live tools ping o k body results replies items0 based on context it is used
+func (o *GetDeviceLiveToolsPingOKBodyResultsRepliesItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetDeviceLiveToolsPingOKBodyResultsRepliesItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetDeviceLiveToolsPingOKBodyResultsRepliesItems0) UnmarshalBinary(b []byte) error {
+	var res GetDeviceLiveToolsPingOKBodyResultsRepliesItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

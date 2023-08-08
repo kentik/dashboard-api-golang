@@ -33,7 +33,7 @@ func (o *CreateNetworkPiiRequestReader) ReadResponse(response runtime.ClientResp
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/pii/requests] createNetworkPiiRequest", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewCreateNetworkPiiRequestCreated() *CreateNetworkPiiRequestCreated {
 	return &CreateNetworkPiiRequestCreated{}
 }
 
-/* CreateNetworkPiiRequestCreated describes a response with status code 201, with default header values.
+/*
+CreateNetworkPiiRequestCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *CreateNetworkPiiRequestCreated) IsCode(code int) bool {
 	return code == 201
 }
 
+// Code gets the status code for the create network pii request created response
+func (o *CreateNetworkPiiRequestCreated) Code() int {
+	return 201
+}
+
 func (o *CreateNetworkPiiRequestCreated) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/pii/requests][%d] createNetworkPiiRequestCreated  %+v", 201, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *CreateNetworkPiiRequestCreated) readResponse(response runtime.ClientRes
 	return nil
 }
 
-/*CreateNetworkPiiRequestBody create network pii request body
+/*
+CreateNetworkPiiRequestBody create network pii request body
 // Example: {"datasets":["usage","events"],"mac":"00:77:00:77:00:77","type":"delete"}
 swagger:model CreateNetworkPiiRequestBody
 */

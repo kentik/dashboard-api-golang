@@ -31,7 +31,7 @@ func (o *GetOrganizationSummaryTopSsidsByUsageReader) ReadResponse(response runt
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/summary/top/ssids/byUsage] getOrganizationSummaryTopSsidsByUsage", response, response.Code())
 	}
 }
 
@@ -40,7 +40,8 @@ func NewGetOrganizationSummaryTopSsidsByUsageOK() *GetOrganizationSummaryTopSsid
 	return &GetOrganizationSummaryTopSsidsByUsageOK{}
 }
 
-/* GetOrganizationSummaryTopSsidsByUsageOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationSummaryTopSsidsByUsageOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -73,6 +74,11 @@ func (o *GetOrganizationSummaryTopSsidsByUsageOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get organization summary top ssids by usage o k response
+func (o *GetOrganizationSummaryTopSsidsByUsageOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationSummaryTopSsidsByUsageOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/summary/top/ssids/byUsage][%d] getOrganizationSummaryTopSsidsByUsageOK  %+v", 200, o.Payload)
 }
@@ -95,7 +101,8 @@ func (o *GetOrganizationSummaryTopSsidsByUsageOK) readResponse(response runtime.
 	return nil
 }
 
-/*GetOrganizationSummaryTopSsidsByUsageOKBodyItems0 get organization summary top ssids by usage o k body items0
+/*
+GetOrganizationSummaryTopSsidsByUsageOKBodyItems0 get organization summary top ssids by usage o k body items0
 swagger:model GetOrganizationSummaryTopSsidsByUsageOKBodyItems0
 */
 type GetOrganizationSummaryTopSsidsByUsageOKBodyItems0 struct {
@@ -187,6 +194,11 @@ func (o *GetOrganizationSummaryTopSsidsByUsageOKBodyItems0) ContextValidate(ctx 
 func (o *GetOrganizationSummaryTopSsidsByUsageOKBodyItems0) contextValidateClients(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Clients != nil {
+
+		if swag.IsZero(o.Clients) { // not required
+			return nil
+		}
+
 		if err := o.Clients.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("clients")
@@ -203,6 +215,11 @@ func (o *GetOrganizationSummaryTopSsidsByUsageOKBodyItems0) contextValidateClien
 func (o *GetOrganizationSummaryTopSsidsByUsageOKBodyItems0) contextValidateUsage(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Usage != nil {
+
+		if swag.IsZero(o.Usage) { // not required
+			return nil
+		}
+
 		if err := o.Usage.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("usage")
@@ -234,7 +251,8 @@ func (o *GetOrganizationSummaryTopSsidsByUsageOKBodyItems0) UnmarshalBinary(b []
 	return nil
 }
 
-/*GetOrganizationSummaryTopSsidsByUsageOKBodyItems0Clients Clients info of the SSID
+/*
+GetOrganizationSummaryTopSsidsByUsageOKBodyItems0Clients Clients info of the SSID
 swagger:model GetOrganizationSummaryTopSsidsByUsageOKBodyItems0Clients
 */
 type GetOrganizationSummaryTopSsidsByUsageOKBodyItems0Clients struct {
@@ -293,6 +311,11 @@ func (o *GetOrganizationSummaryTopSsidsByUsageOKBodyItems0Clients) ContextValida
 func (o *GetOrganizationSummaryTopSsidsByUsageOKBodyItems0Clients) contextValidateCounts(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Counts != nil {
+
+		if swag.IsZero(o.Counts) { // not required
+			return nil
+		}
+
 		if err := o.Counts.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("clients" + "." + "counts")
@@ -324,7 +347,8 @@ func (o *GetOrganizationSummaryTopSsidsByUsageOKBodyItems0Clients) UnmarshalBina
 	return nil
 }
 
-/*GetOrganizationSummaryTopSsidsByUsageOKBodyItems0ClientsCounts Counts of the clients
+/*
+GetOrganizationSummaryTopSsidsByUsageOKBodyItems0ClientsCounts Counts of the clients
 swagger:model GetOrganizationSummaryTopSsidsByUsageOKBodyItems0ClientsCounts
 */
 type GetOrganizationSummaryTopSsidsByUsageOKBodyItems0ClientsCounts struct {
@@ -361,7 +385,8 @@ func (o *GetOrganizationSummaryTopSsidsByUsageOKBodyItems0ClientsCounts) Unmarsh
 	return nil
 }
 
-/*GetOrganizationSummaryTopSsidsByUsageOKBodyItems0Usage Date usage of the SSID, in megabytes
+/*
+GetOrganizationSummaryTopSsidsByUsageOKBodyItems0Usage Date usage of the SSID, in megabytes
 swagger:model GetOrganizationSummaryTopSsidsByUsageOKBodyItems0Usage
 */
 type GetOrganizationSummaryTopSsidsByUsageOKBodyItems0Usage struct {

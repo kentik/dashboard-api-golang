@@ -52,14 +52,19 @@ func NewWipeNetworkSmDevicesParamsWithHTTPClient(client *http.Client) *WipeNetwo
 	}
 }
 
-/* WipeNetworkSmDevicesParams contains all the parameters to send to the API endpoint
-   for the wipe network sm devices operation.
+/*
+WipeNetworkSmDevicesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the wipe network sm devices operation.
+
+	Typically these are written to a http.Request.
 */
 type WipeNetworkSmDevicesParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// WipeNetworkSmDevices.

@@ -52,17 +52,25 @@ func NewGetNetworkWirelessSsidHotspot20ParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* GetNetworkWirelessSsidHotspot20Params contains all the parameters to send to the API endpoint
-   for the get network wireless ssid hotspot20 operation.
+/*
+GetNetworkWirelessSsidHotspot20Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network wireless ssid hotspot20 operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkWirelessSsidHotspot20Params struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// Number.
+	/* Number.
+
+	   Number
+	*/
 	Number string
 
 	timeout    time.Duration

@@ -6,11 +6,14 @@ package organizations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetOrganizationAPIRequestsOverviewReader is a Reader for the GetOrganizationAPIRequestsOverview structure.
@@ -28,7 +31,7 @@ func (o *GetOrganizationAPIRequestsOverviewReader) ReadResponse(response runtime
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/apiRequests/overview] getOrganizationApiRequestsOverview", response, response.Code())
 	}
 }
 
@@ -37,12 +40,13 @@ func NewGetOrganizationAPIRequestsOverviewOK() *GetOrganizationAPIRequestsOvervi
 	return &GetOrganizationAPIRequestsOverviewOK{}
 }
 
-/* GetOrganizationAPIRequestsOverviewOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationAPIRequestsOverviewOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetOrganizationAPIRequestsOverviewOK struct {
-	Payload interface{}
+	Payload *GetOrganizationAPIRequestsOverviewOKBody
 }
 
 // IsSuccess returns true when this get organization Api requests overview o k response has a 2xx status code
@@ -70,6 +74,11 @@ func (o *GetOrganizationAPIRequestsOverviewOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get organization Api requests overview o k response
+func (o *GetOrganizationAPIRequestsOverviewOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationAPIRequestsOverviewOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/apiRequests/overview][%d] getOrganizationApiRequestsOverviewOK  %+v", 200, o.Payload)
 }
@@ -78,16 +87,326 @@ func (o *GetOrganizationAPIRequestsOverviewOK) String() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/apiRequests/overview][%d] getOrganizationApiRequestsOverviewOK  %+v", 200, o.Payload)
 }
 
-func (o *GetOrganizationAPIRequestsOverviewOK) GetPayload() interface{} {
+func (o *GetOrganizationAPIRequestsOverviewOK) GetPayload() *GetOrganizationAPIRequestsOverviewOKBody {
 	return o.Payload
 }
 
 func (o *GetOrganizationAPIRequestsOverviewOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetOrganizationAPIRequestsOverviewOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetOrganizationAPIRequestsOverviewOKBody get organization API requests overview o k body
+swagger:model GetOrganizationAPIRequestsOverviewOKBody
+*/
+type GetOrganizationAPIRequestsOverviewOKBody struct {
+
+	// response code counts
+	ResponseCodeCounts *GetOrganizationAPIRequestsOverviewOKBodyResponseCodeCounts `json:"responseCodeCounts,omitempty"`
+}
+
+// Validate validates this get organization API requests overview o k body
+func (o *GetOrganizationAPIRequestsOverviewOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateResponseCodeCounts(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetOrganizationAPIRequestsOverviewOKBody) validateResponseCodeCounts(formats strfmt.Registry) error {
+	if swag.IsZero(o.ResponseCodeCounts) { // not required
+		return nil
+	}
+
+	if o.ResponseCodeCounts != nil {
+		if err := o.ResponseCodeCounts.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getOrganizationApiRequestsOverviewOK" + "." + "responseCodeCounts")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getOrganizationApiRequestsOverviewOK" + "." + "responseCodeCounts")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get organization API requests overview o k body based on the context it is used
+func (o *GetOrganizationAPIRequestsOverviewOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateResponseCodeCounts(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetOrganizationAPIRequestsOverviewOKBody) contextValidateResponseCodeCounts(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ResponseCodeCounts != nil {
+
+		if swag.IsZero(o.ResponseCodeCounts) { // not required
+			return nil
+		}
+
+		if err := o.ResponseCodeCounts.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getOrganizationApiRequestsOverviewOK" + "." + "responseCodeCounts")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getOrganizationApiRequestsOverviewOK" + "." + "responseCodeCounts")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetOrganizationAPIRequestsOverviewOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetOrganizationAPIRequestsOverviewOKBody) UnmarshalBinary(b []byte) error {
+	var res GetOrganizationAPIRequestsOverviewOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetOrganizationAPIRequestsOverviewOKBodyResponseCodeCounts object of all supported HTTP response code
+swagger:model GetOrganizationAPIRequestsOverviewOKBodyResponseCodeCounts
+*/
+type GetOrganizationAPIRequestsOverviewOKBodyResponseCodeCounts struct {
+
+	// HTTP 200 response code count.
+	Nr200 int64 `json:"200,omitempty"`
+
+	// HTTP 201 response code count.
+	Nr201 int64 `json:"201,omitempty"`
+
+	// HTTP 202 response code count.
+	Nr202 int64 `json:"202,omitempty"`
+
+	// HTTP 203 response code count.
+	Nr203 int64 `json:"203,omitempty"`
+
+	// HTTP 204 response code count.
+	Nr204 int64 `json:"204,omitempty"`
+
+	// HTTP 205 response code count.
+	Nr205 int64 `json:"205,omitempty"`
+
+	// HTTP 206 response code count.
+	Nr206 int64 `json:"206,omitempty"`
+
+	// HTTP 207 response code count.
+	Nr207 int64 `json:"207,omitempty"`
+
+	// HTTP 208 response code count.
+	Nr208 int64 `json:"208,omitempty"`
+
+	// HTTP 226 response code count.
+	Nr226 int64 `json:"226,omitempty"`
+
+	// HTTP 300 response code count.
+	Nr300 int64 `json:"300,omitempty"`
+
+	// HTTP 301 response code count.
+	Nr301 int64 `json:"301,omitempty"`
+
+	// HTTP 302 response code count.
+	Nr302 int64 `json:"302,omitempty"`
+
+	// HTTP 303 response code count.
+	Nr303 int64 `json:"303,omitempty"`
+
+	// HTTP 304 response code count.
+	Nr304 int64 `json:"304,omitempty"`
+
+	// HTTP 305 response code count.
+	Nr305 int64 `json:"305,omitempty"`
+
+	// HTTP 306 response code count.
+	Nr306 int64 `json:"306,omitempty"`
+
+	// HTTP 307 response code count.
+	Nr307 int64 `json:"307,omitempty"`
+
+	// HTTP 308 response code count.
+	Nr308 int64 `json:"308,omitempty"`
+
+	// HTTP 400 response code count.
+	Nr400 int64 `json:"400,omitempty"`
+
+	// HTTP 401 response code count.
+	Nr401 int64 `json:"401,omitempty"`
+
+	// HTTP 402 response code count.
+	Nr402 int64 `json:"402,omitempty"`
+
+	// HTTP 403 response code count.
+	Nr403 int64 `json:"403,omitempty"`
+
+	// HTTP 404 response code count.
+	Nr404 int64 `json:"404,omitempty"`
+
+	// HTTP 405 response code count.
+	Nr405 int64 `json:"405,omitempty"`
+
+	// HTTP 406 response code count.
+	Nr406 int64 `json:"406,omitempty"`
+
+	// HTTP 407 response code count.
+	Nr407 int64 `json:"407,omitempty"`
+
+	// HTTP 408 response code count.
+	Nr408 int64 `json:"408,omitempty"`
+
+	// HTTP 409 response code count.
+	Nr409 int64 `json:"409,omitempty"`
+
+	// HTTP 410 response code count.
+	Nr410 int64 `json:"410,omitempty"`
+
+	// HTTP 411 response code count.
+	Nr411 int64 `json:"411,omitempty"`
+
+	// HTTP 412 response code count.
+	Nr412 int64 `json:"412,omitempty"`
+
+	// HTTP 413 response code count.
+	Nr413 int64 `json:"413,omitempty"`
+
+	// HTTP 414 response code count.
+	Nr414 int64 `json:"414,omitempty"`
+
+	// HTTP 415 response code count.
+	Nr415 int64 `json:"415,omitempty"`
+
+	// HTTP 416 response code count.
+	Nr416 int64 `json:"416,omitempty"`
+
+	// HTTP 417 response code count.
+	Nr417 int64 `json:"417,omitempty"`
+
+	// HTTP 421 response code count.
+	Nr421 int64 `json:"421,omitempty"`
+
+	// HTTP 422 response code count.
+	Nr422 int64 `json:"422,omitempty"`
+
+	// HTTP 423 response code count.
+	Nr423 int64 `json:"423,omitempty"`
+
+	// HTTP 424 response code count.
+	Nr424 int64 `json:"424,omitempty"`
+
+	// HTTP 425 response code count.
+	Nr425 int64 `json:"425,omitempty"`
+
+	// HTTP 426 response code count.
+	Nr426 int64 `json:"426,omitempty"`
+
+	// HTTP 428 response code count.
+	Nr428 int64 `json:"428,omitempty"`
+
+	// HTTP 429 response code count.
+	Nr429 int64 `json:"429,omitempty"`
+
+	// HTTP 431 response code count.
+	Nr431 int64 `json:"431,omitempty"`
+
+	// HTTP 451 response code count.
+	Nr451 int64 `json:"451,omitempty"`
+
+	// HTTP 500 response code count.
+	Nr500 int64 `json:"500,omitempty"`
+
+	// HTTP 501 response code count.
+	Nr501 int64 `json:"501,omitempty"`
+
+	// HTTP 502 response code count.
+	Nr502 int64 `json:"502,omitempty"`
+
+	// HTTP 503 response code count.
+	Nr503 int64 `json:"503,omitempty"`
+
+	// HTTP 504 response code count.
+	Nr504 int64 `json:"504,omitempty"`
+
+	// HTTP 505 response code count.
+	Nr505 int64 `json:"505,omitempty"`
+
+	// HTTP 506 response code count.
+	Nr506 int64 `json:"506,omitempty"`
+
+	// HTTP 507 response code count.
+	Nr507 int64 `json:"507,omitempty"`
+
+	// HTTP 508 response code count.
+	Nr508 int64 `json:"508,omitempty"`
+
+	// HTTP 509 response code count.
+	Nr509 int64 `json:"509,omitempty"`
+
+	// HTTP 510 response code count.
+	Nr510 int64 `json:"510,omitempty"`
+
+	// HTTP 511 response code count.
+	Nr511 int64 `json:"511,omitempty"`
+}
+
+// Validate validates this get organization API requests overview o k body response code counts
+func (o *GetOrganizationAPIRequestsOverviewOKBodyResponseCodeCounts) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get organization API requests overview o k body response code counts based on context it is used
+func (o *GetOrganizationAPIRequestsOverviewOKBodyResponseCodeCounts) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetOrganizationAPIRequestsOverviewOKBodyResponseCodeCounts) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetOrganizationAPIRequestsOverviewOKBodyResponseCodeCounts) UnmarshalBinary(b []byte) error {
+	var res GetOrganizationAPIRequestsOverviewOKBodyResponseCodeCounts
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

@@ -32,7 +32,7 @@ func (o *CreateNetworkWebhooksHTTPServerReader) ReadResponse(response runtime.Cl
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/webhooks/httpServers] createNetworkWebhooksHttpServer", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewCreateNetworkWebhooksHTTPServerCreated() *CreateNetworkWebhooksHTTPServe
 	return &CreateNetworkWebhooksHTTPServerCreated{}
 }
 
-/* CreateNetworkWebhooksHTTPServerCreated describes a response with status code 201, with default header values.
+/*
+CreateNetworkWebhooksHTTPServerCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *CreateNetworkWebhooksHTTPServerCreated) IsCode(code int) bool {
 	return code == 201
 }
 
+// Code gets the status code for the create network webhooks Http server created response
+func (o *CreateNetworkWebhooksHTTPServerCreated) Code() int {
+	return 201
+}
+
 func (o *CreateNetworkWebhooksHTTPServerCreated) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/webhooks/httpServers][%d] createNetworkWebhooksHttpServerCreated  %+v", 201, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *CreateNetworkWebhooksHTTPServerCreated) readResponse(response runtime.C
 	return nil
 }
 
-/*CreateNetworkWebhooksHTTPServerBody create network webhooks HTTP server body
+/*
+CreateNetworkWebhooksHTTPServerBody create network webhooks HTTP server body
 // Example: {"name":"Example Webhook Server","payloadTemplate":{"name":"Meraki (included)","payloadTemplateId":"wpt_00001"},"sharedSecret":"shhh","url":"https://example.com"}
 swagger:model CreateNetworkWebhooksHTTPServerBody
 */
@@ -195,6 +202,11 @@ func (o *CreateNetworkWebhooksHTTPServerBody) ContextValidate(ctx context.Contex
 func (o *CreateNetworkWebhooksHTTPServerBody) contextValidatePayloadTemplate(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.PayloadTemplate != nil {
+
+		if swag.IsZero(o.PayloadTemplate) { // not required
+			return nil
+		}
+
 		if err := o.PayloadTemplate.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkWebhooksHttpServer" + "." + "payloadTemplate")
@@ -226,7 +238,8 @@ func (o *CreateNetworkWebhooksHTTPServerBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*CreateNetworkWebhooksHTTPServerCreatedBody create network webhooks HTTP server created body
+/*
+CreateNetworkWebhooksHTTPServerCreatedBody create network webhooks HTTP server created body
 swagger:model CreateNetworkWebhooksHTTPServerCreatedBody
 */
 type CreateNetworkWebhooksHTTPServerCreatedBody struct {
@@ -298,6 +311,11 @@ func (o *CreateNetworkWebhooksHTTPServerCreatedBody) ContextValidate(ctx context
 func (o *CreateNetworkWebhooksHTTPServerCreatedBody) contextValidatePayloadTemplate(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.PayloadTemplate != nil {
+
+		if swag.IsZero(o.PayloadTemplate) { // not required
+			return nil
+		}
+
 		if err := o.PayloadTemplate.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkWebhooksHttpServerCreated" + "." + "payloadTemplate")
@@ -329,7 +347,8 @@ func (o *CreateNetworkWebhooksHTTPServerCreatedBody) UnmarshalBinary(b []byte) e
 	return nil
 }
 
-/*CreateNetworkWebhooksHTTPServerCreatedBodyPayloadTemplate The payload template to use when posting data to the HTTP server.
+/*
+CreateNetworkWebhooksHTTPServerCreatedBodyPayloadTemplate The payload template to use when posting data to the HTTP server.
 swagger:model CreateNetworkWebhooksHTTPServerCreatedBodyPayloadTemplate
 */
 type CreateNetworkWebhooksHTTPServerCreatedBodyPayloadTemplate struct {
@@ -369,7 +388,8 @@ func (o *CreateNetworkWebhooksHTTPServerCreatedBodyPayloadTemplate) UnmarshalBin
 	return nil
 }
 
-/*CreateNetworkWebhooksHTTPServerParamsBodyPayloadTemplate The payload template to use when posting data to the HTTP server.
+/*
+CreateNetworkWebhooksHTTPServerParamsBodyPayloadTemplate The payload template to use when posting data to the HTTP server.
 swagger:model CreateNetworkWebhooksHTTPServerParamsBodyPayloadTemplate
 */
 type CreateNetworkWebhooksHTTPServerParamsBodyPayloadTemplate struct {
@@ -377,7 +397,7 @@ type CreateNetworkWebhooksHTTPServerParamsBodyPayloadTemplate struct {
 	// The name of the payload template.
 	Name string `json:"name,omitempty"`
 
-	// The ID of the payload template. Defaults to 'wpt_00001' for the Meraki template. For Webex, use 'wpt_00002'; for Slack, use 'wpt_00003'; for Microsoft Teams, use 'wpt_00004'.
+	// The ID of the payload template. Defaults to 'wpt_00001' for the Meraki template. For Meraki-included templates: for the Webex (included) template use 'wpt_00002'; for the Slack (included) template use 'wpt_00003'; for the Microsoft Teams (included) template use 'wpt_00004'; for the ServiceNow (included) template use 'wpt_00006'
 	PayloadTemplateID string `json:"payloadTemplateId,omitempty"`
 }
 

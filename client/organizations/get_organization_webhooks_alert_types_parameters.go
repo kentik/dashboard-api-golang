@@ -52,14 +52,19 @@ func NewGetOrganizationWebhooksAlertTypesParamsWithHTTPClient(client *http.Clien
 	}
 }
 
-/* GetOrganizationWebhooksAlertTypesParams contains all the parameters to send to the API endpoint
-   for the get organization webhooks alert types operation.
+/*
+GetOrganizationWebhooksAlertTypesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization webhooks alert types operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationWebhooksAlertTypesParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	/* ProductType.

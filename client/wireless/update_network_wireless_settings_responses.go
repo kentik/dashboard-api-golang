@@ -33,7 +33,7 @@ func (o *UpdateNetworkWirelessSettingsReader) ReadResponse(response runtime.Clie
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/wireless/settings] updateNetworkWirelessSettings", response, response.Code())
 	}
 }
 
@@ -42,12 +42,13 @@ func NewUpdateNetworkWirelessSettingsOK() *UpdateNetworkWirelessSettingsOK {
 	return &UpdateNetworkWirelessSettingsOK{}
 }
 
-/* UpdateNetworkWirelessSettingsOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkWirelessSettingsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateNetworkWirelessSettingsOK struct {
-	Payload interface{}
+	Payload *UpdateNetworkWirelessSettingsOKBody
 }
 
 // IsSuccess returns true when this update network wireless settings o k response has a 2xx status code
@@ -75,6 +76,11 @@ func (o *UpdateNetworkWirelessSettingsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network wireless settings o k response
+func (o *UpdateNetworkWirelessSettingsOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkWirelessSettingsOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/wireless/settings][%d] updateNetworkWirelessSettingsOK  %+v", 200, o.Payload)
 }
@@ -83,22 +89,25 @@ func (o *UpdateNetworkWirelessSettingsOK) String() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/wireless/settings][%d] updateNetworkWirelessSettingsOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateNetworkWirelessSettingsOK) GetPayload() interface{} {
+func (o *UpdateNetworkWirelessSettingsOK) GetPayload() *UpdateNetworkWirelessSettingsOKBody {
 	return o.Payload
 }
 
 func (o *UpdateNetworkWirelessSettingsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateNetworkWirelessSettingsOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateNetworkWirelessSettingsBody update network wireless settings body
-// Example: {"ipv6BridgeEnabled":false,"locationAnalyticsEnabled":false,"meshingEnabled":true,"upgradeStrategy":"minimizeUpgradeTime"}
+/*
+UpdateNetworkWirelessSettingsBody update network wireless settings body
+// Example: {"ipv6BridgeEnabled":false,"ledLightsOn":false,"locationAnalyticsEnabled":false,"meshingEnabled":true,"upgradeStrategy":"minimizeUpgradeTime"}
 swagger:model UpdateNetworkWirelessSettingsBody
 */
 type UpdateNetworkWirelessSettingsBody struct {
@@ -116,7 +125,7 @@ type UpdateNetworkWirelessSettingsBody struct {
 	MeshingEnabled bool `json:"meshingEnabled,omitempty"`
 
 	// The upgrade strategy to apply to the network. Must be one of 'minimizeUpgradeTime' or 'minimizeClientDowntime'. Requires firmware version MR 26.8 or higher'
-	// Enum: [minimizeUpgradeTime minimizeClientDowntime]
+	// Enum: [minimizeClientDowntime minimizeUpgradeTime]
 	UpgradeStrategy string `json:"upgradeStrategy,omitempty"`
 }
 
@@ -138,7 +147,7 @@ var updateNetworkWirelessSettingsBodyTypeUpgradeStrategyPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["minimizeUpgradeTime","minimizeClientDowntime"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["minimizeClientDowntime","minimizeUpgradeTime"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -148,11 +157,11 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessSettingsBodyUpgradeStrategyMinimizeUpgradeTime captures enum value "minimizeUpgradeTime"
-	UpdateNetworkWirelessSettingsBodyUpgradeStrategyMinimizeUpgradeTime string = "minimizeUpgradeTime"
-
 	// UpdateNetworkWirelessSettingsBodyUpgradeStrategyMinimizeClientDowntime captures enum value "minimizeClientDowntime"
 	UpdateNetworkWirelessSettingsBodyUpgradeStrategyMinimizeClientDowntime string = "minimizeClientDowntime"
+
+	// UpdateNetworkWirelessSettingsBodyUpgradeStrategyMinimizeUpgradeTime captures enum value "minimizeUpgradeTime"
+	UpdateNetworkWirelessSettingsBodyUpgradeStrategyMinimizeUpgradeTime string = "minimizeUpgradeTime"
 )
 
 // prop value enum
@@ -192,6 +201,393 @@ func (o *UpdateNetworkWirelessSettingsBody) MarshalBinary() ([]byte, error) {
 // UnmarshalBinary interface implementation
 func (o *UpdateNetworkWirelessSettingsBody) UnmarshalBinary(b []byte) error {
 	var res UpdateNetworkWirelessSettingsBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessSettingsOKBody update network wireless settings o k body
+swagger:model UpdateNetworkWirelessSettingsOKBody
+*/
+type UpdateNetworkWirelessSettingsOKBody struct {
+
+	// Toggle for enabling or disabling IPv6 bridging in a network (Note: if enabled, SSIDs must also be configured to use bridge mode)
+	IPV6BridgeEnabled bool `json:"ipv6BridgeEnabled,omitempty"`
+
+	// Toggle for enabling or disabling LED lights on all APs in the network (making them run dark)
+	LedLightsOn bool `json:"ledLightsOn,omitempty"`
+
+	// Toggle for enabling or disabling location analytics for your network
+	LocationAnalyticsEnabled bool `json:"locationAnalyticsEnabled,omitempty"`
+
+	// Toggle for enabling or disabling meshing in a network
+	MeshingEnabled bool `json:"meshingEnabled,omitempty"`
+
+	// named vlans
+	NamedVlans *UpdateNetworkWirelessSettingsOKBodyNamedVlans `json:"namedVlans,omitempty"`
+
+	// regulatory domain
+	RegulatoryDomain *UpdateNetworkWirelessSettingsOKBodyRegulatoryDomain `json:"regulatoryDomain,omitempty"`
+
+	// The upgrade strategy to apply to the network. Must be one of 'minimizeUpgradeTime' or 'minimizeClientDowntime'. Requires firmware version MR 26.8 or higher'
+	// Enum: [minimizeClientDowntime minimizeUpgradeTime]
+	UpgradeStrategy string `json:"upgradeStrategy,omitempty"`
+}
+
+// Validate validates this update network wireless settings o k body
+func (o *UpdateNetworkWirelessSettingsOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateNamedVlans(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateRegulatoryDomain(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateUpgradeStrategy(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSettingsOKBody) validateNamedVlans(formats strfmt.Registry) error {
+	if swag.IsZero(o.NamedVlans) { // not required
+		return nil
+	}
+
+	if o.NamedVlans != nil {
+		if err := o.NamedVlans.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessSettingsOK" + "." + "namedVlans")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessSettingsOK" + "." + "namedVlans")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSettingsOKBody) validateRegulatoryDomain(formats strfmt.Registry) error {
+	if swag.IsZero(o.RegulatoryDomain) { // not required
+		return nil
+	}
+
+	if o.RegulatoryDomain != nil {
+		if err := o.RegulatoryDomain.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessSettingsOK" + "." + "regulatoryDomain")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessSettingsOK" + "." + "regulatoryDomain")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+var updateNetworkWirelessSettingsOKBodyTypeUpgradeStrategyPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["minimizeClientDowntime","minimizeUpgradeTime"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessSettingsOKBodyTypeUpgradeStrategyPropEnum = append(updateNetworkWirelessSettingsOKBodyTypeUpgradeStrategyPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessSettingsOKBodyUpgradeStrategyMinimizeClientDowntime captures enum value "minimizeClientDowntime"
+	UpdateNetworkWirelessSettingsOKBodyUpgradeStrategyMinimizeClientDowntime string = "minimizeClientDowntime"
+
+	// UpdateNetworkWirelessSettingsOKBodyUpgradeStrategyMinimizeUpgradeTime captures enum value "minimizeUpgradeTime"
+	UpdateNetworkWirelessSettingsOKBodyUpgradeStrategyMinimizeUpgradeTime string = "minimizeUpgradeTime"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessSettingsOKBody) validateUpgradeStrategyEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessSettingsOKBodyTypeUpgradeStrategyPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSettingsOKBody) validateUpgradeStrategy(formats strfmt.Registry) error {
+	if swag.IsZero(o.UpgradeStrategy) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateUpgradeStrategyEnum("updateNetworkWirelessSettingsOK"+"."+"upgradeStrategy", "body", o.UpgradeStrategy); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless settings o k body based on the context it is used
+func (o *UpdateNetworkWirelessSettingsOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateNamedVlans(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateRegulatoryDomain(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSettingsOKBody) contextValidateNamedVlans(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.NamedVlans != nil {
+
+		if swag.IsZero(o.NamedVlans) { // not required
+			return nil
+		}
+
+		if err := o.NamedVlans.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessSettingsOK" + "." + "namedVlans")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessSettingsOK" + "." + "namedVlans")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSettingsOKBody) contextValidateRegulatoryDomain(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.RegulatoryDomain != nil {
+
+		if swag.IsZero(o.RegulatoryDomain) { // not required
+			return nil
+		}
+
+		if err := o.RegulatoryDomain.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessSettingsOK" + "." + "regulatoryDomain")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessSettingsOK" + "." + "regulatoryDomain")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessSettingsOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessSettingsOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessSettingsOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessSettingsOKBodyNamedVlans Named VLAN settings for wireless networks.
+swagger:model UpdateNetworkWirelessSettingsOKBodyNamedVlans
+*/
+type UpdateNetworkWirelessSettingsOKBodyNamedVlans struct {
+
+	// pool dhcp monitoring
+	PoolDhcpMonitoring *UpdateNetworkWirelessSettingsOKBodyNamedVlansPoolDhcpMonitoring `json:"poolDhcpMonitoring,omitempty"`
+}
+
+// Validate validates this update network wireless settings o k body named vlans
+func (o *UpdateNetworkWirelessSettingsOKBodyNamedVlans) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validatePoolDhcpMonitoring(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSettingsOKBodyNamedVlans) validatePoolDhcpMonitoring(formats strfmt.Registry) error {
+	if swag.IsZero(o.PoolDhcpMonitoring) { // not required
+		return nil
+	}
+
+	if o.PoolDhcpMonitoring != nil {
+		if err := o.PoolDhcpMonitoring.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessSettingsOK" + "." + "namedVlans" + "." + "poolDhcpMonitoring")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessSettingsOK" + "." + "namedVlans" + "." + "poolDhcpMonitoring")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless settings o k body named vlans based on the context it is used
+func (o *UpdateNetworkWirelessSettingsOKBodyNamedVlans) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidatePoolDhcpMonitoring(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSettingsOKBodyNamedVlans) contextValidatePoolDhcpMonitoring(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.PoolDhcpMonitoring != nil {
+
+		if swag.IsZero(o.PoolDhcpMonitoring) { // not required
+			return nil
+		}
+
+		if err := o.PoolDhcpMonitoring.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessSettingsOK" + "." + "namedVlans" + "." + "poolDhcpMonitoring")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessSettingsOK" + "." + "namedVlans" + "." + "poolDhcpMonitoring")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessSettingsOKBodyNamedVlans) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessSettingsOKBodyNamedVlans) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessSettingsOKBodyNamedVlans
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessSettingsOKBodyNamedVlansPoolDhcpMonitoring Named VLAN Pool DHCP Monitoring settings.
+swagger:model UpdateNetworkWirelessSettingsOKBodyNamedVlansPoolDhcpMonitoring
+*/
+type UpdateNetworkWirelessSettingsOKBodyNamedVlansPoolDhcpMonitoring struct {
+
+	// The duration in minutes that devices will refrain from using dirty VLANs before adding them back to the pool.
+	Duration int64 `json:"duration,omitempty"`
+
+	// Whether or not devices using named VLAN pools should remove dirty VLANs from the pool, thereby preventing clients from being assigned to VLANs where they would be unable to obtain an IP address via DHCP
+	Enabled bool `json:"enabled,omitempty"`
+}
+
+// Validate validates this update network wireless settings o k body named vlans pool dhcp monitoring
+func (o *UpdateNetworkWirelessSettingsOKBodyNamedVlansPoolDhcpMonitoring) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless settings o k body named vlans pool dhcp monitoring based on context it is used
+func (o *UpdateNetworkWirelessSettingsOKBodyNamedVlansPoolDhcpMonitoring) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessSettingsOKBodyNamedVlansPoolDhcpMonitoring) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessSettingsOKBodyNamedVlansPoolDhcpMonitoring) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessSettingsOKBodyNamedVlansPoolDhcpMonitoring
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessSettingsOKBodyRegulatoryDomain Regulatory domain information for this network.
+swagger:model UpdateNetworkWirelessSettingsOKBodyRegulatoryDomain
+*/
+type UpdateNetworkWirelessSettingsOKBodyRegulatoryDomain struct {
+
+	// The name of the regulatory domain for this network.
+	Name string `json:"name,omitempty"`
+
+	// Whether or not the regulatory domain for this network permits Wifi 6E.
+	Permits6e bool `json:"permits6e,omitempty"`
+}
+
+// Validate validates this update network wireless settings o k body regulatory domain
+func (o *UpdateNetworkWirelessSettingsOKBodyRegulatoryDomain) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless settings o k body regulatory domain based on context it is used
+func (o *UpdateNetworkWirelessSettingsOKBodyRegulatoryDomain) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessSettingsOKBodyRegulatoryDomain) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessSettingsOKBodyRegulatoryDomain) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessSettingsOKBodyRegulatoryDomain
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

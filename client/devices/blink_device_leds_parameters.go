@@ -52,17 +52,22 @@ func NewBlinkDeviceLedsParamsWithHTTPClient(client *http.Client) *BlinkDeviceLed
 	}
 }
 
-/* BlinkDeviceLedsParams contains all the parameters to send to the API endpoint
-   for the blink device leds operation.
+/*
+BlinkDeviceLedsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the blink device leds operation.
+
+	Typically these are written to a http.Request.
 */
 type BlinkDeviceLedsParams struct {
 
 	// BlinkDeviceLeds.
 	BlinkDeviceLeds BlinkDeviceLedsBody
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	timeout    time.Duration

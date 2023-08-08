@@ -52,17 +52,25 @@ func NewUpdateNetworkSwitchQosRuleParamsWithHTTPClient(client *http.Client) *Upd
 	}
 }
 
-/* UpdateNetworkSwitchQosRuleParams contains all the parameters to send to the API endpoint
-   for the update network switch qos rule operation.
+/*
+UpdateNetworkSwitchQosRuleParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network switch qos rule operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkSwitchQosRuleParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// QosRuleID.
+	/* QosRuleID.
+
+	   Qos rule ID
+	*/
 	QosRuleID string
 
 	// UpdateNetworkSwitchQosRule.

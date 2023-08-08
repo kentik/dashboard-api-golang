@@ -52,17 +52,22 @@ func NewClaimNetworkDevicesParamsWithHTTPClient(client *http.Client) *ClaimNetwo
 	}
 }
 
-/* ClaimNetworkDevicesParams contains all the parameters to send to the API endpoint
-   for the claim network devices operation.
+/*
+ClaimNetworkDevicesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the claim network devices operation.
+
+	Typically these are written to a http.Request.
 */
 type ClaimNetworkDevicesParams struct {
 
 	// ClaimNetworkDevices.
 	ClaimNetworkDevices ClaimNetworkDevicesBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

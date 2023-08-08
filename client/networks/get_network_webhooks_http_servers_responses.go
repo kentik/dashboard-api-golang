@@ -31,7 +31,7 @@ func (o *GetNetworkWebhooksHTTPServersReader) ReadResponse(response runtime.Clie
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/webhooks/httpServers] getNetworkWebhooksHttpServers", response, response.Code())
 	}
 }
 
@@ -40,7 +40,8 @@ func NewGetNetworkWebhooksHTTPServersOK() *GetNetworkWebhooksHTTPServersOK {
 	return &GetNetworkWebhooksHTTPServersOK{}
 }
 
-/* GetNetworkWebhooksHTTPServersOK describes a response with status code 200, with default header values.
+/*
+GetNetworkWebhooksHTTPServersOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -73,6 +74,11 @@ func (o *GetNetworkWebhooksHTTPServersOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network webhooks Http servers o k response
+func (o *GetNetworkWebhooksHTTPServersOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkWebhooksHTTPServersOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/webhooks/httpServers][%d] getNetworkWebhooksHttpServersOK  %+v", 200, o.Payload)
 }
@@ -95,7 +101,8 @@ func (o *GetNetworkWebhooksHTTPServersOK) readResponse(response runtime.ClientRe
 	return nil
 }
 
-/*GetNetworkWebhooksHTTPServersOKBodyItems0 get network webhooks HTTP servers o k body items0
+/*
+GetNetworkWebhooksHTTPServersOKBodyItems0 get network webhooks HTTP servers o k body items0
 swagger:model GetNetworkWebhooksHTTPServersOKBodyItems0
 */
 type GetNetworkWebhooksHTTPServersOKBodyItems0 struct {
@@ -167,6 +174,11 @@ func (o *GetNetworkWebhooksHTTPServersOKBodyItems0) ContextValidate(ctx context.
 func (o *GetNetworkWebhooksHTTPServersOKBodyItems0) contextValidatePayloadTemplate(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.PayloadTemplate != nil {
+
+		if swag.IsZero(o.PayloadTemplate) { // not required
+			return nil
+		}
+
 		if err := o.PayloadTemplate.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("payloadTemplate")
@@ -198,7 +210,8 @@ func (o *GetNetworkWebhooksHTTPServersOKBodyItems0) UnmarshalBinary(b []byte) er
 	return nil
 }
 
-/*GetNetworkWebhooksHTTPServersOKBodyItems0PayloadTemplate The payload template to use when posting data to the HTTP server.
+/*
+GetNetworkWebhooksHTTPServersOKBodyItems0PayloadTemplate The payload template to use when posting data to the HTTP server.
 swagger:model GetNetworkWebhooksHTTPServersOKBodyItems0PayloadTemplate
 */
 type GetNetworkWebhooksHTTPServersOKBodyItems0PayloadTemplate struct {

@@ -6,11 +6,15 @@ package organizations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
+	"strconv"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetOrganizationSamlRoleReader is a Reader for the GetOrganizationSamlRole structure.
@@ -28,7 +32,7 @@ func (o *GetOrganizationSamlRoleReader) ReadResponse(response runtime.ClientResp
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/samlRoles/{samlRoleId}] getOrganizationSamlRole", response, response.Code())
 	}
 }
 
@@ -37,12 +41,13 @@ func NewGetOrganizationSamlRoleOK() *GetOrganizationSamlRoleOK {
 	return &GetOrganizationSamlRoleOK{}
 }
 
-/* GetOrganizationSamlRoleOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationSamlRoleOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetOrganizationSamlRoleOK struct {
-	Payload interface{}
+	Payload *GetOrganizationSamlRoleOKBody
 }
 
 // IsSuccess returns true when this get organization saml role o k response has a 2xx status code
@@ -70,6 +75,11 @@ func (o *GetOrganizationSamlRoleOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get organization saml role o k response
+func (o *GetOrganizationSamlRoleOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationSamlRoleOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/samlRoles/{samlRoleId}][%d] getOrganizationSamlRoleOK  %+v", 200, o.Payload)
 }
@@ -78,16 +88,278 @@ func (o *GetOrganizationSamlRoleOK) String() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/samlRoles/{samlRoleId}][%d] getOrganizationSamlRoleOK  %+v", 200, o.Payload)
 }
 
-func (o *GetOrganizationSamlRoleOK) GetPayload() interface{} {
+func (o *GetOrganizationSamlRoleOK) GetPayload() *GetOrganizationSamlRoleOKBody {
 	return o.Payload
 }
 
 func (o *GetOrganizationSamlRoleOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetOrganizationSamlRoleOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetOrganizationSamlRoleOKBody get organization saml role o k body
+swagger:model GetOrganizationSamlRoleOKBody
+*/
+type GetOrganizationSamlRoleOKBody struct {
+
+	// ID associated with the SAML role
+	ID string `json:"id,omitempty"`
+
+	// The list of networks that the SAML administrator has privileges on
+	Networks []*GetOrganizationSamlRoleOKBodyNetworksItems0 `json:"networks"`
+
+	// The privilege of the SAML administrator on the organization
+	OrgAccess string `json:"orgAccess,omitempty"`
+
+	// The role of the SAML administrator
+	Role string `json:"role,omitempty"`
+
+	// The list of tags that the SAML administrator has privleges on
+	Tags []*GetOrganizationSamlRoleOKBodyTagsItems0 `json:"tags"`
+}
+
+// Validate validates this get organization saml role o k body
+func (o *GetOrganizationSamlRoleOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateNetworks(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTags(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetOrganizationSamlRoleOKBody) validateNetworks(formats strfmt.Registry) error {
+	if swag.IsZero(o.Networks) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Networks); i++ {
+		if swag.IsZero(o.Networks[i]) { // not required
+			continue
+		}
+
+		if o.Networks[i] != nil {
+			if err := o.Networks[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getOrganizationSamlRoleOK" + "." + "networks" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getOrganizationSamlRoleOK" + "." + "networks" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *GetOrganizationSamlRoleOKBody) validateTags(formats strfmt.Registry) error {
+	if swag.IsZero(o.Tags) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Tags); i++ {
+		if swag.IsZero(o.Tags[i]) { // not required
+			continue
+		}
+
+		if o.Tags[i] != nil {
+			if err := o.Tags[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getOrganizationSamlRoleOK" + "." + "tags" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getOrganizationSamlRoleOK" + "." + "tags" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get organization saml role o k body based on the context it is used
+func (o *GetOrganizationSamlRoleOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateNetworks(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateTags(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetOrganizationSamlRoleOKBody) contextValidateNetworks(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Networks); i++ {
+
+		if o.Networks[i] != nil {
+
+			if swag.IsZero(o.Networks[i]) { // not required
+				return nil
+			}
+
+			if err := o.Networks[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getOrganizationSamlRoleOK" + "." + "networks" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getOrganizationSamlRoleOK" + "." + "networks" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *GetOrganizationSamlRoleOKBody) contextValidateTags(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Tags); i++ {
+
+		if o.Tags[i] != nil {
+
+			if swag.IsZero(o.Tags[i]) { // not required
+				return nil
+			}
+
+			if err := o.Tags[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getOrganizationSamlRoleOK" + "." + "tags" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getOrganizationSamlRoleOK" + "." + "tags" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetOrganizationSamlRoleOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetOrganizationSamlRoleOKBody) UnmarshalBinary(b []byte) error {
+	var res GetOrganizationSamlRoleOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetOrganizationSamlRoleOKBodyNetworksItems0 get organization saml role o k body networks items0
+swagger:model GetOrganizationSamlRoleOKBodyNetworksItems0
+*/
+type GetOrganizationSamlRoleOKBodyNetworksItems0 struct {
+
+	// The privilege of the SAML administrator on the network
+	Access string `json:"access,omitempty"`
+
+	// The network ID
+	ID string `json:"id,omitempty"`
+}
+
+// Validate validates this get organization saml role o k body networks items0
+func (o *GetOrganizationSamlRoleOKBodyNetworksItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get organization saml role o k body networks items0 based on context it is used
+func (o *GetOrganizationSamlRoleOKBodyNetworksItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetOrganizationSamlRoleOKBodyNetworksItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetOrganizationSamlRoleOKBodyNetworksItems0) UnmarshalBinary(b []byte) error {
+	var res GetOrganizationSamlRoleOKBodyNetworksItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetOrganizationSamlRoleOKBodyTagsItems0 get organization saml role o k body tags items0
+swagger:model GetOrganizationSamlRoleOKBodyTagsItems0
+*/
+type GetOrganizationSamlRoleOKBodyTagsItems0 struct {
+
+	// The privilege of the SAML administrator on the tag
+	Access string `json:"access,omitempty"`
+
+	// The name of the tag
+	Tag string `json:"tag,omitempty"`
+}
+
+// Validate validates this get organization saml role o k body tags items0
+func (o *GetOrganizationSamlRoleOKBodyTagsItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get organization saml role o k body tags items0 based on context it is used
+func (o *GetOrganizationSamlRoleOKBodyTagsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetOrganizationSamlRoleOKBodyTagsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetOrganizationSamlRoleOKBodyTagsItems0) UnmarshalBinary(b []byte) error {
+	var res GetOrganizationSamlRoleOKBodyTagsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

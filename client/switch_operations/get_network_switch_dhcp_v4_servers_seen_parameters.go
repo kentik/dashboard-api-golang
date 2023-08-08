@@ -53,10 +53,12 @@ func NewGetNetworkSwitchDhcpV4ServersSeenParamsWithHTTPClient(client *http.Clien
 	}
 }
 
-/* GetNetworkSwitchDhcpV4ServersSeenParams contains all the parameters to send to the API endpoint
-   for the get network switch dhcp v4 servers seen operation.
+/*
+GetNetworkSwitchDhcpV4ServersSeenParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network switch dhcp v4 servers seen operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSwitchDhcpV4ServersSeenParams struct {
 
@@ -66,7 +68,10 @@ type GetNetworkSwitchDhcpV4ServersSeenParams struct {
 	*/
 	EndingBefore *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* PerPage.

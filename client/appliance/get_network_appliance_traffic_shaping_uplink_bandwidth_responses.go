@@ -6,11 +6,14 @@ package appliance
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetNetworkApplianceTrafficShapingUplinkBandwidthReader is a Reader for the GetNetworkApplianceTrafficShapingUplinkBandwidth structure.
@@ -28,7 +31,7 @@ func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthReader) ReadResponse(re
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/appliance/trafficShaping/uplinkBandwidth] getNetworkApplianceTrafficShapingUplinkBandwidth", response, response.Code())
 	}
 }
 
@@ -37,12 +40,13 @@ func NewGetNetworkApplianceTrafficShapingUplinkBandwidthOK() *GetNetworkApplianc
 	return &GetNetworkApplianceTrafficShapingUplinkBandwidthOK{}
 }
 
-/* GetNetworkApplianceTrafficShapingUplinkBandwidthOK describes a response with status code 200, with default header values.
+/*
+GetNetworkApplianceTrafficShapingUplinkBandwidthOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkApplianceTrafficShapingUplinkBandwidthOK struct {
-	Payload interface{}
+	Payload *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBody
 }
 
 // IsSuccess returns true when this get network appliance traffic shaping uplink bandwidth o k response has a 2xx status code
@@ -70,6 +74,11 @@ func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOK) IsCode(code int) bo
 	return code == 200
 }
 
+// Code gets the status code for the get network appliance traffic shaping uplink bandwidth o k response
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/appliance/trafficShaping/uplinkBandwidth][%d] getNetworkApplianceTrafficShapingUplinkBandwidthOK  %+v", 200, o.Payload)
 }
@@ -78,16 +87,435 @@ func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/appliance/trafficShaping/uplinkBandwidth][%d] getNetworkApplianceTrafficShapingUplinkBandwidthOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOK) GetPayload() interface{} {
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOK) GetPayload() *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBody {
 	return o.Payload
 }
 
 func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetNetworkApplianceTrafficShapingUplinkBandwidthOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkApplianceTrafficShapingUplinkBandwidthOKBody get network appliance traffic shaping uplink bandwidth o k body
+swagger:model GetNetworkApplianceTrafficShapingUplinkBandwidthOKBody
+*/
+type GetNetworkApplianceTrafficShapingUplinkBandwidthOKBody struct {
+
+	// bandwidth limits
+	BandwidthLimits *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimits `json:"bandwidthLimits,omitempty"`
+}
+
+// Validate validates this get network appliance traffic shaping uplink bandwidth o k body
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBandwidthLimits(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBody) validateBandwidthLimits(formats strfmt.Registry) error {
+	if swag.IsZero(o.BandwidthLimits) { // not required
+		return nil
+	}
+
+	if o.BandwidthLimits != nil {
+		if err := o.BandwidthLimits.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkApplianceTrafficShapingUplinkBandwidthOK" + "." + "bandwidthLimits")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkApplianceTrafficShapingUplinkBandwidthOK" + "." + "bandwidthLimits")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network appliance traffic shaping uplink bandwidth o k body based on the context it is used
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBandwidthLimits(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBody) contextValidateBandwidthLimits(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.BandwidthLimits != nil {
+
+		if swag.IsZero(o.BandwidthLimits) { // not required
+			return nil
+		}
+
+		if err := o.BandwidthLimits.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkApplianceTrafficShapingUplinkBandwidthOK" + "." + "bandwidthLimits")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkApplianceTrafficShapingUplinkBandwidthOK" + "." + "bandwidthLimits")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBody) UnmarshalBinary(b []byte) error {
+	var res GetNetworkApplianceTrafficShapingUplinkBandwidthOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimits A hash uplink keys and their configured settings for the Appliance
+swagger:model GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimits
+*/
+type GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimits struct {
+
+	// cellular
+	Cellular *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsCellular `json:"cellular,omitempty"`
+
+	// wan1
+	Wan1 *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsWan1 `json:"wan1,omitempty"`
+
+	// wan2
+	Wan2 *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsWan2 `json:"wan2,omitempty"`
+}
+
+// Validate validates this get network appliance traffic shaping uplink bandwidth o k body bandwidth limits
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimits) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateCellular(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateWan1(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateWan2(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimits) validateCellular(formats strfmt.Registry) error {
+	if swag.IsZero(o.Cellular) { // not required
+		return nil
+	}
+
+	if o.Cellular != nil {
+		if err := o.Cellular.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkApplianceTrafficShapingUplinkBandwidthOK" + "." + "bandwidthLimits" + "." + "cellular")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkApplianceTrafficShapingUplinkBandwidthOK" + "." + "bandwidthLimits" + "." + "cellular")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimits) validateWan1(formats strfmt.Registry) error {
+	if swag.IsZero(o.Wan1) { // not required
+		return nil
+	}
+
+	if o.Wan1 != nil {
+		if err := o.Wan1.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkApplianceTrafficShapingUplinkBandwidthOK" + "." + "bandwidthLimits" + "." + "wan1")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkApplianceTrafficShapingUplinkBandwidthOK" + "." + "bandwidthLimits" + "." + "wan1")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimits) validateWan2(formats strfmt.Registry) error {
+	if swag.IsZero(o.Wan2) { // not required
+		return nil
+	}
+
+	if o.Wan2 != nil {
+		if err := o.Wan2.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkApplianceTrafficShapingUplinkBandwidthOK" + "." + "bandwidthLimits" + "." + "wan2")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkApplianceTrafficShapingUplinkBandwidthOK" + "." + "bandwidthLimits" + "." + "wan2")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network appliance traffic shaping uplink bandwidth o k body bandwidth limits based on the context it is used
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimits) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateCellular(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateWan1(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateWan2(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimits) contextValidateCellular(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Cellular != nil {
+
+		if swag.IsZero(o.Cellular) { // not required
+			return nil
+		}
+
+		if err := o.Cellular.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkApplianceTrafficShapingUplinkBandwidthOK" + "." + "bandwidthLimits" + "." + "cellular")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkApplianceTrafficShapingUplinkBandwidthOK" + "." + "bandwidthLimits" + "." + "cellular")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimits) contextValidateWan1(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Wan1 != nil {
+
+		if swag.IsZero(o.Wan1) { // not required
+			return nil
+		}
+
+		if err := o.Wan1.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkApplianceTrafficShapingUplinkBandwidthOK" + "." + "bandwidthLimits" + "." + "wan1")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkApplianceTrafficShapingUplinkBandwidthOK" + "." + "bandwidthLimits" + "." + "wan1")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimits) contextValidateWan2(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Wan2 != nil {
+
+		if swag.IsZero(o.Wan2) { // not required
+			return nil
+		}
+
+		if err := o.Wan2.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkApplianceTrafficShapingUplinkBandwidthOK" + "." + "bandwidthLimits" + "." + "wan2")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkApplianceTrafficShapingUplinkBandwidthOK" + "." + "bandwidthLimits" + "." + "wan2")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimits) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimits) UnmarshalBinary(b []byte) error {
+	var res GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimits
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsCellular uplink cellular configured limits [optional]
+swagger:model GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsCellular
+*/
+type GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsCellular struct {
+
+	// configured DOWN limit for the uplink (in Kbps).  Null indicated unlimited
+	LimitDown int64 `json:"limitDown,omitempty"`
+
+	// configured UP limit for the uplink (in Kbps).  Null indicated unlimited
+	LimitUp int64 `json:"limitUp,omitempty"`
+}
+
+// Validate validates this get network appliance traffic shaping uplink bandwidth o k body bandwidth limits cellular
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsCellular) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network appliance traffic shaping uplink bandwidth o k body bandwidth limits cellular based on context it is used
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsCellular) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsCellular) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsCellular) UnmarshalBinary(b []byte) error {
+	var res GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsCellular
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsWan1 uplink wan1 configured limits [optional]
+swagger:model GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsWan1
+*/
+type GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsWan1 struct {
+
+	// configured DOWN limit for the uplink (in Kbps).  Null indicated unlimited
+	LimitDown int64 `json:"limitDown,omitempty"`
+
+	// configured UP limit for the uplink (in Kbps).  Null indicated unlimited
+	LimitUp int64 `json:"limitUp,omitempty"`
+}
+
+// Validate validates this get network appliance traffic shaping uplink bandwidth o k body bandwidth limits wan1
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsWan1) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network appliance traffic shaping uplink bandwidth o k body bandwidth limits wan1 based on context it is used
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsWan1) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsWan1) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsWan1) UnmarshalBinary(b []byte) error {
+	var res GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsWan1
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsWan2 uplink wan2 configured limits [optional]
+swagger:model GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsWan2
+*/
+type GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsWan2 struct {
+
+	// configured DOWN limit for the uplink (in Kbps).  Null indicated unlimited
+	LimitDown int64 `json:"limitDown,omitempty"`
+
+	// configured UP limit for the uplink (in Kbps).  Null indicated unlimited
+	LimitUp int64 `json:"limitUp,omitempty"`
+}
+
+// Validate validates this get network appliance traffic shaping uplink bandwidth o k body bandwidth limits wan2
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsWan2) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network appliance traffic shaping uplink bandwidth o k body bandwidth limits wan2 based on context it is used
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsWan2) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsWan2) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsWan2) UnmarshalBinary(b []byte) error {
+	var res GetNetworkApplianceTrafficShapingUplinkBandwidthOKBodyBandwidthLimitsWan2
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

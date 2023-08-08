@@ -53,14 +53,19 @@ func NewGetNetworkApplianceClientSecurityEventsParamsWithHTTPClient(client *http
 	}
 }
 
-/* GetNetworkApplianceClientSecurityEventsParams contains all the parameters to send to the API endpoint
-   for the get network appliance client security events operation.
+/*
+GetNetworkApplianceClientSecurityEventsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network appliance client security events operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkApplianceClientSecurityEventsParams struct {
 
-	// ClientID.
+	/* ClientID.
+
+	   Client ID
+	*/
 	ClientID string
 
 	/* EndingBefore.
@@ -69,7 +74,10 @@ type GetNetworkApplianceClientSecurityEventsParams struct {
 	*/
 	EndingBefore *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* PerPage.

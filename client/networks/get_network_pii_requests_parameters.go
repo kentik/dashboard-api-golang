@@ -52,14 +52,19 @@ func NewGetNetworkPiiRequestsParamsWithHTTPClient(client *http.Client) *GetNetwo
 	}
 }
 
-/* GetNetworkPiiRequestsParams contains all the parameters to send to the API endpoint
-   for the get network pii requests operation.
+/*
+GetNetworkPiiRequestsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network pii requests operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkPiiRequestsParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

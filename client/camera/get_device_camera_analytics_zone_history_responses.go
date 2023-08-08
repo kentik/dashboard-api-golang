@@ -28,7 +28,7 @@ func (o *GetDeviceCameraAnalyticsZoneHistoryReader) ReadResponse(response runtim
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /devices/{serial}/camera/analytics/zones/{zoneId}/history] getDeviceCameraAnalyticsZoneHistory", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetDeviceCameraAnalyticsZoneHistoryOK() *GetDeviceCameraAnalyticsZoneHis
 	return &GetDeviceCameraAnalyticsZoneHistoryOK{}
 }
 
-/* GetDeviceCameraAnalyticsZoneHistoryOK describes a response with status code 200, with default header values.
+/*
+GetDeviceCameraAnalyticsZoneHistoryOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetDeviceCameraAnalyticsZoneHistoryOK) IsServerError() bool {
 // IsCode returns true when this get device camera analytics zone history o k response a status code equal to that given
 func (o *GetDeviceCameraAnalyticsZoneHistoryOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get device camera analytics zone history o k response
+func (o *GetDeviceCameraAnalyticsZoneHistoryOK) Code() int {
+	return 200
 }
 
 func (o *GetDeviceCameraAnalyticsZoneHistoryOK) Error() string {

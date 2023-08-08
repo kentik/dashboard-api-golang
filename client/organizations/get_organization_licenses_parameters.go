@@ -53,16 +53,18 @@ func NewGetOrganizationLicensesParamsWithHTTPClient(client *http.Client) *GetOrg
 	}
 }
 
-/* GetOrganizationLicensesParams contains all the parameters to send to the API endpoint
-   for the get organization licenses operation.
+/*
+GetOrganizationLicensesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization licenses operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationLicensesParams struct {
 
 	/* DeviceSerial.
 
-	   Filter the licenses to those assigned to a particular device
+	   Filter the licenses to those assigned to a particular device. Returned in the same order that they are queued to the device.
 	*/
 	DeviceSerial *string
 
@@ -78,7 +80,10 @@ type GetOrganizationLicensesParams struct {
 	*/
 	NetworkID *string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	/* PerPage.
@@ -95,7 +100,7 @@ type GetOrganizationLicensesParams struct {
 
 	/* State.
 
-	   Filter the licenses to those in a particular state. Can be one of 'active', 'expired', 'expiring', 'unused', 'unusedActive' or 'recentlyQueued'
+	   Filter the licenses to those in a particular state. Can be one of 'active', 'expired', 'expiring', 'recentlyQueued', 'unused' or 'unusedActive'
 	*/
 	State *string
 

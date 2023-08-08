@@ -31,7 +31,7 @@ func (o *GetOrganizationSummaryTopSwitchesByEnergyUsageReader) ReadResponse(resp
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/summary/top/switches/byEnergyUsage] getOrganizationSummaryTopSwitchesByEnergyUsage", response, response.Code())
 	}
 }
 
@@ -40,7 +40,8 @@ func NewGetOrganizationSummaryTopSwitchesByEnergyUsageOK() *GetOrganizationSumma
 	return &GetOrganizationSummaryTopSwitchesByEnergyUsageOK{}
 }
 
-/* GetOrganizationSummaryTopSwitchesByEnergyUsageOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationSummaryTopSwitchesByEnergyUsageOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -73,6 +74,11 @@ func (o *GetOrganizationSummaryTopSwitchesByEnergyUsageOK) IsCode(code int) bool
 	return code == 200
 }
 
+// Code gets the status code for the get organization summary top switches by energy usage o k response
+func (o *GetOrganizationSummaryTopSwitchesByEnergyUsageOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationSummaryTopSwitchesByEnergyUsageOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/summary/top/switches/byEnergyUsage][%d] getOrganizationSummaryTopSwitchesByEnergyUsageOK  %+v", 200, o.Payload)
 }
@@ -95,7 +101,8 @@ func (o *GetOrganizationSummaryTopSwitchesByEnergyUsageOK) readResponse(response
 	return nil
 }
 
-/*GetOrganizationSummaryTopSwitchesByEnergyUsageOKBodyItems0 get organization summary top switches by energy usage o k body items0
+/*
+GetOrganizationSummaryTopSwitchesByEnergyUsageOKBodyItems0 get organization summary top switches by energy usage o k body items0
 swagger:model GetOrganizationSummaryTopSwitchesByEnergyUsageOKBodyItems0
 */
 type GetOrganizationSummaryTopSwitchesByEnergyUsageOKBodyItems0 struct {
@@ -193,6 +200,11 @@ func (o *GetOrganizationSummaryTopSwitchesByEnergyUsageOKBodyItems0) ContextVali
 func (o *GetOrganizationSummaryTopSwitchesByEnergyUsageOKBodyItems0) contextValidateNetwork(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Network != nil {
+
+		if swag.IsZero(o.Network) { // not required
+			return nil
+		}
+
 		if err := o.Network.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("network")
@@ -209,6 +221,11 @@ func (o *GetOrganizationSummaryTopSwitchesByEnergyUsageOKBodyItems0) contextVali
 func (o *GetOrganizationSummaryTopSwitchesByEnergyUsageOKBodyItems0) contextValidateUsage(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Usage != nil {
+
+		if swag.IsZero(o.Usage) { // not required
+			return nil
+		}
+
 		if err := o.Usage.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("usage")
@@ -240,7 +257,8 @@ func (o *GetOrganizationSummaryTopSwitchesByEnergyUsageOKBodyItems0) UnmarshalBi
 	return nil
 }
 
-/*GetOrganizationSummaryTopSwitchesByEnergyUsageOKBodyItems0Network Network info
+/*
+GetOrganizationSummaryTopSwitchesByEnergyUsageOKBodyItems0Network Network info
 swagger:model GetOrganizationSummaryTopSwitchesByEnergyUsageOKBodyItems0Network
 */
 type GetOrganizationSummaryTopSwitchesByEnergyUsageOKBodyItems0Network struct {
@@ -280,7 +298,8 @@ func (o *GetOrganizationSummaryTopSwitchesByEnergyUsageOKBodyItems0Network) Unma
 	return nil
 }
 
-/*GetOrganizationSummaryTopSwitchesByEnergyUsageOKBodyItems0Usage Energy usage of the switch
+/*
+GetOrganizationSummaryTopSwitchesByEnergyUsageOKBodyItems0Usage Energy usage of the switch
 swagger:model GetOrganizationSummaryTopSwitchesByEnergyUsageOKBodyItems0Usage
 */
 type GetOrganizationSummaryTopSwitchesByEnergyUsageOKBodyItems0Usage struct {

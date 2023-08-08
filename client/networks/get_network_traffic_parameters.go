@@ -53,10 +53,12 @@ func NewGetNetworkTrafficParamsWithHTTPClient(client *http.Client) *GetNetworkTr
 	}
 }
 
-/* GetNetworkTrafficParams contains all the parameters to send to the API endpoint
-   for the get network traffic operation.
+/*
+GetNetworkTrafficParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network traffic operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkTrafficParams struct {
 
@@ -66,7 +68,10 @@ type GetNetworkTrafficParams struct {
 	*/
 	DeviceType *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* T0.

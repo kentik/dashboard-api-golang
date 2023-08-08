@@ -31,7 +31,7 @@ func (o *GetOrganizationSummaryTopAppliancesByUtilizationReader) ReadResponse(re
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/summary/top/appliances/byUtilization] getOrganizationSummaryTopAppliancesByUtilization", response, response.Code())
 	}
 }
 
@@ -40,7 +40,8 @@ func NewGetOrganizationSummaryTopAppliancesByUtilizationOK() *GetOrganizationSum
 	return &GetOrganizationSummaryTopAppliancesByUtilizationOK{}
 }
 
-/* GetOrganizationSummaryTopAppliancesByUtilizationOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationSummaryTopAppliancesByUtilizationOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -73,6 +74,11 @@ func (o *GetOrganizationSummaryTopAppliancesByUtilizationOK) IsCode(code int) bo
 	return code == 200
 }
 
+// Code gets the status code for the get organization summary top appliances by utilization o k response
+func (o *GetOrganizationSummaryTopAppliancesByUtilizationOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationSummaryTopAppliancesByUtilizationOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/summary/top/appliances/byUtilization][%d] getOrganizationSummaryTopAppliancesByUtilizationOK  %+v", 200, o.Payload)
 }
@@ -95,7 +101,8 @@ func (o *GetOrganizationSummaryTopAppliancesByUtilizationOK) readResponse(respon
 	return nil
 }
 
-/*GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0 get organization summary top appliances by utilization o k body items0
+/*
+GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0 get organization summary top appliances by utilization o k body items0
 swagger:model GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0
 */
 type GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0 struct {
@@ -196,6 +203,11 @@ func (o *GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0) ContextVa
 func (o *GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0) contextValidateNetwork(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Network != nil {
+
+		if swag.IsZero(o.Network) { // not required
+			return nil
+		}
+
 		if err := o.Network.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("network")
@@ -212,6 +224,11 @@ func (o *GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0) contextVa
 func (o *GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0) contextValidateUtilization(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Utilization != nil {
+
+		if swag.IsZero(o.Utilization) { // not required
+			return nil
+		}
+
 		if err := o.Utilization.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("utilization")
@@ -243,7 +260,8 @@ func (o *GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0) Unmarshal
 	return nil
 }
 
-/*GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0Network Network info
+/*
+GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0Network Network info
 swagger:model GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0Network
 */
 type GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0Network struct {
@@ -283,7 +301,8 @@ func (o *GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0Network) Un
 	return nil
 }
 
-/*GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0Utilization Utilization of the appliance
+/*
+GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0Utilization Utilization of the appliance
 swagger:model GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0Utilization
 */
 type GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0Utilization struct {
@@ -342,6 +361,11 @@ func (o *GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0Utilization
 func (o *GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0Utilization) contextValidateAverage(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Average != nil {
+
+		if swag.IsZero(o.Average) { // not required
+			return nil
+		}
+
 		if err := o.Average.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("utilization" + "." + "average")
@@ -373,7 +397,8 @@ func (o *GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0Utilization
 	return nil
 }
 
-/*GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0UtilizationAverage Average utilization of the appliance
+/*
+GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0UtilizationAverage Average utilization of the appliance
 swagger:model GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0UtilizationAverage
 */
 type GetOrganizationSummaryTopAppliancesByUtilizationOKBodyItems0UtilizationAverage struct {

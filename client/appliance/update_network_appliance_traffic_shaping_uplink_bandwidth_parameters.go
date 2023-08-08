@@ -52,14 +52,19 @@ func NewUpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsWithHTTPClient(
 	}
 }
 
-/* UpdateNetworkApplianceTrafficShapingUplinkBandwidthParams contains all the parameters to send to the API endpoint
-   for the update network appliance traffic shaping uplink bandwidth operation.
+/*
+UpdateNetworkApplianceTrafficShapingUplinkBandwidthParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network appliance traffic shaping uplink bandwidth operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkApplianceTrafficShapingUplinkBandwidthParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkApplianceTrafficShapingUplinkBandwidth.

@@ -53,10 +53,12 @@ func NewGetDeviceWirelessLatencyStatsParamsWithHTTPClient(client *http.Client) *
 	}
 }
 
-/* GetDeviceWirelessLatencyStatsParams contains all the parameters to send to the API endpoint
-   for the get device wireless latency stats operation.
+/*
+GetDeviceWirelessLatencyStatsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get device wireless latency stats operation.
+
+	Typically these are written to a http.Request.
 */
 type GetDeviceWirelessLatencyStatsParams struct {
 
@@ -78,7 +80,10 @@ type GetDeviceWirelessLatencyStatsParams struct {
 	*/
 	Fields *string
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	/* Ssid.

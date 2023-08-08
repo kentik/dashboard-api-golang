@@ -30,7 +30,7 @@ func (o *UpdateOrganizationEarlyAccessFeaturesOptInReader) ReadResponse(response
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /organizations/{organizationId}/earlyAccess/features/optIns/{optInId}] updateOrganizationEarlyAccessFeaturesOptIn", response, response.Code())
 	}
 }
 
@@ -39,7 +39,8 @@ func NewUpdateOrganizationEarlyAccessFeaturesOptInOK() *UpdateOrganizationEarlyA
 	return &UpdateOrganizationEarlyAccessFeaturesOptInOK{}
 }
 
-/* UpdateOrganizationEarlyAccessFeaturesOptInOK describes a response with status code 200, with default header values.
+/*
+UpdateOrganizationEarlyAccessFeaturesOptInOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -72,6 +73,11 @@ func (o *UpdateOrganizationEarlyAccessFeaturesOptInOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update organization early access features opt in o k response
+func (o *UpdateOrganizationEarlyAccessFeaturesOptInOK) Code() int {
+	return 200
+}
+
 func (o *UpdateOrganizationEarlyAccessFeaturesOptInOK) Error() string {
 	return fmt.Sprintf("[PUT /organizations/{organizationId}/earlyAccess/features/optIns/{optInId}][%d] updateOrganizationEarlyAccessFeaturesOptInOK  %+v", 200, o.Payload)
 }
@@ -94,7 +100,8 @@ func (o *UpdateOrganizationEarlyAccessFeaturesOptInOK) readResponse(response run
 	return nil
 }
 
-/*UpdateOrganizationEarlyAccessFeaturesOptInBody update organization early access features opt in body
+/*
+UpdateOrganizationEarlyAccessFeaturesOptInBody update organization early access features opt in body
 // Example: {"limitScopeToNetworks":["N_12345"]}
 swagger:model UpdateOrganizationEarlyAccessFeaturesOptInBody
 */

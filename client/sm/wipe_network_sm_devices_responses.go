@@ -30,7 +30,7 @@ func (o *WipeNetworkSmDevicesReader) ReadResponse(response runtime.ClientRespons
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/sm/devices/wipe] wipeNetworkSmDevices", response, response.Code())
 	}
 }
 
@@ -39,7 +39,8 @@ func NewWipeNetworkSmDevicesOK() *WipeNetworkSmDevicesOK {
 	return &WipeNetworkSmDevicesOK{}
 }
 
-/* WipeNetworkSmDevicesOK describes a response with status code 200, with default header values.
+/*
+WipeNetworkSmDevicesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -72,6 +73,11 @@ func (o *WipeNetworkSmDevicesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the wipe network sm devices o k response
+func (o *WipeNetworkSmDevicesOK) Code() int {
+	return 200
+}
+
 func (o *WipeNetworkSmDevicesOK) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/sm/devices/wipe][%d] wipeNetworkSmDevicesOK  %+v", 200, o.Payload)
 }
@@ -96,7 +102,8 @@ func (o *WipeNetworkSmDevicesOK) readResponse(response runtime.ClientResponse, c
 	return nil
 }
 
-/*WipeNetworkSmDevicesBody wipe network sm devices body
+/*
+WipeNetworkSmDevicesBody wipe network sm devices body
 // Example: {"id":"1284392014819","pin":123456,"serial":"Q234-ABCD-5678","wifiMac":"00:11:22:33:44:55"}
 swagger:model WipeNetworkSmDevicesBody
 */
@@ -143,7 +150,8 @@ func (o *WipeNetworkSmDevicesBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*WipeNetworkSmDevicesOKBody wipe network sm devices o k body
+/*
+WipeNetworkSmDevicesOKBody wipe network sm devices o k body
 swagger:model WipeNetworkSmDevicesOKBody
 */
 type WipeNetworkSmDevicesOKBody struct {

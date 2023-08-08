@@ -52,17 +52,25 @@ func NewDeleteOrganizationEarlyAccessFeaturesOptInParamsWithHTTPClient(client *h
 	}
 }
 
-/* DeleteOrganizationEarlyAccessFeaturesOptInParams contains all the parameters to send to the API endpoint
-   for the delete organization early access features opt in operation.
+/*
+DeleteOrganizationEarlyAccessFeaturesOptInParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete organization early access features opt in operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteOrganizationEarlyAccessFeaturesOptInParams struct {
 
-	// OptInID.
+	/* OptInID.
+
+	   Opt in ID
+	*/
 	OptInID string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

@@ -6,11 +6,15 @@ package switch_operations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
+	"strconv"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetNetworkSwitchDscpToCosMappingsReader is a Reader for the GetNetworkSwitchDscpToCosMappings structure.
@@ -28,7 +32,7 @@ func (o *GetNetworkSwitchDscpToCosMappingsReader) ReadResponse(response runtime.
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/switch/dscpToCosMappings] getNetworkSwitchDscpToCosMappings", response, response.Code())
 	}
 }
 
@@ -37,12 +41,13 @@ func NewGetNetworkSwitchDscpToCosMappingsOK() *GetNetworkSwitchDscpToCosMappings
 	return &GetNetworkSwitchDscpToCosMappingsOK{}
 }
 
-/* GetNetworkSwitchDscpToCosMappingsOK describes a response with status code 200, with default header values.
+/*
+GetNetworkSwitchDscpToCosMappingsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkSwitchDscpToCosMappingsOK struct {
-	Payload interface{}
+	Payload *GetNetworkSwitchDscpToCosMappingsOKBody
 }
 
 // IsSuccess returns true when this get network switch dscp to cos mappings o k response has a 2xx status code
@@ -70,6 +75,11 @@ func (o *GetNetworkSwitchDscpToCosMappingsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network switch dscp to cos mappings o k response
+func (o *GetNetworkSwitchDscpToCosMappingsOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkSwitchDscpToCosMappingsOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/switch/dscpToCosMappings][%d] getNetworkSwitchDscpToCosMappingsOK  %+v", 200, o.Payload)
 }
@@ -78,16 +88,169 @@ func (o *GetNetworkSwitchDscpToCosMappingsOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/switch/dscpToCosMappings][%d] getNetworkSwitchDscpToCosMappingsOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkSwitchDscpToCosMappingsOK) GetPayload() interface{} {
+func (o *GetNetworkSwitchDscpToCosMappingsOK) GetPayload() *GetNetworkSwitchDscpToCosMappingsOKBody {
 	return o.Payload
 }
 
 func (o *GetNetworkSwitchDscpToCosMappingsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetNetworkSwitchDscpToCosMappingsOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkSwitchDscpToCosMappingsOKBody get network switch dscp to cos mappings o k body
+swagger:model GetNetworkSwitchDscpToCosMappingsOKBody
+*/
+type GetNetworkSwitchDscpToCosMappingsOKBody struct {
+
+	// An array of DSCP to CoS mappings. An empty array will reset the mappings to default.
+	Mappings []*GetNetworkSwitchDscpToCosMappingsOKBodyMappingsItems0 `json:"mappings"`
+}
+
+// Validate validates this get network switch dscp to cos mappings o k body
+func (o *GetNetworkSwitchDscpToCosMappingsOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateMappings(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkSwitchDscpToCosMappingsOKBody) validateMappings(formats strfmt.Registry) error {
+	if swag.IsZero(o.Mappings) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Mappings); i++ {
+		if swag.IsZero(o.Mappings[i]) { // not required
+			continue
+		}
+
+		if o.Mappings[i] != nil {
+			if err := o.Mappings[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkSwitchDscpToCosMappingsOK" + "." + "mappings" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkSwitchDscpToCosMappingsOK" + "." + "mappings" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network switch dscp to cos mappings o k body based on the context it is used
+func (o *GetNetworkSwitchDscpToCosMappingsOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateMappings(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkSwitchDscpToCosMappingsOKBody) contextValidateMappings(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Mappings); i++ {
+
+		if o.Mappings[i] != nil {
+
+			if swag.IsZero(o.Mappings[i]) { // not required
+				return nil
+			}
+
+			if err := o.Mappings[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkSwitchDscpToCosMappingsOK" + "." + "mappings" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkSwitchDscpToCosMappingsOK" + "." + "mappings" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchDscpToCosMappingsOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchDscpToCosMappingsOKBody) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchDscpToCosMappingsOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSwitchDscpToCosMappingsOKBodyMappingsItems0 get network switch dscp to cos mappings o k body mappings items0
+swagger:model GetNetworkSwitchDscpToCosMappingsOKBodyMappingsItems0
+*/
+type GetNetworkSwitchDscpToCosMappingsOKBodyMappingsItems0 struct {
+
+	// The actual layer-2 CoS queue the DSCP value is mapped to. These are not bits set on outgoing frames. Value can be in the range of 0 to 5 inclusive.
+	Cos int64 `json:"cos,omitempty"`
+
+	// The Differentiated Services Code Point (DSCP) tag in the IP header that will be mapped to a particular Class-of-Service (CoS) queue. Value can be in the range of 0 to 63 inclusive.
+	Dscp int64 `json:"dscp,omitempty"`
+
+	// Label for the mapping (optional).
+	Title string `json:"title,omitempty"`
+}
+
+// Validate validates this get network switch dscp to cos mappings o k body mappings items0
+func (o *GetNetworkSwitchDscpToCosMappingsOKBodyMappingsItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network switch dscp to cos mappings o k body mappings items0 based on context it is used
+func (o *GetNetworkSwitchDscpToCosMappingsOKBodyMappingsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchDscpToCosMappingsOKBodyMappingsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchDscpToCosMappingsOKBodyMappingsItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchDscpToCosMappingsOKBodyMappingsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

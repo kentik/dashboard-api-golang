@@ -52,17 +52,25 @@ func NewGetNetworkCameraWirelessProfileParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* GetNetworkCameraWirelessProfileParams contains all the parameters to send to the API endpoint
-   for the get network camera wireless profile operation.
+/*
+GetNetworkCameraWirelessProfileParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network camera wireless profile operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkCameraWirelessProfileParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// WirelessProfileID.
+	/* WirelessProfileID.
+
+	   Wireless profile ID
+	*/
 	WirelessProfileID string
 
 	timeout    time.Duration

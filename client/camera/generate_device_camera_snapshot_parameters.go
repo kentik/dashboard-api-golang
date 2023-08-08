@@ -52,17 +52,22 @@ func NewGenerateDeviceCameraSnapshotParamsWithHTTPClient(client *http.Client) *G
 	}
 }
 
-/* GenerateDeviceCameraSnapshotParams contains all the parameters to send to the API endpoint
-   for the generate device camera snapshot operation.
+/*
+GenerateDeviceCameraSnapshotParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the generate device camera snapshot operation.
+
+	Typically these are written to a http.Request.
 */
 type GenerateDeviceCameraSnapshotParams struct {
 
 	// GenerateDeviceCameraSnapshot.
 	GenerateDeviceCameraSnapshot GenerateDeviceCameraSnapshotBody
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	timeout    time.Duration

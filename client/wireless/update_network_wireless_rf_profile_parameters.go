@@ -52,17 +52,25 @@ func NewUpdateNetworkWirelessRfProfileParamsWithHTTPClient(client *http.Client) 
 	}
 }
 
-/* UpdateNetworkWirelessRfProfileParams contains all the parameters to send to the API endpoint
-   for the update network wireless rf profile operation.
+/*
+UpdateNetworkWirelessRfProfileParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network wireless rf profile operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkWirelessRfProfileParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// RfProfileID.
+	/* RfProfileID.
+
+	   Rf profile ID
+	*/
 	RfProfileID string
 
 	// UpdateNetworkWirelessRfProfile.

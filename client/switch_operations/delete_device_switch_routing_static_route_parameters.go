@@ -52,17 +52,25 @@ func NewDeleteDeviceSwitchRoutingStaticRouteParamsWithHTTPClient(client *http.Cl
 	}
 }
 
-/* DeleteDeviceSwitchRoutingStaticRouteParams contains all the parameters to send to the API endpoint
-   for the delete device switch routing static route operation.
+/*
+DeleteDeviceSwitchRoutingStaticRouteParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete device switch routing static route operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteDeviceSwitchRoutingStaticRouteParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
-	// StaticRouteID.
+	/* StaticRouteID.
+
+	   Static route ID
+	*/
 	StaticRouteID string
 
 	timeout    time.Duration

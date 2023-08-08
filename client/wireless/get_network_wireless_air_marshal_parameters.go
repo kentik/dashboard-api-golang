@@ -53,14 +53,19 @@ func NewGetNetworkWirelessAirMarshalParamsWithHTTPClient(client *http.Client) *G
 	}
 }
 
-/* GetNetworkWirelessAirMarshalParams contains all the parameters to send to the API endpoint
-   for the get network wireless air marshal operation.
+/*
+GetNetworkWirelessAirMarshalParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network wireless air marshal operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkWirelessAirMarshalParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* T0.

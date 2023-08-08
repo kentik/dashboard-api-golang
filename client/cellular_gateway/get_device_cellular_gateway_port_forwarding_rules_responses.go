@@ -28,7 +28,7 @@ func (o *GetDeviceCellularGatewayPortForwardingRulesReader) ReadResponse(respons
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /devices/{serial}/cellularGateway/portForwardingRules] getDeviceCellularGatewayPortForwardingRules", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetDeviceCellularGatewayPortForwardingRulesOK() *GetDeviceCellularGatewa
 	return &GetDeviceCellularGatewayPortForwardingRulesOK{}
 }
 
-/* GetDeviceCellularGatewayPortForwardingRulesOK describes a response with status code 200, with default header values.
+/*
+GetDeviceCellularGatewayPortForwardingRulesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetDeviceCellularGatewayPortForwardingRulesOK) IsServerError() bool {
 // IsCode returns true when this get device cellular gateway port forwarding rules o k response a status code equal to that given
 func (o *GetDeviceCellularGatewayPortForwardingRulesOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get device cellular gateway port forwarding rules o k response
+func (o *GetDeviceCellularGatewayPortForwardingRulesOK) Code() int {
+	return 200
 }
 
 func (o *GetDeviceCellularGatewayPortForwardingRulesOK) Error() string {

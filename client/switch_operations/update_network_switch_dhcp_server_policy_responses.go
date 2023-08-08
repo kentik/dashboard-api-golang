@@ -33,7 +33,7 @@ func (o *UpdateNetworkSwitchDhcpServerPolicyReader) ReadResponse(response runtim
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/switch/dhcpServerPolicy] updateNetworkSwitchDhcpServerPolicy", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateNetworkSwitchDhcpServerPolicyOK() *UpdateNetworkSwitchDhcpServerPo
 	return &UpdateNetworkSwitchDhcpServerPolicyOK{}
 }
 
-/* UpdateNetworkSwitchDhcpServerPolicyOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSwitchDhcpServerPolicyOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateNetworkSwitchDhcpServerPolicyOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network switch dhcp server policy o k response
+func (o *UpdateNetworkSwitchDhcpServerPolicyOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSwitchDhcpServerPolicyOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/switch/dhcpServerPolicy][%d] updateNetworkSwitchDhcpServerPolicyOK  %+v", 200, o.Payload)
 }
@@ -97,8 +103,9 @@ func (o *UpdateNetworkSwitchDhcpServerPolicyOK) readResponse(response runtime.Cl
 	return nil
 }
 
-/*UpdateNetworkSwitchDhcpServerPolicyBody update network switch dhcp server policy body
-// Example: {"alerts":{"email":{"enabled":false}},"allowedServers":["00:50:56:00:00:01","00:50:56:00:00:02"],"arpInspection":{"enabled":false},"blockedServers":["00:50:56:00:00:03","00:50:56:00:00:04"],"defaultPolicy":"block"}
+/*
+UpdateNetworkSwitchDhcpServerPolicyBody update network switch dhcp server policy body
+// Example: {"alerts":{"email":{"enabled":true}},"allowedServers":["00:50:56:00:00:01","00:50:56:00:00:02"],"arpInspection":{"enabled":true},"blockedServers":["00:50:56:00:00:03","00:50:56:00:00:04"],"defaultPolicy":"block"}
 swagger:model UpdateNetworkSwitchDhcpServerPolicyBody
 */
 type UpdateNetworkSwitchDhcpServerPolicyBody struct {
@@ -243,6 +250,11 @@ func (o *UpdateNetworkSwitchDhcpServerPolicyBody) ContextValidate(ctx context.Co
 func (o *UpdateNetworkSwitchDhcpServerPolicyBody) contextValidateAlerts(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Alerts != nil {
+
+		if swag.IsZero(o.Alerts) { // not required
+			return nil
+		}
+
 		if err := o.Alerts.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchDhcpServerPolicy" + "." + "alerts")
@@ -259,6 +271,11 @@ func (o *UpdateNetworkSwitchDhcpServerPolicyBody) contextValidateAlerts(ctx cont
 func (o *UpdateNetworkSwitchDhcpServerPolicyBody) contextValidateArpInspection(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.ArpInspection != nil {
+
+		if swag.IsZero(o.ArpInspection) { // not required
+			return nil
+		}
+
 		if err := o.ArpInspection.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchDhcpServerPolicy" + "." + "arpInspection")
@@ -290,7 +307,8 @@ func (o *UpdateNetworkSwitchDhcpServerPolicyBody) UnmarshalBinary(b []byte) erro
 	return nil
 }
 
-/*UpdateNetworkSwitchDhcpServerPolicyParamsBodyAlerts Alert settings for DHCP servers
+/*
+UpdateNetworkSwitchDhcpServerPolicyParamsBodyAlerts Alert settings for DHCP servers
 swagger:model UpdateNetworkSwitchDhcpServerPolicyParamsBodyAlerts
 */
 type UpdateNetworkSwitchDhcpServerPolicyParamsBodyAlerts struct {
@@ -349,6 +367,11 @@ func (o *UpdateNetworkSwitchDhcpServerPolicyParamsBodyAlerts) ContextValidate(ct
 func (o *UpdateNetworkSwitchDhcpServerPolicyParamsBodyAlerts) contextValidateEmail(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Email != nil {
+
+		if swag.IsZero(o.Email) { // not required
+			return nil
+		}
+
 		if err := o.Email.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchDhcpServerPolicy" + "." + "alerts" + "." + "email")
@@ -380,7 +403,8 @@ func (o *UpdateNetworkSwitchDhcpServerPolicyParamsBodyAlerts) UnmarshalBinary(b 
 	return nil
 }
 
-/*UpdateNetworkSwitchDhcpServerPolicyParamsBodyAlertsEmail Email alert settings for DHCP servers
+/*
+UpdateNetworkSwitchDhcpServerPolicyParamsBodyAlertsEmail Email alert settings for DHCP servers
 swagger:model UpdateNetworkSwitchDhcpServerPolicyParamsBodyAlertsEmail
 */
 type UpdateNetworkSwitchDhcpServerPolicyParamsBodyAlertsEmail struct {
@@ -417,7 +441,8 @@ func (o *UpdateNetworkSwitchDhcpServerPolicyParamsBodyAlertsEmail) UnmarshalBina
 	return nil
 }
 
-/*UpdateNetworkSwitchDhcpServerPolicyParamsBodyArpInspection Dynamic ARP Inspection settings
+/*
+UpdateNetworkSwitchDhcpServerPolicyParamsBodyArpInspection Dynamic ARP Inspection settings
 swagger:model UpdateNetworkSwitchDhcpServerPolicyParamsBodyArpInspection
 */
 type UpdateNetworkSwitchDhcpServerPolicyParamsBodyArpInspection struct {

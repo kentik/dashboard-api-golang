@@ -52,14 +52,19 @@ func NewGetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesParamsWit
 	}
 }
 
-/* GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesParams contains all the parameters to send to the API endpoint
-   for the get network appliance firewall l7 firewall rules application categories operation.
+/*
+GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network appliance firewall l7 firewall rules application categories operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

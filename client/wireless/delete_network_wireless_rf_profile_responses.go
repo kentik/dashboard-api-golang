@@ -27,7 +27,7 @@ func (o *DeleteNetworkWirelessRfProfileReader) ReadResponse(response runtime.Cli
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[DELETE /networks/{networkId}/wireless/rfProfiles/{rfProfileId}] deleteNetworkWirelessRfProfile", response, response.Code())
 	}
 }
 
@@ -36,7 +36,8 @@ func NewDeleteNetworkWirelessRfProfileNoContent() *DeleteNetworkWirelessRfProfil
 	return &DeleteNetworkWirelessRfProfileNoContent{}
 }
 
-/* DeleteNetworkWirelessRfProfileNoContent describes a response with status code 204, with default header values.
+/*
+DeleteNetworkWirelessRfProfileNoContent describes a response with status code 204, with default header values.
 
 Successful operation
 */
@@ -66,6 +67,11 @@ func (o *DeleteNetworkWirelessRfProfileNoContent) IsServerError() bool {
 // IsCode returns true when this delete network wireless rf profile no content response a status code equal to that given
 func (o *DeleteNetworkWirelessRfProfileNoContent) IsCode(code int) bool {
 	return code == 204
+}
+
+// Code gets the status code for the delete network wireless rf profile no content response
+func (o *DeleteNetworkWirelessRfProfileNoContent) Code() int {
+	return 204
 }
 
 func (o *DeleteNetworkWirelessRfProfileNoContent) Error() string {

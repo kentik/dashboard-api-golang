@@ -6,11 +6,17 @@ package networks
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+	"encoding/json"
 	"fmt"
 	"io"
+	"strconv"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // GetNetworkHealthAlertsReader is a Reader for the GetNetworkHealthAlerts structure.
@@ -28,7 +34,7 @@ func (o *GetNetworkHealthAlertsReader) ReadResponse(response runtime.ClientRespo
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/health/alerts] getNetworkHealthAlerts", response, response.Code())
 	}
 }
 
@@ -37,12 +43,13 @@ func NewGetNetworkHealthAlertsOK() *GetNetworkHealthAlertsOK {
 	return &GetNetworkHealthAlertsOK{}
 }
 
-/* GetNetworkHealthAlertsOK describes a response with status code 200, with default header values.
+/*
+GetNetworkHealthAlertsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkHealthAlertsOK struct {
-	Payload interface{}
+	Payload []*GetNetworkHealthAlertsOKBodyItems0
 }
 
 // IsSuccess returns true when this get network health alerts o k response has a 2xx status code
@@ -70,6 +77,11 @@ func (o *GetNetworkHealthAlertsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network health alerts o k response
+func (o *GetNetworkHealthAlertsOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkHealthAlertsOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/health/alerts][%d] getNetworkHealthAlertsOK  %+v", 200, o.Payload)
 }
@@ -78,7 +90,7 @@ func (o *GetNetworkHealthAlertsOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/health/alerts][%d] getNetworkHealthAlertsOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkHealthAlertsOK) GetPayload() interface{} {
+func (o *GetNetworkHealthAlertsOK) GetPayload() []*GetNetworkHealthAlertsOKBodyItems0 {
 	return o.Payload
 }
 
@@ -89,5 +101,824 @@ func (o *GetNetworkHealthAlertsOK) readResponse(response runtime.ClientResponse,
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkHealthAlertsOKBodyItems0 get network health alerts o k body items0
+swagger:model GetNetworkHealthAlertsOKBodyItems0
+*/
+type GetNetworkHealthAlertsOKBodyItems0 struct {
+
+	// Category of the alert
+	Category string `json:"category,omitempty"`
+
+	// Alert identifier. Value can be empty
+	ID string `json:"id,omitempty"`
+
+	// scope
+	Scope *GetNetworkHealthAlertsOKBodyItems0Scope `json:"scope,omitempty"`
+
+	// Severity of the alert
+	// Enum: [error info warning]
+	Severity string `json:"severity,omitempty"`
+
+	// Alert type
+	Type string `json:"type,omitempty"`
+}
+
+// Validate validates this get network health alerts o k body items0
+func (o *GetNetworkHealthAlertsOKBodyItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateScope(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSeverity(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkHealthAlertsOKBodyItems0) validateScope(formats strfmt.Registry) error {
+	if swag.IsZero(o.Scope) { // not required
+		return nil
+	}
+
+	if o.Scope != nil {
+		if err := o.Scope.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("scope")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("scope")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+var getNetworkHealthAlertsOKBodyItems0TypeSeverityPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["error","info","warning"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getNetworkHealthAlertsOKBodyItems0TypeSeverityPropEnum = append(getNetworkHealthAlertsOKBodyItems0TypeSeverityPropEnum, v)
+	}
+}
+
+const (
+
+	// GetNetworkHealthAlertsOKBodyItems0SeverityError captures enum value "error"
+	GetNetworkHealthAlertsOKBodyItems0SeverityError string = "error"
+
+	// GetNetworkHealthAlertsOKBodyItems0SeverityInfo captures enum value "info"
+	GetNetworkHealthAlertsOKBodyItems0SeverityInfo string = "info"
+
+	// GetNetworkHealthAlertsOKBodyItems0SeverityWarning captures enum value "warning"
+	GetNetworkHealthAlertsOKBodyItems0SeverityWarning string = "warning"
+)
+
+// prop value enum
+func (o *GetNetworkHealthAlertsOKBodyItems0) validateSeverityEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getNetworkHealthAlertsOKBodyItems0TypeSeverityPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetNetworkHealthAlertsOKBodyItems0) validateSeverity(formats strfmt.Registry) error {
+	if swag.IsZero(o.Severity) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateSeverityEnum("severity", "body", o.Severity); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network health alerts o k body items0 based on the context it is used
+func (o *GetNetworkHealthAlertsOKBodyItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateScope(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkHealthAlertsOKBodyItems0) contextValidateScope(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Scope != nil {
+
+		if swag.IsZero(o.Scope) { // not required
+			return nil
+		}
+
+		if err := o.Scope.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("scope")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("scope")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkHealthAlertsOKBodyItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkHealthAlertsOKBodyItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkHealthAlertsOKBodyItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkHealthAlertsOKBodyItems0Scope The scope of the alert
+swagger:model GetNetworkHealthAlertsOKBodyItems0Scope
+*/
+type GetNetworkHealthAlertsOKBodyItems0Scope struct {
+
+	// Applications related to the alert
+	Applications []*GetNetworkHealthAlertsOKBodyItems0ScopeApplicationsItems0 `json:"applications"`
+
+	// Devices related to the alert
+	Devices []*GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0 `json:"devices"`
+
+	// Peers related to the alert
+	Peers []*GetNetworkHealthAlertsOKBodyItems0ScopePeersItems0 `json:"peers"`
+}
+
+// Validate validates this get network health alerts o k body items0 scope
+func (o *GetNetworkHealthAlertsOKBodyItems0Scope) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateApplications(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateDevices(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validatePeers(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkHealthAlertsOKBodyItems0Scope) validateApplications(formats strfmt.Registry) error {
+	if swag.IsZero(o.Applications) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Applications); i++ {
+		if swag.IsZero(o.Applications[i]) { // not required
+			continue
+		}
+
+		if o.Applications[i] != nil {
+			if err := o.Applications[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("scope" + "." + "applications" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("scope" + "." + "applications" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *GetNetworkHealthAlertsOKBodyItems0Scope) validateDevices(formats strfmt.Registry) error {
+	if swag.IsZero(o.Devices) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Devices); i++ {
+		if swag.IsZero(o.Devices[i]) { // not required
+			continue
+		}
+
+		if o.Devices[i] != nil {
+			if err := o.Devices[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("scope" + "." + "devices" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("scope" + "." + "devices" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *GetNetworkHealthAlertsOKBodyItems0Scope) validatePeers(formats strfmt.Registry) error {
+	if swag.IsZero(o.Peers) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Peers); i++ {
+		if swag.IsZero(o.Peers[i]) { // not required
+			continue
+		}
+
+		if o.Peers[i] != nil {
+			if err := o.Peers[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("scope" + "." + "peers" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("scope" + "." + "peers" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network health alerts o k body items0 scope based on the context it is used
+func (o *GetNetworkHealthAlertsOKBodyItems0Scope) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateApplications(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateDevices(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidatePeers(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkHealthAlertsOKBodyItems0Scope) contextValidateApplications(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Applications); i++ {
+
+		if o.Applications[i] != nil {
+
+			if swag.IsZero(o.Applications[i]) { // not required
+				return nil
+			}
+
+			if err := o.Applications[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("scope" + "." + "applications" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("scope" + "." + "applications" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *GetNetworkHealthAlertsOKBodyItems0Scope) contextValidateDevices(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Devices); i++ {
+
+		if o.Devices[i] != nil {
+
+			if swag.IsZero(o.Devices[i]) { // not required
+				return nil
+			}
+
+			if err := o.Devices[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("scope" + "." + "devices" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("scope" + "." + "devices" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *GetNetworkHealthAlertsOKBodyItems0Scope) contextValidatePeers(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Peers); i++ {
+
+		if o.Peers[i] != nil {
+
+			if swag.IsZero(o.Peers[i]) { // not required
+				return nil
+			}
+
+			if err := o.Peers[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("scope" + "." + "peers" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("scope" + "." + "peers" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkHealthAlertsOKBodyItems0Scope) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkHealthAlertsOKBodyItems0Scope) UnmarshalBinary(b []byte) error {
+	var res GetNetworkHealthAlertsOKBodyItems0Scope
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkHealthAlertsOKBodyItems0ScopeApplicationsItems0 get network health alerts o k body items0 scope applications items0
+swagger:model GetNetworkHealthAlertsOKBodyItems0ScopeApplicationsItems0
+*/
+type GetNetworkHealthAlertsOKBodyItems0ScopeApplicationsItems0 struct {
+
+	// Name of the application
+	Name string `json:"name,omitempty"`
+
+	// URL to the application
+	URL string `json:"url,omitempty"`
+}
+
+// Validate validates this get network health alerts o k body items0 scope applications items0
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopeApplicationsItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network health alerts o k body items0 scope applications items0 based on context it is used
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopeApplicationsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopeApplicationsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopeApplicationsItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkHealthAlertsOKBodyItems0ScopeApplicationsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0 get network health alerts o k body items0 scope devices items0
+swagger:model GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0
+*/
+type GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0 struct {
+
+	// Clients related to the device
+	Clients []*GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0ClientsItems0 `json:"clients"`
+
+	// lldp
+	Lldp *GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0Lldp `json:"lldp,omitempty"`
+
+	// The mac address of the device
+	Mac string `json:"mac,omitempty"`
+
+	// Name of the device
+	Name string `json:"name,omitempty"`
+
+	// Product type of the device
+	ProductType string `json:"productType,omitempty"`
+
+	// Serial number of the device
+	Serial string `json:"serial,omitempty"`
+
+	// URL to the device
+	URL string `json:"url,omitempty"`
+}
+
+// Validate validates this get network health alerts o k body items0 scope devices items0
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateClients(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateLldp(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0) validateClients(formats strfmt.Registry) error {
+	if swag.IsZero(o.Clients) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Clients); i++ {
+		if swag.IsZero(o.Clients[i]) { // not required
+			continue
+		}
+
+		if o.Clients[i] != nil {
+			if err := o.Clients[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("clients" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("clients" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0) validateLldp(formats strfmt.Registry) error {
+	if swag.IsZero(o.Lldp) { // not required
+		return nil
+	}
+
+	if o.Lldp != nil {
+		if err := o.Lldp.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("lldp")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("lldp")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network health alerts o k body items0 scope devices items0 based on the context it is used
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateClients(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateLldp(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0) contextValidateClients(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Clients); i++ {
+
+		if o.Clients[i] != nil {
+
+			if swag.IsZero(o.Clients[i]) { // not required
+				return nil
+			}
+
+			if err := o.Clients[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("clients" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("clients" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0) contextValidateLldp(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Lldp != nil {
+
+		if swag.IsZero(o.Lldp) { // not required
+			return nil
+		}
+
+		if err := o.Lldp.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("lldp")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("lldp")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0ClientsItems0 get network health alerts o k body items0 scope devices items0 clients items0
+swagger:model GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0ClientsItems0
+*/
+type GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0ClientsItems0 struct {
+
+	// Mac address of the client
+	Mac string `json:"mac,omitempty"`
+}
+
+// Validate validates this get network health alerts o k body items0 scope devices items0 clients items0
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0ClientsItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network health alerts o k body items0 scope devices items0 clients items0 based on context it is used
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0ClientsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0ClientsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0ClientsItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0ClientsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0Lldp Lldp information
+swagger:model GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0Lldp
+*/
+type GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0Lldp struct {
+
+	// Port Id
+	PortID string `json:"portId,omitempty"`
+}
+
+// Validate validates this get network health alerts o k body items0 scope devices items0 lldp
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0Lldp) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network health alerts o k body items0 scope devices items0 lldp based on context it is used
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0Lldp) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0Lldp) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0Lldp) UnmarshalBinary(b []byte) error {
+	var res GetNetworkHealthAlertsOKBodyItems0ScopeDevicesItems0Lldp
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkHealthAlertsOKBodyItems0ScopePeersItems0 get network health alerts o k body items0 scope peers items0
+swagger:model GetNetworkHealthAlertsOKBodyItems0ScopePeersItems0
+*/
+type GetNetworkHealthAlertsOKBodyItems0ScopePeersItems0 struct {
+
+	// network
+	Network *GetNetworkHealthAlertsOKBodyItems0ScopePeersItems0Network `json:"network,omitempty"`
+
+	// URL to the peer
+	URL string `json:"url,omitempty"`
+}
+
+// Validate validates this get network health alerts o k body items0 scope peers items0
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopePeersItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateNetwork(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopePeersItems0) validateNetwork(formats strfmt.Registry) error {
+	if swag.IsZero(o.Network) { // not required
+		return nil
+	}
+
+	if o.Network != nil {
+		if err := o.Network.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("network")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("network")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network health alerts o k body items0 scope peers items0 based on the context it is used
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopePeersItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateNetwork(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopePeersItems0) contextValidateNetwork(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Network != nil {
+
+		if swag.IsZero(o.Network) { // not required
+			return nil
+		}
+
+		if err := o.Network.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("network")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("network")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopePeersItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopePeersItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkHealthAlertsOKBodyItems0ScopePeersItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkHealthAlertsOKBodyItems0ScopePeersItems0Network Network of the peer
+swagger:model GetNetworkHealthAlertsOKBodyItems0ScopePeersItems0Network
+*/
+type GetNetworkHealthAlertsOKBodyItems0ScopePeersItems0Network struct {
+
+	// Id of the network
+	ID string `json:"id,omitempty"`
+
+	// Name of the network
+	Name string `json:"name,omitempty"`
+}
+
+// Validate validates this get network health alerts o k body items0 scope peers items0 network
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopePeersItems0Network) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network health alerts o k body items0 scope peers items0 network based on context it is used
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopePeersItems0Network) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopePeersItems0Network) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkHealthAlertsOKBodyItems0ScopePeersItems0Network) UnmarshalBinary(b []byte) error {
+	var res GetNetworkHealthAlertsOKBodyItems0ScopePeersItems0Network
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

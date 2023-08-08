@@ -52,14 +52,19 @@ func NewGetNetworkSwitchAccessControlListsParamsWithHTTPClient(client *http.Clie
 	}
 }
 
-/* GetNetworkSwitchAccessControlListsParams contains all the parameters to send to the API endpoint
-   for the get network switch access control lists operation.
+/*
+GetNetworkSwitchAccessControlListsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network switch access control lists operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSwitchAccessControlListsParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

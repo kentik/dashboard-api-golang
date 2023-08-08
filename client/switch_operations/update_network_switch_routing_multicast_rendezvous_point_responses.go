@@ -32,7 +32,7 @@ func (o *UpdateNetworkSwitchRoutingMulticastRendezvousPointReader) ReadResponse(
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/switch/routing/multicast/rendezvousPoints/{rendezvousPointId}] updateNetworkSwitchRoutingMulticastRendezvousPoint", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewUpdateNetworkSwitchRoutingMulticastRendezvousPointOK() *UpdateNetworkSwi
 	return &UpdateNetworkSwitchRoutingMulticastRendezvousPointOK{}
 }
 
-/* UpdateNetworkSwitchRoutingMulticastRendezvousPointOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSwitchRoutingMulticastRendezvousPointOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *UpdateNetworkSwitchRoutingMulticastRendezvousPointOK) IsCode(code int) 
 	return code == 200
 }
 
+// Code gets the status code for the update network switch routing multicast rendezvous point o k response
+func (o *UpdateNetworkSwitchRoutingMulticastRendezvousPointOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSwitchRoutingMulticastRendezvousPointOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/switch/routing/multicast/rendezvousPoints/{rendezvousPointId}][%d] updateNetworkSwitchRoutingMulticastRendezvousPointOK  %+v", 200, o.Payload)
 }
@@ -96,7 +102,8 @@ func (o *UpdateNetworkSwitchRoutingMulticastRendezvousPointOK) readResponse(resp
 	return nil
 }
 
-/*UpdateNetworkSwitchRoutingMulticastRendezvousPointBody update network switch routing multicast rendezvous point body
+/*
+UpdateNetworkSwitchRoutingMulticastRendezvousPointBody update network switch routing multicast rendezvous point body
 // Example: {"interfaceIp":"192.168.1.2","multicastGroup":"192.168.128.0/24"}
 swagger:model UpdateNetworkSwitchRoutingMulticastRendezvousPointBody
 */

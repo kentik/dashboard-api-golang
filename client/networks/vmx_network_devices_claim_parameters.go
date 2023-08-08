@@ -52,14 +52,19 @@ func NewVmxNetworkDevicesClaimParamsWithHTTPClient(client *http.Client) *VmxNetw
 	}
 }
 
-/* VmxNetworkDevicesClaimParams contains all the parameters to send to the API endpoint
-   for the vmx network devices claim operation.
+/*
+VmxNetworkDevicesClaimParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the vmx network devices claim operation.
+
+	Typically these are written to a http.Request.
 */
 type VmxNetworkDevicesClaimParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// VmxNetworkDevicesClaim.

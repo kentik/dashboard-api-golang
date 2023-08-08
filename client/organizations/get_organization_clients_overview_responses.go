@@ -31,7 +31,7 @@ func (o *GetOrganizationClientsOverviewReader) ReadResponse(response runtime.Cli
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/clients/overview] getOrganizationClientsOverview", response, response.Code())
 	}
 }
 
@@ -40,7 +40,8 @@ func NewGetOrganizationClientsOverviewOK() *GetOrganizationClientsOverviewOK {
 	return &GetOrganizationClientsOverviewOK{}
 }
 
-/* GetOrganizationClientsOverviewOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationClientsOverviewOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -73,6 +74,11 @@ func (o *GetOrganizationClientsOverviewOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get organization clients overview o k response
+func (o *GetOrganizationClientsOverviewOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationClientsOverviewOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/clients/overview][%d] getOrganizationClientsOverviewOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *GetOrganizationClientsOverviewOK) readResponse(response runtime.ClientR
 	return nil
 }
 
-/*GetOrganizationClientsOverviewOKBody get organization clients overview o k body
+/*
+GetOrganizationClientsOverviewOKBody get organization clients overview o k body
 swagger:model GetOrganizationClientsOverviewOKBody
 */
 type GetOrganizationClientsOverviewOKBody struct {
@@ -186,6 +193,11 @@ func (o *GetOrganizationClientsOverviewOKBody) ContextValidate(ctx context.Conte
 func (o *GetOrganizationClientsOverviewOKBody) contextValidateCounts(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Counts != nil {
+
+		if swag.IsZero(o.Counts) { // not required
+			return nil
+		}
+
 		if err := o.Counts.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("getOrganizationClientsOverviewOK" + "." + "counts")
@@ -202,6 +214,11 @@ func (o *GetOrganizationClientsOverviewOKBody) contextValidateCounts(ctx context
 func (o *GetOrganizationClientsOverviewOKBody) contextValidateUsage(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Usage != nil {
+
+		if swag.IsZero(o.Usage) { // not required
+			return nil
+		}
+
 		if err := o.Usage.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("getOrganizationClientsOverviewOK" + "." + "usage")
@@ -233,7 +250,8 @@ func (o *GetOrganizationClientsOverviewOKBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*GetOrganizationClientsOverviewOKBodyCounts Client count information
+/*
+GetOrganizationClientsOverviewOKBodyCounts Client count information
 swagger:model GetOrganizationClientsOverviewOKBodyCounts
 */
 type GetOrganizationClientsOverviewOKBodyCounts struct {
@@ -270,7 +288,8 @@ func (o *GetOrganizationClientsOverviewOKBodyCounts) UnmarshalBinary(b []byte) e
 	return nil
 }
 
-/*GetOrganizationClientsOverviewOKBodyUsage Usage information of all clients across organization
+/*
+GetOrganizationClientsOverviewOKBodyUsage Usage information of all clients across organization
 swagger:model GetOrganizationClientsOverviewOKBodyUsage
 */
 type GetOrganizationClientsOverviewOKBodyUsage struct {
@@ -332,6 +351,11 @@ func (o *GetOrganizationClientsOverviewOKBodyUsage) ContextValidate(ctx context.
 func (o *GetOrganizationClientsOverviewOKBodyUsage) contextValidateOverall(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Overall != nil {
+
+		if swag.IsZero(o.Overall) { // not required
+			return nil
+		}
+
 		if err := o.Overall.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("getOrganizationClientsOverviewOK" + "." + "usage" + "." + "overall")
@@ -363,7 +387,8 @@ func (o *GetOrganizationClientsOverviewOKBodyUsage) UnmarshalBinary(b []byte) er
 	return nil
 }
 
-/*GetOrganizationClientsOverviewOKBodyUsageOverall Overall data usage of all clients across organization
+/*
+GetOrganizationClientsOverviewOKBodyUsageOverall Overall data usage of all clients across organization
 swagger:model GetOrganizationClientsOverviewOKBodyUsageOverall
 */
 type GetOrganizationClientsOverviewOKBodyUsageOverall struct {

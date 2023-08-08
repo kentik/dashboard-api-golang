@@ -33,7 +33,7 @@ func (o *UpdateNetworkSwitchDscpToCosMappingsReader) ReadResponse(response runti
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/switch/dscpToCosMappings] updateNetworkSwitchDscpToCosMappings", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateNetworkSwitchDscpToCosMappingsOK() *UpdateNetworkSwitchDscpToCosMa
 	return &UpdateNetworkSwitchDscpToCosMappingsOK{}
 }
 
-/* UpdateNetworkSwitchDscpToCosMappingsOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSwitchDscpToCosMappingsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateNetworkSwitchDscpToCosMappingsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network switch dscp to cos mappings o k response
+func (o *UpdateNetworkSwitchDscpToCosMappingsOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSwitchDscpToCosMappingsOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/switch/dscpToCosMappings][%d] updateNetworkSwitchDscpToCosMappingsOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateNetworkSwitchDscpToCosMappingsOK) readResponse(response runtime.C
 	return nil
 }
 
-/*UpdateNetworkSwitchDscpToCosMappingsBody update network switch dscp to cos mappings body
+/*
+UpdateNetworkSwitchDscpToCosMappingsBody update network switch dscp to cos mappings body
 // Example: {"mappings":[{"cos":1,"dscp":1,"title":"Video"}]}
 swagger:model UpdateNetworkSwitchDscpToCosMappingsBody
 */
@@ -168,6 +175,11 @@ func (o *UpdateNetworkSwitchDscpToCosMappingsBody) contextValidateMappings(ctx c
 	for i := 0; i < len(o.Mappings); i++ {
 
 		if o.Mappings[i] != nil {
+
+			if swag.IsZero(o.Mappings[i]) { // not required
+				return nil
+			}
+
 			if err := o.Mappings[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkSwitchDscpToCosMappings" + "." + "mappings" + "." + strconv.Itoa(i))
@@ -201,7 +213,8 @@ func (o *UpdateNetworkSwitchDscpToCosMappingsBody) UnmarshalBinary(b []byte) err
 	return nil
 }
 
-/*UpdateNetworkSwitchDscpToCosMappingsParamsBodyMappingsItems0 update network switch dscp to cos mappings params body mappings items0
+/*
+UpdateNetworkSwitchDscpToCosMappingsParamsBodyMappingsItems0 update network switch dscp to cos mappings params body mappings items0
 swagger:model UpdateNetworkSwitchDscpToCosMappingsParamsBodyMappingsItems0
 */
 type UpdateNetworkSwitchDscpToCosMappingsParamsBodyMappingsItems0 struct {

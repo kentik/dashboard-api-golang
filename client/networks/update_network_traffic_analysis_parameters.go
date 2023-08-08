@@ -52,14 +52,19 @@ func NewUpdateNetworkTrafficAnalysisParamsWithHTTPClient(client *http.Client) *U
 	}
 }
 
-/* UpdateNetworkTrafficAnalysisParams contains all the parameters to send to the API endpoint
-   for the update network traffic analysis operation.
+/*
+UpdateNetworkTrafficAnalysisParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network traffic analysis operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkTrafficAnalysisParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkTrafficAnalysis.

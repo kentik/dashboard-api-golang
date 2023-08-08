@@ -32,7 +32,7 @@ func (o *MoveOrganizationLicensesReader) ReadResponse(response runtime.ClientRes
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /organizations/{organizationId}/licenses/move] moveOrganizationLicenses", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewMoveOrganizationLicensesOK() *MoveOrganizationLicensesOK {
 	return &MoveOrganizationLicensesOK{}
 }
 
-/* MoveOrganizationLicensesOK describes a response with status code 200, with default header values.
+/*
+MoveOrganizationLicensesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *MoveOrganizationLicensesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the move organization licenses o k response
+func (o *MoveOrganizationLicensesOK) Code() int {
+	return 200
+}
+
 func (o *MoveOrganizationLicensesOK) Error() string {
 	return fmt.Sprintf("[POST /organizations/{organizationId}/licenses/move][%d] moveOrganizationLicensesOK  %+v", 200, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *MoveOrganizationLicensesOK) readResponse(response runtime.ClientRespons
 	return nil
 }
 
-/*MoveOrganizationLicensesBody move organization licenses body
+/*
+MoveOrganizationLicensesBody move organization licenses body
 // Example: {"destOrganizationId":"2930418","licenseIds":["123","456"]}
 swagger:model MoveOrganizationLicensesBody
 */
@@ -172,7 +179,8 @@ func (o *MoveOrganizationLicensesBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*MoveOrganizationLicensesOKBody move organization licenses o k body
+/*
+MoveOrganizationLicensesOKBody move organization licenses o k body
 swagger:model MoveOrganizationLicensesOKBody
 */
 type MoveOrganizationLicensesOKBody struct {

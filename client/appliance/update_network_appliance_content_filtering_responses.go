@@ -33,7 +33,7 @@ func (o *UpdateNetworkApplianceContentFilteringReader) ReadResponse(response run
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/appliance/contentFiltering] updateNetworkApplianceContentFiltering", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateNetworkApplianceContentFilteringOK() *UpdateNetworkApplianceConten
 	return &UpdateNetworkApplianceContentFilteringOK{}
 }
 
-/* UpdateNetworkApplianceContentFilteringOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkApplianceContentFilteringOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateNetworkApplianceContentFilteringOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network appliance content filtering o k response
+func (o *UpdateNetworkApplianceContentFilteringOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkApplianceContentFilteringOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/appliance/contentFiltering][%d] updateNetworkApplianceContentFilteringOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateNetworkApplianceContentFilteringOK) readResponse(response runtime
 	return nil
 }
 
-/*UpdateNetworkApplianceContentFilteringBody update network appliance content filtering body
+/*
+UpdateNetworkApplianceContentFilteringBody update network appliance content filtering body
 // Example: {"allowedUrlPatterns":["http://www.example.org","http://help.com.au"],"blockedUrlCategories":["meraki:contentFiltering/category/1","meraki:contentFiltering/category/7"],"blockedUrlPatterns":["http://www.example.com","http://www.betting.com"],"urlCategoryListSize":"topSites"}
 swagger:model UpdateNetworkApplianceContentFilteringBody
 */
@@ -113,7 +120,7 @@ type UpdateNetworkApplianceContentFilteringBody struct {
 	BlockedURLPatterns []string `json:"blockedUrlPatterns"`
 
 	// URL category list size which is either 'topSites' or 'fullList'
-	// Enum: [topSites fullList]
+	// Enum: [fullList topSites]
 	URLCategoryListSize string `json:"urlCategoryListSize,omitempty"`
 }
 
@@ -135,7 +142,7 @@ var updateNetworkApplianceContentFilteringBodyTypeURLCategoryListSizePropEnum []
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["topSites","fullList"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["fullList","topSites"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -145,11 +152,11 @@ func init() {
 
 const (
 
-	// UpdateNetworkApplianceContentFilteringBodyURLCategoryListSizeTopSites captures enum value "topSites"
-	UpdateNetworkApplianceContentFilteringBodyURLCategoryListSizeTopSites string = "topSites"
-
 	// UpdateNetworkApplianceContentFilteringBodyURLCategoryListSizeFullList captures enum value "fullList"
 	UpdateNetworkApplianceContentFilteringBodyURLCategoryListSizeFullList string = "fullList"
+
+	// UpdateNetworkApplianceContentFilteringBodyURLCategoryListSizeTopSites captures enum value "topSites"
+	UpdateNetworkApplianceContentFilteringBodyURLCategoryListSizeTopSites string = "topSites"
 )
 
 // prop value enum

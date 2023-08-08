@@ -6,11 +6,16 @@ package organizations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
+	"strconv"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // GetOrganizationAdaptivePolicyAclsReader is a Reader for the GetOrganizationAdaptivePolicyAcls structure.
@@ -28,7 +33,7 @@ func (o *GetOrganizationAdaptivePolicyAclsReader) ReadResponse(response runtime.
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/adaptivePolicy/acls] getOrganizationAdaptivePolicyAcls", response, response.Code())
 	}
 }
 
@@ -37,12 +42,13 @@ func NewGetOrganizationAdaptivePolicyAclsOK() *GetOrganizationAdaptivePolicyAcls
 	return &GetOrganizationAdaptivePolicyAclsOK{}
 }
 
-/* GetOrganizationAdaptivePolicyAclsOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationAdaptivePolicyAclsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetOrganizationAdaptivePolicyAclsOK struct {
-	Payload []interface{}
+	Payload []*GetOrganizationAdaptivePolicyAclsOKBodyItems0
 }
 
 // IsSuccess returns true when this get organization adaptive policy acls o k response has a 2xx status code
@@ -70,6 +76,11 @@ func (o *GetOrganizationAdaptivePolicyAclsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get organization adaptive policy acls o k response
+func (o *GetOrganizationAdaptivePolicyAclsOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationAdaptivePolicyAclsOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/adaptivePolicy/acls][%d] getOrganizationAdaptivePolicyAclsOK  %+v", 200, o.Payload)
 }
@@ -78,7 +89,7 @@ func (o *GetOrganizationAdaptivePolicyAclsOK) String() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/adaptivePolicy/acls][%d] getOrganizationAdaptivePolicyAclsOK  %+v", 200, o.Payload)
 }
 
-func (o *GetOrganizationAdaptivePolicyAclsOK) GetPayload() []interface{} {
+func (o *GetOrganizationAdaptivePolicyAclsOK) GetPayload() []*GetOrganizationAdaptivePolicyAclsOKBodyItems0 {
 	return o.Payload
 }
 
@@ -89,5 +100,211 @@ func (o *GetOrganizationAdaptivePolicyAclsOK) readResponse(response runtime.Clie
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetOrganizationAdaptivePolicyAclsOKBodyItems0 get organization adaptive policy acls o k body items0
+swagger:model GetOrganizationAdaptivePolicyAclsOKBodyItems0
+*/
+type GetOrganizationAdaptivePolicyAclsOKBodyItems0 struct {
+
+	// ID of the adaptive policy ACL
+	ACLID string `json:"aclId,omitempty"`
+
+	// When the adaptive policy ACL was created
+	// Format: date-time
+	CreatedAt strfmt.DateTime `json:"createdAt,omitempty"`
+
+	// Description of the adaptive policy ACL
+	Description string `json:"description,omitempty"`
+
+	// IP version of adpative policy ACL
+	IPVersion string `json:"ipVersion,omitempty"`
+
+	// Name of the adaptive policy ACL
+	Name string `json:"name,omitempty"`
+
+	// An ordered array of the adaptive policy ACL rules
+	Rules []*GetOrganizationAdaptivePolicyAclsOKBodyItems0RulesItems0 `json:"rules"`
+
+	// When the adaptive policy ACL was last updated
+	// Format: date-time
+	UpdatedAt strfmt.DateTime `json:"updatedAt,omitempty"`
+}
+
+// Validate validates this get organization adaptive policy acls o k body items0
+func (o *GetOrganizationAdaptivePolicyAclsOKBodyItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateCreatedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateRules(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateUpdatedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetOrganizationAdaptivePolicyAclsOKBodyItems0) validateCreatedAt(formats strfmt.Registry) error {
+	if swag.IsZero(o.CreatedAt) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("createdAt", "body", "date-time", o.CreatedAt.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *GetOrganizationAdaptivePolicyAclsOKBodyItems0) validateRules(formats strfmt.Registry) error {
+	if swag.IsZero(o.Rules) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Rules); i++ {
+		if swag.IsZero(o.Rules[i]) { // not required
+			continue
+		}
+
+		if o.Rules[i] != nil {
+			if err := o.Rules[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("rules" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("rules" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *GetOrganizationAdaptivePolicyAclsOKBodyItems0) validateUpdatedAt(formats strfmt.Registry) error {
+	if swag.IsZero(o.UpdatedAt) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updatedAt", "body", "date-time", o.UpdatedAt.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get organization adaptive policy acls o k body items0 based on the context it is used
+func (o *GetOrganizationAdaptivePolicyAclsOKBodyItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateRules(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetOrganizationAdaptivePolicyAclsOKBodyItems0) contextValidateRules(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Rules); i++ {
+
+		if o.Rules[i] != nil {
+
+			if swag.IsZero(o.Rules[i]) { // not required
+				return nil
+			}
+
+			if err := o.Rules[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("rules" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("rules" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetOrganizationAdaptivePolicyAclsOKBodyItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetOrganizationAdaptivePolicyAclsOKBodyItems0) UnmarshalBinary(b []byte) error {
+	var res GetOrganizationAdaptivePolicyAclsOKBodyItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetOrganizationAdaptivePolicyAclsOKBodyItems0RulesItems0 get organization adaptive policy acls o k body items0 rules items0
+swagger:model GetOrganizationAdaptivePolicyAclsOKBodyItems0RulesItems0
+*/
+type GetOrganizationAdaptivePolicyAclsOKBodyItems0RulesItems0 struct {
+
+	// Destination port
+	DstPort string `json:"dstPort,omitempty"`
+
+	// 'allow' or 'deny' traffic specified by this rule
+	Policy string `json:"policy,omitempty"`
+
+	// The type of protocol
+	Protocol string `json:"protocol,omitempty"`
+
+	// Source port
+	SrcPort string `json:"srcPort,omitempty"`
+}
+
+// Validate validates this get organization adaptive policy acls o k body items0 rules items0
+func (o *GetOrganizationAdaptivePolicyAclsOKBodyItems0RulesItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get organization adaptive policy acls o k body items0 rules items0 based on context it is used
+func (o *GetOrganizationAdaptivePolicyAclsOKBodyItems0RulesItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetOrganizationAdaptivePolicyAclsOKBodyItems0RulesItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetOrganizationAdaptivePolicyAclsOKBodyItems0RulesItems0) UnmarshalBinary(b []byte) error {
+	var res GetOrganizationAdaptivePolicyAclsOKBodyItems0RulesItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

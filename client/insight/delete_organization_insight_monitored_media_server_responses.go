@@ -27,7 +27,7 @@ func (o *DeleteOrganizationInsightMonitoredMediaServerReader) ReadResponse(respo
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[DELETE /organizations/{organizationId}/insight/monitoredMediaServers/{monitoredMediaServerId}] deleteOrganizationInsightMonitoredMediaServer", response, response.Code())
 	}
 }
 
@@ -36,7 +36,8 @@ func NewDeleteOrganizationInsightMonitoredMediaServerNoContent() *DeleteOrganiza
 	return &DeleteOrganizationInsightMonitoredMediaServerNoContent{}
 }
 
-/* DeleteOrganizationInsightMonitoredMediaServerNoContent describes a response with status code 204, with default header values.
+/*
+DeleteOrganizationInsightMonitoredMediaServerNoContent describes a response with status code 204, with default header values.
 
 Successful operation
 */
@@ -66,6 +67,11 @@ func (o *DeleteOrganizationInsightMonitoredMediaServerNoContent) IsServerError()
 // IsCode returns true when this delete organization insight monitored media server no content response a status code equal to that given
 func (o *DeleteOrganizationInsightMonitoredMediaServerNoContent) IsCode(code int) bool {
 	return code == 204
+}
+
+// Code gets the status code for the delete organization insight monitored media server no content response
+func (o *DeleteOrganizationInsightMonitoredMediaServerNoContent) Code() int {
+	return 204
 }
 
 func (o *DeleteOrganizationInsightMonitoredMediaServerNoContent) Error() string {

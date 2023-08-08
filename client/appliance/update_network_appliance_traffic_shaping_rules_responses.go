@@ -34,7 +34,7 @@ func (o *UpdateNetworkApplianceTrafficShapingRulesReader) ReadResponse(response 
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/appliance/trafficShaping/rules] updateNetworkApplianceTrafficShapingRules", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewUpdateNetworkApplianceTrafficShapingRulesOK() *UpdateNetworkApplianceTra
 	return &UpdateNetworkApplianceTrafficShapingRulesOK{}
 }
 
-/* UpdateNetworkApplianceTrafficShapingRulesOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkApplianceTrafficShapingRulesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *UpdateNetworkApplianceTrafficShapingRulesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network appliance traffic shaping rules o k response
+func (o *UpdateNetworkApplianceTrafficShapingRulesOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkApplianceTrafficShapingRulesOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/appliance/trafficShaping/rules][%d] updateNetworkApplianceTrafficShapingRulesOK  %+v", 200, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *UpdateNetworkApplianceTrafficShapingRulesOK) readResponse(response runt
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingRulesBody update network appliance traffic shaping rules body
+/*
+UpdateNetworkApplianceTrafficShapingRulesBody update network appliance traffic shaping rules body
 // Example: {"defaultRulesEnabled":true,"rules":[{"definitions":[{"type":"host","value":"google.com"},{"type":"port","value":"9090"},{"type":"ipRange","value":"192.1.0.0"},{"type":"ipRange","value":"192.1.0.0/16"},{"type":"ipRange","value":"10.1.0.0/16:80"},{"type":"localNet","value":"192.168.0.0/16"}],"dscpTagValue":0,"perClientBandwidthLimits":{"bandwidthLimits":{"limitDown":1000000,"limitUp":1000000},"settings":"custom"},"priority":"normal"}]}
 swagger:model UpdateNetworkApplianceTrafficShapingRulesBody
 */
@@ -173,6 +180,11 @@ func (o *UpdateNetworkApplianceTrafficShapingRulesBody) contextValidateRules(ctx
 	for i := 0; i < len(o.Rules); i++ {
 
 		if o.Rules[i] != nil {
+
+			if swag.IsZero(o.Rules[i]) { // not required
+				return nil
+			}
+
 			if err := o.Rules[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkApplianceTrafficShapingRules" + "." + "rules" + "." + strconv.Itoa(i))
@@ -206,7 +218,8 @@ func (o *UpdateNetworkApplianceTrafficShapingRulesBody) UnmarshalBinary(b []byte
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0 update network appliance traffic shaping rules params body rules items0
+/*
+UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0 update network appliance traffic shaping rules params body rules items0
 swagger:model UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0
 */
 type UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0 struct {
@@ -317,6 +330,11 @@ func (o *UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0) context
 	for i := 0; i < len(o.Definitions); i++ {
 
 		if o.Definitions[i] != nil {
+
+			if swag.IsZero(o.Definitions[i]) { // not required
+				return nil
+			}
+
 			if err := o.Definitions[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("definitions" + "." + strconv.Itoa(i))
@@ -335,6 +353,11 @@ func (o *UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0) context
 func (o *UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0) contextValidatePerClientBandwidthLimits(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.PerClientBandwidthLimits != nil {
+
+		if swag.IsZero(o.PerClientBandwidthLimits) { // not required
+			return nil
+		}
+
 		if err := o.PerClientBandwidthLimits.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("perClientBandwidthLimits")
@@ -366,14 +389,15 @@ func (o *UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0) Unmarsh
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0 update network appliance traffic shaping rules params body rules items0 definitions items0
+/*
+UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0 update network appliance traffic shaping rules params body rules items0 definitions items0
 swagger:model UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0
 */
 type UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0 struct {
 
 	// The type of definition. Can be one of 'application', 'applicationCategory', 'host', 'port', 'ipRange' or 'localNet'.
 	// Required: true
-	// Enum: [application applicationCategory host port ipRange localNet]
+	// Enum: [application applicationCategory host ipRange localNet port]
 	Type *string `json:"type"`
 
 	//     If "type" is 'host', 'port', 'ipRange' or 'localNet', then "value" must be a string, matching either
@@ -411,7 +435,7 @@ var updateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0DefinitionsIte
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["application","applicationCategory","host","port","ipRange","localNet"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["application","applicationCategory","host","ipRange","localNet","port"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -430,14 +454,14 @@ const (
 	// UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0TypeHost captures enum value "host"
 	UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0TypeHost string = "host"
 
-	// UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0TypePort captures enum value "port"
-	UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0TypePort string = "port"
-
 	// UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0TypeIPRange captures enum value "ipRange"
 	UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0TypeIPRange string = "ipRange"
 
 	// UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0TypeLocalNet captures enum value "localNet"
 	UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0TypeLocalNet string = "localNet"
+
+	// UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0TypePort captures enum value "port"
+	UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0TypePort string = "port"
 )
 
 // prop value enum
@@ -494,7 +518,8 @@ func (o *UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0Definitio
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0PerClientBandwidthLimits     An object describing the bandwidth settings for your rule.
+/*
+UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0PerClientBandwidthLimits     An object describing the bandwidth settings for your rule.
 //
 swagger:model UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0PerClientBandwidthLimits
 */
@@ -557,6 +582,11 @@ func (o *UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0PerClient
 func (o *UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0PerClientBandwidthLimits) contextValidateBandwidthLimits(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.BandwidthLimits != nil {
+
+		if swag.IsZero(o.BandwidthLimits) { // not required
+			return nil
+		}
+
 		if err := o.BandwidthLimits.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("perClientBandwidthLimits" + "." + "bandwidthLimits")
@@ -588,7 +618,8 @@ func (o *UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0PerClient
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0PerClientBandwidthLimitsBandwidthLimits The bandwidth limits object, specifying the upload ('limitUp') and download ('limitDown') speed in Kbps. These are only enforced if 'settings' is set to 'custom'.
+/*
+UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0PerClientBandwidthLimitsBandwidthLimits The bandwidth limits object, specifying the upload ('limitUp') and download ('limitDown') speed in Kbps. These are only enforced if 'settings' is set to 'custom'.
 swagger:model UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0PerClientBandwidthLimitsBandwidthLimits
 */
 type UpdateNetworkApplianceTrafficShapingRulesParamsBodyRulesItems0PerClientBandwidthLimitsBandwidthLimits struct {

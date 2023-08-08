@@ -6,11 +6,13 @@ package organizations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetOrganizationConfigTemplatesReader is a Reader for the GetOrganizationConfigTemplates structure.
@@ -28,7 +30,7 @@ func (o *GetOrganizationConfigTemplatesReader) ReadResponse(response runtime.Cli
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/configTemplates] getOrganizationConfigTemplates", response, response.Code())
 	}
 }
 
@@ -37,12 +39,13 @@ func NewGetOrganizationConfigTemplatesOK() *GetOrganizationConfigTemplatesOK {
 	return &GetOrganizationConfigTemplatesOK{}
 }
 
-/* GetOrganizationConfigTemplatesOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationConfigTemplatesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetOrganizationConfigTemplatesOK struct {
-	Payload []interface{}
+	Payload []*GetOrganizationConfigTemplatesOKBodyItems0
 }
 
 // IsSuccess returns true when this get organization config templates o k response has a 2xx status code
@@ -70,6 +73,11 @@ func (o *GetOrganizationConfigTemplatesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get organization config templates o k response
+func (o *GetOrganizationConfigTemplatesOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationConfigTemplatesOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/configTemplates][%d] getOrganizationConfigTemplatesOK  %+v", 200, o.Payload)
 }
@@ -78,7 +86,7 @@ func (o *GetOrganizationConfigTemplatesOK) String() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/configTemplates][%d] getOrganizationConfigTemplatesOK  %+v", 200, o.Payload)
 }
 
-func (o *GetOrganizationConfigTemplatesOK) GetPayload() []interface{} {
+func (o *GetOrganizationConfigTemplatesOK) GetPayload() []*GetOrganizationConfigTemplatesOKBodyItems0 {
 	return o.Payload
 }
 
@@ -89,5 +97,52 @@ func (o *GetOrganizationConfigTemplatesOK) readResponse(response runtime.ClientR
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetOrganizationConfigTemplatesOKBodyItems0 get organization config templates o k body items0
+swagger:model GetOrganizationConfigTemplatesOKBodyItems0
+*/
+type GetOrganizationConfigTemplatesOKBodyItems0 struct {
+
+	// The ID of the network or config template to copy configuration from
+	ID string `json:"id,omitempty"`
+
+	// The name of the configuration template
+	Name string `json:"name,omitempty"`
+
+	// The product types of the configuration template
+	ProductTypes []string `json:"productTypes"`
+
+	// The timezone of the configuration template. For a list of allowed timezones, please see the 'TZ' column in the table in <a target='_blank' href='https://en.wikipedia.org/wiki/List_of_tz_database_time_zones'>this article</a>. Not applicable if copying from existing network or template
+	TimeZone string `json:"timeZone,omitempty"`
+}
+
+// Validate validates this get organization config templates o k body items0
+func (o *GetOrganizationConfigTemplatesOKBodyItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get organization config templates o k body items0 based on context it is used
+func (o *GetOrganizationConfigTemplatesOKBodyItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetOrganizationConfigTemplatesOKBodyItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetOrganizationConfigTemplatesOKBodyItems0) UnmarshalBinary(b []byte) error {
+	var res GetOrganizationConfigTemplatesOKBodyItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

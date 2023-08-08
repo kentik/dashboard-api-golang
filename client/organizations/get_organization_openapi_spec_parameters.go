@@ -14,6 +14,7 @@ import (
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // NewGetOrganizationOpenapiSpecParams creates a new GetOrganizationOpenapiSpecParams object,
@@ -52,15 +53,26 @@ func NewGetOrganizationOpenapiSpecParamsWithHTTPClient(client *http.Client) *Get
 	}
 }
 
-/* GetOrganizationOpenapiSpecParams contains all the parameters to send to the API endpoint
-   for the get organization openapi spec operation.
+/*
+GetOrganizationOpenapiSpecParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization openapi spec operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationOpenapiSpecParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
+
+	/* Version.
+
+	   OpenAPI Specification version to return. Default is 2
+	*/
+	Version *int64
 
 	timeout    time.Duration
 	Context    context.Context
@@ -126,6 +138,17 @@ func (o *GetOrganizationOpenapiSpecParams) SetOrganizationID(organizationID stri
 	o.OrganizationID = organizationID
 }
 
+// WithVersion adds the version to the get organization openapi spec params
+func (o *GetOrganizationOpenapiSpecParams) WithVersion(version *int64) *GetOrganizationOpenapiSpecParams {
+	o.SetVersion(version)
+	return o
+}
+
+// SetVersion adds the version to the get organization openapi spec params
+func (o *GetOrganizationOpenapiSpecParams) SetVersion(version *int64) {
+	o.Version = version
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *GetOrganizationOpenapiSpecParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -137,6 +160,23 @@ func (o *GetOrganizationOpenapiSpecParams) WriteToRequest(r runtime.ClientReques
 	// path param organizationId
 	if err := r.SetPathParam("organizationId", o.OrganizationID); err != nil {
 		return err
+	}
+
+	if o.Version != nil {
+
+		// query param version
+		var qrVersion int64
+
+		if o.Version != nil {
+			qrVersion = *o.Version
+		}
+		qVersion := swag.FormatInt64(qrVersion)
+		if qVersion != "" {
+
+			if err := r.SetQueryParam("version", qVersion); err != nil {
+				return err
+			}
+		}
 	}
 
 	if len(res) > 0 {

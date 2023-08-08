@@ -33,7 +33,7 @@ func (o *UpdateDeviceCellularGatewayPortForwardingRulesReader) ReadResponse(resp
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /devices/{serial}/cellularGateway/portForwardingRules] updateDeviceCellularGatewayPortForwardingRules", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateDeviceCellularGatewayPortForwardingRulesOK() *UpdateDeviceCellular
 	return &UpdateDeviceCellularGatewayPortForwardingRulesOK{}
 }
 
-/* UpdateDeviceCellularGatewayPortForwardingRulesOK describes a response with status code 200, with default header values.
+/*
+UpdateDeviceCellularGatewayPortForwardingRulesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateDeviceCellularGatewayPortForwardingRulesOK) IsCode(code int) bool
 	return code == 200
 }
 
+// Code gets the status code for the update device cellular gateway port forwarding rules o k response
+func (o *UpdateDeviceCellularGatewayPortForwardingRulesOK) Code() int {
+	return 200
+}
+
 func (o *UpdateDeviceCellularGatewayPortForwardingRulesOK) Error() string {
 	return fmt.Sprintf("[PUT /devices/{serial}/cellularGateway/portForwardingRules][%d] updateDeviceCellularGatewayPortForwardingRulesOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateDeviceCellularGatewayPortForwardingRulesOK) readResponse(response
 	return nil
 }
 
-/*UpdateDeviceCellularGatewayPortForwardingRulesBody update device cellular gateway port forwarding rules body
+/*
+UpdateDeviceCellularGatewayPortForwardingRulesBody update device cellular gateway port forwarding rules body
 // Example: {"rules":[{"access":"any","lanIp":"172.31.128.5","localPort":"4","name":"test","protocol":"tcp","publicPort":"11-12","uplink":"both"},{"access":"restricted","allowedIps":["10.10.10.10","10.10.10.11"],"lanIp":"172.31.128.5","localPort":"5","name":"test 2","protocol":"tcp","publicPort":"99","uplink":"both"}]}
 swagger:model UpdateDeviceCellularGatewayPortForwardingRulesBody
 */
@@ -166,6 +173,11 @@ func (o *UpdateDeviceCellularGatewayPortForwardingRulesBody) contextValidateRule
 	for i := 0; i < len(o.Rules); i++ {
 
 		if o.Rules[i] != nil {
+
+			if swag.IsZero(o.Rules[i]) { // not required
+				return nil
+			}
+
 			if err := o.Rules[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateDeviceCellularGatewayPortForwardingRules" + "." + "rules" + "." + strconv.Itoa(i))
@@ -199,7 +211,8 @@ func (o *UpdateDeviceCellularGatewayPortForwardingRulesBody) UnmarshalBinary(b [
 	return nil
 }
 
-/*UpdateDeviceCellularGatewayPortForwardingRulesParamsBodyRulesItems0 update device cellular gateway port forwarding rules params body rules items0
+/*
+UpdateDeviceCellularGatewayPortForwardingRulesParamsBodyRulesItems0 update device cellular gateway port forwarding rules params body rules items0
 swagger:model UpdateDeviceCellularGatewayPortForwardingRulesParamsBodyRulesItems0
 */
 type UpdateDeviceCellularGatewayPortForwardingRulesParamsBodyRulesItems0 struct {

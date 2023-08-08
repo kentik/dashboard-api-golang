@@ -52,14 +52,19 @@ func NewUpdateNetworkSwitchStormControlParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* UpdateNetworkSwitchStormControlParams contains all the parameters to send to the API endpoint
-   for the update network switch storm control operation.
+/*
+UpdateNetworkSwitchStormControlParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network switch storm control operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkSwitchStormControlParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkSwitchStormControl.

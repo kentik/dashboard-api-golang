@@ -6,11 +6,13 @@ package switch_operations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetNetworkSwitchQosRuleReader is a Reader for the GetNetworkSwitchQosRule structure.
@@ -28,7 +30,7 @@ func (o *GetNetworkSwitchQosRuleReader) ReadResponse(response runtime.ClientResp
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/switch/qosRules/{qosRuleId}] getNetworkSwitchQosRule", response, response.Code())
 	}
 }
 
@@ -37,12 +39,13 @@ func NewGetNetworkSwitchQosRuleOK() *GetNetworkSwitchQosRuleOK {
 	return &GetNetworkSwitchQosRuleOK{}
 }
 
-/* GetNetworkSwitchQosRuleOK describes a response with status code 200, with default header values.
+/*
+GetNetworkSwitchQosRuleOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkSwitchQosRuleOK struct {
-	Payload interface{}
+	Payload *GetNetworkSwitchQosRuleOKBody
 }
 
 // IsSuccess returns true when this get network switch qos rule o k response has a 2xx status code
@@ -70,6 +73,11 @@ func (o *GetNetworkSwitchQosRuleOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network switch qos rule o k response
+func (o *GetNetworkSwitchQosRuleOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkSwitchQosRuleOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/switch/qosRules/{qosRuleId}][%d] getNetworkSwitchQosRuleOK  %+v", 200, o.Payload)
 }
@@ -78,16 +86,77 @@ func (o *GetNetworkSwitchQosRuleOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/switch/qosRules/{qosRuleId}][%d] getNetworkSwitchQosRuleOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkSwitchQosRuleOK) GetPayload() interface{} {
+func (o *GetNetworkSwitchQosRuleOK) GetPayload() *GetNetworkSwitchQosRuleOKBody {
 	return o.Payload
 }
 
 func (o *GetNetworkSwitchQosRuleOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetNetworkSwitchQosRuleOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkSwitchQosRuleOKBody get network switch qos rule o k body
+swagger:model GetNetworkSwitchQosRuleOKBody
+*/
+type GetNetworkSwitchQosRuleOKBody struct {
+
+	// DSCP tag. Set this to -1 to trust incoming DSCP. Default value is 0
+	Dscp int64 `json:"dscp,omitempty"`
+
+	// The destination port of the incoming packet. Applicable only if protocol is TCP or UDP.
+	DstPort int64 `json:"dstPort,omitempty"`
+
+	// The destination port range of the incoming packet. Applicable only if protocol is set to TCP or UDP. Example: 70-80
+	DstPortRange string `json:"dstPortRange,omitempty"`
+
+	// Qos Rule id
+	ID string `json:"id,omitempty"`
+
+	// The protocol of the incoming packet. Can be one of "ANY", "TCP" or "UDP". Default value is "ANY"
+	Protocol string `json:"protocol,omitempty"`
+
+	// The source port of the incoming packet. Applicable only if protocol is TCP or UDP.
+	SrcPort int64 `json:"srcPort,omitempty"`
+
+	// The source port range of the incoming packet. Applicable only if protocol is set to TCP or UDP. Example: 70-80
+	SrcPortRange string `json:"srcPortRange,omitempty"`
+
+	// The VLAN of the incoming packet. A null value will match any VLAN.
+	Vlan int64 `json:"vlan,omitempty"`
+}
+
+// Validate validates this get network switch qos rule o k body
+func (o *GetNetworkSwitchQosRuleOKBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network switch qos rule o k body based on context it is used
+func (o *GetNetworkSwitchQosRuleOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchQosRuleOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchQosRuleOKBody) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchQosRuleOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

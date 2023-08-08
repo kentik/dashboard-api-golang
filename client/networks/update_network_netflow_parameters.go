@@ -52,14 +52,19 @@ func NewUpdateNetworkNetflowParamsWithHTTPClient(client *http.Client) *UpdateNet
 	}
 }
 
-/* UpdateNetworkNetflowParams contains all the parameters to send to the API endpoint
-   for the update network netflow operation.
+/*
+UpdateNetworkNetflowParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network netflow operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkNetflowParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkNetflow.

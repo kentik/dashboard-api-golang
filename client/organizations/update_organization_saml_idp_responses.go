@@ -30,7 +30,7 @@ func (o *UpdateOrganizationSamlIdpReader) ReadResponse(response runtime.ClientRe
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /organizations/{organizationId}/saml/idps/{idpId}] updateOrganizationSamlIdp", response, response.Code())
 	}
 }
 
@@ -39,12 +39,13 @@ func NewUpdateOrganizationSamlIdpOK() *UpdateOrganizationSamlIdpOK {
 	return &UpdateOrganizationSamlIdpOK{}
 }
 
-/* UpdateOrganizationSamlIdpOK describes a response with status code 200, with default header values.
+/*
+UpdateOrganizationSamlIdpOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateOrganizationSamlIdpOK struct {
-	Payload interface{}
+	Payload []*UpdateOrganizationSamlIdpOKBodyItems0
 }
 
 // IsSuccess returns true when this update organization saml idp o k response has a 2xx status code
@@ -72,6 +73,11 @@ func (o *UpdateOrganizationSamlIdpOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update organization saml idp o k response
+func (o *UpdateOrganizationSamlIdpOK) Code() int {
+	return 200
+}
+
 func (o *UpdateOrganizationSamlIdpOK) Error() string {
 	return fmt.Sprintf("[PUT /organizations/{organizationId}/saml/idps/{idpId}][%d] updateOrganizationSamlIdpOK  %+v", 200, o.Payload)
 }
@@ -80,7 +86,7 @@ func (o *UpdateOrganizationSamlIdpOK) String() string {
 	return fmt.Sprintf("[PUT /organizations/{organizationId}/saml/idps/{idpId}][%d] updateOrganizationSamlIdpOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateOrganizationSamlIdpOK) GetPayload() interface{} {
+func (o *UpdateOrganizationSamlIdpOK) GetPayload() []*UpdateOrganizationSamlIdpOKBodyItems0 {
 	return o.Payload
 }
 
@@ -94,8 +100,9 @@ func (o *UpdateOrganizationSamlIdpOK) readResponse(response runtime.ClientRespon
 	return nil
 }
 
-/*UpdateOrganizationSamlIdpBody update organization saml idp body
-// Example: {"idpId":"ab0c1de23Fg","sloLogoutUrl":"https://somewhere.com","x509certSha1Fingerprint":"00:11:22:33:44:55:66:77:88:99:00:11:22:33:44:55:66:77:88:99"}
+/*
+UpdateOrganizationSamlIdpBody update organization saml idp body
+// Example: {"sloLogoutUrl":"https://somewhere.com","x509certSha1Fingerprint":"00:11:22:33:44:55:66:77:88:99:00:11:22:33:44:55:66:77:88:99"}
 swagger:model UpdateOrganizationSamlIdpBody
 */
 type UpdateOrganizationSamlIdpBody struct {
@@ -128,6 +135,53 @@ func (o *UpdateOrganizationSamlIdpBody) MarshalBinary() ([]byte, error) {
 // UnmarshalBinary interface implementation
 func (o *UpdateOrganizationSamlIdpBody) UnmarshalBinary(b []byte) error {
 	var res UpdateOrganizationSamlIdpBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateOrganizationSamlIdpOKBodyItems0 update organization saml idp o k body items0
+swagger:model UpdateOrganizationSamlIdpOKBodyItems0
+*/
+type UpdateOrganizationSamlIdpOKBodyItems0 struct {
+
+	// URL that is consuming SAML Identity Provider (IdP)
+	ConsumerURL string `json:"consumerUrl,omitempty"`
+
+	// ID associated with the SAML Identity Provider (IdP)
+	IdpID string `json:"idpId,omitempty"`
+
+	// Dashboard will redirect users to this URL when they sign out.
+	SloLogoutURL string `json:"sloLogoutUrl,omitempty"`
+
+	// Fingerprint (SHA1) of the SAML certificate provided by your Identity Provider (IdP). This will be used for encryption / validation.
+	X509certSha1Fingerprint string `json:"x509certSha1Fingerprint,omitempty"`
+}
+
+// Validate validates this update organization saml idp o k body items0
+func (o *UpdateOrganizationSamlIdpOKBodyItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update organization saml idp o k body items0 based on context it is used
+func (o *UpdateOrganizationSamlIdpOKBodyItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateOrganizationSamlIdpOKBodyItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateOrganizationSamlIdpOKBodyItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateOrganizationSamlIdpOKBodyItems0
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

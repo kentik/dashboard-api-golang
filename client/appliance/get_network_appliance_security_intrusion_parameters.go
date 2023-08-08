@@ -52,14 +52,19 @@ func NewGetNetworkApplianceSecurityIntrusionParamsWithHTTPClient(client *http.Cl
 	}
 }
 
-/* GetNetworkApplianceSecurityIntrusionParams contains all the parameters to send to the API endpoint
-   for the get network appliance security intrusion operation.
+/*
+GetNetworkApplianceSecurityIntrusionParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network appliance security intrusion operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkApplianceSecurityIntrusionParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

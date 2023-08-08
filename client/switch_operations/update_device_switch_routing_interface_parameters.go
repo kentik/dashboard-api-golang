@@ -52,17 +52,25 @@ func NewUpdateDeviceSwitchRoutingInterfaceParamsWithHTTPClient(client *http.Clie
 	}
 }
 
-/* UpdateDeviceSwitchRoutingInterfaceParams contains all the parameters to send to the API endpoint
-   for the update device switch routing interface operation.
+/*
+UpdateDeviceSwitchRoutingInterfaceParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update device switch routing interface operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateDeviceSwitchRoutingInterfaceParams struct {
 
-	// InterfaceID.
+	/* InterfaceID.
+
+	   Interface ID
+	*/
 	InterfaceID string
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	// UpdateDeviceSwitchRoutingInterface.

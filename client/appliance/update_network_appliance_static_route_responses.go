@@ -33,7 +33,7 @@ func (o *UpdateNetworkApplianceStaticRouteReader) ReadResponse(response runtime.
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/appliance/staticRoutes/{staticRouteId}] updateNetworkApplianceStaticRoute", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateNetworkApplianceStaticRouteOK() *UpdateNetworkApplianceStaticRoute
 	return &UpdateNetworkApplianceStaticRouteOK{}
 }
 
-/* UpdateNetworkApplianceStaticRouteOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkApplianceStaticRouteOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateNetworkApplianceStaticRouteOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network appliance static route o k response
+func (o *UpdateNetworkApplianceStaticRouteOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkApplianceStaticRouteOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/appliance/staticRoutes/{staticRouteId}][%d] updateNetworkApplianceStaticRouteOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateNetworkApplianceStaticRouteOK) readResponse(response runtime.Clie
 	return nil
 }
 
-/*UpdateNetworkApplianceStaticRouteBody update network appliance static route body
+/*
+UpdateNetworkApplianceStaticRouteBody update network appliance static route body
 // Example: {"fixedIpAssignments":{"22:33:44:55:66:77":{"ip":"1.2.3.4","name":"Some client name"}},"name":"My route","reservedIpRanges":[{"comment":"A reserved IP range","end":"192.168.1.1","start":"192.168.1.0"}],"subnet":"192.168.1.0/24"}
 swagger:model UpdateNetworkApplianceStaticRouteBody
 */
@@ -184,6 +191,11 @@ func (o *UpdateNetworkApplianceStaticRouteBody) contextValidateReservedIPRanges(
 	for i := 0; i < len(o.ReservedIPRanges); i++ {
 
 		if o.ReservedIPRanges[i] != nil {
+
+			if swag.IsZero(o.ReservedIPRanges[i]) { // not required
+				return nil
+			}
+
 			if err := o.ReservedIPRanges[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkApplianceStaticRoute" + "." + "reservedIpRanges" + "." + strconv.Itoa(i))
@@ -217,7 +229,8 @@ func (o *UpdateNetworkApplianceStaticRouteBody) UnmarshalBinary(b []byte) error 
 	return nil
 }
 
-/*UpdateNetworkApplianceStaticRouteParamsBodyReservedIPRangesItems0 update network appliance static route params body reserved IP ranges items0
+/*
+UpdateNetworkApplianceStaticRouteParamsBodyReservedIPRangesItems0 update network appliance static route params body reserved IP ranges items0
 swagger:model UpdateNetworkApplianceStaticRouteParamsBodyReservedIPRangesItems0
 */
 type UpdateNetworkApplianceStaticRouteParamsBodyReservedIPRangesItems0 struct {

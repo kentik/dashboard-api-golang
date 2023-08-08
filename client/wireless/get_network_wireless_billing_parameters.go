@@ -52,14 +52,19 @@ func NewGetNetworkWirelessBillingParamsWithHTTPClient(client *http.Client) *GetN
 	}
 }
 
-/* GetNetworkWirelessBillingParams contains all the parameters to send to the API endpoint
-   for the get network wireless billing operation.
+/*
+GetNetworkWirelessBillingParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network wireless billing operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkWirelessBillingParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

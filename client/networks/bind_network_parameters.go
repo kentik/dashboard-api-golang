@@ -52,17 +52,22 @@ func NewBindNetworkParamsWithHTTPClient(client *http.Client) *BindNetworkParams 
 	}
 }
 
-/* BindNetworkParams contains all the parameters to send to the API endpoint
-   for the bind network operation.
+/*
+BindNetworkParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the bind network operation.
+
+	Typically these are written to a http.Request.
 */
 type BindNetworkParams struct {
 
 	// BindNetwork.
 	BindNetwork BindNetworkBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

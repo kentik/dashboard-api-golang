@@ -28,7 +28,7 @@ func (o *GetNetworkTopologyLinkLayerReader) ReadResponse(response runtime.Client
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/topology/linkLayer] getNetworkTopologyLinkLayer", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetNetworkTopologyLinkLayerOK() *GetNetworkTopologyLinkLayerOK {
 	return &GetNetworkTopologyLinkLayerOK{}
 }
 
-/* GetNetworkTopologyLinkLayerOK describes a response with status code 200, with default header values.
+/*
+GetNetworkTopologyLinkLayerOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetNetworkTopologyLinkLayerOK) IsServerError() bool {
 // IsCode returns true when this get network topology link layer o k response a status code equal to that given
 func (o *GetNetworkTopologyLinkLayerOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get network topology link layer o k response
+func (o *GetNetworkTopologyLinkLayerOK) Code() int {
+	return 200
 }
 
 func (o *GetNetworkTopologyLinkLayerOK) Error() string {

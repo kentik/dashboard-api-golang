@@ -53,10 +53,12 @@ func NewGetNetworkSmUsersParamsWithHTTPClient(client *http.Client) *GetNetworkSm
 	}
 }
 
-/* GetNetworkSmUsersParams contains all the parameters to send to the API endpoint
-   for the get network sm users operation.
+/*
+GetNetworkSmUsersParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network sm users operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSmUsersParams struct {
 
@@ -72,7 +74,10 @@ type GetNetworkSmUsersParams struct {
 	*/
 	Ids []string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* Scope.

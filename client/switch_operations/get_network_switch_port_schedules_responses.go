@@ -6,11 +6,14 @@ package switch_operations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetNetworkSwitchPortSchedulesReader is a Reader for the GetNetworkSwitchPortSchedules structure.
@@ -28,7 +31,7 @@ func (o *GetNetworkSwitchPortSchedulesReader) ReadResponse(response runtime.Clie
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/switch/portSchedules] getNetworkSwitchPortSchedules", response, response.Code())
 	}
 }
 
@@ -37,12 +40,13 @@ func NewGetNetworkSwitchPortSchedulesOK() *GetNetworkSwitchPortSchedulesOK {
 	return &GetNetworkSwitchPortSchedulesOK{}
 }
 
-/* GetNetworkSwitchPortSchedulesOK describes a response with status code 200, with default header values.
+/*
+GetNetworkSwitchPortSchedulesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkSwitchPortSchedulesOK struct {
-	Payload []interface{}
+	Payload []*GetNetworkSwitchPortSchedulesOKBodyItems0
 }
 
 // IsSuccess returns true when this get network switch port schedules o k response has a 2xx status code
@@ -70,6 +74,11 @@ func (o *GetNetworkSwitchPortSchedulesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network switch port schedules o k response
+func (o *GetNetworkSwitchPortSchedulesOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkSwitchPortSchedulesOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/switch/portSchedules][%d] getNetworkSwitchPortSchedulesOK  %+v", 200, o.Payload)
 }
@@ -78,7 +87,7 @@ func (o *GetNetworkSwitchPortSchedulesOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/switch/portSchedules][%d] getNetworkSwitchPortSchedulesOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkSwitchPortSchedulesOK) GetPayload() []interface{} {
+func (o *GetNetworkSwitchPortSchedulesOK) GetPayload() []*GetNetworkSwitchPortSchedulesOKBodyItems0 {
 	return o.Payload
 }
 
@@ -89,5 +98,820 @@ func (o *GetNetworkSwitchPortSchedulesOK) readResponse(response runtime.ClientRe
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkSwitchPortSchedulesOKBodyItems0 get network switch port schedules o k body items0
+swagger:model GetNetworkSwitchPortSchedulesOKBodyItems0
+*/
+type GetNetworkSwitchPortSchedulesOKBodyItems0 struct {
+
+	// Switch port schedule ID
+	ID string `json:"id,omitempty"`
+
+	// Switch port schedule name
+	Name string `json:"name,omitempty"`
+
+	// Network ID
+	NetworkID string `json:"networkId,omitempty"`
+
+	// port schedule
+	PortSchedule *GetNetworkSwitchPortSchedulesOKBodyItems0PortSchedule `json:"portSchedule,omitempty"`
+}
+
+// Validate validates this get network switch port schedules o k body items0
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validatePortSchedule(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0) validatePortSchedule(formats strfmt.Registry) error {
+	if swag.IsZero(o.PortSchedule) { // not required
+		return nil
+	}
+
+	if o.PortSchedule != nil {
+		if err := o.PortSchedule.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("portSchedule")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("portSchedule")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network switch port schedules o k body items0 based on the context it is used
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidatePortSchedule(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0) contextValidatePortSchedule(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.PortSchedule != nil {
+
+		if swag.IsZero(o.PortSchedule) { // not required
+			return nil
+		}
+
+		if err := o.PortSchedule.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("portSchedule")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("portSchedule")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchPortSchedulesOKBodyItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSwitchPortSchedulesOKBodyItems0PortSchedule Port schedule
+swagger:model GetNetworkSwitchPortSchedulesOKBodyItems0PortSchedule
+*/
+type GetNetworkSwitchPortSchedulesOKBodyItems0PortSchedule struct {
+
+	// friday
+	Friday *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleFriday `json:"friday,omitempty"`
+
+	// monday
+	Monday *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleMonday `json:"monday,omitempty"`
+
+	// saturday
+	Saturday *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleSaturday `json:"saturday,omitempty"`
+
+	// sunday
+	Sunday *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleSunday `json:"sunday,omitempty"`
+
+	// thursday
+	Thursday *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleThursday `json:"thursday,omitempty"`
+
+	// tuesday
+	Tuesday *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleTuesday `json:"tuesday,omitempty"`
+
+	// wednesday
+	Wednesday *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleWednesday `json:"wednesday,omitempty"`
+}
+
+// Validate validates this get network switch port schedules o k body items0 port schedule
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortSchedule) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateFriday(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateMonday(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSaturday(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSunday(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateThursday(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTuesday(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateWednesday(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortSchedule) validateFriday(formats strfmt.Registry) error {
+	if swag.IsZero(o.Friday) { // not required
+		return nil
+	}
+
+	if o.Friday != nil {
+		if err := o.Friday.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("portSchedule" + "." + "friday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("portSchedule" + "." + "friday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortSchedule) validateMonday(formats strfmt.Registry) error {
+	if swag.IsZero(o.Monday) { // not required
+		return nil
+	}
+
+	if o.Monday != nil {
+		if err := o.Monday.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("portSchedule" + "." + "monday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("portSchedule" + "." + "monday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortSchedule) validateSaturday(formats strfmt.Registry) error {
+	if swag.IsZero(o.Saturday) { // not required
+		return nil
+	}
+
+	if o.Saturday != nil {
+		if err := o.Saturday.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("portSchedule" + "." + "saturday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("portSchedule" + "." + "saturday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortSchedule) validateSunday(formats strfmt.Registry) error {
+	if swag.IsZero(o.Sunday) { // not required
+		return nil
+	}
+
+	if o.Sunday != nil {
+		if err := o.Sunday.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("portSchedule" + "." + "sunday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("portSchedule" + "." + "sunday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortSchedule) validateThursday(formats strfmt.Registry) error {
+	if swag.IsZero(o.Thursday) { // not required
+		return nil
+	}
+
+	if o.Thursday != nil {
+		if err := o.Thursday.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("portSchedule" + "." + "thursday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("portSchedule" + "." + "thursday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortSchedule) validateTuesday(formats strfmt.Registry) error {
+	if swag.IsZero(o.Tuesday) { // not required
+		return nil
+	}
+
+	if o.Tuesday != nil {
+		if err := o.Tuesday.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("portSchedule" + "." + "tuesday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("portSchedule" + "." + "tuesday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortSchedule) validateWednesday(formats strfmt.Registry) error {
+	if swag.IsZero(o.Wednesday) { // not required
+		return nil
+	}
+
+	if o.Wednesday != nil {
+		if err := o.Wednesday.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("portSchedule" + "." + "wednesday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("portSchedule" + "." + "wednesday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network switch port schedules o k body items0 port schedule based on the context it is used
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortSchedule) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateFriday(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateMonday(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateSaturday(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateSunday(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateThursday(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateTuesday(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateWednesday(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortSchedule) contextValidateFriday(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Friday != nil {
+
+		if swag.IsZero(o.Friday) { // not required
+			return nil
+		}
+
+		if err := o.Friday.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("portSchedule" + "." + "friday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("portSchedule" + "." + "friday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortSchedule) contextValidateMonday(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Monday != nil {
+
+		if swag.IsZero(o.Monday) { // not required
+			return nil
+		}
+
+		if err := o.Monday.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("portSchedule" + "." + "monday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("portSchedule" + "." + "monday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortSchedule) contextValidateSaturday(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Saturday != nil {
+
+		if swag.IsZero(o.Saturday) { // not required
+			return nil
+		}
+
+		if err := o.Saturday.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("portSchedule" + "." + "saturday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("portSchedule" + "." + "saturday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortSchedule) contextValidateSunday(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Sunday != nil {
+
+		if swag.IsZero(o.Sunday) { // not required
+			return nil
+		}
+
+		if err := o.Sunday.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("portSchedule" + "." + "sunday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("portSchedule" + "." + "sunday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortSchedule) contextValidateThursday(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Thursday != nil {
+
+		if swag.IsZero(o.Thursday) { // not required
+			return nil
+		}
+
+		if err := o.Thursday.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("portSchedule" + "." + "thursday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("portSchedule" + "." + "thursday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortSchedule) contextValidateTuesday(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Tuesday != nil {
+
+		if swag.IsZero(o.Tuesday) { // not required
+			return nil
+		}
+
+		if err := o.Tuesday.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("portSchedule" + "." + "tuesday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("portSchedule" + "." + "tuesday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortSchedule) contextValidateWednesday(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Wednesday != nil {
+
+		if swag.IsZero(o.Wednesday) { // not required
+			return nil
+		}
+
+		if err := o.Wednesday.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("portSchedule" + "." + "wednesday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("portSchedule" + "." + "wednesday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortSchedule) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortSchedule) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchPortSchedulesOKBodyItems0PortSchedule
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleFriday Friday schedule
+swagger:model GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleFriday
+*/
+type GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleFriday struct {
+
+	// Whether the schedule is active or inactive
+	Active bool `json:"active,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	From string `json:"from,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	To string `json:"to,omitempty"`
+}
+
+// Validate validates this get network switch port schedules o k body items0 port schedule friday
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleFriday) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network switch port schedules o k body items0 port schedule friday based on context it is used
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleFriday) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleFriday) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleFriday) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleFriday
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleMonday Monday schedule
+swagger:model GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleMonday
+*/
+type GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleMonday struct {
+
+	// Whether the schedule is active or inactive
+	Active bool `json:"active,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	From string `json:"from,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	To string `json:"to,omitempty"`
+}
+
+// Validate validates this get network switch port schedules o k body items0 port schedule monday
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleMonday) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network switch port schedules o k body items0 port schedule monday based on context it is used
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleMonday) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleMonday) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleMonday) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleMonday
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleSaturday Saturday schedule
+swagger:model GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleSaturday
+*/
+type GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleSaturday struct {
+
+	// Whether the schedule is active or inactive
+	Active bool `json:"active,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	From string `json:"from,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	To string `json:"to,omitempty"`
+}
+
+// Validate validates this get network switch port schedules o k body items0 port schedule saturday
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleSaturday) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network switch port schedules o k body items0 port schedule saturday based on context it is used
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleSaturday) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleSaturday) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleSaturday) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleSaturday
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleSunday Sunday schedule
+swagger:model GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleSunday
+*/
+type GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleSunday struct {
+
+	// Whether the schedule is active or inactive
+	Active bool `json:"active,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	From string `json:"from,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	To string `json:"to,omitempty"`
+}
+
+// Validate validates this get network switch port schedules o k body items0 port schedule sunday
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleSunday) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network switch port schedules o k body items0 port schedule sunday based on context it is used
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleSunday) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleSunday) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleSunday) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleSunday
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleThursday Thursday schedule
+swagger:model GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleThursday
+*/
+type GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleThursday struct {
+
+	// Whether the schedule is active or inactive
+	Active bool `json:"active,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	From string `json:"from,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	To string `json:"to,omitempty"`
+}
+
+// Validate validates this get network switch port schedules o k body items0 port schedule thursday
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleThursday) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network switch port schedules o k body items0 port schedule thursday based on context it is used
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleThursday) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleThursday) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleThursday) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleThursday
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleTuesday Tuesday schedule
+swagger:model GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleTuesday
+*/
+type GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleTuesday struct {
+
+	// Whether the schedule is active or inactive
+	Active bool `json:"active,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	From string `json:"from,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	To string `json:"to,omitempty"`
+}
+
+// Validate validates this get network switch port schedules o k body items0 port schedule tuesday
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleTuesday) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network switch port schedules o k body items0 port schedule tuesday based on context it is used
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleTuesday) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleTuesday) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleTuesday) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleTuesday
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleWednesday Wednesday schedule
+swagger:model GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleWednesday
+*/
+type GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleWednesday struct {
+
+	// Whether the schedule is active or inactive
+	Active bool `json:"active,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	From string `json:"from,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	To string `json:"to,omitempty"`
+}
+
+// Validate validates this get network switch port schedules o k body items0 port schedule wednesday
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleWednesday) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network switch port schedules o k body items0 port schedule wednesday based on context it is used
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleWednesday) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleWednesday) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleWednesday) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchPortSchedulesOKBodyItems0PortScheduleWednesday
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

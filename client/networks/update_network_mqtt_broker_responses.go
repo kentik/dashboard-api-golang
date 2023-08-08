@@ -31,7 +31,7 @@ func (o *UpdateNetworkMqttBrokerReader) ReadResponse(response runtime.ClientResp
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/mqttBrokers/{mqttBrokerId}] updateNetworkMqttBroker", response, response.Code())
 	}
 }
 
@@ -40,7 +40,8 @@ func NewUpdateNetworkMqttBrokerOK() *UpdateNetworkMqttBrokerOK {
 	return &UpdateNetworkMqttBrokerOK{}
 }
 
-/* UpdateNetworkMqttBrokerOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkMqttBrokerOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -73,6 +74,11 @@ func (o *UpdateNetworkMqttBrokerOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network mqtt broker o k response
+func (o *UpdateNetworkMqttBrokerOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkMqttBrokerOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/mqttBrokers/{mqttBrokerId}][%d] updateNetworkMqttBrokerOK  %+v", 200, o.Payload)
 }
@@ -95,7 +101,8 @@ func (o *UpdateNetworkMqttBrokerOK) readResponse(response runtime.ClientResponse
 	return nil
 }
 
-/*UpdateNetworkMqttBrokerBody update network mqtt broker body
+/*
+UpdateNetworkMqttBrokerBody update network mqtt broker body
 // Example: {"authentication":{"username":"Username"},"host":"1.1.1.1","id":"1234","name":"MQTT_Broker_1","port":1234,"security":{"mode":"tls","tls":{"hasCaCertificate":true,"verifyHostnames":true}}}
 swagger:model UpdateNetworkMqttBrokerBody
 */
@@ -167,6 +174,11 @@ func (o *UpdateNetworkMqttBrokerBody) ContextValidate(ctx context.Context, forma
 func (o *UpdateNetworkMqttBrokerBody) contextValidateSecurity(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Security != nil {
+
+		if swag.IsZero(o.Security) { // not required
+			return nil
+		}
+
 		if err := o.Security.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkMqttBroker" + "." + "security")
@@ -198,7 +210,8 @@ func (o *UpdateNetworkMqttBrokerBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateNetworkMqttBrokerParamsBodySecurity Security settings of the MQTT broker.
+/*
+UpdateNetworkMqttBrokerParamsBodySecurity Security settings of the MQTT broker.
 swagger:model UpdateNetworkMqttBrokerParamsBodySecurity
 */
 type UpdateNetworkMqttBrokerParamsBodySecurity struct {
@@ -260,6 +273,11 @@ func (o *UpdateNetworkMqttBrokerParamsBodySecurity) ContextValidate(ctx context.
 func (o *UpdateNetworkMqttBrokerParamsBodySecurity) contextValidateSecurity(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Security != nil {
+
+		if swag.IsZero(o.Security) { // not required
+			return nil
+		}
+
 		if err := o.Security.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkMqttBroker" + "." + "security" + "." + "security")
@@ -291,7 +309,8 @@ func (o *UpdateNetworkMqttBrokerParamsBodySecurity) UnmarshalBinary(b []byte) er
 	return nil
 }
 
-/*UpdateNetworkMqttBrokerParamsBodySecuritySecurity TLS settings of the MQTT broker.
+/*
+UpdateNetworkMqttBrokerParamsBodySecuritySecurity TLS settings of the MQTT broker.
 swagger:model UpdateNetworkMqttBrokerParamsBodySecuritySecurity
 */
 type UpdateNetworkMqttBrokerParamsBodySecuritySecurity struct {

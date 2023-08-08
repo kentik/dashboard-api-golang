@@ -10,6 +10,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
@@ -33,7 +34,7 @@ func (o *UpdateNetworkWirelessRfProfileReader) ReadResponse(response runtime.Cli
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/wireless/rfProfiles/{rfProfileId}] updateNetworkWirelessRfProfile", response, response.Code())
 	}
 }
 
@@ -42,12 +43,13 @@ func NewUpdateNetworkWirelessRfProfileOK() *UpdateNetworkWirelessRfProfileOK {
 	return &UpdateNetworkWirelessRfProfileOK{}
 }
 
-/* UpdateNetworkWirelessRfProfileOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkWirelessRfProfileOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateNetworkWirelessRfProfileOK struct {
-	Payload interface{}
+	Payload *UpdateNetworkWirelessRfProfileOKBody
 }
 
 // IsSuccess returns true when this update network wireless rf profile o k response has a 2xx status code
@@ -75,6 +77,11 @@ func (o *UpdateNetworkWirelessRfProfileOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network wireless rf profile o k response
+func (o *UpdateNetworkWirelessRfProfileOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkWirelessRfProfileOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/wireless/rfProfiles/{rfProfileId}][%d] updateNetworkWirelessRfProfileOK  %+v", 200, o.Payload)
 }
@@ -83,22 +90,25 @@ func (o *UpdateNetworkWirelessRfProfileOK) String() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/wireless/rfProfiles/{rfProfileId}][%d] updateNetworkWirelessRfProfileOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateNetworkWirelessRfProfileOK) GetPayload() interface{} {
+func (o *UpdateNetworkWirelessRfProfileOK) GetPayload() *UpdateNetworkWirelessRfProfileOKBody {
 	return o.Payload
 }
 
 func (o *UpdateNetworkWirelessRfProfileOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateNetworkWirelessRfProfileOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateNetworkWirelessRfProfileBody update network wireless rf profile body
-// Example: {}
+/*
+UpdateNetworkWirelessRfProfileBody update network wireless rf profile body
+// Example: {"apBandSettings":{"bandOperationMode":"dual","bandSteeringEnabled":true,"bands":{"enabled":["2.4","5"]}},"bandSelectionType":"ap","clientBalancingEnabled":true,"fiveGhzSettings":{"channelWidth":"auto","maxPower":30,"minBitrate":12,"minPower":8,"rxsop":-95,"validAutoChannels":[36,40,44,48,52,56,60,64,100,104,108,112,116,120,124,128,132,136,140,144,149,153,157,161,165]},"flexRadios":{"byModel":[{"bands":["5"],"model":"MR34"}]},"minBitrateType":"band","name":"1234","perSsidSettings":{"0":{"bandOperationMode":"dual","bandSteeringEnabled":true,"bands":{"enabled":["2.4","5"]},"minBitrate":11},"1":{"bandOperationMode":"dual","bandSteeringEnabled":true,"bands":{"enabled":["2.4","5"]},"minBitrate":11},"10":{"bandOperationMode":"dual","bandSteeringEnabled":true,"bands":{"enabled":["2.4","5"]},"minBitrate":11},"11":{"bandOperationMode":"dual","bandSteeringEnabled":true,"bands":{"enabled":["2.4","5"]},"minBitrate":11},"12":{"bandOperationMode":"dual","bandSteeringEnabled":true,"bands":{"enabled":["2.4","5"]},"minBitrate":11},"13":{"bandOperationMode":"dual","bandSteeringEnabled":true,"bands":{"enabled":["2.4","5"]},"minBitrate":11},"14":{"bandOperationMode":"dual","bandSteeringEnabled":true,"bands":{"enabled":["2.4","5"]},"minBitrate":11},"2":{"bandOperationMode":"dual","bandSteeringEnabled":true,"bands":{"enabled":["2.4","5"]},"minBitrate":11},"3":{"bandOperationMode":"dual","bandSteeringEnabled":true,"bands":{"enabled":["2.4","5"]},"minBitrate":11},"4":{"bandOperationMode":"dual","bandSteeringEnabled":true,"bands":{"enabled":["2.4","5"]},"minBitrate":11},"5":{"bandOperationMode":"dual","bandSteeringEnabled":true,"bands":{"enabled":["2.4","5"]},"minBitrate":11},"6":{"bandOperationMode":"dual","bandSteeringEnabled":true,"bands":{"enabled":["2.4","5"]},"minBitrate":11},"7":{"bandOperationMode":"dual","bandSteeringEnabled":true,"bands":{"enabled":["2.4","5"]},"minBitrate":11},"8":{"bandOperationMode":"dual","bandSteeringEnabled":true,"bands":{"enabled":["2.4","5"]},"minBitrate":11},"9":{"bandOperationMode":"dual","bandSteeringEnabled":true,"bands":{"enabled":["2.4","5"]},"minBitrate":11}},"sixGhzSettings":{"channelWidth":"auto","maxPower":30,"minBitrate":12,"minPower":8,"rxsop":-95,"validAutoChannels":[1,5,9,13,17,21,25,29,33,37,41,45,49,53,57,61,65,69,73,77,81,85,89,93,97,101,105,109,113,117,121,125,129,133,137,141,145,149,153,157,161,165,169,173,177,181,185,189,193,197,201,205,209,213,217,221,225,229,233]},"transmission":{"enabled":true},"twoFourGhzSettings":{"axEnabled":true,"maxPower":30,"minBitrate":11,"minPower":5,"rxsop":-95,"validAutoChannels":[1,6,11]}}
 swagger:model UpdateNetworkWirelessRfProfileBody
 */
 type UpdateNetworkWirelessRfProfileBody struct {
@@ -107,7 +117,7 @@ type UpdateNetworkWirelessRfProfileBody struct {
 	ApBandSettings *UpdateNetworkWirelessRfProfileParamsBodyApBandSettings `json:"apBandSettings,omitempty"`
 
 	// Band selection can be set to either 'ssid' or 'ap'.
-	// Enum: [ssid ap]
+	// Enum: [ap ssid]
 	BandSelectionType string `json:"bandSelectionType,omitempty"`
 
 	// Steers client to best available access point. Can be either true or false.
@@ -115,6 +125,9 @@ type UpdateNetworkWirelessRfProfileBody struct {
 
 	// five ghz settings
 	FiveGhzSettings *UpdateNetworkWirelessRfProfileParamsBodyFiveGhzSettings `json:"fiveGhzSettings,omitempty"`
+
+	// flex radios
+	FlexRadios *UpdateNetworkWirelessRfProfileParamsBodyFlexRadios `json:"flexRadios,omitempty"`
 
 	// Minimum bitrate can be set to either 'band' or 'ssid'.
 	// Enum: [band ssid]
@@ -125,6 +138,9 @@ type UpdateNetworkWirelessRfProfileBody struct {
 
 	// per ssid settings
 	PerSsidSettings *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings `json:"perSsidSettings,omitempty"`
+
+	// six ghz settings
+	SixGhzSettings *UpdateNetworkWirelessRfProfileParamsBodySixGhzSettings `json:"sixGhzSettings,omitempty"`
 
 	// transmission
 	Transmission *UpdateNetworkWirelessRfProfileParamsBodyTransmission `json:"transmission,omitempty"`
@@ -149,11 +165,19 @@ func (o *UpdateNetworkWirelessRfProfileBody) Validate(formats strfmt.Registry) e
 		res = append(res, err)
 	}
 
+	if err := o.validateFlexRadios(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := o.validateMinBitrateType(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := o.validatePerSsidSettings(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSixGhzSettings(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -194,7 +218,7 @@ var updateNetworkWirelessRfProfileBodyTypeBandSelectionTypePropEnum []interface{
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["ssid","ap"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["ap","ssid"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -204,11 +228,11 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessRfProfileBodyBandSelectionTypeSsid captures enum value "ssid"
-	UpdateNetworkWirelessRfProfileBodyBandSelectionTypeSsid string = "ssid"
-
 	// UpdateNetworkWirelessRfProfileBodyBandSelectionTypeAp captures enum value "ap"
 	UpdateNetworkWirelessRfProfileBodyBandSelectionTypeAp string = "ap"
+
+	// UpdateNetworkWirelessRfProfileBodyBandSelectionTypeSsid captures enum value "ssid"
+	UpdateNetworkWirelessRfProfileBodyBandSelectionTypeSsid string = "ssid"
 )
 
 // prop value enum
@@ -243,6 +267,25 @@ func (o *UpdateNetworkWirelessRfProfileBody) validateFiveGhzSettings(formats str
 				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "fiveGhzSettings")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "fiveGhzSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileBody) validateFlexRadios(formats strfmt.Registry) error {
+	if swag.IsZero(o.FlexRadios) { // not required
+		return nil
+	}
+
+	if o.FlexRadios != nil {
+		if err := o.FlexRadios.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "flexRadios")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "flexRadios")
 			}
 			return err
 		}
@@ -312,6 +355,25 @@ func (o *UpdateNetworkWirelessRfProfileBody) validatePerSsidSettings(formats str
 	return nil
 }
 
+func (o *UpdateNetworkWirelessRfProfileBody) validateSixGhzSettings(formats strfmt.Registry) error {
+	if swag.IsZero(o.SixGhzSettings) { // not required
+		return nil
+	}
+
+	if o.SixGhzSettings != nil {
+		if err := o.SixGhzSettings.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "sixGhzSettings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "sixGhzSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (o *UpdateNetworkWirelessRfProfileBody) validateTransmission(formats strfmt.Registry) error {
 	if swag.IsZero(o.Transmission) { // not required
 		return nil
@@ -362,7 +424,15 @@ func (o *UpdateNetworkWirelessRfProfileBody) ContextValidate(ctx context.Context
 		res = append(res, err)
 	}
 
+	if err := o.contextValidateFlexRadios(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := o.contextValidatePerSsidSettings(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateSixGhzSettings(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -383,6 +453,11 @@ func (o *UpdateNetworkWirelessRfProfileBody) ContextValidate(ctx context.Context
 func (o *UpdateNetworkWirelessRfProfileBody) contextValidateApBandSettings(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.ApBandSettings != nil {
+
+		if swag.IsZero(o.ApBandSettings) { // not required
+			return nil
+		}
+
 		if err := o.ApBandSettings.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "apBandSettings")
@@ -399,6 +474,11 @@ func (o *UpdateNetworkWirelessRfProfileBody) contextValidateApBandSettings(ctx c
 func (o *UpdateNetworkWirelessRfProfileBody) contextValidateFiveGhzSettings(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.FiveGhzSettings != nil {
+
+		if swag.IsZero(o.FiveGhzSettings) { // not required
+			return nil
+		}
+
 		if err := o.FiveGhzSettings.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "fiveGhzSettings")
@@ -412,9 +492,35 @@ func (o *UpdateNetworkWirelessRfProfileBody) contextValidateFiveGhzSettings(ctx 
 	return nil
 }
 
+func (o *UpdateNetworkWirelessRfProfileBody) contextValidateFlexRadios(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.FlexRadios != nil {
+
+		if swag.IsZero(o.FlexRadios) { // not required
+			return nil
+		}
+
+		if err := o.FlexRadios.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "flexRadios")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "flexRadios")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (o *UpdateNetworkWirelessRfProfileBody) contextValidatePerSsidSettings(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.PerSsidSettings != nil {
+
+		if swag.IsZero(o.PerSsidSettings) { // not required
+			return nil
+		}
+
 		if err := o.PerSsidSettings.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings")
@@ -428,9 +534,35 @@ func (o *UpdateNetworkWirelessRfProfileBody) contextValidatePerSsidSettings(ctx 
 	return nil
 }
 
+func (o *UpdateNetworkWirelessRfProfileBody) contextValidateSixGhzSettings(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.SixGhzSettings != nil {
+
+		if swag.IsZero(o.SixGhzSettings) { // not required
+			return nil
+		}
+
+		if err := o.SixGhzSettings.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "sixGhzSettings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "sixGhzSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (o *UpdateNetworkWirelessRfProfileBody) contextValidateTransmission(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Transmission != nil {
+
+		if swag.IsZero(o.Transmission) { // not required
+			return nil
+		}
+
 		if err := o.Transmission.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "transmission")
@@ -447,6 +579,11 @@ func (o *UpdateNetworkWirelessRfProfileBody) contextValidateTransmission(ctx con
 func (o *UpdateNetworkWirelessRfProfileBody) contextValidateTwoFourGhzSettings(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.TwoFourGhzSettings != nil {
+
+		if swag.IsZero(o.TwoFourGhzSettings) { // not required
+			return nil
+		}
+
 		if err := o.TwoFourGhzSettings.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "twoFourGhzSettings")
@@ -478,17 +615,4567 @@ func (o *UpdateNetworkWirelessRfProfileBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateNetworkWirelessRfProfileParamsBodyApBandSettings Settings that will be enabled if selectionType is set to 'ap'.
+/*
+UpdateNetworkWirelessRfProfileOKBody update network wireless rf profile o k body
+swagger:model UpdateNetworkWirelessRfProfileOKBody
+*/
+type UpdateNetworkWirelessRfProfileOKBody struct {
+
+	// ap band settings
+	ApBandSettings *UpdateNetworkWirelessRfProfileOKBodyApBandSettings `json:"apBandSettings,omitempty"`
+
+	// Band selection can be set to either 'ssid' or 'ap'. This param is required on creation.
+	BandSelectionType string `json:"bandSelectionType,omitempty"`
+
+	// Steers client to best available access point. Can be either true or false. Defaults to true.
+	ClientBalancingEnabled bool `json:"clientBalancingEnabled,omitempty"`
+
+	// five ghz settings
+	FiveGhzSettings *UpdateNetworkWirelessRfProfileOKBodyFiveGhzSettings `json:"fiveGhzSettings,omitempty"`
+
+	// The name of the new profile. Must be unique.
+	ID string `json:"id,omitempty"`
+
+	// Minimum bitrate can be set to either 'band' or 'ssid'. Defaults to band.
+	MinBitrateType string `json:"minBitrateType,omitempty"`
+
+	// The name of the new profile. Must be unique. This param is required on creation.
+	Name string `json:"name,omitempty"`
+
+	// The network ID of the RF Profile
+	NetworkID string `json:"networkId,omitempty"`
+
+	// per ssid settings
+	PerSsidSettings *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings `json:"perSsidSettings,omitempty"`
+
+	// six ghz settings
+	SixGhzSettings *UpdateNetworkWirelessRfProfileOKBodySixGhzSettings `json:"sixGhzSettings,omitempty"`
+
+	// transmission
+	Transmission *UpdateNetworkWirelessRfProfileOKBodyTransmission `json:"transmission,omitempty"`
+
+	// two four ghz settings
+	TwoFourGhzSettings *UpdateNetworkWirelessRfProfileOKBodyTwoFourGhzSettings `json:"twoFourGhzSettings,omitempty"`
+}
+
+// Validate validates this update network wireless rf profile o k body
+func (o *UpdateNetworkWirelessRfProfileOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateApBandSettings(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateFiveGhzSettings(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validatePerSsidSettings(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSixGhzSettings(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTransmission(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTwoFourGhzSettings(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBody) validateApBandSettings(formats strfmt.Registry) error {
+	if swag.IsZero(o.ApBandSettings) { // not required
+		return nil
+	}
+
+	if o.ApBandSettings != nil {
+		if err := o.ApBandSettings.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "apBandSettings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "apBandSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBody) validateFiveGhzSettings(formats strfmt.Registry) error {
+	if swag.IsZero(o.FiveGhzSettings) { // not required
+		return nil
+	}
+
+	if o.FiveGhzSettings != nil {
+		if err := o.FiveGhzSettings.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "fiveGhzSettings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "fiveGhzSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBody) validatePerSsidSettings(formats strfmt.Registry) error {
+	if swag.IsZero(o.PerSsidSettings) { // not required
+		return nil
+	}
+
+	if o.PerSsidSettings != nil {
+		if err := o.PerSsidSettings.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBody) validateSixGhzSettings(formats strfmt.Registry) error {
+	if swag.IsZero(o.SixGhzSettings) { // not required
+		return nil
+	}
+
+	if o.SixGhzSettings != nil {
+		if err := o.SixGhzSettings.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "sixGhzSettings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "sixGhzSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBody) validateTransmission(formats strfmt.Registry) error {
+	if swag.IsZero(o.Transmission) { // not required
+		return nil
+	}
+
+	if o.Transmission != nil {
+		if err := o.Transmission.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "transmission")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "transmission")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBody) validateTwoFourGhzSettings(formats strfmt.Registry) error {
+	if swag.IsZero(o.TwoFourGhzSettings) { // not required
+		return nil
+	}
+
+	if o.TwoFourGhzSettings != nil {
+		if err := o.TwoFourGhzSettings.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "twoFourGhzSettings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "twoFourGhzSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile o k body based on the context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateApBandSettings(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateFiveGhzSettings(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidatePerSsidSettings(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateSixGhzSettings(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateTransmission(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateTwoFourGhzSettings(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBody) contextValidateApBandSettings(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ApBandSettings != nil {
+
+		if swag.IsZero(o.ApBandSettings) { // not required
+			return nil
+		}
+
+		if err := o.ApBandSettings.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "apBandSettings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "apBandSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBody) contextValidateFiveGhzSettings(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.FiveGhzSettings != nil {
+
+		if swag.IsZero(o.FiveGhzSettings) { // not required
+			return nil
+		}
+
+		if err := o.FiveGhzSettings.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "fiveGhzSettings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "fiveGhzSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBody) contextValidatePerSsidSettings(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.PerSsidSettings != nil {
+
+		if swag.IsZero(o.PerSsidSettings) { // not required
+			return nil
+		}
+
+		if err := o.PerSsidSettings.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBody) contextValidateSixGhzSettings(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.SixGhzSettings != nil {
+
+		if swag.IsZero(o.SixGhzSettings) { // not required
+			return nil
+		}
+
+		if err := o.SixGhzSettings.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "sixGhzSettings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "sixGhzSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBody) contextValidateTransmission(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Transmission != nil {
+
+		if swag.IsZero(o.Transmission) { // not required
+			return nil
+		}
+
+		if err := o.Transmission.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "transmission")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "transmission")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBody) contextValidateTwoFourGhzSettings(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.TwoFourGhzSettings != nil {
+
+		if swag.IsZero(o.TwoFourGhzSettings) { // not required
+			return nil
+		}
+
+		if err := o.TwoFourGhzSettings.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "twoFourGhzSettings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "twoFourGhzSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyApBandSettings Settings that will be enabled if selectionType is set to 'ap'.
+swagger:model UpdateNetworkWirelessRfProfileOKBodyApBandSettings
+*/
+type UpdateNetworkWirelessRfProfileOKBodyApBandSettings struct {
+
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'. Defaults to dual.
+	BandOperationMode string `json:"bandOperationMode,omitempty"`
+
+	// Steers client to most open band. Can be either true or false. Defaults to true.
+	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileOKBodyApBandSettingsBands `json:"bands,omitempty"`
+}
+
+// Validate validates this update network wireless rf profile o k body ap band settings
+func (o *UpdateNetworkWirelessRfProfileOKBodyApBandSettings) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyApBandSettings) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "apBandSettings" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "apBandSettings" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile o k body ap band settings based on the context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyApBandSettings) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyApBandSettings) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "apBandSettings" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "apBandSettings" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyApBandSettings) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyApBandSettings) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyApBandSettings
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyApBandSettingsBands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileOKBodyApBandSettingsBands
+*/
+type UpdateNetworkWirelessRfProfileOKBodyApBandSettingsBands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile o k body ap band settings bands
+func (o *UpdateNetworkWirelessRfProfileOKBodyApBandSettingsBands) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile o k body ap band settings bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyApBandSettingsBands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyApBandSettingsBands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyApBandSettingsBands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyApBandSettingsBands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyFiveGhzSettings Settings related to 5Ghz band
+swagger:model UpdateNetworkWirelessRfProfileOKBodyFiveGhzSettings
+*/
+type UpdateNetworkWirelessRfProfileOKBodyFiveGhzSettings struct {
+
+	// Sets channel width (MHz) for 5Ghz band. Can be one of 'auto', '20', '40' or '80'. Defaults to auto.
+	ChannelWidth string `json:"channelWidth,omitempty"`
+
+	// Sets max power (dBm) of 5Ghz band. Can be integer between 2 and 30. Defaults to 30.
+	MaxPower int64 `json:"maxPower,omitempty"`
+
+	// Sets min bitrate (Mbps) of 5Ghz band. Can be one of '6', '9', '12', '18', '24', '36', '48' or '54'. Defaults to 12.
+	MinBitrate int64 `json:"minBitrate,omitempty"`
+
+	// Sets min power (dBm) of 5Ghz band. Can be integer between 2 and 30. Defaults to 8.
+	MinPower int64 `json:"minPower,omitempty"`
+
+	// The RX-SOP level controls the sensitivity of the radio. It is strongly recommended to use RX-SOP only after consulting a wireless expert. RX-SOP can be configured in the range of -65 to -95 (dBm). A value of null will reset this to the default.
+	Rxsop int64 `json:"rxsop,omitempty"`
+
+	// Sets valid auto channels for 5Ghz band. Can be one of '36', '40', '44', '48', '52', '56', '60', '64', '100', '104', '108', '112', '116', '120', '124', '128', '132', '136', '140', '144', '149', '153', '157', '161' or '165'.Defaults to [36, 40, 44, 48, 52, 56, 60, 64, 100, 104, 108, 112, 116, 120, 124, 128, 132, 136, 140, 144, 149, 153, 157, 161, 165].
+	ValidAutoChannels []int64 `json:"validAutoChannels"`
+}
+
+// Validate validates this update network wireless rf profile o k body five ghz settings
+func (o *UpdateNetworkWirelessRfProfileOKBodyFiveGhzSettings) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile o k body five ghz settings based on context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyFiveGhzSettings) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyFiveGhzSettings) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyFiveGhzSettings) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyFiveGhzSettings
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings Per-SSID radio settings by number.
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings struct {
+
+	// 0
+	Nr0 *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0 `json:"0,omitempty"`
+
+	// 1
+	Nr1 *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1 `json:"1,omitempty"`
+
+	// 10
+	Nr10 *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10 `json:"10,omitempty"`
+
+	// 11
+	Nr11 *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11 `json:"11,omitempty"`
+
+	// 12
+	Nr12 *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12 `json:"12,omitempty"`
+
+	// 13
+	Nr13 *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13 `json:"13,omitempty"`
+
+	// 14
+	Nr14 *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14 `json:"14,omitempty"`
+
+	// 2
+	Nr2 *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2 `json:"2,omitempty"`
+
+	// 3
+	Nr3 *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3 `json:"3,omitempty"`
+
+	// 4
+	Nr4 *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4 `json:"4,omitempty"`
+
+	// 5
+	Nr5 *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5 `json:"5,omitempty"`
+
+	// 6
+	Nr6 *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6 `json:"6,omitempty"`
+
+	// 7
+	Nr7 *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7 `json:"7,omitempty"`
+
+	// 8
+	Nr8 *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8 `json:"8,omitempty"`
+
+	// 9
+	Nr9 *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9 `json:"9,omitempty"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateNr0(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNr1(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNr10(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNr11(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNr12(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNr13(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNr14(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNr2(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNr3(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNr4(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNr5(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNr6(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNr7(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNr8(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNr9(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) validateNr0(formats strfmt.Registry) error {
+	if swag.IsZero(o.Nr0) { // not required
+		return nil
+	}
+
+	if o.Nr0 != nil {
+		if err := o.Nr0.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "0")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "0")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) validateNr1(formats strfmt.Registry) error {
+	if swag.IsZero(o.Nr1) { // not required
+		return nil
+	}
+
+	if o.Nr1 != nil {
+		if err := o.Nr1.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "1")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "1")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) validateNr10(formats strfmt.Registry) error {
+	if swag.IsZero(o.Nr10) { // not required
+		return nil
+	}
+
+	if o.Nr10 != nil {
+		if err := o.Nr10.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "10")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "10")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) validateNr11(formats strfmt.Registry) error {
+	if swag.IsZero(o.Nr11) { // not required
+		return nil
+	}
+
+	if o.Nr11 != nil {
+		if err := o.Nr11.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "11")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "11")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) validateNr12(formats strfmt.Registry) error {
+	if swag.IsZero(o.Nr12) { // not required
+		return nil
+	}
+
+	if o.Nr12 != nil {
+		if err := o.Nr12.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "12")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "12")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) validateNr13(formats strfmt.Registry) error {
+	if swag.IsZero(o.Nr13) { // not required
+		return nil
+	}
+
+	if o.Nr13 != nil {
+		if err := o.Nr13.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "13")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "13")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) validateNr14(formats strfmt.Registry) error {
+	if swag.IsZero(o.Nr14) { // not required
+		return nil
+	}
+
+	if o.Nr14 != nil {
+		if err := o.Nr14.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "14")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "14")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) validateNr2(formats strfmt.Registry) error {
+	if swag.IsZero(o.Nr2) { // not required
+		return nil
+	}
+
+	if o.Nr2 != nil {
+		if err := o.Nr2.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "2")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "2")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) validateNr3(formats strfmt.Registry) error {
+	if swag.IsZero(o.Nr3) { // not required
+		return nil
+	}
+
+	if o.Nr3 != nil {
+		if err := o.Nr3.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "3")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "3")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) validateNr4(formats strfmt.Registry) error {
+	if swag.IsZero(o.Nr4) { // not required
+		return nil
+	}
+
+	if o.Nr4 != nil {
+		if err := o.Nr4.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "4")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "4")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) validateNr5(formats strfmt.Registry) error {
+	if swag.IsZero(o.Nr5) { // not required
+		return nil
+	}
+
+	if o.Nr5 != nil {
+		if err := o.Nr5.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "5")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "5")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) validateNr6(formats strfmt.Registry) error {
+	if swag.IsZero(o.Nr6) { // not required
+		return nil
+	}
+
+	if o.Nr6 != nil {
+		if err := o.Nr6.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "6")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "6")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) validateNr7(formats strfmt.Registry) error {
+	if swag.IsZero(o.Nr7) { // not required
+		return nil
+	}
+
+	if o.Nr7 != nil {
+		if err := o.Nr7.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "7")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "7")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) validateNr8(formats strfmt.Registry) error {
+	if swag.IsZero(o.Nr8) { // not required
+		return nil
+	}
+
+	if o.Nr8 != nil {
+		if err := o.Nr8.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "8")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "8")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) validateNr9(formats strfmt.Registry) error {
+	if swag.IsZero(o.Nr9) { // not required
+		return nil
+	}
+
+	if o.Nr9 != nil {
+		if err := o.Nr9.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "9")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "9")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile o k body per ssid settings based on the context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateNr0(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateNr1(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateNr10(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateNr11(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateNr12(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateNr13(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateNr14(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateNr2(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateNr3(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateNr4(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateNr5(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateNr6(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateNr7(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateNr8(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateNr9(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) contextValidateNr0(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Nr0 != nil {
+
+		if swag.IsZero(o.Nr0) { // not required
+			return nil
+		}
+
+		if err := o.Nr0.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "0")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "0")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) contextValidateNr1(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Nr1 != nil {
+
+		if swag.IsZero(o.Nr1) { // not required
+			return nil
+		}
+
+		if err := o.Nr1.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "1")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "1")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) contextValidateNr10(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Nr10 != nil {
+
+		if swag.IsZero(o.Nr10) { // not required
+			return nil
+		}
+
+		if err := o.Nr10.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "10")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "10")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) contextValidateNr11(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Nr11 != nil {
+
+		if swag.IsZero(o.Nr11) { // not required
+			return nil
+		}
+
+		if err := o.Nr11.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "11")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "11")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) contextValidateNr12(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Nr12 != nil {
+
+		if swag.IsZero(o.Nr12) { // not required
+			return nil
+		}
+
+		if err := o.Nr12.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "12")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "12")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) contextValidateNr13(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Nr13 != nil {
+
+		if swag.IsZero(o.Nr13) { // not required
+			return nil
+		}
+
+		if err := o.Nr13.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "13")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "13")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) contextValidateNr14(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Nr14 != nil {
+
+		if swag.IsZero(o.Nr14) { // not required
+			return nil
+		}
+
+		if err := o.Nr14.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "14")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "14")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) contextValidateNr2(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Nr2 != nil {
+
+		if swag.IsZero(o.Nr2) { // not required
+			return nil
+		}
+
+		if err := o.Nr2.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "2")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "2")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) contextValidateNr3(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Nr3 != nil {
+
+		if swag.IsZero(o.Nr3) { // not required
+			return nil
+		}
+
+		if err := o.Nr3.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "3")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "3")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) contextValidateNr4(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Nr4 != nil {
+
+		if swag.IsZero(o.Nr4) { // not required
+			return nil
+		}
+
+		if err := o.Nr4.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "4")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "4")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) contextValidateNr5(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Nr5 != nil {
+
+		if swag.IsZero(o.Nr5) { // not required
+			return nil
+		}
+
+		if err := o.Nr5.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "5")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "5")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) contextValidateNr6(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Nr6 != nil {
+
+		if swag.IsZero(o.Nr6) { // not required
+			return nil
+		}
+
+		if err := o.Nr6.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "6")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "6")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) contextValidateNr7(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Nr7 != nil {
+
+		if swag.IsZero(o.Nr7) { // not required
+			return nil
+		}
+
+		if err := o.Nr7.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "7")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "7")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) contextValidateNr8(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Nr8 != nil {
+
+		if swag.IsZero(o.Nr8) { // not required
+			return nil
+		}
+
+		if err := o.Nr8.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "8")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "8")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) contextValidateNr9(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Nr9 != nil {
+
+		if swag.IsZero(o.Nr9) { // not required
+			return nil
+		}
+
+		if err := o.Nr9.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "9")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "9")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettings
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0 Settings for SSID 0
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0 struct {
+
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
+	BandOperationMode string `json:"bandOperationMode,omitempty"`
+
+	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
+	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0Bands `json:"bands,omitempty"`
+
+	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
+	MinBitrate int64 `json:"minBitrate,omitempty"`
+
+	// Name of SSID
+	Name string `json:"name,omitempty"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr0
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBandOperationMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0TypeBandOperationModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0TypeBandOperationModePropEnum = append(updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0TypeBandOperationModePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0BandOperationModeNr2Dot4ghz string = "2.4ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0BandOperationModeNr5ghz captures enum value "5ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0BandOperationModeMulti string = "multi"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0) validateBandOperationModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0TypeBandOperationModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0) validateBandOperationMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.BandOperationMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateBandOperationModeEnum("updateNetworkWirelessRfProfileOK"+"."+"perSsidSettings"+"."+"0"+"."+"bandOperationMode", "body", o.BandOperationMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "0" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "0" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile o k body per ssid settings nr0 based on the context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "0" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "0" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0Bands
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr0 bands
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0Bands) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile o k body per ssid settings nr0 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr0Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1 Settings for SSID 1
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1 struct {
+
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
+	BandOperationMode string `json:"bandOperationMode,omitempty"`
+
+	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
+	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1Bands `json:"bands,omitempty"`
+
+	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
+	MinBitrate int64 `json:"minBitrate,omitempty"`
+
+	// Name of SSID
+	Name string `json:"name,omitempty"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr1
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBandOperationMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1TypeBandOperationModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1TypeBandOperationModePropEnum = append(updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1TypeBandOperationModePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1BandOperationModeNr2Dot4ghz string = "2.4ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1BandOperationModeNr5ghz captures enum value "5ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1BandOperationModeMulti string = "multi"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1) validateBandOperationModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1TypeBandOperationModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1) validateBandOperationMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.BandOperationMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateBandOperationModeEnum("updateNetworkWirelessRfProfileOK"+"."+"perSsidSettings"+"."+"1"+"."+"bandOperationMode", "body", o.BandOperationMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "1" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "1" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile o k body per ssid settings nr1 based on the context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "1" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "1" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10 Settings for SSID 10
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10 struct {
+
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
+	BandOperationMode string `json:"bandOperationMode,omitempty"`
+
+	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
+	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10Bands `json:"bands,omitempty"`
+
+	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
+	MinBitrate int64 `json:"minBitrate,omitempty"`
+
+	// Name of SSID
+	Name string `json:"name,omitempty"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr10
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBandOperationMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10TypeBandOperationModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10TypeBandOperationModePropEnum = append(updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10TypeBandOperationModePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10BandOperationModeNr2Dot4ghz string = "2.4ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10BandOperationModeNr5ghz captures enum value "5ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10BandOperationModeMulti string = "multi"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10) validateBandOperationModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10TypeBandOperationModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10) validateBandOperationMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.BandOperationMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateBandOperationModeEnum("updateNetworkWirelessRfProfileOK"+"."+"perSsidSettings"+"."+"10"+"."+"bandOperationMode", "body", o.BandOperationMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "10" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "10" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile o k body per ssid settings nr10 based on the context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "10" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "10" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10Bands
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr10 bands
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10Bands) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile o k body per ssid settings nr10 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr10Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11 Settings for SSID 11
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11 struct {
+
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
+	BandOperationMode string `json:"bandOperationMode,omitempty"`
+
+	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
+	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11Bands `json:"bands,omitempty"`
+
+	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
+	MinBitrate int64 `json:"minBitrate,omitempty"`
+
+	// Name of SSID
+	Name string `json:"name,omitempty"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr11
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBandOperationMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11TypeBandOperationModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11TypeBandOperationModePropEnum = append(updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11TypeBandOperationModePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11BandOperationModeNr2Dot4ghz string = "2.4ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11BandOperationModeNr5ghz captures enum value "5ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11BandOperationModeMulti string = "multi"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11) validateBandOperationModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11TypeBandOperationModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11) validateBandOperationMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.BandOperationMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateBandOperationModeEnum("updateNetworkWirelessRfProfileOK"+"."+"perSsidSettings"+"."+"11"+"."+"bandOperationMode", "body", o.BandOperationMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "11" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "11" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile o k body per ssid settings nr11 based on the context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "11" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "11" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11Bands
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr11 bands
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11Bands) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile o k body per ssid settings nr11 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr11Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12 Settings for SSID 12
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12 struct {
+
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
+	BandOperationMode string `json:"bandOperationMode,omitempty"`
+
+	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
+	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12Bands `json:"bands,omitempty"`
+
+	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
+	MinBitrate int64 `json:"minBitrate,omitempty"`
+
+	// Name of SSID
+	Name string `json:"name,omitempty"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr12
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBandOperationMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12TypeBandOperationModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12TypeBandOperationModePropEnum = append(updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12TypeBandOperationModePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12BandOperationModeNr2Dot4ghz string = "2.4ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12BandOperationModeNr5ghz captures enum value "5ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12BandOperationModeMulti string = "multi"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12) validateBandOperationModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12TypeBandOperationModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12) validateBandOperationMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.BandOperationMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateBandOperationModeEnum("updateNetworkWirelessRfProfileOK"+"."+"perSsidSettings"+"."+"12"+"."+"bandOperationMode", "body", o.BandOperationMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "12" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "12" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile o k body per ssid settings nr12 based on the context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "12" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "12" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12Bands
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr12 bands
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12Bands) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile o k body per ssid settings nr12 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr12Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13 Settings for SSID 13
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13 struct {
+
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
+	BandOperationMode string `json:"bandOperationMode,omitempty"`
+
+	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
+	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13Bands `json:"bands,omitempty"`
+
+	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
+	MinBitrate int64 `json:"minBitrate,omitempty"`
+
+	// Name of SSID
+	Name string `json:"name,omitempty"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr13
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBandOperationMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13TypeBandOperationModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13TypeBandOperationModePropEnum = append(updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13TypeBandOperationModePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13BandOperationModeNr2Dot4ghz string = "2.4ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13BandOperationModeNr5ghz captures enum value "5ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13BandOperationModeMulti string = "multi"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13) validateBandOperationModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13TypeBandOperationModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13) validateBandOperationMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.BandOperationMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateBandOperationModeEnum("updateNetworkWirelessRfProfileOK"+"."+"perSsidSettings"+"."+"13"+"."+"bandOperationMode", "body", o.BandOperationMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "13" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "13" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile o k body per ssid settings nr13 based on the context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "13" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "13" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13Bands
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr13 bands
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13Bands) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile o k body per ssid settings nr13 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr13Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14 Settings for SSID 14
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14 struct {
+
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
+	BandOperationMode string `json:"bandOperationMode,omitempty"`
+
+	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
+	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14Bands `json:"bands,omitempty"`
+
+	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
+	MinBitrate int64 `json:"minBitrate,omitempty"`
+
+	// Name of SSID
+	Name string `json:"name,omitempty"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr14
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBandOperationMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14TypeBandOperationModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14TypeBandOperationModePropEnum = append(updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14TypeBandOperationModePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14BandOperationModeNr2Dot4ghz string = "2.4ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14BandOperationModeNr5ghz captures enum value "5ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14BandOperationModeMulti string = "multi"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14) validateBandOperationModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14TypeBandOperationModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14) validateBandOperationMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.BandOperationMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateBandOperationModeEnum("updateNetworkWirelessRfProfileOK"+"."+"perSsidSettings"+"."+"14"+"."+"bandOperationMode", "body", o.BandOperationMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "14" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "14" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile o k body per ssid settings nr14 based on the context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "14" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "14" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14Bands
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr14 bands
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14Bands) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile o k body per ssid settings nr14 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr14Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1Bands
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr1 bands
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1Bands) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile o k body per ssid settings nr1 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr1Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2 Settings for SSID 2
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2 struct {
+
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
+	BandOperationMode string `json:"bandOperationMode,omitempty"`
+
+	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
+	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2Bands `json:"bands,omitempty"`
+
+	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
+	MinBitrate int64 `json:"minBitrate,omitempty"`
+
+	// Name of SSID
+	Name string `json:"name,omitempty"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr2
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBandOperationMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2TypeBandOperationModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2TypeBandOperationModePropEnum = append(updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2TypeBandOperationModePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2BandOperationModeNr2Dot4ghz string = "2.4ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2BandOperationModeNr5ghz captures enum value "5ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2BandOperationModeMulti string = "multi"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2) validateBandOperationModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2TypeBandOperationModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2) validateBandOperationMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.BandOperationMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateBandOperationModeEnum("updateNetworkWirelessRfProfileOK"+"."+"perSsidSettings"+"."+"2"+"."+"bandOperationMode", "body", o.BandOperationMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "2" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "2" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile o k body per ssid settings nr2 based on the context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "2" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "2" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2Bands
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr2 bands
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2Bands) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile o k body per ssid settings nr2 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr2Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3 Settings for SSID 3
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3 struct {
+
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
+	BandOperationMode string `json:"bandOperationMode,omitempty"`
+
+	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
+	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3Bands `json:"bands,omitempty"`
+
+	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
+	MinBitrate int64 `json:"minBitrate,omitempty"`
+
+	// Name of SSID
+	Name string `json:"name,omitempty"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr3
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBandOperationMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3TypeBandOperationModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3TypeBandOperationModePropEnum = append(updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3TypeBandOperationModePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3BandOperationModeNr2Dot4ghz string = "2.4ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3BandOperationModeNr5ghz captures enum value "5ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3BandOperationModeMulti string = "multi"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3) validateBandOperationModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3TypeBandOperationModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3) validateBandOperationMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.BandOperationMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateBandOperationModeEnum("updateNetworkWirelessRfProfileOK"+"."+"perSsidSettings"+"."+"3"+"."+"bandOperationMode", "body", o.BandOperationMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "3" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "3" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile o k body per ssid settings nr3 based on the context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "3" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "3" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3Bands
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr3 bands
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3Bands) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile o k body per ssid settings nr3 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr3Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4 Settings for SSID 4
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4 struct {
+
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
+	BandOperationMode string `json:"bandOperationMode,omitempty"`
+
+	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
+	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4Bands `json:"bands,omitempty"`
+
+	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
+	MinBitrate int64 `json:"minBitrate,omitempty"`
+
+	// Name of SSID
+	Name string `json:"name,omitempty"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr4
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBandOperationMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4TypeBandOperationModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4TypeBandOperationModePropEnum = append(updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4TypeBandOperationModePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4BandOperationModeNr2Dot4ghz string = "2.4ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4BandOperationModeNr5ghz captures enum value "5ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4BandOperationModeMulti string = "multi"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4) validateBandOperationModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4TypeBandOperationModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4) validateBandOperationMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.BandOperationMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateBandOperationModeEnum("updateNetworkWirelessRfProfileOK"+"."+"perSsidSettings"+"."+"4"+"."+"bandOperationMode", "body", o.BandOperationMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "4" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "4" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile o k body per ssid settings nr4 based on the context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "4" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "4" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4Bands
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr4 bands
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4Bands) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile o k body per ssid settings nr4 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr4Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5 Settings for SSID 5
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5 struct {
+
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
+	BandOperationMode string `json:"bandOperationMode,omitempty"`
+
+	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
+	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5Bands `json:"bands,omitempty"`
+
+	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
+	MinBitrate int64 `json:"minBitrate,omitempty"`
+
+	// Name of SSID
+	Name string `json:"name,omitempty"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr5
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBandOperationMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5TypeBandOperationModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5TypeBandOperationModePropEnum = append(updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5TypeBandOperationModePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5BandOperationModeNr2Dot4ghz string = "2.4ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5BandOperationModeNr5ghz captures enum value "5ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5BandOperationModeMulti string = "multi"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5) validateBandOperationModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5TypeBandOperationModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5) validateBandOperationMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.BandOperationMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateBandOperationModeEnum("updateNetworkWirelessRfProfileOK"+"."+"perSsidSettings"+"."+"5"+"."+"bandOperationMode", "body", o.BandOperationMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "5" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "5" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile o k body per ssid settings nr5 based on the context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "5" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "5" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5Bands
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr5 bands
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5Bands) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile o k body per ssid settings nr5 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr5Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6 Settings for SSID 6
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6 struct {
+
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
+	BandOperationMode string `json:"bandOperationMode,omitempty"`
+
+	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
+	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6Bands `json:"bands,omitempty"`
+
+	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
+	MinBitrate int64 `json:"minBitrate,omitempty"`
+
+	// Name of SSID
+	Name string `json:"name,omitempty"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr6
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBandOperationMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6TypeBandOperationModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6TypeBandOperationModePropEnum = append(updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6TypeBandOperationModePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6BandOperationModeNr2Dot4ghz string = "2.4ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6BandOperationModeNr5ghz captures enum value "5ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6BandOperationModeMulti string = "multi"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6) validateBandOperationModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6TypeBandOperationModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6) validateBandOperationMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.BandOperationMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateBandOperationModeEnum("updateNetworkWirelessRfProfileOK"+"."+"perSsidSettings"+"."+"6"+"."+"bandOperationMode", "body", o.BandOperationMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "6" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "6" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile o k body per ssid settings nr6 based on the context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "6" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "6" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6Bands
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr6 bands
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6Bands) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile o k body per ssid settings nr6 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr6Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7 Settings for SSID 7
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7 struct {
+
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
+	BandOperationMode string `json:"bandOperationMode,omitempty"`
+
+	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
+	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7Bands `json:"bands,omitempty"`
+
+	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
+	MinBitrate int64 `json:"minBitrate,omitempty"`
+
+	// Name of SSID
+	Name string `json:"name,omitempty"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr7
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBandOperationMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7TypeBandOperationModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7TypeBandOperationModePropEnum = append(updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7TypeBandOperationModePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7BandOperationModeNr2Dot4ghz string = "2.4ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7BandOperationModeNr5ghz captures enum value "5ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7BandOperationModeMulti string = "multi"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7) validateBandOperationModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7TypeBandOperationModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7) validateBandOperationMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.BandOperationMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateBandOperationModeEnum("updateNetworkWirelessRfProfileOK"+"."+"perSsidSettings"+"."+"7"+"."+"bandOperationMode", "body", o.BandOperationMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "7" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "7" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile o k body per ssid settings nr7 based on the context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "7" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "7" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7Bands
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr7 bands
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7Bands) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile o k body per ssid settings nr7 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr7Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8 Settings for SSID 8
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8 struct {
+
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
+	BandOperationMode string `json:"bandOperationMode,omitempty"`
+
+	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
+	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8Bands `json:"bands,omitempty"`
+
+	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
+	MinBitrate int64 `json:"minBitrate,omitempty"`
+
+	// Name of SSID
+	Name string `json:"name,omitempty"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr8
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBandOperationMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8TypeBandOperationModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8TypeBandOperationModePropEnum = append(updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8TypeBandOperationModePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8BandOperationModeNr2Dot4ghz string = "2.4ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8BandOperationModeNr5ghz captures enum value "5ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8BandOperationModeMulti string = "multi"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8) validateBandOperationModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8TypeBandOperationModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8) validateBandOperationMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.BandOperationMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateBandOperationModeEnum("updateNetworkWirelessRfProfileOK"+"."+"perSsidSettings"+"."+"8"+"."+"bandOperationMode", "body", o.BandOperationMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "8" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "8" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile o k body per ssid settings nr8 based on the context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "8" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "8" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8Bands
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr8 bands
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8Bands) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile o k body per ssid settings nr8 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr8Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9 Settings for SSID 9
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9 struct {
+
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
+	BandOperationMode string `json:"bandOperationMode,omitempty"`
+
+	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
+	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9Bands `json:"bands,omitempty"`
+
+	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
+	MinBitrate int64 `json:"minBitrate,omitempty"`
+
+	// Name of SSID
+	Name string `json:"name,omitempty"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr9
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBandOperationMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9TypeBandOperationModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9TypeBandOperationModePropEnum = append(updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9TypeBandOperationModePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9BandOperationModeNr2Dot4ghz string = "2.4ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9BandOperationModeNr5ghz captures enum value "5ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9BandOperationModeMulti string = "multi"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9) validateBandOperationModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9TypeBandOperationModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9) validateBandOperationMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.BandOperationMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateBandOperationModeEnum("updateNetworkWirelessRfProfileOK"+"."+"perSsidSettings"+"."+"9"+"."+"bandOperationMode", "body", o.BandOperationMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "9" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "9" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile o k body per ssid settings nr9 based on the context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "9" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfileOK" + "." + "perSsidSettings" + "." + "9" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9Bands
+*/
+type UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile o k body per ssid settings nr9 bands
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9Bands) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile o k body per ssid settings nr9 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyPerSsidSettingsNr9Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodySixGhzSettings Settings related to 6Ghz band. Only applicable to networks with 6Ghz capable APs
+swagger:model UpdateNetworkWirelessRfProfileOKBodySixGhzSettings
+*/
+type UpdateNetworkWirelessRfProfileOKBodySixGhzSettings struct {
+
+	// Sets channel width (MHz) for 6Ghz band. Can be one of '0', '20', '40', '80' or '160'. Defaults to auto.
+	ChannelWidth string `json:"channelWidth,omitempty"`
+
+	// Sets max power (dBm) of 6Ghz band. Can be integer between 2 and 30. Defaults to 30.
+	MaxPower int64 `json:"maxPower,omitempty"`
+
+	// Sets min bitrate (Mbps) of 6Ghz band. Can be one of '6', '9', '12', '18', '24', '36', '48' or '54'. Defaults to 12.
+	MinBitrate int64 `json:"minBitrate,omitempty"`
+
+	// Sets min power (dBm) of 6Ghz band. Can be integer between 2 and 30. Defaults to 8.
+	MinPower int64 `json:"minPower,omitempty"`
+
+	// The RX-SOP level controls the sensitivity of the radio. It is strongly recommended to use RX-SOP only after consulting a wireless expert. RX-SOP can be configured in the range of -65 to -95 (dBm). A value of null will reset this to the default.
+	Rxsop int64 `json:"rxsop,omitempty"`
+
+	// Sets valid auto channels for 6Ghz band. Can be one of '1', '5', '9', '13', '17', '21', '25', '29', '33', '37', '41', '45', '49', '53', '57', '61', '65', '69', '73', '77', '81', '85', '89', '93', '97', '101', '105', '109', '113', '117', '121', '125', '129', '133', '137', '141', '145', '149', '153', '157', '161', '165', '169', '173', '177', '181', '185', '189', '193', '197', '201', '205', '209', '213', '217', '221', '225', '229' or '233'. Defaults to auto.
+	ValidAutoChannels []int64 `json:"validAutoChannels"`
+}
+
+// Validate validates this update network wireless rf profile o k body six ghz settings
+func (o *UpdateNetworkWirelessRfProfileOKBodySixGhzSettings) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile o k body six ghz settings based on context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodySixGhzSettings) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodySixGhzSettings) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodySixGhzSettings) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodySixGhzSettings
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyTransmission Settings related to radio transmission.
+swagger:model UpdateNetworkWirelessRfProfileOKBodyTransmission
+*/
+type UpdateNetworkWirelessRfProfileOKBodyTransmission struct {
+
+	// Toggle for radio transmission. When false, radios will not transmit at all.
+	Enabled bool `json:"enabled,omitempty"`
+}
+
+// Validate validates this update network wireless rf profile o k body transmission
+func (o *UpdateNetworkWirelessRfProfileOKBodyTransmission) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile o k body transmission based on context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyTransmission) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyTransmission) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyTransmission) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyTransmission
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileOKBodyTwoFourGhzSettings Settings related to 2.4Ghz band
+swagger:model UpdateNetworkWirelessRfProfileOKBodyTwoFourGhzSettings
+*/
+type UpdateNetworkWirelessRfProfileOKBodyTwoFourGhzSettings struct {
+
+	// Determines whether ax radio on 2.4Ghz band is on or off. Can be either true or false. If false, we highly recommend disabling band steering. Defaults to true.
+	AxEnabled bool `json:"axEnabled,omitempty"`
+
+	// Sets max power (dBm) of 2.4Ghz band. Can be integer between 2 and 30. Defaults to 30.
+	MaxPower int64 `json:"maxPower,omitempty"`
+
+	// Sets min bitrate (Mbps) of 2.4Ghz band. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'. Defaults to 11.
+	MinBitrate float32 `json:"minBitrate,omitempty"`
+
+	// Sets min power (dBm) of 2.4Ghz band. Can be integer between 2 and 30. Defaults to 5.
+	MinPower int64 `json:"minPower,omitempty"`
+
+	// The RX-SOP level controls the sensitivity of the radio. It is strongly recommended to use RX-SOP only after consulting a wireless expert. RX-SOP can be configured in the range of -65 to -95 (dBm). A value of null will reset this to the default.
+	Rxsop int64 `json:"rxsop,omitempty"`
+
+	// Sets valid auto channels for 2.4Ghz band. Can be one of '1', '6' or '11'. Defaults to [1, 6, 11].
+	ValidAutoChannels []int64 `json:"validAutoChannels"`
+}
+
+// Validate validates this update network wireless rf profile o k body two four ghz settings
+func (o *UpdateNetworkWirelessRfProfileOKBodyTwoFourGhzSettings) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile o k body two four ghz settings based on context it is used
+func (o *UpdateNetworkWirelessRfProfileOKBodyTwoFourGhzSettings) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyTwoFourGhzSettings) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileOKBodyTwoFourGhzSettings) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileOKBodyTwoFourGhzSettings
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileParamsBodyApBandSettings Settings that will be enabled if selectionType is set to 'ap'.
 swagger:model UpdateNetworkWirelessRfProfileParamsBodyApBandSettings
 */
 type UpdateNetworkWirelessRfProfileParamsBodyApBandSettings struct {
 
-	// Choice between 'dual', '2.4ghz' or '5ghz'.
-	// Enum: [dual 2.4ghz 5ghz]
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
 	BandOperationMode string `json:"bandOperationMode,omitempty"`
 
 	// Steers client to most open band. Can be either true or false.
 	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileParamsBodyApBandSettingsBands `json:"bands,omitempty"`
 }
 
 // Validate validates this update network wireless rf profile params body ap band settings
@@ -496,6 +5183,10 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyApBandSettings) Validate(format
 	var res []error
 
 	if err := o.validateBandOperationMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateBands(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -509,7 +5200,7 @@ var updateNetworkWirelessRfProfileParamsBodyApBandSettingsTypeBandOperationModeP
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["dual","2.4ghz","5ghz"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -519,14 +5210,20 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessRfProfileParamsBodyApBandSettingsBandOperationModeDual captures enum value "dual"
-	UpdateNetworkWirelessRfProfileParamsBodyApBandSettingsBandOperationModeDual string = "dual"
-
 	// UpdateNetworkWirelessRfProfileParamsBodyApBandSettingsBandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyApBandSettingsBandOperationModeNr2Dot4ghz string = "2.4ghz"
 
 	// UpdateNetworkWirelessRfProfileParamsBodyApBandSettingsBandOperationModeNr5ghz captures enum value "5ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyApBandSettingsBandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyApBandSettingsBandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileParamsBodyApBandSettingsBandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyApBandSettingsBandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileParamsBodyApBandSettingsBandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyApBandSettingsBandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileParamsBodyApBandSettingsBandOperationModeMulti string = "multi"
 )
 
 // prop value enum
@@ -550,8 +5247,57 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyApBandSettings) validateBandOpe
 	return nil
 }
 
-// ContextValidate validates this update network wireless rf profile params body ap band settings based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyApBandSettings) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "apBandSettings" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "apBandSettings" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile params body ap band settings based on the context it is used
 func (o *UpdateNetworkWirelessRfProfileParamsBodyApBandSettings) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyApBandSettings) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "apBandSettings" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "apBandSettings" + "." + "bands")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -573,7 +5319,91 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyApBandSettings) UnmarshalBinary
 	return nil
 }
 
-/*UpdateNetworkWirelessRfProfileParamsBodyFiveGhzSettings Settings related to 5Ghz band
+/*
+UpdateNetworkWirelessRfProfileParamsBodyApBandSettingsBands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileParamsBodyApBandSettingsBands
+*/
+type UpdateNetworkWirelessRfProfileParamsBodyApBandSettingsBands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile params body ap band settings bands
+func (o *UpdateNetworkWirelessRfProfileParamsBodyApBandSettingsBands) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateEnabled(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileParamsBodyApBandSettingsBandsEnabledItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4","5","6"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileParamsBodyApBandSettingsBandsEnabledItemsEnum = append(updateNetworkWirelessRfProfileParamsBodyApBandSettingsBandsEnabledItemsEnum, v)
+	}
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyApBandSettingsBands) validateEnabledItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileParamsBodyApBandSettingsBandsEnabledItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyApBandSettingsBands) validateEnabled(formats strfmt.Registry) error {
+	if swag.IsZero(o.Enabled) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Enabled); i++ {
+
+		// value enum
+		if err := o.validateEnabledItemsEnum("updateNetworkWirelessRfProfile"+"."+"apBandSettings"+"."+"bands"+"."+"enabled"+"."+strconv.Itoa(i), "body", o.Enabled[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile params body ap band settings bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyApBandSettingsBands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyApBandSettingsBands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyApBandSettingsBands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileParamsBodyApBandSettingsBands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileParamsBodyFiveGhzSettings Settings related to 5Ghz band
 swagger:model UpdateNetworkWirelessRfProfileParamsBodyFiveGhzSettings
 */
 type UpdateNetworkWirelessRfProfileParamsBodyFiveGhzSettings struct {
@@ -581,13 +5411,13 @@ type UpdateNetworkWirelessRfProfileParamsBodyFiveGhzSettings struct {
 	// Sets channel width (MHz) for 5Ghz band. Can be one of 'auto', '20', '40' or '80'.
 	ChannelWidth string `json:"channelWidth,omitempty"`
 
-	// Sets max power (dBm) of 5Ghz band. Can be integer between 8 and 30.
+	// Sets max power (dBm) of 5Ghz band. Can be integer between 2 and 30.
 	MaxPower int64 `json:"maxPower,omitempty"`
 
 	// Sets min bitrate (Mbps) of 5Ghz band. Can be one of '6', '9', '12', '18', '24', '36', '48' or '54'.
 	MinBitrate int64 `json:"minBitrate,omitempty"`
 
-	// Sets min power (dBm) of 5Ghz band. Can be integer between 8 and 30.
+	// Sets min power (dBm) of 5Ghz band. Can be integer between 2 and 30.
 	MinPower int64 `json:"minPower,omitempty"`
 
 	// The RX-SOP level controls the sensitivity of the radio. It is strongly recommended to use RX-SOP only after consulting a wireless expert. RX-SOP can be configured in the range of -65 to -95 (dBm). A value of null will reset this to the default.
@@ -625,7 +5455,201 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyFiveGhzSettings) UnmarshalBinar
 	return nil
 }
 
-/*UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings Per-SSID radio settings by number.
+/*
+UpdateNetworkWirelessRfProfileParamsBodyFlexRadios Flex radio settings.
+swagger:model UpdateNetworkWirelessRfProfileParamsBodyFlexRadios
+*/
+type UpdateNetworkWirelessRfProfileParamsBodyFlexRadios struct {
+
+	// Flex radios by model.
+	ByModel []*UpdateNetworkWirelessRfProfileParamsBodyFlexRadiosByModelItems0 `json:"byModel"`
+}
+
+// Validate validates this update network wireless rf profile params body flex radios
+func (o *UpdateNetworkWirelessRfProfileParamsBodyFlexRadios) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateByModel(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyFlexRadios) validateByModel(formats strfmt.Registry) error {
+	if swag.IsZero(o.ByModel) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.ByModel); i++ {
+		if swag.IsZero(o.ByModel[i]) { // not required
+			continue
+		}
+
+		if o.ByModel[i] != nil {
+			if err := o.ByModel[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "flexRadios" + "." + "byModel" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "flexRadios" + "." + "byModel" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile params body flex radios based on the context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyFlexRadios) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateByModel(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyFlexRadios) contextValidateByModel(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.ByModel); i++ {
+
+		if o.ByModel[i] != nil {
+
+			if swag.IsZero(o.ByModel[i]) { // not required
+				return nil
+			}
+
+			if err := o.ByModel[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "flexRadios" + "." + "byModel" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "flexRadios" + "." + "byModel" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyFlexRadios) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyFlexRadios) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileParamsBodyFlexRadios
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileParamsBodyFlexRadiosByModelItems0 update network wireless rf profile params body flex radios by model items0
+swagger:model UpdateNetworkWirelessRfProfileParamsBodyFlexRadiosByModelItems0
+*/
+type UpdateNetworkWirelessRfProfileParamsBodyFlexRadiosByModelItems0 struct {
+
+	// Band to use for each flex radio. For example, ['6'] will set the AP's first flex radio to 6 GHz
+	Bands []string `json:"bands"`
+
+	// Model of the AP
+	Model string `json:"model,omitempty"`
+}
+
+// Validate validates this update network wireless rf profile params body flex radios by model items0
+func (o *UpdateNetworkWirelessRfProfileParamsBodyFlexRadiosByModelItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileParamsBodyFlexRadiosByModelItems0BandsItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4","5","6"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileParamsBodyFlexRadiosByModelItems0BandsItemsEnum = append(updateNetworkWirelessRfProfileParamsBodyFlexRadiosByModelItems0BandsItemsEnum, v)
+	}
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyFlexRadiosByModelItems0) validateBandsItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileParamsBodyFlexRadiosByModelItems0BandsItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyFlexRadiosByModelItems0) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Bands); i++ {
+
+		// value enum
+		if err := o.validateBandsItemsEnum("bands"+"."+strconv.Itoa(i), "body", o.Bands[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile params body flex radios by model items0 based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyFlexRadiosByModelItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyFlexRadiosByModelItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyFlexRadiosByModelItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileParamsBodyFlexRadiosByModelItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings Per-SSID radio settings by number.
 swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings
 */
 type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings struct {
@@ -1104,6 +6128,11 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) ContextValidat
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidateNr0(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr0 != nil {
+
+		if swag.IsZero(o.Nr0) { // not required
+			return nil
+		}
+
 		if err := o.Nr0.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "0")
@@ -1120,6 +6149,11 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidat
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidateNr1(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr1 != nil {
+
+		if swag.IsZero(o.Nr1) { // not required
+			return nil
+		}
+
 		if err := o.Nr1.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "1")
@@ -1136,6 +6170,11 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidat
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidateNr10(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr10 != nil {
+
+		if swag.IsZero(o.Nr10) { // not required
+			return nil
+		}
+
 		if err := o.Nr10.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "10")
@@ -1152,6 +6191,11 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidat
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidateNr11(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr11 != nil {
+
+		if swag.IsZero(o.Nr11) { // not required
+			return nil
+		}
+
 		if err := o.Nr11.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "11")
@@ -1168,6 +6212,11 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidat
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidateNr12(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr12 != nil {
+
+		if swag.IsZero(o.Nr12) { // not required
+			return nil
+		}
+
 		if err := o.Nr12.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "12")
@@ -1184,6 +6233,11 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidat
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidateNr13(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr13 != nil {
+
+		if swag.IsZero(o.Nr13) { // not required
+			return nil
+		}
+
 		if err := o.Nr13.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "13")
@@ -1200,6 +6254,11 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidat
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidateNr14(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr14 != nil {
+
+		if swag.IsZero(o.Nr14) { // not required
+			return nil
+		}
+
 		if err := o.Nr14.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "14")
@@ -1216,6 +6275,11 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidat
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidateNr2(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr2 != nil {
+
+		if swag.IsZero(o.Nr2) { // not required
+			return nil
+		}
+
 		if err := o.Nr2.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "2")
@@ -1232,6 +6296,11 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidat
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidateNr3(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr3 != nil {
+
+		if swag.IsZero(o.Nr3) { // not required
+			return nil
+		}
+
 		if err := o.Nr3.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "3")
@@ -1248,6 +6317,11 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidat
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidateNr4(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr4 != nil {
+
+		if swag.IsZero(o.Nr4) { // not required
+			return nil
+		}
+
 		if err := o.Nr4.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "4")
@@ -1264,6 +6338,11 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidat
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidateNr5(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr5 != nil {
+
+		if swag.IsZero(o.Nr5) { // not required
+			return nil
+		}
+
 		if err := o.Nr5.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "5")
@@ -1280,6 +6359,11 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidat
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidateNr6(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr6 != nil {
+
+		if swag.IsZero(o.Nr6) { // not required
+			return nil
+		}
+
 		if err := o.Nr6.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "6")
@@ -1296,6 +6380,11 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidat
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidateNr7(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr7 != nil {
+
+		if swag.IsZero(o.Nr7) { // not required
+			return nil
+		}
+
 		if err := o.Nr7.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "7")
@@ -1312,6 +6401,11 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidat
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidateNr8(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr8 != nil {
+
+		if swag.IsZero(o.Nr8) { // not required
+			return nil
+		}
+
 		if err := o.Nr8.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "8")
@@ -1328,6 +6422,11 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidat
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) contextValidateNr9(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr9 != nil {
+
+		if swag.IsZero(o.Nr9) { // not required
+			return nil
+		}
+
 		if err := o.Nr9.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "9")
@@ -1359,17 +6458,21 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettings) UnmarshalBinar
 	return nil
 }
 
-/*UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0 Settings for SSID 0
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0 Settings for SSID 0
 swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0
 */
 type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0 struct {
 
-	// Choice between 'dual', '2.4ghz' or '5ghz'.
-	// Enum: [dual 2.4ghz 5ghz]
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
 	BandOperationMode string `json:"bandOperationMode,omitempty"`
 
 	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
 	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0Bands `json:"bands,omitempty"`
 
 	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
 	MinBitrate float32 `json:"minBitrate,omitempty"`
@@ -1383,6 +6486,10 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0) Validate(fo
 		res = append(res, err)
 	}
 
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -1393,7 +6500,7 @@ var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0TypeBandOperationM
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["dual","2.4ghz","5ghz"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1403,14 +6510,20 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0BandOperationModeDual captures enum value "dual"
-	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0BandOperationModeDual string = "dual"
-
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0BandOperationModeNr2Dot4ghz string = "2.4ghz"
 
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0BandOperationModeNr5ghz captures enum value "5ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0BandOperationModeMulti string = "multi"
 )
 
 // prop value enum
@@ -1434,8 +6547,57 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0) validateBan
 	return nil
 }
 
-// ContextValidate validates this update network wireless rf profile params body per ssid settings nr0 based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "0" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "0" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile params body per ssid settings nr0 based on the context it is used
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "0" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "0" + "." + "bands")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -1457,17 +6619,104 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0) UnmarshalBi
 	return nil
 }
 
-/*UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1 Settings for SSID 1
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0Bands
+*/
+type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile params body per ssid settings nr0 bands
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0Bands) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateEnabled(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0BandsEnabledItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4","5","6"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0BandsEnabledItemsEnum = append(updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0BandsEnabledItemsEnum, v)
+	}
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0Bands) validateEnabledItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0BandsEnabledItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0Bands) validateEnabled(formats strfmt.Registry) error {
+	if swag.IsZero(o.Enabled) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Enabled); i++ {
+
+		// value enum
+		if err := o.validateEnabledItemsEnum("updateNetworkWirelessRfProfile"+"."+"perSsidSettings"+"."+"0"+"."+"bands"+"."+"enabled"+"."+strconv.Itoa(i), "body", o.Enabled[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile params body per ssid settings nr0 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr0Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1 Settings for SSID 1
 swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1
 */
 type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1 struct {
 
-	// Choice between 'dual', '2.4ghz' or '5ghz'.
-	// Enum: [dual 2.4ghz 5ghz]
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
 	BandOperationMode string `json:"bandOperationMode,omitempty"`
 
 	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
 	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1Bands `json:"bands,omitempty"`
 
 	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
 	MinBitrate float32 `json:"minBitrate,omitempty"`
@@ -1481,6 +6730,10 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1) Validate(fo
 		res = append(res, err)
 	}
 
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -1491,7 +6744,7 @@ var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1TypeBandOperationM
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["dual","2.4ghz","5ghz"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1501,14 +6754,20 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1BandOperationModeDual captures enum value "dual"
-	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1BandOperationModeDual string = "dual"
-
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1BandOperationModeNr2Dot4ghz string = "2.4ghz"
 
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1BandOperationModeNr5ghz captures enum value "5ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1BandOperationModeMulti string = "multi"
 )
 
 // prop value enum
@@ -1532,8 +6791,57 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1) validateBan
 	return nil
 }
 
-// ContextValidate validates this update network wireless rf profile params body per ssid settings nr1 based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "1" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "1" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile params body per ssid settings nr1 based on the context it is used
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "1" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "1" + "." + "bands")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -1555,17 +6863,21 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1) UnmarshalBi
 	return nil
 }
 
-/*UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10 Settings for SSID 10
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10 Settings for SSID 10
 swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10
 */
 type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10 struct {
 
-	// Choice between 'dual', '2.4ghz' or '5ghz'.
-	// Enum: [dual 2.4ghz 5ghz]
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
 	BandOperationMode string `json:"bandOperationMode,omitempty"`
 
 	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
 	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10Bands `json:"bands,omitempty"`
 
 	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
 	MinBitrate float32 `json:"minBitrate,omitempty"`
@@ -1579,6 +6891,10 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10) Validate(f
 		res = append(res, err)
 	}
 
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -1589,7 +6905,7 @@ var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10TypeBandOperation
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["dual","2.4ghz","5ghz"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1599,14 +6915,20 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10BandOperationModeDual captures enum value "dual"
-	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10BandOperationModeDual string = "dual"
-
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10BandOperationModeNr2Dot4ghz string = "2.4ghz"
 
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10BandOperationModeNr5ghz captures enum value "5ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10BandOperationModeMulti string = "multi"
 )
 
 // prop value enum
@@ -1630,8 +6952,57 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10) validateBa
 	return nil
 }
 
-// ContextValidate validates this update network wireless rf profile params body per ssid settings nr10 based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "10" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "10" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile params body per ssid settings nr10 based on the context it is used
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "10" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "10" + "." + "bands")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -1653,17 +7024,104 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10) UnmarshalB
 	return nil
 }
 
-/*UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11 Settings for SSID 11
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10Bands
+*/
+type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile params body per ssid settings nr10 bands
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10Bands) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateEnabled(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10BandsEnabledItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4","5","6"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10BandsEnabledItemsEnum = append(updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10BandsEnabledItemsEnum, v)
+	}
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10Bands) validateEnabledItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10BandsEnabledItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10Bands) validateEnabled(formats strfmt.Registry) error {
+	if swag.IsZero(o.Enabled) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Enabled); i++ {
+
+		// value enum
+		if err := o.validateEnabledItemsEnum("updateNetworkWirelessRfProfile"+"."+"perSsidSettings"+"."+"10"+"."+"bands"+"."+"enabled"+"."+strconv.Itoa(i), "body", o.Enabled[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile params body per ssid settings nr10 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr10Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11 Settings for SSID 11
 swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11
 */
 type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11 struct {
 
-	// Choice between 'dual', '2.4ghz' or '5ghz'.
-	// Enum: [dual 2.4ghz 5ghz]
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
 	BandOperationMode string `json:"bandOperationMode,omitempty"`
 
 	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
 	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11Bands `json:"bands,omitempty"`
 
 	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
 	MinBitrate float32 `json:"minBitrate,omitempty"`
@@ -1677,6 +7135,10 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11) Validate(f
 		res = append(res, err)
 	}
 
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -1687,7 +7149,7 @@ var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11TypeBandOperation
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["dual","2.4ghz","5ghz"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1697,14 +7159,20 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11BandOperationModeDual captures enum value "dual"
-	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11BandOperationModeDual string = "dual"
-
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11BandOperationModeNr2Dot4ghz string = "2.4ghz"
 
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11BandOperationModeNr5ghz captures enum value "5ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11BandOperationModeMulti string = "multi"
 )
 
 // prop value enum
@@ -1728,8 +7196,57 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11) validateBa
 	return nil
 }
 
-// ContextValidate validates this update network wireless rf profile params body per ssid settings nr11 based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "11" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "11" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile params body per ssid settings nr11 based on the context it is used
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "11" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "11" + "." + "bands")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -1751,17 +7268,104 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11) UnmarshalB
 	return nil
 }
 
-/*UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12 Settings for SSID 12
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11Bands
+*/
+type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile params body per ssid settings nr11 bands
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11Bands) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateEnabled(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11BandsEnabledItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4","5","6"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11BandsEnabledItemsEnum = append(updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11BandsEnabledItemsEnum, v)
+	}
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11Bands) validateEnabledItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11BandsEnabledItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11Bands) validateEnabled(formats strfmt.Registry) error {
+	if swag.IsZero(o.Enabled) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Enabled); i++ {
+
+		// value enum
+		if err := o.validateEnabledItemsEnum("updateNetworkWirelessRfProfile"+"."+"perSsidSettings"+"."+"11"+"."+"bands"+"."+"enabled"+"."+strconv.Itoa(i), "body", o.Enabled[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile params body per ssid settings nr11 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr11Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12 Settings for SSID 12
 swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12
 */
 type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12 struct {
 
-	// Choice between 'dual', '2.4ghz' or '5ghz'.
-	// Enum: [dual 2.4ghz 5ghz]
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
 	BandOperationMode string `json:"bandOperationMode,omitempty"`
 
 	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
 	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12Bands `json:"bands,omitempty"`
 
 	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
 	MinBitrate float32 `json:"minBitrate,omitempty"`
@@ -1775,6 +7379,10 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12) Validate(f
 		res = append(res, err)
 	}
 
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -1785,7 +7393,7 @@ var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12TypeBandOperation
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["dual","2.4ghz","5ghz"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1795,14 +7403,20 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12BandOperationModeDual captures enum value "dual"
-	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12BandOperationModeDual string = "dual"
-
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12BandOperationModeNr2Dot4ghz string = "2.4ghz"
 
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12BandOperationModeNr5ghz captures enum value "5ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12BandOperationModeMulti string = "multi"
 )
 
 // prop value enum
@@ -1826,8 +7440,57 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12) validateBa
 	return nil
 }
 
-// ContextValidate validates this update network wireless rf profile params body per ssid settings nr12 based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "12" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "12" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile params body per ssid settings nr12 based on the context it is used
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "12" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "12" + "." + "bands")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -1849,17 +7512,104 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12) UnmarshalB
 	return nil
 }
 
-/*UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13 Settings for SSID 13
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12Bands
+*/
+type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile params body per ssid settings nr12 bands
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12Bands) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateEnabled(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12BandsEnabledItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4","5","6"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12BandsEnabledItemsEnum = append(updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12BandsEnabledItemsEnum, v)
+	}
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12Bands) validateEnabledItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12BandsEnabledItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12Bands) validateEnabled(formats strfmt.Registry) error {
+	if swag.IsZero(o.Enabled) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Enabled); i++ {
+
+		// value enum
+		if err := o.validateEnabledItemsEnum("updateNetworkWirelessRfProfile"+"."+"perSsidSettings"+"."+"12"+"."+"bands"+"."+"enabled"+"."+strconv.Itoa(i), "body", o.Enabled[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile params body per ssid settings nr12 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr12Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13 Settings for SSID 13
 swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13
 */
 type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13 struct {
 
-	// Choice between 'dual', '2.4ghz' or '5ghz'.
-	// Enum: [dual 2.4ghz 5ghz]
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
 	BandOperationMode string `json:"bandOperationMode,omitempty"`
 
 	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
 	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13Bands `json:"bands,omitempty"`
 
 	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
 	MinBitrate float32 `json:"minBitrate,omitempty"`
@@ -1873,6 +7623,10 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13) Validate(f
 		res = append(res, err)
 	}
 
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -1883,7 +7637,7 @@ var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13TypeBandOperation
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["dual","2.4ghz","5ghz"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1893,14 +7647,20 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13BandOperationModeDual captures enum value "dual"
-	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13BandOperationModeDual string = "dual"
-
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13BandOperationModeNr2Dot4ghz string = "2.4ghz"
 
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13BandOperationModeNr5ghz captures enum value "5ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13BandOperationModeMulti string = "multi"
 )
 
 // prop value enum
@@ -1924,8 +7684,57 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13) validateBa
 	return nil
 }
 
-// ContextValidate validates this update network wireless rf profile params body per ssid settings nr13 based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "13" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "13" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile params body per ssid settings nr13 based on the context it is used
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "13" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "13" + "." + "bands")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -1947,17 +7756,104 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13) UnmarshalB
 	return nil
 }
 
-/*UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14 Settings for SSID 14
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13Bands
+*/
+type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile params body per ssid settings nr13 bands
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13Bands) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateEnabled(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13BandsEnabledItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4","5","6"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13BandsEnabledItemsEnum = append(updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13BandsEnabledItemsEnum, v)
+	}
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13Bands) validateEnabledItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13BandsEnabledItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13Bands) validateEnabled(formats strfmt.Registry) error {
+	if swag.IsZero(o.Enabled) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Enabled); i++ {
+
+		// value enum
+		if err := o.validateEnabledItemsEnum("updateNetworkWirelessRfProfile"+"."+"perSsidSettings"+"."+"13"+"."+"bands"+"."+"enabled"+"."+strconv.Itoa(i), "body", o.Enabled[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile params body per ssid settings nr13 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr13Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14 Settings for SSID 14
 swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14
 */
 type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14 struct {
 
-	// Choice between 'dual', '2.4ghz' or '5ghz'.
-	// Enum: [dual 2.4ghz 5ghz]
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
 	BandOperationMode string `json:"bandOperationMode,omitempty"`
 
 	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
 	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14Bands `json:"bands,omitempty"`
 
 	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
 	MinBitrate float32 `json:"minBitrate,omitempty"`
@@ -1971,6 +7867,10 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14) Validate(f
 		res = append(res, err)
 	}
 
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -1981,7 +7881,7 @@ var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14TypeBandOperation
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["dual","2.4ghz","5ghz"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1991,14 +7891,20 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14BandOperationModeDual captures enum value "dual"
-	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14BandOperationModeDual string = "dual"
-
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14BandOperationModeNr2Dot4ghz string = "2.4ghz"
 
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14BandOperationModeNr5ghz captures enum value "5ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14BandOperationModeMulti string = "multi"
 )
 
 // prop value enum
@@ -2022,8 +7928,57 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14) validateBa
 	return nil
 }
 
-// ContextValidate validates this update network wireless rf profile params body per ssid settings nr14 based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "14" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "14" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile params body per ssid settings nr14 based on the context it is used
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "14" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "14" + "." + "bands")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -2045,17 +8000,187 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14) UnmarshalB
 	return nil
 }
 
-/*UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2 Settings for SSID 2
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14Bands
+*/
+type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile params body per ssid settings nr14 bands
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14Bands) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateEnabled(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14BandsEnabledItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4","5","6"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14BandsEnabledItemsEnum = append(updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14BandsEnabledItemsEnum, v)
+	}
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14Bands) validateEnabledItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14BandsEnabledItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14Bands) validateEnabled(formats strfmt.Registry) error {
+	if swag.IsZero(o.Enabled) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Enabled); i++ {
+
+		// value enum
+		if err := o.validateEnabledItemsEnum("updateNetworkWirelessRfProfile"+"."+"perSsidSettings"+"."+"14"+"."+"bands"+"."+"enabled"+"."+strconv.Itoa(i), "body", o.Enabled[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile params body per ssid settings nr14 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr14Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1Bands
+*/
+type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile params body per ssid settings nr1 bands
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1Bands) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateEnabled(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1BandsEnabledItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4","5","6"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1BandsEnabledItemsEnum = append(updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1BandsEnabledItemsEnum, v)
+	}
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1Bands) validateEnabledItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1BandsEnabledItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1Bands) validateEnabled(formats strfmt.Registry) error {
+	if swag.IsZero(o.Enabled) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Enabled); i++ {
+
+		// value enum
+		if err := o.validateEnabledItemsEnum("updateNetworkWirelessRfProfile"+"."+"perSsidSettings"+"."+"1"+"."+"bands"+"."+"enabled"+"."+strconv.Itoa(i), "body", o.Enabled[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile params body per ssid settings nr1 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr1Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2 Settings for SSID 2
 swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2
 */
 type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2 struct {
 
-	// Choice between 'dual', '2.4ghz' or '5ghz'.
-	// Enum: [dual 2.4ghz 5ghz]
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
 	BandOperationMode string `json:"bandOperationMode,omitempty"`
 
 	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
 	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2Bands `json:"bands,omitempty"`
 
 	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
 	MinBitrate float32 `json:"minBitrate,omitempty"`
@@ -2069,6 +8194,10 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2) Validate(fo
 		res = append(res, err)
 	}
 
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -2079,7 +8208,7 @@ var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2TypeBandOperationM
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["dual","2.4ghz","5ghz"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -2089,14 +8218,20 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2BandOperationModeDual captures enum value "dual"
-	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2BandOperationModeDual string = "dual"
-
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2BandOperationModeNr2Dot4ghz string = "2.4ghz"
 
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2BandOperationModeNr5ghz captures enum value "5ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2BandOperationModeMulti string = "multi"
 )
 
 // prop value enum
@@ -2120,8 +8255,57 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2) validateBan
 	return nil
 }
 
-// ContextValidate validates this update network wireless rf profile params body per ssid settings nr2 based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "2" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "2" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile params body per ssid settings nr2 based on the context it is used
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "2" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "2" + "." + "bands")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -2143,17 +8327,104 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2) UnmarshalBi
 	return nil
 }
 
-/*UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3 Settings for SSID 3
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2Bands
+*/
+type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile params body per ssid settings nr2 bands
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2Bands) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateEnabled(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2BandsEnabledItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4","5","6"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2BandsEnabledItemsEnum = append(updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2BandsEnabledItemsEnum, v)
+	}
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2Bands) validateEnabledItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2BandsEnabledItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2Bands) validateEnabled(formats strfmt.Registry) error {
+	if swag.IsZero(o.Enabled) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Enabled); i++ {
+
+		// value enum
+		if err := o.validateEnabledItemsEnum("updateNetworkWirelessRfProfile"+"."+"perSsidSettings"+"."+"2"+"."+"bands"+"."+"enabled"+"."+strconv.Itoa(i), "body", o.Enabled[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile params body per ssid settings nr2 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr2Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3 Settings for SSID 3
 swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3
 */
 type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3 struct {
 
-	// Choice between 'dual', '2.4ghz' or '5ghz'.
-	// Enum: [dual 2.4ghz 5ghz]
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
 	BandOperationMode string `json:"bandOperationMode,omitempty"`
 
 	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
 	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3Bands `json:"bands,omitempty"`
 
 	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
 	MinBitrate float32 `json:"minBitrate,omitempty"`
@@ -2167,6 +8438,10 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3) Validate(fo
 		res = append(res, err)
 	}
 
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -2177,7 +8452,7 @@ var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3TypeBandOperationM
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["dual","2.4ghz","5ghz"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -2187,14 +8462,20 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3BandOperationModeDual captures enum value "dual"
-	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3BandOperationModeDual string = "dual"
-
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3BandOperationModeNr2Dot4ghz string = "2.4ghz"
 
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3BandOperationModeNr5ghz captures enum value "5ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3BandOperationModeMulti string = "multi"
 )
 
 // prop value enum
@@ -2218,8 +8499,57 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3) validateBan
 	return nil
 }
 
-// ContextValidate validates this update network wireless rf profile params body per ssid settings nr3 based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "3" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "3" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile params body per ssid settings nr3 based on the context it is used
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "3" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "3" + "." + "bands")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -2241,17 +8571,104 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3) UnmarshalBi
 	return nil
 }
 
-/*UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4 Settings for SSID 4
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3Bands
+*/
+type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile params body per ssid settings nr3 bands
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3Bands) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateEnabled(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3BandsEnabledItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4","5","6"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3BandsEnabledItemsEnum = append(updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3BandsEnabledItemsEnum, v)
+	}
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3Bands) validateEnabledItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3BandsEnabledItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3Bands) validateEnabled(formats strfmt.Registry) error {
+	if swag.IsZero(o.Enabled) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Enabled); i++ {
+
+		// value enum
+		if err := o.validateEnabledItemsEnum("updateNetworkWirelessRfProfile"+"."+"perSsidSettings"+"."+"3"+"."+"bands"+"."+"enabled"+"."+strconv.Itoa(i), "body", o.Enabled[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile params body per ssid settings nr3 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr3Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4 Settings for SSID 4
 swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4
 */
 type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4 struct {
 
-	// Choice between 'dual', '2.4ghz' or '5ghz'.
-	// Enum: [dual 2.4ghz 5ghz]
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
 	BandOperationMode string `json:"bandOperationMode,omitempty"`
 
 	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
 	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4Bands `json:"bands,omitempty"`
 
 	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
 	MinBitrate float32 `json:"minBitrate,omitempty"`
@@ -2265,6 +8682,10 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4) Validate(fo
 		res = append(res, err)
 	}
 
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -2275,7 +8696,7 @@ var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4TypeBandOperationM
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["dual","2.4ghz","5ghz"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -2285,14 +8706,20 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4BandOperationModeDual captures enum value "dual"
-	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4BandOperationModeDual string = "dual"
-
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4BandOperationModeNr2Dot4ghz string = "2.4ghz"
 
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4BandOperationModeNr5ghz captures enum value "5ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4BandOperationModeMulti string = "multi"
 )
 
 // prop value enum
@@ -2316,8 +8743,57 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4) validateBan
 	return nil
 }
 
-// ContextValidate validates this update network wireless rf profile params body per ssid settings nr4 based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "4" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "4" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile params body per ssid settings nr4 based on the context it is used
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "4" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "4" + "." + "bands")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -2339,17 +8815,104 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4) UnmarshalBi
 	return nil
 }
 
-/*UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5 Settings for SSID 5
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4Bands
+*/
+type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile params body per ssid settings nr4 bands
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4Bands) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateEnabled(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4BandsEnabledItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4","5","6"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4BandsEnabledItemsEnum = append(updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4BandsEnabledItemsEnum, v)
+	}
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4Bands) validateEnabledItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4BandsEnabledItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4Bands) validateEnabled(formats strfmt.Registry) error {
+	if swag.IsZero(o.Enabled) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Enabled); i++ {
+
+		// value enum
+		if err := o.validateEnabledItemsEnum("updateNetworkWirelessRfProfile"+"."+"perSsidSettings"+"."+"4"+"."+"bands"+"."+"enabled"+"."+strconv.Itoa(i), "body", o.Enabled[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile params body per ssid settings nr4 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr4Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5 Settings for SSID 5
 swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5
 */
 type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5 struct {
 
-	// Choice between 'dual', '2.4ghz' or '5ghz'.
-	// Enum: [dual 2.4ghz 5ghz]
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
 	BandOperationMode string `json:"bandOperationMode,omitempty"`
 
 	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
 	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5Bands `json:"bands,omitempty"`
 
 	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
 	MinBitrate float32 `json:"minBitrate,omitempty"`
@@ -2363,6 +8926,10 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5) Validate(fo
 		res = append(res, err)
 	}
 
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -2373,7 +8940,7 @@ var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5TypeBandOperationM
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["dual","2.4ghz","5ghz"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -2383,14 +8950,20 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5BandOperationModeDual captures enum value "dual"
-	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5BandOperationModeDual string = "dual"
-
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5BandOperationModeNr2Dot4ghz string = "2.4ghz"
 
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5BandOperationModeNr5ghz captures enum value "5ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5BandOperationModeMulti string = "multi"
 )
 
 // prop value enum
@@ -2414,8 +8987,57 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5) validateBan
 	return nil
 }
 
-// ContextValidate validates this update network wireless rf profile params body per ssid settings nr5 based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "5" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "5" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile params body per ssid settings nr5 based on the context it is used
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "5" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "5" + "." + "bands")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -2437,17 +9059,104 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5) UnmarshalBi
 	return nil
 }
 
-/*UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6 Settings for SSID 6
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5Bands
+*/
+type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile params body per ssid settings nr5 bands
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5Bands) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateEnabled(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5BandsEnabledItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4","5","6"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5BandsEnabledItemsEnum = append(updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5BandsEnabledItemsEnum, v)
+	}
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5Bands) validateEnabledItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5BandsEnabledItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5Bands) validateEnabled(formats strfmt.Registry) error {
+	if swag.IsZero(o.Enabled) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Enabled); i++ {
+
+		// value enum
+		if err := o.validateEnabledItemsEnum("updateNetworkWirelessRfProfile"+"."+"perSsidSettings"+"."+"5"+"."+"bands"+"."+"enabled"+"."+strconv.Itoa(i), "body", o.Enabled[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile params body per ssid settings nr5 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr5Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6 Settings for SSID 6
 swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6
 */
 type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6 struct {
 
-	// Choice between 'dual', '2.4ghz' or '5ghz'.
-	// Enum: [dual 2.4ghz 5ghz]
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
 	BandOperationMode string `json:"bandOperationMode,omitempty"`
 
 	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
 	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6Bands `json:"bands,omitempty"`
 
 	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
 	MinBitrate float32 `json:"minBitrate,omitempty"`
@@ -2461,6 +9170,10 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6) Validate(fo
 		res = append(res, err)
 	}
 
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -2471,7 +9184,7 @@ var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6TypeBandOperationM
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["dual","2.4ghz","5ghz"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -2481,14 +9194,20 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6BandOperationModeDual captures enum value "dual"
-	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6BandOperationModeDual string = "dual"
-
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6BandOperationModeNr2Dot4ghz string = "2.4ghz"
 
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6BandOperationModeNr5ghz captures enum value "5ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6BandOperationModeMulti string = "multi"
 )
 
 // prop value enum
@@ -2512,8 +9231,57 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6) validateBan
 	return nil
 }
 
-// ContextValidate validates this update network wireless rf profile params body per ssid settings nr6 based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "6" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "6" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile params body per ssid settings nr6 based on the context it is used
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "6" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "6" + "." + "bands")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -2535,17 +9303,104 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6) UnmarshalBi
 	return nil
 }
 
-/*UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7 Settings for SSID 7
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6Bands
+*/
+type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile params body per ssid settings nr6 bands
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6Bands) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateEnabled(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6BandsEnabledItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4","5","6"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6BandsEnabledItemsEnum = append(updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6BandsEnabledItemsEnum, v)
+	}
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6Bands) validateEnabledItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6BandsEnabledItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6Bands) validateEnabled(formats strfmt.Registry) error {
+	if swag.IsZero(o.Enabled) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Enabled); i++ {
+
+		// value enum
+		if err := o.validateEnabledItemsEnum("updateNetworkWirelessRfProfile"+"."+"perSsidSettings"+"."+"6"+"."+"bands"+"."+"enabled"+"."+strconv.Itoa(i), "body", o.Enabled[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile params body per ssid settings nr6 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr6Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7 Settings for SSID 7
 swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7
 */
 type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7 struct {
 
-	// Choice between 'dual', '2.4ghz' or '5ghz'.
-	// Enum: [dual 2.4ghz 5ghz]
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
 	BandOperationMode string `json:"bandOperationMode,omitempty"`
 
 	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
 	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7Bands `json:"bands,omitempty"`
 
 	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
 	MinBitrate float32 `json:"minBitrate,omitempty"`
@@ -2559,6 +9414,10 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7) Validate(fo
 		res = append(res, err)
 	}
 
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -2569,7 +9428,7 @@ var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7TypeBandOperationM
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["dual","2.4ghz","5ghz"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -2579,14 +9438,20 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7BandOperationModeDual captures enum value "dual"
-	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7BandOperationModeDual string = "dual"
-
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7BandOperationModeNr2Dot4ghz string = "2.4ghz"
 
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7BandOperationModeNr5ghz captures enum value "5ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7BandOperationModeMulti string = "multi"
 )
 
 // prop value enum
@@ -2610,8 +9475,57 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7) validateBan
 	return nil
 }
 
-// ContextValidate validates this update network wireless rf profile params body per ssid settings nr7 based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "7" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "7" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile params body per ssid settings nr7 based on the context it is used
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "7" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "7" + "." + "bands")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -2633,17 +9547,104 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7) UnmarshalBi
 	return nil
 }
 
-/*UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8 Settings for SSID 8
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7Bands
+*/
+type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile params body per ssid settings nr7 bands
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7Bands) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateEnabled(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7BandsEnabledItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4","5","6"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7BandsEnabledItemsEnum = append(updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7BandsEnabledItemsEnum, v)
+	}
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7Bands) validateEnabledItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7BandsEnabledItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7Bands) validateEnabled(formats strfmt.Registry) error {
+	if swag.IsZero(o.Enabled) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Enabled); i++ {
+
+		// value enum
+		if err := o.validateEnabledItemsEnum("updateNetworkWirelessRfProfile"+"."+"perSsidSettings"+"."+"7"+"."+"bands"+"."+"enabled"+"."+strconv.Itoa(i), "body", o.Enabled[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile params body per ssid settings nr7 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr7Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8 Settings for SSID 8
 swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8
 */
 type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8 struct {
 
-	// Choice between 'dual', '2.4ghz' or '5ghz'.
-	// Enum: [dual 2.4ghz 5ghz]
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
 	BandOperationMode string `json:"bandOperationMode,omitempty"`
 
 	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
 	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8Bands `json:"bands,omitempty"`
 
 	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
 	MinBitrate float32 `json:"minBitrate,omitempty"`
@@ -2657,6 +9658,10 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8) Validate(fo
 		res = append(res, err)
 	}
 
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -2667,7 +9672,7 @@ var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8TypeBandOperationM
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["dual","2.4ghz","5ghz"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -2677,14 +9682,20 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8BandOperationModeDual captures enum value "dual"
-	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8BandOperationModeDual string = "dual"
-
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8BandOperationModeNr2Dot4ghz string = "2.4ghz"
 
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8BandOperationModeNr5ghz captures enum value "5ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8BandOperationModeMulti string = "multi"
 )
 
 // prop value enum
@@ -2708,8 +9719,57 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8) validateBan
 	return nil
 }
 
-// ContextValidate validates this update network wireless rf profile params body per ssid settings nr8 based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "8" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "8" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile params body per ssid settings nr8 based on the context it is used
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "8" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "8" + "." + "bands")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -2731,17 +9791,104 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8) UnmarshalBi
 	return nil
 }
 
-/*UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9 Settings for SSID 9
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8Bands
+*/
+type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile params body per ssid settings nr8 bands
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8Bands) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateEnabled(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8BandsEnabledItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4","5","6"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8BandsEnabledItemsEnum = append(updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8BandsEnabledItemsEnum, v)
+	}
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8Bands) validateEnabledItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8BandsEnabledItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8Bands) validateEnabled(formats strfmt.Registry) error {
+	if swag.IsZero(o.Enabled) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Enabled); i++ {
+
+		// value enum
+		if err := o.validateEnabledItemsEnum("updateNetworkWirelessRfProfile"+"."+"perSsidSettings"+"."+"8"+"."+"bands"+"."+"enabled"+"."+strconv.Itoa(i), "body", o.Enabled[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile params body per ssid settings nr8 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr8Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9 Settings for SSID 9
 swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9
 */
 type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9 struct {
 
-	// Choice between 'dual', '2.4ghz' or '5ghz'.
-	// Enum: [dual 2.4ghz 5ghz]
+	// Choice between 'dual', '2.4ghz', '5ghz', '6ghz' or 'multi'.
+	// Enum: [2.4ghz 5ghz 6ghz dual multi]
 	BandOperationMode string `json:"bandOperationMode,omitempty"`
 
 	// Steers client to most open band between 2.4 GHz and 5 GHz. Can be either true or false.
 	BandSteeringEnabled bool `json:"bandSteeringEnabled,omitempty"`
+
+	// bands
+	Bands *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9Bands `json:"bands,omitempty"`
 
 	// Sets min bitrate (Mbps) of this SSID. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
 	MinBitrate float32 `json:"minBitrate,omitempty"`
@@ -2755,6 +9902,10 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9) Validate(fo
 		res = append(res, err)
 	}
 
+	if err := o.validateBands(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -2765,7 +9916,7 @@ var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9TypeBandOperationM
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["dual","2.4ghz","5ghz"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["2.4ghz","5ghz","6ghz","dual","multi"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -2775,14 +9926,20 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9BandOperationModeDual captures enum value "dual"
-	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9BandOperationModeDual string = "dual"
-
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9BandOperationModeNr2Dot4ghz captures enum value "2.4ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9BandOperationModeNr2Dot4ghz string = "2.4ghz"
 
 	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9BandOperationModeNr5ghz captures enum value "5ghz"
 	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9BandOperationModeNr5ghz string = "5ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9BandOperationModeNr6ghz captures enum value "6ghz"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9BandOperationModeNr6ghz string = "6ghz"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9BandOperationModeDual captures enum value "dual"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9BandOperationModeDual string = "dual"
+
+	// UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9BandOperationModeMulti captures enum value "multi"
+	UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9BandOperationModeMulti string = "multi"
 )
 
 // prop value enum
@@ -2806,8 +9963,57 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9) validateBan
 	return nil
 }
 
-// ContextValidate validates this update network wireless rf profile params body per ssid settings nr9 based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9) validateBands(formats strfmt.Registry) error {
+	if swag.IsZero(o.Bands) { // not required
+		return nil
+	}
+
+	if o.Bands != nil {
+		if err := o.Bands.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "9" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "9" + "." + "bands")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless rf profile params body per ssid settings nr9 based on the context it is used
 func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBands(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9) contextValidateBands(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Bands != nil {
+
+		if swag.IsZero(o.Bands) { // not required
+			return nil
+		}
+
+		if err := o.Bands.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "9" + "." + "bands")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWirelessRfProfile" + "." + "perSsidSettings" + "." + "9" + "." + "bands")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -2829,7 +10035,144 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9) UnmarshalBi
 	return nil
 }
 
-/*UpdateNetworkWirelessRfProfileParamsBodyTransmission Settings related to radio transmission.
+/*
+UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9Bands Settings related to all bands
+swagger:model UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9Bands
+*/
+type UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9Bands struct {
+
+	// List of enabled bands. Can include ["2.4", "5", "6"]
+	Enabled []string `json:"enabled"`
+}
+
+// Validate validates this update network wireless rf profile params body per ssid settings nr9 bands
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9Bands) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateEnabled(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9BandsEnabledItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["2.4","5","6"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9BandsEnabledItemsEnum = append(updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9BandsEnabledItemsEnum, v)
+	}
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9Bands) validateEnabledItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9BandsEnabledItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9Bands) validateEnabled(formats strfmt.Registry) error {
+	if swag.IsZero(o.Enabled) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Enabled); i++ {
+
+		// value enum
+		if err := o.validateEnabledItemsEnum("updateNetworkWirelessRfProfile"+"."+"perSsidSettings"+"."+"9"+"."+"bands"+"."+"enabled"+"."+strconv.Itoa(i), "body", o.Enabled[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile params body per ssid settings nr9 bands based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9Bands) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9Bands) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9Bands) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileParamsBodyPerSsidSettingsNr9Bands
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileParamsBodySixGhzSettings Settings related to 6Ghz band. Only applicable to networks with 6Ghz capable APs
+swagger:model UpdateNetworkWirelessRfProfileParamsBodySixGhzSettings
+*/
+type UpdateNetworkWirelessRfProfileParamsBodySixGhzSettings struct {
+
+	// Sets channel width (MHz) for 6Ghz band. Can be one of '0', '20', '40', '80' or '160'.
+	ChannelWidth string `json:"channelWidth,omitempty"`
+
+	// Sets max power (dBm) of 6Ghz band. Can be integer between 2 and 30.
+	MaxPower int64 `json:"maxPower,omitempty"`
+
+	// Sets min bitrate (Mbps) of 6Ghz band. Can be one of '6', '9', '12', '18', '24', '36', '48' or '54'.
+	MinBitrate int64 `json:"minBitrate,omitempty"`
+
+	// Sets min power (dBm) of 6Ghz band. Can be integer between 2 and 30.
+	MinPower int64 `json:"minPower,omitempty"`
+
+	// The RX-SOP level controls the sensitivity of the radio. It is strongly recommended to use RX-SOP only after consulting a wireless expert. RX-SOP can be configured in the range of -65 to -95 (dBm). A value of null will reset this to the default.
+	Rxsop int64 `json:"rxsop,omitempty"`
+
+	// Sets valid auto channels for 6Ghz band. Can be one of '1', '5', '9', '13', '17', '21', '25', '29', '33', '37', '41', '45', '49', '53', '57', '61', '65', '69', '73', '77', '81', '85', '89', '93', '97', '101', '105', '109', '113', '117', '121', '125', '129', '133', '137', '141', '145', '149', '153', '157', '161', '165', '169', '173', '177', '181', '185', '189', '193', '197', '201', '205', '209', '213', '217', '221', '225', '229' or '233'.
+	ValidAutoChannels []int64 `json:"validAutoChannels"`
+}
+
+// Validate validates this update network wireless rf profile params body six ghz settings
+func (o *UpdateNetworkWirelessRfProfileParamsBodySixGhzSettings) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless rf profile params body six ghz settings based on context it is used
+func (o *UpdateNetworkWirelessRfProfileParamsBodySixGhzSettings) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodySixGhzSettings) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessRfProfileParamsBodySixGhzSettings) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessRfProfileParamsBodySixGhzSettings
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessRfProfileParamsBodyTransmission Settings related to radio transmission.
 swagger:model UpdateNetworkWirelessRfProfileParamsBodyTransmission
 */
 type UpdateNetworkWirelessRfProfileParamsBodyTransmission struct {
@@ -2866,7 +10209,8 @@ func (o *UpdateNetworkWirelessRfProfileParamsBodyTransmission) UnmarshalBinary(b
 	return nil
 }
 
-/*UpdateNetworkWirelessRfProfileParamsBodyTwoFourGhzSettings Settings related to 2.4Ghz band
+/*
+UpdateNetworkWirelessRfProfileParamsBodyTwoFourGhzSettings Settings related to 2.4Ghz band
 swagger:model UpdateNetworkWirelessRfProfileParamsBodyTwoFourGhzSettings
 */
 type UpdateNetworkWirelessRfProfileParamsBodyTwoFourGhzSettings struct {
@@ -2874,13 +10218,13 @@ type UpdateNetworkWirelessRfProfileParamsBodyTwoFourGhzSettings struct {
 	// Determines whether ax radio on 2.4Ghz band is on or off. Can be either true or false. If false, we highly recommend disabling band steering.
 	AxEnabled bool `json:"axEnabled,omitempty"`
 
-	// Sets max power (dBm) of 2.4Ghz band. Can be integer between 5 and 30.
+	// Sets max power (dBm) of 2.4Ghz band. Can be integer between 2 and 30.
 	MaxPower int64 `json:"maxPower,omitempty"`
 
 	// Sets min bitrate (Mbps) of 2.4Ghz band. Can be one of '1', '2', '5.5', '6', '9', '11', '12', '18', '24', '36', '48' or '54'.
 	MinBitrate float32 `json:"minBitrate,omitempty"`
 
-	// Sets min power (dBm) of 2.4Ghz band. Can be integer between 5 and 30.
+	// Sets min power (dBm) of 2.4Ghz band. Can be integer between 2 and 30.
 	MinPower int64 `json:"minPower,omitempty"`
 
 	// The RX-SOP level controls the sensitivity of the radio. It is strongly recommended to use RX-SOP only after consulting a wireless expert. RX-SOP can be configured in the range of -65 to -95 (dBm). A value of null will reset this to the default.

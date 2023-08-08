@@ -52,14 +52,19 @@ func NewUpdateNetworkApplianceContentFilteringParamsWithHTTPClient(client *http.
 	}
 }
 
-/* UpdateNetworkApplianceContentFilteringParams contains all the parameters to send to the API endpoint
-   for the update network appliance content filtering operation.
+/*
+UpdateNetworkApplianceContentFilteringParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network appliance content filtering operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkApplianceContentFilteringParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkApplianceContentFiltering.

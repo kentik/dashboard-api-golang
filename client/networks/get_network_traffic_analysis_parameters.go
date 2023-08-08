@@ -52,14 +52,19 @@ func NewGetNetworkTrafficAnalysisParamsWithHTTPClient(client *http.Client) *GetN
 	}
 }
 
-/* GetNetworkTrafficAnalysisParams contains all the parameters to send to the API endpoint
-   for the get network traffic analysis operation.
+/*
+GetNetworkTrafficAnalysisParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network traffic analysis operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkTrafficAnalysisParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

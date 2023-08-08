@@ -28,7 +28,7 @@ func (o *GetDeviceReader) ReadResponse(response runtime.ClientResponse, consumer
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /devices/{serial}] getDevice", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetDeviceOK() *GetDeviceOK {
 	return &GetDeviceOK{}
 }
 
-/* GetDeviceOK describes a response with status code 200, with default header values.
+/*
+GetDeviceOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetDeviceOK) IsServerError() bool {
 // IsCode returns true when this get device o k response a status code equal to that given
 func (o *GetDeviceOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get device o k response
+func (o *GetDeviceOK) Code() int {
+	return 200
 }
 
 func (o *GetDeviceOK) Error() string {

@@ -52,17 +52,25 @@ func NewUpdateOrganizationAdaptivePolicyPolicyParamsWithHTTPClient(client *http.
 	}
 }
 
-/* UpdateOrganizationAdaptivePolicyPolicyParams contains all the parameters to send to the API endpoint
-   for the update organization adaptive policy policy operation.
+/*
+UpdateOrganizationAdaptivePolicyPolicyParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update organization adaptive policy policy operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateOrganizationAdaptivePolicyPolicyParams struct {
 
-	// AdaptivePolicyID.
-	AdaptivePolicyID string
+	/* ID.
 
-	// OrganizationID.
+	   ID
+	*/
+	ID string
+
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	// UpdateOrganizationAdaptivePolicyPolicy.
@@ -121,15 +129,15 @@ func (o *UpdateOrganizationAdaptivePolicyPolicyParams) SetHTTPClient(client *htt
 	o.HTTPClient = client
 }
 
-// WithAdaptivePolicyID adds the adaptivePolicyID to the update organization adaptive policy policy params
-func (o *UpdateOrganizationAdaptivePolicyPolicyParams) WithAdaptivePolicyID(adaptivePolicyID string) *UpdateOrganizationAdaptivePolicyPolicyParams {
-	o.SetAdaptivePolicyID(adaptivePolicyID)
+// WithID adds the id to the update organization adaptive policy policy params
+func (o *UpdateOrganizationAdaptivePolicyPolicyParams) WithID(id string) *UpdateOrganizationAdaptivePolicyPolicyParams {
+	o.SetID(id)
 	return o
 }
 
-// SetAdaptivePolicyID adds the adaptivePolicyId to the update organization adaptive policy policy params
-func (o *UpdateOrganizationAdaptivePolicyPolicyParams) SetAdaptivePolicyID(adaptivePolicyID string) {
-	o.AdaptivePolicyID = adaptivePolicyID
+// SetID adds the id to the update organization adaptive policy policy params
+func (o *UpdateOrganizationAdaptivePolicyPolicyParams) SetID(id string) {
+	o.ID = id
 }
 
 // WithOrganizationID adds the organizationID to the update organization adaptive policy policy params
@@ -162,8 +170,8 @@ func (o *UpdateOrganizationAdaptivePolicyPolicyParams) WriteToRequest(r runtime.
 	}
 	var res []error
 
-	// path param adaptivePolicyId
-	if err := r.SetPathParam("adaptivePolicyId", o.AdaptivePolicyID); err != nil {
+	// path param id
+	if err := r.SetPathParam("id", o.ID); err != nil {
 		return err
 	}
 

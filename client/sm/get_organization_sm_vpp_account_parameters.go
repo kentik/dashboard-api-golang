@@ -52,17 +52,25 @@ func NewGetOrganizationSmVppAccountParamsWithHTTPClient(client *http.Client) *Ge
 	}
 }
 
-/* GetOrganizationSmVppAccountParams contains all the parameters to send to the API endpoint
-   for the get organization sm vpp account operation.
+/*
+GetOrganizationSmVppAccountParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization sm vpp account operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationSmVppAccountParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
-	// VppAccountID.
+	/* VppAccountID.
+
+	   Vpp account ID
+	*/
 	VppAccountID string
 
 	timeout    time.Duration

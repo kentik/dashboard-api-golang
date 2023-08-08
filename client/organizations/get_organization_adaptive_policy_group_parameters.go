@@ -52,17 +52,25 @@ func NewGetOrganizationAdaptivePolicyGroupParamsWithHTTPClient(client *http.Clie
 	}
 }
 
-/* GetOrganizationAdaptivePolicyGroupParams contains all the parameters to send to the API endpoint
-   for the get organization adaptive policy group operation.
+/*
+GetOrganizationAdaptivePolicyGroupParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization adaptive policy group operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationAdaptivePolicyGroupParams struct {
 
-	// GroupID.
-	GroupID string
+	/* ID.
 
-	// OrganizationID.
+	   ID
+	*/
+	ID string
+
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration
@@ -118,15 +126,15 @@ func (o *GetOrganizationAdaptivePolicyGroupParams) SetHTTPClient(client *http.Cl
 	o.HTTPClient = client
 }
 
-// WithGroupID adds the groupID to the get organization adaptive policy group params
-func (o *GetOrganizationAdaptivePolicyGroupParams) WithGroupID(groupID string) *GetOrganizationAdaptivePolicyGroupParams {
-	o.SetGroupID(groupID)
+// WithID adds the id to the get organization adaptive policy group params
+func (o *GetOrganizationAdaptivePolicyGroupParams) WithID(id string) *GetOrganizationAdaptivePolicyGroupParams {
+	o.SetID(id)
 	return o
 }
 
-// SetGroupID adds the groupId to the get organization adaptive policy group params
-func (o *GetOrganizationAdaptivePolicyGroupParams) SetGroupID(groupID string) {
-	o.GroupID = groupID
+// SetID adds the id to the get organization adaptive policy group params
+func (o *GetOrganizationAdaptivePolicyGroupParams) SetID(id string) {
+	o.ID = id
 }
 
 // WithOrganizationID adds the organizationID to the get organization adaptive policy group params
@@ -148,8 +156,8 @@ func (o *GetOrganizationAdaptivePolicyGroupParams) WriteToRequest(r runtime.Clie
 	}
 	var res []error
 
-	// path param groupId
-	if err := r.SetPathParam("groupId", o.GroupID); err != nil {
+	// path param id
+	if err := r.SetPathParam("id", o.ID); err != nil {
 		return err
 	}
 

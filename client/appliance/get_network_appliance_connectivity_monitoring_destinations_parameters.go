@@ -52,14 +52,19 @@ func NewGetNetworkApplianceConnectivityMonitoringDestinationsParamsWithHTTPClien
 	}
 }
 
-/* GetNetworkApplianceConnectivityMonitoringDestinationsParams contains all the parameters to send to the API endpoint
-   for the get network appliance connectivity monitoring destinations operation.
+/*
+GetNetworkApplianceConnectivityMonitoringDestinationsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network appliance connectivity monitoring destinations operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkApplianceConnectivityMonitoringDestinationsParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

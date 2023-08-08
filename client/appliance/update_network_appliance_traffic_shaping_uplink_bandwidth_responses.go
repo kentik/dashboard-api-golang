@@ -31,7 +31,7 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkBandwidthReader) ReadResponse
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/appliance/trafficShaping/uplinkBandwidth] updateNetworkApplianceTrafficShapingUplinkBandwidth", response, response.Code())
 	}
 }
 
@@ -40,7 +40,8 @@ func NewUpdateNetworkApplianceTrafficShapingUplinkBandwidthOK() *UpdateNetworkAp
 	return &UpdateNetworkApplianceTrafficShapingUplinkBandwidthOK{}
 }
 
-/* UpdateNetworkApplianceTrafficShapingUplinkBandwidthOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkApplianceTrafficShapingUplinkBandwidthOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -73,6 +74,11 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkBandwidthOK) IsCode(code int)
 	return code == 200
 }
 
+// Code gets the status code for the update network appliance traffic shaping uplink bandwidth o k response
+func (o *UpdateNetworkApplianceTrafficShapingUplinkBandwidthOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkApplianceTrafficShapingUplinkBandwidthOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/appliance/trafficShaping/uplinkBandwidth][%d] updateNetworkApplianceTrafficShapingUplinkBandwidthOK  %+v", 200, o.Payload)
 }
@@ -95,8 +101,9 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkBandwidthOK) readResponse(res
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingUplinkBandwidthBody update network appliance traffic shaping uplink bandwidth body
-// Example: {"bandwidthLimits":{"cellular":{"limitDown":51200,"limitUp":51200},"wan1":{"limitDown":1000000,"limitUp":1000000},"wan2":{"limitDown":1000000,"limitUp":1000000}}}
+/*
+UpdateNetworkApplianceTrafficShapingUplinkBandwidthBody update network appliance traffic shaping uplink bandwidth body
+// Example: {"bandwidthLimits":{"cellular":{"limitDown":1000,"limitUp":1000},"wan1":{"limitDown":1000,"limitUp":1000},"wan2":{"limitDown":1000,"limitUp":1000}}}
 swagger:model UpdateNetworkApplianceTrafficShapingUplinkBandwidthBody
 */
 type UpdateNetworkApplianceTrafficShapingUplinkBandwidthBody struct {
@@ -155,6 +162,11 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkBandwidthBody) ContextValidat
 func (o *UpdateNetworkApplianceTrafficShapingUplinkBandwidthBody) contextValidateBandwidthLimits(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.BandwidthLimits != nil {
+
+		if swag.IsZero(o.BandwidthLimits) { // not required
+			return nil
+		}
+
 		if err := o.BandwidthLimits.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkApplianceTrafficShapingUplinkBandwidth" + "." + "bandwidthLimits")
@@ -186,7 +198,8 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkBandwidthBody) UnmarshalBinar
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthLimits A mapping of uplinks to their bandwidth settings (be sure to check which uplinks are supported for your network)
+/*
+UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthLimits A mapping of uplinks to their bandwidth settings (be sure to check which uplinks are supported for your network)
 swagger:model UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthLimits
 */
 type UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthLimits struct {
@@ -305,6 +318,11 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthL
 func (o *UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthLimits) contextValidateCellular(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Cellular != nil {
+
+		if swag.IsZero(o.Cellular) { // not required
+			return nil
+		}
+
 		if err := o.Cellular.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkApplianceTrafficShapingUplinkBandwidth" + "." + "bandwidthLimits" + "." + "cellular")
@@ -321,6 +339,11 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthL
 func (o *UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthLimits) contextValidateWan1(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Wan1 != nil {
+
+		if swag.IsZero(o.Wan1) { // not required
+			return nil
+		}
+
 		if err := o.Wan1.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkApplianceTrafficShapingUplinkBandwidth" + "." + "bandwidthLimits" + "." + "wan1")
@@ -337,6 +360,11 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthL
 func (o *UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthLimits) contextValidateWan2(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Wan2 != nil {
+
+		if swag.IsZero(o.Wan2) { // not required
+			return nil
+		}
+
 		if err := o.Wan2.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkApplianceTrafficShapingUplinkBandwidth" + "." + "bandwidthLimits" + "." + "wan2")
@@ -368,7 +396,8 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthL
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthLimitsCellular The bandwidth settings for the 'cellular' uplink
+/*
+UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthLimitsCellular The bandwidth settings for the 'cellular' uplink
 swagger:model UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthLimitsCellular
 */
 type UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthLimitsCellular struct {
@@ -408,7 +437,8 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthL
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthLimitsWan1 The bandwidth settings for the 'wan1' uplink
+/*
+UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthLimitsWan1 The bandwidth settings for the 'wan1' uplink
 swagger:model UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthLimitsWan1
 */
 type UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthLimitsWan1 struct {
@@ -448,7 +478,8 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthL
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthLimitsWan2 The bandwidth settings for the 'wan2' uplink
+/*
+UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthLimitsWan2 The bandwidth settings for the 'wan2' uplink
 swagger:model UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthLimitsWan2
 */
 type UpdateNetworkApplianceTrafficShapingUplinkBandwidthParamsBodyBandwidthLimitsWan2 struct {

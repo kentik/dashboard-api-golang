@@ -33,7 +33,7 @@ func (o *GetNetworkSmUserAccessDevicesReader) ReadResponse(response runtime.Clie
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/sm/userAccessDevices] getNetworkSmUserAccessDevices", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewGetNetworkSmUserAccessDevicesOK() *GetNetworkSmUserAccessDevicesOK {
 	return &GetNetworkSmUserAccessDevicesOK{}
 }
 
-/* GetNetworkSmUserAccessDevicesOK describes a response with status code 200, with default header values.
+/*
+GetNetworkSmUserAccessDevicesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -80,6 +81,11 @@ func (o *GetNetworkSmUserAccessDevicesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network sm user access devices o k response
+func (o *GetNetworkSmUserAccessDevicesOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkSmUserAccessDevicesOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/sm/userAccessDevices][%d] getNetworkSmUserAccessDevicesOK  %+v", 200, o.Payload)
 }
@@ -109,7 +115,8 @@ func (o *GetNetworkSmUserAccessDevicesOK) readResponse(response runtime.ClientRe
 	return nil
 }
 
-/*GetNetworkSmUserAccessDevicesOKBodyItems0 get network sm user access devices o k body items0
+/*
+GetNetworkSmUserAccessDevicesOKBodyItems0 get network sm user access devices o k body items0
 swagger:model GetNetworkSmUserAccessDevicesOKBodyItems0
 */
 type GetNetworkSmUserAccessDevicesOKBodyItems0 struct {
@@ -198,6 +205,11 @@ func (o *GetNetworkSmUserAccessDevicesOKBodyItems0) contextValidateTrustedAccess
 	for i := 0; i < len(o.TrustedAccessConnections); i++ {
 
 		if o.TrustedAccessConnections[i] != nil {
+
+			if swag.IsZero(o.TrustedAccessConnections[i]) { // not required
+				return nil
+			}
+
 			if err := o.TrustedAccessConnections[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("trustedAccessConnections" + "." + strconv.Itoa(i))
@@ -231,7 +243,8 @@ func (o *GetNetworkSmUserAccessDevicesOKBodyItems0) UnmarshalBinary(b []byte) er
 	return nil
 }
 
-/*GetNetworkSmUserAccessDevicesOKBodyItems0TrustedAccessConnectionsItems0 get network sm user access devices o k body items0 trusted access connections items0
+/*
+GetNetworkSmUserAccessDevicesOKBodyItems0TrustedAccessConnectionsItems0 get network sm user access devices o k body items0 trusted access connections items0
 swagger:model GetNetworkSmUserAccessDevicesOKBodyItems0TrustedAccessConnectionsItems0
 */
 type GetNetworkSmUserAccessDevicesOKBodyItems0TrustedAccessConnectionsItems0 struct {

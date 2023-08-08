@@ -30,7 +30,7 @@ func (o *UpdateNetworkReader) ReadResponse(response runtime.ClientResponse, cons
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}] updateNetwork", response, response.Code())
 	}
 }
 
@@ -39,12 +39,13 @@ func NewUpdateNetworkOK() *UpdateNetworkOK {
 	return &UpdateNetworkOK{}
 }
 
-/* UpdateNetworkOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateNetworkOK struct {
-	Payload interface{}
+	Payload *UpdateNetworkOKBody
 }
 
 // IsSuccess returns true when this update network o k response has a 2xx status code
@@ -72,6 +73,11 @@ func (o *UpdateNetworkOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network o k response
+func (o *UpdateNetworkOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}][%d] updateNetworkOK  %+v", 200, o.Payload)
 }
@@ -80,22 +86,25 @@ func (o *UpdateNetworkOK) String() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}][%d] updateNetworkOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateNetworkOK) GetPayload() interface{} {
+func (o *UpdateNetworkOK) GetPayload() *UpdateNetworkOKBody {
 	return o.Payload
 }
 
 func (o *UpdateNetworkOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateNetworkOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateNetworkBody update network body
-// Example: {"name":"Long Island Office","notes":"Combined network for Long Island Office","tags":["tag1","tag2"],"timeZone":"America/Los_Angeles"}
+/*
+UpdateNetworkBody update network body
+// Example: {"enrollmentString":"my-enrollment-string","name":"Main Office","notes":"Additional description of the network","tags":["tag1","tag2"],"timeZone":"America/Los_Angeles"}
 swagger:model UpdateNetworkBody
 */
 type UpdateNetworkBody struct {
@@ -137,6 +146,71 @@ func (o *UpdateNetworkBody) MarshalBinary() ([]byte, error) {
 // UnmarshalBinary interface implementation
 func (o *UpdateNetworkBody) UnmarshalBinary(b []byte) error {
 	var res UpdateNetworkBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkOKBody update network o k body
+swagger:model UpdateNetworkOKBody
+*/
+type UpdateNetworkOKBody struct {
+
+	// Enrollment string for the network
+	EnrollmentString string `json:"enrollmentString,omitempty"`
+
+	// Network ID
+	ID string `json:"id,omitempty"`
+
+	// If the network is bound to a config template
+	IsBoundToConfigTemplate bool `json:"isBoundToConfigTemplate,omitempty"`
+
+	// Network name
+	Name string `json:"name,omitempty"`
+
+	// Notes for the network
+	Notes string `json:"notes,omitempty"`
+
+	// Organization ID
+	OrganizationID string `json:"organizationId,omitempty"`
+
+	// List of the product types that the network supports
+	ProductTypes []string `json:"productTypes"`
+
+	// Network tags
+	Tags []string `json:"tags"`
+
+	// Timezone of the network
+	TimeZone string `json:"timeZone,omitempty"`
+
+	// URL to the network Dashboard UI
+	URL string `json:"url,omitempty"`
+}
+
+// Validate validates this update network o k body
+func (o *UpdateNetworkOKBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network o k body based on context it is used
+func (o *UpdateNetworkOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkOKBody
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

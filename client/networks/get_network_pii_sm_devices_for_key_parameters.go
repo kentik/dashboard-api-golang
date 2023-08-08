@@ -52,10 +52,12 @@ func NewGetNetworkPiiSmDevicesForKeyParamsWithHTTPClient(client *http.Client) *G
 	}
 }
 
-/* GetNetworkPiiSmDevicesForKeyParams contains all the parameters to send to the API endpoint
-   for the get network pii sm devices for key operation.
+/*
+GetNetworkPiiSmDevicesForKeyParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network pii sm devices for key operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkPiiSmDevicesForKeyParams struct {
 
@@ -83,7 +85,10 @@ type GetNetworkPiiSmDevicesForKeyParams struct {
 	*/
 	Mac *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* Serial.

@@ -52,17 +52,25 @@ func NewDeleteOrganizationSamlIdpParamsWithHTTPClient(client *http.Client) *Dele
 	}
 }
 
-/* DeleteOrganizationSamlIdpParams contains all the parameters to send to the API endpoint
-   for the delete organization saml idp operation.
+/*
+DeleteOrganizationSamlIdpParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete organization saml idp operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteOrganizationSamlIdpParams struct {
 
-	// IdpID.
+	/* IdpID.
+
+	   Idp ID
+	*/
 	IdpID string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

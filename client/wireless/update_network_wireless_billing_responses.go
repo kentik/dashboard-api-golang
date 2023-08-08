@@ -34,7 +34,7 @@ func (o *UpdateNetworkWirelessBillingReader) ReadResponse(response runtime.Clien
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/wireless/billing] updateNetworkWirelessBilling", response, response.Code())
 	}
 }
 
@@ -43,12 +43,13 @@ func NewUpdateNetworkWirelessBillingOK() *UpdateNetworkWirelessBillingOK {
 	return &UpdateNetworkWirelessBillingOK{}
 }
 
-/* UpdateNetworkWirelessBillingOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkWirelessBillingOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateNetworkWirelessBillingOK struct {
-	Payload interface{}
+	Payload *UpdateNetworkWirelessBillingOKBody
 }
 
 // IsSuccess returns true when this update network wireless billing o k response has a 2xx status code
@@ -76,6 +77,11 @@ func (o *UpdateNetworkWirelessBillingOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network wireless billing o k response
+func (o *UpdateNetworkWirelessBillingOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkWirelessBillingOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/wireless/billing][%d] updateNetworkWirelessBillingOK  %+v", 200, o.Payload)
 }
@@ -84,21 +90,24 @@ func (o *UpdateNetworkWirelessBillingOK) String() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/wireless/billing][%d] updateNetworkWirelessBillingOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateNetworkWirelessBillingOK) GetPayload() interface{} {
+func (o *UpdateNetworkWirelessBillingOK) GetPayload() *UpdateNetworkWirelessBillingOKBody {
 	return o.Payload
 }
 
 func (o *UpdateNetworkWirelessBillingOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateNetworkWirelessBillingOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateNetworkWirelessBillingBody update network wireless billing body
+/*
+UpdateNetworkWirelessBillingBody update network wireless billing body
 // Example: {"currency":"USD","plans":[{"bandwidthLimits":{"limitDown":1000,"limitUp":1000},"id":"1","price":5,"timeLimit":"1 hour"}]}
 swagger:model UpdateNetworkWirelessBillingBody
 */
@@ -170,6 +179,11 @@ func (o *UpdateNetworkWirelessBillingBody) contextValidatePlans(ctx context.Cont
 	for i := 0; i < len(o.Plans); i++ {
 
 		if o.Plans[i] != nil {
+
+			if swag.IsZero(o.Plans[i]) { // not required
+				return nil
+			}
+
 			if err := o.Plans[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkWirelessBilling" + "." + "plans" + "." + strconv.Itoa(i))
@@ -203,7 +217,264 @@ func (o *UpdateNetworkWirelessBillingBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateNetworkWirelessBillingParamsBodyPlansItems0 update network wireless billing params body plans items0
+/*
+UpdateNetworkWirelessBillingOKBody update network wireless billing o k body
+swagger:model UpdateNetworkWirelessBillingOKBody
+*/
+type UpdateNetworkWirelessBillingOKBody struct {
+
+	// The currency code of this node group's billing plans
+	Currency string `json:"currency,omitempty"`
+
+	// Array of billing plans in the node group. (Can configure a maximum of 5)
+	Plans []*UpdateNetworkWirelessBillingOKBodyPlansItems0 `json:"plans"`
+}
+
+// Validate validates this update network wireless billing o k body
+func (o *UpdateNetworkWirelessBillingOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validatePlans(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessBillingOKBody) validatePlans(formats strfmt.Registry) error {
+	if swag.IsZero(o.Plans) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Plans); i++ {
+		if swag.IsZero(o.Plans[i]) { // not required
+			continue
+		}
+
+		if o.Plans[i] != nil {
+			if err := o.Plans[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkWirelessBillingOK" + "." + "plans" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkWirelessBillingOK" + "." + "plans" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless billing o k body based on the context it is used
+func (o *UpdateNetworkWirelessBillingOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidatePlans(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessBillingOKBody) contextValidatePlans(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Plans); i++ {
+
+		if o.Plans[i] != nil {
+
+			if swag.IsZero(o.Plans[i]) { // not required
+				return nil
+			}
+
+			if err := o.Plans[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkWirelessBillingOK" + "." + "plans" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkWirelessBillingOK" + "." + "plans" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessBillingOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessBillingOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessBillingOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessBillingOKBodyPlansItems0 update network wireless billing o k body plans items0
+swagger:model UpdateNetworkWirelessBillingOKBodyPlansItems0
+*/
+type UpdateNetworkWirelessBillingOKBodyPlansItems0 struct {
+
+	// bandwidth limits
+	BandwidthLimits *UpdateNetworkWirelessBillingOKBodyPlansItems0BandwidthLimits `json:"bandwidthLimits,omitempty"`
+
+	// The id of the pricing plan to update.
+	ID string `json:"id,omitempty"`
+
+	// The price of the billing plan.
+	Price float32 `json:"price,omitempty"`
+
+	// The time limit of the pricing plan in minutes.
+	TimeLimit string `json:"timeLimit,omitempty"`
+}
+
+// Validate validates this update network wireless billing o k body plans items0
+func (o *UpdateNetworkWirelessBillingOKBodyPlansItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBandwidthLimits(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessBillingOKBodyPlansItems0) validateBandwidthLimits(formats strfmt.Registry) error {
+	if swag.IsZero(o.BandwidthLimits) { // not required
+		return nil
+	}
+
+	if o.BandwidthLimits != nil {
+		if err := o.BandwidthLimits.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("bandwidthLimits")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("bandwidthLimits")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless billing o k body plans items0 based on the context it is used
+func (o *UpdateNetworkWirelessBillingOKBodyPlansItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBandwidthLimits(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessBillingOKBodyPlansItems0) contextValidateBandwidthLimits(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.BandwidthLimits != nil {
+
+		if swag.IsZero(o.BandwidthLimits) { // not required
+			return nil
+		}
+
+		if err := o.BandwidthLimits.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("bandwidthLimits")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("bandwidthLimits")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessBillingOKBodyPlansItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessBillingOKBodyPlansItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessBillingOKBodyPlansItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessBillingOKBodyPlansItems0BandwidthLimits The uplink bandwidth settings for the pricing plan.
+swagger:model UpdateNetworkWirelessBillingOKBodyPlansItems0BandwidthLimits
+*/
+type UpdateNetworkWirelessBillingOKBodyPlansItems0BandwidthLimits struct {
+
+	// The maximum download limit (integer, in Kbps).
+	LimitDown int64 `json:"limitDown,omitempty"`
+
+	// The maximum upload limit (integer, in Kbps).
+	LimitUp int64 `json:"limitUp,omitempty"`
+}
+
+// Validate validates this update network wireless billing o k body plans items0 bandwidth limits
+func (o *UpdateNetworkWirelessBillingOKBodyPlansItems0BandwidthLimits) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless billing o k body plans items0 bandwidth limits based on context it is used
+func (o *UpdateNetworkWirelessBillingOKBodyPlansItems0BandwidthLimits) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessBillingOKBodyPlansItems0BandwidthLimits) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessBillingOKBodyPlansItems0BandwidthLimits) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessBillingOKBodyPlansItems0BandwidthLimits
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessBillingParamsBodyPlansItems0 update network wireless billing params body plans items0
 swagger:model UpdateNetworkWirelessBillingParamsBodyPlansItems0
 */
 type UpdateNetworkWirelessBillingParamsBodyPlansItems0 struct {
@@ -221,7 +492,7 @@ type UpdateNetworkWirelessBillingParamsBodyPlansItems0 struct {
 
 	// The time limit of the pricing plan in minutes. Can be '1 hour', '1 day', '1 week', or '30 days'.
 	// Required: true
-	// Enum: [1 hour 1 day 1 week 30 days]
+	// Enum: [1 day 1 hour 1 week 30 days]
 	TimeLimit *string `json:"timeLimit"`
 }
 
@@ -280,7 +551,7 @@ var updateNetworkWirelessBillingParamsBodyPlansItems0TypeTimeLimitPropEnum []int
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["1 hour","1 day","1 week","30 days"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["1 day","1 hour","1 week","30 days"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -290,11 +561,11 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessBillingParamsBodyPlansItems0TimeLimitNr1Hour captures enum value "1 hour"
-	UpdateNetworkWirelessBillingParamsBodyPlansItems0TimeLimitNr1Hour string = "1 hour"
-
 	// UpdateNetworkWirelessBillingParamsBodyPlansItems0TimeLimitNr1Day captures enum value "1 day"
 	UpdateNetworkWirelessBillingParamsBodyPlansItems0TimeLimitNr1Day string = "1 day"
+
+	// UpdateNetworkWirelessBillingParamsBodyPlansItems0TimeLimitNr1Hour captures enum value "1 hour"
+	UpdateNetworkWirelessBillingParamsBodyPlansItems0TimeLimitNr1Hour string = "1 hour"
 
 	// UpdateNetworkWirelessBillingParamsBodyPlansItems0TimeLimitNr1Week captures enum value "1 week"
 	UpdateNetworkWirelessBillingParamsBodyPlansItems0TimeLimitNr1Week string = "1 week"
@@ -342,6 +613,7 @@ func (o *UpdateNetworkWirelessBillingParamsBodyPlansItems0) ContextValidate(ctx 
 func (o *UpdateNetworkWirelessBillingParamsBodyPlansItems0) contextValidateBandwidthLimits(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.BandwidthLimits != nil {
+
 		if err := o.BandwidthLimits.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("bandwidthLimits")
@@ -373,7 +645,8 @@ func (o *UpdateNetworkWirelessBillingParamsBodyPlansItems0) UnmarshalBinary(b []
 	return nil
 }
 
-/*UpdateNetworkWirelessBillingParamsBodyPlansItems0BandwidthLimits The uplink bandwidth settings for the pricing plan.
+/*
+UpdateNetworkWirelessBillingParamsBodyPlansItems0BandwidthLimits The uplink bandwidth settings for the pricing plan.
 swagger:model UpdateNetworkWirelessBillingParamsBodyPlansItems0BandwidthLimits
 */
 type UpdateNetworkWirelessBillingParamsBodyPlansItems0BandwidthLimits struct {

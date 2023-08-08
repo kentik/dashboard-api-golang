@@ -52,17 +52,25 @@ func NewDeleteNetworkGroupPolicyParamsWithHTTPClient(client *http.Client) *Delet
 	}
 }
 
-/* DeleteNetworkGroupPolicyParams contains all the parameters to send to the API endpoint
-   for the delete network group policy operation.
+/*
+DeleteNetworkGroupPolicyParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete network group policy operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteNetworkGroupPolicyParams struct {
 
-	// GroupPolicyID.
+	/* GroupPolicyID.
+
+	   Group policy ID
+	*/
 	GroupPolicyID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

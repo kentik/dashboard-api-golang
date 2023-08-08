@@ -52,14 +52,19 @@ func NewGetDeviceCameraCustomAnalyticsParamsWithHTTPClient(client *http.Client) 
 	}
 }
 
-/* GetDeviceCameraCustomAnalyticsParams contains all the parameters to send to the API endpoint
-   for the get device camera custom analytics operation.
+/*
+GetDeviceCameraCustomAnalyticsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get device camera custom analytics operation.
+
+	Typically these are written to a http.Request.
 */
 type GetDeviceCameraCustomAnalyticsParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	timeout    time.Duration

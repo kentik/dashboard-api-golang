@@ -6,11 +6,16 @@ package networks
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
+	"strconv"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // GetNetworkMerakiAuthUsersReader is a Reader for the GetNetworkMerakiAuthUsers structure.
@@ -28,7 +33,7 @@ func (o *GetNetworkMerakiAuthUsersReader) ReadResponse(response runtime.ClientRe
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/merakiAuthUsers] getNetworkMerakiAuthUsers", response, response.Code())
 	}
 }
 
@@ -37,12 +42,13 @@ func NewGetNetworkMerakiAuthUsersOK() *GetNetworkMerakiAuthUsersOK {
 	return &GetNetworkMerakiAuthUsersOK{}
 }
 
-/* GetNetworkMerakiAuthUsersOK describes a response with status code 200, with default header values.
+/*
+GetNetworkMerakiAuthUsersOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkMerakiAuthUsersOK struct {
-	Payload []interface{}
+	Payload []*GetNetworkMerakiAuthUsersOKBodyItems0
 }
 
 // IsSuccess returns true when this get network meraki auth users o k response has a 2xx status code
@@ -70,6 +76,11 @@ func (o *GetNetworkMerakiAuthUsersOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network meraki auth users o k response
+func (o *GetNetworkMerakiAuthUsersOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkMerakiAuthUsersOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/merakiAuthUsers][%d] getNetworkMerakiAuthUsersOK  %+v", 200, o.Payload)
 }
@@ -78,7 +89,7 @@ func (o *GetNetworkMerakiAuthUsersOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/merakiAuthUsers][%d] getNetworkMerakiAuthUsersOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkMerakiAuthUsersOK) GetPayload() []interface{} {
+func (o *GetNetworkMerakiAuthUsersOK) GetPayload() []*GetNetworkMerakiAuthUsersOKBodyItems0 {
 	return o.Payload
 }
 
@@ -89,5 +100,219 @@ func (o *GetNetworkMerakiAuthUsersOK) readResponse(response runtime.ClientRespon
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkMerakiAuthUsersOKBodyItems0 get network meraki auth users o k body items0
+swagger:model GetNetworkMerakiAuthUsersOKBodyItems0
+*/
+type GetNetworkMerakiAuthUsersOKBodyItems0 struct {
+
+	// Authorization type for user.
+	AccountType string `json:"accountType,omitempty"`
+
+	// User authorization info
+	Authorizations []*GetNetworkMerakiAuthUsersOKBodyItems0AuthorizationsItems0 `json:"authorizations"`
+
+	// Creation time of the user
+	// Format: date-time
+	CreatedAt strfmt.DateTime `json:"createdAt,omitempty"`
+
+	// Email address of the user
+	Email string `json:"email,omitempty"`
+
+	// Meraki auth user id
+	ID string `json:"id,omitempty"`
+
+	// Whether or not the user is a Dashboard administrator
+	IsAdmin bool `json:"isAdmin,omitempty"`
+
+	// Name of the user
+	Name string `json:"name,omitempty"`
+}
+
+// Validate validates this get network meraki auth users o k body items0
+func (o *GetNetworkMerakiAuthUsersOKBodyItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateAuthorizations(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateCreatedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkMerakiAuthUsersOKBodyItems0) validateAuthorizations(formats strfmt.Registry) error {
+	if swag.IsZero(o.Authorizations) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Authorizations); i++ {
+		if swag.IsZero(o.Authorizations[i]) { // not required
+			continue
+		}
+
+		if o.Authorizations[i] != nil {
+			if err := o.Authorizations[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("authorizations" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("authorizations" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *GetNetworkMerakiAuthUsersOKBodyItems0) validateCreatedAt(formats strfmt.Registry) error {
+	if swag.IsZero(o.CreatedAt) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("createdAt", "body", "date-time", o.CreatedAt.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network meraki auth users o k body items0 based on the context it is used
+func (o *GetNetworkMerakiAuthUsersOKBodyItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateAuthorizations(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkMerakiAuthUsersOKBodyItems0) contextValidateAuthorizations(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Authorizations); i++ {
+
+		if o.Authorizations[i] != nil {
+
+			if swag.IsZero(o.Authorizations[i]) { // not required
+				return nil
+			}
+
+			if err := o.Authorizations[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("authorizations" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("authorizations" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkMerakiAuthUsersOKBodyItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkMerakiAuthUsersOKBodyItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkMerakiAuthUsersOKBodyItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkMerakiAuthUsersOKBodyItems0AuthorizationsItems0 get network meraki auth users o k body items0 authorizations items0
+swagger:model GetNetworkMerakiAuthUsersOKBodyItems0AuthorizationsItems0
+*/
+type GetNetworkMerakiAuthUsersOKBodyItems0AuthorizationsItems0 struct {
+
+	// User is authorized by the account email address
+	AuthorizedByEmail string `json:"authorizedByEmail,omitempty"`
+
+	// User is authorized by the account name
+	AuthorizedByName string `json:"authorizedByName,omitempty"`
+
+	// Authorized zone of the user
+	AuthorizedZone string `json:"authorizedZone,omitempty"`
+
+	// Authorization expiration time
+	// Format: date-time
+	ExpiresAt strfmt.DateTime `json:"expiresAt,omitempty"`
+
+	// SSID number
+	SsidNumber int64 `json:"ssidNumber,omitempty"`
+}
+
+// Validate validates this get network meraki auth users o k body items0 authorizations items0
+func (o *GetNetworkMerakiAuthUsersOKBodyItems0AuthorizationsItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateExpiresAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkMerakiAuthUsersOKBodyItems0AuthorizationsItems0) validateExpiresAt(formats strfmt.Registry) error {
+	if swag.IsZero(o.ExpiresAt) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("expiresAt", "body", "date-time", o.ExpiresAt.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this get network meraki auth users o k body items0 authorizations items0 based on context it is used
+func (o *GetNetworkMerakiAuthUsersOKBodyItems0AuthorizationsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkMerakiAuthUsersOKBodyItems0AuthorizationsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkMerakiAuthUsersOKBodyItems0AuthorizationsItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkMerakiAuthUsersOKBodyItems0AuthorizationsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

@@ -52,14 +52,19 @@ func NewGetNetworkWirelessBluetoothSettingsParamsWithHTTPClient(client *http.Cli
 	}
 }
 
-/* GetNetworkWirelessBluetoothSettingsParams contains all the parameters to send to the API endpoint
-   for the get network wireless bluetooth settings operation.
+/*
+GetNetworkWirelessBluetoothSettingsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network wireless bluetooth settings operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkWirelessBluetoothSettingsParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

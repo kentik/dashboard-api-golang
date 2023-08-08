@@ -28,7 +28,7 @@ func (o *GetDeviceSwitchPortsStatusesPacketsReader) ReadResponse(response runtim
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /devices/{serial}/switch/ports/statuses/packets] getDeviceSwitchPortsStatusesPackets", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetDeviceSwitchPortsStatusesPacketsOK() *GetDeviceSwitchPortsStatusesPac
 	return &GetDeviceSwitchPortsStatusesPacketsOK{}
 }
 
-/* GetDeviceSwitchPortsStatusesPacketsOK describes a response with status code 200, with default header values.
+/*
+GetDeviceSwitchPortsStatusesPacketsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetDeviceSwitchPortsStatusesPacketsOK) IsServerError() bool {
 // IsCode returns true when this get device switch ports statuses packets o k response a status code equal to that given
 func (o *GetDeviceSwitchPortsStatusesPacketsOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get device switch ports statuses packets o k response
+func (o *GetDeviceSwitchPortsStatusesPacketsOK) Code() int {
+	return 200
 }
 
 func (o *GetDeviceSwitchPortsStatusesPacketsOK) Error() string {

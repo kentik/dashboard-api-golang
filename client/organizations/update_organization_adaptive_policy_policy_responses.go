@@ -34,7 +34,7 @@ func (o *UpdateOrganizationAdaptivePolicyPolicyReader) ReadResponse(response run
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /organizations/{organizationId}/adaptivePolicy/policies/{id}] updateOrganizationAdaptivePolicyPolicy", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewUpdateOrganizationAdaptivePolicyPolicyOK() *UpdateOrganizationAdaptivePo
 	return &UpdateOrganizationAdaptivePolicyPolicyOK{}
 }
 
-/* UpdateOrganizationAdaptivePolicyPolicyOK describes a response with status code 200, with default header values.
+/*
+UpdateOrganizationAdaptivePolicyPolicyOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,12 +77,17 @@ func (o *UpdateOrganizationAdaptivePolicyPolicyOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update organization adaptive policy policy o k response
+func (o *UpdateOrganizationAdaptivePolicyPolicyOK) Code() int {
+	return 200
+}
+
 func (o *UpdateOrganizationAdaptivePolicyPolicyOK) Error() string {
-	return fmt.Sprintf("[PUT /organizations/{organizationId}/adaptivePolicy/policies/{adaptivePolicyId}][%d] updateOrganizationAdaptivePolicyPolicyOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /organizations/{organizationId}/adaptivePolicy/policies/{id}][%d] updateOrganizationAdaptivePolicyPolicyOK  %+v", 200, o.Payload)
 }
 
 func (o *UpdateOrganizationAdaptivePolicyPolicyOK) String() string {
-	return fmt.Sprintf("[PUT /organizations/{organizationId}/adaptivePolicy/policies/{adaptivePolicyId}][%d] updateOrganizationAdaptivePolicyPolicyOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /organizations/{organizationId}/adaptivePolicy/policies/{id}][%d] updateOrganizationAdaptivePolicyPolicyOK  %+v", 200, o.Payload)
 }
 
 func (o *UpdateOrganizationAdaptivePolicyPolicyOK) GetPayload() interface{} {
@@ -98,22 +104,21 @@ func (o *UpdateOrganizationAdaptivePolicyPolicyOK) readResponse(response runtime
 	return nil
 }
 
-/*UpdateOrganizationAdaptivePolicyPolicyBody update organization adaptive policy policy body
+/*
+UpdateOrganizationAdaptivePolicyPolicyBody update organization adaptive policy policy body
 // Example: {"acls":[{"id":"444","name":"Block web"}],"destinationGroup":{"id":"333","name":"IoT Servers","sgt":51},"lastEntryRule":"allow","sourceGroup":{"id":"222","name":"IoT Devices","sgt":50}}
 swagger:model UpdateOrganizationAdaptivePolicyPolicyBody
 */
 type UpdateOrganizationAdaptivePolicyPolicyBody struct {
 
 	// An ordered array of adaptive policy ACLs (each requires one unique attribute) that apply to this policy
-	//
 	Acls []*UpdateOrganizationAdaptivePolicyPolicyParamsBodyAclsItems0 `json:"acls"`
 
 	// destination group
 	DestinationGroup *UpdateOrganizationAdaptivePolicyPolicyParamsBodyDestinationGroup `json:"destinationGroup,omitempty"`
 
 	// The rule to apply if there is no matching ACL
-	//
-	// Enum: [default allow deny]
+	// Enum: [allow default deny]
 	LastEntryRule string `json:"lastEntryRule,omitempty"`
 
 	// source group
@@ -195,7 +200,7 @@ var updateOrganizationAdaptivePolicyPolicyBodyTypeLastEntryRulePropEnum []interf
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["default","allow","deny"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["allow","default","deny"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -205,11 +210,11 @@ func init() {
 
 const (
 
-	// UpdateOrganizationAdaptivePolicyPolicyBodyLastEntryRuleDefault captures enum value "default"
-	UpdateOrganizationAdaptivePolicyPolicyBodyLastEntryRuleDefault string = "default"
-
 	// UpdateOrganizationAdaptivePolicyPolicyBodyLastEntryRuleAllow captures enum value "allow"
 	UpdateOrganizationAdaptivePolicyPolicyBodyLastEntryRuleAllow string = "allow"
+
+	// UpdateOrganizationAdaptivePolicyPolicyBodyLastEntryRuleDefault captures enum value "default"
+	UpdateOrganizationAdaptivePolicyPolicyBodyLastEntryRuleDefault string = "default"
 
 	// UpdateOrganizationAdaptivePolicyPolicyBodyLastEntryRuleDeny captures enum value "deny"
 	UpdateOrganizationAdaptivePolicyPolicyBodyLastEntryRuleDeny string = "deny"
@@ -282,6 +287,11 @@ func (o *UpdateOrganizationAdaptivePolicyPolicyBody) contextValidateAcls(ctx con
 	for i := 0; i < len(o.Acls); i++ {
 
 		if o.Acls[i] != nil {
+
+			if swag.IsZero(o.Acls[i]) { // not required
+				return nil
+			}
+
 			if err := o.Acls[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateOrganizationAdaptivePolicyPolicy" + "." + "acls" + "." + strconv.Itoa(i))
@@ -300,6 +310,11 @@ func (o *UpdateOrganizationAdaptivePolicyPolicyBody) contextValidateAcls(ctx con
 func (o *UpdateOrganizationAdaptivePolicyPolicyBody) contextValidateDestinationGroup(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.DestinationGroup != nil {
+
+		if swag.IsZero(o.DestinationGroup) { // not required
+			return nil
+		}
+
 		if err := o.DestinationGroup.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateOrganizationAdaptivePolicyPolicy" + "." + "destinationGroup")
@@ -316,6 +331,11 @@ func (o *UpdateOrganizationAdaptivePolicyPolicyBody) contextValidateDestinationG
 func (o *UpdateOrganizationAdaptivePolicyPolicyBody) contextValidateSourceGroup(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.SourceGroup != nil {
+
+		if swag.IsZero(o.SourceGroup) { // not required
+			return nil
+		}
+
 		if err := o.SourceGroup.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateOrganizationAdaptivePolicyPolicy" + "." + "sourceGroup")
@@ -347,7 +367,8 @@ func (o *UpdateOrganizationAdaptivePolicyPolicyBody) UnmarshalBinary(b []byte) e
 	return nil
 }
 
-/*UpdateOrganizationAdaptivePolicyPolicyParamsBodyAclsItems0 update organization adaptive policy policy params body acls items0
+/*
+UpdateOrganizationAdaptivePolicyPolicyParamsBodyAclsItems0 update organization adaptive policy policy params body acls items0
 swagger:model UpdateOrganizationAdaptivePolicyPolicyParamsBodyAclsItems0
 */
 type UpdateOrganizationAdaptivePolicyPolicyParamsBodyAclsItems0 struct {
@@ -387,8 +408,8 @@ func (o *UpdateOrganizationAdaptivePolicyPolicyParamsBodyAclsItems0) UnmarshalBi
 	return nil
 }
 
-/*UpdateOrganizationAdaptivePolicyPolicyParamsBodyDestinationGroup The destination adaptive policy group (requires one unique attribute)
-//
+/*
+UpdateOrganizationAdaptivePolicyPolicyParamsBodyDestinationGroup The destination adaptive policy group (requires one unique attribute)
 swagger:model UpdateOrganizationAdaptivePolicyPolicyParamsBodyDestinationGroup
 */
 type UpdateOrganizationAdaptivePolicyPolicyParamsBodyDestinationGroup struct {
@@ -431,8 +452,8 @@ func (o *UpdateOrganizationAdaptivePolicyPolicyParamsBodyDestinationGroup) Unmar
 	return nil
 }
 
-/*UpdateOrganizationAdaptivePolicyPolicyParamsBodySourceGroup The source adaptive policy group (requires one unique attribute)
-//
+/*
+UpdateOrganizationAdaptivePolicyPolicyParamsBodySourceGroup The source adaptive policy group (requires one unique attribute)
 swagger:model UpdateOrganizationAdaptivePolicyPolicyParamsBodySourceGroup
 */
 type UpdateOrganizationAdaptivePolicyPolicyParamsBodySourceGroup struct {

@@ -32,7 +32,7 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusReader) ReadResponse(respon
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/clients/{clientId}/splashAuthorizationStatus] updateNetworkClientSplashAuthorizationStatus", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewUpdateNetworkClientSplashAuthorizationStatusOK() *UpdateNetworkClientSpl
 	return &UpdateNetworkClientSplashAuthorizationStatusOK{}
 }
 
-/* UpdateNetworkClientSplashAuthorizationStatusOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkClientSplashAuthorizationStatusOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network client splash authorization status o k response
+func (o *UpdateNetworkClientSplashAuthorizationStatusOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkClientSplashAuthorizationStatusOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/clients/{clientId}/splashAuthorizationStatus][%d] updateNetworkClientSplashAuthorizationStatusOK  %+v", 200, o.Payload)
 }
@@ -96,7 +102,8 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusOK) readResponse(response r
 	return nil
 }
 
-/*UpdateNetworkClientSplashAuthorizationStatusBody update network client splash authorization status body
+/*
+UpdateNetworkClientSplashAuthorizationStatusBody update network client splash authorization status body
 // Example: {"ssids":{"0":{"isAuthorized":true},"2":{"isAuthorized":false}}}
 swagger:model UpdateNetworkClientSplashAuthorizationStatusBody
 */
@@ -158,6 +165,7 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusBody) ContextValidate(ctx c
 func (o *UpdateNetworkClientSplashAuthorizationStatusBody) contextValidateSsids(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Ssids != nil {
+
 		if err := o.Ssids.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkClientSplashAuthorizationStatus" + "." + "ssids")
@@ -189,7 +197,8 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusBody) UnmarshalBinary(b []b
 	return nil
 }
 
-/*UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids The target SSIDs. Each SSID must be enabled and must have Click-through splash enabled. For each SSID where isAuthorized is true, the expiration time will automatically be set according to the SSID's splash frequency. Not all networks support configuring all SSIDs
+/*
+UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids The target SSIDs. Each SSID must be enabled and must have Click-through splash enabled. For each SSID where isAuthorized is true, the expiration time will automatically be set according to the SSID's splash frequency. Not all networks support configuring all SSIDs
 swagger:model UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids
 */
 type UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids struct {
@@ -668,6 +677,11 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) ContextVal
 func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextValidateNr0(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr0 != nil {
+
+		if swag.IsZero(o.Nr0) { // not required
+			return nil
+		}
+
 		if err := o.Nr0.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkClientSplashAuthorizationStatus" + "." + "ssids" + "." + "0")
@@ -684,6 +698,11 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextVal
 func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextValidateNr1(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr1 != nil {
+
+		if swag.IsZero(o.Nr1) { // not required
+			return nil
+		}
+
 		if err := o.Nr1.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkClientSplashAuthorizationStatus" + "." + "ssids" + "." + "1")
@@ -700,6 +719,11 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextVal
 func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextValidateNr10(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr10 != nil {
+
+		if swag.IsZero(o.Nr10) { // not required
+			return nil
+		}
+
 		if err := o.Nr10.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkClientSplashAuthorizationStatus" + "." + "ssids" + "." + "10")
@@ -716,6 +740,11 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextVal
 func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextValidateNr11(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr11 != nil {
+
+		if swag.IsZero(o.Nr11) { // not required
+			return nil
+		}
+
 		if err := o.Nr11.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkClientSplashAuthorizationStatus" + "." + "ssids" + "." + "11")
@@ -732,6 +761,11 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextVal
 func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextValidateNr12(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr12 != nil {
+
+		if swag.IsZero(o.Nr12) { // not required
+			return nil
+		}
+
 		if err := o.Nr12.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkClientSplashAuthorizationStatus" + "." + "ssids" + "." + "12")
@@ -748,6 +782,11 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextVal
 func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextValidateNr13(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr13 != nil {
+
+		if swag.IsZero(o.Nr13) { // not required
+			return nil
+		}
+
 		if err := o.Nr13.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkClientSplashAuthorizationStatus" + "." + "ssids" + "." + "13")
@@ -764,6 +803,11 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextVal
 func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextValidateNr14(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr14 != nil {
+
+		if swag.IsZero(o.Nr14) { // not required
+			return nil
+		}
+
 		if err := o.Nr14.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkClientSplashAuthorizationStatus" + "." + "ssids" + "." + "14")
@@ -780,6 +824,11 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextVal
 func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextValidateNr2(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr2 != nil {
+
+		if swag.IsZero(o.Nr2) { // not required
+			return nil
+		}
+
 		if err := o.Nr2.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkClientSplashAuthorizationStatus" + "." + "ssids" + "." + "2")
@@ -796,6 +845,11 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextVal
 func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextValidateNr3(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr3 != nil {
+
+		if swag.IsZero(o.Nr3) { // not required
+			return nil
+		}
+
 		if err := o.Nr3.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkClientSplashAuthorizationStatus" + "." + "ssids" + "." + "3")
@@ -812,6 +866,11 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextVal
 func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextValidateNr4(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr4 != nil {
+
+		if swag.IsZero(o.Nr4) { // not required
+			return nil
+		}
+
 		if err := o.Nr4.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkClientSplashAuthorizationStatus" + "." + "ssids" + "." + "4")
@@ -828,6 +887,11 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextVal
 func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextValidateNr5(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr5 != nil {
+
+		if swag.IsZero(o.Nr5) { // not required
+			return nil
+		}
+
 		if err := o.Nr5.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkClientSplashAuthorizationStatus" + "." + "ssids" + "." + "5")
@@ -844,6 +908,11 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextVal
 func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextValidateNr6(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr6 != nil {
+
+		if swag.IsZero(o.Nr6) { // not required
+			return nil
+		}
+
 		if err := o.Nr6.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkClientSplashAuthorizationStatus" + "." + "ssids" + "." + "6")
@@ -860,6 +929,11 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextVal
 func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextValidateNr7(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr7 != nil {
+
+		if swag.IsZero(o.Nr7) { // not required
+			return nil
+		}
+
 		if err := o.Nr7.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkClientSplashAuthorizationStatus" + "." + "ssids" + "." + "7")
@@ -876,6 +950,11 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextVal
 func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextValidateNr8(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr8 != nil {
+
+		if swag.IsZero(o.Nr8) { // not required
+			return nil
+		}
+
 		if err := o.Nr8.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkClientSplashAuthorizationStatus" + "." + "ssids" + "." + "8")
@@ -892,6 +971,11 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextVal
 func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) contextValidateNr9(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr9 != nil {
+
+		if swag.IsZero(o.Nr9) { // not required
+			return nil
+		}
+
 		if err := o.Nr9.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkClientSplashAuthorizationStatus" + "." + "ssids" + "." + "9")
@@ -923,7 +1007,8 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsids) UnmarshalB
 	return nil
 }
 
-/*UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr0 Splash authorization for SSID 0
+/*
+UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr0 Splash authorization for SSID 0
 swagger:model UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr0
 */
 type UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr0 struct {
@@ -960,7 +1045,8 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr0) Unmarsh
 	return nil
 }
 
-/*UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr1 Splash authorization for SSID 1
+/*
+UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr1 Splash authorization for SSID 1
 swagger:model UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr1
 */
 type UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr1 struct {
@@ -997,7 +1083,8 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr1) Unmarsh
 	return nil
 }
 
-/*UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr10 Splash authorization for SSID 10
+/*
+UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr10 Splash authorization for SSID 10
 swagger:model UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr10
 */
 type UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr10 struct {
@@ -1034,7 +1121,8 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr10) Unmars
 	return nil
 }
 
-/*UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr11 Splash authorization for SSID 11
+/*
+UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr11 Splash authorization for SSID 11
 swagger:model UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr11
 */
 type UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr11 struct {
@@ -1071,7 +1159,8 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr11) Unmars
 	return nil
 }
 
-/*UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr12 Splash authorization for SSID 12
+/*
+UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr12 Splash authorization for SSID 12
 swagger:model UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr12
 */
 type UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr12 struct {
@@ -1108,7 +1197,8 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr12) Unmars
 	return nil
 }
 
-/*UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr13 Splash authorization for SSID 13
+/*
+UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr13 Splash authorization for SSID 13
 swagger:model UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr13
 */
 type UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr13 struct {
@@ -1145,7 +1235,8 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr13) Unmars
 	return nil
 }
 
-/*UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr14 Splash authorization for SSID 14
+/*
+UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr14 Splash authorization for SSID 14
 swagger:model UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr14
 */
 type UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr14 struct {
@@ -1182,7 +1273,8 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr14) Unmars
 	return nil
 }
 
-/*UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr2 Splash authorization for SSID 2
+/*
+UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr2 Splash authorization for SSID 2
 swagger:model UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr2
 */
 type UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr2 struct {
@@ -1219,7 +1311,8 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr2) Unmarsh
 	return nil
 }
 
-/*UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr3 Splash authorization for SSID 3
+/*
+UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr3 Splash authorization for SSID 3
 swagger:model UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr3
 */
 type UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr3 struct {
@@ -1256,7 +1349,8 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr3) Unmarsh
 	return nil
 }
 
-/*UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr4 Splash authorization for SSID 4
+/*
+UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr4 Splash authorization for SSID 4
 swagger:model UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr4
 */
 type UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr4 struct {
@@ -1293,7 +1387,8 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr4) Unmarsh
 	return nil
 }
 
-/*UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr5 Splash authorization for SSID 5
+/*
+UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr5 Splash authorization for SSID 5
 swagger:model UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr5
 */
 type UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr5 struct {
@@ -1330,7 +1425,8 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr5) Unmarsh
 	return nil
 }
 
-/*UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr6 Splash authorization for SSID 6
+/*
+UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr6 Splash authorization for SSID 6
 swagger:model UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr6
 */
 type UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr6 struct {
@@ -1367,7 +1463,8 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr6) Unmarsh
 	return nil
 }
 
-/*UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr7 Splash authorization for SSID 7
+/*
+UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr7 Splash authorization for SSID 7
 swagger:model UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr7
 */
 type UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr7 struct {
@@ -1404,7 +1501,8 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr7) Unmarsh
 	return nil
 }
 
-/*UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr8 Splash authorization for SSID 8
+/*
+UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr8 Splash authorization for SSID 8
 swagger:model UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr8
 */
 type UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr8 struct {
@@ -1441,7 +1539,8 @@ func (o *UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr8) Unmarsh
 	return nil
 }
 
-/*UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr9 Splash authorization for SSID 9
+/*
+UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr9 Splash authorization for SSID 9
 swagger:model UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr9
 */
 type UpdateNetworkClientSplashAuthorizationStatusParamsBodySsidsNr9 struct {

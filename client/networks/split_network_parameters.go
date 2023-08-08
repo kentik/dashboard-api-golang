@@ -52,14 +52,19 @@ func NewSplitNetworkParamsWithHTTPClient(client *http.Client) *SplitNetworkParam
 	}
 }
 
-/* SplitNetworkParams contains all the parameters to send to the API endpoint
-   for the split network operation.
+/*
+SplitNetworkParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the split network operation.
+
+	Typically these are written to a http.Request.
 */
 type SplitNetworkParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

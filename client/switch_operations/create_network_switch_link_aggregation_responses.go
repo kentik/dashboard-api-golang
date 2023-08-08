@@ -33,7 +33,7 @@ func (o *CreateNetworkSwitchLinkAggregationReader) ReadResponse(response runtime
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/switch/linkAggregations] createNetworkSwitchLinkAggregation", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewCreateNetworkSwitchLinkAggregationCreated() *CreateNetworkSwitchLinkAggr
 	return &CreateNetworkSwitchLinkAggregationCreated{}
 }
 
-/* CreateNetworkSwitchLinkAggregationCreated describes a response with status code 201, with default header values.
+/*
+CreateNetworkSwitchLinkAggregationCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *CreateNetworkSwitchLinkAggregationCreated) IsCode(code int) bool {
 	return code == 201
 }
 
+// Code gets the status code for the create network switch link aggregation created response
+func (o *CreateNetworkSwitchLinkAggregationCreated) Code() int {
+	return 201
+}
+
 func (o *CreateNetworkSwitchLinkAggregationCreated) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/switch/linkAggregations][%d] createNetworkSwitchLinkAggregationCreated  %+v", 201, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *CreateNetworkSwitchLinkAggregationCreated) readResponse(response runtim
 	return nil
 }
 
-/*CreateNetworkSwitchLinkAggregationBody create network switch link aggregation body
+/*
+CreateNetworkSwitchLinkAggregationBody create network switch link aggregation body
 // Example: {"switchPorts":[{"portId":"1","serial":"Q234-ABCD-0001"},{"portId":"2","serial":"Q234-ABCD-0002"},{"portId":"3","serial":"Q234-ABCD-0003"},{"portId":"4","serial":"Q234-ABCD-0004"},{"portId":"5","serial":"Q234-ABCD-0005"},{"portId":"6","serial":"Q234-ABCD-0006"},{"portId":"7","serial":"Q234-ABCD-0007"},{"portId":"8","serial":"Q234-ABCD-0008"}]}
 swagger:model CreateNetworkSwitchLinkAggregationBody
 */
@@ -203,6 +210,11 @@ func (o *CreateNetworkSwitchLinkAggregationBody) contextValidateSwitchPorts(ctx 
 	for i := 0; i < len(o.SwitchPorts); i++ {
 
 		if o.SwitchPorts[i] != nil {
+
+			if swag.IsZero(o.SwitchPorts[i]) { // not required
+				return nil
+			}
+
 			if err := o.SwitchPorts[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("createNetworkSwitchLinkAggregation" + "." + "switchPorts" + "." + strconv.Itoa(i))
@@ -223,6 +235,11 @@ func (o *CreateNetworkSwitchLinkAggregationBody) contextValidateSwitchProfilePor
 	for i := 0; i < len(o.SwitchProfilePorts); i++ {
 
 		if o.SwitchProfilePorts[i] != nil {
+
+			if swag.IsZero(o.SwitchProfilePorts[i]) { // not required
+				return nil
+			}
+
 			if err := o.SwitchProfilePorts[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("createNetworkSwitchLinkAggregation" + "." + "switchProfilePorts" + "." + strconv.Itoa(i))
@@ -256,7 +273,8 @@ func (o *CreateNetworkSwitchLinkAggregationBody) UnmarshalBinary(b []byte) error
 	return nil
 }
 
-/*CreateNetworkSwitchLinkAggregationParamsBodySwitchPortsItems0 create network switch link aggregation params body switch ports items0
+/*
+CreateNetworkSwitchLinkAggregationParamsBodySwitchPortsItems0 create network switch link aggregation params body switch ports items0
 swagger:model CreateNetworkSwitchLinkAggregationParamsBodySwitchPortsItems0
 */
 type CreateNetworkSwitchLinkAggregationParamsBodySwitchPortsItems0 struct {
@@ -329,7 +347,8 @@ func (o *CreateNetworkSwitchLinkAggregationParamsBodySwitchPortsItems0) Unmarsha
 	return nil
 }
 
-/*CreateNetworkSwitchLinkAggregationParamsBodySwitchProfilePortsItems0 create network switch link aggregation params body switch profile ports items0
+/*
+CreateNetworkSwitchLinkAggregationParamsBodySwitchProfilePortsItems0 create network switch link aggregation params body switch profile ports items0
 swagger:model CreateNetworkSwitchLinkAggregationParamsBodySwitchProfilePortsItems0
 */
 type CreateNetworkSwitchLinkAggregationParamsBodySwitchProfilePortsItems0 struct {

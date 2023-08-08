@@ -52,14 +52,19 @@ func NewGetNetworkCellularGatewayUplinkParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* GetNetworkCellularGatewayUplinkParams contains all the parameters to send to the API endpoint
-   for the get network cellular gateway uplink operation.
+/*
+GetNetworkCellularGatewayUplinkParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network cellular gateway uplink operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkCellularGatewayUplinkParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

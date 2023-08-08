@@ -52,14 +52,19 @@ func NewGetNetworkApplianceVpnBgpParamsWithHTTPClient(client *http.Client) *GetN
 	}
 }
 
-/* GetNetworkApplianceVpnBgpParams contains all the parameters to send to the API endpoint
-   for the get network appliance vpn bgp operation.
+/*
+GetNetworkApplianceVpnBgpParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network appliance vpn bgp operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkApplianceVpnBgpParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

@@ -33,7 +33,7 @@ func (o *UpdateOrganizationSnmpReader) ReadResponse(response runtime.ClientRespo
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /organizations/{organizationId}/snmp] updateOrganizationSnmp", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateOrganizationSnmpOK() *UpdateOrganizationSnmpOK {
 	return &UpdateOrganizationSnmpOK{}
 }
 
-/* UpdateOrganizationSnmpOK describes a response with status code 200, with default header values.
+/*
+UpdateOrganizationSnmpOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateOrganizationSnmpOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update organization snmp o k response
+func (o *UpdateOrganizationSnmpOK) Code() int {
+	return 200
+}
+
 func (o *UpdateOrganizationSnmpOK) Error() string {
 	return fmt.Sprintf("[PUT /organizations/{organizationId}/snmp][%d] updateOrganizationSnmpOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateOrganizationSnmpOK) readResponse(response runtime.ClientResponse,
 	return nil
 }
 
-/*UpdateOrganizationSnmpBody update organization snmp body
+/*
+UpdateOrganizationSnmpBody update organization snmp body
 // Example: {"peerIps":["123.123.123.1"],"v2cEnabled":false,"v3AuthMode":"SHA","v3Enabled":true,"v3PrivMode":"AES128"}
 swagger:model UpdateOrganizationSnmpBody
 */
@@ -120,7 +127,7 @@ type UpdateOrganizationSnmpBody struct {
 	V3Enabled bool `json:"v3Enabled,omitempty"`
 
 	// The SNMP version 3 privacy mode. Can be either 'DES' or 'AES128'.
-	// Enum: [DES AES128]
+	// Enum: [AES128 DES]
 	V3PrivMode string `json:"v3PrivMode,omitempty"`
 
 	// The SNMP version 3 privacy password. Must be at least 8 characters if specified.
@@ -191,7 +198,7 @@ var updateOrganizationSnmpBodyTypeV3PrivModePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["DES","AES128"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["AES128","DES"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -201,11 +208,11 @@ func init() {
 
 const (
 
-	// UpdateOrganizationSnmpBodyV3PrivModeDES captures enum value "DES"
-	UpdateOrganizationSnmpBodyV3PrivModeDES string = "DES"
-
 	// UpdateOrganizationSnmpBodyV3PrivModeAES128 captures enum value "AES128"
 	UpdateOrganizationSnmpBodyV3PrivModeAES128 string = "AES128"
+
+	// UpdateOrganizationSnmpBodyV3PrivModeDES captures enum value "DES"
+	UpdateOrganizationSnmpBodyV3PrivModeDES string = "DES"
 )
 
 // prop value enum

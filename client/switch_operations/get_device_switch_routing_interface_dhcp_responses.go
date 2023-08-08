@@ -28,7 +28,7 @@ func (o *GetDeviceSwitchRoutingInterfaceDhcpReader) ReadResponse(response runtim
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /devices/{serial}/switch/routing/interfaces/{interfaceId}/dhcp] getDeviceSwitchRoutingInterfaceDhcp", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetDeviceSwitchRoutingInterfaceDhcpOK() *GetDeviceSwitchRoutingInterface
 	return &GetDeviceSwitchRoutingInterfaceDhcpOK{}
 }
 
-/* GetDeviceSwitchRoutingInterfaceDhcpOK describes a response with status code 200, with default header values.
+/*
+GetDeviceSwitchRoutingInterfaceDhcpOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetDeviceSwitchRoutingInterfaceDhcpOK) IsServerError() bool {
 // IsCode returns true when this get device switch routing interface dhcp o k response a status code equal to that given
 func (o *GetDeviceSwitchRoutingInterfaceDhcpOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get device switch routing interface dhcp o k response
+func (o *GetDeviceSwitchRoutingInterfaceDhcpOK) Code() int {
+	return 200
 }
 
 func (o *GetDeviceSwitchRoutingInterfaceDhcpOK) Error() string {

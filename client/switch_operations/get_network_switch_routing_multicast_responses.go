@@ -6,11 +6,15 @@ package switch_operations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
+	"strconv"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetNetworkSwitchRoutingMulticastReader is a Reader for the GetNetworkSwitchRoutingMulticast structure.
@@ -28,7 +32,7 @@ func (o *GetNetworkSwitchRoutingMulticastReader) ReadResponse(response runtime.C
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/switch/routing/multicast] getNetworkSwitchRoutingMulticast", response, response.Code())
 	}
 }
 
@@ -37,12 +41,13 @@ func NewGetNetworkSwitchRoutingMulticastOK() *GetNetworkSwitchRoutingMulticastOK
 	return &GetNetworkSwitchRoutingMulticastOK{}
 }
 
-/* GetNetworkSwitchRoutingMulticastOK describes a response with status code 200, with default header values.
+/*
+GetNetworkSwitchRoutingMulticastOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkSwitchRoutingMulticastOK struct {
-	Payload interface{}
+	Payload *GetNetworkSwitchRoutingMulticastOKBody
 }
 
 // IsSuccess returns true when this get network switch routing multicast o k response has a 2xx status code
@@ -70,6 +75,11 @@ func (o *GetNetworkSwitchRoutingMulticastOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network switch routing multicast o k response
+func (o *GetNetworkSwitchRoutingMulticastOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkSwitchRoutingMulticastOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/switch/routing/multicast][%d] getNetworkSwitchRoutingMulticastOK  %+v", 200, o.Payload)
 }
@@ -78,16 +88,269 @@ func (o *GetNetworkSwitchRoutingMulticastOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/switch/routing/multicast][%d] getNetworkSwitchRoutingMulticastOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkSwitchRoutingMulticastOK) GetPayload() interface{} {
+func (o *GetNetworkSwitchRoutingMulticastOK) GetPayload() *GetNetworkSwitchRoutingMulticastOKBody {
 	return o.Payload
 }
 
 func (o *GetNetworkSwitchRoutingMulticastOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetNetworkSwitchRoutingMulticastOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkSwitchRoutingMulticastOKBody get network switch routing multicast o k body
+swagger:model GetNetworkSwitchRoutingMulticastOKBody
+*/
+type GetNetworkSwitchRoutingMulticastOKBody struct {
+
+	// default settings
+	DefaultSettings *GetNetworkSwitchRoutingMulticastOKBodyDefaultSettings `json:"defaultSettings,omitempty"`
+
+	// Array of paired switches/stacks/profiles and corresponding multicast settings.
+	//       An empty array will clear the multicast settings.
+	Overrides []*GetNetworkSwitchRoutingMulticastOKBodyOverridesItems0 `json:"overrides"`
+}
+
+// Validate validates this get network switch routing multicast o k body
+func (o *GetNetworkSwitchRoutingMulticastOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateDefaultSettings(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateOverrides(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkSwitchRoutingMulticastOKBody) validateDefaultSettings(formats strfmt.Registry) error {
+	if swag.IsZero(o.DefaultSettings) { // not required
+		return nil
+	}
+
+	if o.DefaultSettings != nil {
+		if err := o.DefaultSettings.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkSwitchRoutingMulticastOK" + "." + "defaultSettings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkSwitchRoutingMulticastOK" + "." + "defaultSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSwitchRoutingMulticastOKBody) validateOverrides(formats strfmt.Registry) error {
+	if swag.IsZero(o.Overrides) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Overrides); i++ {
+		if swag.IsZero(o.Overrides[i]) { // not required
+			continue
+		}
+
+		if o.Overrides[i] != nil {
+			if err := o.Overrides[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkSwitchRoutingMulticastOK" + "." + "overrides" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkSwitchRoutingMulticastOK" + "." + "overrides" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network switch routing multicast o k body based on the context it is used
+func (o *GetNetworkSwitchRoutingMulticastOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateDefaultSettings(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateOverrides(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkSwitchRoutingMulticastOKBody) contextValidateDefaultSettings(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.DefaultSettings != nil {
+
+		if swag.IsZero(o.DefaultSettings) { // not required
+			return nil
+		}
+
+		if err := o.DefaultSettings.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkSwitchRoutingMulticastOK" + "." + "defaultSettings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkSwitchRoutingMulticastOK" + "." + "defaultSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSwitchRoutingMulticastOKBody) contextValidateOverrides(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Overrides); i++ {
+
+		if o.Overrides[i] != nil {
+
+			if swag.IsZero(o.Overrides[i]) { // not required
+				return nil
+			}
+
+			if err := o.Overrides[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkSwitchRoutingMulticastOK" + "." + "overrides" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkSwitchRoutingMulticastOK" + "." + "overrides" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchRoutingMulticastOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchRoutingMulticastOKBody) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchRoutingMulticastOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSwitchRoutingMulticastOKBodyDefaultSettings Default multicast setting for entire network. IGMP snooping and Flood unknown
+//       multicast traffic settings are enabled by default.
+swagger:model GetNetworkSwitchRoutingMulticastOKBodyDefaultSettings
+*/
+type GetNetworkSwitchRoutingMulticastOKBodyDefaultSettings struct {
+
+	// Flood unknown multicast traffic enabled for the entire network
+	FloodUnknownMulticastTrafficEnabled bool `json:"floodUnknownMulticastTrafficEnabled,omitempty"`
+
+	// IGMP snooping enabled for the entire network
+	IgmpSnoopingEnabled bool `json:"igmpSnoopingEnabled,omitempty"`
+}
+
+// Validate validates this get network switch routing multicast o k body default settings
+func (o *GetNetworkSwitchRoutingMulticastOKBodyDefaultSettings) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network switch routing multicast o k body default settings based on context it is used
+func (o *GetNetworkSwitchRoutingMulticastOKBodyDefaultSettings) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchRoutingMulticastOKBodyDefaultSettings) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchRoutingMulticastOKBodyDefaultSettings) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchRoutingMulticastOKBodyDefaultSettings
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSwitchRoutingMulticastOKBodyOverridesItems0 get network switch routing multicast o k body overrides items0
+swagger:model GetNetworkSwitchRoutingMulticastOKBodyOverridesItems0
+*/
+type GetNetworkSwitchRoutingMulticastOKBodyOverridesItems0 struct {
+
+	// Flood unknown multicast traffic enabled for switches, switch stacks or switch templates
+	FloodUnknownMulticastTrafficEnabled bool `json:"floodUnknownMulticastTrafficEnabled,omitempty"`
+
+	// IGMP snooping enabled for switches, switch stacks or switch templates
+	IgmpSnoopingEnabled bool `json:"igmpSnoopingEnabled,omitempty"`
+
+	// (optional) List of switch stack ids for non-template network
+	Stacks []string `json:"stacks"`
+
+	// (optional) List of switch templates ids for template network
+	SwitchProfiles []string `json:"switchProfiles"`
+
+	// (optional) List of switch serials for non-template network
+	Switches []string `json:"switches"`
+}
+
+// Validate validates this get network switch routing multicast o k body overrides items0
+func (o *GetNetworkSwitchRoutingMulticastOKBodyOverridesItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network switch routing multicast o k body overrides items0 based on context it is used
+func (o *GetNetworkSwitchRoutingMulticastOKBodyOverridesItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchRoutingMulticastOKBodyOverridesItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchRoutingMulticastOKBodyOverridesItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchRoutingMulticastOKBodyOverridesItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

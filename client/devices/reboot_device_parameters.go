@@ -52,14 +52,19 @@ func NewRebootDeviceParamsWithHTTPClient(client *http.Client) *RebootDeviceParam
 	}
 }
 
-/* RebootDeviceParams contains all the parameters to send to the API endpoint
-   for the reboot device operation.
+/*
+RebootDeviceParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the reboot device operation.
+
+	Typically these are written to a http.Request.
 */
 type RebootDeviceParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	timeout    time.Duration

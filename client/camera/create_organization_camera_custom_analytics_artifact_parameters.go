@@ -52,17 +52,22 @@ func NewCreateOrganizationCameraCustomAnalyticsArtifactParamsWithHTTPClient(clie
 	}
 }
 
-/* CreateOrganizationCameraCustomAnalyticsArtifactParams contains all the parameters to send to the API endpoint
-   for the create organization camera custom analytics artifact operation.
+/*
+CreateOrganizationCameraCustomAnalyticsArtifactParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create organization camera custom analytics artifact operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateOrganizationCameraCustomAnalyticsArtifactParams struct {
 
 	// CreateOrganizationCameraCustomAnalyticsArtifact.
 	CreateOrganizationCameraCustomAnalyticsArtifact CreateOrganizationCameraCustomAnalyticsArtifactBody
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

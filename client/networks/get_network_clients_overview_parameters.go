@@ -53,14 +53,19 @@ func NewGetNetworkClientsOverviewParamsWithHTTPClient(client *http.Client) *GetN
 	}
 }
 
-/* GetNetworkClientsOverviewParams contains all the parameters to send to the API endpoint
-   for the get network clients overview operation.
+/*
+GetNetworkClientsOverviewParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network clients overview operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkClientsOverviewParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* Resolution.

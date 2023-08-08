@@ -52,17 +52,22 @@ func NewMoveOrganizationLicensesParamsWithHTTPClient(client *http.Client) *MoveO
 	}
 }
 
-/* MoveOrganizationLicensesParams contains all the parameters to send to the API endpoint
-   for the move organization licenses operation.
+/*
+MoveOrganizationLicensesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the move organization licenses operation.
+
+	Typically these are written to a http.Request.
 */
 type MoveOrganizationLicensesParams struct {
 
 	// MoveOrganizationLicenses.
 	MoveOrganizationLicenses MoveOrganizationLicensesBody
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

@@ -52,17 +52,25 @@ func NewUpdateOrganizationAlertsProfileParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* UpdateOrganizationAlertsProfileParams contains all the parameters to send to the API endpoint
-   for the update organization alerts profile operation.
+/*
+UpdateOrganizationAlertsProfileParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update organization alerts profile operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateOrganizationAlertsProfileParams struct {
 
-	// AlertConfigID.
+	/* AlertConfigID.
+
+	   Alert config ID
+	*/
 	AlertConfigID string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	// UpdateOrganizationAlertsProfile.

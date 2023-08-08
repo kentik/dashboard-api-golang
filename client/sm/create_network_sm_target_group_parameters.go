@@ -52,17 +52,22 @@ func NewCreateNetworkSmTargetGroupParamsWithHTTPClient(client *http.Client) *Cre
 	}
 }
 
-/* CreateNetworkSmTargetGroupParams contains all the parameters to send to the API endpoint
-   for the create network sm target group operation.
+/*
+CreateNetworkSmTargetGroupParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create network sm target group operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateNetworkSmTargetGroupParams struct {
 
 	// CreateNetworkSmTargetGroup.
 	CreateNetworkSmTargetGroup CreateNetworkSmTargetGroupBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

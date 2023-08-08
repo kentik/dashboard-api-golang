@@ -52,17 +52,22 @@ func NewCreateNetworkSwitchStackParamsWithHTTPClient(client *http.Client) *Creat
 	}
 }
 
-/* CreateNetworkSwitchStackParams contains all the parameters to send to the API endpoint
-   for the create network switch stack operation.
+/*
+CreateNetworkSwitchStackParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create network switch stack operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateNetworkSwitchStackParams struct {
 
 	// CreateNetworkSwitchStack.
 	CreateNetworkSwitchStack CreateNetworkSwitchStackBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

@@ -53,10 +53,12 @@ func NewGetOrganizationClientsSearchParamsWithHTTPClient(client *http.Client) *G
 	}
 }
 
-/* GetOrganizationClientsSearchParams contains all the parameters to send to the API endpoint
-   for the get organization clients search operation.
+/*
+GetOrganizationClientsSearchParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization clients search operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationClientsSearchParams struct {
 
@@ -72,7 +74,10 @@ type GetOrganizationClientsSearchParams struct {
 	*/
 	Mac string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	/* PerPage.

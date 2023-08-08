@@ -38,6 +38,8 @@ type ClientService interface {
 
 	GetDevice(params *GetDeviceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceOK, error)
 
+	GetDeviceCellularSims(params *GetDeviceCellularSimsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceCellularSimsOK, error)
+
 	GetDeviceClients(params *GetDeviceClientsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceClientsOK, error)
 
 	GetDeviceLiveToolsPing(params *GetDeviceLiveToolsPingParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceLiveToolsPingOK, error)
@@ -54,15 +56,17 @@ type ClientService interface {
 
 	UpdateDevice(params *UpdateDeviceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceOK, error)
 
+	UpdateDeviceCellularSims(params *UpdateDeviceCellularSimsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceCellularSimsOK, error)
+
 	UpdateDeviceManagementInterface(params *UpdateDeviceManagementInterfaceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceManagementInterfaceOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  BlinkDeviceLeds blinks the l e ds on a device
+BlinkDeviceLeds blinks the l e ds on a device
 
-  Blink the LEDs on a device
+Blink the LEDs on a device
 */
 func (a *Client) BlinkDeviceLeds(params *BlinkDeviceLedsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*BlinkDeviceLedsAccepted, error) {
 	// TODO: Validate the params before sending
@@ -101,9 +105,9 @@ func (a *Client) BlinkDeviceLeds(params *BlinkDeviceLedsParams, authInfo runtime
 }
 
 /*
-  CreateDeviceLiveToolsPing enqueues a job to ping a target host from the device
+CreateDeviceLiveToolsPing enqueues a job to ping a target host from the device
 
-  Enqueue a job to ping a target host from the device
+Enqueue a job to ping a target host from the device
 */
 func (a *Client) CreateDeviceLiveToolsPing(params *CreateDeviceLiveToolsPingParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateDeviceLiveToolsPingCreated, error) {
 	// TODO: Validate the params before sending
@@ -142,9 +146,9 @@ func (a *Client) CreateDeviceLiveToolsPing(params *CreateDeviceLiveToolsPingPara
 }
 
 /*
-  CreateDeviceLiveToolsPingDevice enqueues a job to check connectivity status to the device
+CreateDeviceLiveToolsPingDevice enqueues a job to check connectivity status to the device
 
-  Enqueue a job to check connectivity status to the device
+Enqueue a job to check connectivity status to the device
 */
 func (a *Client) CreateDeviceLiveToolsPingDevice(params *CreateDeviceLiveToolsPingDeviceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateDeviceLiveToolsPingDeviceCreated, error) {
 	// TODO: Validate the params before sending
@@ -183,9 +187,9 @@ func (a *Client) CreateDeviceLiveToolsPingDevice(params *CreateDeviceLiveToolsPi
 }
 
 /*
-  GetDevice returns a single device
+GetDevice returns a single device
 
-  Return a single device
+Return a single device
 */
 func (a *Client) GetDevice(params *GetDeviceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceOK, error) {
 	// TODO: Validate the params before sending
@@ -224,9 +228,50 @@ func (a *Client) GetDevice(params *GetDeviceParams, authInfo runtime.ClientAuthI
 }
 
 /*
-  GetDeviceClients lists the clients of a device up to a maximum of a month ago
+GetDeviceCellularSims returns the s i m and a p n configurations for a cellular device
 
-  List the clients of a device, up to a maximum of a month ago. The usage of each client is returned in kilobytes. If the device is a switch, the switchport is returned; otherwise the switchport field is null.
+Return the SIM and APN configurations for a cellular device.
+*/
+func (a *Client) GetDeviceCellularSims(params *GetDeviceCellularSimsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceCellularSimsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetDeviceCellularSimsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getDeviceCellularSims",
+		Method:             "GET",
+		PathPattern:        "/devices/{serial}/cellular/sims",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetDeviceCellularSimsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetDeviceCellularSimsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getDeviceCellularSims: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetDeviceClients lists the clients of a device up to a maximum of a month ago
+
+List the clients of a device, up to a maximum of a month ago. The usage of each client is returned in kilobytes. If the device is a switch, the switchport is returned; otherwise the switchport field is null.
 */
 func (a *Client) GetDeviceClients(params *GetDeviceClientsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceClientsOK, error) {
 	// TODO: Validate the params before sending
@@ -265,9 +310,9 @@ func (a *Client) GetDeviceClients(params *GetDeviceClientsParams, authInfo runti
 }
 
 /*
-  GetDeviceLiveToolsPing returns a ping job
+GetDeviceLiveToolsPing returns a ping job
 
-  Return a ping job. Latency unit in response is in milliseconds. Size is in bytes.
+Return a ping job. Latency unit in response is in milliseconds. Size is in bytes.
 */
 func (a *Client) GetDeviceLiveToolsPing(params *GetDeviceLiveToolsPingParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceLiveToolsPingOK, error) {
 	// TODO: Validate the params before sending
@@ -306,9 +351,9 @@ func (a *Client) GetDeviceLiveToolsPing(params *GetDeviceLiveToolsPingParams, au
 }
 
 /*
-  GetDeviceLiveToolsPingDevice returns a ping job
+GetDeviceLiveToolsPingDevice returns a ping device job
 
-  Return a ping job. Latency unit in response is in milliseconds. Size is in bytes.
+Return a ping device job. Latency unit in response is in milliseconds. Size is in bytes.
 */
 func (a *Client) GetDeviceLiveToolsPingDevice(params *GetDeviceLiveToolsPingDeviceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceLiveToolsPingDeviceOK, error) {
 	// TODO: Validate the params before sending
@@ -347,9 +392,9 @@ func (a *Client) GetDeviceLiveToolsPingDevice(params *GetDeviceLiveToolsPingDevi
 }
 
 /*
-  GetDeviceLldpCdp lists l l d p and c d p information for a device
+GetDeviceLldpCdp lists l l d p and c d p information for a device
 
-  List LLDP and CDP information for a device
+List LLDP and CDP information for a device
 */
 func (a *Client) GetDeviceLldpCdp(params *GetDeviceLldpCdpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceLldpCdpOK, error) {
 	// TODO: Validate the params before sending
@@ -388,9 +433,9 @@ func (a *Client) GetDeviceLldpCdp(params *GetDeviceLldpCdpParams, authInfo runti
 }
 
 /*
-  GetDeviceLossAndLatencyHistory gets the uplink loss percentage and latency in milliseconds and goodput in kilobits per second for a wired network device
+GetDeviceLossAndLatencyHistory gets the uplink loss percentage and latency in milliseconds and goodput in kilobits per second for m x m g and z devices
 
-  Get the uplink loss percentage and latency in milliseconds, and goodput in kilobits per second for a wired network device.
+Get the uplink loss percentage and latency in milliseconds, and goodput in kilobits per second for MX, MG and Z devices.
 */
 func (a *Client) GetDeviceLossAndLatencyHistory(params *GetDeviceLossAndLatencyHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceLossAndLatencyHistoryOK, error) {
 	// TODO: Validate the params before sending
@@ -429,9 +474,9 @@ func (a *Client) GetDeviceLossAndLatencyHistory(params *GetDeviceLossAndLatencyH
 }
 
 /*
-  GetDeviceManagementInterface returns the management interface settings for a device
+GetDeviceManagementInterface returns the management interface settings for a device
 
-  Return the management interface settings for a device
+Return the management interface settings for a device
 */
 func (a *Client) GetDeviceManagementInterface(params *GetDeviceManagementInterfaceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceManagementInterfaceOK, error) {
 	// TODO: Validate the params before sending
@@ -470,9 +515,9 @@ func (a *Client) GetDeviceManagementInterface(params *GetDeviceManagementInterfa
 }
 
 /*
-  RebootDevice reboots a device
+RebootDevice reboots a device
 
-  Reboot a device
+Reboot a device
 */
 func (a *Client) RebootDevice(params *RebootDeviceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RebootDeviceAccepted, error) {
 	// TODO: Validate the params before sending
@@ -511,9 +556,9 @@ func (a *Client) RebootDevice(params *RebootDeviceParams, authInfo runtime.Clien
 }
 
 /*
-  UpdateDevice updates the attributes of a device
+UpdateDevice updates the attributes of a device
 
-  Update the attributes of a device
+Update the attributes of a device
 */
 func (a *Client) UpdateDevice(params *UpdateDeviceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceOK, error) {
 	// TODO: Validate the params before sending
@@ -552,9 +597,50 @@ func (a *Client) UpdateDevice(params *UpdateDeviceParams, authInfo runtime.Clien
 }
 
 /*
-  UpdateDeviceManagementInterface updates the management interface settings for a device
+UpdateDeviceCellularSims updates the s i m and a p n configurations for a cellular device
 
-  Update the management interface settings for a device
+Updates the SIM and APN configurations for a cellular device.
+*/
+func (a *Client) UpdateDeviceCellularSims(params *UpdateDeviceCellularSimsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceCellularSimsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateDeviceCellularSimsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "updateDeviceCellularSims",
+		Method:             "PUT",
+		PathPattern:        "/devices/{serial}/cellular/sims",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateDeviceCellularSimsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateDeviceCellularSimsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for updateDeviceCellularSims: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UpdateDeviceManagementInterface updates the management interface settings for a device
+
+Update the management interface settings for a device
 */
 func (a *Client) UpdateDeviceManagementInterface(params *UpdateDeviceManagementInterfaceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceManagementInterfaceOK, error) {
 	// TODO: Validate the params before sending

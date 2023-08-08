@@ -52,17 +52,25 @@ func NewDeleteNetworkSmUserAccessDeviceParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* DeleteNetworkSmUserAccessDeviceParams contains all the parameters to send to the API endpoint
-   for the delete network sm user access device operation.
+/*
+DeleteNetworkSmUserAccessDeviceParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete network sm user access device operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteNetworkSmUserAccessDeviceParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// UserAccessDeviceID.
+	/* UserAccessDeviceID.
+
+	   User access device ID
+	*/
 	UserAccessDeviceID string
 
 	timeout    time.Duration

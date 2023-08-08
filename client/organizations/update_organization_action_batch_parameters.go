@@ -52,17 +52,25 @@ func NewUpdateOrganizationActionBatchParamsWithHTTPClient(client *http.Client) *
 	}
 }
 
-/* UpdateOrganizationActionBatchParams contains all the parameters to send to the API endpoint
-   for the update organization action batch operation.
+/*
+UpdateOrganizationActionBatchParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update organization action batch operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateOrganizationActionBatchParams struct {
 
-	// ActionBatchID.
+	/* ActionBatchID.
+
+	   Action batch ID
+	*/
 	ActionBatchID string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	// UpdateOrganizationActionBatch.

@@ -126,6 +126,16 @@ type ClientService interface {
 
 	GetNetworkWirelessUsageHistory(params *GetNetworkWirelessUsageHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessUsageHistoryOK, error)
 
+	GetOrganizationWirelessDevicesChannelUtilizationByDevice(params *GetOrganizationWirelessDevicesChannelUtilizationByDeviceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationWirelessDevicesChannelUtilizationByDeviceOK, error)
+
+	GetOrganizationWirelessDevicesChannelUtilizationByNetwork(params *GetOrganizationWirelessDevicesChannelUtilizationByNetworkParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationWirelessDevicesChannelUtilizationByNetworkOK, error)
+
+	GetOrganizationWirelessDevicesChannelUtilizationHistoryByDeviceByInterval(params *GetOrganizationWirelessDevicesChannelUtilizationHistoryByDeviceByIntervalParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationWirelessDevicesChannelUtilizationHistoryByDeviceByIntervalOK, error)
+
+	GetOrganizationWirelessDevicesChannelUtilizationHistoryByNetworkByInterval(params *GetOrganizationWirelessDevicesChannelUtilizationHistoryByNetworkByIntervalParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationWirelessDevicesChannelUtilizationHistoryByNetworkByIntervalOK, error)
+
+	GetOrganizationWirelessDevicesEthernetStatuses(params *GetOrganizationWirelessDevicesEthernetStatusesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationWirelessDevicesEthernetStatusesOK, error)
+
 	UpdateDeviceWirelessBluetoothSettings(params *UpdateDeviceWirelessBluetoothSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceWirelessBluetoothSettingsOK, error)
 
 	UpdateDeviceWirelessRadioSettings(params *UpdateDeviceWirelessRadioSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceWirelessRadioSettingsOK, error)
@@ -168,9 +178,9 @@ type ClientService interface {
 }
 
 /*
-  CreateNetworkWirelessRfProfile creates new r f profile for this network
+CreateNetworkWirelessRfProfile creates new r f profile for this network
 
-  Creates new RF profile for this network
+Creates new RF profile for this network
 */
 func (a *Client) CreateNetworkWirelessRfProfile(params *CreateNetworkWirelessRfProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkWirelessRfProfileCreated, error) {
 	// TODO: Validate the params before sending
@@ -209,9 +219,9 @@ func (a *Client) CreateNetworkWirelessRfProfile(params *CreateNetworkWirelessRfP
 }
 
 /*
-  CreateNetworkWirelessSsidIdentityPsk creates an identity p s k
+CreateNetworkWirelessSsidIdentityPsk creates an identity p s k
 
-  Create an Identity PSK
+Create an Identity PSK
 */
 func (a *Client) CreateNetworkWirelessSsidIdentityPsk(params *CreateNetworkWirelessSsidIdentityPskParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkWirelessSsidIdentityPskCreated, error) {
 	// TODO: Validate the params before sending
@@ -250,9 +260,9 @@ func (a *Client) CreateNetworkWirelessSsidIdentityPsk(params *CreateNetworkWirel
 }
 
 /*
-  DeleteNetworkWirelessRfProfile deletes a r f profile
+DeleteNetworkWirelessRfProfile deletes a r f profile
 
-  Delete a RF Profile
+Delete a RF Profile
 */
 func (a *Client) DeleteNetworkWirelessRfProfile(params *DeleteNetworkWirelessRfProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkWirelessRfProfileNoContent, error) {
 	// TODO: Validate the params before sending
@@ -291,9 +301,9 @@ func (a *Client) DeleteNetworkWirelessRfProfile(params *DeleteNetworkWirelessRfP
 }
 
 /*
-  DeleteNetworkWirelessSsidIdentityPsk deletes an identity p s k
+DeleteNetworkWirelessSsidIdentityPsk deletes an identity p s k
 
-  Delete an Identity PSK
+Delete an Identity PSK
 */
 func (a *Client) DeleteNetworkWirelessSsidIdentityPsk(params *DeleteNetworkWirelessSsidIdentityPskParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkWirelessSsidIdentityPskNoContent, error) {
 	// TODO: Validate the params before sending
@@ -332,9 +342,9 @@ func (a *Client) DeleteNetworkWirelessSsidIdentityPsk(params *DeleteNetworkWirel
 }
 
 /*
-  GetDeviceWirelessBluetoothSettings returns the bluetooth settings for a wireless device
+GetDeviceWirelessBluetoothSettings returns the bluetooth settings for a wireless device
 
-  Return the bluetooth settings for a wireless device
+Return the bluetooth settings for a wireless device
 */
 func (a *Client) GetDeviceWirelessBluetoothSettings(params *GetDeviceWirelessBluetoothSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceWirelessBluetoothSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -373,9 +383,9 @@ func (a *Client) GetDeviceWirelessBluetoothSettings(params *GetDeviceWirelessBlu
 }
 
 /*
-  GetDeviceWirelessConnectionStats aggregateds connectivity info for a given a p on this network
+GetDeviceWirelessConnectionStats aggregateds connectivity info for a given a p on this network
 
-  Aggregated connectivity info for a given AP on this network
+Aggregated connectivity info for a given AP on this network
 */
 func (a *Client) GetDeviceWirelessConnectionStats(params *GetDeviceWirelessConnectionStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceWirelessConnectionStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -414,9 +424,9 @@ func (a *Client) GetDeviceWirelessConnectionStats(params *GetDeviceWirelessConne
 }
 
 /*
-  GetDeviceWirelessLatencyStats aggregateds latency info for a given a p on this network
+GetDeviceWirelessLatencyStats aggregateds latency info for a given a p on this network
 
-  Aggregated latency info for a given AP on this network
+Aggregated latency info for a given AP on this network
 */
 func (a *Client) GetDeviceWirelessLatencyStats(params *GetDeviceWirelessLatencyStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceWirelessLatencyStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -455,9 +465,9 @@ func (a *Client) GetDeviceWirelessLatencyStats(params *GetDeviceWirelessLatencyS
 }
 
 /*
-  GetDeviceWirelessRadioSettings returns the radio settings of a device
+GetDeviceWirelessRadioSettings returns the radio settings of a device
 
-  Return the radio settings of a device
+Return the radio settings of a device
 */
 func (a *Client) GetDeviceWirelessRadioSettings(params *GetDeviceWirelessRadioSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceWirelessRadioSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -496,9 +506,9 @@ func (a *Client) GetDeviceWirelessRadioSettings(params *GetDeviceWirelessRadioSe
 }
 
 /*
-  GetDeviceWirelessStatus returns the s s ID statuses of an access point
+GetDeviceWirelessStatus returns the s s ID statuses of an access point
 
-  Return the SSID statuses of an access point
+Return the SSID statuses of an access point
 */
 func (a *Client) GetDeviceWirelessStatus(params *GetDeviceWirelessStatusParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceWirelessStatusOK, error) {
 	// TODO: Validate the params before sending
@@ -537,9 +547,9 @@ func (a *Client) GetDeviceWirelessStatus(params *GetDeviceWirelessStatusParams, 
 }
 
 /*
-  GetNetworkWirelessAirMarshal lists air marshal scan results from a network
+GetNetworkWirelessAirMarshal lists air marshal scan results from a network
 
-  List Air Marshal scan results from a network
+List Air Marshal scan results from a network
 */
 func (a *Client) GetNetworkWirelessAirMarshal(params *GetNetworkWirelessAirMarshalParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessAirMarshalOK, error) {
 	// TODO: Validate the params before sending
@@ -578,9 +588,9 @@ func (a *Client) GetNetworkWirelessAirMarshal(params *GetNetworkWirelessAirMarsh
 }
 
 /*
-  GetNetworkWirelessAlternateManagementInterface returns alternate management interface and devices with IP assigned
+GetNetworkWirelessAlternateManagementInterface returns alternate management interface and devices with IP assigned
 
-  Return alternate management interface and devices with IP assigned
+Return alternate management interface and devices with IP assigned
 */
 func (a *Client) GetNetworkWirelessAlternateManagementInterface(params *GetNetworkWirelessAlternateManagementInterfaceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessAlternateManagementInterfaceOK, error) {
 	// TODO: Validate the params before sending
@@ -619,9 +629,9 @@ func (a *Client) GetNetworkWirelessAlternateManagementInterface(params *GetNetwo
 }
 
 /*
-  GetNetworkWirelessBilling returns the billing settings of this network
+GetNetworkWirelessBilling returns the billing settings of this network
 
-  Return the billing settings of this network
+Return the billing settings of this network
 */
 func (a *Client) GetNetworkWirelessBilling(params *GetNetworkWirelessBillingParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessBillingOK, error) {
 	// TODO: Validate the params before sending
@@ -660,9 +670,9 @@ func (a *Client) GetNetworkWirelessBilling(params *GetNetworkWirelessBillingPara
 }
 
 /*
-  GetNetworkWirelessBluetoothSettings returns the bluetooth settings for a network a href https documentation meraki com m r bluetooth bluetooth low energy b l e bluetooth settings a must be enabled on the network
+GetNetworkWirelessBluetoothSettings returns the bluetooth settings for a network a href https documentation meraki com m r bluetooth bluetooth low energy b l e bluetooth settings a must be enabled on the network
 
-  Return the Bluetooth settings for a network. <a href="https://documentation.meraki.com/MR/Bluetooth/Bluetooth_Low_Energy_(BLE)">Bluetooth settings</a> must be enabled on the network.
+Return the Bluetooth settings for a network. <a href="https://documentation.meraki.com/MR/Bluetooth/Bluetooth_Low_Energy_(BLE)">Bluetooth settings</a> must be enabled on the network.
 */
 func (a *Client) GetNetworkWirelessBluetoothSettings(params *GetNetworkWirelessBluetoothSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessBluetoothSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -701,9 +711,9 @@ func (a *Client) GetNetworkWirelessBluetoothSettings(params *GetNetworkWirelessB
 }
 
 /*
-  GetNetworkWirelessChannelUtilizationHistory returns a p channel utilization over time for a device or network client
+GetNetworkWirelessChannelUtilizationHistory returns a p channel utilization over time for a device or network client
 
-  Return AP channel utilization over time for a device or network client
+Return AP channel utilization over time for a device or network client
 */
 func (a *Client) GetNetworkWirelessChannelUtilizationHistory(params *GetNetworkWirelessChannelUtilizationHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessChannelUtilizationHistoryOK, error) {
 	// TODO: Validate the params before sending
@@ -742,9 +752,9 @@ func (a *Client) GetNetworkWirelessChannelUtilizationHistory(params *GetNetworkW
 }
 
 /*
-  GetNetworkWirelessClientConnectionStats aggregateds connectivity info for a given client on this network
+GetNetworkWirelessClientConnectionStats aggregateds connectivity info for a given client on this network
 
-  Aggregated connectivity info for a given client on this network. Clients are identified by their MAC.
+Aggregated connectivity info for a given client on this network. Clients are identified by their MAC.
 */
 func (a *Client) GetNetworkWirelessClientConnectionStats(params *GetNetworkWirelessClientConnectionStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessClientConnectionStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -783,9 +793,9 @@ func (a *Client) GetNetworkWirelessClientConnectionStats(params *GetNetworkWirel
 }
 
 /*
-  GetNetworkWirelessClientConnectivityEvents lists the wireless connectivity events for a client within a network in the timespan
+GetNetworkWirelessClientConnectivityEvents lists the wireless connectivity events for a client within a network in the timespan
 
-  List the wireless connectivity events for a client within a network in the timespan.
+List the wireless connectivity events for a client within a network in the timespan.
 */
 func (a *Client) GetNetworkWirelessClientConnectivityEvents(params *GetNetworkWirelessClientConnectivityEventsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessClientConnectivityEventsOK, error) {
 	// TODO: Validate the params before sending
@@ -824,9 +834,9 @@ func (a *Client) GetNetworkWirelessClientConnectivityEvents(params *GetNetworkWi
 }
 
 /*
-  GetNetworkWirelessClientCountHistory returns wireless client counts over time for a network device or network client
+GetNetworkWirelessClientCountHistory returns wireless client counts over time for a network device or network client
 
-  Return wireless client counts over time for a network, device, or network client
+Return wireless client counts over time for a network, device, or network client
 */
 func (a *Client) GetNetworkWirelessClientCountHistory(params *GetNetworkWirelessClientCountHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessClientCountHistoryOK, error) {
 	// TODO: Validate the params before sending
@@ -865,9 +875,9 @@ func (a *Client) GetNetworkWirelessClientCountHistory(params *GetNetworkWireless
 }
 
 /*
-  GetNetworkWirelessClientLatencyHistory returns the latency history for a client
+GetNetworkWirelessClientLatencyHistory returns the latency history for a client
 
-  Return the latency history for a client. Clients can be identified by a client key or either the MAC or IP depending on whether the network uses Track-by-IP. The latency data is from a sample of 2% of packets and is grouped into 4 traffic categories: background, best effort, video, voice. Within these categories the sampled packet counters are bucketed by latency in milliseconds.
+Return the latency history for a client. Clients can be identified by a client key or either the MAC or IP depending on whether the network uses Track-by-IP. The latency data is from a sample of 2% of packets and is grouped into 4 traffic categories: background, best effort, video, voice. Within these categories the sampled packet counters are bucketed by latency in milliseconds.
 */
 func (a *Client) GetNetworkWirelessClientLatencyHistory(params *GetNetworkWirelessClientLatencyHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessClientLatencyHistoryOK, error) {
 	// TODO: Validate the params before sending
@@ -906,9 +916,9 @@ func (a *Client) GetNetworkWirelessClientLatencyHistory(params *GetNetworkWirele
 }
 
 /*
-  GetNetworkWirelessClientLatencyStats aggregateds latency info for a given client on this network
+GetNetworkWirelessClientLatencyStats aggregateds latency info for a given client on this network
 
-  Aggregated latency info for a given client on this network. Clients are identified by their MAC.
+Aggregated latency info for a given client on this network. Clients are identified by their MAC.
 */
 func (a *Client) GetNetworkWirelessClientLatencyStats(params *GetNetworkWirelessClientLatencyStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessClientLatencyStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -947,9 +957,9 @@ func (a *Client) GetNetworkWirelessClientLatencyStats(params *GetNetworkWireless
 }
 
 /*
-  GetNetworkWirelessClientsConnectionStats aggregateds connectivity info for this network grouped by clients
+GetNetworkWirelessClientsConnectionStats aggregateds connectivity info for this network grouped by clients
 
-  Aggregated connectivity info for this network, grouped by clients
+Aggregated connectivity info for this network, grouped by clients
 */
 func (a *Client) GetNetworkWirelessClientsConnectionStats(params *GetNetworkWirelessClientsConnectionStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessClientsConnectionStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -988,9 +998,9 @@ func (a *Client) GetNetworkWirelessClientsConnectionStats(params *GetNetworkWire
 }
 
 /*
-  GetNetworkWirelessClientsLatencyStats aggregateds latency info for this network grouped by clients
+GetNetworkWirelessClientsLatencyStats aggregateds latency info for this network grouped by clients
 
-  Aggregated latency info for this network, grouped by clients
+Aggregated latency info for this network, grouped by clients
 */
 func (a *Client) GetNetworkWirelessClientsLatencyStats(params *GetNetworkWirelessClientsLatencyStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessClientsLatencyStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -1029,9 +1039,9 @@ func (a *Client) GetNetworkWirelessClientsLatencyStats(params *GetNetworkWireles
 }
 
 /*
-  GetNetworkWirelessConnectionStats aggregateds connectivity info for this network
+GetNetworkWirelessConnectionStats aggregateds connectivity info for this network
 
-  Aggregated connectivity info for this network
+Aggregated connectivity info for this network
 */
 func (a *Client) GetNetworkWirelessConnectionStats(params *GetNetworkWirelessConnectionStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessConnectionStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -1070,9 +1080,9 @@ func (a *Client) GetNetworkWirelessConnectionStats(params *GetNetworkWirelessCon
 }
 
 /*
-  GetNetworkWirelessDataRateHistory returns p h y data rates over time for a network device or network client
+GetNetworkWirelessDataRateHistory returns p h y data rates over time for a network device or network client
 
-  Return PHY data rates over time for a network, device, or network client
+Return PHY data rates over time for a network, device, or network client
 */
 func (a *Client) GetNetworkWirelessDataRateHistory(params *GetNetworkWirelessDataRateHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessDataRateHistoryOK, error) {
 	// TODO: Validate the params before sending
@@ -1111,9 +1121,9 @@ func (a *Client) GetNetworkWirelessDataRateHistory(params *GetNetworkWirelessDat
 }
 
 /*
-  GetNetworkWirelessDevicesConnectionStats aggregateds connectivity info for this network grouped by node
+GetNetworkWirelessDevicesConnectionStats aggregateds connectivity info for this network grouped by node
 
-  Aggregated connectivity info for this network, grouped by node
+Aggregated connectivity info for this network, grouped by node
 */
 func (a *Client) GetNetworkWirelessDevicesConnectionStats(params *GetNetworkWirelessDevicesConnectionStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessDevicesConnectionStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -1152,9 +1162,9 @@ func (a *Client) GetNetworkWirelessDevicesConnectionStats(params *GetNetworkWire
 }
 
 /*
-  GetNetworkWirelessDevicesLatencyStats aggregateds latency info for this network grouped by node
+GetNetworkWirelessDevicesLatencyStats aggregateds latency info for this network grouped by node
 
-  Aggregated latency info for this network, grouped by node
+Aggregated latency info for this network, grouped by node
 */
 func (a *Client) GetNetworkWirelessDevicesLatencyStats(params *GetNetworkWirelessDevicesLatencyStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessDevicesLatencyStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -1193,9 +1203,9 @@ func (a *Client) GetNetworkWirelessDevicesLatencyStats(params *GetNetworkWireles
 }
 
 /*
-  GetNetworkWirelessFailedConnections lists of all failed client connection events on this network in a given time range
+GetNetworkWirelessFailedConnections lists of all failed client connection events on this network in a given time range
 
-  List of all failed client connection events on this network in a given time range
+List of all failed client connection events on this network in a given time range
 */
 func (a *Client) GetNetworkWirelessFailedConnections(params *GetNetworkWirelessFailedConnectionsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessFailedConnectionsOK, error) {
 	// TODO: Validate the params before sending
@@ -1234,9 +1244,9 @@ func (a *Client) GetNetworkWirelessFailedConnections(params *GetNetworkWirelessF
 }
 
 /*
-  GetNetworkWirelessLatencyHistory returns average wireless latency over time for a network device or network client
+GetNetworkWirelessLatencyHistory returns average wireless latency over time for a network device or network client
 
-  Return average wireless latency over time for a network, device, or network client
+Return average wireless latency over time for a network, device, or network client
 */
 func (a *Client) GetNetworkWirelessLatencyHistory(params *GetNetworkWirelessLatencyHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessLatencyHistoryOK, error) {
 	// TODO: Validate the params before sending
@@ -1275,9 +1285,9 @@ func (a *Client) GetNetworkWirelessLatencyHistory(params *GetNetworkWirelessLate
 }
 
 /*
-  GetNetworkWirelessLatencyStats aggregateds latency info for this network
+GetNetworkWirelessLatencyStats aggregateds latency info for this network
 
-  Aggregated latency info for this network
+Aggregated latency info for this network
 */
 func (a *Client) GetNetworkWirelessLatencyStats(params *GetNetworkWirelessLatencyStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessLatencyStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -1316,9 +1326,9 @@ func (a *Client) GetNetworkWirelessLatencyStats(params *GetNetworkWirelessLatenc
 }
 
 /*
-  GetNetworkWirelessMeshStatuses lists wireless mesh statuses for repeaters
+GetNetworkWirelessMeshStatuses lists wireless mesh statuses for repeaters
 
-  List wireless mesh statuses for repeaters
+List wireless mesh statuses for repeaters
 */
 func (a *Client) GetNetworkWirelessMeshStatuses(params *GetNetworkWirelessMeshStatusesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessMeshStatusesOK, error) {
 	// TODO: Validate the params before sending
@@ -1357,9 +1367,9 @@ func (a *Client) GetNetworkWirelessMeshStatuses(params *GetNetworkWirelessMeshSt
 }
 
 /*
-  GetNetworkWirelessRfProfile returns a r f profile
+GetNetworkWirelessRfProfile returns a r f profile
 
-  Return a RF profile
+Return a RF profile
 */
 func (a *Client) GetNetworkWirelessRfProfile(params *GetNetworkWirelessRfProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessRfProfileOK, error) {
 	// TODO: Validate the params before sending
@@ -1398,9 +1408,9 @@ func (a *Client) GetNetworkWirelessRfProfile(params *GetNetworkWirelessRfProfile
 }
 
 /*
-  GetNetworkWirelessRfProfiles lists the non basic r f profiles for this network
+GetNetworkWirelessRfProfiles lists r f profiles for this network
 
-  List the non-basic RF profiles for this network
+List RF profiles for this network
 */
 func (a *Client) GetNetworkWirelessRfProfiles(params *GetNetworkWirelessRfProfilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessRfProfilesOK, error) {
 	// TODO: Validate the params before sending
@@ -1439,9 +1449,9 @@ func (a *Client) GetNetworkWirelessRfProfiles(params *GetNetworkWirelessRfProfil
 }
 
 /*
-  GetNetworkWirelessSettings returns the wireless settings for a network
+GetNetworkWirelessSettings returns the wireless settings for a network
 
-  Return the wireless settings for a network
+Return the wireless settings for a network
 */
 func (a *Client) GetNetworkWirelessSettings(params *GetNetworkWirelessSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -1480,9 +1490,9 @@ func (a *Client) GetNetworkWirelessSettings(params *GetNetworkWirelessSettingsPa
 }
 
 /*
-  GetNetworkWirelessSignalQualityHistory returns signal quality s n r r s s i over time for a device or network client
+GetNetworkWirelessSignalQualityHistory returns signal quality s n r r s s i over time for a device or network client
 
-  Return signal quality (SNR/RSSI) over time for a device or network client
+Return signal quality (SNR/RSSI) over time for a device or network client
 */
 func (a *Client) GetNetworkWirelessSignalQualityHistory(params *GetNetworkWirelessSignalQualityHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessSignalQualityHistoryOK, error) {
 	// TODO: Validate the params before sending
@@ -1521,9 +1531,9 @@ func (a *Client) GetNetworkWirelessSignalQualityHistory(params *GetNetworkWirele
 }
 
 /*
-  GetNetworkWirelessSsid returns a single m r s s ID
+GetNetworkWirelessSsid returns a single m r s s ID
 
-  Return a single MR SSID
+Return a single MR SSID
 */
 func (a *Client) GetNetworkWirelessSsid(params *GetNetworkWirelessSsidParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessSsidOK, error) {
 	// TODO: Validate the params before sending
@@ -1562,9 +1572,9 @@ func (a *Client) GetNetworkWirelessSsid(params *GetNetworkWirelessSsidParams, au
 }
 
 /*
-  GetNetworkWirelessSsidBonjourForwarding lists the bonjour forwarding setting and rules for the s s ID
+GetNetworkWirelessSsidBonjourForwarding lists the bonjour forwarding setting and rules for the s s ID
 
-  List the Bonjour forwarding setting and rules for the SSID
+List the Bonjour forwarding setting and rules for the SSID
 */
 func (a *Client) GetNetworkWirelessSsidBonjourForwarding(params *GetNetworkWirelessSsidBonjourForwardingParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessSsidBonjourForwardingOK, error) {
 	// TODO: Validate the params before sending
@@ -1603,9 +1613,9 @@ func (a *Client) GetNetworkWirelessSsidBonjourForwarding(params *GetNetworkWirel
 }
 
 /*
-  GetNetworkWirelessSsidDeviceTypeGroupPolicies lists the device type group policies for the s s ID
+GetNetworkWirelessSsidDeviceTypeGroupPolicies lists the device type group policies for the s s ID
 
-  List the device type group policies for the SSID
+List the device type group policies for the SSID
 */
 func (a *Client) GetNetworkWirelessSsidDeviceTypeGroupPolicies(params *GetNetworkWirelessSsidDeviceTypeGroupPoliciesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessSsidDeviceTypeGroupPoliciesOK, error) {
 	// TODO: Validate the params before sending
@@ -1644,9 +1654,9 @@ func (a *Client) GetNetworkWirelessSsidDeviceTypeGroupPolicies(params *GetNetwor
 }
 
 /*
-  GetNetworkWirelessSsidEapOverride returns the e a p overridden parameters for an s s ID
+GetNetworkWirelessSsidEapOverride returns the e a p overridden parameters for an s s ID
 
-  Return the EAP overridden parameters for an SSID
+Return the EAP overridden parameters for an SSID
 */
 func (a *Client) GetNetworkWirelessSsidEapOverride(params *GetNetworkWirelessSsidEapOverrideParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessSsidEapOverrideOK, error) {
 	// TODO: Validate the params before sending
@@ -1685,9 +1695,9 @@ func (a *Client) GetNetworkWirelessSsidEapOverride(params *GetNetworkWirelessSsi
 }
 
 /*
-  GetNetworkWirelessSsidFirewallL3FirewallRules returns the l3 firewall rules for an s s ID on an m r network
+GetNetworkWirelessSsidFirewallL3FirewallRules returns the l3 firewall rules for an s s ID on an m r network
 
-  Return the L3 firewall rules for an SSID on an MR network
+Return the L3 firewall rules for an SSID on an MR network
 */
 func (a *Client) GetNetworkWirelessSsidFirewallL3FirewallRules(params *GetNetworkWirelessSsidFirewallL3FirewallRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessSsidFirewallL3FirewallRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -1726,9 +1736,9 @@ func (a *Client) GetNetworkWirelessSsidFirewallL3FirewallRules(params *GetNetwor
 }
 
 /*
-  GetNetworkWirelessSsidFirewallL7FirewallRules returns the l7 firewall rules for an s s ID on an m r network
+GetNetworkWirelessSsidFirewallL7FirewallRules returns the l7 firewall rules for an s s ID on an m r network
 
-  Return the L7 firewall rules for an SSID on an MR network
+Return the L7 firewall rules for an SSID on an MR network
 */
 func (a *Client) GetNetworkWirelessSsidFirewallL7FirewallRules(params *GetNetworkWirelessSsidFirewallL7FirewallRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessSsidFirewallL7FirewallRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -1767,9 +1777,9 @@ func (a *Client) GetNetworkWirelessSsidFirewallL7FirewallRules(params *GetNetwor
 }
 
 /*
-  GetNetworkWirelessSsidHotspot20 returns the hotspot 2 0 settings for an s s ID
+GetNetworkWirelessSsidHotspot20 returns the hotspot 2 0 settings for an s s ID
 
-  Return the Hotspot 2.0 settings for an SSID
+Return the Hotspot 2.0 settings for an SSID
 */
 func (a *Client) GetNetworkWirelessSsidHotspot20(params *GetNetworkWirelessSsidHotspot20Params, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessSsidHotspot20OK, error) {
 	// TODO: Validate the params before sending
@@ -1808,9 +1818,9 @@ func (a *Client) GetNetworkWirelessSsidHotspot20(params *GetNetworkWirelessSsidH
 }
 
 /*
-  GetNetworkWirelessSsidIdentityPsk returns an identity p s k
+GetNetworkWirelessSsidIdentityPsk returns an identity p s k
 
-  Return an Identity PSK
+Return an Identity PSK
 */
 func (a *Client) GetNetworkWirelessSsidIdentityPsk(params *GetNetworkWirelessSsidIdentityPskParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessSsidIdentityPskOK, error) {
 	// TODO: Validate the params before sending
@@ -1849,9 +1859,9 @@ func (a *Client) GetNetworkWirelessSsidIdentityPsk(params *GetNetworkWirelessSsi
 }
 
 /*
-  GetNetworkWirelessSsidIdentityPsks lists all identity p s ks in a wireless network
+GetNetworkWirelessSsidIdentityPsks lists all identity p s ks in a wireless network
 
-  List all Identity PSKs in a wireless network
+List all Identity PSKs in a wireless network
 */
 func (a *Client) GetNetworkWirelessSsidIdentityPsks(params *GetNetworkWirelessSsidIdentityPsksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessSsidIdentityPsksOK, error) {
 	// TODO: Validate the params before sending
@@ -1890,9 +1900,9 @@ func (a *Client) GetNetworkWirelessSsidIdentityPsks(params *GetNetworkWirelessSs
 }
 
 /*
-  GetNetworkWirelessSsidSchedules lists the outage schedule for the s s ID
+GetNetworkWirelessSsidSchedules lists the outage schedule for the s s ID
 
-  List the outage schedule for the SSID
+List the outage schedule for the SSID
 */
 func (a *Client) GetNetworkWirelessSsidSchedules(params *GetNetworkWirelessSsidSchedulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessSsidSchedulesOK, error) {
 	// TODO: Validate the params before sending
@@ -1931,9 +1941,9 @@ func (a *Client) GetNetworkWirelessSsidSchedules(params *GetNetworkWirelessSsidS
 }
 
 /*
-  GetNetworkWirelessSsidSplashSettings displays the splash page settings for the given s s ID
+GetNetworkWirelessSsidSplashSettings displays the splash page settings for the given s s ID
 
-  Display the splash page settings for the given SSID
+Display the splash page settings for the given SSID
 */
 func (a *Client) GetNetworkWirelessSsidSplashSettings(params *GetNetworkWirelessSsidSplashSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessSsidSplashSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -1972,9 +1982,9 @@ func (a *Client) GetNetworkWirelessSsidSplashSettings(params *GetNetworkWireless
 }
 
 /*
-  GetNetworkWirelessSsidTrafficShapingRules displays the traffic shaping settings for a s s ID on an m r network
+GetNetworkWirelessSsidTrafficShapingRules displays the traffic shaping settings for a s s ID on an m r network
 
-  Display the traffic shaping settings for a SSID on an MR network
+Display the traffic shaping settings for a SSID on an MR network
 */
 func (a *Client) GetNetworkWirelessSsidTrafficShapingRules(params *GetNetworkWirelessSsidTrafficShapingRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessSsidTrafficShapingRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -2013,9 +2023,9 @@ func (a *Client) GetNetworkWirelessSsidTrafficShapingRules(params *GetNetworkWir
 }
 
 /*
-  GetNetworkWirelessSsidVpn lists the v p n settings for the s s ID
+GetNetworkWirelessSsidVpn lists the v p n settings for the s s ID
 
-  List the VPN settings for the SSID.
+List the VPN settings for the SSID.
 */
 func (a *Client) GetNetworkWirelessSsidVpn(params *GetNetworkWirelessSsidVpnParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessSsidVpnOK, error) {
 	// TODO: Validate the params before sending
@@ -2054,9 +2064,9 @@ func (a *Client) GetNetworkWirelessSsidVpn(params *GetNetworkWirelessSsidVpnPara
 }
 
 /*
-  GetNetworkWirelessSsids lists the m r s s i ds in a network
+GetNetworkWirelessSsids lists the m r s s i ds in a network
 
-  List the MR SSIDs in a network
+List the MR SSIDs in a network
 */
 func (a *Client) GetNetworkWirelessSsids(params *GetNetworkWirelessSsidsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessSsidsOK, error) {
 	// TODO: Validate the params before sending
@@ -2095,9 +2105,9 @@ func (a *Client) GetNetworkWirelessSsids(params *GetNetworkWirelessSsidsParams, 
 }
 
 /*
-  GetNetworkWirelessUsageHistory returns a p usage over time for a device or network client
+GetNetworkWirelessUsageHistory returns a p usage over time for a device or network client
 
-  Return AP usage over time for a device or network client
+Return AP usage over time for a device or network client
 */
 func (a *Client) GetNetworkWirelessUsageHistory(params *GetNetworkWirelessUsageHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWirelessUsageHistoryOK, error) {
 	// TODO: Validate the params before sending
@@ -2136,9 +2146,214 @@ func (a *Client) GetNetworkWirelessUsageHistory(params *GetNetworkWirelessUsageH
 }
 
 /*
-  UpdateDeviceWirelessBluetoothSettings updates the bluetooth settings for a wireless device
+GetOrganizationWirelessDevicesChannelUtilizationByDevice gets average channel utilization for all bands in a network split by a p
 
-  Update the bluetooth settings for a wireless device
+Get average channel utilization for all bands in a network, split by AP
+*/
+func (a *Client) GetOrganizationWirelessDevicesChannelUtilizationByDevice(params *GetOrganizationWirelessDevicesChannelUtilizationByDeviceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationWirelessDevicesChannelUtilizationByDeviceOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetOrganizationWirelessDevicesChannelUtilizationByDeviceParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getOrganizationWirelessDevicesChannelUtilizationByDevice",
+		Method:             "GET",
+		PathPattern:        "/organizations/{organizationId}/wireless/devices/channelUtilization/byDevice",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetOrganizationWirelessDevicesChannelUtilizationByDeviceReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetOrganizationWirelessDevicesChannelUtilizationByDeviceOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getOrganizationWirelessDevicesChannelUtilizationByDevice: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetOrganizationWirelessDevicesChannelUtilizationByNetwork gets average channel utilization across all bands for all networks in the organization
+
+Get average channel utilization across all bands for all networks in the organization
+*/
+func (a *Client) GetOrganizationWirelessDevicesChannelUtilizationByNetwork(params *GetOrganizationWirelessDevicesChannelUtilizationByNetworkParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationWirelessDevicesChannelUtilizationByNetworkOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetOrganizationWirelessDevicesChannelUtilizationByNetworkParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getOrganizationWirelessDevicesChannelUtilizationByNetwork",
+		Method:             "GET",
+		PathPattern:        "/organizations/{organizationId}/wireless/devices/channelUtilization/byNetwork",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetOrganizationWirelessDevicesChannelUtilizationByNetworkReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetOrganizationWirelessDevicesChannelUtilizationByNetworkOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getOrganizationWirelessDevicesChannelUtilizationByNetwork: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetOrganizationWirelessDevicesChannelUtilizationHistoryByDeviceByInterval gets a time series of average channel utilization for all bands segmented by device
+
+Get a time-series of average channel utilization for all bands, segmented by device.
+*/
+func (a *Client) GetOrganizationWirelessDevicesChannelUtilizationHistoryByDeviceByInterval(params *GetOrganizationWirelessDevicesChannelUtilizationHistoryByDeviceByIntervalParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationWirelessDevicesChannelUtilizationHistoryByDeviceByIntervalOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetOrganizationWirelessDevicesChannelUtilizationHistoryByDeviceByIntervalParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getOrganizationWirelessDevicesChannelUtilizationHistoryByDeviceByInterval",
+		Method:             "GET",
+		PathPattern:        "/organizations/{organizationId}/wireless/devices/channelUtilization/history/byDevice/byInterval",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetOrganizationWirelessDevicesChannelUtilizationHistoryByDeviceByIntervalReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetOrganizationWirelessDevicesChannelUtilizationHistoryByDeviceByIntervalOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getOrganizationWirelessDevicesChannelUtilizationHistoryByDeviceByInterval: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetOrganizationWirelessDevicesChannelUtilizationHistoryByNetworkByInterval gets a time series of average channel utilization for all bands
+
+Get a time-series of average channel utilization for all bands
+*/
+func (a *Client) GetOrganizationWirelessDevicesChannelUtilizationHistoryByNetworkByInterval(params *GetOrganizationWirelessDevicesChannelUtilizationHistoryByNetworkByIntervalParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationWirelessDevicesChannelUtilizationHistoryByNetworkByIntervalOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetOrganizationWirelessDevicesChannelUtilizationHistoryByNetworkByIntervalParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getOrganizationWirelessDevicesChannelUtilizationHistoryByNetworkByInterval",
+		Method:             "GET",
+		PathPattern:        "/organizations/{organizationId}/wireless/devices/channelUtilization/history/byNetwork/byInterval",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetOrganizationWirelessDevicesChannelUtilizationHistoryByNetworkByIntervalReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetOrganizationWirelessDevicesChannelUtilizationHistoryByNetworkByIntervalOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getOrganizationWirelessDevicesChannelUtilizationHistoryByNetworkByInterval: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetOrganizationWirelessDevicesEthernetStatuses lists the most recent ethernet link speed duplex aggregation and power mode and status information for wireless devices
+
+List the most recent Ethernet link speed, duplex, aggregation and power mode and status information for wireless devices.
+*/
+func (a *Client) GetOrganizationWirelessDevicesEthernetStatuses(params *GetOrganizationWirelessDevicesEthernetStatusesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationWirelessDevicesEthernetStatusesOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetOrganizationWirelessDevicesEthernetStatusesParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getOrganizationWirelessDevicesEthernetStatuses",
+		Method:             "GET",
+		PathPattern:        "/organizations/{organizationId}/wireless/devices/ethernet/statuses",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetOrganizationWirelessDevicesEthernetStatusesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetOrganizationWirelessDevicesEthernetStatusesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getOrganizationWirelessDevicesEthernetStatuses: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UpdateDeviceWirelessBluetoothSettings updates the bluetooth settings for a wireless device
+
+Update the bluetooth settings for a wireless device
 */
 func (a *Client) UpdateDeviceWirelessBluetoothSettings(params *UpdateDeviceWirelessBluetoothSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceWirelessBluetoothSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -2177,9 +2392,9 @@ func (a *Client) UpdateDeviceWirelessBluetoothSettings(params *UpdateDeviceWirel
 }
 
 /*
-  UpdateDeviceWirelessRadioSettings updates the radio settings of a device
+UpdateDeviceWirelessRadioSettings updates the radio settings of a device
 
-  Update the radio settings of a device
+Update the radio settings of a device
 */
 func (a *Client) UpdateDeviceWirelessRadioSettings(params *UpdateDeviceWirelessRadioSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceWirelessRadioSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -2218,9 +2433,9 @@ func (a *Client) UpdateDeviceWirelessRadioSettings(params *UpdateDeviceWirelessR
 }
 
 /*
-  UpdateNetworkWirelessAlternateManagementInterface updates alternate management interface and device static IP
+UpdateNetworkWirelessAlternateManagementInterface updates alternate management interface and device static IP
 
-  Update alternate management interface and device static IP
+Update alternate management interface and device static IP
 */
 func (a *Client) UpdateNetworkWirelessAlternateManagementInterface(params *UpdateNetworkWirelessAlternateManagementInterfaceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkWirelessAlternateManagementInterfaceOK, error) {
 	// TODO: Validate the params before sending
@@ -2259,9 +2474,9 @@ func (a *Client) UpdateNetworkWirelessAlternateManagementInterface(params *Updat
 }
 
 /*
-  UpdateNetworkWirelessBilling updates the billing settings
+UpdateNetworkWirelessBilling updates the billing settings
 
-  Update the billing settings
+Update the billing settings
 */
 func (a *Client) UpdateNetworkWirelessBilling(params *UpdateNetworkWirelessBillingParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkWirelessBillingOK, error) {
 	// TODO: Validate the params before sending
@@ -2300,9 +2515,9 @@ func (a *Client) UpdateNetworkWirelessBilling(params *UpdateNetworkWirelessBilli
 }
 
 /*
-  UpdateNetworkWirelessBluetoothSettings updates the bluetooth settings for a network
+UpdateNetworkWirelessBluetoothSettings updates the bluetooth settings for a network
 
-  Update the Bluetooth settings for a network. See the docs page for <a href="https://documentation.meraki.com/MR/Bluetooth/Bluetooth_Low_Energy_(BLE)">Bluetooth settings</a>.
+Update the Bluetooth settings for a network. See the docs page for <a href="https://documentation.meraki.com/MR/Bluetooth/Bluetooth_Low_Energy_(BLE)">Bluetooth settings</a>.
 */
 func (a *Client) UpdateNetworkWirelessBluetoothSettings(params *UpdateNetworkWirelessBluetoothSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkWirelessBluetoothSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -2341,9 +2556,9 @@ func (a *Client) UpdateNetworkWirelessBluetoothSettings(params *UpdateNetworkWir
 }
 
 /*
-  UpdateNetworkWirelessRfProfile updates specified r f profile for this network
+UpdateNetworkWirelessRfProfile updates specified r f profile for this network
 
-  Updates specified RF profile for this network
+Updates specified RF profile for this network
 */
 func (a *Client) UpdateNetworkWirelessRfProfile(params *UpdateNetworkWirelessRfProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkWirelessRfProfileOK, error) {
 	// TODO: Validate the params before sending
@@ -2382,9 +2597,9 @@ func (a *Client) UpdateNetworkWirelessRfProfile(params *UpdateNetworkWirelessRfP
 }
 
 /*
-  UpdateNetworkWirelessSettings updates the wireless settings for a network
+UpdateNetworkWirelessSettings updates the wireless settings for a network
 
-  Update the wireless settings for a network
+Update the wireless settings for a network
 */
 func (a *Client) UpdateNetworkWirelessSettings(params *UpdateNetworkWirelessSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkWirelessSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -2423,9 +2638,9 @@ func (a *Client) UpdateNetworkWirelessSettings(params *UpdateNetworkWirelessSett
 }
 
 /*
-  UpdateNetworkWirelessSsid updates the attributes of an m r s s ID
+UpdateNetworkWirelessSsid updates the attributes of an m r s s ID
 
-  Update the attributes of an MR SSID
+Update the attributes of an MR SSID
 */
 func (a *Client) UpdateNetworkWirelessSsid(params *UpdateNetworkWirelessSsidParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkWirelessSsidOK, error) {
 	// TODO: Validate the params before sending
@@ -2464,9 +2679,9 @@ func (a *Client) UpdateNetworkWirelessSsid(params *UpdateNetworkWirelessSsidPara
 }
 
 /*
-  UpdateNetworkWirelessSsidBonjourForwarding updates the bonjour forwarding setting and rules for the s s ID
+UpdateNetworkWirelessSsidBonjourForwarding updates the bonjour forwarding setting and rules for the s s ID
 
-  Update the bonjour forwarding setting and rules for the SSID
+Update the bonjour forwarding setting and rules for the SSID
 */
 func (a *Client) UpdateNetworkWirelessSsidBonjourForwarding(params *UpdateNetworkWirelessSsidBonjourForwardingParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkWirelessSsidBonjourForwardingOK, error) {
 	// TODO: Validate the params before sending
@@ -2505,9 +2720,9 @@ func (a *Client) UpdateNetworkWirelessSsidBonjourForwarding(params *UpdateNetwor
 }
 
 /*
-  UpdateNetworkWirelessSsidDeviceTypeGroupPolicies updates the device type group policies for the s s ID
+UpdateNetworkWirelessSsidDeviceTypeGroupPolicies updates the device type group policies for the s s ID
 
-  Update the device type group policies for the SSID
+Update the device type group policies for the SSID
 */
 func (a *Client) UpdateNetworkWirelessSsidDeviceTypeGroupPolicies(params *UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesOK, error) {
 	// TODO: Validate the params before sending
@@ -2546,9 +2761,9 @@ func (a *Client) UpdateNetworkWirelessSsidDeviceTypeGroupPolicies(params *Update
 }
 
 /*
-  UpdateNetworkWirelessSsidEapOverride updates the e a p overridden parameters for an s s ID
+UpdateNetworkWirelessSsidEapOverride updates the e a p overridden parameters for an s s ID
 
-  Update the EAP overridden parameters for an SSID.
+Update the EAP overridden parameters for an SSID.
 */
 func (a *Client) UpdateNetworkWirelessSsidEapOverride(params *UpdateNetworkWirelessSsidEapOverrideParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkWirelessSsidEapOverrideOK, error) {
 	// TODO: Validate the params before sending
@@ -2587,9 +2802,9 @@ func (a *Client) UpdateNetworkWirelessSsidEapOverride(params *UpdateNetworkWirel
 }
 
 /*
-  UpdateNetworkWirelessSsidFirewallL3FirewallRules updates the l3 firewall rules of an s s ID on an m r network
+UpdateNetworkWirelessSsidFirewallL3FirewallRules updates the l3 firewall rules of an s s ID on an m r network
 
-  Update the L3 firewall rules of an SSID on an MR network
+Update the L3 firewall rules of an SSID on an MR network
 */
 func (a *Client) UpdateNetworkWirelessSsidFirewallL3FirewallRules(params *UpdateNetworkWirelessSsidFirewallL3FirewallRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkWirelessSsidFirewallL3FirewallRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -2628,9 +2843,9 @@ func (a *Client) UpdateNetworkWirelessSsidFirewallL3FirewallRules(params *Update
 }
 
 /*
-  UpdateNetworkWirelessSsidFirewallL7FirewallRules updates the l7 firewall rules of an s s ID on an m r network
+UpdateNetworkWirelessSsidFirewallL7FirewallRules updates the l7 firewall rules of an s s ID on an m r network
 
-  Update the L7 firewall rules of an SSID on an MR network
+Update the L7 firewall rules of an SSID on an MR network
 */
 func (a *Client) UpdateNetworkWirelessSsidFirewallL7FirewallRules(params *UpdateNetworkWirelessSsidFirewallL7FirewallRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkWirelessSsidFirewallL7FirewallRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -2669,9 +2884,9 @@ func (a *Client) UpdateNetworkWirelessSsidFirewallL7FirewallRules(params *Update
 }
 
 /*
-  UpdateNetworkWirelessSsidHotspot20 updates the hotspot 2 0 settings of an s s ID
+UpdateNetworkWirelessSsidHotspot20 updates the hotspot 2 0 settings of an s s ID
 
-  Update the Hotspot 2.0 settings of an SSID
+Update the Hotspot 2.0 settings of an SSID
 */
 func (a *Client) UpdateNetworkWirelessSsidHotspot20(params *UpdateNetworkWirelessSsidHotspot20Params, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkWirelessSsidHotspot20OK, error) {
 	// TODO: Validate the params before sending
@@ -2710,9 +2925,9 @@ func (a *Client) UpdateNetworkWirelessSsidHotspot20(params *UpdateNetworkWireles
 }
 
 /*
-  UpdateNetworkWirelessSsidIdentityPsk updates an identity p s k
+UpdateNetworkWirelessSsidIdentityPsk updates an identity p s k
 
-  Update an Identity PSK
+Update an Identity PSK
 */
 func (a *Client) UpdateNetworkWirelessSsidIdentityPsk(params *UpdateNetworkWirelessSsidIdentityPskParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkWirelessSsidIdentityPskOK, error) {
 	// TODO: Validate the params before sending
@@ -2751,9 +2966,9 @@ func (a *Client) UpdateNetworkWirelessSsidIdentityPsk(params *UpdateNetworkWirel
 }
 
 /*
-  UpdateNetworkWirelessSsidSchedules updates the outage schedule for the s s ID
+UpdateNetworkWirelessSsidSchedules updates the outage schedule for the s s ID
 
-  Update the outage schedule for the SSID
+Update the outage schedule for the SSID
 */
 func (a *Client) UpdateNetworkWirelessSsidSchedules(params *UpdateNetworkWirelessSsidSchedulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkWirelessSsidSchedulesOK, error) {
 	// TODO: Validate the params before sending
@@ -2792,9 +3007,9 @@ func (a *Client) UpdateNetworkWirelessSsidSchedules(params *UpdateNetworkWireles
 }
 
 /*
-  UpdateNetworkWirelessSsidSplashSettings modifies the splash page settings for the given s s ID
+UpdateNetworkWirelessSsidSplashSettings modifies the splash page settings for the given s s ID
 
-  Modify the splash page settings for the given SSID
+Modify the splash page settings for the given SSID
 */
 func (a *Client) UpdateNetworkWirelessSsidSplashSettings(params *UpdateNetworkWirelessSsidSplashSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkWirelessSsidSplashSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -2833,9 +3048,9 @@ func (a *Client) UpdateNetworkWirelessSsidSplashSettings(params *UpdateNetworkWi
 }
 
 /*
-  UpdateNetworkWirelessSsidTrafficShapingRules updates the traffic shaping settings for an s s ID on an m r network
+UpdateNetworkWirelessSsidTrafficShapingRules updates the traffic shaping settings for an s s ID on an m r network
 
-  Update the traffic shaping settings for an SSID on an MR network
+Update the traffic shaping settings for an SSID on an MR network
 */
 func (a *Client) UpdateNetworkWirelessSsidTrafficShapingRules(params *UpdateNetworkWirelessSsidTrafficShapingRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkWirelessSsidTrafficShapingRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -2874,9 +3089,9 @@ func (a *Client) UpdateNetworkWirelessSsidTrafficShapingRules(params *UpdateNetw
 }
 
 /*
-  UpdateNetworkWirelessSsidVpn updates the v p n settings for the s s ID
+UpdateNetworkWirelessSsidVpn updates the v p n settings for the s s ID
 
-  Update the VPN settings for the SSID
+Update the VPN settings for the SSID
 */
 func (a *Client) UpdateNetworkWirelessSsidVpn(params *UpdateNetworkWirelessSsidVpnParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkWirelessSsidVpnOK, error) {
 	// TODO: Validate the params before sending

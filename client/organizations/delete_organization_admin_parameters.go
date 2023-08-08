@@ -52,17 +52,25 @@ func NewDeleteOrganizationAdminParamsWithHTTPClient(client *http.Client) *Delete
 	}
 }
 
-/* DeleteOrganizationAdminParams contains all the parameters to send to the API endpoint
-   for the delete organization admin operation.
+/*
+DeleteOrganizationAdminParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete organization admin operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteOrganizationAdminParams struct {
 
-	// AdminID.
+	/* AdminID.
+
+	   Admin ID
+	*/
 	AdminID string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

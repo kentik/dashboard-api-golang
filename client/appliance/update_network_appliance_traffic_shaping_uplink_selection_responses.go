@@ -34,7 +34,7 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionReader) ReadResponse
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/appliance/trafficShaping/uplinkSelection] updateNetworkApplianceTrafficShapingUplinkSelection", response, response.Code())
 	}
 }
 
@@ -43,12 +43,13 @@ func NewUpdateNetworkApplianceTrafficShapingUplinkSelectionOK() *UpdateNetworkAp
 	return &UpdateNetworkApplianceTrafficShapingUplinkSelectionOK{}
 }
 
-/* UpdateNetworkApplianceTrafficShapingUplinkSelectionOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateNetworkApplianceTrafficShapingUplinkSelectionOK struct {
-	Payload interface{}
+	Payload *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBody
 }
 
 // IsSuccess returns true when this update network appliance traffic shaping uplink selection o k response has a 2xx status code
@@ -76,6 +77,11 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOK) IsCode(code int)
 	return code == 200
 }
 
+// Code gets the status code for the update network appliance traffic shaping uplink selection o k response
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/appliance/trafficShaping/uplinkSelection][%d] updateNetworkApplianceTrafficShapingUplinkSelectionOK  %+v", 200, o.Payload)
 }
@@ -84,22 +90,25 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOK) String() string 
 	return fmt.Sprintf("[PUT /networks/{networkId}/appliance/trafficShaping/uplinkSelection][%d] updateNetworkApplianceTrafficShapingUplinkSelectionOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOK) GetPayload() interface{} {
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOK) GetPayload() *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBody {
 	return o.Payload
 }
 
 func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingUplinkSelectionBody update network appliance traffic shaping uplink selection body
-// Example: {"activeActiveAutoVpnEnabled":true,"defaultUplink":"wan1","loadBalancingEnabled":true,"vpnTrafficUplinkPreferences":[{"failOverCriterion":"poorPerformance","performanceClass":{"customPerformanceClassId":"123456","type":"custom"},"preferredUplink":"wan2","trafficFilters":[{"type":"applicationCategory","value":{"id":"meraki:layer7/category/1"}},{"type":"application","value":{"id":"meraki:layer7/application/33"}},{"type":"custom","value":{"destination":{"cidr":"any","port":"any"},"protocol":"tcp","source":{"cidr":"192.168.1.0/24","port":"any"}}},{"type":"custom","value":{"destination":{"host":200,"network":"L_23456789","port":"any","vlan":20},"protocol":"tcp","source":{"cidr":"any","port":"any"}}},{"type":"custom","value":{"destination":{"fqdn":"www.google.com","port":"1-1024"},"protocol":"tcp","source":{"cidr":"any","port":"any"}}}]},{"preferredUplink":"defaultUplink","trafficFilters":[{"type":"application","value":{"id":"meraki:layer7/application/9"}}]},{"preferredUplink":"bestForVoIP","trafficFilters":[{"type":"application","value":{"id":"meraki:layer7/application/106"}}]},{"performanceClass":{"builtinPerformanceClassName":"VoIP","type":"builtin"},"preferredUplink":"loadBalancing","trafficFilters":[{"type":"application","value":{"id":"meraki:layer7/application/107"}}]},{"performanceClass":{"customPerformanceClassId":"123456","type":"custom"},"preferredUplink":"loadBalancing","trafficFilters":[{"type":"application","value":{"id":"meraki:layer7/application/162"}}]},{"failOverCriterion":"poorPerformance","performanceClass":{"builtinPerformanceClassName":"VoIP","type":"builtin"},"preferredUplink":"wan2","trafficFilters":[{"type":"application","value":{"id":"meraki:layer7/application/168"}}]},{"failOverCriterion":"poorPerformance","performanceClass":{"customPerformanceClassId":"123456","type":"custom"},"preferredUplink":"wan2","trafficFilters":[{"type":"application","value":{"id":"meraki:layer7/application/171"}}]}],"wanTrafficUplinkPreferences":[{"preferredUplink":"wan2","trafficFilters":[{"type":"custom","value":{"destination":{"cidr":"any","port":"any"},"protocol":"tcp","source":{"cidr":"192.168.1.0/24","port":"any"}}}]},{"preferredUplink":"wan1","trafficFilters":[{"type":"custom","value":{"destination":{"cidr":"any","port":"any"},"protocol":"tcp","source":{"host":254,"port":"1-1024","vlan":10}}}]}]}
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionBody update network appliance traffic shaping uplink selection body
+// Example: {"activeActiveAutoVpnEnabled":true,"defaultUplink":"wan1","failoverAndFailback":{"immediate":{"enabled":true}},"loadBalancingEnabled":true,"vpnTrafficUplinkPreferences":[{"failOverCriterion":"poorPerformance","performanceClass":{"builtinPerformanceClassName":"VoIP","customPerformanceClassId":"123456","type":"custom"},"preferredUplink":"bestForVoIP","trafficFilters":[{"type":"applicationCategory","value":{"destination":{"cidr":"any","fqdn":"www.google.com","host":254,"network":"L_12345678","port":"1-1024","vlan":10},"id":"meraki:layer7/category/1","protocol":"tcp","source":{"cidr":"192.168.1.0/24","host":200,"network":"L_23456789","port":"any","vlan":20}}}]}],"wanTrafficUplinkPreferences":[{"preferredUplink":"wan1","trafficFilters":[{"type":"custom","value":{"destination":{"cidr":"any","port":"any"},"protocol":"tcp","source":{"cidr":"192.168.1.0/24","host":254,"port":"1-1024","vlan":10}}}]}]}
 swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionBody
 */
 type UpdateNetworkApplianceTrafficShapingUplinkSelectionBody struct {
@@ -110,6 +119,9 @@ type UpdateNetworkApplianceTrafficShapingUplinkSelectionBody struct {
 	// The default uplink. Must be one of: 'wan1' or 'wan2'
 	// Enum: [wan1 wan2]
 	DefaultUplink string `json:"defaultUplink,omitempty"`
+
+	// failover and failback
+	FailoverAndFailback *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyFailoverAndFailback `json:"failoverAndFailback,omitempty"`
 
 	// Toggle for enabling or disabling load balancing
 	LoadBalancingEnabled bool `json:"loadBalancingEnabled,omitempty"`
@@ -126,6 +138,10 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionBody) Validate(forma
 	var res []error
 
 	if err := o.validateDefaultUplink(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateFailoverAndFailback(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -180,6 +196,25 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionBody) validateDefaul
 	// value enum
 	if err := o.validateDefaultUplinkEnum("updateNetworkApplianceTrafficShapingUplinkSelection"+"."+"defaultUplink", "body", o.DefaultUplink); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionBody) validateFailoverAndFailback(formats strfmt.Registry) error {
+	if swag.IsZero(o.FailoverAndFailback) { // not required
+		return nil
+	}
+
+	if o.FailoverAndFailback != nil {
+		if err := o.FailoverAndFailback.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelection" + "." + "failoverAndFailback")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelection" + "." + "failoverAndFailback")
+			}
+			return err
+		}
 	}
 
 	return nil
@@ -241,6 +276,10 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionBody) validateWanTra
 func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
+	if err := o.contextValidateFailoverAndFailback(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := o.contextValidateVpnTrafficUplinkPreferences(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -255,11 +294,37 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionBody) ContextValidat
 	return nil
 }
 
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionBody) contextValidateFailoverAndFailback(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.FailoverAndFailback != nil {
+
+		if swag.IsZero(o.FailoverAndFailback) { // not required
+			return nil
+		}
+
+		if err := o.FailoverAndFailback.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelection" + "." + "failoverAndFailback")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelection" + "." + "failoverAndFailback")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionBody) contextValidateVpnTrafficUplinkPreferences(ctx context.Context, formats strfmt.Registry) error {
 
 	for i := 0; i < len(o.VpnTrafficUplinkPreferences); i++ {
 
 		if o.VpnTrafficUplinkPreferences[i] != nil {
+
+			if swag.IsZero(o.VpnTrafficUplinkPreferences[i]) { // not required
+				return nil
+			}
+
 			if err := o.VpnTrafficUplinkPreferences[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelection" + "." + "vpnTrafficUplinkPreferences" + "." + strconv.Itoa(i))
@@ -280,6 +345,11 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionBody) contextValidat
 	for i := 0; i < len(o.WanTrafficUplinkPreferences); i++ {
 
 		if o.WanTrafficUplinkPreferences[i] != nil {
+
+			if swag.IsZero(o.WanTrafficUplinkPreferences[i]) { // not required
+				return nil
+			}
+
 			if err := o.WanTrafficUplinkPreferences[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelection" + "." + "wanTrafficUplinkPreferences" + "." + strconv.Itoa(i))
@@ -313,7 +383,2055 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionBody) UnmarshalBinar
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0 update network appliance traffic shaping uplink selection params body vpn traffic uplink preferences items0
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBody update network appliance traffic shaping uplink selection o k body
+swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBody
+*/
+type UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBody struct {
+
+	// Whether active-active AutoVPN is enabled
+	ActiveActiveAutoVpnEnabled bool `json:"activeActiveAutoVpnEnabled,omitempty"`
+
+	// The default uplink. Must be one of: 'wan1' or 'wan2'
+	// Enum: [wan1 wan2]
+	DefaultUplink string `json:"defaultUplink,omitempty"`
+
+	// failover and failback
+	FailoverAndFailback *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyFailoverAndFailback `json:"failoverAndFailback,omitempty"`
+
+	// Whether load balancing is enabled
+	LoadBalancingEnabled bool `json:"loadBalancingEnabled,omitempty"`
+
+	// Uplink preference rules for VPN traffic
+	VpnTrafficUplinkPreferences []*UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0 `json:"vpnTrafficUplinkPreferences"`
+
+	// Uplink preference rules for WAN traffic
+	WanTrafficUplinkPreferences []*UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0 `json:"wanTrafficUplinkPreferences"`
+}
+
+// Validate validates this update network appliance traffic shaping uplink selection o k body
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateDefaultUplink(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateFailoverAndFailback(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateVpnTrafficUplinkPreferences(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateWanTrafficUplinkPreferences(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyTypeDefaultUplinkPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["wan1","wan2"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyTypeDefaultUplinkPropEnum = append(updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyTypeDefaultUplinkPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyDefaultUplinkWan1 captures enum value "wan1"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyDefaultUplinkWan1 string = "wan1"
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyDefaultUplinkWan2 captures enum value "wan2"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyDefaultUplinkWan2 string = "wan2"
+)
+
+// prop value enum
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBody) validateDefaultUplinkEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyTypeDefaultUplinkPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBody) validateDefaultUplink(formats strfmt.Registry) error {
+	if swag.IsZero(o.DefaultUplink) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateDefaultUplinkEnum("updateNetworkApplianceTrafficShapingUplinkSelectionOK"+"."+"defaultUplink", "body", o.DefaultUplink); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBody) validateFailoverAndFailback(formats strfmt.Registry) error {
+	if swag.IsZero(o.FailoverAndFailback) { // not required
+		return nil
+	}
+
+	if o.FailoverAndFailback != nil {
+		if err := o.FailoverAndFailback.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelectionOK" + "." + "failoverAndFailback")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelectionOK" + "." + "failoverAndFailback")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBody) validateVpnTrafficUplinkPreferences(formats strfmt.Registry) error {
+	if swag.IsZero(o.VpnTrafficUplinkPreferences) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.VpnTrafficUplinkPreferences); i++ {
+		if swag.IsZero(o.VpnTrafficUplinkPreferences[i]) { // not required
+			continue
+		}
+
+		if o.VpnTrafficUplinkPreferences[i] != nil {
+			if err := o.VpnTrafficUplinkPreferences[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelectionOK" + "." + "vpnTrafficUplinkPreferences" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelectionOK" + "." + "vpnTrafficUplinkPreferences" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBody) validateWanTrafficUplinkPreferences(formats strfmt.Registry) error {
+	if swag.IsZero(o.WanTrafficUplinkPreferences) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.WanTrafficUplinkPreferences); i++ {
+		if swag.IsZero(o.WanTrafficUplinkPreferences[i]) { // not required
+			continue
+		}
+
+		if o.WanTrafficUplinkPreferences[i] != nil {
+			if err := o.WanTrafficUplinkPreferences[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelectionOK" + "." + "wanTrafficUplinkPreferences" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelectionOK" + "." + "wanTrafficUplinkPreferences" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network appliance traffic shaping uplink selection o k body based on the context it is used
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateFailoverAndFailback(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateVpnTrafficUplinkPreferences(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateWanTrafficUplinkPreferences(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBody) contextValidateFailoverAndFailback(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.FailoverAndFailback != nil {
+
+		if swag.IsZero(o.FailoverAndFailback) { // not required
+			return nil
+		}
+
+		if err := o.FailoverAndFailback.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelectionOK" + "." + "failoverAndFailback")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelectionOK" + "." + "failoverAndFailback")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBody) contextValidateVpnTrafficUplinkPreferences(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.VpnTrafficUplinkPreferences); i++ {
+
+		if o.VpnTrafficUplinkPreferences[i] != nil {
+
+			if swag.IsZero(o.VpnTrafficUplinkPreferences[i]) { // not required
+				return nil
+			}
+
+			if err := o.VpnTrafficUplinkPreferences[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelectionOK" + "." + "vpnTrafficUplinkPreferences" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelectionOK" + "." + "vpnTrafficUplinkPreferences" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBody) contextValidateWanTrafficUplinkPreferences(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.WanTrafficUplinkPreferences); i++ {
+
+		if o.WanTrafficUplinkPreferences[i] != nil {
+
+			if swag.IsZero(o.WanTrafficUplinkPreferences[i]) { // not required
+				return nil
+			}
+
+			if err := o.WanTrafficUplinkPreferences[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelectionOK" + "." + "wanTrafficUplinkPreferences" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelectionOK" + "." + "wanTrafficUplinkPreferences" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyFailoverAndFailback WAN failover and failback
+swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyFailoverAndFailback
+*/
+type UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyFailoverAndFailback struct {
+
+	// immediate
+	Immediate *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyFailoverAndFailbackImmediate `json:"immediate,omitempty"`
+}
+
+// Validate validates this update network appliance traffic shaping uplink selection o k body failover and failback
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyFailoverAndFailback) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateImmediate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyFailoverAndFailback) validateImmediate(formats strfmt.Registry) error {
+	if swag.IsZero(o.Immediate) { // not required
+		return nil
+	}
+
+	if o.Immediate != nil {
+		if err := o.Immediate.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelectionOK" + "." + "failoverAndFailback" + "." + "immediate")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelectionOK" + "." + "failoverAndFailback" + "." + "immediate")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network appliance traffic shaping uplink selection o k body failover and failback based on the context it is used
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyFailoverAndFailback) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateImmediate(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyFailoverAndFailback) contextValidateImmediate(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Immediate != nil {
+
+		if swag.IsZero(o.Immediate) { // not required
+			return nil
+		}
+
+		if err := o.Immediate.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelectionOK" + "." + "failoverAndFailback" + "." + "immediate")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelectionOK" + "." + "failoverAndFailback" + "." + "immediate")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyFailoverAndFailback) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyFailoverAndFailback) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyFailoverAndFailback
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyFailoverAndFailbackImmediate Immediate WAN failover and failback
+swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyFailoverAndFailbackImmediate
+*/
+type UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyFailoverAndFailbackImmediate struct {
+
+	// Whether immediate WAN failover and failback is enabled
+	// Required: true
+	Enabled *bool `json:"enabled"`
+}
+
+// Validate validates this update network appliance traffic shaping uplink selection o k body failover and failback immediate
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyFailoverAndFailbackImmediate) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateEnabled(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyFailoverAndFailbackImmediate) validateEnabled(formats strfmt.Registry) error {
+
+	if err := validate.Required("updateNetworkApplianceTrafficShapingUplinkSelectionOK"+"."+"failoverAndFailback"+"."+"immediate"+"."+"enabled", "body", o.Enabled); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network appliance traffic shaping uplink selection o k body failover and failback immediate based on context it is used
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyFailoverAndFailbackImmediate) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyFailoverAndFailbackImmediate) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyFailoverAndFailbackImmediate) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyFailoverAndFailbackImmediate
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0 update network appliance traffic shaping uplink selection o k body vpn traffic uplink preferences items0
+swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0
+*/
+type UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0 struct {
+
+	// Fail over criterion for uplink preference rule. Must be one of: 'poorPerformance' or 'uplinkDown'
+	// Enum: [poorPerformance uplinkDown]
+	FailOverCriterion string `json:"failOverCriterion,omitempty"`
+
+	// performance class
+	PerformanceClass *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClass `json:"performanceClass,omitempty"`
+
+	// Preferred uplink for uplink preference rule. Must be one of: 'wan1', 'wan2', 'bestForVoIP', 'loadBalancing' or 'defaultUplink'
+	// Required: true
+	// Enum: [bestForVoIP defaultUplink loadBalancing wan1 wan2]
+	PreferredUplink *string `json:"preferredUplink"`
+
+	// Traffic filters
+	// Required: true
+	TrafficFilters []*UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0 `json:"trafficFilters"`
+}
+
+// Validate validates this update network appliance traffic shaping uplink selection o k body vpn traffic uplink preferences items0
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateFailOverCriterion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validatePerformanceClass(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validatePreferredUplink(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTrafficFilters(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TypeFailOverCriterionPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["poorPerformance","uplinkDown"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TypeFailOverCriterionPropEnum = append(updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TypeFailOverCriterionPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0FailOverCriterionPoorPerformance captures enum value "poorPerformance"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0FailOverCriterionPoorPerformance string = "poorPerformance"
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0FailOverCriterionUplinkDown captures enum value "uplinkDown"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0FailOverCriterionUplinkDown string = "uplinkDown"
+)
+
+// prop value enum
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0) validateFailOverCriterionEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TypeFailOverCriterionPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0) validateFailOverCriterion(formats strfmt.Registry) error {
+	if swag.IsZero(o.FailOverCriterion) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateFailOverCriterionEnum("failOverCriterion", "body", o.FailOverCriterion); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0) validatePerformanceClass(formats strfmt.Registry) error {
+	if swag.IsZero(o.PerformanceClass) { // not required
+		return nil
+	}
+
+	if o.PerformanceClass != nil {
+		if err := o.PerformanceClass.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("performanceClass")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("performanceClass")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+var updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TypePreferredUplinkPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["bestForVoIP","defaultUplink","loadBalancing","wan1","wan2"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TypePreferredUplinkPropEnum = append(updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TypePreferredUplinkPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkBestForVoIP captures enum value "bestForVoIP"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkBestForVoIP string = "bestForVoIP"
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkDefaultUplink captures enum value "defaultUplink"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkDefaultUplink string = "defaultUplink"
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkLoadBalancing captures enum value "loadBalancing"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkLoadBalancing string = "loadBalancing"
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkWan1 captures enum value "wan1"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkWan1 string = "wan1"
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkWan2 captures enum value "wan2"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkWan2 string = "wan2"
+)
+
+// prop value enum
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0) validatePreferredUplinkEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TypePreferredUplinkPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0) validatePreferredUplink(formats strfmt.Registry) error {
+
+	if err := validate.Required("preferredUplink", "body", o.PreferredUplink); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := o.validatePreferredUplinkEnum("preferredUplink", "body", *o.PreferredUplink); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0) validateTrafficFilters(formats strfmt.Registry) error {
+
+	if err := validate.Required("trafficFilters", "body", o.TrafficFilters); err != nil {
+		return err
+	}
+
+	for i := 0; i < len(o.TrafficFilters); i++ {
+		if swag.IsZero(o.TrafficFilters[i]) { // not required
+			continue
+		}
+
+		if o.TrafficFilters[i] != nil {
+			if err := o.TrafficFilters[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("trafficFilters" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("trafficFilters" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network appliance traffic shaping uplink selection o k body vpn traffic uplink preferences items0 based on the context it is used
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidatePerformanceClass(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateTrafficFilters(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0) contextValidatePerformanceClass(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.PerformanceClass != nil {
+
+		if swag.IsZero(o.PerformanceClass) { // not required
+			return nil
+		}
+
+		if err := o.PerformanceClass.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("performanceClass")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("performanceClass")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0) contextValidateTrafficFilters(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.TrafficFilters); i++ {
+
+		if o.TrafficFilters[i] != nil {
+
+			if swag.IsZero(o.TrafficFilters[i]) { // not required
+				return nil
+			}
+
+			if err := o.TrafficFilters[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("trafficFilters" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("trafficFilters" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClass Performance class setting for uplink preference rule
+swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClass
+*/
+type UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClass struct {
+
+	// Name of builtin performance class. Must be present when performanceClass type is 'builtin' and value must be one of: 'VoIP'
+	// Enum: [VoIP]
+	BuiltinPerformanceClassName string `json:"builtinPerformanceClassName,omitempty"`
+
+	// ID of created custom performance class, must be present when performanceClass type is "custom"
+	CustomPerformanceClassID string `json:"customPerformanceClassId,omitempty"`
+
+	// Type of this performance class. Must be one of: 'builtin' or 'custom'
+	// Required: true
+	// Enum: [builtin custom]
+	Type *string `json:"type"`
+}
+
+// Validate validates this update network appliance traffic shaping uplink selection o k body vpn traffic uplink preferences items0 performance class
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClass) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBuiltinPerformanceClassName(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClassTypeBuiltinPerformanceClassNamePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["VoIP"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClassTypeBuiltinPerformanceClassNamePropEnum = append(updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClassTypeBuiltinPerformanceClassNamePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClassBuiltinPerformanceClassNameVoIP captures enum value "VoIP"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClassBuiltinPerformanceClassNameVoIP string = "VoIP"
+)
+
+// prop value enum
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClass) validateBuiltinPerformanceClassNameEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClassTypeBuiltinPerformanceClassNamePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClass) validateBuiltinPerformanceClassName(formats strfmt.Registry) error {
+	if swag.IsZero(o.BuiltinPerformanceClassName) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateBuiltinPerformanceClassNameEnum("performanceClass"+"."+"builtinPerformanceClassName", "body", o.BuiltinPerformanceClassName); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClassTypeTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["builtin","custom"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClassTypeTypePropEnum = append(updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClassTypeTypePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClassTypeBuiltin captures enum value "builtin"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClassTypeBuiltin string = "builtin"
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClassTypeCustom captures enum value "custom"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClassTypeCustom string = "custom"
+)
+
+// prop value enum
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClass) validateTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClassTypeTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClass) validateType(formats strfmt.Registry) error {
+
+	if err := validate.Required("performanceClass"+"."+"type", "body", o.Type); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := o.validateTypeEnum("performanceClass"+"."+"type", "body", *o.Type); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network appliance traffic shaping uplink selection o k body vpn traffic uplink preferences items0 performance class based on context it is used
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClass) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClass) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClass) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0PerformanceClass
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0 update network appliance traffic shaping uplink selection o k body vpn traffic uplink preferences items0 traffic filters items0
+swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0
+*/
+type UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0 struct {
+
+	// Traffic filter type. Must be one of: 'applicationCategory', 'application' or 'custom'
+	// Required: true
+	// Enum: [application applicationCategory custom]
+	Type *string `json:"type"`
+
+	// value
+	// Required: true
+	Value *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0Value `json:"value"`
+}
+
+// Validate validates this update network appliance traffic shaping uplink selection o k body vpn traffic uplink preferences items0 traffic filters items0
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateValue(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["application","applicationCategory","custom"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeTypePropEnum = append(updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeTypePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeApplication captures enum value "application"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeApplication string = "application"
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeApplicationCategory captures enum value "applicationCategory"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeApplicationCategory string = "applicationCategory"
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeCustom captures enum value "custom"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeCustom string = "custom"
+)
+
+// prop value enum
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0) validateTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0) validateType(formats strfmt.Registry) error {
+
+	if err := validate.Required("type", "body", o.Type); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := o.validateTypeEnum("type", "body", *o.Type); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0) validateValue(formats strfmt.Registry) error {
+
+	if err := validate.Required("value", "body", o.Value); err != nil {
+		return err
+	}
+
+	if o.Value != nil {
+		if err := o.Value.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("value")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("value")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network appliance traffic shaping uplink selection o k body vpn traffic uplink preferences items0 traffic filters items0 based on the context it is used
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateValue(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0) contextValidateValue(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Value != nil {
+
+		if err := o.Value.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("value")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("value")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0Value Value of traffic filter
+swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0Value
+*/
+type UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0Value struct {
+
+	// destination
+	Destination *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination `json:"destination,omitempty"`
+
+	// ID of 'applicationCategory' or 'application' type traffic filter
+	ID string `json:"id,omitempty"`
+
+	// Protocol of 'custom' type traffic filter. Must be one of: 'tcp', 'udp', 'icmp', 'icmp6' or 'any'
+	// Enum: [any icmp icmp6 tcp udp]
+	Protocol string `json:"protocol,omitempty"`
+
+	// source
+	Source *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource `json:"source,omitempty"`
+}
+
+// Validate validates this update network appliance traffic shaping uplink selection o k body vpn traffic uplink preferences items0 traffic filters items0 value
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateDestination(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateProtocol(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSource(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) validateDestination(formats strfmt.Registry) error {
+	if swag.IsZero(o.Destination) { // not required
+		return nil
+	}
+
+	if o.Destination != nil {
+		if err := o.Destination.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("value" + "." + "destination")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("value" + "." + "destination")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+var updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueTypeProtocolPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["any","icmp","icmp6","tcp","udp"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueTypeProtocolPropEnum = append(updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueTypeProtocolPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolAny captures enum value "any"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolAny string = "any"
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolIcmp captures enum value "icmp"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolIcmp string = "icmp"
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolIcmp6 captures enum value "icmp6"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolIcmp6 string = "icmp6"
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolTCP captures enum value "tcp"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolTCP string = "tcp"
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolUDP captures enum value "udp"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolUDP string = "udp"
+)
+
+// prop value enum
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) validateProtocolEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueTypeProtocolPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) validateProtocol(formats strfmt.Registry) error {
+	if swag.IsZero(o.Protocol) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateProtocolEnum("value"+"."+"protocol", "body", o.Protocol); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) validateSource(formats strfmt.Registry) error {
+	if swag.IsZero(o.Source) { // not required
+		return nil
+	}
+
+	if o.Source != nil {
+		if err := o.Source.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("value" + "." + "source")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("value" + "." + "source")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network appliance traffic shaping uplink selection o k body vpn traffic uplink preferences items0 traffic filters items0 value based on the context it is used
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateDestination(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateSource(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) contextValidateDestination(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Destination != nil {
+
+		if swag.IsZero(o.Destination) { // not required
+			return nil
+		}
+
+		if err := o.Destination.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("value" + "." + "destination")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("value" + "." + "destination")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) contextValidateSource(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Source != nil {
+
+		if swag.IsZero(o.Source) { // not required
+			return nil
+		}
+
+		if err := o.Source.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("value" + "." + "source")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("value" + "." + "source")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0Value
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination Destination of 'custom' type traffic filter
+swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination
+*/
+type UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination struct {
+
+	// CIDR format address (e.g."192.168.10.1", which is the same as "192.168.10.1/32"), or "any". Cannot be used in combination with the "vlan" or "fqdn" property
+	Cidr string `json:"cidr,omitempty"`
+
+	// FQDN format address. Cannot be used in combination with the "cidr" or "fqdn" property and is currently only available in the "destination" object of the "vpnTrafficUplinkPreference" object. E.g.: "www.google.com"
+	Fqdn string `json:"fqdn,omitempty"`
+
+	// Host ID in the VLAN. Should not exceed the VLAN subnet capacity. Must be used along with the "vlan" property and is currently only available under a template network.
+	Host int64 `json:"host,omitempty"`
+
+	// Meraki network ID. Currently only available under a template network, and the value should be ID of either same template network, or another template network currently. E.g.: "L_12345678".
+	Network string `json:"network,omitempty"`
+
+	// E.g.: "any", "0" (also means "any"), "8080", "1-1024"
+	Port string `json:"port,omitempty"`
+
+	// VLAN ID of the configured VLAN in the Meraki network. Cannot be used in combination with the "cidr" or "fqdn" property and is currently only available under a template network.
+	Vlan int64 `json:"vlan,omitempty"`
+}
+
+// Validate validates this update network appliance traffic shaping uplink selection o k body vpn traffic uplink preferences items0 traffic filters items0 value destination
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network appliance traffic shaping uplink selection o k body vpn traffic uplink preferences items0 traffic filters items0 value destination based on context it is used
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource Source of 'custom' type traffic filter
+swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource
+*/
+type UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource struct {
+
+	// CIDR format address (e.g."192.168.10.1", which is the same as "192.168.10.1/32"), or "any". Cannot be used in combination with the "vlan" property
+	Cidr string `json:"cidr,omitempty"`
+
+	// Host ID in the VLAN. Should not exceed the VLAN subnet capacity. Must be used along with the "vlan" property and is currently only available under a template network.
+	Host int64 `json:"host,omitempty"`
+
+	// Meraki network ID. Currently only available under a template network, and the value should be ID of either same template network, or another template network currently. E.g.: "L_12345678".
+	Network string `json:"network,omitempty"`
+
+	// E.g.: "any", "0" (also means "any"), "8080", "1-1024"
+	Port string `json:"port,omitempty"`
+
+	// VLAN ID of the configured VLAN in the Meraki network. Cannot be used in combination with the "cidr" property and is currently only available under a template network.
+	Vlan int64 `json:"vlan,omitempty"`
+}
+
+// Validate validates this update network appliance traffic shaping uplink selection o k body vpn traffic uplink preferences items0 traffic filters items0 value source
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network appliance traffic shaping uplink selection o k body vpn traffic uplink preferences items0 traffic filters items0 value source based on context it is used
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0 update network appliance traffic shaping uplink selection o k body wan traffic uplink preferences items0
+swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0
+*/
+type UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0 struct {
+
+	// Preferred uplink for uplink preference rule. Must be one of: 'wan1' or 'wan2'
+	// Required: true
+	// Enum: [wan1 wan2]
+	PreferredUplink *string `json:"preferredUplink"`
+
+	// Traffic filters
+	// Required: true
+	TrafficFilters []*UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0 `json:"trafficFilters"`
+}
+
+// Validate validates this update network appliance traffic shaping uplink selection o k body wan traffic uplink preferences items0
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validatePreferredUplink(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTrafficFilters(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TypePreferredUplinkPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["wan1","wan2"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TypePreferredUplinkPropEnum = append(updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TypePreferredUplinkPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0PreferredUplinkWan1 captures enum value "wan1"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0PreferredUplinkWan1 string = "wan1"
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0PreferredUplinkWan2 captures enum value "wan2"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0PreferredUplinkWan2 string = "wan2"
+)
+
+// prop value enum
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0) validatePreferredUplinkEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TypePreferredUplinkPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0) validatePreferredUplink(formats strfmt.Registry) error {
+
+	if err := validate.Required("preferredUplink", "body", o.PreferredUplink); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := o.validatePreferredUplinkEnum("preferredUplink", "body", *o.PreferredUplink); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0) validateTrafficFilters(formats strfmt.Registry) error {
+
+	if err := validate.Required("trafficFilters", "body", o.TrafficFilters); err != nil {
+		return err
+	}
+
+	for i := 0; i < len(o.TrafficFilters); i++ {
+		if swag.IsZero(o.TrafficFilters[i]) { // not required
+			continue
+		}
+
+		if o.TrafficFilters[i] != nil {
+			if err := o.TrafficFilters[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("trafficFilters" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("trafficFilters" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network appliance traffic shaping uplink selection o k body wan traffic uplink preferences items0 based on the context it is used
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateTrafficFilters(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0) contextValidateTrafficFilters(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.TrafficFilters); i++ {
+
+		if o.TrafficFilters[i] != nil {
+
+			if swag.IsZero(o.TrafficFilters[i]) { // not required
+				return nil
+			}
+
+			if err := o.TrafficFilters[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("trafficFilters" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("trafficFilters" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0 update network appliance traffic shaping uplink selection o k body wan traffic uplink preferences items0 traffic filters items0
+swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0
+*/
+type UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0 struct {
+
+	// Traffic filter type. Must be "custom"
+	// Required: true
+	// Enum: [custom]
+	Type *string `json:"type"`
+
+	// value
+	// Required: true
+	Value *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0Value `json:"value"`
+}
+
+// Validate validates this update network appliance traffic shaping uplink selection o k body wan traffic uplink preferences items0 traffic filters items0
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateValue(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["custom"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeTypePropEnum = append(updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeTypePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeCustom captures enum value "custom"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeCustom string = "custom"
+)
+
+// prop value enum
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0) validateTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0) validateType(formats strfmt.Registry) error {
+
+	if err := validate.Required("type", "body", o.Type); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := o.validateTypeEnum("type", "body", *o.Type); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0) validateValue(formats strfmt.Registry) error {
+
+	if err := validate.Required("value", "body", o.Value); err != nil {
+		return err
+	}
+
+	if o.Value != nil {
+		if err := o.Value.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("value")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("value")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network appliance traffic shaping uplink selection o k body wan traffic uplink preferences items0 traffic filters items0 based on the context it is used
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateValue(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0) contextValidateValue(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Value != nil {
+
+		if err := o.Value.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("value")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("value")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0Value Value of traffic filter
+swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0Value
+*/
+type UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0Value struct {
+
+	// destination
+	// Required: true
+	Destination *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination `json:"destination"`
+
+	// Protocol of 'custom' type traffic filter. Must be one of: 'tcp', 'udp', 'icmp6' or 'any'
+	// Enum: [any icmp6 tcp udp]
+	Protocol string `json:"protocol,omitempty"`
+
+	// source
+	// Required: true
+	Source *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource `json:"source"`
+}
+
+// Validate validates this update network appliance traffic shaping uplink selection o k body wan traffic uplink preferences items0 traffic filters items0 value
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateDestination(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateProtocol(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSource(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) validateDestination(formats strfmt.Registry) error {
+
+	if err := validate.Required("value"+"."+"destination", "body", o.Destination); err != nil {
+		return err
+	}
+
+	if o.Destination != nil {
+		if err := o.Destination.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("value" + "." + "destination")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("value" + "." + "destination")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+var updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueTypeProtocolPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["any","icmp6","tcp","udp"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueTypeProtocolPropEnum = append(updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueTypeProtocolPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolAny captures enum value "any"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolAny string = "any"
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolIcmp6 captures enum value "icmp6"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolIcmp6 string = "icmp6"
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolTCP captures enum value "tcp"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolTCP string = "tcp"
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolUDP captures enum value "udp"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolUDP string = "udp"
+)
+
+// prop value enum
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) validateProtocolEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueTypeProtocolPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) validateProtocol(formats strfmt.Registry) error {
+	if swag.IsZero(o.Protocol) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateProtocolEnum("value"+"."+"protocol", "body", o.Protocol); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) validateSource(formats strfmt.Registry) error {
+
+	if err := validate.Required("value"+"."+"source", "body", o.Source); err != nil {
+		return err
+	}
+
+	if o.Source != nil {
+		if err := o.Source.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("value" + "." + "source")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("value" + "." + "source")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network appliance traffic shaping uplink selection o k body wan traffic uplink preferences items0 traffic filters items0 value based on the context it is used
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateDestination(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateSource(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) contextValidateDestination(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Destination != nil {
+
+		if err := o.Destination.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("value" + "." + "destination")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("value" + "." + "destination")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) contextValidateSource(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Source != nil {
+
+		if err := o.Source.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("value" + "." + "source")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("value" + "." + "source")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0Value
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination Destination of 'custom' type traffic filter
+swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination
+*/
+type UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination struct {
+
+	// CIDR format address (e.g."192.168.10.1", which is the same as "192.168.10.1/32"), or "any"
+	Cidr string `json:"cidr,omitempty"`
+
+	// E.g.: "any", "0" (also means "any"), "8080", "1-1024"
+	Port string `json:"port,omitempty"`
+}
+
+// Validate validates this update network appliance traffic shaping uplink selection o k body wan traffic uplink preferences items0 traffic filters items0 value destination
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network appliance traffic shaping uplink selection o k body wan traffic uplink preferences items0 traffic filters items0 value destination based on context it is used
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource Source of 'custom' type traffic filter
+swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource
+*/
+type UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource struct {
+
+	// CIDR format address (e.g."192.168.10.1", which is the same as "192.168.10.1/32"), or "any". Cannot be used in combination with the "vlan" property
+	Cidr string `json:"cidr,omitempty"`
+
+	// Host ID in the VLAN. Should not exceed the VLAN subnet capacity. Must be used along with the "vlan" property and is currently only available under a template network.
+	Host int64 `json:"host,omitempty"`
+
+	// E.g.: "any", "0" (also means "any"), "8080", "1-1024"
+	Port string `json:"port,omitempty"`
+
+	// VLAN ID of the configured VLAN in the Meraki network. Cannot be used in combination with the "cidr" property and is currently only available under a template network.
+	Vlan int64 `json:"vlan,omitempty"`
+}
+
+// Validate validates this update network appliance traffic shaping uplink selection o k body wan traffic uplink preferences items0 traffic filters items0 value source
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network appliance traffic shaping uplink selection o k body wan traffic uplink preferences items0 traffic filters items0 value source based on context it is used
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceTrafficShapingUplinkSelectionOKBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyFailoverAndFailback WAN failover and failback behavior
+swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyFailoverAndFailback
+*/
+type UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyFailoverAndFailback struct {
+
+	// immediate
+	Immediate *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyFailoverAndFailbackImmediate `json:"immediate,omitempty"`
+}
+
+// Validate validates this update network appliance traffic shaping uplink selection params body failover and failback
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyFailoverAndFailback) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateImmediate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyFailoverAndFailback) validateImmediate(formats strfmt.Registry) error {
+	if swag.IsZero(o.Immediate) { // not required
+		return nil
+	}
+
+	if o.Immediate != nil {
+		if err := o.Immediate.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelection" + "." + "failoverAndFailback" + "." + "immediate")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelection" + "." + "failoverAndFailback" + "." + "immediate")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network appliance traffic shaping uplink selection params body failover and failback based on the context it is used
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyFailoverAndFailback) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateImmediate(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyFailoverAndFailback) contextValidateImmediate(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Immediate != nil {
+
+		if swag.IsZero(o.Immediate) { // not required
+			return nil
+		}
+
+		if err := o.Immediate.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelection" + "." + "failoverAndFailback" + "." + "immediate")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkApplianceTrafficShapingUplinkSelection" + "." + "failoverAndFailback" + "." + "immediate")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyFailoverAndFailback) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyFailoverAndFailback) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyFailoverAndFailback
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyFailoverAndFailbackImmediate Immediate WAN transition terminates all flows (new and existing) on current WAN when it is deemed unreliable.
+swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyFailoverAndFailbackImmediate
+*/
+type UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyFailoverAndFailbackImmediate struct {
+
+	// Toggle for enabling or disabling immediate WAN failover and failback
+	// Required: true
+	Enabled *bool `json:"enabled"`
+}
+
+// Validate validates this update network appliance traffic shaping uplink selection params body failover and failback immediate
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyFailoverAndFailbackImmediate) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateEnabled(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyFailoverAndFailbackImmediate) validateEnabled(formats strfmt.Registry) error {
+
+	if err := validate.Required("updateNetworkApplianceTrafficShapingUplinkSelection"+"."+"failoverAndFailback"+"."+"immediate"+"."+"enabled", "body", o.Enabled); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network appliance traffic shaping uplink selection params body failover and failback immediate based on context it is used
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyFailoverAndFailbackImmediate) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyFailoverAndFailbackImmediate) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyFailoverAndFailbackImmediate) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyFailoverAndFailbackImmediate
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0 update network appliance traffic shaping uplink selection params body vpn traffic uplink preferences items0
 swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0
 */
 type UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0 struct {
@@ -327,7 +2445,7 @@ type UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUpli
 
 	// Preferred uplink for this uplink preference rule. Must be one of: 'wan1', 'wan2', 'bestForVoIP', 'loadBalancing' or 'defaultUplink'
 	// Required: true
-	// Enum: [wan1 wan2 bestForVoIP loadBalancing defaultUplink]
+	// Enum: [bestForVoIP defaultUplink loadBalancing wan1 wan2]
 	PreferredUplink *string `json:"preferredUplink"`
 
 	// Array of traffic filters for this uplink preference rule
@@ -426,7 +2544,7 @@ var updateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplin
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["wan1","wan2","bestForVoIP","loadBalancing","defaultUplink"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["bestForVoIP","defaultUplink","loadBalancing","wan1","wan2"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -436,20 +2554,20 @@ func init() {
 
 const (
 
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkBestForVoIP captures enum value "bestForVoIP"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkBestForVoIP string = "bestForVoIP"
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkDefaultUplink captures enum value "defaultUplink"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkDefaultUplink string = "defaultUplink"
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkLoadBalancing captures enum value "loadBalancing"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkLoadBalancing string = "loadBalancing"
+
 	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkWan1 captures enum value "wan1"
 	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkWan1 string = "wan1"
 
 	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkWan2 captures enum value "wan2"
 	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkWan2 string = "wan2"
-
-	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkBestForVoIP captures enum value "bestForVoIP"
-	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkBestForVoIP string = "bestForVoIP"
-
-	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkLoadBalancing captures enum value "loadBalancing"
-	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkLoadBalancing string = "loadBalancing"
-
-	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkDefaultUplink captures enum value "defaultUplink"
-	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0PreferredUplinkDefaultUplink string = "defaultUplink"
 )
 
 // prop value enum
@@ -522,6 +2640,11 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTraffic
 func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0) contextValidatePerformanceClass(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.PerformanceClass != nil {
+
+		if swag.IsZero(o.PerformanceClass) { // not required
+			return nil
+		}
+
 		if err := o.PerformanceClass.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("performanceClass")
@@ -540,6 +2663,11 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTraffic
 	for i := 0; i < len(o.TrafficFilters); i++ {
 
 		if o.TrafficFilters[i] != nil {
+
+			if swag.IsZero(o.TrafficFilters[i]) { // not required
+				return nil
+			}
+
 			if err := o.TrafficFilters[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("trafficFilters" + "." + strconv.Itoa(i))
@@ -573,7 +2701,8 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTraffic
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0PerformanceClass Performance class setting for this uplink preference rule
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0PerformanceClass Performance class setting for this uplink preference rule
 swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0PerformanceClass
 */
 type UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0PerformanceClass struct {
@@ -714,14 +2843,15 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTraffic
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0 update network appliance traffic shaping uplink selection params body vpn traffic uplink preferences items0 traffic filters items0
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0 update network appliance traffic shaping uplink selection params body vpn traffic uplink preferences items0 traffic filters items0
 swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0
 */
 type UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0 struct {
 
 	// Type of this traffic filter. Must be one of: 'applicationCategory', 'application' or 'custom'
 	// Required: true
-	// Enum: [applicationCategory application custom]
+	// Enum: [application applicationCategory custom]
 	Type *string `json:"type"`
 
 	// value
@@ -751,7 +2881,7 @@ var updateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplin
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["applicationCategory","application","custom"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["application","applicationCategory","custom"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -761,11 +2891,11 @@ func init() {
 
 const (
 
-	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeApplicationCategory captures enum value "applicationCategory"
-	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeApplicationCategory string = "applicationCategory"
-
 	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeApplication captures enum value "application"
 	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeApplication string = "application"
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeApplicationCategory captures enum value "applicationCategory"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeApplicationCategory string = "applicationCategory"
 
 	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeCustom captures enum value "custom"
 	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0TypeCustom string = "custom"
@@ -830,6 +2960,7 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTraffic
 func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0) contextValidateValue(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Value != nil {
+
 		if err := o.Value.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("value")
@@ -861,7 +2992,8 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTraffic
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0Value Value object of this traffic filter
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0Value Value object of this traffic filter
 swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0Value
 */
 type UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0Value struct {
@@ -873,7 +3005,7 @@ type UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUpli
 	ID string `json:"id,omitempty"`
 
 	// Protocol of this custom type traffic filter. Must be one of: 'tcp', 'udp', 'icmp', 'icmp6' or 'any'
-	// Enum: [tcp udp icmp icmp6 any]
+	// Enum: [any icmp icmp6 tcp udp]
 	Protocol string `json:"protocol,omitempty"`
 
 	// source
@@ -925,7 +3057,7 @@ var updateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplin
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["tcp","udp","icmp","icmp6","any"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["any","icmp","icmp6","tcp","udp"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -935,11 +3067,8 @@ func init() {
 
 const (
 
-	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolTCP captures enum value "tcp"
-	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolTCP string = "tcp"
-
-	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolUDP captures enum value "udp"
-	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolUDP string = "udp"
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolAny captures enum value "any"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolAny string = "any"
 
 	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolIcmp captures enum value "icmp"
 	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolIcmp string = "icmp"
@@ -947,8 +3076,11 @@ const (
 	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolIcmp6 captures enum value "icmp6"
 	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolIcmp6 string = "icmp6"
 
-	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolAny captures enum value "any"
-	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolAny string = "any"
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolTCP captures enum value "tcp"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolTCP string = "tcp"
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolUDP captures enum value "udp"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolUDP string = "udp"
 )
 
 // prop value enum
@@ -1012,6 +3144,11 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTraffic
 func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) contextValidateDestination(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Destination != nil {
+
+		if swag.IsZero(o.Destination) { // not required
+			return nil
+		}
+
 		if err := o.Destination.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("value" + "." + "destination")
@@ -1028,6 +3165,11 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTraffic
 func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) contextValidateSource(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Source != nil {
+
+		if swag.IsZero(o.Source) { // not required
+			return nil
+		}
+
 		if err := o.Source.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("value" + "." + "source")
@@ -1059,7 +3201,8 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTraffic
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination Destination of this custom type traffic filter
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination Destination of this custom type traffic filter
 swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination
 */
 type UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination struct {
@@ -1111,7 +3254,8 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTraffic
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource Source of this custom type traffic filter
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource Source of this custom type traffic filter
 swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource
 */
 type UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource struct {
@@ -1160,7 +3304,8 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyVpnTraffic
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0 update network appliance traffic shaping uplink selection params body wan traffic uplink preferences items0
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0 update network appliance traffic shaping uplink selection params body wan traffic uplink preferences items0
 swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0
 */
 type UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0 struct {
@@ -1282,6 +3427,11 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTraffic
 	for i := 0; i < len(o.TrafficFilters); i++ {
 
 		if o.TrafficFilters[i] != nil {
+
+			if swag.IsZero(o.TrafficFilters[i]) { // not required
+				return nil
+			}
+
 			if err := o.TrafficFilters[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("trafficFilters" + "." + strconv.Itoa(i))
@@ -1315,7 +3465,8 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTraffic
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0 update network appliance traffic shaping uplink selection params body wan traffic uplink preferences items0 traffic filters items0
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0 update network appliance traffic shaping uplink selection params body wan traffic uplink preferences items0 traffic filters items0
 swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0
 */
 type UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0 struct {
@@ -1425,6 +3576,7 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTraffic
 func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0) contextValidateValue(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Value != nil {
+
 		if err := o.Value.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("value")
@@ -1456,7 +3608,8 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTraffic
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0Value Value object of this traffic filter
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0Value Value object of this traffic filter
 swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0Value
 */
 type UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0Value struct {
@@ -1466,7 +3619,7 @@ type UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUpli
 	Destination *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination `json:"destination"`
 
 	// Protocol of this custom type traffic filter. Must be one of: 'tcp', 'udp', 'icmp6' or 'any'
-	// Enum: [tcp udp icmp6 any]
+	// Enum: [any icmp6 tcp udp]
 	Protocol string `json:"protocol,omitempty"`
 
 	// source
@@ -1520,7 +3673,7 @@ var updateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplin
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["tcp","udp","icmp6","any"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["any","icmp6","tcp","udp"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1530,17 +3683,17 @@ func init() {
 
 const (
 
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolAny captures enum value "any"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolAny string = "any"
+
+	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolIcmp6 captures enum value "icmp6"
+	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolIcmp6 string = "icmp6"
+
 	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolTCP captures enum value "tcp"
 	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolTCP string = "tcp"
 
 	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolUDP captures enum value "udp"
 	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolUDP string = "udp"
-
-	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolIcmp6 captures enum value "icmp6"
-	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolIcmp6 string = "icmp6"
-
-	// UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolAny captures enum value "any"
-	UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueProtocolAny string = "any"
 )
 
 // prop value enum
@@ -1605,6 +3758,7 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTraffic
 func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) contextValidateDestination(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Destination != nil {
+
 		if err := o.Destination.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("value" + "." + "destination")
@@ -1621,6 +3775,7 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTraffic
 func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0Value) contextValidateSource(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Source != nil {
+
 		if err := o.Source.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("value" + "." + "source")
@@ -1652,7 +3807,8 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTraffic
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination Destination of this custom type traffic filter
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination Destination of this custom type traffic filter
 swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination
 */
 type UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueDestination struct {
@@ -1692,7 +3848,8 @@ func (o *UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTraffic
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource Source of this custom type traffic filter
+/*
+UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource Source of this custom type traffic filter
 swagger:model UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource
 */
 type UpdateNetworkApplianceTrafficShapingUplinkSelectionParamsBodyWanTrafficUplinkPreferencesItems0TrafficFiltersItems0ValueSource struct {

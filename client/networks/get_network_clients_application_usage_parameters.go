@@ -53,10 +53,12 @@ func NewGetNetworkClientsApplicationUsageParamsWithHTTPClient(client *http.Clien
 	}
 }
 
-/* GetNetworkClientsApplicationUsageParams contains all the parameters to send to the API endpoint
-   for the get network clients application usage operation.
+/*
+GetNetworkClientsApplicationUsageParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network clients application usage operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkClientsApplicationUsageParams struct {
 
@@ -72,7 +74,10 @@ type GetNetworkClientsApplicationUsageParams struct {
 	*/
 	EndingBefore *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* PerPage.

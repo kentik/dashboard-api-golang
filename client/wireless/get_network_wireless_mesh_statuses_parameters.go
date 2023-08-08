@@ -53,10 +53,12 @@ func NewGetNetworkWirelessMeshStatusesParamsWithHTTPClient(client *http.Client) 
 	}
 }
 
-/* GetNetworkWirelessMeshStatusesParams contains all the parameters to send to the API endpoint
-   for the get network wireless mesh statuses operation.
+/*
+GetNetworkWirelessMeshStatusesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network wireless mesh statuses operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkWirelessMeshStatusesParams struct {
 
@@ -66,7 +68,10 @@ type GetNetworkWirelessMeshStatusesParams struct {
 	*/
 	EndingBefore *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* PerPage.

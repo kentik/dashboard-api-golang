@@ -28,7 +28,7 @@ func (o *GetNetworkApplianceClientSecurityEventsReader) ReadResponse(response ru
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/appliance/clients/{clientId}/security/events] getNetworkApplianceClientSecurityEvents", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetNetworkApplianceClientSecurityEventsOK() *GetNetworkApplianceClientSe
 	return &GetNetworkApplianceClientSecurityEventsOK{}
 }
 
-/* GetNetworkApplianceClientSecurityEventsOK describes a response with status code 200, with default header values.
+/*
+GetNetworkApplianceClientSecurityEventsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -73,6 +74,11 @@ func (o *GetNetworkApplianceClientSecurityEventsOK) IsServerError() bool {
 // IsCode returns true when this get network appliance client security events o k response a status code equal to that given
 func (o *GetNetworkApplianceClientSecurityEventsOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get network appliance client security events o k response
+func (o *GetNetworkApplianceClientSecurityEventsOK) Code() int {
+	return 200
 }
 
 func (o *GetNetworkApplianceClientSecurityEventsOK) Error() string {

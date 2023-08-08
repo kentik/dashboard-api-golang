@@ -52,14 +52,19 @@ func NewGetOrganizationEarlyAccessFeaturesOptInsParamsWithHTTPClient(client *htt
 	}
 }
 
-/* GetOrganizationEarlyAccessFeaturesOptInsParams contains all the parameters to send to the API endpoint
-   for the get organization early access features opt ins operation.
+/*
+GetOrganizationEarlyAccessFeaturesOptInsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization early access features opt ins operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationEarlyAccessFeaturesOptInsParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

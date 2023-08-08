@@ -31,7 +31,7 @@ func (o *UpdateNetworkApplianceTrafficShapingReader) ReadResponse(response runti
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/appliance/trafficShaping] updateNetworkApplianceTrafficShaping", response, response.Code())
 	}
 }
 
@@ -40,7 +40,8 @@ func NewUpdateNetworkApplianceTrafficShapingOK() *UpdateNetworkApplianceTrafficS
 	return &UpdateNetworkApplianceTrafficShapingOK{}
 }
 
-/* UpdateNetworkApplianceTrafficShapingOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkApplianceTrafficShapingOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -73,6 +74,11 @@ func (o *UpdateNetworkApplianceTrafficShapingOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network appliance traffic shaping o k response
+func (o *UpdateNetworkApplianceTrafficShapingOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkApplianceTrafficShapingOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/appliance/trafficShaping][%d] updateNetworkApplianceTrafficShapingOK  %+v", 200, o.Payload)
 }
@@ -95,7 +101,8 @@ func (o *UpdateNetworkApplianceTrafficShapingOK) readResponse(response runtime.C
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingBody update network appliance traffic shaping body
+/*
+UpdateNetworkApplianceTrafficShapingBody update network appliance traffic shaping body
 // Example: {"globalBandwidthLimits":{"limitDown":5120,"limitUp":2048}}
 swagger:model UpdateNetworkApplianceTrafficShapingBody
 */
@@ -155,6 +162,11 @@ func (o *UpdateNetworkApplianceTrafficShapingBody) ContextValidate(ctx context.C
 func (o *UpdateNetworkApplianceTrafficShapingBody) contextValidateGlobalBandwidthLimits(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.GlobalBandwidthLimits != nil {
+
+		if swag.IsZero(o.GlobalBandwidthLimits) { // not required
+			return nil
+		}
+
 		if err := o.GlobalBandwidthLimits.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkApplianceTrafficShaping" + "." + "globalBandwidthLimits")
@@ -186,7 +198,8 @@ func (o *UpdateNetworkApplianceTrafficShapingBody) UnmarshalBinary(b []byte) err
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingParamsBodyGlobalBandwidthLimits Global per-client bandwidth limit
+/*
+UpdateNetworkApplianceTrafficShapingParamsBodyGlobalBandwidthLimits Global per-client bandwidth limit
 swagger:model UpdateNetworkApplianceTrafficShapingParamsBodyGlobalBandwidthLimits
 */
 type UpdateNetworkApplianceTrafficShapingParamsBodyGlobalBandwidthLimits struct {

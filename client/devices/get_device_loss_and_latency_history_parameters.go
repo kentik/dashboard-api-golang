@@ -53,10 +53,12 @@ func NewGetDeviceLossAndLatencyHistoryParamsWithHTTPClient(client *http.Client) 
 	}
 }
 
-/* GetDeviceLossAndLatencyHistoryParams contains all the parameters to send to the API endpoint
-   for the get device loss and latency history operation.
+/*
+GetDeviceLossAndLatencyHistoryParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get device loss and latency history operation.
+
+	Typically these are written to a http.Request.
 */
 type GetDeviceLossAndLatencyHistoryParams struct {
 
@@ -72,12 +74,15 @@ type GetDeviceLossAndLatencyHistoryParams struct {
 	*/
 	Resolution *int64
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	/* T0.
 
-	   The beginning of the timespan for the data. The maximum lookback period is 365 days from today.
+	   The beginning of the timespan for the data. The maximum lookback period is 60 days from today.
 	*/
 	T0 *string
 
@@ -97,7 +102,7 @@ type GetDeviceLossAndLatencyHistoryParams struct {
 
 	/* Uplink.
 
-	   The WAN uplink used to obtain the requested stats. Valid uplinks are wan1, wan2, cellular. The default is wan1.
+	   The WAN uplink used to obtain the requested stats. Valid uplinks are wan1, wan2, wan3, cellular. The default is wan1.
 	*/
 	Uplink *string
 

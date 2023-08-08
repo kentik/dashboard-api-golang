@@ -52,17 +52,25 @@ func NewDeleteNetworkWebhooksPayloadTemplateParamsWithHTTPClient(client *http.Cl
 	}
 }
 
-/* DeleteNetworkWebhooksPayloadTemplateParams contains all the parameters to send to the API endpoint
-   for the delete network webhooks payload template operation.
+/*
+DeleteNetworkWebhooksPayloadTemplateParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete network webhooks payload template operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteNetworkWebhooksPayloadTemplateParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// PayloadTemplateID.
+	/* PayloadTemplateID.
+
+	   Payload template ID
+	*/
 	PayloadTemplateID string
 
 	timeout    time.Duration

@@ -30,7 +30,7 @@ func (o *GetNetworkSmUserDeviceProfilesReader) ReadResponse(response runtime.Cli
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/sm/users/{userId}/deviceProfiles] getNetworkSmUserDeviceProfiles", response, response.Code())
 	}
 }
 
@@ -39,7 +39,8 @@ func NewGetNetworkSmUserDeviceProfilesOK() *GetNetworkSmUserDeviceProfilesOK {
 	return &GetNetworkSmUserDeviceProfilesOK{}
 }
 
-/* GetNetworkSmUserDeviceProfilesOK describes a response with status code 200, with default header values.
+/*
+GetNetworkSmUserDeviceProfilesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -72,6 +73,11 @@ func (o *GetNetworkSmUserDeviceProfilesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network sm user device profiles o k response
+func (o *GetNetworkSmUserDeviceProfilesOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkSmUserDeviceProfilesOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/sm/users/{userId}/deviceProfiles][%d] getNetworkSmUserDeviceProfilesOK  %+v", 200, o.Payload)
 }
@@ -94,7 +100,8 @@ func (o *GetNetworkSmUserDeviceProfilesOK) readResponse(response runtime.ClientR
 	return nil
 }
 
-/*GetNetworkSmUserDeviceProfilesOKBodyItems0 get network sm user device profiles o k body items0
+/*
+GetNetworkSmUserDeviceProfilesOKBodyItems0 get network sm user device profiles o k body items0
 swagger:model GetNetworkSmUserDeviceProfilesOKBodyItems0
 */
 type GetNetworkSmUserDeviceProfilesOKBodyItems0 struct {

@@ -33,7 +33,7 @@ func (o *UpdateNetworkSwitchStackRoutingInterfaceReader) ReadResponse(response r
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/switch/stacks/{switchStackId}/routing/interfaces/{interfaceId}] updateNetworkSwitchStackRoutingInterface", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateNetworkSwitchStackRoutingInterfaceOK() *UpdateNetworkSwitchStackRo
 	return &UpdateNetworkSwitchStackRoutingInterfaceOK{}
 }
 
-/* UpdateNetworkSwitchStackRoutingInterfaceOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSwitchStackRoutingInterfaceOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateNetworkSwitchStackRoutingInterfaceOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network switch stack routing interface o k response
+func (o *UpdateNetworkSwitchStackRoutingInterfaceOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSwitchStackRoutingInterfaceOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/switch/stacks/{switchStackId}/routing/interfaces/{interfaceId}][%d] updateNetworkSwitchStackRoutingInterfaceOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateNetworkSwitchStackRoutingInterfaceOK) readResponse(response runti
 	return nil
 }
 
-/*UpdateNetworkSwitchStackRoutingInterfaceBody update network switch stack routing interface body
+/*
+UpdateNetworkSwitchStackRoutingInterfaceBody update network switch stack routing interface body
 // Example: {"interfaceIp":"192.168.1.2","ipv6":{"address":"1:2:3:4::1","assignmentMode":"static","gateway":"1:2:3:4::2","prefix":"1:2:3:4::/48"},"multicastRouting":"disabled","name":"L3 interface","ospfSettings":{"area":"0","cost":1,"isPassiveEnabled":true},"ospfV3":{"area":"1","cost":2,"isPassiveEnabled":true},"subnet":"192.168.1.0/24","vlanId":100}
 swagger:model UpdateNetworkSwitchStackRoutingInterfaceBody
 */
@@ -113,7 +120,7 @@ type UpdateNetworkSwitchStackRoutingInterfaceBody struct {
 	IPV6 *UpdateNetworkSwitchStackRoutingInterfaceParamsBodyIPV6 `json:"ipv6,omitempty"`
 
 	// Enable multicast support if, multicast routing between VLANs is required. Options are, 'disabled', 'enabled' or 'IGMP snooping querier'.
-	// Enum: [disabled enabled IGMP snooping querier]
+	// Enum: [IGMP snooping querier disabled enabled]
 	MulticastRouting string `json:"multicastRouting,omitempty"`
 
 	// A friendly name or description for the interface or VLAN.
@@ -174,7 +181,7 @@ var updateNetworkSwitchStackRoutingInterfaceBodyTypeMulticastRoutingPropEnum []i
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["disabled","enabled","IGMP snooping querier"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["IGMP snooping querier","disabled","enabled"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -184,14 +191,14 @@ func init() {
 
 const (
 
+	// UpdateNetworkSwitchStackRoutingInterfaceBodyMulticastRoutingIGMPSnoopingQuerier captures enum value "IGMP snooping querier"
+	UpdateNetworkSwitchStackRoutingInterfaceBodyMulticastRoutingIGMPSnoopingQuerier string = "IGMP snooping querier"
+
 	// UpdateNetworkSwitchStackRoutingInterfaceBodyMulticastRoutingDisabled captures enum value "disabled"
 	UpdateNetworkSwitchStackRoutingInterfaceBodyMulticastRoutingDisabled string = "disabled"
 
 	// UpdateNetworkSwitchStackRoutingInterfaceBodyMulticastRoutingEnabled captures enum value "enabled"
 	UpdateNetworkSwitchStackRoutingInterfaceBodyMulticastRoutingEnabled string = "enabled"
-
-	// UpdateNetworkSwitchStackRoutingInterfaceBodyMulticastRoutingIGMPSnoopingQuerier captures enum value "IGMP snooping querier"
-	UpdateNetworkSwitchStackRoutingInterfaceBodyMulticastRoutingIGMPSnoopingQuerier string = "IGMP snooping querier"
 )
 
 // prop value enum
@@ -255,6 +262,11 @@ func (o *UpdateNetworkSwitchStackRoutingInterfaceBody) ContextValidate(ctx conte
 func (o *UpdateNetworkSwitchStackRoutingInterfaceBody) contextValidateIPV6(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.IPV6 != nil {
+
+		if swag.IsZero(o.IPV6) { // not required
+			return nil
+		}
+
 		if err := o.IPV6.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchStackRoutingInterface" + "." + "ipv6")
@@ -271,6 +283,11 @@ func (o *UpdateNetworkSwitchStackRoutingInterfaceBody) contextValidateIPV6(ctx c
 func (o *UpdateNetworkSwitchStackRoutingInterfaceBody) contextValidateOspfSettings(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.OspfSettings != nil {
+
+		if swag.IsZero(o.OspfSettings) { // not required
+			return nil
+		}
+
 		if err := o.OspfSettings.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchStackRoutingInterface" + "." + "ospfSettings")
@@ -302,7 +319,8 @@ func (o *UpdateNetworkSwitchStackRoutingInterfaceBody) UnmarshalBinary(b []byte)
 	return nil
 }
 
-/*UpdateNetworkSwitchStackRoutingInterfaceParamsBodyIPV6 The IPv6 settings of the interface.
+/*
+UpdateNetworkSwitchStackRoutingInterfaceParamsBodyIPV6 The IPv6 settings of the interface.
 swagger:model UpdateNetworkSwitchStackRoutingInterfaceParamsBodyIPV6
 */
 type UpdateNetworkSwitchStackRoutingInterfaceParamsBodyIPV6 struct {
@@ -348,7 +366,8 @@ func (o *UpdateNetworkSwitchStackRoutingInterfaceParamsBodyIPV6) UnmarshalBinary
 	return nil
 }
 
-/*UpdateNetworkSwitchStackRoutingInterfaceParamsBodyOspfSettings The OSPF routing settings of the interface.
+/*
+UpdateNetworkSwitchStackRoutingInterfaceParamsBodyOspfSettings The OSPF routing settings of the interface.
 swagger:model UpdateNetworkSwitchStackRoutingInterfaceParamsBodyOspfSettings
 */
 type UpdateNetworkSwitchStackRoutingInterfaceParamsBodyOspfSettings struct {

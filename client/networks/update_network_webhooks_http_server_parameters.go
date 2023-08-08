@@ -52,17 +52,25 @@ func NewUpdateNetworkWebhooksHTTPServerParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* UpdateNetworkWebhooksHTTPServerParams contains all the parameters to send to the API endpoint
-   for the update network webhooks Http server operation.
+/*
+UpdateNetworkWebhooksHTTPServerParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network webhooks Http server operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkWebhooksHTTPServerParams struct {
 
-	// HTTPServerID.
+	/* HTTPServerID.
+
+	   Http server ID
+	*/
 	HTTPServerID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkWebhooksHTTPServer.

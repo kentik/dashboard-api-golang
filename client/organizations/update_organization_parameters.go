@@ -52,14 +52,19 @@ func NewUpdateOrganizationParamsWithHTTPClient(client *http.Client) *UpdateOrgan
 	}
 }
 
-/* UpdateOrganizationParams contains all the parameters to send to the API endpoint
-   for the update organization operation.
+/*
+UpdateOrganizationParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update organization operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateOrganizationParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	// UpdateOrganization.

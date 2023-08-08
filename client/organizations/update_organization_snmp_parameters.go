@@ -52,14 +52,19 @@ func NewUpdateOrganizationSnmpParamsWithHTTPClient(client *http.Client) *UpdateO
 	}
 }
 
-/* UpdateOrganizationSnmpParams contains all the parameters to send to the API endpoint
-   for the update organization snmp operation.
+/*
+UpdateOrganizationSnmpParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update organization snmp operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateOrganizationSnmpParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	// UpdateOrganizationSnmp.

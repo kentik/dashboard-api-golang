@@ -53,10 +53,12 @@ func NewGetNetworkWirelessSignalQualityHistoryParamsWithHTTPClient(client *http.
 	}
 }
 
-/* GetNetworkWirelessSignalQualityHistoryParams contains all the parameters to send to the API endpoint
-   for the get network wireless signal quality history operation.
+/*
+GetNetworkWirelessSignalQualityHistoryParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network wireless signal quality history operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkWirelessSignalQualityHistoryParams struct {
 
@@ -90,7 +92,10 @@ type GetNetworkWirelessSignalQualityHistoryParams struct {
 	*/
 	DeviceSerial *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* Resolution.

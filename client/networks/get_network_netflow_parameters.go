@@ -52,14 +52,19 @@ func NewGetNetworkNetflowParamsWithHTTPClient(client *http.Client) *GetNetworkNe
 	}
 }
 
-/* GetNetworkNetflowParams contains all the parameters to send to the API endpoint
-   for the get network netflow operation.
+/*
+GetNetworkNetflowParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network netflow operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkNetflowParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

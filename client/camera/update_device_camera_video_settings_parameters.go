@@ -52,14 +52,19 @@ func NewUpdateDeviceCameraVideoSettingsParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* UpdateDeviceCameraVideoSettingsParams contains all the parameters to send to the API endpoint
-   for the update device camera video settings operation.
+/*
+UpdateDeviceCameraVideoSettingsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update device camera video settings operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateDeviceCameraVideoSettingsParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	// UpdateDeviceCameraVideoSettings.

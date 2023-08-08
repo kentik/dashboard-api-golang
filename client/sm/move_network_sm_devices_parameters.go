@@ -52,17 +52,22 @@ func NewMoveNetworkSmDevicesParamsWithHTTPClient(client *http.Client) *MoveNetwo
 	}
 }
 
-/* MoveNetworkSmDevicesParams contains all the parameters to send to the API endpoint
-   for the move network sm devices operation.
+/*
+MoveNetworkSmDevicesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the move network sm devices operation.
+
+	Typically these are written to a http.Request.
 */
 type MoveNetworkSmDevicesParams struct {
 
 	// MoveNetworkSmDevices.
 	MoveNetworkSmDevices MoveNetworkSmDevicesBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

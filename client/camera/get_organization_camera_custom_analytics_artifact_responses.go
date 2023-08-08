@@ -28,7 +28,7 @@ func (o *GetOrganizationCameraCustomAnalyticsArtifactReader) ReadResponse(respon
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/camera/customAnalytics/artifacts/{artifactId}] getOrganizationCameraCustomAnalyticsArtifact", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetOrganizationCameraCustomAnalyticsArtifactOK() *GetOrganizationCameraC
 	return &GetOrganizationCameraCustomAnalyticsArtifactOK{}
 }
 
-/* GetOrganizationCameraCustomAnalyticsArtifactOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationCameraCustomAnalyticsArtifactOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetOrganizationCameraCustomAnalyticsArtifactOK) IsServerError() bool {
 // IsCode returns true when this get organization camera custom analytics artifact o k response a status code equal to that given
 func (o *GetOrganizationCameraCustomAnalyticsArtifactOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get organization camera custom analytics artifact o k response
+func (o *GetOrganizationCameraCustomAnalyticsArtifactOK) Code() int {
+	return 200
 }
 
 func (o *GetOrganizationCameraCustomAnalyticsArtifactOK) Error() string {

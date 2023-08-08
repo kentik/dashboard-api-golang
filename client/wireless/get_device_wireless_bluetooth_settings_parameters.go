@@ -52,14 +52,19 @@ func NewGetDeviceWirelessBluetoothSettingsParamsWithHTTPClient(client *http.Clie
 	}
 }
 
-/* GetDeviceWirelessBluetoothSettingsParams contains all the parameters to send to the API endpoint
-   for the get device wireless bluetooth settings operation.
+/*
+GetDeviceWirelessBluetoothSettingsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get device wireless bluetooth settings operation.
+
+	Typically these are written to a http.Request.
 */
 type GetDeviceWirelessBluetoothSettingsParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	timeout    time.Duration

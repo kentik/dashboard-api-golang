@@ -52,17 +52,25 @@ func NewGetNetworkApplianceVlanParamsWithHTTPClient(client *http.Client) *GetNet
 	}
 }
 
-/* GetNetworkApplianceVlanParams contains all the parameters to send to the API endpoint
-   for the get network appliance vlan operation.
+/*
+GetNetworkApplianceVlanParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network appliance vlan operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkApplianceVlanParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// VlanID.
+	/* VlanID.
+
+	   Vlan ID
+	*/
 	VlanID string
 
 	timeout    time.Duration

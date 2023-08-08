@@ -52,14 +52,19 @@ func NewUpdateNetworkApplianceSecurityIntrusionParamsWithHTTPClient(client *http
 	}
 }
 
-/* UpdateNetworkApplianceSecurityIntrusionParams contains all the parameters to send to the API endpoint
-   for the update network appliance security intrusion operation.
+/*
+UpdateNetworkApplianceSecurityIntrusionParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network appliance security intrusion operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkApplianceSecurityIntrusionParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkApplianceSecurityIntrusion.

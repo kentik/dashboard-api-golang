@@ -52,14 +52,19 @@ func NewUpdateNetworkApplianceFirewallPortForwardingRulesParamsWithHTTPClient(cl
 	}
 }
 
-/* UpdateNetworkApplianceFirewallPortForwardingRulesParams contains all the parameters to send to the API endpoint
-   for the update network appliance firewall port forwarding rules operation.
+/*
+UpdateNetworkApplianceFirewallPortForwardingRulesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network appliance firewall port forwarding rules operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkApplianceFirewallPortForwardingRulesParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkApplianceFirewallPortForwardingRules.

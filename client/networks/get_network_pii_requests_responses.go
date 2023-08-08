@@ -28,7 +28,7 @@ func (o *GetNetworkPiiRequestsReader) ReadResponse(response runtime.ClientRespon
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/pii/requests] getNetworkPiiRequests", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetNetworkPiiRequestsOK() *GetNetworkPiiRequestsOK {
 	return &GetNetworkPiiRequestsOK{}
 }
 
-/* GetNetworkPiiRequestsOK describes a response with status code 200, with default header values.
+/*
+GetNetworkPiiRequestsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetNetworkPiiRequestsOK) IsServerError() bool {
 // IsCode returns true when this get network pii requests o k response a status code equal to that given
 func (o *GetNetworkPiiRequestsOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get network pii requests o k response
+func (o *GetNetworkPiiRequestsOK) Code() int {
+	return 200
 }
 
 func (o *GetNetworkPiiRequestsOK) Error() string {

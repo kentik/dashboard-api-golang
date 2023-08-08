@@ -52,17 +52,22 @@ func NewCreateNetworkFirmwareUpgradesRollbackParamsWithHTTPClient(client *http.C
 	}
 }
 
-/* CreateNetworkFirmwareUpgradesRollbackParams contains all the parameters to send to the API endpoint
-   for the create network firmware upgrades rollback operation.
+/*
+CreateNetworkFirmwareUpgradesRollbackParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create network firmware upgrades rollback operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateNetworkFirmwareUpgradesRollbackParams struct {
 
 	// CreateNetworkFirmwareUpgradesRollback.
 	CreateNetworkFirmwareUpgradesRollback CreateNetworkFirmwareUpgradesRollbackBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

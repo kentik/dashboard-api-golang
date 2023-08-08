@@ -6,11 +6,15 @@ package wireless
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
+	"strconv"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetNetworkWirelessBillingReader is a Reader for the GetNetworkWirelessBilling structure.
@@ -28,7 +32,7 @@ func (o *GetNetworkWirelessBillingReader) ReadResponse(response runtime.ClientRe
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/wireless/billing] getNetworkWirelessBilling", response, response.Code())
 	}
 }
 
@@ -37,12 +41,13 @@ func NewGetNetworkWirelessBillingOK() *GetNetworkWirelessBillingOK {
 	return &GetNetworkWirelessBillingOK{}
 }
 
-/* GetNetworkWirelessBillingOK describes a response with status code 200, with default header values.
+/*
+GetNetworkWirelessBillingOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkWirelessBillingOK struct {
-	Payload interface{}
+	Payload *GetNetworkWirelessBillingOKBody
 }
 
 // IsSuccess returns true when this get network wireless billing o k response has a 2xx status code
@@ -70,6 +75,11 @@ func (o *GetNetworkWirelessBillingOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network wireless billing o k response
+func (o *GetNetworkWirelessBillingOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkWirelessBillingOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/wireless/billing][%d] getNetworkWirelessBillingOK  %+v", 200, o.Payload)
 }
@@ -78,16 +88,274 @@ func (o *GetNetworkWirelessBillingOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/wireless/billing][%d] getNetworkWirelessBillingOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkWirelessBillingOK) GetPayload() interface{} {
+func (o *GetNetworkWirelessBillingOK) GetPayload() *GetNetworkWirelessBillingOKBody {
 	return o.Payload
 }
 
 func (o *GetNetworkWirelessBillingOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetNetworkWirelessBillingOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkWirelessBillingOKBody get network wireless billing o k body
+swagger:model GetNetworkWirelessBillingOKBody
+*/
+type GetNetworkWirelessBillingOKBody struct {
+
+	// The currency code of this node group's billing plans
+	Currency string `json:"currency,omitempty"`
+
+	// Array of billing plans in the node group. (Can configure a maximum of 5)
+	Plans []*GetNetworkWirelessBillingOKBodyPlansItems0 `json:"plans"`
+}
+
+// Validate validates this get network wireless billing o k body
+func (o *GetNetworkWirelessBillingOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validatePlans(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkWirelessBillingOKBody) validatePlans(formats strfmt.Registry) error {
+	if swag.IsZero(o.Plans) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Plans); i++ {
+		if swag.IsZero(o.Plans[i]) { // not required
+			continue
+		}
+
+		if o.Plans[i] != nil {
+			if err := o.Plans[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkWirelessBillingOK" + "." + "plans" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkWirelessBillingOK" + "." + "plans" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network wireless billing o k body based on the context it is used
+func (o *GetNetworkWirelessBillingOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidatePlans(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkWirelessBillingOKBody) contextValidatePlans(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Plans); i++ {
+
+		if o.Plans[i] != nil {
+
+			if swag.IsZero(o.Plans[i]) { // not required
+				return nil
+			}
+
+			if err := o.Plans[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkWirelessBillingOK" + "." + "plans" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkWirelessBillingOK" + "." + "plans" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkWirelessBillingOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkWirelessBillingOKBody) UnmarshalBinary(b []byte) error {
+	var res GetNetworkWirelessBillingOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkWirelessBillingOKBodyPlansItems0 get network wireless billing o k body plans items0
+swagger:model GetNetworkWirelessBillingOKBodyPlansItems0
+*/
+type GetNetworkWirelessBillingOKBodyPlansItems0 struct {
+
+	// bandwidth limits
+	BandwidthLimits *GetNetworkWirelessBillingOKBodyPlansItems0BandwidthLimits `json:"bandwidthLimits,omitempty"`
+
+	// The id of the pricing plan to update.
+	ID string `json:"id,omitempty"`
+
+	// The price of the billing plan.
+	Price float32 `json:"price,omitempty"`
+
+	// The time limit of the pricing plan in minutes.
+	TimeLimit string `json:"timeLimit,omitempty"`
+}
+
+// Validate validates this get network wireless billing o k body plans items0
+func (o *GetNetworkWirelessBillingOKBodyPlansItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBandwidthLimits(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkWirelessBillingOKBodyPlansItems0) validateBandwidthLimits(formats strfmt.Registry) error {
+	if swag.IsZero(o.BandwidthLimits) { // not required
+		return nil
+	}
+
+	if o.BandwidthLimits != nil {
+		if err := o.BandwidthLimits.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("bandwidthLimits")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("bandwidthLimits")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network wireless billing o k body plans items0 based on the context it is used
+func (o *GetNetworkWirelessBillingOKBodyPlansItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBandwidthLimits(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkWirelessBillingOKBodyPlansItems0) contextValidateBandwidthLimits(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.BandwidthLimits != nil {
+
+		if swag.IsZero(o.BandwidthLimits) { // not required
+			return nil
+		}
+
+		if err := o.BandwidthLimits.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("bandwidthLimits")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("bandwidthLimits")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkWirelessBillingOKBodyPlansItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkWirelessBillingOKBodyPlansItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkWirelessBillingOKBodyPlansItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkWirelessBillingOKBodyPlansItems0BandwidthLimits The uplink bandwidth settings for the pricing plan.
+swagger:model GetNetworkWirelessBillingOKBodyPlansItems0BandwidthLimits
+*/
+type GetNetworkWirelessBillingOKBodyPlansItems0BandwidthLimits struct {
+
+	// The maximum download limit (integer, in Kbps).
+	LimitDown int64 `json:"limitDown,omitempty"`
+
+	// The maximum upload limit (integer, in Kbps).
+	LimitUp int64 `json:"limitUp,omitempty"`
+}
+
+// Validate validates this get network wireless billing o k body plans items0 bandwidth limits
+func (o *GetNetworkWirelessBillingOKBodyPlansItems0BandwidthLimits) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network wireless billing o k body plans items0 bandwidth limits based on context it is used
+func (o *GetNetworkWirelessBillingOKBodyPlansItems0BandwidthLimits) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkWirelessBillingOKBodyPlansItems0BandwidthLimits) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkWirelessBillingOKBodyPlansItems0BandwidthLimits) UnmarshalBinary(b []byte) error {
+	var res GetNetworkWirelessBillingOKBodyPlansItems0BandwidthLimits
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

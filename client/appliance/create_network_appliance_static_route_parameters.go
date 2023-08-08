@@ -52,17 +52,22 @@ func NewCreateNetworkApplianceStaticRouteParamsWithHTTPClient(client *http.Clien
 	}
 }
 
-/* CreateNetworkApplianceStaticRouteParams contains all the parameters to send to the API endpoint
-   for the create network appliance static route operation.
+/*
+CreateNetworkApplianceStaticRouteParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create network appliance static route operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateNetworkApplianceStaticRouteParams struct {
 
 	// CreateNetworkApplianceStaticRoute.
 	CreateNetworkApplianceStaticRoute CreateNetworkApplianceStaticRouteBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

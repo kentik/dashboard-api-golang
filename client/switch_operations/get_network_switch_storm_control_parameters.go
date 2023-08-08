@@ -52,14 +52,19 @@ func NewGetNetworkSwitchStormControlParamsWithHTTPClient(client *http.Client) *G
 	}
 }
 
-/* GetNetworkSwitchStormControlParams contains all the parameters to send to the API endpoint
-   for the get network switch storm control operation.
+/*
+GetNetworkSwitchStormControlParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network switch storm control operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSwitchStormControlParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

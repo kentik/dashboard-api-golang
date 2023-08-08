@@ -52,17 +52,25 @@ func NewDeleteNetworkSwitchStackParamsWithHTTPClient(client *http.Client) *Delet
 	}
 }
 
-/* DeleteNetworkSwitchStackParams contains all the parameters to send to the API endpoint
-   for the delete network switch stack operation.
+/*
+DeleteNetworkSwitchStackParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete network switch stack operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteNetworkSwitchStackParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// SwitchStackID.
+	/* SwitchStackID.
+
+	   Switch stack ID
+	*/
 	SwitchStackID string
 
 	timeout    time.Duration

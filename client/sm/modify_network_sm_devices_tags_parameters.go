@@ -52,17 +52,22 @@ func NewModifyNetworkSmDevicesTagsParamsWithHTTPClient(client *http.Client) *Mod
 	}
 }
 
-/* ModifyNetworkSmDevicesTagsParams contains all the parameters to send to the API endpoint
-   for the modify network sm devices tags operation.
+/*
+ModifyNetworkSmDevicesTagsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the modify network sm devices tags operation.
+
+	Typically these are written to a http.Request.
 */
 type ModifyNetworkSmDevicesTagsParams struct {
 
 	// ModifyNetworkSmDevicesTags.
 	ModifyNetworkSmDevicesTags ModifyNetworkSmDevicesTagsBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

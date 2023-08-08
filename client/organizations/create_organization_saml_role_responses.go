@@ -34,7 +34,7 @@ func (o *CreateOrganizationSamlRoleReader) ReadResponse(response runtime.ClientR
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /organizations/{organizationId}/samlRoles] createOrganizationSamlRole", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewCreateOrganizationSamlRoleCreated() *CreateOrganizationSamlRoleCreated {
 	return &CreateOrganizationSamlRoleCreated{}
 }
 
-/* CreateOrganizationSamlRoleCreated describes a response with status code 201, with default header values.
+/*
+CreateOrganizationSamlRoleCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *CreateOrganizationSamlRoleCreated) IsCode(code int) bool {
 	return code == 201
 }
 
+// Code gets the status code for the create organization saml role created response
+func (o *CreateOrganizationSamlRoleCreated) Code() int {
+	return 201
+}
+
 func (o *CreateOrganizationSamlRoleCreated) Error() string {
 	return fmt.Sprintf("[POST /organizations/{organizationId}/samlRoles][%d] createOrganizationSamlRoleCreated  %+v", 201, o.Payload)
 }
@@ -98,8 +104,9 @@ func (o *CreateOrganizationSamlRoleCreated) readResponse(response runtime.Client
 	return nil
 }
 
-/*CreateOrganizationSamlRoleBody create organization saml role body
-// Example: {"networks":[{"access":"full","id":"N_1234"}],"orgAccess":"none","role":"myrole","tags":[{"access":"read-only","tag":"west"}]}
+/*
+CreateOrganizationSamlRoleBody create organization saml role body
+// Example: {"networks":[{"access":"full","id":"N_24329156"}],"orgAccess":"none","role":"myrole","tags":[{"access":"read-only","tag":"west"}]}
 swagger:model CreateOrganizationSamlRoleBody
 */
 type CreateOrganizationSamlRoleBody struct {
@@ -107,16 +114,16 @@ type CreateOrganizationSamlRoleBody struct {
 	// The list of networks that the SAML administrator has privileges on
 	Networks []*CreateOrganizationSamlRoleParamsBodyNetworksItems0 `json:"networks"`
 
-	// The privilege of the SAML administrator on the organization. Can be one of 'none', 'read-only' or 'full'
+	// The privilege of the SAML administrator on the organization. Can be one of 'none', 'read-only', 'full' or 'enterprise'
 	// Required: true
-	// Enum: [none read-only full]
+	// Enum: [enterprise full none read-only]
 	OrgAccess *string `json:"orgAccess"`
 
 	// The role of the SAML administrator
 	// Required: true
 	Role *string `json:"role"`
 
-	// The list of tags that the SAML administrator has privleges on
+	// The list of tags that the SAML administrator has privileges on
 	Tags []*CreateOrganizationSamlRoleParamsBodyTagsItems0 `json:"tags"`
 }
 
@@ -176,7 +183,7 @@ var createOrganizationSamlRoleBodyTypeOrgAccessPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["none","read-only","full"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["enterprise","full","none","read-only"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -186,14 +193,17 @@ func init() {
 
 const (
 
+	// CreateOrganizationSamlRoleBodyOrgAccessEnterprise captures enum value "enterprise"
+	CreateOrganizationSamlRoleBodyOrgAccessEnterprise string = "enterprise"
+
+	// CreateOrganizationSamlRoleBodyOrgAccessFull captures enum value "full"
+	CreateOrganizationSamlRoleBodyOrgAccessFull string = "full"
+
 	// CreateOrganizationSamlRoleBodyOrgAccessNone captures enum value "none"
 	CreateOrganizationSamlRoleBodyOrgAccessNone string = "none"
 
 	// CreateOrganizationSamlRoleBodyOrgAccessReadDashOnly captures enum value "read-only"
 	CreateOrganizationSamlRoleBodyOrgAccessReadDashOnly string = "read-only"
-
-	// CreateOrganizationSamlRoleBodyOrgAccessFull captures enum value "full"
-	CreateOrganizationSamlRoleBodyOrgAccessFull string = "full"
 )
 
 // prop value enum
@@ -276,6 +286,11 @@ func (o *CreateOrganizationSamlRoleBody) contextValidateNetworks(ctx context.Con
 	for i := 0; i < len(o.Networks); i++ {
 
 		if o.Networks[i] != nil {
+
+			if swag.IsZero(o.Networks[i]) { // not required
+				return nil
+			}
+
 			if err := o.Networks[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("createOrganizationSamlRole" + "." + "networks" + "." + strconv.Itoa(i))
@@ -296,6 +311,11 @@ func (o *CreateOrganizationSamlRoleBody) contextValidateTags(ctx context.Context
 	for i := 0; i < len(o.Tags); i++ {
 
 		if o.Tags[i] != nil {
+
+			if swag.IsZero(o.Tags[i]) { // not required
+				return nil
+			}
+
 			if err := o.Tags[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("createOrganizationSamlRole" + "." + "tags" + "." + strconv.Itoa(i))
@@ -329,14 +349,15 @@ func (o *CreateOrganizationSamlRoleBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*CreateOrganizationSamlRoleParamsBodyNetworksItems0 create organization saml role params body networks items0
+/*
+CreateOrganizationSamlRoleParamsBodyNetworksItems0 create organization saml role params body networks items0
 swagger:model CreateOrganizationSamlRoleParamsBodyNetworksItems0
 */
 type CreateOrganizationSamlRoleParamsBodyNetworksItems0 struct {
 
-	// The privilege of the SAML administrator on the network. Can be one of 'full', 'read-only', 'guest-ambassador' or 'monitor-only'
+	// The privilege of the SAML administrator on the network. Can be one of 'full', 'read-only', 'guest-ambassador', 'monitor-only' or 'ssid-admin'
 	// Required: true
-	// Enum: [full read-only guest-ambassador monitor-only]
+	// Enum: [full guest-ambassador monitor-only read-only ssid-admin]
 	Access *string `json:"access"`
 
 	// The network ID
@@ -366,7 +387,7 @@ var createOrganizationSamlRoleParamsBodyNetworksItems0TypeAccessPropEnum []inter
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["full","read-only","guest-ambassador","monitor-only"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["full","guest-ambassador","monitor-only","read-only","ssid-admin"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -379,14 +400,17 @@ const (
 	// CreateOrganizationSamlRoleParamsBodyNetworksItems0AccessFull captures enum value "full"
 	CreateOrganizationSamlRoleParamsBodyNetworksItems0AccessFull string = "full"
 
-	// CreateOrganizationSamlRoleParamsBodyNetworksItems0AccessReadDashOnly captures enum value "read-only"
-	CreateOrganizationSamlRoleParamsBodyNetworksItems0AccessReadDashOnly string = "read-only"
-
 	// CreateOrganizationSamlRoleParamsBodyNetworksItems0AccessGuestDashAmbassador captures enum value "guest-ambassador"
 	CreateOrganizationSamlRoleParamsBodyNetworksItems0AccessGuestDashAmbassador string = "guest-ambassador"
 
 	// CreateOrganizationSamlRoleParamsBodyNetworksItems0AccessMonitorDashOnly captures enum value "monitor-only"
 	CreateOrganizationSamlRoleParamsBodyNetworksItems0AccessMonitorDashOnly string = "monitor-only"
+
+	// CreateOrganizationSamlRoleParamsBodyNetworksItems0AccessReadDashOnly captures enum value "read-only"
+	CreateOrganizationSamlRoleParamsBodyNetworksItems0AccessReadDashOnly string = "read-only"
+
+	// CreateOrganizationSamlRoleParamsBodyNetworksItems0AccessSsidDashAdmin captures enum value "ssid-admin"
+	CreateOrganizationSamlRoleParamsBodyNetworksItems0AccessSsidDashAdmin string = "ssid-admin"
 )
 
 // prop value enum
@@ -443,14 +467,15 @@ func (o *CreateOrganizationSamlRoleParamsBodyNetworksItems0) UnmarshalBinary(b [
 	return nil
 }
 
-/*CreateOrganizationSamlRoleParamsBodyTagsItems0 create organization saml role params body tags items0
+/*
+CreateOrganizationSamlRoleParamsBodyTagsItems0 create organization saml role params body tags items0
 swagger:model CreateOrganizationSamlRoleParamsBodyTagsItems0
 */
 type CreateOrganizationSamlRoleParamsBodyTagsItems0 struct {
 
 	// The privilege of the SAML administrator on the tag. Can be one of 'full', 'read-only', 'guest-ambassador' or 'monitor-only'
 	// Required: true
-	// Enum: [full read-only guest-ambassador monitor-only]
+	// Enum: [full guest-ambassador monitor-only read-only]
 	Access *string `json:"access"`
 
 	// The name of the tag
@@ -480,7 +505,7 @@ var createOrganizationSamlRoleParamsBodyTagsItems0TypeAccessPropEnum []interface
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["full","read-only","guest-ambassador","monitor-only"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["full","guest-ambassador","monitor-only","read-only"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -493,14 +518,14 @@ const (
 	// CreateOrganizationSamlRoleParamsBodyTagsItems0AccessFull captures enum value "full"
 	CreateOrganizationSamlRoleParamsBodyTagsItems0AccessFull string = "full"
 
-	// CreateOrganizationSamlRoleParamsBodyTagsItems0AccessReadDashOnly captures enum value "read-only"
-	CreateOrganizationSamlRoleParamsBodyTagsItems0AccessReadDashOnly string = "read-only"
-
 	// CreateOrganizationSamlRoleParamsBodyTagsItems0AccessGuestDashAmbassador captures enum value "guest-ambassador"
 	CreateOrganizationSamlRoleParamsBodyTagsItems0AccessGuestDashAmbassador string = "guest-ambassador"
 
 	// CreateOrganizationSamlRoleParamsBodyTagsItems0AccessMonitorDashOnly captures enum value "monitor-only"
 	CreateOrganizationSamlRoleParamsBodyTagsItems0AccessMonitorDashOnly string = "monitor-only"
+
+	// CreateOrganizationSamlRoleParamsBodyTagsItems0AccessReadDashOnly captures enum value "read-only"
+	CreateOrganizationSamlRoleParamsBodyTagsItems0AccessReadDashOnly string = "read-only"
 )
 
 // prop value enum

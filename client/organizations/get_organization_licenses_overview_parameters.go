@@ -52,14 +52,19 @@ func NewGetOrganizationLicensesOverviewParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* GetOrganizationLicensesOverviewParams contains all the parameters to send to the API endpoint
-   for the get organization licenses overview operation.
+/*
+GetOrganizationLicensesOverviewParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization licenses overview operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationLicensesOverviewParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

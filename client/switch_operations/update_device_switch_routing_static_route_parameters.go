@@ -52,17 +52,25 @@ func NewUpdateDeviceSwitchRoutingStaticRouteParamsWithHTTPClient(client *http.Cl
 	}
 }
 
-/* UpdateDeviceSwitchRoutingStaticRouteParams contains all the parameters to send to the API endpoint
-   for the update device switch routing static route operation.
+/*
+UpdateDeviceSwitchRoutingStaticRouteParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update device switch routing static route operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateDeviceSwitchRoutingStaticRouteParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
-	// StaticRouteID.
+	/* StaticRouteID.
+
+	   Static route ID
+	*/
 	StaticRouteID string
 
 	// UpdateDeviceSwitchRoutingStaticRoute.

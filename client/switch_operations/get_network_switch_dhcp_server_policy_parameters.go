@@ -52,14 +52,19 @@ func NewGetNetworkSwitchDhcpServerPolicyParamsWithHTTPClient(client *http.Client
 	}
 }
 
-/* GetNetworkSwitchDhcpServerPolicyParams contains all the parameters to send to the API endpoint
-   for the get network switch dhcp server policy operation.
+/*
+GetNetworkSwitchDhcpServerPolicyParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network switch dhcp server policy operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSwitchDhcpServerPolicyParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

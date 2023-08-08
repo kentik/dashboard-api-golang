@@ -52,17 +52,25 @@ func NewUpdateOrganizationSamlRoleParamsWithHTTPClient(client *http.Client) *Upd
 	}
 }
 
-/* UpdateOrganizationSamlRoleParams contains all the parameters to send to the API endpoint
-   for the update organization saml role operation.
+/*
+UpdateOrganizationSamlRoleParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update organization saml role operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateOrganizationSamlRoleParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
-	// SamlRoleID.
+	/* SamlRoleID.
+
+	   Saml role ID
+	*/
 	SamlRoleID string
 
 	// UpdateOrganizationSamlRole.

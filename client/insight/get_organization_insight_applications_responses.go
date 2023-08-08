@@ -6,11 +6,15 @@ package insight
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
+	"strconv"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetOrganizationInsightApplicationsReader is a Reader for the GetOrganizationInsightApplications structure.
@@ -28,7 +32,7 @@ func (o *GetOrganizationInsightApplicationsReader) ReadResponse(response runtime
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/insight/applications] getOrganizationInsightApplications", response, response.Code())
 	}
 }
 
@@ -37,12 +41,13 @@ func NewGetOrganizationInsightApplicationsOK() *GetOrganizationInsightApplicatio
 	return &GetOrganizationInsightApplicationsOK{}
 }
 
-/* GetOrganizationInsightApplicationsOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationInsightApplicationsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetOrganizationInsightApplicationsOK struct {
-	Payload []interface{}
+	Payload []*GetOrganizationInsightApplicationsOKBodyItems0
 }
 
 // IsSuccess returns true when this get organization insight applications o k response has a 2xx status code
@@ -70,6 +75,11 @@ func (o *GetOrganizationInsightApplicationsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get organization insight applications o k response
+func (o *GetOrganizationInsightApplicationsOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationInsightApplicationsOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/insight/applications][%d] getOrganizationInsightApplicationsOK  %+v", 200, o.Payload)
 }
@@ -78,7 +88,7 @@ func (o *GetOrganizationInsightApplicationsOK) String() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/insight/applications][%d] getOrganizationInsightApplicationsOK  %+v", 200, o.Payload)
 }
 
-func (o *GetOrganizationInsightApplicationsOK) GetPayload() []interface{} {
+func (o *GetOrganizationInsightApplicationsOK) GetPayload() []*GetOrganizationInsightApplicationsOKBodyItems0 {
 	return o.Payload
 }
 
@@ -89,5 +99,261 @@ func (o *GetOrganizationInsightApplicationsOK) readResponse(response runtime.Cli
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetOrganizationInsightApplicationsOKBodyItems0 get organization insight applications o k body items0
+swagger:model GetOrganizationInsightApplicationsOKBodyItems0
+*/
+type GetOrganizationInsightApplicationsOKBodyItems0 struct {
+
+	// Application identifier
+	ApplicationID string `json:"applicationId,omitempty"`
+
+	// Application name
+	Name string `json:"name,omitempty"`
+
+	// thresholds
+	Thresholds *GetOrganizationInsightApplicationsOKBodyItems0Thresholds `json:"thresholds,omitempty"`
+}
+
+// Validate validates this get organization insight applications o k body items0
+func (o *GetOrganizationInsightApplicationsOKBodyItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateThresholds(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetOrganizationInsightApplicationsOKBodyItems0) validateThresholds(formats strfmt.Registry) error {
+	if swag.IsZero(o.Thresholds) { // not required
+		return nil
+	}
+
+	if o.Thresholds != nil {
+		if err := o.Thresholds.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("thresholds")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("thresholds")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get organization insight applications o k body items0 based on the context it is used
+func (o *GetOrganizationInsightApplicationsOKBodyItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateThresholds(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetOrganizationInsightApplicationsOKBodyItems0) contextValidateThresholds(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Thresholds != nil {
+
+		if swag.IsZero(o.Thresholds) { // not required
+			return nil
+		}
+
+		if err := o.Thresholds.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("thresholds")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("thresholds")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetOrganizationInsightApplicationsOKBodyItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetOrganizationInsightApplicationsOKBodyItems0) UnmarshalBinary(b []byte) error {
+	var res GetOrganizationInsightApplicationsOKBodyItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetOrganizationInsightApplicationsOKBodyItems0Thresholds Thresholds defined by a user or Meraki models for each application
+swagger:model GetOrganizationInsightApplicationsOKBodyItems0Thresholds
+*/
+type GetOrganizationInsightApplicationsOKBodyItems0Thresholds struct {
+
+	// Threshold for each network
+	ByNetwork []*GetOrganizationInsightApplicationsOKBodyItems0ThresholdsByNetworkItems0 `json:"byNetwork"`
+
+	// Threshold type (static or smart)
+	Type string `json:"type,omitempty"`
+}
+
+// Validate validates this get organization insight applications o k body items0 thresholds
+func (o *GetOrganizationInsightApplicationsOKBodyItems0Thresholds) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateByNetwork(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetOrganizationInsightApplicationsOKBodyItems0Thresholds) validateByNetwork(formats strfmt.Registry) error {
+	if swag.IsZero(o.ByNetwork) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.ByNetwork); i++ {
+		if swag.IsZero(o.ByNetwork[i]) { // not required
+			continue
+		}
+
+		if o.ByNetwork[i] != nil {
+			if err := o.ByNetwork[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("thresholds" + "." + "byNetwork" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("thresholds" + "." + "byNetwork" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get organization insight applications o k body items0 thresholds based on the context it is used
+func (o *GetOrganizationInsightApplicationsOKBodyItems0Thresholds) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateByNetwork(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetOrganizationInsightApplicationsOKBodyItems0Thresholds) contextValidateByNetwork(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.ByNetwork); i++ {
+
+		if o.ByNetwork[i] != nil {
+
+			if swag.IsZero(o.ByNetwork[i]) { // not required
+				return nil
+			}
+
+			if err := o.ByNetwork[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("thresholds" + "." + "byNetwork" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("thresholds" + "." + "byNetwork" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetOrganizationInsightApplicationsOKBodyItems0Thresholds) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetOrganizationInsightApplicationsOKBodyItems0Thresholds) UnmarshalBinary(b []byte) error {
+	var res GetOrganizationInsightApplicationsOKBodyItems0Thresholds
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetOrganizationInsightApplicationsOKBodyItems0ThresholdsByNetworkItems0 get organization insight applications o k body items0 thresholds by network items0
+swagger:model GetOrganizationInsightApplicationsOKBodyItems0ThresholdsByNetworkItems0
+*/
+type GetOrganizationInsightApplicationsOKBodyItems0ThresholdsByNetworkItems0 struct {
+
+	// Number of useful information bits delivered over a network per unit of time
+	Goodput int64 `json:"goodput,omitempty"`
+
+	// Network identifier
+	NetworkID string `json:"networkId,omitempty"`
+
+	// Duration of the response, in milliseconds
+	ResponseDuration int64 `json:"responseDuration,omitempty"`
+}
+
+// Validate validates this get organization insight applications o k body items0 thresholds by network items0
+func (o *GetOrganizationInsightApplicationsOKBodyItems0ThresholdsByNetworkItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get organization insight applications o k body items0 thresholds by network items0 based on context it is used
+func (o *GetOrganizationInsightApplicationsOKBodyItems0ThresholdsByNetworkItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetOrganizationInsightApplicationsOKBodyItems0ThresholdsByNetworkItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetOrganizationInsightApplicationsOKBodyItems0ThresholdsByNetworkItems0) UnmarshalBinary(b []byte) error {
+	var res GetOrganizationInsightApplicationsOKBodyItems0ThresholdsByNetworkItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

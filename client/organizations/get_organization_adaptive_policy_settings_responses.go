@@ -28,7 +28,7 @@ func (o *GetOrganizationAdaptivePolicySettingsReader) ReadResponse(response runt
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/adaptivePolicy/settings] getOrganizationAdaptivePolicySettings", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetOrganizationAdaptivePolicySettingsOK() *GetOrganizationAdaptivePolicy
 	return &GetOrganizationAdaptivePolicySettingsOK{}
 }
 
-/* GetOrganizationAdaptivePolicySettingsOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationAdaptivePolicySettingsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetOrganizationAdaptivePolicySettingsOK) IsServerError() bool {
 // IsCode returns true when this get organization adaptive policy settings o k response a status code equal to that given
 func (o *GetOrganizationAdaptivePolicySettingsOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get organization adaptive policy settings o k response
+func (o *GetOrganizationAdaptivePolicySettingsOK) Code() int {
+	return 200
 }
 
 func (o *GetOrganizationAdaptivePolicySettingsOK) Error() string {

@@ -52,17 +52,25 @@ func NewGetDeviceSwitchRoutingStaticRouteParamsWithHTTPClient(client *http.Clien
 	}
 }
 
-/* GetDeviceSwitchRoutingStaticRouteParams contains all the parameters to send to the API endpoint
-   for the get device switch routing static route operation.
+/*
+GetDeviceSwitchRoutingStaticRouteParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get device switch routing static route operation.
+
+	Typically these are written to a http.Request.
 */
 type GetDeviceSwitchRoutingStaticRouteParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
-	// StaticRouteID.
+	/* StaticRouteID.
+
+	   Static route ID
+	*/
 	StaticRouteID string
 
 	timeout    time.Duration

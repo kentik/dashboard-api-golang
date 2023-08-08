@@ -34,7 +34,7 @@ func (o *UpdateNetworkApplianceFirewallOneToOneNatRulesReader) ReadResponse(resp
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/appliance/firewall/oneToOneNatRules] updateNetworkApplianceFirewallOneToOneNatRules", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewUpdateNetworkApplianceFirewallOneToOneNatRulesOK() *UpdateNetworkApplian
 	return &UpdateNetworkApplianceFirewallOneToOneNatRulesOK{}
 }
 
-/* UpdateNetworkApplianceFirewallOneToOneNatRulesOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkApplianceFirewallOneToOneNatRulesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *UpdateNetworkApplianceFirewallOneToOneNatRulesOK) IsCode(code int) bool
 	return code == 200
 }
 
+// Code gets the status code for the update network appliance firewall one to one nat rules o k response
+func (o *UpdateNetworkApplianceFirewallOneToOneNatRulesOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkApplianceFirewallOneToOneNatRulesOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/appliance/firewall/oneToOneNatRules][%d] updateNetworkApplianceFirewallOneToOneNatRulesOK  %+v", 200, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *UpdateNetworkApplianceFirewallOneToOneNatRulesOK) readResponse(response
 	return nil
 }
 
-/*UpdateNetworkApplianceFirewallOneToOneNatRulesBody update network appliance firewall one to one nat rules body
+/*
+UpdateNetworkApplianceFirewallOneToOneNatRulesBody update network appliance firewall one to one nat rules body
 // Example: {"rules":[{"allowedInbound":[{"allowedIps":["10.82.112.0/24","10.82.0.0/16"],"destinationPorts":["80"],"protocol":"tcp"},{"allowedIps":["10.81.110.5","10.81.0.0/16"],"destinationPorts":["8080"],"protocol":"udp"}],"lanIp":"192.168.128.22","name":"Service behind NAT","publicIp":"146.12.3.33","uplink":"internet1"}]}
 swagger:model UpdateNetworkApplianceFirewallOneToOneNatRulesBody
 */
@@ -169,6 +176,11 @@ func (o *UpdateNetworkApplianceFirewallOneToOneNatRulesBody) contextValidateRule
 	for i := 0; i < len(o.Rules); i++ {
 
 		if o.Rules[i] != nil {
+
+			if swag.IsZero(o.Rules[i]) { // not required
+				return nil
+			}
+
 			if err := o.Rules[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkApplianceFirewallOneToOneNatRules" + "." + "rules" + "." + strconv.Itoa(i))
@@ -202,7 +214,8 @@ func (o *UpdateNetworkApplianceFirewallOneToOneNatRulesBody) UnmarshalBinary(b [
 	return nil
 }
 
-/*UpdateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0 update network appliance firewall one to one nat rules params body rules items0
+/*
+UpdateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0 update network appliance firewall one to one nat rules params body rules items0
 swagger:model UpdateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0
 */
 type UpdateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0 struct {
@@ -343,6 +356,11 @@ func (o *UpdateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0) co
 	for i := 0; i < len(o.AllowedInbound); i++ {
 
 		if o.AllowedInbound[i] != nil {
+
+			if swag.IsZero(o.AllowedInbound[i]) { // not required
+				return nil
+			}
+
 			if err := o.AllowedInbound[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("allowedInbound" + "." + strconv.Itoa(i))
@@ -376,7 +394,8 @@ func (o *UpdateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0) Un
 	return nil
 }
 
-/*UpdateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0AllowedInboundItems0 update network appliance firewall one to one nat rules params body rules items0 allowed inbound items0
+/*
+UpdateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0AllowedInboundItems0 update network appliance firewall one to one nat rules params body rules items0 allowed inbound items0
 swagger:model UpdateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0AllowedInboundItems0
 */
 type UpdateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0AllowedInboundItems0 struct {
@@ -388,7 +407,7 @@ type UpdateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0AllowedI
 	DestinationPorts []string `json:"destinationPorts"`
 
 	// Either of the following: 'tcp', 'udp', 'icmp-ping' or 'any'
-	// Enum: [tcp udp icmp-ping any]
+	// Enum: [any icmp-ping tcp udp]
 	Protocol string `json:"protocol,omitempty"`
 }
 
@@ -410,7 +429,7 @@ var updateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0AllowedIn
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["tcp","udp","icmp-ping","any"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["any","icmp-ping","tcp","udp"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -420,17 +439,17 @@ func init() {
 
 const (
 
+	// UpdateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0AllowedInboundItems0ProtocolAny captures enum value "any"
+	UpdateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0AllowedInboundItems0ProtocolAny string = "any"
+
+	// UpdateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0AllowedInboundItems0ProtocolIcmpDashPing captures enum value "icmp-ping"
+	UpdateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0AllowedInboundItems0ProtocolIcmpDashPing string = "icmp-ping"
+
 	// UpdateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0AllowedInboundItems0ProtocolTCP captures enum value "tcp"
 	UpdateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0AllowedInboundItems0ProtocolTCP string = "tcp"
 
 	// UpdateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0AllowedInboundItems0ProtocolUDP captures enum value "udp"
 	UpdateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0AllowedInboundItems0ProtocolUDP string = "udp"
-
-	// UpdateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0AllowedInboundItems0ProtocolIcmpDashPing captures enum value "icmp-ping"
-	UpdateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0AllowedInboundItems0ProtocolIcmpDashPing string = "icmp-ping"
-
-	// UpdateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0AllowedInboundItems0ProtocolAny captures enum value "any"
-	UpdateNetworkApplianceFirewallOneToOneNatRulesParamsBodyRulesItems0AllowedInboundItems0ProtocolAny string = "any"
 )
 
 // prop value enum

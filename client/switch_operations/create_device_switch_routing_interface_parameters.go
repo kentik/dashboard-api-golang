@@ -52,17 +52,22 @@ func NewCreateDeviceSwitchRoutingInterfaceParamsWithHTTPClient(client *http.Clie
 	}
 }
 
-/* CreateDeviceSwitchRoutingInterfaceParams contains all the parameters to send to the API endpoint
-   for the create device switch routing interface operation.
+/*
+CreateDeviceSwitchRoutingInterfaceParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create device switch routing interface operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateDeviceSwitchRoutingInterfaceParams struct {
 
 	// CreateDeviceSwitchRoutingInterface.
 	CreateDeviceSwitchRoutingInterface CreateDeviceSwitchRoutingInterfaceBody
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	timeout    time.Duration

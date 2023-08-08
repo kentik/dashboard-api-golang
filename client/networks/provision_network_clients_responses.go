@@ -34,7 +34,7 @@ func (o *ProvisionNetworkClientsReader) ReadResponse(response runtime.ClientResp
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/clients/provision] provisionNetworkClients", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewProvisionNetworkClientsCreated() *ProvisionNetworkClientsCreated {
 	return &ProvisionNetworkClientsCreated{}
 }
 
-/* ProvisionNetworkClientsCreated describes a response with status code 201, with default header values.
+/*
+ProvisionNetworkClientsCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *ProvisionNetworkClientsCreated) IsCode(code int) bool {
 	return code == 201
 }
 
+// Code gets the status code for the provision network clients created response
+func (o *ProvisionNetworkClientsCreated) Code() int {
+	return 201
+}
+
 func (o *ProvisionNetworkClientsCreated) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/clients/provision][%d] provisionNetworkClientsCreated  %+v", 201, o.Payload)
 }
@@ -98,8 +104,9 @@ func (o *ProvisionNetworkClientsCreated) readResponse(response runtime.ClientRes
 	return nil
 }
 
-/*ProvisionNetworkClientsBody provision network clients body
-// Example: {"clients":[{"clientId":"k74272e","mac":"00:11:22:33:44:55","name":"Miles's phone"}],"devicePolicy":"Group policy","groupPolicyId":"101"}
+/*
+ProvisionNetworkClientsBody provision network clients body
+// Example: {"clients":[{"clientId":"k74272e","mac":"00:11:22:33:44:55","message":"Blocked message for client","name":"Miles's phone"}],"devicePolicy":"Group policy","groupPolicyId":"101"}
 swagger:model ProvisionNetworkClientsBody
 */
 type ProvisionNetworkClientsBody struct {
@@ -110,7 +117,7 @@ type ProvisionNetworkClientsBody struct {
 
 	// The policy to apply to the specified client. Can be 'Group policy', 'Allowed', 'Blocked', 'Per connection' or 'Normal'. Required.
 	// Required: true
-	// Enum: [Group policy Allowed Blocked Per connection Normal]
+	// Enum: [Allowed Blocked Group policy Normal Per connection]
 	DevicePolicy *string `json:"devicePolicy"`
 
 	// The ID of the desired group policy to apply to the client. Required if 'devicePolicy' is set to "Group policy". Otherwise this is ignored.
@@ -180,7 +187,7 @@ var provisionNetworkClientsBodyTypeDevicePolicyPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Group policy","Allowed","Blocked","Per connection","Normal"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Group policy","Normal","Per connection"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -190,20 +197,20 @@ func init() {
 
 const (
 
-	// ProvisionNetworkClientsBodyDevicePolicyGroupPolicy captures enum value "Group policy"
-	ProvisionNetworkClientsBodyDevicePolicyGroupPolicy string = "Group policy"
-
 	// ProvisionNetworkClientsBodyDevicePolicyAllowed captures enum value "Allowed"
 	ProvisionNetworkClientsBodyDevicePolicyAllowed string = "Allowed"
 
 	// ProvisionNetworkClientsBodyDevicePolicyBlocked captures enum value "Blocked"
 	ProvisionNetworkClientsBodyDevicePolicyBlocked string = "Blocked"
 
-	// ProvisionNetworkClientsBodyDevicePolicyPerConnection captures enum value "Per connection"
-	ProvisionNetworkClientsBodyDevicePolicyPerConnection string = "Per connection"
+	// ProvisionNetworkClientsBodyDevicePolicyGroupPolicy captures enum value "Group policy"
+	ProvisionNetworkClientsBodyDevicePolicyGroupPolicy string = "Group policy"
 
 	// ProvisionNetworkClientsBodyDevicePolicyNormal captures enum value "Normal"
 	ProvisionNetworkClientsBodyDevicePolicyNormal string = "Normal"
+
+	// ProvisionNetworkClientsBodyDevicePolicyPerConnection captures enum value "Per connection"
+	ProvisionNetworkClientsBodyDevicePolicyPerConnection string = "Per connection"
 )
 
 // prop value enum
@@ -293,6 +300,11 @@ func (o *ProvisionNetworkClientsBody) contextValidateClients(ctx context.Context
 	for i := 0; i < len(o.Clients); i++ {
 
 		if o.Clients[i] != nil {
+
+			if swag.IsZero(o.Clients[i]) { // not required
+				return nil
+			}
+
 			if err := o.Clients[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("provisionNetworkClients" + "." + "clients" + "." + strconv.Itoa(i))
@@ -311,6 +323,11 @@ func (o *ProvisionNetworkClientsBody) contextValidateClients(ctx context.Context
 func (o *ProvisionNetworkClientsBody) contextValidatePoliciesBySecurityAppliance(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.PoliciesBySecurityAppliance != nil {
+
+		if swag.IsZero(o.PoliciesBySecurityAppliance) { // not required
+			return nil
+		}
+
 		if err := o.PoliciesBySecurityAppliance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("provisionNetworkClients" + "." + "policiesBySecurityAppliance")
@@ -327,6 +344,11 @@ func (o *ProvisionNetworkClientsBody) contextValidatePoliciesBySecurityAppliance
 func (o *ProvisionNetworkClientsBody) contextValidatePoliciesBySsid(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.PoliciesBySsid != nil {
+
+		if swag.IsZero(o.PoliciesBySsid) { // not required
+			return nil
+		}
+
 		if err := o.PoliciesBySsid.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("provisionNetworkClients" + "." + "policiesBySsid")
@@ -358,7 +380,8 @@ func (o *ProvisionNetworkClientsBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*ProvisionNetworkClientsParamsBodyClientsItems0 provision network clients params body clients items0
+/*
+ProvisionNetworkClientsParamsBodyClientsItems0 provision network clients params body clients items0
 swagger:model ProvisionNetworkClientsParamsBodyClientsItems0
 */
 type ProvisionNetworkClientsParamsBodyClientsItems0 struct {
@@ -417,7 +440,8 @@ func (o *ProvisionNetworkClientsParamsBodyClientsItems0) UnmarshalBinary(b []byt
 	return nil
 }
 
-/*ProvisionNetworkClientsParamsBodyPoliciesBySecurityAppliance An object, describing what the policy-connection association is for the security appliance. (Only relevant if the security appliance is actually within the network)
+/*
+ProvisionNetworkClientsParamsBodyPoliciesBySecurityAppliance An object, describing what the policy-connection association is for the security appliance. (Only relevant if the security appliance is actually within the network)
 swagger:model ProvisionNetworkClientsParamsBodyPoliciesBySecurityAppliance
 */
 type ProvisionNetworkClientsParamsBodyPoliciesBySecurityAppliance struct {
@@ -509,7 +533,8 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySecurityAppliance) Unmarshal
 	return nil
 }
 
-/*ProvisionNetworkClientsParamsBodyPoliciesBySsid An object, describing the policy-connection associations for each active SSID within the network. Keys should be the number of enabled SSIDs, mapping to an object describing the client's policy
+/*
+ProvisionNetworkClientsParamsBodyPoliciesBySsid An object, describing the policy-connection associations for each active SSID within the network. Keys should be the number of enabled SSIDs, mapping to an object describing the client's policy
 swagger:model ProvisionNetworkClientsParamsBodyPoliciesBySsid
 */
 type ProvisionNetworkClientsParamsBodyPoliciesBySsid struct {
@@ -988,6 +1013,11 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) ContextValidate(ctx co
 func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr0(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr0 != nil {
+
+		if swag.IsZero(o.Nr0) { // not required
+			return nil
+		}
+
 		if err := o.Nr0.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("provisionNetworkClients" + "." + "policiesBySsid" + "." + "0")
@@ -1004,6 +1034,11 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr0(ctx
 func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr1(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr1 != nil {
+
+		if swag.IsZero(o.Nr1) { // not required
+			return nil
+		}
+
 		if err := o.Nr1.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("provisionNetworkClients" + "." + "policiesBySsid" + "." + "1")
@@ -1020,6 +1055,11 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr1(ctx
 func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr10(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr10 != nil {
+
+		if swag.IsZero(o.Nr10) { // not required
+			return nil
+		}
+
 		if err := o.Nr10.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("provisionNetworkClients" + "." + "policiesBySsid" + "." + "10")
@@ -1036,6 +1076,11 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr10(ct
 func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr11(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr11 != nil {
+
+		if swag.IsZero(o.Nr11) { // not required
+			return nil
+		}
+
 		if err := o.Nr11.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("provisionNetworkClients" + "." + "policiesBySsid" + "." + "11")
@@ -1052,6 +1097,11 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr11(ct
 func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr12(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr12 != nil {
+
+		if swag.IsZero(o.Nr12) { // not required
+			return nil
+		}
+
 		if err := o.Nr12.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("provisionNetworkClients" + "." + "policiesBySsid" + "." + "12")
@@ -1068,6 +1118,11 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr12(ct
 func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr13(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr13 != nil {
+
+		if swag.IsZero(o.Nr13) { // not required
+			return nil
+		}
+
 		if err := o.Nr13.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("provisionNetworkClients" + "." + "policiesBySsid" + "." + "13")
@@ -1084,6 +1139,11 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr13(ct
 func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr14(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr14 != nil {
+
+		if swag.IsZero(o.Nr14) { // not required
+			return nil
+		}
+
 		if err := o.Nr14.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("provisionNetworkClients" + "." + "policiesBySsid" + "." + "14")
@@ -1100,6 +1160,11 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr14(ct
 func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr2(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr2 != nil {
+
+		if swag.IsZero(o.Nr2) { // not required
+			return nil
+		}
+
 		if err := o.Nr2.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("provisionNetworkClients" + "." + "policiesBySsid" + "." + "2")
@@ -1116,6 +1181,11 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr2(ctx
 func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr3(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr3 != nil {
+
+		if swag.IsZero(o.Nr3) { // not required
+			return nil
+		}
+
 		if err := o.Nr3.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("provisionNetworkClients" + "." + "policiesBySsid" + "." + "3")
@@ -1132,6 +1202,11 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr3(ctx
 func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr4(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr4 != nil {
+
+		if swag.IsZero(o.Nr4) { // not required
+			return nil
+		}
+
 		if err := o.Nr4.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("provisionNetworkClients" + "." + "policiesBySsid" + "." + "4")
@@ -1148,6 +1223,11 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr4(ctx
 func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr5(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr5 != nil {
+
+		if swag.IsZero(o.Nr5) { // not required
+			return nil
+		}
+
 		if err := o.Nr5.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("provisionNetworkClients" + "." + "policiesBySsid" + "." + "5")
@@ -1164,6 +1244,11 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr5(ctx
 func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr6(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr6 != nil {
+
+		if swag.IsZero(o.Nr6) { // not required
+			return nil
+		}
+
 		if err := o.Nr6.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("provisionNetworkClients" + "." + "policiesBySsid" + "." + "6")
@@ -1180,6 +1265,11 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr6(ctx
 func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr7(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr7 != nil {
+
+		if swag.IsZero(o.Nr7) { // not required
+			return nil
+		}
+
 		if err := o.Nr7.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("provisionNetworkClients" + "." + "policiesBySsid" + "." + "7")
@@ -1196,6 +1286,11 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr7(ctx
 func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr8(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr8 != nil {
+
+		if swag.IsZero(o.Nr8) { // not required
+			return nil
+		}
+
 		if err := o.Nr8.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("provisionNetworkClients" + "." + "policiesBySsid" + "." + "8")
@@ -1212,6 +1307,11 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr8(ctx
 func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) contextValidateNr9(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Nr9 != nil {
+
+		if swag.IsZero(o.Nr9) { // not required
+			return nil
+		}
+
 		if err := o.Nr9.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("provisionNetworkClients" + "." + "policiesBySsid" + "." + "9")
@@ -1243,14 +1343,15 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsid) UnmarshalBinary(b []by
 	return nil
 }
 
-/*ProvisionNetworkClientsParamsBodyPoliciesBySsidNr0 The number for the SSID
+/*
+ProvisionNetworkClientsParamsBodyPoliciesBySsidNr0 The number for the SSID
 swagger:model ProvisionNetworkClientsParamsBodyPoliciesBySsidNr0
 */
 type ProvisionNetworkClientsParamsBodyPoliciesBySsidNr0 struct {
 
 	// The policy to apply to the specified client. Can be 'Allowed', 'Blocked', 'Normal' or 'Group policy'. Required.
 	// Required: true
-	// Enum: [Allowed Blocked Normal Group policy]
+	// Enum: [Allowed Blocked Group policy Normal]
 	DevicePolicy *string `json:"devicePolicy"`
 
 	// The ID of the desired group policy to apply to the client. Required if 'devicePolicy' is set to "Group policy". Otherwise this is ignored.
@@ -1275,7 +1376,7 @@ var provisionNetworkClientsParamsBodyPoliciesBySsidNr0TypeDevicePolicyPropEnum [
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Normal","Group policy"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Group policy","Normal"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1291,11 +1392,11 @@ const (
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr0DevicePolicyBlocked captures enum value "Blocked"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr0DevicePolicyBlocked string = "Blocked"
 
-	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr0DevicePolicyNormal captures enum value "Normal"
-	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr0DevicePolicyNormal string = "Normal"
-
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr0DevicePolicyGroupPolicy captures enum value "Group policy"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr0DevicePolicyGroupPolicy string = "Group policy"
+
+	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr0DevicePolicyNormal captures enum value "Normal"
+	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr0DevicePolicyNormal string = "Normal"
 )
 
 // prop value enum
@@ -1343,14 +1444,15 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsidNr0) UnmarshalBinary(b [
 	return nil
 }
 
-/*ProvisionNetworkClientsParamsBodyPoliciesBySsidNr1 The number for the SSID
+/*
+ProvisionNetworkClientsParamsBodyPoliciesBySsidNr1 The number for the SSID
 swagger:model ProvisionNetworkClientsParamsBodyPoliciesBySsidNr1
 */
 type ProvisionNetworkClientsParamsBodyPoliciesBySsidNr1 struct {
 
 	// The policy to apply to the specified client. Can be 'Allowed', 'Blocked', 'Normal' or 'Group policy'. Required.
 	// Required: true
-	// Enum: [Allowed Blocked Normal Group policy]
+	// Enum: [Allowed Blocked Group policy Normal]
 	DevicePolicy *string `json:"devicePolicy"`
 
 	// The ID of the desired group policy to apply to the client. Required if 'devicePolicy' is set to "Group policy". Otherwise this is ignored.
@@ -1375,7 +1477,7 @@ var provisionNetworkClientsParamsBodyPoliciesBySsidNr1TypeDevicePolicyPropEnum [
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Normal","Group policy"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Group policy","Normal"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1391,11 +1493,11 @@ const (
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr1DevicePolicyBlocked captures enum value "Blocked"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr1DevicePolicyBlocked string = "Blocked"
 
-	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr1DevicePolicyNormal captures enum value "Normal"
-	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr1DevicePolicyNormal string = "Normal"
-
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr1DevicePolicyGroupPolicy captures enum value "Group policy"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr1DevicePolicyGroupPolicy string = "Group policy"
+
+	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr1DevicePolicyNormal captures enum value "Normal"
+	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr1DevicePolicyNormal string = "Normal"
 )
 
 // prop value enum
@@ -1443,14 +1545,15 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsidNr1) UnmarshalBinary(b [
 	return nil
 }
 
-/*ProvisionNetworkClientsParamsBodyPoliciesBySsidNr10 The number for the SSID
+/*
+ProvisionNetworkClientsParamsBodyPoliciesBySsidNr10 The number for the SSID
 swagger:model ProvisionNetworkClientsParamsBodyPoliciesBySsidNr10
 */
 type ProvisionNetworkClientsParamsBodyPoliciesBySsidNr10 struct {
 
 	// The policy to apply to the specified client. Can be 'Allowed', 'Blocked', 'Normal' or 'Group policy'. Required.
 	// Required: true
-	// Enum: [Allowed Blocked Normal Group policy]
+	// Enum: [Allowed Blocked Group policy Normal]
 	DevicePolicy *string `json:"devicePolicy"`
 
 	// The ID of the desired group policy to apply to the client. Required if 'devicePolicy' is set to "Group policy". Otherwise this is ignored.
@@ -1475,7 +1578,7 @@ var provisionNetworkClientsParamsBodyPoliciesBySsidNr10TypeDevicePolicyPropEnum 
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Normal","Group policy"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Group policy","Normal"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1491,11 +1594,11 @@ const (
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr10DevicePolicyBlocked captures enum value "Blocked"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr10DevicePolicyBlocked string = "Blocked"
 
-	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr10DevicePolicyNormal captures enum value "Normal"
-	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr10DevicePolicyNormal string = "Normal"
-
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr10DevicePolicyGroupPolicy captures enum value "Group policy"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr10DevicePolicyGroupPolicy string = "Group policy"
+
+	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr10DevicePolicyNormal captures enum value "Normal"
+	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr10DevicePolicyNormal string = "Normal"
 )
 
 // prop value enum
@@ -1543,14 +1646,15 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsidNr10) UnmarshalBinary(b 
 	return nil
 }
 
-/*ProvisionNetworkClientsParamsBodyPoliciesBySsidNr11 The number for the SSID
+/*
+ProvisionNetworkClientsParamsBodyPoliciesBySsidNr11 The number for the SSID
 swagger:model ProvisionNetworkClientsParamsBodyPoliciesBySsidNr11
 */
 type ProvisionNetworkClientsParamsBodyPoliciesBySsidNr11 struct {
 
 	// The policy to apply to the specified client. Can be 'Allowed', 'Blocked', 'Normal' or 'Group policy'. Required.
 	// Required: true
-	// Enum: [Allowed Blocked Normal Group policy]
+	// Enum: [Allowed Blocked Group policy Normal]
 	DevicePolicy *string `json:"devicePolicy"`
 
 	// The ID of the desired group policy to apply to the client. Required if 'devicePolicy' is set to "Group policy". Otherwise this is ignored.
@@ -1575,7 +1679,7 @@ var provisionNetworkClientsParamsBodyPoliciesBySsidNr11TypeDevicePolicyPropEnum 
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Normal","Group policy"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Group policy","Normal"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1591,11 +1695,11 @@ const (
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr11DevicePolicyBlocked captures enum value "Blocked"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr11DevicePolicyBlocked string = "Blocked"
 
-	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr11DevicePolicyNormal captures enum value "Normal"
-	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr11DevicePolicyNormal string = "Normal"
-
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr11DevicePolicyGroupPolicy captures enum value "Group policy"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr11DevicePolicyGroupPolicy string = "Group policy"
+
+	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr11DevicePolicyNormal captures enum value "Normal"
+	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr11DevicePolicyNormal string = "Normal"
 )
 
 // prop value enum
@@ -1643,14 +1747,15 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsidNr11) UnmarshalBinary(b 
 	return nil
 }
 
-/*ProvisionNetworkClientsParamsBodyPoliciesBySsidNr12 The number for the SSID
+/*
+ProvisionNetworkClientsParamsBodyPoliciesBySsidNr12 The number for the SSID
 swagger:model ProvisionNetworkClientsParamsBodyPoliciesBySsidNr12
 */
 type ProvisionNetworkClientsParamsBodyPoliciesBySsidNr12 struct {
 
 	// The policy to apply to the specified client. Can be 'Allowed', 'Blocked', 'Normal' or 'Group policy'. Required.
 	// Required: true
-	// Enum: [Allowed Blocked Normal Group policy]
+	// Enum: [Allowed Blocked Group policy Normal]
 	DevicePolicy *string `json:"devicePolicy"`
 
 	// The ID of the desired group policy to apply to the client. Required if 'devicePolicy' is set to "Group policy". Otherwise this is ignored.
@@ -1675,7 +1780,7 @@ var provisionNetworkClientsParamsBodyPoliciesBySsidNr12TypeDevicePolicyPropEnum 
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Normal","Group policy"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Group policy","Normal"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1691,11 +1796,11 @@ const (
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr12DevicePolicyBlocked captures enum value "Blocked"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr12DevicePolicyBlocked string = "Blocked"
 
-	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr12DevicePolicyNormal captures enum value "Normal"
-	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr12DevicePolicyNormal string = "Normal"
-
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr12DevicePolicyGroupPolicy captures enum value "Group policy"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr12DevicePolicyGroupPolicy string = "Group policy"
+
+	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr12DevicePolicyNormal captures enum value "Normal"
+	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr12DevicePolicyNormal string = "Normal"
 )
 
 // prop value enum
@@ -1743,14 +1848,15 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsidNr12) UnmarshalBinary(b 
 	return nil
 }
 
-/*ProvisionNetworkClientsParamsBodyPoliciesBySsidNr13 The number for the SSID
+/*
+ProvisionNetworkClientsParamsBodyPoliciesBySsidNr13 The number for the SSID
 swagger:model ProvisionNetworkClientsParamsBodyPoliciesBySsidNr13
 */
 type ProvisionNetworkClientsParamsBodyPoliciesBySsidNr13 struct {
 
 	// The policy to apply to the specified client. Can be 'Allowed', 'Blocked', 'Normal' or 'Group policy'. Required.
 	// Required: true
-	// Enum: [Allowed Blocked Normal Group policy]
+	// Enum: [Allowed Blocked Group policy Normal]
 	DevicePolicy *string `json:"devicePolicy"`
 
 	// The ID of the desired group policy to apply to the client. Required if 'devicePolicy' is set to "Group policy". Otherwise this is ignored.
@@ -1775,7 +1881,7 @@ var provisionNetworkClientsParamsBodyPoliciesBySsidNr13TypeDevicePolicyPropEnum 
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Normal","Group policy"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Group policy","Normal"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1791,11 +1897,11 @@ const (
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr13DevicePolicyBlocked captures enum value "Blocked"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr13DevicePolicyBlocked string = "Blocked"
 
-	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr13DevicePolicyNormal captures enum value "Normal"
-	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr13DevicePolicyNormal string = "Normal"
-
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr13DevicePolicyGroupPolicy captures enum value "Group policy"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr13DevicePolicyGroupPolicy string = "Group policy"
+
+	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr13DevicePolicyNormal captures enum value "Normal"
+	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr13DevicePolicyNormal string = "Normal"
 )
 
 // prop value enum
@@ -1843,14 +1949,15 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsidNr13) UnmarshalBinary(b 
 	return nil
 }
 
-/*ProvisionNetworkClientsParamsBodyPoliciesBySsidNr14 The number for the SSID
+/*
+ProvisionNetworkClientsParamsBodyPoliciesBySsidNr14 The number for the SSID
 swagger:model ProvisionNetworkClientsParamsBodyPoliciesBySsidNr14
 */
 type ProvisionNetworkClientsParamsBodyPoliciesBySsidNr14 struct {
 
 	// The policy to apply to the specified client. Can be 'Allowed', 'Blocked', 'Normal' or 'Group policy'. Required.
 	// Required: true
-	// Enum: [Allowed Blocked Normal Group policy]
+	// Enum: [Allowed Blocked Group policy Normal]
 	DevicePolicy *string `json:"devicePolicy"`
 
 	// The ID of the desired group policy to apply to the client. Required if 'devicePolicy' is set to "Group policy". Otherwise this is ignored.
@@ -1875,7 +1982,7 @@ var provisionNetworkClientsParamsBodyPoliciesBySsidNr14TypeDevicePolicyPropEnum 
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Normal","Group policy"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Group policy","Normal"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1891,11 +1998,11 @@ const (
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr14DevicePolicyBlocked captures enum value "Blocked"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr14DevicePolicyBlocked string = "Blocked"
 
-	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr14DevicePolicyNormal captures enum value "Normal"
-	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr14DevicePolicyNormal string = "Normal"
-
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr14DevicePolicyGroupPolicy captures enum value "Group policy"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr14DevicePolicyGroupPolicy string = "Group policy"
+
+	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr14DevicePolicyNormal captures enum value "Normal"
+	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr14DevicePolicyNormal string = "Normal"
 )
 
 // prop value enum
@@ -1943,14 +2050,15 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsidNr14) UnmarshalBinary(b 
 	return nil
 }
 
-/*ProvisionNetworkClientsParamsBodyPoliciesBySsidNr2 The number for the SSID
+/*
+ProvisionNetworkClientsParamsBodyPoliciesBySsidNr2 The number for the SSID
 swagger:model ProvisionNetworkClientsParamsBodyPoliciesBySsidNr2
 */
 type ProvisionNetworkClientsParamsBodyPoliciesBySsidNr2 struct {
 
 	// The policy to apply to the specified client. Can be 'Allowed', 'Blocked', 'Normal' or 'Group policy'. Required.
 	// Required: true
-	// Enum: [Allowed Blocked Normal Group policy]
+	// Enum: [Allowed Blocked Group policy Normal]
 	DevicePolicy *string `json:"devicePolicy"`
 
 	// The ID of the desired group policy to apply to the client. Required if 'devicePolicy' is set to "Group policy". Otherwise this is ignored.
@@ -1975,7 +2083,7 @@ var provisionNetworkClientsParamsBodyPoliciesBySsidNr2TypeDevicePolicyPropEnum [
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Normal","Group policy"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Group policy","Normal"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1991,11 +2099,11 @@ const (
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr2DevicePolicyBlocked captures enum value "Blocked"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr2DevicePolicyBlocked string = "Blocked"
 
-	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr2DevicePolicyNormal captures enum value "Normal"
-	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr2DevicePolicyNormal string = "Normal"
-
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr2DevicePolicyGroupPolicy captures enum value "Group policy"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr2DevicePolicyGroupPolicy string = "Group policy"
+
+	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr2DevicePolicyNormal captures enum value "Normal"
+	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr2DevicePolicyNormal string = "Normal"
 )
 
 // prop value enum
@@ -2043,14 +2151,15 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsidNr2) UnmarshalBinary(b [
 	return nil
 }
 
-/*ProvisionNetworkClientsParamsBodyPoliciesBySsidNr3 The number for the SSID
+/*
+ProvisionNetworkClientsParamsBodyPoliciesBySsidNr3 The number for the SSID
 swagger:model ProvisionNetworkClientsParamsBodyPoliciesBySsidNr3
 */
 type ProvisionNetworkClientsParamsBodyPoliciesBySsidNr3 struct {
 
 	// The policy to apply to the specified client. Can be 'Allowed', 'Blocked', 'Normal' or 'Group policy'. Required.
 	// Required: true
-	// Enum: [Allowed Blocked Normal Group policy]
+	// Enum: [Allowed Blocked Group policy Normal]
 	DevicePolicy *string `json:"devicePolicy"`
 
 	// The ID of the desired group policy to apply to the client. Required if 'devicePolicy' is set to "Group policy". Otherwise this is ignored.
@@ -2075,7 +2184,7 @@ var provisionNetworkClientsParamsBodyPoliciesBySsidNr3TypeDevicePolicyPropEnum [
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Normal","Group policy"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Group policy","Normal"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -2091,11 +2200,11 @@ const (
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr3DevicePolicyBlocked captures enum value "Blocked"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr3DevicePolicyBlocked string = "Blocked"
 
-	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr3DevicePolicyNormal captures enum value "Normal"
-	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr3DevicePolicyNormal string = "Normal"
-
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr3DevicePolicyGroupPolicy captures enum value "Group policy"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr3DevicePolicyGroupPolicy string = "Group policy"
+
+	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr3DevicePolicyNormal captures enum value "Normal"
+	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr3DevicePolicyNormal string = "Normal"
 )
 
 // prop value enum
@@ -2143,14 +2252,15 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsidNr3) UnmarshalBinary(b [
 	return nil
 }
 
-/*ProvisionNetworkClientsParamsBodyPoliciesBySsidNr4 The number for the SSID
+/*
+ProvisionNetworkClientsParamsBodyPoliciesBySsidNr4 The number for the SSID
 swagger:model ProvisionNetworkClientsParamsBodyPoliciesBySsidNr4
 */
 type ProvisionNetworkClientsParamsBodyPoliciesBySsidNr4 struct {
 
 	// The policy to apply to the specified client. Can be 'Allowed', 'Blocked', 'Normal' or 'Group policy'. Required.
 	// Required: true
-	// Enum: [Allowed Blocked Normal Group policy]
+	// Enum: [Allowed Blocked Group policy Normal]
 	DevicePolicy *string `json:"devicePolicy"`
 
 	// The ID of the desired group policy to apply to the client. Required if 'devicePolicy' is set to "Group policy". Otherwise this is ignored.
@@ -2175,7 +2285,7 @@ var provisionNetworkClientsParamsBodyPoliciesBySsidNr4TypeDevicePolicyPropEnum [
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Normal","Group policy"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Group policy","Normal"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -2191,11 +2301,11 @@ const (
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr4DevicePolicyBlocked captures enum value "Blocked"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr4DevicePolicyBlocked string = "Blocked"
 
-	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr4DevicePolicyNormal captures enum value "Normal"
-	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr4DevicePolicyNormal string = "Normal"
-
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr4DevicePolicyGroupPolicy captures enum value "Group policy"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr4DevicePolicyGroupPolicy string = "Group policy"
+
+	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr4DevicePolicyNormal captures enum value "Normal"
+	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr4DevicePolicyNormal string = "Normal"
 )
 
 // prop value enum
@@ -2243,14 +2353,15 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsidNr4) UnmarshalBinary(b [
 	return nil
 }
 
-/*ProvisionNetworkClientsParamsBodyPoliciesBySsidNr5 The number for the SSID
+/*
+ProvisionNetworkClientsParamsBodyPoliciesBySsidNr5 The number for the SSID
 swagger:model ProvisionNetworkClientsParamsBodyPoliciesBySsidNr5
 */
 type ProvisionNetworkClientsParamsBodyPoliciesBySsidNr5 struct {
 
 	// The policy to apply to the specified client. Can be 'Allowed', 'Blocked', 'Normal' or 'Group policy'. Required.
 	// Required: true
-	// Enum: [Allowed Blocked Normal Group policy]
+	// Enum: [Allowed Blocked Group policy Normal]
 	DevicePolicy *string `json:"devicePolicy"`
 
 	// The ID of the desired group policy to apply to the client. Required if 'devicePolicy' is set to "Group policy". Otherwise this is ignored.
@@ -2275,7 +2386,7 @@ var provisionNetworkClientsParamsBodyPoliciesBySsidNr5TypeDevicePolicyPropEnum [
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Normal","Group policy"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Group policy","Normal"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -2291,11 +2402,11 @@ const (
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr5DevicePolicyBlocked captures enum value "Blocked"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr5DevicePolicyBlocked string = "Blocked"
 
-	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr5DevicePolicyNormal captures enum value "Normal"
-	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr5DevicePolicyNormal string = "Normal"
-
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr5DevicePolicyGroupPolicy captures enum value "Group policy"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr5DevicePolicyGroupPolicy string = "Group policy"
+
+	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr5DevicePolicyNormal captures enum value "Normal"
+	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr5DevicePolicyNormal string = "Normal"
 )
 
 // prop value enum
@@ -2343,14 +2454,15 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsidNr5) UnmarshalBinary(b [
 	return nil
 }
 
-/*ProvisionNetworkClientsParamsBodyPoliciesBySsidNr6 The number for the SSID
+/*
+ProvisionNetworkClientsParamsBodyPoliciesBySsidNr6 The number for the SSID
 swagger:model ProvisionNetworkClientsParamsBodyPoliciesBySsidNr6
 */
 type ProvisionNetworkClientsParamsBodyPoliciesBySsidNr6 struct {
 
 	// The policy to apply to the specified client. Can be 'Allowed', 'Blocked', 'Normal' or 'Group policy'. Required.
 	// Required: true
-	// Enum: [Allowed Blocked Normal Group policy]
+	// Enum: [Allowed Blocked Group policy Normal]
 	DevicePolicy *string `json:"devicePolicy"`
 
 	// The ID of the desired group policy to apply to the client. Required if 'devicePolicy' is set to "Group policy". Otherwise this is ignored.
@@ -2375,7 +2487,7 @@ var provisionNetworkClientsParamsBodyPoliciesBySsidNr6TypeDevicePolicyPropEnum [
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Normal","Group policy"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Group policy","Normal"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -2391,11 +2503,11 @@ const (
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr6DevicePolicyBlocked captures enum value "Blocked"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr6DevicePolicyBlocked string = "Blocked"
 
-	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr6DevicePolicyNormal captures enum value "Normal"
-	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr6DevicePolicyNormal string = "Normal"
-
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr6DevicePolicyGroupPolicy captures enum value "Group policy"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr6DevicePolicyGroupPolicy string = "Group policy"
+
+	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr6DevicePolicyNormal captures enum value "Normal"
+	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr6DevicePolicyNormal string = "Normal"
 )
 
 // prop value enum
@@ -2443,14 +2555,15 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsidNr6) UnmarshalBinary(b [
 	return nil
 }
 
-/*ProvisionNetworkClientsParamsBodyPoliciesBySsidNr7 The number for the SSID
+/*
+ProvisionNetworkClientsParamsBodyPoliciesBySsidNr7 The number for the SSID
 swagger:model ProvisionNetworkClientsParamsBodyPoliciesBySsidNr7
 */
 type ProvisionNetworkClientsParamsBodyPoliciesBySsidNr7 struct {
 
 	// The policy to apply to the specified client. Can be 'Allowed', 'Blocked', 'Normal' or 'Group policy'. Required.
 	// Required: true
-	// Enum: [Allowed Blocked Normal Group policy]
+	// Enum: [Allowed Blocked Group policy Normal]
 	DevicePolicy *string `json:"devicePolicy"`
 
 	// The ID of the desired group policy to apply to the client. Required if 'devicePolicy' is set to "Group policy". Otherwise this is ignored.
@@ -2475,7 +2588,7 @@ var provisionNetworkClientsParamsBodyPoliciesBySsidNr7TypeDevicePolicyPropEnum [
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Normal","Group policy"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Group policy","Normal"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -2491,11 +2604,11 @@ const (
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr7DevicePolicyBlocked captures enum value "Blocked"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr7DevicePolicyBlocked string = "Blocked"
 
-	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr7DevicePolicyNormal captures enum value "Normal"
-	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr7DevicePolicyNormal string = "Normal"
-
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr7DevicePolicyGroupPolicy captures enum value "Group policy"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr7DevicePolicyGroupPolicy string = "Group policy"
+
+	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr7DevicePolicyNormal captures enum value "Normal"
+	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr7DevicePolicyNormal string = "Normal"
 )
 
 // prop value enum
@@ -2543,14 +2656,15 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsidNr7) UnmarshalBinary(b [
 	return nil
 }
 
-/*ProvisionNetworkClientsParamsBodyPoliciesBySsidNr8 The number for the SSID
+/*
+ProvisionNetworkClientsParamsBodyPoliciesBySsidNr8 The number for the SSID
 swagger:model ProvisionNetworkClientsParamsBodyPoliciesBySsidNr8
 */
 type ProvisionNetworkClientsParamsBodyPoliciesBySsidNr8 struct {
 
 	// The policy to apply to the specified client. Can be 'Allowed', 'Blocked', 'Normal' or 'Group policy'. Required.
 	// Required: true
-	// Enum: [Allowed Blocked Normal Group policy]
+	// Enum: [Allowed Blocked Group policy Normal]
 	DevicePolicy *string `json:"devicePolicy"`
 
 	// The ID of the desired group policy to apply to the client. Required if 'devicePolicy' is set to "Group policy". Otherwise this is ignored.
@@ -2575,7 +2689,7 @@ var provisionNetworkClientsParamsBodyPoliciesBySsidNr8TypeDevicePolicyPropEnum [
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Normal","Group policy"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Group policy","Normal"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -2591,11 +2705,11 @@ const (
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr8DevicePolicyBlocked captures enum value "Blocked"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr8DevicePolicyBlocked string = "Blocked"
 
-	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr8DevicePolicyNormal captures enum value "Normal"
-	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr8DevicePolicyNormal string = "Normal"
-
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr8DevicePolicyGroupPolicy captures enum value "Group policy"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr8DevicePolicyGroupPolicy string = "Group policy"
+
+	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr8DevicePolicyNormal captures enum value "Normal"
+	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr8DevicePolicyNormal string = "Normal"
 )
 
 // prop value enum
@@ -2643,14 +2757,15 @@ func (o *ProvisionNetworkClientsParamsBodyPoliciesBySsidNr8) UnmarshalBinary(b [
 	return nil
 }
 
-/*ProvisionNetworkClientsParamsBodyPoliciesBySsidNr9 The number for the SSID
+/*
+ProvisionNetworkClientsParamsBodyPoliciesBySsidNr9 The number for the SSID
 swagger:model ProvisionNetworkClientsParamsBodyPoliciesBySsidNr9
 */
 type ProvisionNetworkClientsParamsBodyPoliciesBySsidNr9 struct {
 
 	// The policy to apply to the specified client. Can be 'Allowed', 'Blocked', 'Normal' or 'Group policy'. Required.
 	// Required: true
-	// Enum: [Allowed Blocked Normal Group policy]
+	// Enum: [Allowed Blocked Group policy Normal]
 	DevicePolicy *string `json:"devicePolicy"`
 
 	// The ID of the desired group policy to apply to the client. Required if 'devicePolicy' is set to "Group policy". Otherwise this is ignored.
@@ -2675,7 +2790,7 @@ var provisionNetworkClientsParamsBodyPoliciesBySsidNr9TypeDevicePolicyPropEnum [
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Normal","Group policy"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Allowed","Blocked","Group policy","Normal"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -2691,11 +2806,11 @@ const (
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr9DevicePolicyBlocked captures enum value "Blocked"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr9DevicePolicyBlocked string = "Blocked"
 
-	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr9DevicePolicyNormal captures enum value "Normal"
-	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr9DevicePolicyNormal string = "Normal"
-
 	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr9DevicePolicyGroupPolicy captures enum value "Group policy"
 	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr9DevicePolicyGroupPolicy string = "Group policy"
+
+	// ProvisionNetworkClientsParamsBodyPoliciesBySsidNr9DevicePolicyNormal captures enum value "Normal"
+	ProvisionNetworkClientsParamsBodyPoliciesBySsidNr9DevicePolicyNormal string = "Normal"
 )
 
 // prop value enum

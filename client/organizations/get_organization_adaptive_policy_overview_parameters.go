@@ -52,14 +52,19 @@ func NewGetOrganizationAdaptivePolicyOverviewParamsWithHTTPClient(client *http.C
 	}
 }
 
-/* GetOrganizationAdaptivePolicyOverviewParams contains all the parameters to send to the API endpoint
-   for the get organization adaptive policy overview operation.
+/*
+GetOrganizationAdaptivePolicyOverviewParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization adaptive policy overview operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationAdaptivePolicyOverviewParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

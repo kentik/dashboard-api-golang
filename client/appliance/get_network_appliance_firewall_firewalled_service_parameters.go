@@ -52,17 +52,25 @@ func NewGetNetworkApplianceFirewallFirewalledServiceParamsWithHTTPClient(client 
 	}
 }
 
-/* GetNetworkApplianceFirewallFirewalledServiceParams contains all the parameters to send to the API endpoint
-   for the get network appliance firewall firewalled service operation.
+/*
+GetNetworkApplianceFirewallFirewalledServiceParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network appliance firewall firewalled service operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkApplianceFirewallFirewalledServiceParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// Service.
+	/* Service.
+
+	   Service
+	*/
 	Service string
 
 	timeout    time.Duration

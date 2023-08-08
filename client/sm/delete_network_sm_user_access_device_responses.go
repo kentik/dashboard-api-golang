@@ -27,7 +27,7 @@ func (o *DeleteNetworkSmUserAccessDeviceReader) ReadResponse(response runtime.Cl
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[DELETE /networks/{networkId}/sm/userAccessDevices/{userAccessDeviceId}] deleteNetworkSmUserAccessDevice", response, response.Code())
 	}
 }
 
@@ -36,7 +36,8 @@ func NewDeleteNetworkSmUserAccessDeviceNoContent() *DeleteNetworkSmUserAccessDev
 	return &DeleteNetworkSmUserAccessDeviceNoContent{}
 }
 
-/* DeleteNetworkSmUserAccessDeviceNoContent describes a response with status code 204, with default header values.
+/*
+DeleteNetworkSmUserAccessDeviceNoContent describes a response with status code 204, with default header values.
 
 Successful operation
 */
@@ -66,6 +67,11 @@ func (o *DeleteNetworkSmUserAccessDeviceNoContent) IsServerError() bool {
 // IsCode returns true when this delete network sm user access device no content response a status code equal to that given
 func (o *DeleteNetworkSmUserAccessDeviceNoContent) IsCode(code int) bool {
 	return code == 204
+}
+
+// Code gets the status code for the delete network sm user access device no content response
+func (o *DeleteNetworkSmUserAccessDeviceNoContent) Code() int {
+	return 204
 }
 
 func (o *DeleteNetworkSmUserAccessDeviceNoContent) Error() string {

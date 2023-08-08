@@ -52,17 +52,25 @@ func NewUpdateOrganizationSamlIdpParamsWithHTTPClient(client *http.Client) *Upda
 	}
 }
 
-/* UpdateOrganizationSamlIdpParams contains all the parameters to send to the API endpoint
-   for the update organization saml idp operation.
+/*
+UpdateOrganizationSamlIdpParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update organization saml idp operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateOrganizationSamlIdpParams struct {
 
-	// IdpID.
+	/* IdpID.
+
+	   Idp ID
+	*/
 	IdpID string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	// UpdateOrganizationSamlIdp.

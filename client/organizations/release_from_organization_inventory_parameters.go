@@ -52,14 +52,19 @@ func NewReleaseFromOrganizationInventoryParamsWithHTTPClient(client *http.Client
 	}
 }
 
-/* ReleaseFromOrganizationInventoryParams contains all the parameters to send to the API endpoint
-   for the release from organization inventory operation.
+/*
+ReleaseFromOrganizationInventoryParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the release from organization inventory operation.
+
+	Typically these are written to a http.Request.
 */
 type ReleaseFromOrganizationInventoryParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	// ReleaseFromOrganizationInventory.

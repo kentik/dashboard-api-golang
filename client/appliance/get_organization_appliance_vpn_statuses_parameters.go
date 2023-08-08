@@ -53,10 +53,12 @@ func NewGetOrganizationApplianceVpnStatusesParamsWithHTTPClient(client *http.Cli
 	}
 }
 
-/* GetOrganizationApplianceVpnStatusesParams contains all the parameters to send to the API endpoint
-   for the get organization appliance vpn statuses operation.
+/*
+GetOrganizationApplianceVpnStatusesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization appliance vpn statuses operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationApplianceVpnStatusesParams struct {
 
@@ -72,7 +74,10 @@ type GetOrganizationApplianceVpnStatusesParams struct {
 	*/
 	NetworkIds []string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	/* PerPage.

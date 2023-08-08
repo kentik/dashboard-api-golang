@@ -60,7 +60,17 @@ type ClientService interface {
 
 	CreateOrganizationEarlyAccessFeaturesOptIn(params *CreateOrganizationEarlyAccessFeaturesOptInParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationEarlyAccessFeaturesOptInOK, error)
 
+	CreateOrganizationInventoryOnboardingCloudMonitoringExportEvent(params *CreateOrganizationInventoryOnboardingCloudMonitoringExportEventParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationInventoryOnboardingCloudMonitoringExportEventAccepted, error)
+
+	CreateOrganizationInventoryOnboardingCloudMonitoringImport(params *CreateOrganizationInventoryOnboardingCloudMonitoringImportParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationInventoryOnboardingCloudMonitoringImportCreated, error)
+
+	CreateOrganizationInventoryOnboardingCloudMonitoringPrepare(params *CreateOrganizationInventoryOnboardingCloudMonitoringPrepareParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationInventoryOnboardingCloudMonitoringPrepareCreated, error)
+
 	CreateOrganizationNetwork(params *CreateOrganizationNetworkParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationNetworkCreated, error)
+
+	CreateOrganizationPolicyObject(params *CreateOrganizationPolicyObjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationPolicyObjectCreated, error)
+
+	CreateOrganizationPolicyObjectsGroup(params *CreateOrganizationPolicyObjectsGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationPolicyObjectsGroupCreated, error)
 
 	CreateOrganizationSamlIdp(params *CreateOrganizationSamlIdpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationSamlIdpCreated, error)
 
@@ -85,6 +95,10 @@ type ClientService interface {
 	DeleteOrganizationConfigTemplate(params *DeleteOrganizationConfigTemplateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationConfigTemplateNoContent, error)
 
 	DeleteOrganizationEarlyAccessFeaturesOptIn(params *DeleteOrganizationEarlyAccessFeaturesOptInParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationEarlyAccessFeaturesOptInNoContent, error)
+
+	DeleteOrganizationPolicyObject(params *DeleteOrganizationPolicyObjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationPolicyObjectNoContent, error)
+
+	DeleteOrganizationPolicyObjectsGroup(params *DeleteOrganizationPolicyObjectsGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationPolicyObjectsGroupNoContent, error)
 
 	DeleteOrganizationSamlIdp(params *DeleteOrganizationSamlIdpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationSamlIdpNoContent, error)
 
@@ -120,6 +134,8 @@ type ClientService interface {
 
 	GetOrganizationAPIRequestsOverview(params *GetOrganizationAPIRequestsOverviewParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationAPIRequestsOverviewOK, error)
 
+	GetOrganizationAPIRequestsOverviewResponseCodesByInterval(params *GetOrganizationAPIRequestsOverviewResponseCodesByIntervalParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationAPIRequestsOverviewResponseCodesByIntervalOK, error)
+
 	GetOrganizationBrandingPolicies(params *GetOrganizationBrandingPoliciesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationBrandingPoliciesOK, error)
 
 	GetOrganizationBrandingPoliciesPriorities(params *GetOrganizationBrandingPoliciesPrioritiesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationBrandingPoliciesPrioritiesOK, error)
@@ -142,9 +158,17 @@ type ClientService interface {
 
 	GetOrganizationDevicesAvailabilities(params *GetOrganizationDevicesAvailabilitiesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationDevicesAvailabilitiesOK, error)
 
+	GetOrganizationDevicesAvailabilitiesChangeHistory(params *GetOrganizationDevicesAvailabilitiesChangeHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationDevicesAvailabilitiesChangeHistoryOK, error)
+
+	GetOrganizationDevicesPowerModulesStatusesByDevice(params *GetOrganizationDevicesPowerModulesStatusesByDeviceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationDevicesPowerModulesStatusesByDeviceOK, error)
+
+	GetOrganizationDevicesProvisioningStatuses(params *GetOrganizationDevicesProvisioningStatusesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationDevicesProvisioningStatusesOK, error)
+
 	GetOrganizationDevicesStatuses(params *GetOrganizationDevicesStatusesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationDevicesStatusesOK, error)
 
 	GetOrganizationDevicesStatusesOverview(params *GetOrganizationDevicesStatusesOverviewParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationDevicesStatusesOverviewOK, error)
+
+	GetOrganizationDevicesUplinksAddressesByDevice(params *GetOrganizationDevicesUplinksAddressesByDeviceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationDevicesUplinksAddressesByDeviceOK, error)
 
 	GetOrganizationDevicesUplinksLossAndLatency(params *GetOrganizationDevicesUplinksLossAndLatencyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationDevicesUplinksLossAndLatencyOK, error)
 
@@ -154,9 +178,17 @@ type ClientService interface {
 
 	GetOrganizationEarlyAccessFeaturesOptIns(params *GetOrganizationEarlyAccessFeaturesOptInsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationEarlyAccessFeaturesOptInsOK, error)
 
+	GetOrganizationFirmwareUpgrades(params *GetOrganizationFirmwareUpgradesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationFirmwareUpgradesOK, error)
+
+	GetOrganizationFirmwareUpgradesByDevice(params *GetOrganizationFirmwareUpgradesByDeviceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationFirmwareUpgradesByDeviceOK, error)
+
 	GetOrganizationInventoryDevice(params *GetOrganizationInventoryDeviceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationInventoryDeviceOK, error)
 
 	GetOrganizationInventoryDevices(params *GetOrganizationInventoryDevicesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationInventoryDevicesOK, error)
+
+	GetOrganizationInventoryOnboardingCloudMonitoringImports(params *GetOrganizationInventoryOnboardingCloudMonitoringImportsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationInventoryOnboardingCloudMonitoringImportsOK, error)
+
+	GetOrganizationInventoryOnboardingCloudMonitoringNetworks(params *GetOrganizationInventoryOnboardingCloudMonitoringNetworksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationInventoryOnboardingCloudMonitoringNetworksAccepted, error)
 
 	GetOrganizationLicense(params *GetOrganizationLicenseParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationLicenseOK, error)
 
@@ -169,6 +201,14 @@ type ClientService interface {
 	GetOrganizationNetworks(params *GetOrganizationNetworksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationNetworksOK, error)
 
 	GetOrganizationOpenapiSpec(params *GetOrganizationOpenapiSpecParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationOpenapiSpecOK, error)
+
+	GetOrganizationPolicyObject(params *GetOrganizationPolicyObjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationPolicyObjectOK, error)
+
+	GetOrganizationPolicyObjects(params *GetOrganizationPolicyObjectsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationPolicyObjectsOK, error)
+
+	GetOrganizationPolicyObjectsGroup(params *GetOrganizationPolicyObjectsGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationPolicyObjectsGroupOK, error)
+
+	GetOrganizationPolicyObjectsGroups(params *GetOrganizationPolicyObjectsGroupsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationPolicyObjectsGroupsOK, error)
 
 	GetOrganizationSaml(params *GetOrganizationSamlParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSamlOK, error)
 
@@ -240,6 +280,10 @@ type ClientService interface {
 
 	UpdateOrganizationLoginSecurity(params *UpdateOrganizationLoginSecurityParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationLoginSecurityOK, error)
 
+	UpdateOrganizationPolicyObject(params *UpdateOrganizationPolicyObjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationPolicyObjectOK, error)
+
+	UpdateOrganizationPolicyObjectsGroup(params *UpdateOrganizationPolicyObjectsGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationPolicyObjectsGroupOK, error)
+
 	UpdateOrganizationSaml(params *UpdateOrganizationSamlParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationSamlOK, error)
 
 	UpdateOrganizationSamlIdp(params *UpdateOrganizationSamlIdpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationSamlIdpOK, error)
@@ -252,9 +296,9 @@ type ClientService interface {
 }
 
 /*
-  AssignOrganizationLicensesSeats assigns s m seats to a network
+AssignOrganizationLicensesSeats assigns s m seats to a network
 
-  Assign SM seats to a network. This will increase the managed SM device limit of the network
+Assign SM seats to a network. This will increase the managed SM device limit of the network
 */
 func (a *Client) AssignOrganizationLicensesSeats(params *AssignOrganizationLicensesSeatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*AssignOrganizationLicensesSeatsOK, error) {
 	// TODO: Validate the params before sending
@@ -293,9 +337,9 @@ func (a *Client) AssignOrganizationLicensesSeats(params *AssignOrganizationLicen
 }
 
 /*
-  ClaimIntoOrganization claims a list of devices licenses and or orders into an organization
+ClaimIntoOrganization claims a list of devices licenses and or orders into an organization
 
-  Claim a list of devices, licenses, and/or orders into an organization. When claiming by order, all devices and licenses in the order will be claimed; licenses will be added to the organization and devices will be placed in the organization's inventory.
+Claim a list of devices, licenses, and/or orders into an organization. When claiming by order, all devices and licenses in the order will be claimed; licenses will be added to the organization and devices will be placed in the organization's inventory.
 */
 func (a *Client) ClaimIntoOrganization(params *ClaimIntoOrganizationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ClaimIntoOrganizationOK, error) {
 	// TODO: Validate the params before sending
@@ -334,9 +378,9 @@ func (a *Client) ClaimIntoOrganization(params *ClaimIntoOrganizationParams, auth
 }
 
 /*
-  ClaimIntoOrganizationInventory claims a list of devices licenses and or orders into an organization
+ClaimIntoOrganizationInventory claims a list of devices licenses and or orders into an organization inventory
 
-  Claim a list of devices, licenses, and/or orders into an organization. When claiming by order, all devices and licenses in the order will be claimed; licenses will be added to the organization and devices will be placed in the organization's inventory. Use /organizations/{organizationId}/inventory/release to release devices from an organization.
+Claim a list of devices, licenses, and/or orders into an organization inventory. When claiming by order, all devices and licenses in the order will be claimed; licenses will be added to the organization and devices will be placed in the organization's inventory. Use /organizations/{organizationId}/inventory/release to release devices from an organization.
 */
 func (a *Client) ClaimIntoOrganizationInventory(params *ClaimIntoOrganizationInventoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ClaimIntoOrganizationInventoryOK, error) {
 	// TODO: Validate the params before sending
@@ -375,9 +419,9 @@ func (a *Client) ClaimIntoOrganizationInventory(params *ClaimIntoOrganizationInv
 }
 
 /*
-  CloneOrganization creates a new organization by cloning the addressed organization
+CloneOrganization creates a new organization by cloning the addressed organization
 
-  Create a new organization by cloning the addressed organization
+Create a new organization by cloning the addressed organization
 */
 func (a *Client) CloneOrganization(params *CloneOrganizationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CloneOrganizationCreated, error) {
 	// TODO: Validate the params before sending
@@ -416,9 +460,9 @@ func (a *Client) CloneOrganization(params *CloneOrganizationParams, authInfo run
 }
 
 /*
-  CombineOrganizationNetworks combines multiple networks into a single network
+CombineOrganizationNetworks combines multiple networks into a single network
 
-  Combine multiple networks into a single network
+Combine multiple networks into a single network
 */
 func (a *Client) CombineOrganizationNetworks(params *CombineOrganizationNetworksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CombineOrganizationNetworksOK, error) {
 	// TODO: Validate the params before sending
@@ -457,9 +501,9 @@ func (a *Client) CombineOrganizationNetworks(params *CombineOrganizationNetworks
 }
 
 /*
-  CreateOrganization creates a new organization
+CreateOrganization creates a new organization
 
-  Create a new organization
+Create a new organization
 */
 func (a *Client) CreateOrganization(params *CreateOrganizationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationCreated, error) {
 	// TODO: Validate the params before sending
@@ -498,9 +542,9 @@ func (a *Client) CreateOrganization(params *CreateOrganizationParams, authInfo r
 }
 
 /*
-  CreateOrganizationActionBatch creates an action batch
+CreateOrganizationActionBatch creates an action batch
 
-  Create an action batch
+Create an action batch
 */
 func (a *Client) CreateOrganizationActionBatch(params *CreateOrganizationActionBatchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationActionBatchCreated, error) {
 	// TODO: Validate the params before sending
@@ -539,9 +583,9 @@ func (a *Client) CreateOrganizationActionBatch(params *CreateOrganizationActionB
 }
 
 /*
-  CreateOrganizationAdaptivePolicyACL creates new adaptive policy ACL
+CreateOrganizationAdaptivePolicyACL creates new adaptive policy ACL
 
-  Creates new adaptive policy ACL
+Creates new adaptive policy ACL
 */
 func (a *Client) CreateOrganizationAdaptivePolicyACL(params *CreateOrganizationAdaptivePolicyACLParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationAdaptivePolicyACLOK, error) {
 	// TODO: Validate the params before sending
@@ -580,9 +624,9 @@ func (a *Client) CreateOrganizationAdaptivePolicyACL(params *CreateOrganizationA
 }
 
 /*
-  CreateOrganizationAdaptivePolicyGroup creates a new adaptive policy group
+CreateOrganizationAdaptivePolicyGroup creates a new adaptive policy group
 
-  Creates a new adaptive policy group
+Creates a new adaptive policy group
 */
 func (a *Client) CreateOrganizationAdaptivePolicyGroup(params *CreateOrganizationAdaptivePolicyGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationAdaptivePolicyGroupCreated, error) {
 	// TODO: Validate the params before sending
@@ -621,9 +665,9 @@ func (a *Client) CreateOrganizationAdaptivePolicyGroup(params *CreateOrganizatio
 }
 
 /*
-  CreateOrganizationAdaptivePolicyPolicy adds an adaptive policy
+CreateOrganizationAdaptivePolicyPolicy adds an adaptive policy
 
-  Add an Adaptive Policy
+Add an Adaptive Policy
 */
 func (a *Client) CreateOrganizationAdaptivePolicyPolicy(params *CreateOrganizationAdaptivePolicyPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationAdaptivePolicyPolicyCreated, error) {
 	// TODO: Validate the params before sending
@@ -662,9 +706,9 @@ func (a *Client) CreateOrganizationAdaptivePolicyPolicy(params *CreateOrganizati
 }
 
 /*
-  CreateOrganizationAdmin creates a new dashboard administrator
+CreateOrganizationAdmin creates a new dashboard administrator
 
-  Create a new dashboard administrator
+Create a new dashboard administrator
 */
 func (a *Client) CreateOrganizationAdmin(params *CreateOrganizationAdminParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationAdminCreated, error) {
 	// TODO: Validate the params before sending
@@ -703,9 +747,9 @@ func (a *Client) CreateOrganizationAdmin(params *CreateOrganizationAdminParams, 
 }
 
 /*
-  CreateOrganizationAlertsProfile creates an organization wide alert configuration
+CreateOrganizationAlertsProfile creates an organization wide alert configuration
 
-  Create an organization-wide alert configuration
+Create an organization-wide alert configuration
 */
 func (a *Client) CreateOrganizationAlertsProfile(params *CreateOrganizationAlertsProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationAlertsProfileCreated, error) {
 	// TODO: Validate the params before sending
@@ -744,9 +788,9 @@ func (a *Client) CreateOrganizationAlertsProfile(params *CreateOrganizationAlert
 }
 
 /*
-  CreateOrganizationBrandingPolicy adds a new branding policy to an organization
+CreateOrganizationBrandingPolicy adds a new branding policy to an organization
 
-  Add a new branding policy to an organization
+Add a new branding policy to an organization
 */
 func (a *Client) CreateOrganizationBrandingPolicy(params *CreateOrganizationBrandingPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationBrandingPolicyCreated, error) {
 	// TODO: Validate the params before sending
@@ -785,9 +829,9 @@ func (a *Client) CreateOrganizationBrandingPolicy(params *CreateOrganizationBran
 }
 
 /*
-  CreateOrganizationConfigTemplate creates a new configuration template
+CreateOrganizationConfigTemplate creates a new configuration template
 
-  Create a new configuration template
+Create a new configuration template
 */
 func (a *Client) CreateOrganizationConfigTemplate(params *CreateOrganizationConfigTemplateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationConfigTemplateCreated, error) {
 	// TODO: Validate the params before sending
@@ -826,9 +870,9 @@ func (a *Client) CreateOrganizationConfigTemplate(params *CreateOrganizationConf
 }
 
 /*
-  CreateOrganizationEarlyAccessFeaturesOptIn creates a new early access feature opt in for an organization
+CreateOrganizationEarlyAccessFeaturesOptIn creates a new early access feature opt in for an organization
 
-  Create a new early access feature opt-in for an organization
+Create a new early access feature opt-in for an organization
 */
 func (a *Client) CreateOrganizationEarlyAccessFeaturesOptIn(params *CreateOrganizationEarlyAccessFeaturesOptInParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationEarlyAccessFeaturesOptInOK, error) {
 	// TODO: Validate the params before sending
@@ -867,9 +911,132 @@ func (a *Client) CreateOrganizationEarlyAccessFeaturesOptIn(params *CreateOrgani
 }
 
 /*
-  CreateOrganizationNetwork creates a network
+CreateOrganizationInventoryOnboardingCloudMonitoringExportEvent imports event logs related to the onboarding app into elastisearch
 
-  Create a network
+Imports event logs related to the onboarding app into elastisearch
+*/
+func (a *Client) CreateOrganizationInventoryOnboardingCloudMonitoringExportEvent(params *CreateOrganizationInventoryOnboardingCloudMonitoringExportEventParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationInventoryOnboardingCloudMonitoringExportEventAccepted, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateOrganizationInventoryOnboardingCloudMonitoringExportEventParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "createOrganizationInventoryOnboardingCloudMonitoringExportEvent",
+		Method:             "POST",
+		PathPattern:        "/organizations/{organizationId}/inventory/onboarding/cloudMonitoring/exportEvents",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &CreateOrganizationInventoryOnboardingCloudMonitoringExportEventReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*CreateOrganizationInventoryOnboardingCloudMonitoringExportEventAccepted)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for createOrganizationInventoryOnboardingCloudMonitoringExportEvent: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+CreateOrganizationInventoryOnboardingCloudMonitoringImport commits the import operation to complete the onboarding of a device into dashboard for monitoring
+
+Commits the import operation to complete the onboarding of a device into Dashboard for monitoring.
+*/
+func (a *Client) CreateOrganizationInventoryOnboardingCloudMonitoringImport(params *CreateOrganizationInventoryOnboardingCloudMonitoringImportParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationInventoryOnboardingCloudMonitoringImportCreated, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateOrganizationInventoryOnboardingCloudMonitoringImportParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "createOrganizationInventoryOnboardingCloudMonitoringImport",
+		Method:             "POST",
+		PathPattern:        "/organizations/{organizationId}/inventory/onboarding/cloudMonitoring/imports",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &CreateOrganizationInventoryOnboardingCloudMonitoringImportReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*CreateOrganizationInventoryOnboardingCloudMonitoringImportCreated)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for createOrganizationInventoryOnboardingCloudMonitoringImport: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+CreateOrganizationInventoryOnboardingCloudMonitoringPrepare initiates or updates an import session
+
+Initiates or updates an import session. An import ID will be generated and used when you are ready to commit the import.
+*/
+func (a *Client) CreateOrganizationInventoryOnboardingCloudMonitoringPrepare(params *CreateOrganizationInventoryOnboardingCloudMonitoringPrepareParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationInventoryOnboardingCloudMonitoringPrepareCreated, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateOrganizationInventoryOnboardingCloudMonitoringPrepareParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "createOrganizationInventoryOnboardingCloudMonitoringPrepare",
+		Method:             "POST",
+		PathPattern:        "/organizations/{organizationId}/inventory/onboarding/cloudMonitoring/prepare",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &CreateOrganizationInventoryOnboardingCloudMonitoringPrepareReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*CreateOrganizationInventoryOnboardingCloudMonitoringPrepareCreated)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for createOrganizationInventoryOnboardingCloudMonitoringPrepare: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+CreateOrganizationNetwork creates a network
+
+Create a network
 */
 func (a *Client) CreateOrganizationNetwork(params *CreateOrganizationNetworkParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationNetworkCreated, error) {
 	// TODO: Validate the params before sending
@@ -908,9 +1075,91 @@ func (a *Client) CreateOrganizationNetwork(params *CreateOrganizationNetworkPara
 }
 
 /*
-  CreateOrganizationSamlIdp creates a s a m l Id p for your organization
+CreateOrganizationPolicyObject creates a new policy object
 
-  Create a SAML IdP for your organization.
+Creates a new Policy Object.
+*/
+func (a *Client) CreateOrganizationPolicyObject(params *CreateOrganizationPolicyObjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationPolicyObjectCreated, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateOrganizationPolicyObjectParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "createOrganizationPolicyObject",
+		Method:             "POST",
+		PathPattern:        "/organizations/{organizationId}/policyObjects",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &CreateOrganizationPolicyObjectReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*CreateOrganizationPolicyObjectCreated)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for createOrganizationPolicyObject: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+CreateOrganizationPolicyObjectsGroup creates a new policy object group
+
+Creates a new Policy Object Group.
+*/
+func (a *Client) CreateOrganizationPolicyObjectsGroup(params *CreateOrganizationPolicyObjectsGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationPolicyObjectsGroupCreated, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateOrganizationPolicyObjectsGroupParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "createOrganizationPolicyObjectsGroup",
+		Method:             "POST",
+		PathPattern:        "/organizations/{organizationId}/policyObjects/groups",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &CreateOrganizationPolicyObjectsGroupReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*CreateOrganizationPolicyObjectsGroupCreated)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for createOrganizationPolicyObjectsGroup: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+CreateOrganizationSamlIdp creates a s a m l Id p for your organization
+
+Create a SAML IdP for your organization.
 */
 func (a *Client) CreateOrganizationSamlIdp(params *CreateOrganizationSamlIdpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationSamlIdpCreated, error) {
 	// TODO: Validate the params before sending
@@ -949,9 +1198,9 @@ func (a *Client) CreateOrganizationSamlIdp(params *CreateOrganizationSamlIdpPara
 }
 
 /*
-  CreateOrganizationSamlRole creates a s a m l role
+CreateOrganizationSamlRole creates a s a m l role
 
-  Create a SAML role
+Create a SAML role
 */
 func (a *Client) CreateOrganizationSamlRole(params *CreateOrganizationSamlRoleParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationSamlRoleCreated, error) {
 	// TODO: Validate the params before sending
@@ -990,9 +1239,9 @@ func (a *Client) CreateOrganizationSamlRole(params *CreateOrganizationSamlRolePa
 }
 
 /*
-  DeleteOrganization deletes an organization
+DeleteOrganization deletes an organization
 
-  Delete an organization
+Delete an organization
 */
 func (a *Client) DeleteOrganization(params *DeleteOrganizationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1031,9 +1280,9 @@ func (a *Client) DeleteOrganization(params *DeleteOrganizationParams, authInfo r
 }
 
 /*
-  DeleteOrganizationActionBatch deletes an action batch
+DeleteOrganizationActionBatch deletes an action batch
 
-  Delete an action batch
+Delete an action batch
 */
 func (a *Client) DeleteOrganizationActionBatch(params *DeleteOrganizationActionBatchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationActionBatchNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1072,9 +1321,9 @@ func (a *Client) DeleteOrganizationActionBatch(params *DeleteOrganizationActionB
 }
 
 /*
-  DeleteOrganizationAdaptivePolicyACL deletes the specified adaptive policy ACL
+DeleteOrganizationAdaptivePolicyACL deletes the specified adaptive policy ACL
 
-  Deletes the specified adaptive policy ACL. Note this adaptive policy ACL will also be removed from policies using it.
+Deletes the specified adaptive policy ACL. Note this adaptive policy ACL will also be removed from policies using it.
 */
 func (a *Client) DeleteOrganizationAdaptivePolicyACL(params *DeleteOrganizationAdaptivePolicyACLParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationAdaptivePolicyACLNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1084,7 +1333,7 @@ func (a *Client) DeleteOrganizationAdaptivePolicyACL(params *DeleteOrganizationA
 	op := &runtime.ClientOperation{
 		ID:                 "deleteOrganizationAdaptivePolicyAcl",
 		Method:             "DELETE",
-		PathPattern:        "/organizations/{organizationId}/adaptivePolicy/acls/{id}",
+		PathPattern:        "/organizations/{organizationId}/adaptivePolicy/acls/{aclId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
@@ -1113,9 +1362,9 @@ func (a *Client) DeleteOrganizationAdaptivePolicyACL(params *DeleteOrganizationA
 }
 
 /*
-  DeleteOrganizationAdaptivePolicyGroup deletes the specified adaptive policy group and any associated policies and references
+DeleteOrganizationAdaptivePolicyGroup deletes the specified adaptive policy group and any associated policies and references
 
-  Deletes the specified adaptive policy group and any associated policies and references
+Deletes the specified adaptive policy group and any associated policies and references
 */
 func (a *Client) DeleteOrganizationAdaptivePolicyGroup(params *DeleteOrganizationAdaptivePolicyGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationAdaptivePolicyGroupNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1125,7 +1374,7 @@ func (a *Client) DeleteOrganizationAdaptivePolicyGroup(params *DeleteOrganizatio
 	op := &runtime.ClientOperation{
 		ID:                 "deleteOrganizationAdaptivePolicyGroup",
 		Method:             "DELETE",
-		PathPattern:        "/organizations/{organizationId}/adaptivePolicy/groups/{groupId}",
+		PathPattern:        "/organizations/{organizationId}/adaptivePolicy/groups/{id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
@@ -1154,9 +1403,9 @@ func (a *Client) DeleteOrganizationAdaptivePolicyGroup(params *DeleteOrganizatio
 }
 
 /*
-  DeleteOrganizationAdaptivePolicyPolicy deletes an adaptive policy
+DeleteOrganizationAdaptivePolicyPolicy deletes an adaptive policy
 
-  Delete an Adaptive Policy
+Delete an Adaptive Policy
 */
 func (a *Client) DeleteOrganizationAdaptivePolicyPolicy(params *DeleteOrganizationAdaptivePolicyPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationAdaptivePolicyPolicyNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1166,7 +1415,7 @@ func (a *Client) DeleteOrganizationAdaptivePolicyPolicy(params *DeleteOrganizati
 	op := &runtime.ClientOperation{
 		ID:                 "deleteOrganizationAdaptivePolicyPolicy",
 		Method:             "DELETE",
-		PathPattern:        "/organizations/{organizationId}/adaptivePolicy/policies/{adaptivePolicyId}",
+		PathPattern:        "/organizations/{organizationId}/adaptivePolicy/policies/{id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
@@ -1195,9 +1444,9 @@ func (a *Client) DeleteOrganizationAdaptivePolicyPolicy(params *DeleteOrganizati
 }
 
 /*
-  DeleteOrganizationAdmin revokes all access for a dashboard administrator within this organization
+DeleteOrganizationAdmin revokes all access for a dashboard administrator within this organization
 
-  Revoke all access for a dashboard administrator within this organization
+Revoke all access for a dashboard administrator within this organization
 */
 func (a *Client) DeleteOrganizationAdmin(params *DeleteOrganizationAdminParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationAdminNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1236,9 +1485,9 @@ func (a *Client) DeleteOrganizationAdmin(params *DeleteOrganizationAdminParams, 
 }
 
 /*
-  DeleteOrganizationAlertsProfile removes an organization wide alert config
+DeleteOrganizationAlertsProfile removes an organization wide alert config
 
-  Removes an organization-wide alert config
+Removes an organization-wide alert config
 */
 func (a *Client) DeleteOrganizationAlertsProfile(params *DeleteOrganizationAlertsProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationAlertsProfileNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1277,9 +1526,9 @@ func (a *Client) DeleteOrganizationAlertsProfile(params *DeleteOrganizationAlert
 }
 
 /*
-  DeleteOrganizationBrandingPolicy deletes a branding policy
+DeleteOrganizationBrandingPolicy deletes a branding policy
 
-  Delete a branding policy
+Delete a branding policy
 */
 func (a *Client) DeleteOrganizationBrandingPolicy(params *DeleteOrganizationBrandingPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationBrandingPolicyNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1318,9 +1567,9 @@ func (a *Client) DeleteOrganizationBrandingPolicy(params *DeleteOrganizationBran
 }
 
 /*
-  DeleteOrganizationConfigTemplate removes a configuration template
+DeleteOrganizationConfigTemplate removes a configuration template
 
-  Remove a configuration template
+Remove a configuration template
 */
 func (a *Client) DeleteOrganizationConfigTemplate(params *DeleteOrganizationConfigTemplateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationConfigTemplateNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1359,9 +1608,9 @@ func (a *Client) DeleteOrganizationConfigTemplate(params *DeleteOrganizationConf
 }
 
 /*
-  DeleteOrganizationEarlyAccessFeaturesOptIn deletes an early access feature opt in
+DeleteOrganizationEarlyAccessFeaturesOptIn deletes an early access feature opt in
 
-  Delete an early access feature opt-in
+Delete an early access feature opt-in
 */
 func (a *Client) DeleteOrganizationEarlyAccessFeaturesOptIn(params *DeleteOrganizationEarlyAccessFeaturesOptInParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationEarlyAccessFeaturesOptInNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1400,9 +1649,91 @@ func (a *Client) DeleteOrganizationEarlyAccessFeaturesOptIn(params *DeleteOrgani
 }
 
 /*
-  DeleteOrganizationSamlIdp removes a s a m l Id p in your organization
+DeleteOrganizationPolicyObject deletes a policy object
 
-  Remove a SAML IdP in your organization.
+Deletes a Policy Object.
+*/
+func (a *Client) DeleteOrganizationPolicyObject(params *DeleteOrganizationPolicyObjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationPolicyObjectNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteOrganizationPolicyObjectParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "deleteOrganizationPolicyObject",
+		Method:             "DELETE",
+		PathPattern:        "/organizations/{organizationId}/policyObjects/{policyObjectId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DeleteOrganizationPolicyObjectReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DeleteOrganizationPolicyObjectNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for deleteOrganizationPolicyObject: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+DeleteOrganizationPolicyObjectsGroup deletes a policy object group
+
+Deletes a Policy Object Group.
+*/
+func (a *Client) DeleteOrganizationPolicyObjectsGroup(params *DeleteOrganizationPolicyObjectsGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationPolicyObjectsGroupNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteOrganizationPolicyObjectsGroupParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "deleteOrganizationPolicyObjectsGroup",
+		Method:             "DELETE",
+		PathPattern:        "/organizations/{organizationId}/policyObjects/groups/{policyObjectGroupId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DeleteOrganizationPolicyObjectsGroupReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DeleteOrganizationPolicyObjectsGroupNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for deleteOrganizationPolicyObjectsGroup: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+DeleteOrganizationSamlIdp removes a s a m l Id p in your organization
+
+Remove a SAML IdP in your organization.
 */
 func (a *Client) DeleteOrganizationSamlIdp(params *DeleteOrganizationSamlIdpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationSamlIdpNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1441,9 +1772,9 @@ func (a *Client) DeleteOrganizationSamlIdp(params *DeleteOrganizationSamlIdpPara
 }
 
 /*
-  DeleteOrganizationSamlRole removes a s a m l role
+DeleteOrganizationSamlRole removes a s a m l role
 
-  Remove a SAML role
+Remove a SAML role
 */
 func (a *Client) DeleteOrganizationSamlRole(params *DeleteOrganizationSamlRoleParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationSamlRoleNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1482,9 +1813,9 @@ func (a *Client) DeleteOrganizationSamlRole(params *DeleteOrganizationSamlRolePa
 }
 
 /*
-  GetOrganization returns an organization
+GetOrganization returns an organization
 
-  Return an organization
+Return an organization
 */
 func (a *Client) GetOrganization(params *GetOrganizationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationOK, error) {
 	// TODO: Validate the params before sending
@@ -1523,9 +1854,9 @@ func (a *Client) GetOrganization(params *GetOrganizationParams, authInfo runtime
 }
 
 /*
-  GetOrganizationActionBatch returns an action batch
+GetOrganizationActionBatch returns an action batch
 
-  Return an action batch
+Return an action batch
 */
 func (a *Client) GetOrganizationActionBatch(params *GetOrganizationActionBatchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationActionBatchOK, error) {
 	// TODO: Validate the params before sending
@@ -1564,9 +1895,9 @@ func (a *Client) GetOrganizationActionBatch(params *GetOrganizationActionBatchPa
 }
 
 /*
-  GetOrganizationActionBatches returns the list of action batches in the organization
+GetOrganizationActionBatches returns the list of action batches in the organization
 
-  Return the list of action batches in the organization
+Return the list of action batches in the organization
 */
 func (a *Client) GetOrganizationActionBatches(params *GetOrganizationActionBatchesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationActionBatchesOK, error) {
 	// TODO: Validate the params before sending
@@ -1605,9 +1936,9 @@ func (a *Client) GetOrganizationActionBatches(params *GetOrganizationActionBatch
 }
 
 /*
-  GetOrganizationAdaptivePolicyACL returns the adaptive policy ACL information
+GetOrganizationAdaptivePolicyACL returns the adaptive policy ACL information
 
-  Returns the adaptive policy ACL information
+Returns the adaptive policy ACL information
 */
 func (a *Client) GetOrganizationAdaptivePolicyACL(params *GetOrganizationAdaptivePolicyACLParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationAdaptivePolicyACLOK, error) {
 	// TODO: Validate the params before sending
@@ -1617,7 +1948,7 @@ func (a *Client) GetOrganizationAdaptivePolicyACL(params *GetOrganizationAdaptiv
 	op := &runtime.ClientOperation{
 		ID:                 "getOrganizationAdaptivePolicyAcl",
 		Method:             "GET",
-		PathPattern:        "/organizations/{organizationId}/adaptivePolicy/acls/{id}",
+		PathPattern:        "/organizations/{organizationId}/adaptivePolicy/acls/{aclId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
@@ -1646,9 +1977,9 @@ func (a *Client) GetOrganizationAdaptivePolicyACL(params *GetOrganizationAdaptiv
 }
 
 /*
-  GetOrganizationAdaptivePolicyAcls lists adaptive policy a c ls in a organization
+GetOrganizationAdaptivePolicyAcls lists adaptive policy a c ls in a organization
 
-  List adaptive policy ACLs in a organization
+List adaptive policy ACLs in a organization
 */
 func (a *Client) GetOrganizationAdaptivePolicyAcls(params *GetOrganizationAdaptivePolicyAclsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationAdaptivePolicyAclsOK, error) {
 	// TODO: Validate the params before sending
@@ -1687,9 +2018,9 @@ func (a *Client) GetOrganizationAdaptivePolicyAcls(params *GetOrganizationAdapti
 }
 
 /*
-  GetOrganizationAdaptivePolicyGroup returns an adaptive policy group
+GetOrganizationAdaptivePolicyGroup returns an adaptive policy group
 
-  Returns an adaptive policy group
+Returns an adaptive policy group
 */
 func (a *Client) GetOrganizationAdaptivePolicyGroup(params *GetOrganizationAdaptivePolicyGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationAdaptivePolicyGroupOK, error) {
 	// TODO: Validate the params before sending
@@ -1699,7 +2030,7 @@ func (a *Client) GetOrganizationAdaptivePolicyGroup(params *GetOrganizationAdapt
 	op := &runtime.ClientOperation{
 		ID:                 "getOrganizationAdaptivePolicyGroup",
 		Method:             "GET",
-		PathPattern:        "/organizations/{organizationId}/adaptivePolicy/groups/{groupId}",
+		PathPattern:        "/organizations/{organizationId}/adaptivePolicy/groups/{id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
@@ -1728,9 +2059,9 @@ func (a *Client) GetOrganizationAdaptivePolicyGroup(params *GetOrganizationAdapt
 }
 
 /*
-  GetOrganizationAdaptivePolicyGroups lists adaptive policy groups in a organization
+GetOrganizationAdaptivePolicyGroups lists adaptive policy groups in a organization
 
-  List adaptive policy groups in a organization
+List adaptive policy groups in a organization
 */
 func (a *Client) GetOrganizationAdaptivePolicyGroups(params *GetOrganizationAdaptivePolicyGroupsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationAdaptivePolicyGroupsOK, error) {
 	// TODO: Validate the params before sending
@@ -1769,9 +2100,9 @@ func (a *Client) GetOrganizationAdaptivePolicyGroups(params *GetOrganizationAdap
 }
 
 /*
-  GetOrganizationAdaptivePolicyOverview returns adaptive policy aggregate statistics for an organization
+GetOrganizationAdaptivePolicyOverview returns adaptive policy aggregate statistics for an organization
 
-  Returns adaptive policy aggregate statistics for an organization
+Returns adaptive policy aggregate statistics for an organization
 */
 func (a *Client) GetOrganizationAdaptivePolicyOverview(params *GetOrganizationAdaptivePolicyOverviewParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationAdaptivePolicyOverviewOK, error) {
 	// TODO: Validate the params before sending
@@ -1810,9 +2141,9 @@ func (a *Client) GetOrganizationAdaptivePolicyOverview(params *GetOrganizationAd
 }
 
 /*
-  GetOrganizationAdaptivePolicyPolicies lists adaptive policies in an organization
+GetOrganizationAdaptivePolicyPolicies lists adaptive policies in an organization
 
-  List adaptive policies in an organization
+List adaptive policies in an organization
 */
 func (a *Client) GetOrganizationAdaptivePolicyPolicies(params *GetOrganizationAdaptivePolicyPoliciesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationAdaptivePolicyPoliciesOK, error) {
 	// TODO: Validate the params before sending
@@ -1851,9 +2182,9 @@ func (a *Client) GetOrganizationAdaptivePolicyPolicies(params *GetOrganizationAd
 }
 
 /*
-  GetOrganizationAdaptivePolicyPolicy returns an adaptive policy
+GetOrganizationAdaptivePolicyPolicy returns an adaptive policy
 
-  Return an adaptive policy
+Return an adaptive policy
 */
 func (a *Client) GetOrganizationAdaptivePolicyPolicy(params *GetOrganizationAdaptivePolicyPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationAdaptivePolicyPolicyOK, error) {
 	// TODO: Validate the params before sending
@@ -1863,7 +2194,7 @@ func (a *Client) GetOrganizationAdaptivePolicyPolicy(params *GetOrganizationAdap
 	op := &runtime.ClientOperation{
 		ID:                 "getOrganizationAdaptivePolicyPolicy",
 		Method:             "GET",
-		PathPattern:        "/organizations/{organizationId}/adaptivePolicy/policies/{adaptivePolicyId}",
+		PathPattern:        "/organizations/{organizationId}/adaptivePolicy/policies/{id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
@@ -1892,9 +2223,9 @@ func (a *Client) GetOrganizationAdaptivePolicyPolicy(params *GetOrganizationAdap
 }
 
 /*
-  GetOrganizationAdaptivePolicySettings returns global adaptive policy settings in an organization
+GetOrganizationAdaptivePolicySettings returns global adaptive policy settings in an organization
 
-  Returns global adaptive policy settings in an organization
+Returns global adaptive policy settings in an organization
 */
 func (a *Client) GetOrganizationAdaptivePolicySettings(params *GetOrganizationAdaptivePolicySettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationAdaptivePolicySettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -1933,9 +2264,9 @@ func (a *Client) GetOrganizationAdaptivePolicySettings(params *GetOrganizationAd
 }
 
 /*
-  GetOrganizationAdmins lists the dashboard administrators in this organization
+GetOrganizationAdmins lists the dashboard administrators in this organization
 
-  List the dashboard administrators in this organization
+List the dashboard administrators in this organization
 */
 func (a *Client) GetOrganizationAdmins(params *GetOrganizationAdminsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationAdminsOK, error) {
 	// TODO: Validate the params before sending
@@ -1974,9 +2305,9 @@ func (a *Client) GetOrganizationAdmins(params *GetOrganizationAdminsParams, auth
 }
 
 /*
-  GetOrganizationAlertsProfiles lists all organization wide alert configurations
+GetOrganizationAlertsProfiles lists all organization wide alert configurations
 
-  List all organization-wide alert configurations
+List all organization-wide alert configurations
 */
 func (a *Client) GetOrganizationAlertsProfiles(params *GetOrganizationAlertsProfilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationAlertsProfilesOK, error) {
 	// TODO: Validate the params before sending
@@ -2015,9 +2346,9 @@ func (a *Client) GetOrganizationAlertsProfiles(params *GetOrganizationAlertsProf
 }
 
 /*
-  GetOrganizationAPIRequests lists the API requests made by an organization
+GetOrganizationAPIRequests lists the API requests made by an organization
 
-  List the API requests made by an organization
+List the API requests made by an organization
 */
 func (a *Client) GetOrganizationAPIRequests(params *GetOrganizationAPIRequestsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationAPIRequestsOK, error) {
 	// TODO: Validate the params before sending
@@ -2056,9 +2387,9 @@ func (a *Client) GetOrganizationAPIRequests(params *GetOrganizationAPIRequestsPa
 }
 
 /*
-  GetOrganizationAPIRequestsOverview returns an aggregated overview of API requests data
+GetOrganizationAPIRequestsOverview returns an aggregated overview of API requests data
 
-  Return an aggregated overview of API requests data
+Return an aggregated overview of API requests data
 */
 func (a *Client) GetOrganizationAPIRequestsOverview(params *GetOrganizationAPIRequestsOverviewParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationAPIRequestsOverviewOK, error) {
 	// TODO: Validate the params before sending
@@ -2097,9 +2428,50 @@ func (a *Client) GetOrganizationAPIRequestsOverview(params *GetOrganizationAPIRe
 }
 
 /*
-  GetOrganizationBrandingPolicies lists the branding policies of an organization
+GetOrganizationAPIRequestsOverviewResponseCodesByInterval tracks organizations API requests by response code across a given time period
 
-  List the branding policies of an organization
+Tracks organizations' API requests by response code across a given time period
+*/
+func (a *Client) GetOrganizationAPIRequestsOverviewResponseCodesByInterval(params *GetOrganizationAPIRequestsOverviewResponseCodesByIntervalParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationAPIRequestsOverviewResponseCodesByIntervalOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetOrganizationAPIRequestsOverviewResponseCodesByIntervalParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getOrganizationApiRequestsOverviewResponseCodesByInterval",
+		Method:             "GET",
+		PathPattern:        "/organizations/{organizationId}/apiRequests/overview/responseCodes/byInterval",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetOrganizationAPIRequestsOverviewResponseCodesByIntervalReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetOrganizationAPIRequestsOverviewResponseCodesByIntervalOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getOrganizationApiRequestsOverviewResponseCodesByInterval: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetOrganizationBrandingPolicies lists the branding policies of an organization
+
+List the branding policies of an organization
 */
 func (a *Client) GetOrganizationBrandingPolicies(params *GetOrganizationBrandingPoliciesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationBrandingPoliciesOK, error) {
 	// TODO: Validate the params before sending
@@ -2138,9 +2510,9 @@ func (a *Client) GetOrganizationBrandingPolicies(params *GetOrganizationBranding
 }
 
 /*
-  GetOrganizationBrandingPoliciesPriorities returns the branding policy i ds of an organization in priority order
+GetOrganizationBrandingPoliciesPriorities returns the branding policy i ds of an organization in priority order
 
-  Return the branding policy IDs of an organization in priority order. IDs are ordered in ascending order of priority (IDs later in the array have higher priority).
+Return the branding policy IDs of an organization in priority order. IDs are ordered in ascending order of priority (IDs later in the array have higher priority).
 */
 func (a *Client) GetOrganizationBrandingPoliciesPriorities(params *GetOrganizationBrandingPoliciesPrioritiesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationBrandingPoliciesPrioritiesOK, error) {
 	// TODO: Validate the params before sending
@@ -2179,9 +2551,9 @@ func (a *Client) GetOrganizationBrandingPoliciesPriorities(params *GetOrganizati
 }
 
 /*
-  GetOrganizationBrandingPolicy returns a branding policy
+GetOrganizationBrandingPolicy returns a branding policy
 
-  Return a branding policy
+Return a branding policy
 */
 func (a *Client) GetOrganizationBrandingPolicy(params *GetOrganizationBrandingPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationBrandingPolicyOK, error) {
 	// TODO: Validate the params before sending
@@ -2220,9 +2592,9 @@ func (a *Client) GetOrganizationBrandingPolicy(params *GetOrganizationBrandingPo
 }
 
 /*
-  GetOrganizationClientsBandwidthUsageHistory returns data usage in megabits per second over time for all clients in the given organization within a given time range
+GetOrganizationClientsBandwidthUsageHistory returns data usage in megabits per second over time for all clients in the given organization within a given time range
 
-  Return data usage (in megabits per second) over time for all clients in the given organization within a given time range.
+Return data usage (in megabits per second) over time for all clients in the given organization within a given time range.
 */
 func (a *Client) GetOrganizationClientsBandwidthUsageHistory(params *GetOrganizationClientsBandwidthUsageHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationClientsBandwidthUsageHistoryOK, error) {
 	// TODO: Validate the params before sending
@@ -2261,9 +2633,9 @@ func (a *Client) GetOrganizationClientsBandwidthUsageHistory(params *GetOrganiza
 }
 
 /*
-  GetOrganizationClientsOverview returns summary information around client data usage in mb across the given organization
+GetOrganizationClientsOverview returns summary information around client data usage in mb across the given organization
 
-  Return summary information around client data usage (in mb) across the given organization.
+Return summary information around client data usage (in mb) across the given organization.
 */
 func (a *Client) GetOrganizationClientsOverview(params *GetOrganizationClientsOverviewParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationClientsOverviewOK, error) {
 	// TODO: Validate the params before sending
@@ -2302,9 +2674,9 @@ func (a *Client) GetOrganizationClientsOverview(params *GetOrganizationClientsOv
 }
 
 /*
-  GetOrganizationClientsSearch returns the client details in an organization
+GetOrganizationClientsSearch returns the client details in an organization
 
-  Return the client details in an organization
+Return the client details in an organization
 */
 func (a *Client) GetOrganizationClientsSearch(params *GetOrganizationClientsSearchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationClientsSearchOK, error) {
 	// TODO: Validate the params before sending
@@ -2343,9 +2715,9 @@ func (a *Client) GetOrganizationClientsSearch(params *GetOrganizationClientsSear
 }
 
 /*
-  GetOrganizationConfigTemplate returns a single configuration template
+GetOrganizationConfigTemplate returns a single configuration template
 
-  Return a single configuration template
+Return a single configuration template
 */
 func (a *Client) GetOrganizationConfigTemplate(params *GetOrganizationConfigTemplateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationConfigTemplateOK, error) {
 	// TODO: Validate the params before sending
@@ -2384,9 +2756,9 @@ func (a *Client) GetOrganizationConfigTemplate(params *GetOrganizationConfigTemp
 }
 
 /*
-  GetOrganizationConfigTemplates lists the configuration templates for this organization
+GetOrganizationConfigTemplates lists the configuration templates for this organization
 
-  List the configuration templates for this organization
+List the configuration templates for this organization
 */
 func (a *Client) GetOrganizationConfigTemplates(params *GetOrganizationConfigTemplatesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationConfigTemplatesOK, error) {
 	// TODO: Validate the params before sending
@@ -2425,9 +2797,9 @@ func (a *Client) GetOrganizationConfigTemplates(params *GetOrganizationConfigTem
 }
 
 /*
-  GetOrganizationConfigurationChanges views the change log for your organization
+GetOrganizationConfigurationChanges views the change log for your organization
 
-  View the Change Log for your organization
+View the Change Log for your organization
 */
 func (a *Client) GetOrganizationConfigurationChanges(params *GetOrganizationConfigurationChangesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationConfigurationChangesOK, error) {
 	// TODO: Validate the params before sending
@@ -2466,9 +2838,9 @@ func (a *Client) GetOrganizationConfigurationChanges(params *GetOrganizationConf
 }
 
 /*
-  GetOrganizationDevices lists the devices in an organization
+GetOrganizationDevices lists the devices in an organization
 
-  List the devices in an organization
+List the devices in an organization
 */
 func (a *Client) GetOrganizationDevices(params *GetOrganizationDevicesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationDevicesOK, error) {
 	// TODO: Validate the params before sending
@@ -2507,9 +2879,9 @@ func (a *Client) GetOrganizationDevices(params *GetOrganizationDevicesParams, au
 }
 
 /*
-  GetOrganizationDevicesAvailabilities lists the availability information for devices in an organization
+GetOrganizationDevicesAvailabilities lists the availability information for devices in an organization
 
-  List the availability information for devices in an organization. The data returned by this endpoint is updated every 5 minutes.
+List the availability information for devices in an organization. The data returned by this endpoint is updated every 5 minutes.
 */
 func (a *Client) GetOrganizationDevicesAvailabilities(params *GetOrganizationDevicesAvailabilitiesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationDevicesAvailabilitiesOK, error) {
 	// TODO: Validate the params before sending
@@ -2548,9 +2920,132 @@ func (a *Client) GetOrganizationDevicesAvailabilities(params *GetOrganizationDev
 }
 
 /*
-  GetOrganizationDevicesStatuses lists the status of every meraki device in the organization
+GetOrganizationDevicesAvailabilitiesChangeHistory lists the availability history information for devices in an organization
 
-  List the status of every Meraki device in the organization
+List the availability history information for devices in an organization.
+*/
+func (a *Client) GetOrganizationDevicesAvailabilitiesChangeHistory(params *GetOrganizationDevicesAvailabilitiesChangeHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationDevicesAvailabilitiesChangeHistoryOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetOrganizationDevicesAvailabilitiesChangeHistoryParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getOrganizationDevicesAvailabilitiesChangeHistory",
+		Method:             "GET",
+		PathPattern:        "/organizations/{organizationId}/devices/availabilities/changeHistory",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetOrganizationDevicesAvailabilitiesChangeHistoryReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetOrganizationDevicesAvailabilitiesChangeHistoryOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getOrganizationDevicesAvailabilitiesChangeHistory: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetOrganizationDevicesPowerModulesStatusesByDevice lists the power status information for devices in an organization
+
+List the power status information for devices in an organization. The data returned by this endpoint is updated every 5 minutes.
+*/
+func (a *Client) GetOrganizationDevicesPowerModulesStatusesByDevice(params *GetOrganizationDevicesPowerModulesStatusesByDeviceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationDevicesPowerModulesStatusesByDeviceOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetOrganizationDevicesPowerModulesStatusesByDeviceParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getOrganizationDevicesPowerModulesStatusesByDevice",
+		Method:             "GET",
+		PathPattern:        "/organizations/{organizationId}/devices/powerModules/statuses/byDevice",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetOrganizationDevicesPowerModulesStatusesByDeviceReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetOrganizationDevicesPowerModulesStatusesByDeviceOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getOrganizationDevicesPowerModulesStatusesByDevice: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetOrganizationDevicesProvisioningStatuses lists the provisioning statuses information for devices in an organization
+
+List the provisioning statuses information for devices in an organization.
+*/
+func (a *Client) GetOrganizationDevicesProvisioningStatuses(params *GetOrganizationDevicesProvisioningStatusesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationDevicesProvisioningStatusesOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetOrganizationDevicesProvisioningStatusesParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getOrganizationDevicesProvisioningStatuses",
+		Method:             "GET",
+		PathPattern:        "/organizations/{organizationId}/devices/provisioning/statuses",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetOrganizationDevicesProvisioningStatusesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetOrganizationDevicesProvisioningStatusesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getOrganizationDevicesProvisioningStatuses: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetOrganizationDevicesStatuses lists the status of every meraki device in the organization
+
+List the status of every Meraki device in the organization
 */
 func (a *Client) GetOrganizationDevicesStatuses(params *GetOrganizationDevicesStatusesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationDevicesStatusesOK, error) {
 	// TODO: Validate the params before sending
@@ -2589,9 +3084,9 @@ func (a *Client) GetOrganizationDevicesStatuses(params *GetOrganizationDevicesSt
 }
 
 /*
-  GetOrganizationDevicesStatusesOverview returns an overview of current device statuses
+GetOrganizationDevicesStatusesOverview returns an overview of current device statuses
 
-  Return an overview of current device statuses
+Return an overview of current device statuses
 */
 func (a *Client) GetOrganizationDevicesStatusesOverview(params *GetOrganizationDevicesStatusesOverviewParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationDevicesStatusesOverviewOK, error) {
 	// TODO: Validate the params before sending
@@ -2630,9 +3125,50 @@ func (a *Client) GetOrganizationDevicesStatusesOverview(params *GetOrganizationD
 }
 
 /*
-  GetOrganizationDevicesUplinksLossAndLatency returns the uplink loss and latency for every m x in the organization from at latest 2 minutes ago
+GetOrganizationDevicesUplinksAddressesByDevice lists the current uplink addresses for devices in an organization
 
-  Return the uplink loss and latency for every MX in the organization from at latest 2 minutes ago
+List the current uplink addresses for devices in an organization.
+*/
+func (a *Client) GetOrganizationDevicesUplinksAddressesByDevice(params *GetOrganizationDevicesUplinksAddressesByDeviceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationDevicesUplinksAddressesByDeviceOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetOrganizationDevicesUplinksAddressesByDeviceParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getOrganizationDevicesUplinksAddressesByDevice",
+		Method:             "GET",
+		PathPattern:        "/organizations/{organizationId}/devices/uplinks/addresses/byDevice",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetOrganizationDevicesUplinksAddressesByDeviceReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetOrganizationDevicesUplinksAddressesByDeviceOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getOrganizationDevicesUplinksAddressesByDevice: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetOrganizationDevicesUplinksLossAndLatency returns the uplink loss and latency for every m x in the organization from at latest 2 minutes ago
+
+Return the uplink loss and latency for every MX in the organization from at latest 2 minutes ago
 */
 func (a *Client) GetOrganizationDevicesUplinksLossAndLatency(params *GetOrganizationDevicesUplinksLossAndLatencyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationDevicesUplinksLossAndLatencyOK, error) {
 	// TODO: Validate the params before sending
@@ -2671,9 +3207,9 @@ func (a *Client) GetOrganizationDevicesUplinksLossAndLatency(params *GetOrganiza
 }
 
 /*
-  GetOrganizationEarlyAccessFeatures lists the available early access features for organization
+GetOrganizationEarlyAccessFeatures lists the available early access features for organization
 
-  List the available early access features for organization
+List the available early access features for organization
 */
 func (a *Client) GetOrganizationEarlyAccessFeatures(params *GetOrganizationEarlyAccessFeaturesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationEarlyAccessFeaturesOK, error) {
 	// TODO: Validate the params before sending
@@ -2712,9 +3248,9 @@ func (a *Client) GetOrganizationEarlyAccessFeatures(params *GetOrganizationEarly
 }
 
 /*
-  GetOrganizationEarlyAccessFeaturesOptIn shows an early access feature opt in for an organization
+GetOrganizationEarlyAccessFeaturesOptIn shows an early access feature opt in for an organization
 
-  Show an early access feature opt-in for an organization
+Show an early access feature opt-in for an organization
 */
 func (a *Client) GetOrganizationEarlyAccessFeaturesOptIn(params *GetOrganizationEarlyAccessFeaturesOptInParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationEarlyAccessFeaturesOptInOK, error) {
 	// TODO: Validate the params before sending
@@ -2753,9 +3289,9 @@ func (a *Client) GetOrganizationEarlyAccessFeaturesOptIn(params *GetOrganization
 }
 
 /*
-  GetOrganizationEarlyAccessFeaturesOptIns lists the early access feature opt ins for an organization
+GetOrganizationEarlyAccessFeaturesOptIns lists the early access feature opt ins for an organization
 
-  List the early access feature opt-ins for an organization
+List the early access feature opt-ins for an organization
 */
 func (a *Client) GetOrganizationEarlyAccessFeaturesOptIns(params *GetOrganizationEarlyAccessFeaturesOptInsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationEarlyAccessFeaturesOptInsOK, error) {
 	// TODO: Validate the params before sending
@@ -2794,9 +3330,91 @@ func (a *Client) GetOrganizationEarlyAccessFeaturesOptIns(params *GetOrganizatio
 }
 
 /*
-  GetOrganizationInventoryDevice returns a single device from the inventory of an organization
+GetOrganizationFirmwareUpgrades gets firmware upgrade information for an organization
 
-  Return a single device from the inventory of an organization
+Get firmware upgrade information for an organization
+*/
+func (a *Client) GetOrganizationFirmwareUpgrades(params *GetOrganizationFirmwareUpgradesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationFirmwareUpgradesOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetOrganizationFirmwareUpgradesParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getOrganizationFirmwareUpgrades",
+		Method:             "GET",
+		PathPattern:        "/organizations/{organizationId}/firmware/upgrades",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetOrganizationFirmwareUpgradesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetOrganizationFirmwareUpgradesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getOrganizationFirmwareUpgrades: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetOrganizationFirmwareUpgradesByDevice gets firmware upgrade status for the filtered devices
+
+Get firmware upgrade status for the filtered devices
+*/
+func (a *Client) GetOrganizationFirmwareUpgradesByDevice(params *GetOrganizationFirmwareUpgradesByDeviceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationFirmwareUpgradesByDeviceOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetOrganizationFirmwareUpgradesByDeviceParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getOrganizationFirmwareUpgradesByDevice",
+		Method:             "GET",
+		PathPattern:        "/organizations/{organizationId}/firmware/upgrades/byDevice",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetOrganizationFirmwareUpgradesByDeviceReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetOrganizationFirmwareUpgradesByDeviceOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getOrganizationFirmwareUpgradesByDevice: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetOrganizationInventoryDevice returns a single device from the inventory of an organization
+
+Return a single device from the inventory of an organization
 */
 func (a *Client) GetOrganizationInventoryDevice(params *GetOrganizationInventoryDeviceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationInventoryDeviceOK, error) {
 	// TODO: Validate the params before sending
@@ -2835,9 +3453,9 @@ func (a *Client) GetOrganizationInventoryDevice(params *GetOrganizationInventory
 }
 
 /*
-  GetOrganizationInventoryDevices returns the device inventory for an organization
+GetOrganizationInventoryDevices returns the device inventory for an organization
 
-  Return the device inventory for an organization
+Return the device inventory for an organization
 */
 func (a *Client) GetOrganizationInventoryDevices(params *GetOrganizationInventoryDevicesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationInventoryDevicesOK, error) {
 	// TODO: Validate the params before sending
@@ -2876,9 +3494,91 @@ func (a *Client) GetOrganizationInventoryDevices(params *GetOrganizationInventor
 }
 
 /*
-  GetOrganizationLicense displays a license
+GetOrganizationInventoryOnboardingCloudMonitoringImports checks the status of a committed import operation
 
-  Display a license
+Check the status of a committed Import operation
+*/
+func (a *Client) GetOrganizationInventoryOnboardingCloudMonitoringImports(params *GetOrganizationInventoryOnboardingCloudMonitoringImportsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationInventoryOnboardingCloudMonitoringImportsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetOrganizationInventoryOnboardingCloudMonitoringImportsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getOrganizationInventoryOnboardingCloudMonitoringImports",
+		Method:             "GET",
+		PathPattern:        "/organizations/{organizationId}/inventory/onboarding/cloudMonitoring/imports",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetOrganizationInventoryOnboardingCloudMonitoringImportsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetOrganizationInventoryOnboardingCloudMonitoringImportsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getOrganizationInventoryOnboardingCloudMonitoringImports: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetOrganizationInventoryOnboardingCloudMonitoringNetworks returns list of networks eligible for adding cloud monitored device
+
+Returns list of networks eligible for adding cloud monitored device
+*/
+func (a *Client) GetOrganizationInventoryOnboardingCloudMonitoringNetworks(params *GetOrganizationInventoryOnboardingCloudMonitoringNetworksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationInventoryOnboardingCloudMonitoringNetworksAccepted, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetOrganizationInventoryOnboardingCloudMonitoringNetworksParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getOrganizationInventoryOnboardingCloudMonitoringNetworks",
+		Method:             "GET",
+		PathPattern:        "/organizations/{organizationId}/inventory/onboarding/cloudMonitoring/networks",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetOrganizationInventoryOnboardingCloudMonitoringNetworksReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetOrganizationInventoryOnboardingCloudMonitoringNetworksAccepted)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getOrganizationInventoryOnboardingCloudMonitoringNetworks: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetOrganizationLicense displays a license
+
+Display a license
 */
 func (a *Client) GetOrganizationLicense(params *GetOrganizationLicenseParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationLicenseOK, error) {
 	// TODO: Validate the params before sending
@@ -2917,9 +3617,9 @@ func (a *Client) GetOrganizationLicense(params *GetOrganizationLicenseParams, au
 }
 
 /*
-  GetOrganizationLicenses lists the licenses for an organization
+GetOrganizationLicenses lists the licenses for an organization
 
-  List the licenses for an organization
+List the licenses for an organization
 */
 func (a *Client) GetOrganizationLicenses(params *GetOrganizationLicensesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationLicensesOK, error) {
 	// TODO: Validate the params before sending
@@ -2958,9 +3658,9 @@ func (a *Client) GetOrganizationLicenses(params *GetOrganizationLicensesParams, 
 }
 
 /*
-  GetOrganizationLicensesOverview returns an overview of the license state for an organization
+GetOrganizationLicensesOverview returns an overview of the license state for an organization
 
-  Return an overview of the license state for an organization
+Return an overview of the license state for an organization
 */
 func (a *Client) GetOrganizationLicensesOverview(params *GetOrganizationLicensesOverviewParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationLicensesOverviewOK, error) {
 	// TODO: Validate the params before sending
@@ -2999,9 +3699,9 @@ func (a *Client) GetOrganizationLicensesOverview(params *GetOrganizationLicenses
 }
 
 /*
-  GetOrganizationLoginSecurity returns the login security settings for an organization
+GetOrganizationLoginSecurity returns the login security settings for an organization
 
-  Returns the login security settings for an organization.
+Returns the login security settings for an organization.
 */
 func (a *Client) GetOrganizationLoginSecurity(params *GetOrganizationLoginSecurityParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationLoginSecurityOK, error) {
 	// TODO: Validate the params before sending
@@ -3040,9 +3740,9 @@ func (a *Client) GetOrganizationLoginSecurity(params *GetOrganizationLoginSecuri
 }
 
 /*
-  GetOrganizationNetworks lists the networks that the user has privileges on in an organization
+GetOrganizationNetworks lists the networks that the user has privileges on in an organization
 
-  List the networks that the user has privileges on in an organization
+List the networks that the user has privileges on in an organization
 */
 func (a *Client) GetOrganizationNetworks(params *GetOrganizationNetworksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationNetworksOK, error) {
 	// TODO: Validate the params before sending
@@ -3081,9 +3781,9 @@ func (a *Client) GetOrganizationNetworks(params *GetOrganizationNetworksParams, 
 }
 
 /*
-  GetOrganizationOpenapiSpec returns the open API 2 0 specification of the organization s API documentation in JSON
+GetOrganizationOpenapiSpec returns the open API specification of the organization s API documentation in JSON
 
-  Return the OpenAPI 2.0 Specification of the organization's API documentation in JSON
+Return the OpenAPI Specification of the organization's API documentation in JSON
 */
 func (a *Client) GetOrganizationOpenapiSpec(params *GetOrganizationOpenapiSpecParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationOpenapiSpecOK, error) {
 	// TODO: Validate the params before sending
@@ -3122,9 +3822,173 @@ func (a *Client) GetOrganizationOpenapiSpec(params *GetOrganizationOpenapiSpecPa
 }
 
 /*
-  GetOrganizationSaml returns the s a m l s s o enabled settings for an organization
+GetOrganizationPolicyObject shows details of a policy object
 
-  Returns the SAML SSO enabled settings for an organization.
+Shows details of a Policy Object.
+*/
+func (a *Client) GetOrganizationPolicyObject(params *GetOrganizationPolicyObjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationPolicyObjectOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetOrganizationPolicyObjectParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getOrganizationPolicyObject",
+		Method:             "GET",
+		PathPattern:        "/organizations/{organizationId}/policyObjects/{policyObjectId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetOrganizationPolicyObjectReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetOrganizationPolicyObjectOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getOrganizationPolicyObject: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetOrganizationPolicyObjects lists policy objects belonging to the organization
+
+Lists Policy Objects belonging to the organization.
+*/
+func (a *Client) GetOrganizationPolicyObjects(params *GetOrganizationPolicyObjectsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationPolicyObjectsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetOrganizationPolicyObjectsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getOrganizationPolicyObjects",
+		Method:             "GET",
+		PathPattern:        "/organizations/{organizationId}/policyObjects",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetOrganizationPolicyObjectsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetOrganizationPolicyObjectsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getOrganizationPolicyObjects: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetOrganizationPolicyObjectsGroup shows details of a policy object group
+
+Shows details of a Policy Object Group.
+*/
+func (a *Client) GetOrganizationPolicyObjectsGroup(params *GetOrganizationPolicyObjectsGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationPolicyObjectsGroupOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetOrganizationPolicyObjectsGroupParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getOrganizationPolicyObjectsGroup",
+		Method:             "GET",
+		PathPattern:        "/organizations/{organizationId}/policyObjects/groups/{policyObjectGroupId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetOrganizationPolicyObjectsGroupReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetOrganizationPolicyObjectsGroupOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getOrganizationPolicyObjectsGroup: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetOrganizationPolicyObjectsGroups lists policy object groups belonging to the organization
+
+Lists Policy Object Groups belonging to the organization.
+*/
+func (a *Client) GetOrganizationPolicyObjectsGroups(params *GetOrganizationPolicyObjectsGroupsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationPolicyObjectsGroupsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetOrganizationPolicyObjectsGroupsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getOrganizationPolicyObjectsGroups",
+		Method:             "GET",
+		PathPattern:        "/organizations/{organizationId}/policyObjects/groups",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetOrganizationPolicyObjectsGroupsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetOrganizationPolicyObjectsGroupsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getOrganizationPolicyObjectsGroups: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetOrganizationSaml returns the s a m l s s o enabled settings for an organization
+
+Returns the SAML SSO enabled settings for an organization.
 */
 func (a *Client) GetOrganizationSaml(params *GetOrganizationSamlParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSamlOK, error) {
 	// TODO: Validate the params before sending
@@ -3163,9 +4027,9 @@ func (a *Client) GetOrganizationSaml(params *GetOrganizationSamlParams, authInfo
 }
 
 /*
-  GetOrganizationSamlIdp gets a s a m l Id p from your organization
+GetOrganizationSamlIdp gets a s a m l Id p from your organization
 
-  Get a SAML IdP from your organization.
+Get a SAML IdP from your organization.
 */
 func (a *Client) GetOrganizationSamlIdp(params *GetOrganizationSamlIdpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSamlIdpOK, error) {
 	// TODO: Validate the params before sending
@@ -3204,9 +4068,9 @@ func (a *Client) GetOrganizationSamlIdp(params *GetOrganizationSamlIdpParams, au
 }
 
 /*
-  GetOrganizationSamlIdps lists the s a m l Id ps in your organization
+GetOrganizationSamlIdps lists the s a m l Id ps in your organization
 
-  List the SAML IdPs in your organization.
+List the SAML IdPs in your organization.
 */
 func (a *Client) GetOrganizationSamlIdps(params *GetOrganizationSamlIdpsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSamlIdpsOK, error) {
 	// TODO: Validate the params before sending
@@ -3245,9 +4109,9 @@ func (a *Client) GetOrganizationSamlIdps(params *GetOrganizationSamlIdpsParams, 
 }
 
 /*
-  GetOrganizationSamlRole returns a s a m l role
+GetOrganizationSamlRole returns a s a m l role
 
-  Return a SAML role
+Return a SAML role
 */
 func (a *Client) GetOrganizationSamlRole(params *GetOrganizationSamlRoleParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSamlRoleOK, error) {
 	// TODO: Validate the params before sending
@@ -3286,9 +4150,9 @@ func (a *Client) GetOrganizationSamlRole(params *GetOrganizationSamlRoleParams, 
 }
 
 /*
-  GetOrganizationSamlRoles lists the s a m l roles for this organization
+GetOrganizationSamlRoles lists the s a m l roles for this organization
 
-  List the SAML roles for this organization
+List the SAML roles for this organization
 */
 func (a *Client) GetOrganizationSamlRoles(params *GetOrganizationSamlRolesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSamlRolesOK, error) {
 	// TODO: Validate the params before sending
@@ -3327,9 +4191,9 @@ func (a *Client) GetOrganizationSamlRoles(params *GetOrganizationSamlRolesParams
 }
 
 /*
-  GetOrganizationSnmp returns the s n m p settings for an organization
+GetOrganizationSnmp returns the s n m p settings for an organization
 
-  Return the SNMP settings for an organization
+Return the SNMP settings for an organization
 */
 func (a *Client) GetOrganizationSnmp(params *GetOrganizationSnmpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSnmpOK, error) {
 	// TODO: Validate the params before sending
@@ -3368,9 +4232,9 @@ func (a *Client) GetOrganizationSnmp(params *GetOrganizationSnmpParams, authInfo
 }
 
 /*
-  GetOrganizationSummaryTopAppliancesByUtilization returns the top 10 appliances sorted by utilization over given time range
+GetOrganizationSummaryTopAppliancesByUtilization returns the top 10 appliances sorted by utilization over given time range
 
-  Return the top 10 appliances sorted by utilization over given time range.
+Return the top 10 appliances sorted by utilization over given time range.
 */
 func (a *Client) GetOrganizationSummaryTopAppliancesByUtilization(params *GetOrganizationSummaryTopAppliancesByUtilizationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSummaryTopAppliancesByUtilizationOK, error) {
 	// TODO: Validate the params before sending
@@ -3409,9 +4273,9 @@ func (a *Client) GetOrganizationSummaryTopAppliancesByUtilization(params *GetOrg
 }
 
 /*
-  GetOrganizationSummaryTopClientsByUsage returns metrics for organization s top 10 clients by data usage in mb over given time range
+GetOrganizationSummaryTopClientsByUsage returns metrics for organization s top 10 clients by data usage in mb over given time range
 
-  Return metrics for organization's top 10 clients by data usage (in mb) over given time range.
+Return metrics for organization's top 10 clients by data usage (in mb) over given time range.
 */
 func (a *Client) GetOrganizationSummaryTopClientsByUsage(params *GetOrganizationSummaryTopClientsByUsageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSummaryTopClientsByUsageOK, error) {
 	// TODO: Validate the params before sending
@@ -3450,9 +4314,9 @@ func (a *Client) GetOrganizationSummaryTopClientsByUsage(params *GetOrganization
 }
 
 /*
-  GetOrganizationSummaryTopClientsManufacturersByUsage returns metrics for organization s top clients by data usage in mb over given time range grouped by manufacturer
+GetOrganizationSummaryTopClientsManufacturersByUsage returns metrics for organization s top clients by data usage in mb over given time range grouped by manufacturer
 
-  Return metrics for organization's top clients by data usage (in mb) over given time range, grouped by manufacturer.
+Return metrics for organization's top clients by data usage (in mb) over given time range, grouped by manufacturer.
 */
 func (a *Client) GetOrganizationSummaryTopClientsManufacturersByUsage(params *GetOrganizationSummaryTopClientsManufacturersByUsageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSummaryTopClientsManufacturersByUsageOK, error) {
 	// TODO: Validate the params before sending
@@ -3491,9 +4355,9 @@ func (a *Client) GetOrganizationSummaryTopClientsManufacturersByUsage(params *Ge
 }
 
 /*
-  GetOrganizationSummaryTopDevicesByUsage returns metrics for organization s top 10 devices sorted by data usage over given time range
+GetOrganizationSummaryTopDevicesByUsage returns metrics for organization s top 10 devices sorted by data usage over given time range
 
-  Return metrics for organization's top 10 devices sorted by data usage over given time range. Default unit is megabytes.
+Return metrics for organization's top 10 devices sorted by data usage over given time range. Default unit is megabytes.
 */
 func (a *Client) GetOrganizationSummaryTopDevicesByUsage(params *GetOrganizationSummaryTopDevicesByUsageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSummaryTopDevicesByUsageOK, error) {
 	// TODO: Validate the params before sending
@@ -3532,9 +4396,9 @@ func (a *Client) GetOrganizationSummaryTopDevicesByUsage(params *GetOrganization
 }
 
 /*
-  GetOrganizationSummaryTopDevicesModelsByUsage returns metrics for organization s top 10 device models sorted by data usage over given time range
+GetOrganizationSummaryTopDevicesModelsByUsage returns metrics for organization s top 10 device models sorted by data usage over given time range
 
-  Return metrics for organization's top 10 device models sorted by data usage over given time range. Default unit is megabytes.
+Return metrics for organization's top 10 device models sorted by data usage over given time range. Default unit is megabytes.
 */
 func (a *Client) GetOrganizationSummaryTopDevicesModelsByUsage(params *GetOrganizationSummaryTopDevicesModelsByUsageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSummaryTopDevicesModelsByUsageOK, error) {
 	// TODO: Validate the params before sending
@@ -3573,9 +4437,9 @@ func (a *Client) GetOrganizationSummaryTopDevicesModelsByUsage(params *GetOrgani
 }
 
 /*
-  GetOrganizationSummaryTopSsidsByUsage returns metrics for organization s top 10 ssids by data usage over given time range
+GetOrganizationSummaryTopSsidsByUsage returns metrics for organization s top 10 ssids by data usage over given time range
 
-  Return metrics for organization's top 10 ssids by data usage over given time range. Default unit is megabytes.
+Return metrics for organization's top 10 ssids by data usage over given time range. Default unit is megabytes.
 */
 func (a *Client) GetOrganizationSummaryTopSsidsByUsage(params *GetOrganizationSummaryTopSsidsByUsageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSummaryTopSsidsByUsageOK, error) {
 	// TODO: Validate the params before sending
@@ -3614,9 +4478,9 @@ func (a *Client) GetOrganizationSummaryTopSsidsByUsage(params *GetOrganizationSu
 }
 
 /*
-  GetOrganizationSummaryTopSwitchesByEnergyUsage returns metrics for organization s top 10 switches by energy usage over given time range
+GetOrganizationSummaryTopSwitchesByEnergyUsage returns metrics for organization s top 10 switches by energy usage over given time range
 
-  Return metrics for organization's top 10 switches by energy usage over given time range. Default unit is joules.
+Return metrics for organization's top 10 switches by energy usage over given time range. Default unit is joules.
 */
 func (a *Client) GetOrganizationSummaryTopSwitchesByEnergyUsage(params *GetOrganizationSummaryTopSwitchesByEnergyUsageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSummaryTopSwitchesByEnergyUsageOK, error) {
 	// TODO: Validate the params before sending
@@ -3655,9 +4519,9 @@ func (a *Client) GetOrganizationSummaryTopSwitchesByEnergyUsage(params *GetOrgan
 }
 
 /*
-  GetOrganizationUplinksStatuses lists the uplink status of every meraki m x m g and z series devices in the organization
+GetOrganizationUplinksStatuses lists the uplink status of every meraki m x m g and z series devices in the organization
 
-  List the uplink status of every Meraki MX, MG and Z series devices in the organization
+List the uplink status of every Meraki MX, MG and Z series devices in the organization
 */
 func (a *Client) GetOrganizationUplinksStatuses(params *GetOrganizationUplinksStatusesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationUplinksStatusesOK, error) {
 	// TODO: Validate the params before sending
@@ -3696,9 +4560,9 @@ func (a *Client) GetOrganizationUplinksStatuses(params *GetOrganizationUplinksSt
 }
 
 /*
-  GetOrganizationWebhooksAlertTypes returns a list of alert types to be used with managing webhook alerts
+GetOrganizationWebhooksAlertTypes returns a list of alert types to be used with managing webhook alerts
 
-  Return a list of alert types to be used with managing webhook alerts
+Return a list of alert types to be used with managing webhook alerts
 */
 func (a *Client) GetOrganizationWebhooksAlertTypes(params *GetOrganizationWebhooksAlertTypesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationWebhooksAlertTypesOK, error) {
 	// TODO: Validate the params before sending
@@ -3737,9 +4601,9 @@ func (a *Client) GetOrganizationWebhooksAlertTypes(params *GetOrganizationWebhoo
 }
 
 /*
-  GetOrganizationWebhooksLogs returns the log of webhook p o s ts sent
+GetOrganizationWebhooksLogs returns the log of webhook p o s ts sent
 
-  Return the log of webhook POSTs sent
+Return the log of webhook POSTs sent
 */
 func (a *Client) GetOrganizationWebhooksLogs(params *GetOrganizationWebhooksLogsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationWebhooksLogsOK, error) {
 	// TODO: Validate the params before sending
@@ -3778,9 +4642,9 @@ func (a *Client) GetOrganizationWebhooksLogs(params *GetOrganizationWebhooksLogs
 }
 
 /*
-  GetOrganizations lists the organizations that the user has privileges on
+GetOrganizations lists the organizations that the user has privileges on
 
-  List the organizations that the user has privileges on
+List the organizations that the user has privileges on
 */
 func (a *Client) GetOrganizations(params *GetOrganizationsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationsOK, error) {
 	// TODO: Validate the params before sending
@@ -3819,9 +4683,9 @@ func (a *Client) GetOrganizations(params *GetOrganizationsParams, authInfo runti
 }
 
 /*
-  MoveOrganizationLicenses moves licenses to another organization
+MoveOrganizationLicenses moves licenses to another organization
 
-  Move licenses to another organization. This will also move any devices that the licenses are assigned to
+Move licenses to another organization. This will also move any devices that the licenses are assigned to
 */
 func (a *Client) MoveOrganizationLicenses(params *MoveOrganizationLicensesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*MoveOrganizationLicensesOK, error) {
 	// TODO: Validate the params before sending
@@ -3860,9 +4724,9 @@ func (a *Client) MoveOrganizationLicenses(params *MoveOrganizationLicensesParams
 }
 
 /*
-  MoveOrganizationLicensesSeats moves s m seats to another organization
+MoveOrganizationLicensesSeats moves s m seats to another organization
 
-  Move SM seats to another organization
+Move SM seats to another organization
 */
 func (a *Client) MoveOrganizationLicensesSeats(params *MoveOrganizationLicensesSeatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*MoveOrganizationLicensesSeatsOK, error) {
 	// TODO: Validate the params before sending
@@ -3901,9 +4765,9 @@ func (a *Client) MoveOrganizationLicensesSeats(params *MoveOrganizationLicensesS
 }
 
 /*
-  ReleaseFromOrganizationInventory releases a list of claimed devices from an organization
+ReleaseFromOrganizationInventory releases a list of claimed devices from an organization
 
-  Release a list of claimed devices from an organization.
+Release a list of claimed devices from an organization.
 */
 func (a *Client) ReleaseFromOrganizationInventory(params *ReleaseFromOrganizationInventoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ReleaseFromOrganizationInventoryOK, error) {
 	// TODO: Validate the params before sending
@@ -3942,9 +4806,9 @@ func (a *Client) ReleaseFromOrganizationInventory(params *ReleaseFromOrganizatio
 }
 
 /*
-  RenewOrganizationLicensesSeats renews s m seats of a license
+RenewOrganizationLicensesSeats renews s m seats of a license
 
-  Renew SM seats of a license. This will extend the license expiration date of managed SM devices covered by this license
+Renew SM seats of a license. This will extend the license expiration date of managed SM devices covered by this license
 */
 func (a *Client) RenewOrganizationLicensesSeats(params *RenewOrganizationLicensesSeatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RenewOrganizationLicensesSeatsOK, error) {
 	// TODO: Validate the params before sending
@@ -3983,9 +4847,9 @@ func (a *Client) RenewOrganizationLicensesSeats(params *RenewOrganizationLicense
 }
 
 /*
-  UpdateOrganization updates an organization
+UpdateOrganization updates an organization
 
-  Update an organization
+Update an organization
 */
 func (a *Client) UpdateOrganization(params *UpdateOrganizationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationOK, error) {
 	// TODO: Validate the params before sending
@@ -4024,9 +4888,9 @@ func (a *Client) UpdateOrganization(params *UpdateOrganizationParams, authInfo r
 }
 
 /*
-  UpdateOrganizationActionBatch updates an action batch
+UpdateOrganizationActionBatch updates an action batch
 
-  Update an action batch
+Update an action batch
 */
 func (a *Client) UpdateOrganizationActionBatch(params *UpdateOrganizationActionBatchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationActionBatchOK, error) {
 	// TODO: Validate the params before sending
@@ -4065,9 +4929,9 @@ func (a *Client) UpdateOrganizationActionBatch(params *UpdateOrganizationActionB
 }
 
 /*
-  UpdateOrganizationAdaptivePolicyACL updates an adaptive policy ACL
+UpdateOrganizationAdaptivePolicyACL updates an adaptive policy ACL
 
-  Updates an adaptive policy ACL
+Updates an adaptive policy ACL
 */
 func (a *Client) UpdateOrganizationAdaptivePolicyACL(params *UpdateOrganizationAdaptivePolicyACLParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationAdaptivePolicyACLOK, error) {
 	// TODO: Validate the params before sending
@@ -4077,7 +4941,7 @@ func (a *Client) UpdateOrganizationAdaptivePolicyACL(params *UpdateOrganizationA
 	op := &runtime.ClientOperation{
 		ID:                 "updateOrganizationAdaptivePolicyAcl",
 		Method:             "PUT",
-		PathPattern:        "/organizations/{organizationId}/adaptivePolicy/acls/{id}",
+		PathPattern:        "/organizations/{organizationId}/adaptivePolicy/acls/{aclId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
@@ -4106,9 +4970,9 @@ func (a *Client) UpdateOrganizationAdaptivePolicyACL(params *UpdateOrganizationA
 }
 
 /*
-  UpdateOrganizationAdaptivePolicyGroup updates an adaptive policy group
+UpdateOrganizationAdaptivePolicyGroup updates an adaptive policy group
 
-  Updates an adaptive policy group. If updating "Infrastructure", only the SGT is allowed. Cannot update "Unknown".
+Updates an adaptive policy group. If updating "Infrastructure", only the SGT is allowed. Cannot update "Unknown".
 */
 func (a *Client) UpdateOrganizationAdaptivePolicyGroup(params *UpdateOrganizationAdaptivePolicyGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationAdaptivePolicyGroupOK, error) {
 	// TODO: Validate the params before sending
@@ -4118,7 +4982,7 @@ func (a *Client) UpdateOrganizationAdaptivePolicyGroup(params *UpdateOrganizatio
 	op := &runtime.ClientOperation{
 		ID:                 "updateOrganizationAdaptivePolicyGroup",
 		Method:             "PUT",
-		PathPattern:        "/organizations/{organizationId}/adaptivePolicy/groups/{groupId}",
+		PathPattern:        "/organizations/{organizationId}/adaptivePolicy/groups/{id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
@@ -4147,9 +5011,9 @@ func (a *Client) UpdateOrganizationAdaptivePolicyGroup(params *UpdateOrganizatio
 }
 
 /*
-  UpdateOrganizationAdaptivePolicyPolicy updates an adaptive policy
+UpdateOrganizationAdaptivePolicyPolicy updates an adaptive policy
 
-  Update an Adaptive Policy
+Update an Adaptive Policy
 */
 func (a *Client) UpdateOrganizationAdaptivePolicyPolicy(params *UpdateOrganizationAdaptivePolicyPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationAdaptivePolicyPolicyOK, error) {
 	// TODO: Validate the params before sending
@@ -4159,7 +5023,7 @@ func (a *Client) UpdateOrganizationAdaptivePolicyPolicy(params *UpdateOrganizati
 	op := &runtime.ClientOperation{
 		ID:                 "updateOrganizationAdaptivePolicyPolicy",
 		Method:             "PUT",
-		PathPattern:        "/organizations/{organizationId}/adaptivePolicy/policies/{adaptivePolicyId}",
+		PathPattern:        "/organizations/{organizationId}/adaptivePolicy/policies/{id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
@@ -4188,9 +5052,9 @@ func (a *Client) UpdateOrganizationAdaptivePolicyPolicy(params *UpdateOrganizati
 }
 
 /*
-  UpdateOrganizationAdaptivePolicySettings updates global adaptive policy settings
+UpdateOrganizationAdaptivePolicySettings updates global adaptive policy settings
 
-  Update global adaptive policy settings
+Update global adaptive policy settings
 */
 func (a *Client) UpdateOrganizationAdaptivePolicySettings(params *UpdateOrganizationAdaptivePolicySettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationAdaptivePolicySettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -4229,9 +5093,9 @@ func (a *Client) UpdateOrganizationAdaptivePolicySettings(params *UpdateOrganiza
 }
 
 /*
-  UpdateOrganizationAdmin updates an administrator
+UpdateOrganizationAdmin updates an administrator
 
-  Update an administrator
+Update an administrator
 */
 func (a *Client) UpdateOrganizationAdmin(params *UpdateOrganizationAdminParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationAdminOK, error) {
 	// TODO: Validate the params before sending
@@ -4270,9 +5134,9 @@ func (a *Client) UpdateOrganizationAdmin(params *UpdateOrganizationAdminParams, 
 }
 
 /*
-  UpdateOrganizationAlertsProfile updates an organization wide alert config
+UpdateOrganizationAlertsProfile updates an organization wide alert config
 
-  Update an organization-wide alert config
+Update an organization-wide alert config
 */
 func (a *Client) UpdateOrganizationAlertsProfile(params *UpdateOrganizationAlertsProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationAlertsProfileOK, error) {
 	// TODO: Validate the params before sending
@@ -4311,9 +5175,9 @@ func (a *Client) UpdateOrganizationAlertsProfile(params *UpdateOrganizationAlert
 }
 
 /*
-  UpdateOrganizationBrandingPoliciesPriorities updates the priority ordering of an organization s branding policies
+UpdateOrganizationBrandingPoliciesPriorities updates the priority ordering of an organization s branding policies
 
-  Update the priority ordering of an organization's branding policies.
+Update the priority ordering of an organization's branding policies.
 */
 func (a *Client) UpdateOrganizationBrandingPoliciesPriorities(params *UpdateOrganizationBrandingPoliciesPrioritiesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationBrandingPoliciesPrioritiesOK, error) {
 	// TODO: Validate the params before sending
@@ -4352,9 +5216,9 @@ func (a *Client) UpdateOrganizationBrandingPoliciesPriorities(params *UpdateOrga
 }
 
 /*
-  UpdateOrganizationBrandingPolicy updates a branding policy
+UpdateOrganizationBrandingPolicy updates a branding policy
 
-  Update a branding policy
+Update a branding policy
 */
 func (a *Client) UpdateOrganizationBrandingPolicy(params *UpdateOrganizationBrandingPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationBrandingPolicyOK, error) {
 	// TODO: Validate the params before sending
@@ -4393,9 +5257,9 @@ func (a *Client) UpdateOrganizationBrandingPolicy(params *UpdateOrganizationBran
 }
 
 /*
-  UpdateOrganizationConfigTemplate updates a configuration template
+UpdateOrganizationConfigTemplate updates a configuration template
 
-  Update a configuration template
+Update a configuration template
 */
 func (a *Client) UpdateOrganizationConfigTemplate(params *UpdateOrganizationConfigTemplateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationConfigTemplateOK, error) {
 	// TODO: Validate the params before sending
@@ -4434,9 +5298,9 @@ func (a *Client) UpdateOrganizationConfigTemplate(params *UpdateOrganizationConf
 }
 
 /*
-  UpdateOrganizationEarlyAccessFeaturesOptIn updates an early access feature opt in for an organization
+UpdateOrganizationEarlyAccessFeaturesOptIn updates an early access feature opt in for an organization
 
-  Update an early access feature opt-in for an organization
+Update an early access feature opt-in for an organization
 */
 func (a *Client) UpdateOrganizationEarlyAccessFeaturesOptIn(params *UpdateOrganizationEarlyAccessFeaturesOptInParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationEarlyAccessFeaturesOptInOK, error) {
 	// TODO: Validate the params before sending
@@ -4475,9 +5339,9 @@ func (a *Client) UpdateOrganizationEarlyAccessFeaturesOptIn(params *UpdateOrgani
 }
 
 /*
-  UpdateOrganizationLicense updates a license
+UpdateOrganizationLicense updates a license
 
-  Update a license
+Update a license
 */
 func (a *Client) UpdateOrganizationLicense(params *UpdateOrganizationLicenseParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationLicenseOK, error) {
 	// TODO: Validate the params before sending
@@ -4516,9 +5380,9 @@ func (a *Client) UpdateOrganizationLicense(params *UpdateOrganizationLicensePara
 }
 
 /*
-  UpdateOrganizationLoginSecurity updates the login security settings for an organization
+UpdateOrganizationLoginSecurity updates the login security settings for an organization
 
-  Update the login security settings for an organization
+Update the login security settings for an organization
 */
 func (a *Client) UpdateOrganizationLoginSecurity(params *UpdateOrganizationLoginSecurityParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationLoginSecurityOK, error) {
 	// TODO: Validate the params before sending
@@ -4557,9 +5421,91 @@ func (a *Client) UpdateOrganizationLoginSecurity(params *UpdateOrganizationLogin
 }
 
 /*
-  UpdateOrganizationSaml updates the s a m l s s o enabled settings for an organization
+UpdateOrganizationPolicyObject updates a policy object
 
-  Updates the SAML SSO enabled settings for an organization.
+Updates a Policy Object.
+*/
+func (a *Client) UpdateOrganizationPolicyObject(params *UpdateOrganizationPolicyObjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationPolicyObjectOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateOrganizationPolicyObjectParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "updateOrganizationPolicyObject",
+		Method:             "PUT",
+		PathPattern:        "/organizations/{organizationId}/policyObjects/{policyObjectId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateOrganizationPolicyObjectReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateOrganizationPolicyObjectOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for updateOrganizationPolicyObject: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UpdateOrganizationPolicyObjectsGroup updates a policy object group
+
+Updates a Policy Object Group.
+*/
+func (a *Client) UpdateOrganizationPolicyObjectsGroup(params *UpdateOrganizationPolicyObjectsGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationPolicyObjectsGroupOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateOrganizationPolicyObjectsGroupParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "updateOrganizationPolicyObjectsGroup",
+		Method:             "PUT",
+		PathPattern:        "/organizations/{organizationId}/policyObjects/groups/{policyObjectGroupId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateOrganizationPolicyObjectsGroupReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateOrganizationPolicyObjectsGroupOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for updateOrganizationPolicyObjectsGroup: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UpdateOrganizationSaml updates the s a m l s s o enabled settings for an organization
+
+Updates the SAML SSO enabled settings for an organization.
 */
 func (a *Client) UpdateOrganizationSaml(params *UpdateOrganizationSamlParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationSamlOK, error) {
 	// TODO: Validate the params before sending
@@ -4598,9 +5544,9 @@ func (a *Client) UpdateOrganizationSaml(params *UpdateOrganizationSamlParams, au
 }
 
 /*
-  UpdateOrganizationSamlIdp updates a s a m l Id p in your organization
+UpdateOrganizationSamlIdp updates a s a m l Id p in your organization
 
-  Update a SAML IdP in your organization
+Update a SAML IdP in your organization
 */
 func (a *Client) UpdateOrganizationSamlIdp(params *UpdateOrganizationSamlIdpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationSamlIdpOK, error) {
 	// TODO: Validate the params before sending
@@ -4639,9 +5585,9 @@ func (a *Client) UpdateOrganizationSamlIdp(params *UpdateOrganizationSamlIdpPara
 }
 
 /*
-  UpdateOrganizationSamlRole updates a s a m l role
+UpdateOrganizationSamlRole updates a s a m l role
 
-  Update a SAML role
+Update a SAML role
 */
 func (a *Client) UpdateOrganizationSamlRole(params *UpdateOrganizationSamlRoleParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationSamlRoleOK, error) {
 	// TODO: Validate the params before sending
@@ -4680,9 +5626,9 @@ func (a *Client) UpdateOrganizationSamlRole(params *UpdateOrganizationSamlRolePa
 }
 
 /*
-  UpdateOrganizationSnmp updates the s n m p settings for an organization
+UpdateOrganizationSnmp updates the s n m p settings for an organization
 
-  Update the SNMP settings for an organization
+Update the SNMP settings for an organization
 */
 func (a *Client) UpdateOrganizationSnmp(params *UpdateOrganizationSnmpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationSnmpOK, error) {
 	// TODO: Validate the params before sending

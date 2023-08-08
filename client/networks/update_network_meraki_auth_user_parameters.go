@@ -52,17 +52,25 @@ func NewUpdateNetworkMerakiAuthUserParamsWithHTTPClient(client *http.Client) *Up
 	}
 }
 
-/* UpdateNetworkMerakiAuthUserParams contains all the parameters to send to the API endpoint
-   for the update network meraki auth user operation.
+/*
+UpdateNetworkMerakiAuthUserParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network meraki auth user operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkMerakiAuthUserParams struct {
 
-	// MerakiAuthUserID.
+	/* MerakiAuthUserID.
+
+	   Meraki auth user ID
+	*/
 	MerakiAuthUserID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkMerakiAuthUser.

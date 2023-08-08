@@ -33,7 +33,7 @@ func (o *CreateDeviceSwitchRoutingInterfaceReader) ReadResponse(response runtime
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /devices/{serial}/switch/routing/interfaces] createDeviceSwitchRoutingInterface", response, response.Code())
 	}
 }
 
@@ -42,12 +42,13 @@ func NewCreateDeviceSwitchRoutingInterfaceCreated() *CreateDeviceSwitchRoutingIn
 	return &CreateDeviceSwitchRoutingInterfaceCreated{}
 }
 
-/* CreateDeviceSwitchRoutingInterfaceCreated describes a response with status code 201, with default header values.
+/*
+CreateDeviceSwitchRoutingInterfaceCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
 type CreateDeviceSwitchRoutingInterfaceCreated struct {
-	Payload interface{}
+	Payload *CreateDeviceSwitchRoutingInterfaceCreatedBody
 }
 
 // IsSuccess returns true when this create device switch routing interface created response has a 2xx status code
@@ -75,6 +76,11 @@ func (o *CreateDeviceSwitchRoutingInterfaceCreated) IsCode(code int) bool {
 	return code == 201
 }
 
+// Code gets the status code for the create device switch routing interface created response
+func (o *CreateDeviceSwitchRoutingInterfaceCreated) Code() int {
+	return 201
+}
+
 func (o *CreateDeviceSwitchRoutingInterfaceCreated) Error() string {
 	return fmt.Sprintf("[POST /devices/{serial}/switch/routing/interfaces][%d] createDeviceSwitchRoutingInterfaceCreated  %+v", 201, o.Payload)
 }
@@ -83,52 +89,56 @@ func (o *CreateDeviceSwitchRoutingInterfaceCreated) String() string {
 	return fmt.Sprintf("[POST /devices/{serial}/switch/routing/interfaces][%d] createDeviceSwitchRoutingInterfaceCreated  %+v", 201, o.Payload)
 }
 
-func (o *CreateDeviceSwitchRoutingInterfaceCreated) GetPayload() interface{} {
+func (o *CreateDeviceSwitchRoutingInterfaceCreated) GetPayload() *CreateDeviceSwitchRoutingInterfaceCreatedBody {
 	return o.Payload
 }
 
 func (o *CreateDeviceSwitchRoutingInterfaceCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(CreateDeviceSwitchRoutingInterfaceCreatedBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*CreateDeviceSwitchRoutingInterfaceBody create device switch routing interface body
+/*
+CreateDeviceSwitchRoutingInterfaceBody create device switch routing interface body
 // Example: {"defaultGateway":"192.168.1.1","interfaceIp":"192.168.1.2","ipv6":{"address":"1:2:3:4::1","assignmentMode":"static","gateway":"1:2:3:4::2","prefix":"1:2:3:4::/48"},"multicastRouting":"disabled","name":"L3 interface","ospfSettings":{"area":"0","cost":1,"isPassiveEnabled":true},"ospfV3":{"area":"1","cost":2,"isPassiveEnabled":true},"subnet":"192.168.1.0/24","vlanId":100}
 swagger:model CreateDeviceSwitchRoutingInterfaceBody
 */
 type CreateDeviceSwitchRoutingInterfaceBody struct {
 
-	// The next hop for any traffic that isn't going to a directly connected subnet or over a static route. This IP address must exist in a subnet with a routed interface.
+	// The next hop for any traffic that isn't going to a directly connected subnet or over a static route.         This IP address must exist in a subnet with a routed interface. Required if this is the first IPv4 interface.
 	DefaultGateway string `json:"defaultGateway,omitempty"`
 
-	// The IP address this switch will use for layer 3 routing on this VLAN or subnet. This cannot be the same as the switch's management IP.
+	// The IP address this switch will use for layer 3 routing on this VLAN or subnet. This cannot be the same         as the switch's management IP.
 	InterfaceIP string `json:"interfaceIp,omitempty"`
 
 	// ipv6
 	IPV6 *CreateDeviceSwitchRoutingInterfaceParamsBodyIPV6 `json:"ipv6,omitempty"`
 
-	// Enable multicast support if, multicast routing between VLANs is required. Options are, 'disabled', 'enabled' or 'IGMP snooping querier'. Default is 'disabled'.
-	// Enum: [disabled enabled IGMP snooping querier]
+	// Enable multicast support if, multicast routing between VLANs is required. Options are:         'disabled', 'enabled' or 'IGMP snooping querier'. Default is 'disabled'.
+	// Enum: [IGMP snooping querier disabled enabled]
 	MulticastRouting string `json:"multicastRouting,omitempty"`
 
 	// A friendly name or description for the interface or VLAN.
-	// Required: true
-	Name *string `json:"name"`
+	Name string `json:"name,omitempty"`
 
 	// ospf settings
 	OspfSettings *CreateDeviceSwitchRoutingInterfaceParamsBodyOspfSettings `json:"ospfSettings,omitempty"`
+
+	// ospf v3
+	OspfV3 *CreateDeviceSwitchRoutingInterfaceParamsBodyOspfV3 `json:"ospfV3,omitempty"`
 
 	// The network that this routed interface is on, in CIDR notation (ex. 10.1.1.0/24).
 	Subnet string `json:"subnet,omitempty"`
 
 	// The VLAN this routed interface is on. VLAN must be between 1 and 4094.
-	// Required: true
-	VlanID *int64 `json:"vlanId"`
+	VlanID int64 `json:"vlanId,omitempty"`
 }
 
 // Validate validates this create device switch routing interface body
@@ -143,15 +153,11 @@ func (o *CreateDeviceSwitchRoutingInterfaceBody) Validate(formats strfmt.Registr
 		res = append(res, err)
 	}
 
-	if err := o.validateName(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := o.validateOspfSettings(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := o.validateVlanID(formats); err != nil {
+	if err := o.validateOspfV3(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -184,7 +190,7 @@ var createDeviceSwitchRoutingInterfaceBodyTypeMulticastRoutingPropEnum []interfa
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["disabled","enabled","IGMP snooping querier"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["IGMP snooping querier","disabled","enabled"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -194,14 +200,14 @@ func init() {
 
 const (
 
+	// CreateDeviceSwitchRoutingInterfaceBodyMulticastRoutingIGMPSnoopingQuerier captures enum value "IGMP snooping querier"
+	CreateDeviceSwitchRoutingInterfaceBodyMulticastRoutingIGMPSnoopingQuerier string = "IGMP snooping querier"
+
 	// CreateDeviceSwitchRoutingInterfaceBodyMulticastRoutingDisabled captures enum value "disabled"
 	CreateDeviceSwitchRoutingInterfaceBodyMulticastRoutingDisabled string = "disabled"
 
 	// CreateDeviceSwitchRoutingInterfaceBodyMulticastRoutingEnabled captures enum value "enabled"
 	CreateDeviceSwitchRoutingInterfaceBodyMulticastRoutingEnabled string = "enabled"
-
-	// CreateDeviceSwitchRoutingInterfaceBodyMulticastRoutingIGMPSnoopingQuerier captures enum value "IGMP snooping querier"
-	CreateDeviceSwitchRoutingInterfaceBodyMulticastRoutingIGMPSnoopingQuerier string = "IGMP snooping querier"
 )
 
 // prop value enum
@@ -219,15 +225,6 @@ func (o *CreateDeviceSwitchRoutingInterfaceBody) validateMulticastRouting(format
 
 	// value enum
 	if err := o.validateMulticastRoutingEnum("createDeviceSwitchRoutingInterface"+"."+"multicastRouting", "body", o.MulticastRouting); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (o *CreateDeviceSwitchRoutingInterfaceBody) validateName(formats strfmt.Registry) error {
-
-	if err := validate.Required("createDeviceSwitchRoutingInterface"+"."+"name", "body", o.Name); err != nil {
 		return err
 	}
 
@@ -253,10 +250,20 @@ func (o *CreateDeviceSwitchRoutingInterfaceBody) validateOspfSettings(formats st
 	return nil
 }
 
-func (o *CreateDeviceSwitchRoutingInterfaceBody) validateVlanID(formats strfmt.Registry) error {
+func (o *CreateDeviceSwitchRoutingInterfaceBody) validateOspfV3(formats strfmt.Registry) error {
+	if swag.IsZero(o.OspfV3) { // not required
+		return nil
+	}
 
-	if err := validate.Required("createDeviceSwitchRoutingInterface"+"."+"vlanId", "body", o.VlanID); err != nil {
-		return err
+	if o.OspfV3 != nil {
+		if err := o.OspfV3.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createDeviceSwitchRoutingInterface" + "." + "ospfV3")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createDeviceSwitchRoutingInterface" + "." + "ospfV3")
+			}
+			return err
+		}
 	}
 
 	return nil
@@ -274,6 +281,10 @@ func (o *CreateDeviceSwitchRoutingInterfaceBody) ContextValidate(ctx context.Con
 		res = append(res, err)
 	}
 
+	if err := o.contextValidateOspfV3(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -283,6 +294,11 @@ func (o *CreateDeviceSwitchRoutingInterfaceBody) ContextValidate(ctx context.Con
 func (o *CreateDeviceSwitchRoutingInterfaceBody) contextValidateIPV6(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.IPV6 != nil {
+
+		if swag.IsZero(o.IPV6) { // not required
+			return nil
+		}
+
 		if err := o.IPV6.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createDeviceSwitchRoutingInterface" + "." + "ipv6")
@@ -299,11 +315,37 @@ func (o *CreateDeviceSwitchRoutingInterfaceBody) contextValidateIPV6(ctx context
 func (o *CreateDeviceSwitchRoutingInterfaceBody) contextValidateOspfSettings(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.OspfSettings != nil {
+
+		if swag.IsZero(o.OspfSettings) { // not required
+			return nil
+		}
+
 		if err := o.OspfSettings.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createDeviceSwitchRoutingInterface" + "." + "ospfSettings")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("createDeviceSwitchRoutingInterface" + "." + "ospfSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *CreateDeviceSwitchRoutingInterfaceBody) contextValidateOspfV3(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.OspfV3 != nil {
+
+		if swag.IsZero(o.OspfV3) { // not required
+			return nil
+		}
+
+		if err := o.OspfV3.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createDeviceSwitchRoutingInterface" + "." + "ospfV3")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createDeviceSwitchRoutingInterface" + "." + "ospfV3")
 			}
 			return err
 		}
@@ -330,18 +372,373 @@ func (o *CreateDeviceSwitchRoutingInterfaceBody) UnmarshalBinary(b []byte) error
 	return nil
 }
 
-/*CreateDeviceSwitchRoutingInterfaceParamsBodyIPV6 The IPv6 settings of the interface.
+/*
+CreateDeviceSwitchRoutingInterfaceCreatedBody create device switch routing interface created body
+swagger:model CreateDeviceSwitchRoutingInterfaceCreatedBody
+*/
+type CreateDeviceSwitchRoutingInterfaceCreatedBody struct {
+
+	// IPv4 default gateway
+	DefaultGateway string `json:"defaultGateway,omitempty"`
+
+	// The id
+	InterfaceID string `json:"interfaceId,omitempty"`
+
+	// IPv4 address
+	InterfaceIP string `json:"interfaceIp,omitempty"`
+
+	// ipv6
+	IPV6 *CreateDeviceSwitchRoutingInterfaceCreatedBodyIPV6 `json:"ipv6,omitempty"`
+
+	// Multicast routing status
+	MulticastRouting string `json:"multicastRouting,omitempty"`
+
+	// The name
+	Name string `json:"name,omitempty"`
+
+	// ospf settings
+	OspfSettings *CreateDeviceSwitchRoutingInterfaceCreatedBodyOspfSettings `json:"ospfSettings,omitempty"`
+
+	// ospf v3
+	OspfV3 *CreateDeviceSwitchRoutingInterfaceCreatedBodyOspfV3 `json:"ospfV3,omitempty"`
+
+	// IPv4 subnet
+	Subnet string `json:"subnet,omitempty"`
+
+	// VLAN id
+	VlanID int64 `json:"vlanId,omitempty"`
+}
+
+// Validate validates this create device switch routing interface created body
+func (o *CreateDeviceSwitchRoutingInterfaceCreatedBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateIPV6(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateOspfSettings(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateOspfV3(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateDeviceSwitchRoutingInterfaceCreatedBody) validateIPV6(formats strfmt.Registry) error {
+	if swag.IsZero(o.IPV6) { // not required
+		return nil
+	}
+
+	if o.IPV6 != nil {
+		if err := o.IPV6.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createDeviceSwitchRoutingInterfaceCreated" + "." + "ipv6")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createDeviceSwitchRoutingInterfaceCreated" + "." + "ipv6")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *CreateDeviceSwitchRoutingInterfaceCreatedBody) validateOspfSettings(formats strfmt.Registry) error {
+	if swag.IsZero(o.OspfSettings) { // not required
+		return nil
+	}
+
+	if o.OspfSettings != nil {
+		if err := o.OspfSettings.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createDeviceSwitchRoutingInterfaceCreated" + "." + "ospfSettings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createDeviceSwitchRoutingInterfaceCreated" + "." + "ospfSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *CreateDeviceSwitchRoutingInterfaceCreatedBody) validateOspfV3(formats strfmt.Registry) error {
+	if swag.IsZero(o.OspfV3) { // not required
+		return nil
+	}
+
+	if o.OspfV3 != nil {
+		if err := o.OspfV3.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createDeviceSwitchRoutingInterfaceCreated" + "." + "ospfV3")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createDeviceSwitchRoutingInterfaceCreated" + "." + "ospfV3")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this create device switch routing interface created body based on the context it is used
+func (o *CreateDeviceSwitchRoutingInterfaceCreatedBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateIPV6(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateOspfSettings(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateOspfV3(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateDeviceSwitchRoutingInterfaceCreatedBody) contextValidateIPV6(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.IPV6 != nil {
+
+		if swag.IsZero(o.IPV6) { // not required
+			return nil
+		}
+
+		if err := o.IPV6.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createDeviceSwitchRoutingInterfaceCreated" + "." + "ipv6")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createDeviceSwitchRoutingInterfaceCreated" + "." + "ipv6")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *CreateDeviceSwitchRoutingInterfaceCreatedBody) contextValidateOspfSettings(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.OspfSettings != nil {
+
+		if swag.IsZero(o.OspfSettings) { // not required
+			return nil
+		}
+
+		if err := o.OspfSettings.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createDeviceSwitchRoutingInterfaceCreated" + "." + "ospfSettings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createDeviceSwitchRoutingInterfaceCreated" + "." + "ospfSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *CreateDeviceSwitchRoutingInterfaceCreatedBody) contextValidateOspfV3(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.OspfV3 != nil {
+
+		if swag.IsZero(o.OspfV3) { // not required
+			return nil
+		}
+
+		if err := o.OspfV3.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createDeviceSwitchRoutingInterfaceCreated" + "." + "ospfV3")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createDeviceSwitchRoutingInterfaceCreated" + "." + "ospfV3")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateDeviceSwitchRoutingInterfaceCreatedBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateDeviceSwitchRoutingInterfaceCreatedBody) UnmarshalBinary(b []byte) error {
+	var res CreateDeviceSwitchRoutingInterfaceCreatedBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateDeviceSwitchRoutingInterfaceCreatedBodyIPV6 IPv6 addressing
+swagger:model CreateDeviceSwitchRoutingInterfaceCreatedBodyIPV6
+*/
+type CreateDeviceSwitchRoutingInterfaceCreatedBodyIPV6 struct {
+
+	// IPv6 address
+	Address string `json:"address,omitempty"`
+
+	// Assignment mode
+	AssignmentMode string `json:"assignmentMode,omitempty"`
+
+	// IPv6 gateway
+	Gateway string `json:"gateway,omitempty"`
+
+	// IPv6 subnet
+	Prefix string `json:"prefix,omitempty"`
+}
+
+// Validate validates this create device switch routing interface created body IP v6
+func (o *CreateDeviceSwitchRoutingInterfaceCreatedBodyIPV6) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this create device switch routing interface created body IP v6 based on context it is used
+func (o *CreateDeviceSwitchRoutingInterfaceCreatedBodyIPV6) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateDeviceSwitchRoutingInterfaceCreatedBodyIPV6) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateDeviceSwitchRoutingInterfaceCreatedBodyIPV6) UnmarshalBinary(b []byte) error {
+	var res CreateDeviceSwitchRoutingInterfaceCreatedBodyIPV6
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateDeviceSwitchRoutingInterfaceCreatedBodyOspfSettings IPv4 OSPF Settings
+swagger:model CreateDeviceSwitchRoutingInterfaceCreatedBodyOspfSettings
+*/
+type CreateDeviceSwitchRoutingInterfaceCreatedBodyOspfSettings struct {
+
+	// Area id
+	Area string `json:"area,omitempty"`
+
+	// OSPF Cost
+	Cost int64 `json:"cost,omitempty"`
+
+	// Disable sending Hello packets on this interface's IPv4 area
+	IsPassiveEnabled bool `json:"isPassiveEnabled,omitempty"`
+}
+
+// Validate validates this create device switch routing interface created body ospf settings
+func (o *CreateDeviceSwitchRoutingInterfaceCreatedBodyOspfSettings) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this create device switch routing interface created body ospf settings based on context it is used
+func (o *CreateDeviceSwitchRoutingInterfaceCreatedBodyOspfSettings) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateDeviceSwitchRoutingInterfaceCreatedBodyOspfSettings) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateDeviceSwitchRoutingInterfaceCreatedBodyOspfSettings) UnmarshalBinary(b []byte) error {
+	var res CreateDeviceSwitchRoutingInterfaceCreatedBodyOspfSettings
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateDeviceSwitchRoutingInterfaceCreatedBodyOspfV3 IPv6 OSPF Settings
+swagger:model CreateDeviceSwitchRoutingInterfaceCreatedBodyOspfV3
+*/
+type CreateDeviceSwitchRoutingInterfaceCreatedBodyOspfV3 struct {
+
+	// Area id
+	Area string `json:"area,omitempty"`
+
+	// OSPF Cost
+	Cost int64 `json:"cost,omitempty"`
+
+	// Disable sending Hello packets on this interface's IPv6 area
+	IsPassiveEnabled bool `json:"isPassiveEnabled,omitempty"`
+}
+
+// Validate validates this create device switch routing interface created body ospf v3
+func (o *CreateDeviceSwitchRoutingInterfaceCreatedBodyOspfV3) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this create device switch routing interface created body ospf v3 based on context it is used
+func (o *CreateDeviceSwitchRoutingInterfaceCreatedBodyOspfV3) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateDeviceSwitchRoutingInterfaceCreatedBodyOspfV3) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateDeviceSwitchRoutingInterfaceCreatedBodyOspfV3) UnmarshalBinary(b []byte) error {
+	var res CreateDeviceSwitchRoutingInterfaceCreatedBodyOspfV3
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateDeviceSwitchRoutingInterfaceParamsBodyIPV6 The IPv6 settings of the interface.
 swagger:model CreateDeviceSwitchRoutingInterfaceParamsBodyIPV6
 */
 type CreateDeviceSwitchRoutingInterfaceParamsBodyIPV6 struct {
 
-	// The IPv6 address of the interface. Required if assignmentMode is 'static'. Must not be included if assignmentMode is 'eui-64'.
+	// The IPv6 address of the interface. Required if assignmentMode is 'static'. Must not be included if           assignmentMode is 'eui-64'.
 	Address string `json:"address,omitempty"`
 
 	// The IPv6 assignment mode for the interface. Can be either 'eui-64' or 'static'.
 	AssignmentMode string `json:"assignmentMode,omitempty"`
 
-	// The IPv6 default gateway of the interface. Required if prefix is defined and this is the first interface with IPv6 configured for the switch.
+	// The IPv6 default gateway of the interface. Required if prefix is defined and this is the first           interface with IPv6 configured for the switch.
 	Gateway string `json:"gateway,omitempty"`
 
 	// The IPv6 prefix of the interface. Required if IPv6 object is included.
@@ -376,15 +773,16 @@ func (o *CreateDeviceSwitchRoutingInterfaceParamsBodyIPV6) UnmarshalBinary(b []b
 	return nil
 }
 
-/*CreateDeviceSwitchRoutingInterfaceParamsBodyOspfSettings The OSPF routing settings of the interface.
+/*
+CreateDeviceSwitchRoutingInterfaceParamsBodyOspfSettings The OSPF routing settings of the interface.
 swagger:model CreateDeviceSwitchRoutingInterfaceParamsBodyOspfSettings
 */
 type CreateDeviceSwitchRoutingInterfaceParamsBodyOspfSettings struct {
 
-	// The OSPF area to which this interface should belong. Can be either 'disabled' or the identifier of an existing OSPF area. Defaults to 'disabled'.
+	// The OSPF area to which this interface should belong. Can be either 'disabled' or the identifier of an           existing OSPF area. Defaults to 'disabled'.
 	Area string `json:"area,omitempty"`
 
-	// The path cost for this interface. Defaults to 1, but can be increased up to 65535 to give lower priority.
+	// The path cost for this interface. Defaults to 1, but can be increased up to 65535           to give lower priority.
 	Cost int64 `json:"cost,omitempty"`
 
 	// When enabled, OSPF will not run on the interface, but the subnet will still be advertised.
@@ -412,6 +810,50 @@ func (o *CreateDeviceSwitchRoutingInterfaceParamsBodyOspfSettings) MarshalBinary
 // UnmarshalBinary interface implementation
 func (o *CreateDeviceSwitchRoutingInterfaceParamsBodyOspfSettings) UnmarshalBinary(b []byte) error {
 	var res CreateDeviceSwitchRoutingInterfaceParamsBodyOspfSettings
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateDeviceSwitchRoutingInterfaceParamsBodyOspfV3 The OSPFv3 routing settings of the interface.
+swagger:model CreateDeviceSwitchRoutingInterfaceParamsBodyOspfV3
+*/
+type CreateDeviceSwitchRoutingInterfaceParamsBodyOspfV3 struct {
+
+	// The OSPFv3 area to which this interface should belong. Can be either 'disabled' or the identifier of an           existing OSPFv3 area. Defaults to 'disabled'.
+	Area string `json:"area,omitempty"`
+
+	// The path cost for this interface. Defaults to 1, but can be increased up to 65535           to give lower priority.
+	Cost int64 `json:"cost,omitempty"`
+
+	// When enabled, OSPFv3 will not run on the interface, but the subnet will still be advertised.
+	IsPassiveEnabled bool `json:"isPassiveEnabled,omitempty"`
+}
+
+// Validate validates this create device switch routing interface params body ospf v3
+func (o *CreateDeviceSwitchRoutingInterfaceParamsBodyOspfV3) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this create device switch routing interface params body ospf v3 based on context it is used
+func (o *CreateDeviceSwitchRoutingInterfaceParamsBodyOspfV3) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateDeviceSwitchRoutingInterfaceParamsBodyOspfV3) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateDeviceSwitchRoutingInterfaceParamsBodyOspfV3) UnmarshalBinary(b []byte) error {
+	var res CreateDeviceSwitchRoutingInterfaceParamsBodyOspfV3
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

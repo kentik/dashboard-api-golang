@@ -9,6 +9,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
@@ -32,7 +33,7 @@ func (o *CreateNetworkFloorPlanReader) ReadResponse(response runtime.ClientRespo
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/floorPlans] createNetworkFloorPlan", response, response.Code())
 	}
 }
 
@@ -41,12 +42,13 @@ func NewCreateNetworkFloorPlanCreated() *CreateNetworkFloorPlanCreated {
 	return &CreateNetworkFloorPlanCreated{}
 }
 
-/* CreateNetworkFloorPlanCreated describes a response with status code 201, with default header values.
+/*
+CreateNetworkFloorPlanCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
 type CreateNetworkFloorPlanCreated struct {
-	Payload interface{}
+	Payload *CreateNetworkFloorPlanCreatedBody
 }
 
 // IsSuccess returns true when this create network floor plan created response has a 2xx status code
@@ -74,6 +76,11 @@ func (o *CreateNetworkFloorPlanCreated) IsCode(code int) bool {
 	return code == 201
 }
 
+// Code gets the status code for the create network floor plan created response
+func (o *CreateNetworkFloorPlanCreated) Code() int {
+	return 201
+}
+
 func (o *CreateNetworkFloorPlanCreated) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/floorPlans][%d] createNetworkFloorPlanCreated  %+v", 201, o.Payload)
 }
@@ -82,22 +89,25 @@ func (o *CreateNetworkFloorPlanCreated) String() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/floorPlans][%d] createNetworkFloorPlanCreated  %+v", 201, o.Payload)
 }
 
-func (o *CreateNetworkFloorPlanCreated) GetPayload() interface{} {
+func (o *CreateNetworkFloorPlanCreated) GetPayload() *CreateNetworkFloorPlanCreatedBody {
 	return o.Payload
 }
 
 func (o *CreateNetworkFloorPlanCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(CreateNetworkFloorPlanCreatedBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*CreateNetworkFloorPlanBody create network floor plan body
-// Example: {"imageContents":"Q2lzY28gTWVyYWtp","name":"HQ Floor Plan"}
+/*
+CreateNetworkFloorPlanBody create network floor plan body
+// Example: {"bottomLeftCorner":{"lat":37.770040510499996,"lng":-122.38714009525},"bottomRightCorner":{"lat":37.770040510499996,"lng":-122.38714009525},"center":{"lat":37.770040510499996,"lng":-122.38714009525},"imageContents":"2a9edd3f4ffd80130c647d13eacb59f3","name":"HQ Floor Plan","topLeftCorner":{"lat":37.770040510499996,"lng":-122.38714009525},"topRightCorner":{"lat":37.770040510499996,"lng":-122.38714009525}}
 swagger:model CreateNetworkFloorPlanBody
 */
 type CreateNetworkFloorPlanBody struct {
@@ -311,6 +321,11 @@ func (o *CreateNetworkFloorPlanBody) ContextValidate(ctx context.Context, format
 func (o *CreateNetworkFloorPlanBody) contextValidateBottomLeftCorner(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.BottomLeftCorner != nil {
+
+		if swag.IsZero(o.BottomLeftCorner) { // not required
+			return nil
+		}
+
 		if err := o.BottomLeftCorner.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkFloorPlan" + "." + "bottomLeftCorner")
@@ -327,6 +342,11 @@ func (o *CreateNetworkFloorPlanBody) contextValidateBottomLeftCorner(ctx context
 func (o *CreateNetworkFloorPlanBody) contextValidateBottomRightCorner(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.BottomRightCorner != nil {
+
+		if swag.IsZero(o.BottomRightCorner) { // not required
+			return nil
+		}
+
 		if err := o.BottomRightCorner.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkFloorPlan" + "." + "bottomRightCorner")
@@ -343,6 +363,11 @@ func (o *CreateNetworkFloorPlanBody) contextValidateBottomRightCorner(ctx contex
 func (o *CreateNetworkFloorPlanBody) contextValidateCenter(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Center != nil {
+
+		if swag.IsZero(o.Center) { // not required
+			return nil
+		}
+
 		if err := o.Center.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkFloorPlan" + "." + "center")
@@ -359,6 +384,11 @@ func (o *CreateNetworkFloorPlanBody) contextValidateCenter(ctx context.Context, 
 func (o *CreateNetworkFloorPlanBody) contextValidateTopLeftCorner(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.TopLeftCorner != nil {
+
+		if swag.IsZero(o.TopLeftCorner) { // not required
+			return nil
+		}
+
 		if err := o.TopLeftCorner.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkFloorPlan" + "." + "topLeftCorner")
@@ -375,6 +405,11 @@ func (o *CreateNetworkFloorPlanBody) contextValidateTopLeftCorner(ctx context.Co
 func (o *CreateNetworkFloorPlanBody) contextValidateTopRightCorner(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.TopRightCorner != nil {
+
+		if swag.IsZero(o.TopRightCorner) { // not required
+			return nil
+		}
+
 		if err := o.TopRightCorner.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkFloorPlan" + "." + "topRightCorner")
@@ -406,7 +441,674 @@ func (o *CreateNetworkFloorPlanBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*CreateNetworkFloorPlanParamsBodyBottomLeftCorner The longitude and latitude of the bottom left corner of your floor plan.
+/*
+CreateNetworkFloorPlanCreatedBody create network floor plan created body
+swagger:model CreateNetworkFloorPlanCreatedBody
+*/
+type CreateNetworkFloorPlanCreatedBody struct {
+
+	// bottom left corner
+	BottomLeftCorner *CreateNetworkFloorPlanCreatedBodyBottomLeftCorner `json:"bottomLeftCorner,omitempty"`
+
+	// bottom right corner
+	BottomRightCorner *CreateNetworkFloorPlanCreatedBodyBottomRightCorner `json:"bottomRightCorner,omitempty"`
+
+	// center
+	Center *CreateNetworkFloorPlanCreatedBodyCenter `json:"center,omitempty"`
+
+	// List of devices for the floorplan
+	Devices []*CreateNetworkFloorPlanCreatedBodyDevicesItems0 `json:"devices"`
+
+	// Floor plan ID
+	FloorPlanID string `json:"floorPlanId,omitempty"`
+
+	// The height of your floor plan.
+	Height float32 `json:"height,omitempty"`
+
+	// The format type of the image.
+	ImageExtension string `json:"imageExtension,omitempty"`
+
+	// The file contents (a base 64 encoded string) of your new image. Supported formats are PNG, GIF, and JPG. Note that all images are saved as PNG files, regardless of the format they are uploaded in. If you upload a new image, and you do NOT specify any new geolocation fields ('center, 'topLeftCorner', etc), the floor plan will be recentered with no rotation in order to maintain the aspect ratio of your new image.
+	// Format: byte
+	ImageMd5 strfmt.Base64 `json:"imageMd5,omitempty"`
+
+	// The url link for the floor plan image.
+	ImageURL string `json:"imageUrl,omitempty"`
+
+	// The time the image url link will expire.
+	ImageURLExpiresAt string `json:"imageUrlExpiresAt,omitempty"`
+
+	// The name of your floor plan.
+	Name string `json:"name,omitempty"`
+
+	// top left corner
+	TopLeftCorner *CreateNetworkFloorPlanCreatedBodyTopLeftCorner `json:"topLeftCorner,omitempty"`
+
+	// top right corner
+	TopRightCorner *CreateNetworkFloorPlanCreatedBodyTopRightCorner `json:"topRightCorner,omitempty"`
+
+	// The width of your floor plan.
+	Width float32 `json:"width,omitempty"`
+}
+
+// Validate validates this create network floor plan created body
+func (o *CreateNetworkFloorPlanCreatedBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBottomLeftCorner(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateBottomRightCorner(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateCenter(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateDevices(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTopLeftCorner(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTopRightCorner(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateNetworkFloorPlanCreatedBody) validateBottomLeftCorner(formats strfmt.Registry) error {
+	if swag.IsZero(o.BottomLeftCorner) { // not required
+		return nil
+	}
+
+	if o.BottomLeftCorner != nil {
+		if err := o.BottomLeftCorner.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createNetworkFloorPlanCreated" + "." + "bottomLeftCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createNetworkFloorPlanCreated" + "." + "bottomLeftCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *CreateNetworkFloorPlanCreatedBody) validateBottomRightCorner(formats strfmt.Registry) error {
+	if swag.IsZero(o.BottomRightCorner) { // not required
+		return nil
+	}
+
+	if o.BottomRightCorner != nil {
+		if err := o.BottomRightCorner.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createNetworkFloorPlanCreated" + "." + "bottomRightCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createNetworkFloorPlanCreated" + "." + "bottomRightCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *CreateNetworkFloorPlanCreatedBody) validateCenter(formats strfmt.Registry) error {
+	if swag.IsZero(o.Center) { // not required
+		return nil
+	}
+
+	if o.Center != nil {
+		if err := o.Center.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createNetworkFloorPlanCreated" + "." + "center")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createNetworkFloorPlanCreated" + "." + "center")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *CreateNetworkFloorPlanCreatedBody) validateDevices(formats strfmt.Registry) error {
+	if swag.IsZero(o.Devices) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Devices); i++ {
+		if swag.IsZero(o.Devices[i]) { // not required
+			continue
+		}
+
+		if o.Devices[i] != nil {
+			if err := o.Devices[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("createNetworkFloorPlanCreated" + "." + "devices" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("createNetworkFloorPlanCreated" + "." + "devices" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *CreateNetworkFloorPlanCreatedBody) validateTopLeftCorner(formats strfmt.Registry) error {
+	if swag.IsZero(o.TopLeftCorner) { // not required
+		return nil
+	}
+
+	if o.TopLeftCorner != nil {
+		if err := o.TopLeftCorner.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createNetworkFloorPlanCreated" + "." + "topLeftCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createNetworkFloorPlanCreated" + "." + "topLeftCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *CreateNetworkFloorPlanCreatedBody) validateTopRightCorner(formats strfmt.Registry) error {
+	if swag.IsZero(o.TopRightCorner) { // not required
+		return nil
+	}
+
+	if o.TopRightCorner != nil {
+		if err := o.TopRightCorner.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createNetworkFloorPlanCreated" + "." + "topRightCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createNetworkFloorPlanCreated" + "." + "topRightCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this create network floor plan created body based on the context it is used
+func (o *CreateNetworkFloorPlanCreatedBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBottomLeftCorner(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateBottomRightCorner(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateCenter(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateDevices(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateTopLeftCorner(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateTopRightCorner(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateNetworkFloorPlanCreatedBody) contextValidateBottomLeftCorner(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.BottomLeftCorner != nil {
+
+		if swag.IsZero(o.BottomLeftCorner) { // not required
+			return nil
+		}
+
+		if err := o.BottomLeftCorner.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createNetworkFloorPlanCreated" + "." + "bottomLeftCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createNetworkFloorPlanCreated" + "." + "bottomLeftCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *CreateNetworkFloorPlanCreatedBody) contextValidateBottomRightCorner(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.BottomRightCorner != nil {
+
+		if swag.IsZero(o.BottomRightCorner) { // not required
+			return nil
+		}
+
+		if err := o.BottomRightCorner.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createNetworkFloorPlanCreated" + "." + "bottomRightCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createNetworkFloorPlanCreated" + "." + "bottomRightCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *CreateNetworkFloorPlanCreatedBody) contextValidateCenter(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Center != nil {
+
+		if swag.IsZero(o.Center) { // not required
+			return nil
+		}
+
+		if err := o.Center.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createNetworkFloorPlanCreated" + "." + "center")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createNetworkFloorPlanCreated" + "." + "center")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *CreateNetworkFloorPlanCreatedBody) contextValidateDevices(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Devices); i++ {
+
+		if o.Devices[i] != nil {
+
+			if swag.IsZero(o.Devices[i]) { // not required
+				return nil
+			}
+
+			if err := o.Devices[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("createNetworkFloorPlanCreated" + "." + "devices" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("createNetworkFloorPlanCreated" + "." + "devices" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *CreateNetworkFloorPlanCreatedBody) contextValidateTopLeftCorner(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.TopLeftCorner != nil {
+
+		if swag.IsZero(o.TopLeftCorner) { // not required
+			return nil
+		}
+
+		if err := o.TopLeftCorner.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createNetworkFloorPlanCreated" + "." + "topLeftCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createNetworkFloorPlanCreated" + "." + "topLeftCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *CreateNetworkFloorPlanCreatedBody) contextValidateTopRightCorner(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.TopRightCorner != nil {
+
+		if swag.IsZero(o.TopRightCorner) { // not required
+			return nil
+		}
+
+		if err := o.TopRightCorner.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createNetworkFloorPlanCreated" + "." + "topRightCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createNetworkFloorPlanCreated" + "." + "topRightCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateNetworkFloorPlanCreatedBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateNetworkFloorPlanCreatedBody) UnmarshalBinary(b []byte) error {
+	var res CreateNetworkFloorPlanCreatedBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateNetworkFloorPlanCreatedBodyBottomLeftCorner The longitude and latitude of the bottom left corner of your floor plan.
+swagger:model CreateNetworkFloorPlanCreatedBodyBottomLeftCorner
+*/
+type CreateNetworkFloorPlanCreatedBodyBottomLeftCorner struct {
+
+	// Latitude
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude
+	Lng float32 `json:"lng,omitempty"`
+}
+
+// Validate validates this create network floor plan created body bottom left corner
+func (o *CreateNetworkFloorPlanCreatedBodyBottomLeftCorner) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this create network floor plan created body bottom left corner based on context it is used
+func (o *CreateNetworkFloorPlanCreatedBodyBottomLeftCorner) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateNetworkFloorPlanCreatedBodyBottomLeftCorner) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateNetworkFloorPlanCreatedBodyBottomLeftCorner) UnmarshalBinary(b []byte) error {
+	var res CreateNetworkFloorPlanCreatedBodyBottomLeftCorner
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateNetworkFloorPlanCreatedBodyBottomRightCorner The longitude and latitude of the bottom right corner of your floor plan.
+swagger:model CreateNetworkFloorPlanCreatedBodyBottomRightCorner
+*/
+type CreateNetworkFloorPlanCreatedBodyBottomRightCorner struct {
+
+	// Latitude
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude
+	Lng float32 `json:"lng,omitempty"`
+}
+
+// Validate validates this create network floor plan created body bottom right corner
+func (o *CreateNetworkFloorPlanCreatedBodyBottomRightCorner) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this create network floor plan created body bottom right corner based on context it is used
+func (o *CreateNetworkFloorPlanCreatedBodyBottomRightCorner) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateNetworkFloorPlanCreatedBodyBottomRightCorner) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateNetworkFloorPlanCreatedBodyBottomRightCorner) UnmarshalBinary(b []byte) error {
+	var res CreateNetworkFloorPlanCreatedBodyBottomRightCorner
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateNetworkFloorPlanCreatedBodyCenter The longitude and latitude of the center of your floor plan. The 'center' or two adjacent corners (e.g. 'topLeftCorner' and 'bottomLeftCorner') must be specified. If 'center' is specified, the floor plan is placed over that point with no rotation. If two adjacent corners are specified, the floor plan is rotated to line up with the two specified points. The aspect ratio of the floor plan's image is preserved regardless of which corners/center are specified. (This means if that more than two corners are specified, only two corners may be used to preserve the floor plan's aspect ratio.). No two points can have the same latitude, longitude pair.
+swagger:model CreateNetworkFloorPlanCreatedBodyCenter
+*/
+type CreateNetworkFloorPlanCreatedBodyCenter struct {
+
+	// Latitude
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude
+	Lng float32 `json:"lng,omitempty"`
+}
+
+// Validate validates this create network floor plan created body center
+func (o *CreateNetworkFloorPlanCreatedBodyCenter) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this create network floor plan created body center based on context it is used
+func (o *CreateNetworkFloorPlanCreatedBodyCenter) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateNetworkFloorPlanCreatedBodyCenter) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateNetworkFloorPlanCreatedBodyCenter) UnmarshalBinary(b []byte) error {
+	var res CreateNetworkFloorPlanCreatedBodyCenter
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateNetworkFloorPlanCreatedBodyDevicesItems0 create network floor plan created body devices items0
+swagger:model CreateNetworkFloorPlanCreatedBodyDevicesItems0
+*/
+type CreateNetworkFloorPlanCreatedBodyDevicesItems0 struct {
+
+	// Physical address of the device
+	Address string `json:"address,omitempty"`
+
+	// Firmware version of the device
+	Firmware string `json:"firmware,omitempty"`
+
+	// LAN IP address of the device
+	LanIP string `json:"lanIp,omitempty"`
+
+	// Latitude of the device
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude of the device
+	Lng float32 `json:"lng,omitempty"`
+
+	// MAC address of the device
+	Mac string `json:"mac,omitempty"`
+
+	// Model of the device
+	Model string `json:"model,omitempty"`
+
+	// Name of the device
+	Name string `json:"name,omitempty"`
+
+	// ID of the network the device belongs to
+	NetworkID string `json:"networkId,omitempty"`
+
+	// Notes for the device, limited to 255 characters
+	Notes string `json:"notes,omitempty"`
+
+	// Product type of the device
+	ProductType string `json:"productType,omitempty"`
+
+	// Serial number of the device
+	Serial string `json:"serial,omitempty"`
+
+	// List of tags assigned to the device
+	Tags []string `json:"tags"`
+}
+
+// Validate validates this create network floor plan created body devices items0
+func (o *CreateNetworkFloorPlanCreatedBodyDevicesItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this create network floor plan created body devices items0 based on context it is used
+func (o *CreateNetworkFloorPlanCreatedBodyDevicesItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateNetworkFloorPlanCreatedBodyDevicesItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateNetworkFloorPlanCreatedBodyDevicesItems0) UnmarshalBinary(b []byte) error {
+	var res CreateNetworkFloorPlanCreatedBodyDevicesItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateNetworkFloorPlanCreatedBodyTopLeftCorner The longitude and latitude of the top left corner of your floor plan.
+swagger:model CreateNetworkFloorPlanCreatedBodyTopLeftCorner
+*/
+type CreateNetworkFloorPlanCreatedBodyTopLeftCorner struct {
+
+	// Latitude
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude
+	Lng float32 `json:"lng,omitempty"`
+}
+
+// Validate validates this create network floor plan created body top left corner
+func (o *CreateNetworkFloorPlanCreatedBodyTopLeftCorner) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this create network floor plan created body top left corner based on context it is used
+func (o *CreateNetworkFloorPlanCreatedBodyTopLeftCorner) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateNetworkFloorPlanCreatedBodyTopLeftCorner) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateNetworkFloorPlanCreatedBodyTopLeftCorner) UnmarshalBinary(b []byte) error {
+	var res CreateNetworkFloorPlanCreatedBodyTopLeftCorner
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateNetworkFloorPlanCreatedBodyTopRightCorner The longitude and latitude of the top right corner of your floor plan.
+swagger:model CreateNetworkFloorPlanCreatedBodyTopRightCorner
+*/
+type CreateNetworkFloorPlanCreatedBodyTopRightCorner struct {
+
+	// Latitude
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude
+	Lng float32 `json:"lng,omitempty"`
+}
+
+// Validate validates this create network floor plan created body top right corner
+func (o *CreateNetworkFloorPlanCreatedBodyTopRightCorner) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this create network floor plan created body top right corner based on context it is used
+func (o *CreateNetworkFloorPlanCreatedBodyTopRightCorner) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateNetworkFloorPlanCreatedBodyTopRightCorner) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateNetworkFloorPlanCreatedBodyTopRightCorner) UnmarshalBinary(b []byte) error {
+	var res CreateNetworkFloorPlanCreatedBodyTopRightCorner
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateNetworkFloorPlanParamsBodyBottomLeftCorner The longitude and latitude of the bottom left corner of your floor plan.
 swagger:model CreateNetworkFloorPlanParamsBodyBottomLeftCorner
 */
 type CreateNetworkFloorPlanParamsBodyBottomLeftCorner struct {
@@ -446,7 +1148,8 @@ func (o *CreateNetworkFloorPlanParamsBodyBottomLeftCorner) UnmarshalBinary(b []b
 	return nil
 }
 
-/*CreateNetworkFloorPlanParamsBodyBottomRightCorner The longitude and latitude of the bottom right corner of your floor plan.
+/*
+CreateNetworkFloorPlanParamsBodyBottomRightCorner The longitude and latitude of the bottom right corner of your floor plan.
 swagger:model CreateNetworkFloorPlanParamsBodyBottomRightCorner
 */
 type CreateNetworkFloorPlanParamsBodyBottomRightCorner struct {
@@ -486,7 +1189,8 @@ func (o *CreateNetworkFloorPlanParamsBodyBottomRightCorner) UnmarshalBinary(b []
 	return nil
 }
 
-/*CreateNetworkFloorPlanParamsBodyCenter The longitude and latitude of the center of your floor plan. The 'center' or two adjacent corners (e.g. 'topLeftCorner' and 'bottomLeftCorner') must be specified. If 'center' is specified, the floor plan is placed over that point with no rotation. If two adjacent corners are specified, the floor plan is rotated to line up with the two specified points. The aspect ratio of the floor plan's image is preserved regardless of which corners/center are specified. (This means if that more than two corners are specified, only two corners may be used to preserve the floor plan's aspect ratio.). No two points can have the same latitude, longitude pair.
+/*
+CreateNetworkFloorPlanParamsBodyCenter The longitude and latitude of the center of your floor plan. The 'center' or two adjacent corners (e.g. 'topLeftCorner' and 'bottomLeftCorner') must be specified. If 'center' is specified, the floor plan is placed over that point with no rotation. If two adjacent corners are specified, the floor plan is rotated to line up with the two specified points. The aspect ratio of the floor plan's image is preserved regardless of which corners/center are specified. (This means if that more than two corners are specified, only two corners may be used to preserve the floor plan's aspect ratio.). No two points can have the same latitude, longitude pair.
 swagger:model CreateNetworkFloorPlanParamsBodyCenter
 */
 type CreateNetworkFloorPlanParamsBodyCenter struct {
@@ -526,7 +1230,8 @@ func (o *CreateNetworkFloorPlanParamsBodyCenter) UnmarshalBinary(b []byte) error
 	return nil
 }
 
-/*CreateNetworkFloorPlanParamsBodyTopLeftCorner The longitude and latitude of the top left corner of your floor plan.
+/*
+CreateNetworkFloorPlanParamsBodyTopLeftCorner The longitude and latitude of the top left corner of your floor plan.
 swagger:model CreateNetworkFloorPlanParamsBodyTopLeftCorner
 */
 type CreateNetworkFloorPlanParamsBodyTopLeftCorner struct {
@@ -566,7 +1271,8 @@ func (o *CreateNetworkFloorPlanParamsBodyTopLeftCorner) UnmarshalBinary(b []byte
 	return nil
 }
 
-/*CreateNetworkFloorPlanParamsBodyTopRightCorner The longitude and latitude of the top right corner of your floor plan.
+/*
+CreateNetworkFloorPlanParamsBodyTopRightCorner The longitude and latitude of the top right corner of your floor plan.
 swagger:model CreateNetworkFloorPlanParamsBodyTopRightCorner
 */
 type CreateNetworkFloorPlanParamsBodyTopRightCorner struct {

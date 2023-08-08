@@ -52,17 +52,25 @@ func NewGetNetworkCameraQualityRetentionProfileParamsWithHTTPClient(client *http
 	}
 }
 
-/* GetNetworkCameraQualityRetentionProfileParams contains all the parameters to send to the API endpoint
-   for the get network camera quality retention profile operation.
+/*
+GetNetworkCameraQualityRetentionProfileParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network camera quality retention profile operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkCameraQualityRetentionProfileParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// QualityRetentionProfileID.
+	/* QualityRetentionProfileID.
+
+	   Quality retention profile ID
+	*/
 	QualityRetentionProfileID string
 
 	timeout    time.Duration

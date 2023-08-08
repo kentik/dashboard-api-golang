@@ -33,7 +33,7 @@ func (o *UpdateOrganizationConfigTemplateSwitchProfilePortReader) ReadResponse(r
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /organizations/{organizationId}/configTemplates/{configTemplateId}/switch/profiles/{profileId}/ports/{portId}] updateOrganizationConfigTemplateSwitchProfilePort", response, response.Code())
 	}
 }
 
@@ -42,12 +42,13 @@ func NewUpdateOrganizationConfigTemplateSwitchProfilePortOK() *UpdateOrganizatio
 	return &UpdateOrganizationConfigTemplateSwitchProfilePortOK{}
 }
 
-/* UpdateOrganizationConfigTemplateSwitchProfilePortOK describes a response with status code 200, with default header values.
+/*
+UpdateOrganizationConfigTemplateSwitchProfilePortOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateOrganizationConfigTemplateSwitchProfilePortOK struct {
-	Payload interface{}
+	Payload *UpdateOrganizationConfigTemplateSwitchProfilePortOKBody
 }
 
 // IsSuccess returns true when this update organization config template switch profile port o k response has a 2xx status code
@@ -75,6 +76,11 @@ func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOK) IsCode(code int) b
 	return code == 200
 }
 
+// Code gets the status code for the update organization config template switch profile port o k response
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOK) Code() int {
+	return 200
+}
+
 func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOK) Error() string {
 	return fmt.Sprintf("[PUT /organizations/{organizationId}/configTemplates/{configTemplateId}/switch/profiles/{profileId}/ports/{portId}][%d] updateOrganizationConfigTemplateSwitchProfilePortOK  %+v", 200, o.Payload)
 }
@@ -83,91 +89,100 @@ func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOK) String() string {
 	return fmt.Sprintf("[PUT /organizations/{organizationId}/configTemplates/{configTemplateId}/switch/profiles/{profileId}/ports/{portId}][%d] updateOrganizationConfigTemplateSwitchProfilePortOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOK) GetPayload() interface{} {
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOK) GetPayload() *UpdateOrganizationConfigTemplateSwitchProfilePortOKBody {
 	return o.Payload
 }
 
 func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateOrganizationConfigTemplateSwitchProfilePortOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateOrganizationConfigTemplateSwitchProfilePortBody update organization config template switch profile port body
-// Example: {"accessPolicyType":"Sticky MAC allow list","adaptivePolicyGroupId":"123","enabled":true,"isolationEnabled":false,"linkNegotiation":"Auto negotiate","linkNegotiationCapabilities":["Auto negotiate","1 Gigabit full duplex (auto)"],"name":"My switch port","peerSgtCapable":false,"poeEnabled":true,"portScheduleId":"1234","rstpEnabled":true,"stickyMacAllowList":["34:56:fe:ce:8e:b0","34:56:fe:ce:8e:b1"],"stickyMacAllowListLimit":5,"stormControlEnabled":true,"stpGuard":"disabled","tags":["tag1","tag2"],"type":"access","udld":"Alert only","vlan":10,"voiceVlan":20}
+/*
+UpdateOrganizationConfigTemplateSwitchProfilePortBody update organization config template switch profile port body
+// Example: {"accessPolicyNumber":2,"accessPolicyType":"Sticky MAC allow list","allowedVlans":"1,3,5-10","daiTrusted":false,"enabled":true,"flexibleStackingEnabled":true,"isolationEnabled":false,"linkNegotiation":"Auto negotiate","macAllowList":["34:56:fe:ce:8e:b0","34:56:fe:ce:8e:b1"],"name":"My switch port","poeEnabled":true,"portScheduleId":"1234","profile":{"enabled":false,"id":"1284392014819","iname":"iname"},"rstpEnabled":true,"stickyMacAllowList":["34:56:fe:ce:8e:b0","34:56:fe:ce:8e:b1"],"stickyMacAllowListLimit":5,"stormControlEnabled":true,"stpGuard":"disabled","tags":["tag1","tag2"],"type":"access","udld":"Alert only","vlan":10,"voiceVlan":20}
 swagger:model UpdateOrganizationConfigTemplateSwitchProfilePortBody
 */
 type UpdateOrganizationConfigTemplateSwitchProfilePortBody struct {
 
-	// The number of a custom access policy to configure on the switch profile port. Only applicable when 'accessPolicyType' is 'Custom access policy'
+	// The number of a custom access policy to configure on the switch template port. Only applicable when 'accessPolicyType' is 'Custom access policy'.
 	AccessPolicyNumber int64 `json:"accessPolicyNumber,omitempty"`
 
-	// The type of the access policy of the switch profile port. Only applicable to access ports. Can be one of 'Open', 'Custom access policy', 'MAC allow list' or 'Sticky MAC allow list'
-	// Enum: [Open Custom access policy MAC allow list Sticky MAC allow list]
+	// The type of the access policy of the switch template port. Only applicable to access ports. Can be one of 'Open', 'Custom access policy', 'MAC allow list' or 'Sticky MAC allow list'.
+	// Enum: [Custom access policy MAC allow list Open Sticky MAC allow list]
 	AccessPolicyType string `json:"accessPolicyType,omitempty"`
 
-	// The VLANs allowed on the switch profile port. Only applicable to trunk ports
+	// The VLANs allowed on the switch template port. Only applicable to trunk ports.
 	AllowedVlans string `json:"allowedVlans,omitempty"`
 
-	// The status of the switch profile port
+	// If true, ARP packets for this port will be considered trusted, and Dynamic ARP Inspection will allow the traffic.
+	DaiTrusted bool `json:"daiTrusted,omitempty"`
+
+	// The status of the switch template port.
 	Enabled bool `json:"enabled,omitempty"`
 
 	// For supported switches (e.g. MS420/MS425), whether or not the port has flexible stacking enabled.
 	FlexibleStackingEnabled bool `json:"flexibleStackingEnabled,omitempty"`
 
-	// The isolation status of the switch profile port
+	// The isolation status of the switch template port.
 	IsolationEnabled bool `json:"isolationEnabled,omitempty"`
 
-	// The link speed for the switch profile port
+	// The link speed for the switch template port.
 	LinkNegotiation string `json:"linkNegotiation,omitempty"`
 
-	// Only devices with MAC addresses specified in this list will have access to this port. Up to 20 MAC addresses can be defined. Only applicable when 'accessPolicyType' is 'MAC allow list'
+	// Only devices with MAC addresses specified in this list will have access to this port. Up to 20 MAC addresses can be defined. Only applicable when 'accessPolicyType' is 'MAC allow list'.
 	MacAllowList []string `json:"macAllowList"`
 
-	// The name of the switch profile port
+	// The name of the switch template port.
 	Name string `json:"name,omitempty"`
 
-	// The PoE status of the switch profile port
+	// The PoE status of the switch template port.
 	PoeEnabled bool `json:"poeEnabled,omitempty"`
 
 	// The ID of the port schedule. A value of null will clear the port schedule.
 	PortScheduleID string `json:"portScheduleId,omitempty"`
 
-	// The rapid spanning tree protocol status
+	// profile
+	Profile *UpdateOrganizationConfigTemplateSwitchProfilePortParamsBodyProfile `json:"profile,omitempty"`
+
+	// The rapid spanning tree protocol status.
 	RstpEnabled bool `json:"rstpEnabled,omitempty"`
 
-	// The initial list of MAC addresses for sticky Mac allow list. Only applicable when 'accessPolicyType' is 'Sticky MAC allow list'
+	// The initial list of MAC addresses for sticky Mac allow list. Only applicable when 'accessPolicyType' is 'Sticky MAC allow list'.
 	StickyMacAllowList []string `json:"stickyMacAllowList"`
 
-	// The maximum number of MAC addresses for sticky MAC allow list. Only applicable when 'accessPolicyType' is 'Sticky MAC allow list'
+	// The maximum number of MAC addresses for sticky MAC allow list. Only applicable when 'accessPolicyType' is 'Sticky MAC allow list'.
 	StickyMacAllowListLimit int64 `json:"stickyMacAllowListLimit,omitempty"`
 
-	// The storm control status of the switch profile port
+	// The storm control status of the switch template port.
 	StormControlEnabled bool `json:"stormControlEnabled,omitempty"`
 
-	// The state of the STP guard ('disabled', 'root guard', 'bpdu guard' or 'loop guard')
-	// Enum: [disabled root guard bpdu guard loop guard]
+	// The state of the STP guard ('disabled', 'root guard', 'bpdu guard' or 'loop guard').
+	// Enum: [bpdu guard disabled loop guard root guard]
 	StpGuard string `json:"stpGuard,omitempty"`
 
-	// The list of tags of the switch profile port
+	// The list of tags of the switch template port.
 	Tags []string `json:"tags"`
 
-	// The type of the switch profile port ('trunk' or 'access')
-	// Enum: [trunk access]
+	// The type of the switch template port ('trunk' or 'access').
+	// Enum: [access trunk]
 	Type string `json:"type,omitempty"`
 
 	// The action to take when Unidirectional Link is detected (Alert only, Enforce). Default configuration is Alert only.
 	// Enum: [Alert only Enforce]
 	Udld string `json:"udld,omitempty"`
 
-	// The VLAN of the switch profile port. A null value will clear the value set for trunk ports.
+	// The VLAN of the switch template port. A null value will clear the value set for trunk ports.
 	Vlan int64 `json:"vlan,omitempty"`
 
-	// The voice VLAN of the switch profile port. Only applicable to access ports
+	// The voice VLAN of the switch template port. Only applicable to access ports.
 	VoiceVlan int64 `json:"voiceVlan,omitempty"`
 }
 
@@ -176,6 +191,10 @@ func (o *UpdateOrganizationConfigTemplateSwitchProfilePortBody) Validate(formats
 	var res []error
 
 	if err := o.validateAccessPolicyType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateProfile(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -201,7 +220,7 @@ var updateOrganizationConfigTemplateSwitchProfilePortBodyTypeAccessPolicyTypePro
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Open","Custom access policy","MAC allow list","Sticky MAC allow list"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Custom access policy","MAC allow list","Open","Sticky MAC allow list"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -211,14 +230,14 @@ func init() {
 
 const (
 
-	// UpdateOrganizationConfigTemplateSwitchProfilePortBodyAccessPolicyTypeOpen captures enum value "Open"
-	UpdateOrganizationConfigTemplateSwitchProfilePortBodyAccessPolicyTypeOpen string = "Open"
-
 	// UpdateOrganizationConfigTemplateSwitchProfilePortBodyAccessPolicyTypeCustomAccessPolicy captures enum value "Custom access policy"
 	UpdateOrganizationConfigTemplateSwitchProfilePortBodyAccessPolicyTypeCustomAccessPolicy string = "Custom access policy"
 
 	// UpdateOrganizationConfigTemplateSwitchProfilePortBodyAccessPolicyTypeMACAllowList captures enum value "MAC allow list"
 	UpdateOrganizationConfigTemplateSwitchProfilePortBodyAccessPolicyTypeMACAllowList string = "MAC allow list"
+
+	// UpdateOrganizationConfigTemplateSwitchProfilePortBodyAccessPolicyTypeOpen captures enum value "Open"
+	UpdateOrganizationConfigTemplateSwitchProfilePortBodyAccessPolicyTypeOpen string = "Open"
 
 	// UpdateOrganizationConfigTemplateSwitchProfilePortBodyAccessPolicyTypeStickyMACAllowList captures enum value "Sticky MAC allow list"
 	UpdateOrganizationConfigTemplateSwitchProfilePortBodyAccessPolicyTypeStickyMACAllowList string = "Sticky MAC allow list"
@@ -245,11 +264,30 @@ func (o *UpdateOrganizationConfigTemplateSwitchProfilePortBody) validateAccessPo
 	return nil
 }
 
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortBody) validateProfile(formats strfmt.Registry) error {
+	if swag.IsZero(o.Profile) { // not required
+		return nil
+	}
+
+	if o.Profile != nil {
+		if err := o.Profile.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateOrganizationConfigTemplateSwitchProfilePort" + "." + "profile")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateOrganizationConfigTemplateSwitchProfilePort" + "." + "profile")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 var updateOrganizationConfigTemplateSwitchProfilePortBodyTypeStpGuardPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["disabled","root guard","bpdu guard","loop guard"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["bpdu guard","disabled","loop guard","root guard"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -259,17 +297,17 @@ func init() {
 
 const (
 
-	// UpdateOrganizationConfigTemplateSwitchProfilePortBodyStpGuardDisabled captures enum value "disabled"
-	UpdateOrganizationConfigTemplateSwitchProfilePortBodyStpGuardDisabled string = "disabled"
-
-	// UpdateOrganizationConfigTemplateSwitchProfilePortBodyStpGuardRootGuard captures enum value "root guard"
-	UpdateOrganizationConfigTemplateSwitchProfilePortBodyStpGuardRootGuard string = "root guard"
-
 	// UpdateOrganizationConfigTemplateSwitchProfilePortBodyStpGuardBpduGuard captures enum value "bpdu guard"
 	UpdateOrganizationConfigTemplateSwitchProfilePortBodyStpGuardBpduGuard string = "bpdu guard"
 
+	// UpdateOrganizationConfigTemplateSwitchProfilePortBodyStpGuardDisabled captures enum value "disabled"
+	UpdateOrganizationConfigTemplateSwitchProfilePortBodyStpGuardDisabled string = "disabled"
+
 	// UpdateOrganizationConfigTemplateSwitchProfilePortBodyStpGuardLoopGuard captures enum value "loop guard"
 	UpdateOrganizationConfigTemplateSwitchProfilePortBodyStpGuardLoopGuard string = "loop guard"
+
+	// UpdateOrganizationConfigTemplateSwitchProfilePortBodyStpGuardRootGuard captures enum value "root guard"
+	UpdateOrganizationConfigTemplateSwitchProfilePortBodyStpGuardRootGuard string = "root guard"
 )
 
 // prop value enum
@@ -297,7 +335,7 @@ var updateOrganizationConfigTemplateSwitchProfilePortBodyTypeTypePropEnum []inte
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["trunk","access"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["access","trunk"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -307,11 +345,11 @@ func init() {
 
 const (
 
-	// UpdateOrganizationConfigTemplateSwitchProfilePortBodyTypeTrunk captures enum value "trunk"
-	UpdateOrganizationConfigTemplateSwitchProfilePortBodyTypeTrunk string = "trunk"
-
 	// UpdateOrganizationConfigTemplateSwitchProfilePortBodyTypeAccess captures enum value "access"
 	UpdateOrganizationConfigTemplateSwitchProfilePortBodyTypeAccess string = "access"
+
+	// UpdateOrganizationConfigTemplateSwitchProfilePortBodyTypeTrunk captures enum value "trunk"
+	UpdateOrganizationConfigTemplateSwitchProfilePortBodyTypeTrunk string = "trunk"
 )
 
 // prop value enum
@@ -377,8 +415,38 @@ func (o *UpdateOrganizationConfigTemplateSwitchProfilePortBody) validateUdld(for
 	return nil
 }
 
-// ContextValidate validates this update organization config template switch profile port body based on context it is used
+// ContextValidate validate this update organization config template switch profile port body based on the context it is used
 func (o *UpdateOrganizationConfigTemplateSwitchProfilePortBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateProfile(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortBody) contextValidateProfile(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Profile != nil {
+
+		if swag.IsZero(o.Profile) { // not required
+			return nil
+		}
+
+		if err := o.Profile.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateOrganizationConfigTemplateSwitchProfilePort" + "." + "profile")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateOrganizationConfigTemplateSwitchProfilePort" + "." + "profile")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -393,6 +461,462 @@ func (o *UpdateOrganizationConfigTemplateSwitchProfilePortBody) MarshalBinary() 
 // UnmarshalBinary interface implementation
 func (o *UpdateOrganizationConfigTemplateSwitchProfilePortBody) UnmarshalBinary(b []byte) error {
 	var res UpdateOrganizationConfigTemplateSwitchProfilePortBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateOrganizationConfigTemplateSwitchProfilePortOKBody update organization config template switch profile port o k body
+swagger:model UpdateOrganizationConfigTemplateSwitchProfilePortOKBody
+*/
+type UpdateOrganizationConfigTemplateSwitchProfilePortOKBody struct {
+
+	// The number of a custom access policy to configure on the switch template port. Only applicable when 'accessPolicyType' is 'Custom access policy'.
+	AccessPolicyNumber int64 `json:"accessPolicyNumber,omitempty"`
+
+	// The type of the access policy of the switch template port. Only applicable to access ports. Can be one of 'Open', 'Custom access policy', 'MAC allow list' or 'Sticky MAC allow list'.
+	// Enum: [Custom access policy MAC allow list Open Sticky MAC allow list]
+	AccessPolicyType string `json:"accessPolicyType,omitempty"`
+
+	// The VLANs allowed on the switch template port. Only applicable to trunk ports.
+	AllowedVlans string `json:"allowedVlans,omitempty"`
+
+	// If true, ARP packets for this port will be considered trusted, and Dynamic ARP Inspection will allow the traffic.
+	DaiTrusted bool `json:"daiTrusted,omitempty"`
+
+	// The status of the switch template port.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// For supported switches (e.g. MS420/MS425), whether or not the port has flexible stacking enabled.
+	FlexibleStackingEnabled bool `json:"flexibleStackingEnabled,omitempty"`
+
+	// The isolation status of the switch template port.
+	IsolationEnabled bool `json:"isolationEnabled,omitempty"`
+
+	// The link speed for the switch template port.
+	LinkNegotiation string `json:"linkNegotiation,omitempty"`
+
+	// Available link speeds for the switch template port.
+	LinkNegotiationCapabilities []string `json:"linkNegotiationCapabilities"`
+
+	// Only devices with MAC addresses specified in this list will have access to this port. Up to 20 MAC addresses can be defined. Only applicable when 'accessPolicyType' is 'MAC allow list'.
+	MacAllowList []string `json:"macAllowList"`
+
+	// The name of the switch template port.
+	Name string `json:"name,omitempty"`
+
+	// The PoE status of the switch template port.
+	PoeEnabled bool `json:"poeEnabled,omitempty"`
+
+	// The identifier of the switch template port.
+	PortID string `json:"portId,omitempty"`
+
+	// The ID of the port schedule. A value of null will clear the port schedule.
+	PortScheduleID string `json:"portScheduleId,omitempty"`
+
+	// profile
+	Profile *UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyProfile `json:"profile,omitempty"`
+
+	// The rapid spanning tree protocol status.
+	RstpEnabled bool `json:"rstpEnabled,omitempty"`
+
+	// The initial list of MAC addresses for sticky Mac allow list. Only applicable when 'accessPolicyType' is 'Sticky MAC allow list'.
+	StickyMacAllowList []string `json:"stickyMacAllowList"`
+
+	// The maximum number of MAC addresses for sticky MAC allow list. Only applicable when 'accessPolicyType' is 'Sticky MAC allow list'.
+	StickyMacAllowListLimit int64 `json:"stickyMacAllowListLimit,omitempty"`
+
+	// The storm control status of the switch template port.
+	StormControlEnabled bool `json:"stormControlEnabled,omitempty"`
+
+	// The state of the STP guard ('disabled', 'root guard', 'bpdu guard' or 'loop guard').
+	// Enum: [bpdu guard disabled loop guard root guard]
+	StpGuard string `json:"stpGuard,omitempty"`
+
+	// The list of tags of the switch template port.
+	Tags []string `json:"tags"`
+
+	// The type of the switch template port ('trunk' or 'access').
+	// Enum: [access trunk]
+	Type string `json:"type,omitempty"`
+
+	// The action to take when Unidirectional Link is detected (Alert only, Enforce). Default configuration is Alert only.
+	// Enum: [Alert only Enforce]
+	Udld string `json:"udld,omitempty"`
+
+	// The VLAN of the switch template port. A null value will clear the value set for trunk ports.
+	Vlan int64 `json:"vlan,omitempty"`
+
+	// The voice VLAN of the switch template port. Only applicable to access ports.
+	VoiceVlan int64 `json:"voiceVlan,omitempty"`
+}
+
+// Validate validates this update organization config template switch profile port o k body
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateAccessPolicyType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateProfile(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateStpGuard(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateUdld(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateOrganizationConfigTemplateSwitchProfilePortOKBodyTypeAccessPolicyTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Custom access policy","MAC allow list","Open","Sticky MAC allow list"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateOrganizationConfigTemplateSwitchProfilePortOKBodyTypeAccessPolicyTypePropEnum = append(updateOrganizationConfigTemplateSwitchProfilePortOKBodyTypeAccessPolicyTypePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyAccessPolicyTypeCustomAccessPolicy captures enum value "Custom access policy"
+	UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyAccessPolicyTypeCustomAccessPolicy string = "Custom access policy"
+
+	// UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyAccessPolicyTypeMACAllowList captures enum value "MAC allow list"
+	UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyAccessPolicyTypeMACAllowList string = "MAC allow list"
+
+	// UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyAccessPolicyTypeOpen captures enum value "Open"
+	UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyAccessPolicyTypeOpen string = "Open"
+
+	// UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyAccessPolicyTypeStickyMACAllowList captures enum value "Sticky MAC allow list"
+	UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyAccessPolicyTypeStickyMACAllowList string = "Sticky MAC allow list"
+)
+
+// prop value enum
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOKBody) validateAccessPolicyTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateOrganizationConfigTemplateSwitchProfilePortOKBodyTypeAccessPolicyTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOKBody) validateAccessPolicyType(formats strfmt.Registry) error {
+	if swag.IsZero(o.AccessPolicyType) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateAccessPolicyTypeEnum("updateOrganizationConfigTemplateSwitchProfilePortOK"+"."+"accessPolicyType", "body", o.AccessPolicyType); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOKBody) validateProfile(formats strfmt.Registry) error {
+	if swag.IsZero(o.Profile) { // not required
+		return nil
+	}
+
+	if o.Profile != nil {
+		if err := o.Profile.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateOrganizationConfigTemplateSwitchProfilePortOK" + "." + "profile")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateOrganizationConfigTemplateSwitchProfilePortOK" + "." + "profile")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+var updateOrganizationConfigTemplateSwitchProfilePortOKBodyTypeStpGuardPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["bpdu guard","disabled","loop guard","root guard"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateOrganizationConfigTemplateSwitchProfilePortOKBodyTypeStpGuardPropEnum = append(updateOrganizationConfigTemplateSwitchProfilePortOKBodyTypeStpGuardPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyStpGuardBpduGuard captures enum value "bpdu guard"
+	UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyStpGuardBpduGuard string = "bpdu guard"
+
+	// UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyStpGuardDisabled captures enum value "disabled"
+	UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyStpGuardDisabled string = "disabled"
+
+	// UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyStpGuardLoopGuard captures enum value "loop guard"
+	UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyStpGuardLoopGuard string = "loop guard"
+
+	// UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyStpGuardRootGuard captures enum value "root guard"
+	UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyStpGuardRootGuard string = "root guard"
+)
+
+// prop value enum
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOKBody) validateStpGuardEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateOrganizationConfigTemplateSwitchProfilePortOKBodyTypeStpGuardPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOKBody) validateStpGuard(formats strfmt.Registry) error {
+	if swag.IsZero(o.StpGuard) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateStpGuardEnum("updateOrganizationConfigTemplateSwitchProfilePortOK"+"."+"stpGuard", "body", o.StpGuard); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var updateOrganizationConfigTemplateSwitchProfilePortOKBodyTypeTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["access","trunk"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateOrganizationConfigTemplateSwitchProfilePortOKBodyTypeTypePropEnum = append(updateOrganizationConfigTemplateSwitchProfilePortOKBodyTypeTypePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyTypeAccess captures enum value "access"
+	UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyTypeAccess string = "access"
+
+	// UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyTypeTrunk captures enum value "trunk"
+	UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyTypeTrunk string = "trunk"
+)
+
+// prop value enum
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOKBody) validateTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateOrganizationConfigTemplateSwitchProfilePortOKBodyTypeTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOKBody) validateType(formats strfmt.Registry) error {
+	if swag.IsZero(o.Type) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateTypeEnum("updateOrganizationConfigTemplateSwitchProfilePortOK"+"."+"type", "body", o.Type); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var updateOrganizationConfigTemplateSwitchProfilePortOKBodyTypeUdldPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Alert only","Enforce"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateOrganizationConfigTemplateSwitchProfilePortOKBodyTypeUdldPropEnum = append(updateOrganizationConfigTemplateSwitchProfilePortOKBodyTypeUdldPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyUdldAlertOnly captures enum value "Alert only"
+	UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyUdldAlertOnly string = "Alert only"
+
+	// UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyUdldEnforce captures enum value "Enforce"
+	UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyUdldEnforce string = "Enforce"
+)
+
+// prop value enum
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOKBody) validateUdldEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateOrganizationConfigTemplateSwitchProfilePortOKBodyTypeUdldPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOKBody) validateUdld(formats strfmt.Registry) error {
+	if swag.IsZero(o.Udld) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateUdldEnum("updateOrganizationConfigTemplateSwitchProfilePortOK"+"."+"udld", "body", o.Udld); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update organization config template switch profile port o k body based on the context it is used
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateProfile(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOKBody) contextValidateProfile(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Profile != nil {
+
+		if swag.IsZero(o.Profile) { // not required
+			return nil
+		}
+
+		if err := o.Profile.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateOrganizationConfigTemplateSwitchProfilePortOK" + "." + "profile")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateOrganizationConfigTemplateSwitchProfilePortOK" + "." + "profile")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateOrganizationConfigTemplateSwitchProfilePortOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyProfile Profile attributes
+swagger:model UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyProfile
+*/
+type UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyProfile struct {
+
+	// When enabled, override this port's configuration with a port profile.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// When enabled, the ID of the port profile used to override the port's configuration.
+	ID string `json:"id,omitempty"`
+
+	// When enabled, the IName of the profile.
+	Iname string `json:"iname,omitempty"`
+}
+
+// Validate validates this update organization config template switch profile port o k body profile
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyProfile) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update organization config template switch profile port o k body profile based on context it is used
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyProfile) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyProfile) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyProfile) UnmarshalBinary(b []byte) error {
+	var res UpdateOrganizationConfigTemplateSwitchProfilePortOKBodyProfile
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateOrganizationConfigTemplateSwitchProfilePortParamsBodyProfile Profile attributes
+swagger:model UpdateOrganizationConfigTemplateSwitchProfilePortParamsBodyProfile
+*/
+type UpdateOrganizationConfigTemplateSwitchProfilePortParamsBodyProfile struct {
+
+	// When enabled, override this port's configuration with a port profile.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// When enabled, the ID of the port profile used to override the port's configuration.
+	ID string `json:"id,omitempty"`
+
+	// When enabled, the IName of the profile.
+	Iname string `json:"iname,omitempty"`
+}
+
+// Validate validates this update organization config template switch profile port params body profile
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortParamsBodyProfile) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update organization config template switch profile port params body profile based on context it is used
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortParamsBodyProfile) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortParamsBodyProfile) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateOrganizationConfigTemplateSwitchProfilePortParamsBodyProfile) UnmarshalBinary(b []byte) error {
+	var res UpdateOrganizationConfigTemplateSwitchProfilePortParamsBodyProfile
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

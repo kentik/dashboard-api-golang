@@ -33,7 +33,7 @@ func (o *UpdateNetworkCellularGatewayConnectivityMonitoringDestinationsReader) R
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/cellularGateway/connectivityMonitoringDestinations] updateNetworkCellularGatewayConnectivityMonitoringDestinations", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateNetworkCellularGatewayConnectivityMonitoringDestinationsOK() *Upda
 	return &UpdateNetworkCellularGatewayConnectivityMonitoringDestinationsOK{}
 }
 
-/* UpdateNetworkCellularGatewayConnectivityMonitoringDestinationsOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkCellularGatewayConnectivityMonitoringDestinationsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateNetworkCellularGatewayConnectivityMonitoringDestinationsOK) IsCod
 	return code == 200
 }
 
+// Code gets the status code for the update network cellular gateway connectivity monitoring destinations o k response
+func (o *UpdateNetworkCellularGatewayConnectivityMonitoringDestinationsOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkCellularGatewayConnectivityMonitoringDestinationsOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/cellularGateway/connectivityMonitoringDestinations][%d] updateNetworkCellularGatewayConnectivityMonitoringDestinationsOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateNetworkCellularGatewayConnectivityMonitoringDestinationsOK) readR
 	return nil
 }
 
-/*UpdateNetworkCellularGatewayConnectivityMonitoringDestinationsBody update network cellular gateway connectivity monitoring destinations body
+/*
+UpdateNetworkCellularGatewayConnectivityMonitoringDestinationsBody update network cellular gateway connectivity monitoring destinations body
 // Example: {"destinations":[{"default":false,"description":"Google","ip":"8.8.8.8"},{"default":true,"description":"test description","ip":"1.23.45.67"},{"ip":"9.8.7.6"}]}
 swagger:model UpdateNetworkCellularGatewayConnectivityMonitoringDestinationsBody
 */
@@ -166,6 +173,11 @@ func (o *UpdateNetworkCellularGatewayConnectivityMonitoringDestinationsBody) con
 	for i := 0; i < len(o.Destinations); i++ {
 
 		if o.Destinations[i] != nil {
+
+			if swag.IsZero(o.Destinations[i]) { // not required
+				return nil
+			}
+
 			if err := o.Destinations[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkCellularGatewayConnectivityMonitoringDestinations" + "." + "destinations" + "." + strconv.Itoa(i))
@@ -199,7 +211,8 @@ func (o *UpdateNetworkCellularGatewayConnectivityMonitoringDestinationsBody) Unm
 	return nil
 }
 
-/*UpdateNetworkCellularGatewayConnectivityMonitoringDestinationsParamsBodyDestinationsItems0 update network cellular gateway connectivity monitoring destinations params body destinations items0
+/*
+UpdateNetworkCellularGatewayConnectivityMonitoringDestinationsParamsBodyDestinationsItems0 update network cellular gateway connectivity monitoring destinations params body destinations items0
 swagger:model UpdateNetworkCellularGatewayConnectivityMonitoringDestinationsParamsBodyDestinationsItems0
 */
 type UpdateNetworkCellularGatewayConnectivityMonitoringDestinationsParamsBodyDestinationsItems0 struct {

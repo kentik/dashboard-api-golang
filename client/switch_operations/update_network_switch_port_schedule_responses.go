@@ -31,7 +31,7 @@ func (o *UpdateNetworkSwitchPortScheduleReader) ReadResponse(response runtime.Cl
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/switch/portSchedules/{portScheduleId}] updateNetworkSwitchPortSchedule", response, response.Code())
 	}
 }
 
@@ -40,12 +40,13 @@ func NewUpdateNetworkSwitchPortScheduleOK() *UpdateNetworkSwitchPortScheduleOK {
 	return &UpdateNetworkSwitchPortScheduleOK{}
 }
 
-/* UpdateNetworkSwitchPortScheduleOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSwitchPortScheduleOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateNetworkSwitchPortScheduleOK struct {
-	Payload interface{}
+	Payload *UpdateNetworkSwitchPortScheduleOKBody
 }
 
 // IsSuccess returns true when this update network switch port schedule o k response has a 2xx status code
@@ -73,6 +74,11 @@ func (o *UpdateNetworkSwitchPortScheduleOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network switch port schedule o k response
+func (o *UpdateNetworkSwitchPortScheduleOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSwitchPortScheduleOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/switch/portSchedules/{portScheduleId}][%d] updateNetworkSwitchPortScheduleOK  %+v", 200, o.Payload)
 }
@@ -81,21 +87,24 @@ func (o *UpdateNetworkSwitchPortScheduleOK) String() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/switch/portSchedules/{portScheduleId}][%d] updateNetworkSwitchPortScheduleOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateNetworkSwitchPortScheduleOK) GetPayload() interface{} {
+func (o *UpdateNetworkSwitchPortScheduleOK) GetPayload() *UpdateNetworkSwitchPortScheduleOKBody {
 	return o.Payload
 }
 
 func (o *UpdateNetworkSwitchPortScheduleOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateNetworkSwitchPortScheduleOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateNetworkSwitchPortScheduleBody update network switch port schedule body
+/*
+UpdateNetworkSwitchPortScheduleBody update network switch port schedule body
 // Example: {"name":"Weekdays schedule","portSchedule":{"friday":{"active":true,"from":"9:00","to":"17:00"},"monday":{"active":true,"from":"9:00","to":"17:00"},"saturday":{"active":false,"from":"0:00","to":"24:00"},"sunday":{"active":false,"from":"0:00","to":"24:00"},"thursday":{"active":true,"from":"9:00","to":"17:00"},"tuesday":{"active":true,"from":"9:00","to":"17:00"},"wednesday":{"active":true,"from":"9:00","to":"17:00"}}}
 swagger:model UpdateNetworkSwitchPortScheduleBody
 */
@@ -158,6 +167,11 @@ func (o *UpdateNetworkSwitchPortScheduleBody) ContextValidate(ctx context.Contex
 func (o *UpdateNetworkSwitchPortScheduleBody) contextValidatePortSchedule(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.PortSchedule != nil {
+
+		if swag.IsZero(o.PortSchedule) { // not required
+			return nil
+		}
+
 		if err := o.PortSchedule.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchPortSchedule" + "." + "portSchedule")
@@ -189,7 +203,823 @@ func (o *UpdateNetworkSwitchPortScheduleBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateNetworkSwitchPortScheduleParamsBodyPortSchedule     The schedule for switch port scheduling. Schedules are applied to days of the week.
+/*
+UpdateNetworkSwitchPortScheduleOKBody update network switch port schedule o k body
+swagger:model UpdateNetworkSwitchPortScheduleOKBody
+*/
+type UpdateNetworkSwitchPortScheduleOKBody struct {
+
+	// Switch port schedule ID
+	ID string `json:"id,omitempty"`
+
+	// Switch port schedule name
+	Name string `json:"name,omitempty"`
+
+	// Network ID
+	NetworkID string `json:"networkId,omitempty"`
+
+	// port schedule
+	PortSchedule *UpdateNetworkSwitchPortScheduleOKBodyPortSchedule `json:"portSchedule,omitempty"`
+}
+
+// Validate validates this update network switch port schedule o k body
+func (o *UpdateNetworkSwitchPortScheduleOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validatePortSchedule(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkSwitchPortScheduleOKBody) validatePortSchedule(formats strfmt.Registry) error {
+	if swag.IsZero(o.PortSchedule) { // not required
+		return nil
+	}
+
+	if o.PortSchedule != nil {
+		if err := o.PortSchedule.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network switch port schedule o k body based on the context it is used
+func (o *UpdateNetworkSwitchPortScheduleOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidatePortSchedule(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkSwitchPortScheduleOKBody) contextValidatePortSchedule(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.PortSchedule != nil {
+
+		if swag.IsZero(o.PortSchedule) { // not required
+			return nil
+		}
+
+		if err := o.PortSchedule.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkSwitchPortScheduleOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkSwitchPortScheduleOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkSwitchPortScheduleOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkSwitchPortScheduleOKBodyPortSchedule Port schedule
+swagger:model UpdateNetworkSwitchPortScheduleOKBodyPortSchedule
+*/
+type UpdateNetworkSwitchPortScheduleOKBodyPortSchedule struct {
+
+	// friday
+	Friday *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleFriday `json:"friday,omitempty"`
+
+	// monday
+	Monday *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleMonday `json:"monday,omitempty"`
+
+	// saturday
+	Saturday *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleSaturday `json:"saturday,omitempty"`
+
+	// sunday
+	Sunday *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleSunday `json:"sunday,omitempty"`
+
+	// thursday
+	Thursday *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleThursday `json:"thursday,omitempty"`
+
+	// tuesday
+	Tuesday *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleTuesday `json:"tuesday,omitempty"`
+
+	// wednesday
+	Wednesday *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleWednesday `json:"wednesday,omitempty"`
+}
+
+// Validate validates this update network switch port schedule o k body port schedule
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortSchedule) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateFriday(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateMonday(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSaturday(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSunday(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateThursday(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTuesday(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateWednesday(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortSchedule) validateFriday(formats strfmt.Registry) error {
+	if swag.IsZero(o.Friday) { // not required
+		return nil
+	}
+
+	if o.Friday != nil {
+		if err := o.Friday.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "friday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "friday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortSchedule) validateMonday(formats strfmt.Registry) error {
+	if swag.IsZero(o.Monday) { // not required
+		return nil
+	}
+
+	if o.Monday != nil {
+		if err := o.Monday.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "monday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "monday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortSchedule) validateSaturday(formats strfmt.Registry) error {
+	if swag.IsZero(o.Saturday) { // not required
+		return nil
+	}
+
+	if o.Saturday != nil {
+		if err := o.Saturday.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "saturday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "saturday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortSchedule) validateSunday(formats strfmt.Registry) error {
+	if swag.IsZero(o.Sunday) { // not required
+		return nil
+	}
+
+	if o.Sunday != nil {
+		if err := o.Sunday.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "sunday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "sunday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortSchedule) validateThursday(formats strfmt.Registry) error {
+	if swag.IsZero(o.Thursday) { // not required
+		return nil
+	}
+
+	if o.Thursday != nil {
+		if err := o.Thursday.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "thursday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "thursday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortSchedule) validateTuesday(formats strfmt.Registry) error {
+	if swag.IsZero(o.Tuesday) { // not required
+		return nil
+	}
+
+	if o.Tuesday != nil {
+		if err := o.Tuesday.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "tuesday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "tuesday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortSchedule) validateWednesday(formats strfmt.Registry) error {
+	if swag.IsZero(o.Wednesday) { // not required
+		return nil
+	}
+
+	if o.Wednesday != nil {
+		if err := o.Wednesday.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "wednesday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "wednesday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network switch port schedule o k body port schedule based on the context it is used
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortSchedule) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateFriday(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateMonday(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateSaturday(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateSunday(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateThursday(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateTuesday(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateWednesday(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortSchedule) contextValidateFriday(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Friday != nil {
+
+		if swag.IsZero(o.Friday) { // not required
+			return nil
+		}
+
+		if err := o.Friday.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "friday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "friday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortSchedule) contextValidateMonday(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Monday != nil {
+
+		if swag.IsZero(o.Monday) { // not required
+			return nil
+		}
+
+		if err := o.Monday.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "monday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "monday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortSchedule) contextValidateSaturday(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Saturday != nil {
+
+		if swag.IsZero(o.Saturday) { // not required
+			return nil
+		}
+
+		if err := o.Saturday.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "saturday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "saturday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortSchedule) contextValidateSunday(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Sunday != nil {
+
+		if swag.IsZero(o.Sunday) { // not required
+			return nil
+		}
+
+		if err := o.Sunday.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "sunday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "sunday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortSchedule) contextValidateThursday(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Thursday != nil {
+
+		if swag.IsZero(o.Thursday) { // not required
+			return nil
+		}
+
+		if err := o.Thursday.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "thursday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "thursday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortSchedule) contextValidateTuesday(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Tuesday != nil {
+
+		if swag.IsZero(o.Tuesday) { // not required
+			return nil
+		}
+
+		if err := o.Tuesday.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "tuesday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "tuesday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortSchedule) contextValidateWednesday(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Wednesday != nil {
+
+		if swag.IsZero(o.Wednesday) { // not required
+			return nil
+		}
+
+		if err := o.Wednesday.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "wednesday")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkSwitchPortScheduleOK" + "." + "portSchedule" + "." + "wednesday")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortSchedule) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortSchedule) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkSwitchPortScheduleOKBodyPortSchedule
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkSwitchPortScheduleOKBodyPortScheduleFriday Friday schedule
+swagger:model UpdateNetworkSwitchPortScheduleOKBodyPortScheduleFriday
+*/
+type UpdateNetworkSwitchPortScheduleOKBodyPortScheduleFriday struct {
+
+	// Whether the schedule is active or inactive
+	Active bool `json:"active,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	From string `json:"from,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	To string `json:"to,omitempty"`
+}
+
+// Validate validates this update network switch port schedule o k body port schedule friday
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleFriday) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network switch port schedule o k body port schedule friday based on context it is used
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleFriday) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleFriday) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleFriday) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkSwitchPortScheduleOKBodyPortScheduleFriday
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkSwitchPortScheduleOKBodyPortScheduleMonday Monday schedule
+swagger:model UpdateNetworkSwitchPortScheduleOKBodyPortScheduleMonday
+*/
+type UpdateNetworkSwitchPortScheduleOKBodyPortScheduleMonday struct {
+
+	// Whether the schedule is active or inactive
+	Active bool `json:"active,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	From string `json:"from,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	To string `json:"to,omitempty"`
+}
+
+// Validate validates this update network switch port schedule o k body port schedule monday
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleMonday) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network switch port schedule o k body port schedule monday based on context it is used
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleMonday) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleMonday) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleMonday) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkSwitchPortScheduleOKBodyPortScheduleMonday
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkSwitchPortScheduleOKBodyPortScheduleSaturday Saturday schedule
+swagger:model UpdateNetworkSwitchPortScheduleOKBodyPortScheduleSaturday
+*/
+type UpdateNetworkSwitchPortScheduleOKBodyPortScheduleSaturday struct {
+
+	// Whether the schedule is active or inactive
+	Active bool `json:"active,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	From string `json:"from,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	To string `json:"to,omitempty"`
+}
+
+// Validate validates this update network switch port schedule o k body port schedule saturday
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleSaturday) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network switch port schedule o k body port schedule saturday based on context it is used
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleSaturday) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleSaturday) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleSaturday) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkSwitchPortScheduleOKBodyPortScheduleSaturday
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkSwitchPortScheduleOKBodyPortScheduleSunday Sunday schedule
+swagger:model UpdateNetworkSwitchPortScheduleOKBodyPortScheduleSunday
+*/
+type UpdateNetworkSwitchPortScheduleOKBodyPortScheduleSunday struct {
+
+	// Whether the schedule is active or inactive
+	Active bool `json:"active,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	From string `json:"from,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	To string `json:"to,omitempty"`
+}
+
+// Validate validates this update network switch port schedule o k body port schedule sunday
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleSunday) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network switch port schedule o k body port schedule sunday based on context it is used
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleSunday) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleSunday) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleSunday) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkSwitchPortScheduleOKBodyPortScheduleSunday
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkSwitchPortScheduleOKBodyPortScheduleThursday Thursday schedule
+swagger:model UpdateNetworkSwitchPortScheduleOKBodyPortScheduleThursday
+*/
+type UpdateNetworkSwitchPortScheduleOKBodyPortScheduleThursday struct {
+
+	// Whether the schedule is active or inactive
+	Active bool `json:"active,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	From string `json:"from,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	To string `json:"to,omitempty"`
+}
+
+// Validate validates this update network switch port schedule o k body port schedule thursday
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleThursday) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network switch port schedule o k body port schedule thursday based on context it is used
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleThursday) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleThursday) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleThursday) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkSwitchPortScheduleOKBodyPortScheduleThursday
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkSwitchPortScheduleOKBodyPortScheduleTuesday Tuesday schedule
+swagger:model UpdateNetworkSwitchPortScheduleOKBodyPortScheduleTuesday
+*/
+type UpdateNetworkSwitchPortScheduleOKBodyPortScheduleTuesday struct {
+
+	// Whether the schedule is active or inactive
+	Active bool `json:"active,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	From string `json:"from,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	To string `json:"to,omitempty"`
+}
+
+// Validate validates this update network switch port schedule o k body port schedule tuesday
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleTuesday) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network switch port schedule o k body port schedule tuesday based on context it is used
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleTuesday) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleTuesday) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleTuesday) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkSwitchPortScheduleOKBodyPortScheduleTuesday
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkSwitchPortScheduleOKBodyPortScheduleWednesday Wednesday schedule
+swagger:model UpdateNetworkSwitchPortScheduleOKBodyPortScheduleWednesday
+*/
+type UpdateNetworkSwitchPortScheduleOKBodyPortScheduleWednesday struct {
+
+	// Whether the schedule is active or inactive
+	Active bool `json:"active,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	From string `json:"from,omitempty"`
+
+	// The time, from '00:00' to '24:00'
+	To string `json:"to,omitempty"`
+}
+
+// Validate validates this update network switch port schedule o k body port schedule wednesday
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleWednesday) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network switch port schedule o k body port schedule wednesday based on context it is used
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleWednesday) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleWednesday) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkSwitchPortScheduleOKBodyPortScheduleWednesday) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkSwitchPortScheduleOKBodyPortScheduleWednesday
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkSwitchPortScheduleParamsBodyPortSchedule     The schedule for switch port scheduling. Schedules are applied to days of the week.
 //     When it's empty, default schedule with all days of a week are configured.
 //     Any unspecified day in the schedule is added as a default schedule configuration of the day.
 //
@@ -431,6 +1261,11 @@ func (o *UpdateNetworkSwitchPortScheduleParamsBodyPortSchedule) ContextValidate(
 func (o *UpdateNetworkSwitchPortScheduleParamsBodyPortSchedule) contextValidateFriday(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Friday != nil {
+
+		if swag.IsZero(o.Friday) { // not required
+			return nil
+		}
+
 		if err := o.Friday.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchPortSchedule" + "." + "portSchedule" + "." + "friday")
@@ -447,6 +1282,11 @@ func (o *UpdateNetworkSwitchPortScheduleParamsBodyPortSchedule) contextValidateF
 func (o *UpdateNetworkSwitchPortScheduleParamsBodyPortSchedule) contextValidateMonday(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Monday != nil {
+
+		if swag.IsZero(o.Monday) { // not required
+			return nil
+		}
+
 		if err := o.Monday.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchPortSchedule" + "." + "portSchedule" + "." + "monday")
@@ -463,6 +1303,11 @@ func (o *UpdateNetworkSwitchPortScheduleParamsBodyPortSchedule) contextValidateM
 func (o *UpdateNetworkSwitchPortScheduleParamsBodyPortSchedule) contextValidateSaturday(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Saturday != nil {
+
+		if swag.IsZero(o.Saturday) { // not required
+			return nil
+		}
+
 		if err := o.Saturday.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchPortSchedule" + "." + "portSchedule" + "." + "saturday")
@@ -479,6 +1324,11 @@ func (o *UpdateNetworkSwitchPortScheduleParamsBodyPortSchedule) contextValidateS
 func (o *UpdateNetworkSwitchPortScheduleParamsBodyPortSchedule) contextValidateSunday(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Sunday != nil {
+
+		if swag.IsZero(o.Sunday) { // not required
+			return nil
+		}
+
 		if err := o.Sunday.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchPortSchedule" + "." + "portSchedule" + "." + "sunday")
@@ -495,6 +1345,11 @@ func (o *UpdateNetworkSwitchPortScheduleParamsBodyPortSchedule) contextValidateS
 func (o *UpdateNetworkSwitchPortScheduleParamsBodyPortSchedule) contextValidateThursday(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Thursday != nil {
+
+		if swag.IsZero(o.Thursday) { // not required
+			return nil
+		}
+
 		if err := o.Thursday.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchPortSchedule" + "." + "portSchedule" + "." + "thursday")
@@ -511,6 +1366,11 @@ func (o *UpdateNetworkSwitchPortScheduleParamsBodyPortSchedule) contextValidateT
 func (o *UpdateNetworkSwitchPortScheduleParamsBodyPortSchedule) contextValidateTuesday(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Tuesday != nil {
+
+		if swag.IsZero(o.Tuesday) { // not required
+			return nil
+		}
+
 		if err := o.Tuesday.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchPortSchedule" + "." + "portSchedule" + "." + "tuesday")
@@ -527,6 +1387,11 @@ func (o *UpdateNetworkSwitchPortScheduleParamsBodyPortSchedule) contextValidateT
 func (o *UpdateNetworkSwitchPortScheduleParamsBodyPortSchedule) contextValidateWednesday(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Wednesday != nil {
+
+		if swag.IsZero(o.Wednesday) { // not required
+			return nil
+		}
+
 		if err := o.Wednesday.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchPortSchedule" + "." + "portSchedule" + "." + "wednesday")
@@ -558,7 +1423,8 @@ func (o *UpdateNetworkSwitchPortScheduleParamsBodyPortSchedule) UnmarshalBinary(
 	return nil
 }
 
-/*UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleFriday The schedule object for Friday.
+/*
+UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleFriday The schedule object for Friday.
 swagger:model UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleFriday
 */
 type UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleFriday struct {
@@ -601,7 +1467,8 @@ func (o *UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleFriday) UnmarshalB
 	return nil
 }
 
-/*UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleMonday The schedule object for Monday.
+/*
+UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleMonday The schedule object for Monday.
 swagger:model UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleMonday
 */
 type UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleMonday struct {
@@ -644,7 +1511,8 @@ func (o *UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleMonday) UnmarshalB
 	return nil
 }
 
-/*UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleSaturday The schedule object for Saturday.
+/*
+UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleSaturday The schedule object for Saturday.
 swagger:model UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleSaturday
 */
 type UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleSaturday struct {
@@ -687,7 +1555,8 @@ func (o *UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleSaturday) Unmarsha
 	return nil
 }
 
-/*UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleSunday The schedule object for Sunday.
+/*
+UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleSunday The schedule object for Sunday.
 swagger:model UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleSunday
 */
 type UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleSunday struct {
@@ -730,7 +1599,8 @@ func (o *UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleSunday) UnmarshalB
 	return nil
 }
 
-/*UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleThursday The schedule object for Thursday.
+/*
+UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleThursday The schedule object for Thursday.
 swagger:model UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleThursday
 */
 type UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleThursday struct {
@@ -773,7 +1643,8 @@ func (o *UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleThursday) Unmarsha
 	return nil
 }
 
-/*UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleTuesday The schedule object for Tuesday.
+/*
+UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleTuesday The schedule object for Tuesday.
 swagger:model UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleTuesday
 */
 type UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleTuesday struct {
@@ -816,7 +1687,8 @@ func (o *UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleTuesday) Unmarshal
 	return nil
 }
 
-/*UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleWednesday The schedule object for Wednesday.
+/*
+UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleWednesday The schedule object for Wednesday.
 swagger:model UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleWednesday
 */
 type UpdateNetworkSwitchPortScheduleParamsBodyPortScheduleWednesday struct {

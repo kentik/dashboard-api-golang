@@ -32,7 +32,7 @@ func (o *UpdateNetworkClientPolicyReader) ReadResponse(response runtime.ClientRe
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/clients/{clientId}/policy] updateNetworkClientPolicy", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewUpdateNetworkClientPolicyOK() *UpdateNetworkClientPolicyOK {
 	return &UpdateNetworkClientPolicyOK{}
 }
 
-/* UpdateNetworkClientPolicyOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkClientPolicyOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *UpdateNetworkClientPolicyOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network client policy o k response
+func (o *UpdateNetworkClientPolicyOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkClientPolicyOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/clients/{clientId}/policy][%d] updateNetworkClientPolicyOK  %+v", 200, o.Payload)
 }
@@ -96,7 +102,8 @@ func (o *UpdateNetworkClientPolicyOK) readResponse(response runtime.ClientRespon
 	return nil
 }
 
-/*UpdateNetworkClientPolicyBody update network client policy body
+/*
+UpdateNetworkClientPolicyBody update network client policy body
 // Example: {"devicePolicy":"Group policy","groupPolicyId":"101","mac":"00:11:22:33:44:55"}
 swagger:model UpdateNetworkClientPolicyBody
 */

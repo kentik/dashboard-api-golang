@@ -33,7 +33,7 @@ func (o *UpdateNetworkSwitchQosRuleReader) ReadResponse(response runtime.ClientR
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/switch/qosRules/{qosRuleId}] updateNetworkSwitchQosRule", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateNetworkSwitchQosRuleOK() *UpdateNetworkSwitchQosRuleOK {
 	return &UpdateNetworkSwitchQosRuleOK{}
 }
 
-/* UpdateNetworkSwitchQosRuleOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSwitchQosRuleOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateNetworkSwitchQosRuleOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network switch qos rule o k response
+func (o *UpdateNetworkSwitchQosRuleOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSwitchQosRuleOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/switch/qosRules/{qosRuleId}][%d] updateNetworkSwitchQosRuleOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateNetworkSwitchQosRuleOK) readResponse(response runtime.ClientRespo
 	return nil
 }
 
-/*UpdateNetworkSwitchQosRuleBody update network switch qos rule body
+/*
+UpdateNetworkSwitchQosRuleBody update network switch qos rule body
 // Example: {"dscp":0,"dstPort":3000,"dstPortRange":"3000-3100","protocol":"TCP","srcPort":2000,"srcPortRange":"70-80","vlan":100}
 swagger:model UpdateNetworkSwitchQosRuleBody
 */

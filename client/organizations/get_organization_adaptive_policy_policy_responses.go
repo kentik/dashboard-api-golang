@@ -28,7 +28,7 @@ func (o *GetOrganizationAdaptivePolicyPolicyReader) ReadResponse(response runtim
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/adaptivePolicy/policies/{id}] getOrganizationAdaptivePolicyPolicy", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetOrganizationAdaptivePolicyPolicyOK() *GetOrganizationAdaptivePolicyPo
 	return &GetOrganizationAdaptivePolicyPolicyOK{}
 }
 
-/* GetOrganizationAdaptivePolicyPolicyOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationAdaptivePolicyPolicyOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -70,12 +71,17 @@ func (o *GetOrganizationAdaptivePolicyPolicyOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get organization adaptive policy policy o k response
+func (o *GetOrganizationAdaptivePolicyPolicyOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationAdaptivePolicyPolicyOK) Error() string {
-	return fmt.Sprintf("[GET /organizations/{organizationId}/adaptivePolicy/policies/{adaptivePolicyId}][%d] getOrganizationAdaptivePolicyPolicyOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /organizations/{organizationId}/adaptivePolicy/policies/{id}][%d] getOrganizationAdaptivePolicyPolicyOK  %+v", 200, o.Payload)
 }
 
 func (o *GetOrganizationAdaptivePolicyPolicyOK) String() string {
-	return fmt.Sprintf("[GET /organizations/{organizationId}/adaptivePolicy/policies/{adaptivePolicyId}][%d] getOrganizationAdaptivePolicyPolicyOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /organizations/{organizationId}/adaptivePolicy/policies/{id}][%d] getOrganizationAdaptivePolicyPolicyOK  %+v", 200, o.Payload)
 }
 
 func (o *GetOrganizationAdaptivePolicyPolicyOK) GetPayload() interface{} {

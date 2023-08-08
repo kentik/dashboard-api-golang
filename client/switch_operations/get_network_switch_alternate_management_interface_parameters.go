@@ -52,14 +52,19 @@ func NewGetNetworkSwitchAlternateManagementInterfaceParamsWithHTTPClient(client 
 	}
 }
 
-/* GetNetworkSwitchAlternateManagementInterfaceParams contains all the parameters to send to the API endpoint
-   for the get network switch alternate management interface operation.
+/*
+GetNetworkSwitchAlternateManagementInterfaceParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network switch alternate management interface operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSwitchAlternateManagementInterfaceParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

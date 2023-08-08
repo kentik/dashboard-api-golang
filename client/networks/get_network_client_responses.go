@@ -6,11 +6,17 @@ package networks
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+	"encoding/json"
 	"fmt"
 	"io"
+	"strconv"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // GetNetworkClientReader is a Reader for the GetNetworkClient structure.
@@ -28,7 +34,7 @@ func (o *GetNetworkClientReader) ReadResponse(response runtime.ClientResponse, c
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/clients/{clientId}] getNetworkClient", response, response.Code())
 	}
 }
 
@@ -37,12 +43,13 @@ func NewGetNetworkClientOK() *GetNetworkClientOK {
 	return &GetNetworkClientOK{}
 }
 
-/* GetNetworkClientOK describes a response with status code 200, with default header values.
+/*
+GetNetworkClientOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkClientOK struct {
-	Payload interface{}
+	Payload *GetNetworkClientOKBody
 }
 
 // IsSuccess returns true when this get network client o k response has a 2xx status code
@@ -70,6 +77,11 @@ func (o *GetNetworkClientOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network client o k response
+func (o *GetNetworkClientOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkClientOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/clients/{clientId}][%d] getNetworkClientOK  %+v", 200, o.Payload)
 }
@@ -78,16 +90,273 @@ func (o *GetNetworkClientOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/clients/{clientId}][%d] getNetworkClientOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkClientOK) GetPayload() interface{} {
+func (o *GetNetworkClientOK) GetPayload() *GetNetworkClientOKBody {
 	return o.Payload
 }
 
 func (o *GetNetworkClientOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetNetworkClientOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkClientOKBody get network client o k body
+swagger:model GetNetworkClientOKBody
+*/
+type GetNetworkClientOKBody struct {
+
+	// The Cisco discover protocol settings for the client
+	Cdp [][]string `json:"cdp"`
+
+	// VPN connections associated with the client
+	ClientVpnConnections []*GetNetworkClientOKBodyClientVpnConnectionsItems0 `json:"clientVpnConnections"`
+
+	// Short description of the client
+	Description string `json:"description,omitempty"`
+
+	// Timestamp client was first seen in the network
+	FirstSeen int64 `json:"firstSeen,omitempty"`
+
+	// The ID of the client
+	ID string `json:"id,omitempty"`
+
+	// The IP address of the client
+	IP string `json:"ip,omitempty"`
+
+	// The IPv6 address of the client
+	Ip6 string `json:"ip6,omitempty"`
+
+	// Timestamp client was last seen in the network
+	LastSeen int64 `json:"lastSeen,omitempty"`
+
+	// The link layer discover protocol settings for the client
+	Lldp [][]string `json:"lldp"`
+
+	// The MAC address of the client
+	Mac string `json:"mac,omitempty"`
+
+	// Manufacturer of the client
+	Manufacturer string `json:"manufacturer,omitempty"`
+
+	// The operating system of the client
+	Os string `json:"os,omitempty"`
+
+	// The MAC address of the node that the device was last connected to
+	RecentDeviceMac string `json:"recentDeviceMac,omitempty"`
+
+	// Status of SM for the client
+	SmInstalled bool `json:"smInstalled,omitempty"`
+
+	// The name of the SSID that the client is connected to
+	Ssid string `json:"ssid,omitempty"`
+
+	// The connection status of the client
+	// Enum: [Offline Online]
+	Status string `json:"status,omitempty"`
+
+	// The switch port that the client is connected to
+	Switchport string `json:"switchport,omitempty"`
+
+	// The username of the user of the client
+	User string `json:"user,omitempty"`
+
+	// The name of the VLAN that the client is connected to
+	Vlan string `json:"vlan,omitempty"`
+
+	// Wireless capabilities of the client
+	WirelessCapabilities string `json:"wirelessCapabilities,omitempty"`
+}
+
+// Validate validates this get network client o k body
+func (o *GetNetworkClientOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateClientVpnConnections(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateStatus(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkClientOKBody) validateClientVpnConnections(formats strfmt.Registry) error {
+	if swag.IsZero(o.ClientVpnConnections) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.ClientVpnConnections); i++ {
+		if swag.IsZero(o.ClientVpnConnections[i]) { // not required
+			continue
+		}
+
+		if o.ClientVpnConnections[i] != nil {
+			if err := o.ClientVpnConnections[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkClientOK" + "." + "clientVpnConnections" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkClientOK" + "." + "clientVpnConnections" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+var getNetworkClientOKBodyTypeStatusPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Offline","Online"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getNetworkClientOKBodyTypeStatusPropEnum = append(getNetworkClientOKBodyTypeStatusPropEnum, v)
+	}
+}
+
+const (
+
+	// GetNetworkClientOKBodyStatusOffline captures enum value "Offline"
+	GetNetworkClientOKBodyStatusOffline string = "Offline"
+
+	// GetNetworkClientOKBodyStatusOnline captures enum value "Online"
+	GetNetworkClientOKBodyStatusOnline string = "Online"
+)
+
+// prop value enum
+func (o *GetNetworkClientOKBody) validateStatusEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getNetworkClientOKBodyTypeStatusPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetNetworkClientOKBody) validateStatus(formats strfmt.Registry) error {
+	if swag.IsZero(o.Status) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateStatusEnum("getNetworkClientOK"+"."+"status", "body", o.Status); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network client o k body based on the context it is used
+func (o *GetNetworkClientOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateClientVpnConnections(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkClientOKBody) contextValidateClientVpnConnections(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.ClientVpnConnections); i++ {
+
+		if o.ClientVpnConnections[i] != nil {
+
+			if swag.IsZero(o.ClientVpnConnections[i]) { // not required
+				return nil
+			}
+
+			if err := o.ClientVpnConnections[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkClientOK" + "." + "clientVpnConnections" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkClientOK" + "." + "clientVpnConnections" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkClientOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkClientOKBody) UnmarshalBinary(b []byte) error {
+	var res GetNetworkClientOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkClientOKBodyClientVpnConnectionsItems0 get network client o k body client vpn connections items0
+swagger:model GetNetworkClientOKBodyClientVpnConnectionsItems0
+*/
+type GetNetworkClientOKBodyClientVpnConnectionsItems0 struct {
+
+	// The time the client last connected to the VPN
+	ConnectedAt int64 `json:"connectedAt,omitempty"`
+
+	// The time the client last disconnectd from the VPN
+	DisconnectedAt int64 `json:"disconnectedAt,omitempty"`
+
+	// The IP address of the VPN the client last connected to
+	RemoteIP string `json:"remoteIp,omitempty"`
+}
+
+// Validate validates this get network client o k body client vpn connections items0
+func (o *GetNetworkClientOKBodyClientVpnConnectionsItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network client o k body client vpn connections items0 based on context it is used
+func (o *GetNetworkClientOKBodyClientVpnConnectionsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkClientOKBodyClientVpnConnectionsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkClientOKBodyClientVpnConnectionsItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkClientOKBodyClientVpnConnectionsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

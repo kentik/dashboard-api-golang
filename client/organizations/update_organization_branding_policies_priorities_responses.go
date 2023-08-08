@@ -10,11 +10,9 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // UpdateOrganizationBrandingPoliciesPrioritiesReader is a Reader for the UpdateOrganizationBrandingPoliciesPriorities structure.
@@ -32,7 +30,7 @@ func (o *UpdateOrganizationBrandingPoliciesPrioritiesReader) ReadResponse(respon
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /organizations/{organizationId}/brandingPolicies/priorities] updateOrganizationBrandingPoliciesPriorities", response, response.Code())
 	}
 }
 
@@ -41,12 +39,13 @@ func NewUpdateOrganizationBrandingPoliciesPrioritiesOK() *UpdateOrganizationBran
 	return &UpdateOrganizationBrandingPoliciesPrioritiesOK{}
 }
 
-/* UpdateOrganizationBrandingPoliciesPrioritiesOK describes a response with status code 200, with default header values.
+/*
+UpdateOrganizationBrandingPoliciesPrioritiesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateOrganizationBrandingPoliciesPrioritiesOK struct {
-	Payload interface{}
+	Payload *UpdateOrganizationBrandingPoliciesPrioritiesOKBody
 }
 
 // IsSuccess returns true when this update organization branding policies priorities o k response has a 2xx status code
@@ -74,6 +73,11 @@ func (o *UpdateOrganizationBrandingPoliciesPrioritiesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update organization branding policies priorities o k response
+func (o *UpdateOrganizationBrandingPoliciesPrioritiesOK) Code() int {
+	return 200
+}
+
 func (o *UpdateOrganizationBrandingPoliciesPrioritiesOK) Error() string {
 	return fmt.Sprintf("[PUT /organizations/{organizationId}/brandingPolicies/priorities][%d] updateOrganizationBrandingPoliciesPrioritiesOK  %+v", 200, o.Payload)
 }
@@ -82,51 +86,36 @@ func (o *UpdateOrganizationBrandingPoliciesPrioritiesOK) String() string {
 	return fmt.Sprintf("[PUT /organizations/{organizationId}/brandingPolicies/priorities][%d] updateOrganizationBrandingPoliciesPrioritiesOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateOrganizationBrandingPoliciesPrioritiesOK) GetPayload() interface{} {
+func (o *UpdateOrganizationBrandingPoliciesPrioritiesOK) GetPayload() *UpdateOrganizationBrandingPoliciesPrioritiesOKBody {
 	return o.Payload
 }
 
 func (o *UpdateOrganizationBrandingPoliciesPrioritiesOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateOrganizationBrandingPoliciesPrioritiesOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateOrganizationBrandingPoliciesPrioritiesBody update organization branding policies priorities body
+/*
+UpdateOrganizationBrandingPoliciesPrioritiesBody update organization branding policies priorities body
 // Example: {"brandingPolicyIds":["123","456","789"]}
 swagger:model UpdateOrganizationBrandingPoliciesPrioritiesBody
 */
 type UpdateOrganizationBrandingPoliciesPrioritiesBody struct {
 
-	// A list of branding policy IDs arranged in ascending priority order (IDs later in the array have higher priority).
-	// Required: true
+	//       An ordered list of branding policy IDs that determines the priority order of how to apply the policies
+	//
 	BrandingPolicyIds []string `json:"brandingPolicyIds"`
 }
 
 // Validate validates this update organization branding policies priorities body
 func (o *UpdateOrganizationBrandingPoliciesPrioritiesBody) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := o.validateBrandingPolicyIds(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (o *UpdateOrganizationBrandingPoliciesPrioritiesBody) validateBrandingPolicyIds(formats strfmt.Registry) error {
-
-	if err := validate.Required("updateOrganizationBrandingPoliciesPriorities"+"."+"brandingPolicyIds", "body", o.BrandingPolicyIds); err != nil {
-		return err
-	}
-
 	return nil
 }
 
@@ -146,6 +135,45 @@ func (o *UpdateOrganizationBrandingPoliciesPrioritiesBody) MarshalBinary() ([]by
 // UnmarshalBinary interface implementation
 func (o *UpdateOrganizationBrandingPoliciesPrioritiesBody) UnmarshalBinary(b []byte) error {
 	var res UpdateOrganizationBrandingPoliciesPrioritiesBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateOrganizationBrandingPoliciesPrioritiesOKBody update organization branding policies priorities o k body
+swagger:model UpdateOrganizationBrandingPoliciesPrioritiesOKBody
+*/
+type UpdateOrganizationBrandingPoliciesPrioritiesOKBody struct {
+
+	//       An ordered list of branding policy IDs that determines the priority order of how to apply the policies
+	//
+	BrandingPolicyIds []string `json:"brandingPolicyIds"`
+}
+
+// Validate validates this update organization branding policies priorities o k body
+func (o *UpdateOrganizationBrandingPoliciesPrioritiesOKBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update organization branding policies priorities o k body based on context it is used
+func (o *UpdateOrganizationBrandingPoliciesPrioritiesOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateOrganizationBrandingPoliciesPrioritiesOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateOrganizationBrandingPoliciesPrioritiesOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateOrganizationBrandingPoliciesPrioritiesOKBody
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

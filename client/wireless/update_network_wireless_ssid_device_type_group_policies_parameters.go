@@ -52,17 +52,25 @@ func NewUpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsWithHTTPClient(cli
 	}
 }
 
-/* UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParams contains all the parameters to send to the API endpoint
-   for the update network wireless ssid device type group policies operation.
+/*
+UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network wireless ssid device type group policies operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// Number.
+	/* Number.
+
+	   Number
+	*/
 	Number string
 
 	// UpdateNetworkWirelessSsidDeviceTypeGroupPolicies.

@@ -28,7 +28,7 @@ func (o *GetNetworkSwitchRoutingMulticastRendezvousPointsReader) ReadResponse(re
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/switch/routing/multicast/rendezvousPoints] getNetworkSwitchRoutingMulticastRendezvousPoints", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetNetworkSwitchRoutingMulticastRendezvousPointsOK() *GetNetworkSwitchRo
 	return &GetNetworkSwitchRoutingMulticastRendezvousPointsOK{}
 }
 
-/* GetNetworkSwitchRoutingMulticastRendezvousPointsOK describes a response with status code 200, with default header values.
+/*
+GetNetworkSwitchRoutingMulticastRendezvousPointsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetNetworkSwitchRoutingMulticastRendezvousPointsOK) IsServerError() boo
 // IsCode returns true when this get network switch routing multicast rendezvous points o k response a status code equal to that given
 func (o *GetNetworkSwitchRoutingMulticastRendezvousPointsOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get network switch routing multicast rendezvous points o k response
+func (o *GetNetworkSwitchRoutingMulticastRendezvousPointsOK) Code() int {
+	return 200
 }
 
 func (o *GetNetworkSwitchRoutingMulticastRendezvousPointsOK) Error() string {

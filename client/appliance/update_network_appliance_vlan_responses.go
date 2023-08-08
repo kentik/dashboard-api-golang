@@ -34,7 +34,7 @@ func (o *UpdateNetworkApplianceVlanReader) ReadResponse(response runtime.ClientR
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/appliance/vlans/{vlanId}] updateNetworkApplianceVlan", response, response.Code())
 	}
 }
 
@@ -43,12 +43,13 @@ func NewUpdateNetworkApplianceVlanOK() *UpdateNetworkApplianceVlanOK {
 	return &UpdateNetworkApplianceVlanOK{}
 }
 
-/* UpdateNetworkApplianceVlanOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkApplianceVlanOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateNetworkApplianceVlanOK struct {
-	Payload interface{}
+	Payload *UpdateNetworkApplianceVlanOKBody
 }
 
 // IsSuccess returns true when this update network appliance vlan o k response has a 2xx status code
@@ -76,6 +77,11 @@ func (o *UpdateNetworkApplianceVlanOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network appliance vlan o k response
+func (o *UpdateNetworkApplianceVlanOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkApplianceVlanOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/appliance/vlans/{vlanId}][%d] updateNetworkApplianceVlanOK  %+v", 200, o.Payload)
 }
@@ -84,28 +90,34 @@ func (o *UpdateNetworkApplianceVlanOK) String() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/appliance/vlans/{vlanId}][%d] updateNetworkApplianceVlanOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateNetworkApplianceVlanOK) GetPayload() interface{} {
+func (o *UpdateNetworkApplianceVlanOK) GetPayload() *UpdateNetworkApplianceVlanOKBody {
 	return o.Payload
 }
 
 func (o *UpdateNetworkApplianceVlanOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateNetworkApplianceVlanOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateNetworkApplianceVlanBody update network appliance vlan body
-// Example: {"applianceIp":"192.168.1.2","dhcpBootFilename":"sample.file","dhcpBootNextServer":"1.2.3.4","dhcpBootOptionsEnabled":false,"dhcpHandling":"Run a DHCP server","dhcpLeaseTime":"1 day","dhcpOptions":[{"code":"5","type":"text","value":"five"}],"dnsNameservers":"google_dns","fixedIpAssignments":{"22:33:44:55:66:77":{"ip":"1.2.3.4","name":"Some client name"}},"groupPolicyId":"101","name":"My VLAN","reservedIpRanges":[{"comment":"A reserved IP range","end":"192.168.1.1","start":"192.168.1.0"}],"subnet":"192.168.1.0/24"}
+/*
+UpdateNetworkApplianceVlanBody update network appliance vlan body
+// Example: {"adaptivePolicyGroupId":"1234","applianceIp":"192.168.1.2","cidr":"192.168.1.0/24","dhcpBootFilename":"sample.file","dhcpBootNextServer":"1.2.3.4","dhcpBootOptionsEnabled":false,"dhcpHandling":"Run a DHCP server","dhcpLeaseTime":"1 day","dhcpOptions":[{"code":"5","type":"text","value":"five"}],"dhcpRelayServerIps":["192.168.1.0/24","192.168.128.0/24"],"dnsNameservers":"google_dns","fixedIpAssignments":{"22:33:44:55:66:77":{"ip":"1.2.3.4","name":"Some client name"}},"groupPolicyId":"101","ipv6":{"enabled":true,"prefixAssignments":[{"autonomous":false,"origin":{"interfaces":["wan0"],"type":"internet"},"staticApplianceIp6":"2001:db8:3c4d:15::1","staticPrefix":"2001:db8:3c4d:15::/64"}]},"mandatoryDhcp":{"enabled":true},"mask":28,"name":"My VLAN","reservedIpRanges":[{"comment":"A reserved IP range","end":"192.168.1.1","start":"192.168.1.0"}],"subnet":"192.168.1.0/24","templateVlanType":"same","vpnNatSubnet":"192.168.1.0/24"}
 swagger:model UpdateNetworkApplianceVlanBody
 */
 type UpdateNetworkApplianceVlanBody struct {
 
 	// The local IP of the appliance on the VLAN
 	ApplianceIP string `json:"applianceIp,omitempty"`
+
+	// CIDR of the pool of subnets. Applicable only for template network. Each network bound to the template will automatically pick a subnet from this pool to build its own VLAN.
+	Cidr string `json:"cidr,omitempty"`
 
 	// DHCP boot option for boot filename
 	DhcpBootFilename string `json:"dhcpBootFilename,omitempty"`
@@ -117,11 +129,11 @@ type UpdateNetworkApplianceVlanBody struct {
 	DhcpBootOptionsEnabled bool `json:"dhcpBootOptionsEnabled,omitempty"`
 
 	// The appliance's handling of DHCP requests on this VLAN. One of: 'Run a DHCP server', 'Relay DHCP to another server' or 'Do not respond to DHCP requests'
-	// Enum: [Run a DHCP server Relay DHCP to another server Do not respond to DHCP requests]
+	// Enum: [Do not respond to DHCP requests Relay DHCP to another server Run a DHCP server]
 	DhcpHandling string `json:"dhcpHandling,omitempty"`
 
 	// The term of DHCP leases if the appliance is running a DHCP server on this VLAN. One of: '30 minutes', '1 hour', '4 hours', '12 hours', '1 day' or '1 week'
-	// Enum: [30 minutes 1 hour 4 hours 12 hours 1 day 1 week]
+	// Enum: [1 day 1 hour 1 week 12 hours 30 minutes 4 hours]
 	DhcpLeaseTime string `json:"dhcpLeaseTime,omitempty"`
 
 	// The list of DHCP options that will be included in DHCP responses. Each object in the list should have "code", "type", and "value" properties.
@@ -139,6 +151,15 @@ type UpdateNetworkApplianceVlanBody struct {
 	// The id of the desired group policy to apply to the VLAN
 	GroupPolicyID string `json:"groupPolicyId,omitempty"`
 
+	// ipv6
+	IPV6 *UpdateNetworkApplianceVlanParamsBodyIPV6 `json:"ipv6,omitempty"`
+
+	// mandatory dhcp
+	MandatoryDhcp *UpdateNetworkApplianceVlanParamsBodyMandatoryDhcp `json:"mandatoryDhcp,omitempty"`
+
+	// Mask used for the subnet of all bound to the template networks. Applicable only for template network.
+	Mask int64 `json:"mask,omitempty"`
+
 	// The name of the VLAN
 	Name string `json:"name,omitempty"`
 
@@ -147,6 +168,10 @@ type UpdateNetworkApplianceVlanBody struct {
 
 	// The subnet of the VLAN
 	Subnet string `json:"subnet,omitempty"`
+
+	// Type of subnetting of the VLAN. Applicable only for template network.
+	// Enum: [same unique]
+	TemplateVlanType string `json:"templateVlanType,omitempty"`
 
 	// The translated VPN subnet if VPN and VPN subnet translation are enabled on the VLAN
 	VpnNatSubnet string `json:"vpnNatSubnet,omitempty"`
@@ -168,7 +193,19 @@ func (o *UpdateNetworkApplianceVlanBody) Validate(formats strfmt.Registry) error
 		res = append(res, err)
 	}
 
+	if err := o.validateIPV6(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateMandatoryDhcp(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := o.validateReservedIPRanges(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTemplateVlanType(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -182,7 +219,7 @@ var updateNetworkApplianceVlanBodyTypeDhcpHandlingPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Run a DHCP server","Relay DHCP to another server","Do not respond to DHCP requests"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Do not respond to DHCP requests","Relay DHCP to another server","Run a DHCP server"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -192,14 +229,14 @@ func init() {
 
 const (
 
-	// UpdateNetworkApplianceVlanBodyDhcpHandlingRunaDHCPServer captures enum value "Run a DHCP server"
-	UpdateNetworkApplianceVlanBodyDhcpHandlingRunaDHCPServer string = "Run a DHCP server"
+	// UpdateNetworkApplianceVlanBodyDhcpHandlingDoNotRespondToDHCPRequests captures enum value "Do not respond to DHCP requests"
+	UpdateNetworkApplianceVlanBodyDhcpHandlingDoNotRespondToDHCPRequests string = "Do not respond to DHCP requests"
 
 	// UpdateNetworkApplianceVlanBodyDhcpHandlingRelayDHCPToAnotherServer captures enum value "Relay DHCP to another server"
 	UpdateNetworkApplianceVlanBodyDhcpHandlingRelayDHCPToAnotherServer string = "Relay DHCP to another server"
 
-	// UpdateNetworkApplianceVlanBodyDhcpHandlingDoNotRespondToDHCPRequests captures enum value "Do not respond to DHCP requests"
-	UpdateNetworkApplianceVlanBodyDhcpHandlingDoNotRespondToDHCPRequests string = "Do not respond to DHCP requests"
+	// UpdateNetworkApplianceVlanBodyDhcpHandlingRunaDHCPServer captures enum value "Run a DHCP server"
+	UpdateNetworkApplianceVlanBodyDhcpHandlingRunaDHCPServer string = "Run a DHCP server"
 )
 
 // prop value enum
@@ -227,7 +264,7 @@ var updateNetworkApplianceVlanBodyTypeDhcpLeaseTimePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["30 minutes","1 hour","4 hours","12 hours","1 day","1 week"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["1 day","1 hour","1 week","12 hours","30 minutes","4 hours"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -237,23 +274,23 @@ func init() {
 
 const (
 
-	// UpdateNetworkApplianceVlanBodyDhcpLeaseTimeNr30Minutes captures enum value "30 minutes"
-	UpdateNetworkApplianceVlanBodyDhcpLeaseTimeNr30Minutes string = "30 minutes"
+	// UpdateNetworkApplianceVlanBodyDhcpLeaseTimeNr1Day captures enum value "1 day"
+	UpdateNetworkApplianceVlanBodyDhcpLeaseTimeNr1Day string = "1 day"
 
 	// UpdateNetworkApplianceVlanBodyDhcpLeaseTimeNr1Hour captures enum value "1 hour"
 	UpdateNetworkApplianceVlanBodyDhcpLeaseTimeNr1Hour string = "1 hour"
 
-	// UpdateNetworkApplianceVlanBodyDhcpLeaseTimeNr4Hours captures enum value "4 hours"
-	UpdateNetworkApplianceVlanBodyDhcpLeaseTimeNr4Hours string = "4 hours"
+	// UpdateNetworkApplianceVlanBodyDhcpLeaseTimeNr1Week captures enum value "1 week"
+	UpdateNetworkApplianceVlanBodyDhcpLeaseTimeNr1Week string = "1 week"
 
 	// UpdateNetworkApplianceVlanBodyDhcpLeaseTimeNr12Hours captures enum value "12 hours"
 	UpdateNetworkApplianceVlanBodyDhcpLeaseTimeNr12Hours string = "12 hours"
 
-	// UpdateNetworkApplianceVlanBodyDhcpLeaseTimeNr1Day captures enum value "1 day"
-	UpdateNetworkApplianceVlanBodyDhcpLeaseTimeNr1Day string = "1 day"
+	// UpdateNetworkApplianceVlanBodyDhcpLeaseTimeNr30Minutes captures enum value "30 minutes"
+	UpdateNetworkApplianceVlanBodyDhcpLeaseTimeNr30Minutes string = "30 minutes"
 
-	// UpdateNetworkApplianceVlanBodyDhcpLeaseTimeNr1Week captures enum value "1 week"
-	UpdateNetworkApplianceVlanBodyDhcpLeaseTimeNr1Week string = "1 week"
+	// UpdateNetworkApplianceVlanBodyDhcpLeaseTimeNr4Hours captures enum value "4 hours"
+	UpdateNetworkApplianceVlanBodyDhcpLeaseTimeNr4Hours string = "4 hours"
 )
 
 // prop value enum
@@ -303,6 +340,44 @@ func (o *UpdateNetworkApplianceVlanBody) validateDhcpOptions(formats strfmt.Regi
 	return nil
 }
 
+func (o *UpdateNetworkApplianceVlanBody) validateIPV6(formats strfmt.Registry) error {
+	if swag.IsZero(o.IPV6) { // not required
+		return nil
+	}
+
+	if o.IPV6 != nil {
+		if err := o.IPV6.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkApplianceVlan" + "." + "ipv6")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkApplianceVlan" + "." + "ipv6")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanBody) validateMandatoryDhcp(formats strfmt.Registry) error {
+	if swag.IsZero(o.MandatoryDhcp) { // not required
+		return nil
+	}
+
+	if o.MandatoryDhcp != nil {
+		if err := o.MandatoryDhcp.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkApplianceVlan" + "." + "mandatoryDhcp")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkApplianceVlan" + "." + "mandatoryDhcp")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (o *UpdateNetworkApplianceVlanBody) validateReservedIPRanges(formats strfmt.Registry) error {
 	if swag.IsZero(o.ReservedIPRanges) { // not required
 		return nil
@@ -329,11 +404,61 @@ func (o *UpdateNetworkApplianceVlanBody) validateReservedIPRanges(formats strfmt
 	return nil
 }
 
+var updateNetworkApplianceVlanBodyTypeTemplateVlanTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["same","unique"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkApplianceVlanBodyTypeTemplateVlanTypePropEnum = append(updateNetworkApplianceVlanBodyTypeTemplateVlanTypePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkApplianceVlanBodyTemplateVlanTypeSame captures enum value "same"
+	UpdateNetworkApplianceVlanBodyTemplateVlanTypeSame string = "same"
+
+	// UpdateNetworkApplianceVlanBodyTemplateVlanTypeUnique captures enum value "unique"
+	UpdateNetworkApplianceVlanBodyTemplateVlanTypeUnique string = "unique"
+)
+
+// prop value enum
+func (o *UpdateNetworkApplianceVlanBody) validateTemplateVlanTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkApplianceVlanBodyTypeTemplateVlanTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanBody) validateTemplateVlanType(formats strfmt.Registry) error {
+	if swag.IsZero(o.TemplateVlanType) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateTemplateVlanTypeEnum("updateNetworkApplianceVlan"+"."+"templateVlanType", "body", o.TemplateVlanType); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // ContextValidate validate this update network appliance vlan body based on the context it is used
 func (o *UpdateNetworkApplianceVlanBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
 	if err := o.contextValidateDhcpOptions(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateIPV6(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateMandatoryDhcp(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -352,6 +477,11 @@ func (o *UpdateNetworkApplianceVlanBody) contextValidateDhcpOptions(ctx context.
 	for i := 0; i < len(o.DhcpOptions); i++ {
 
 		if o.DhcpOptions[i] != nil {
+
+			if swag.IsZero(o.DhcpOptions[i]) { // not required
+				return nil
+			}
+
 			if err := o.DhcpOptions[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkApplianceVlan" + "." + "dhcpOptions" + "." + strconv.Itoa(i))
@@ -367,11 +497,58 @@ func (o *UpdateNetworkApplianceVlanBody) contextValidateDhcpOptions(ctx context.
 	return nil
 }
 
+func (o *UpdateNetworkApplianceVlanBody) contextValidateIPV6(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.IPV6 != nil {
+
+		if swag.IsZero(o.IPV6) { // not required
+			return nil
+		}
+
+		if err := o.IPV6.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkApplianceVlan" + "." + "ipv6")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkApplianceVlan" + "." + "ipv6")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanBody) contextValidateMandatoryDhcp(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.MandatoryDhcp != nil {
+
+		if swag.IsZero(o.MandatoryDhcp) { // not required
+			return nil
+		}
+
+		if err := o.MandatoryDhcp.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkApplianceVlan" + "." + "mandatoryDhcp")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkApplianceVlan" + "." + "mandatoryDhcp")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (o *UpdateNetworkApplianceVlanBody) contextValidateReservedIPRanges(ctx context.Context, formats strfmt.Registry) error {
 
 	for i := 0; i < len(o.ReservedIPRanges); i++ {
 
 		if o.ReservedIPRanges[i] != nil {
+
+			if swag.IsZero(o.ReservedIPRanges[i]) { // not required
+				return nil
+			}
+
 			if err := o.ReservedIPRanges[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkApplianceVlan" + "." + "reservedIpRanges" + "." + strconv.Itoa(i))
@@ -405,7 +582,1011 @@ func (o *UpdateNetworkApplianceVlanBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateNetworkApplianceVlanParamsBodyDhcpOptionsItems0 update network appliance vlan params body dhcp options items0
+/*
+UpdateNetworkApplianceVlanOKBody update network appliance vlan o k body
+swagger:model UpdateNetworkApplianceVlanOKBody
+*/
+type UpdateNetworkApplianceVlanOKBody struct {
+
+	// The local IP of the appliance on the VLAN
+	ApplianceIP string `json:"applianceIp,omitempty"`
+
+	// CIDR of the pool of subnets. Applicable only for template network. Each network bound to the template will automatically pick a subnet from this pool to build its own VLAN.
+	Cidr string `json:"cidr,omitempty"`
+
+	// DHCP boot option for boot filename
+	DhcpBootFilename string `json:"dhcpBootFilename,omitempty"`
+
+	// DHCP boot option to direct boot clients to the server to load the boot file from
+	DhcpBootNextServer string `json:"dhcpBootNextServer,omitempty"`
+
+	// Use DHCP boot options specified in other properties
+	DhcpBootOptionsEnabled bool `json:"dhcpBootOptionsEnabled,omitempty"`
+
+	// The appliance's handling of DHCP requests on this VLAN. One of: 'Run a DHCP server', 'Relay DHCP to another server' or 'Do not respond to DHCP requests'
+	// Enum: [Do not respond to DHCP requests Relay DHCP to another server Run a DHCP server]
+	DhcpHandling string `json:"dhcpHandling,omitempty"`
+
+	// The term of DHCP leases if the appliance is running a DHCP server on this VLAN. One of: '30 minutes', '1 hour', '4 hours', '12 hours', '1 day' or '1 week'
+	// Enum: [1 day 1 hour 1 week 12 hours 30 minutes 4 hours]
+	DhcpLeaseTime string `json:"dhcpLeaseTime,omitempty"`
+
+	// The list of DHCP options that will be included in DHCP responses. Each object in the list should have "code", "type", and "value" properties.
+	DhcpOptions []*UpdateNetworkApplianceVlanOKBodyDhcpOptionsItems0 `json:"dhcpOptions"`
+
+	// The IPs of the DHCP servers that DHCP requests should be relayed to
+	DhcpRelayServerIps []string `json:"dhcpRelayServerIps"`
+
+	// The DNS nameservers used for DHCP responses, either "upstream_dns", "google_dns", "opendns", or a newline seperated string of IP addresses or domain names
+	DNSNameservers string `json:"dnsNameservers,omitempty"`
+
+	// The DHCP fixed IP assignments on the VLAN. This should be an object that contains mappings from MAC addresses to objects that themselves each contain "ip" and "name" string fields. See the sample request/response for more details.
+	FixedIPAssignments interface{} `json:"fixedIpAssignments,omitempty"`
+
+	// The id of the desired group policy to apply to the VLAN
+	GroupPolicyID string `json:"groupPolicyId,omitempty"`
+
+	// The VLAN ID of the VLAN
+	ID string `json:"id,omitempty"`
+
+	// The interface ID of the VLAN
+	InterfaceID string `json:"interfaceId,omitempty"`
+
+	// ipv6
+	IPV6 *UpdateNetworkApplianceVlanOKBodyIPV6 `json:"ipv6,omitempty"`
+
+	// mandatory dhcp
+	MandatoryDhcp *UpdateNetworkApplianceVlanOKBodyMandatoryDhcp `json:"mandatoryDhcp,omitempty"`
+
+	// Mask used for the subnet of all bound to the template networks. Applicable only for template network.
+	Mask int64 `json:"mask,omitempty"`
+
+	// The name of the VLAN
+	Name string `json:"name,omitempty"`
+
+	// The DHCP reserved IP ranges on the VLAN
+	ReservedIPRanges []*UpdateNetworkApplianceVlanOKBodyReservedIPRangesItems0 `json:"reservedIpRanges"`
+
+	// The subnet of the VLAN
+	Subnet string `json:"subnet,omitempty"`
+
+	// Type of subnetting of the VLAN. Applicable only for template network.
+	// Enum: [same unique]
+	TemplateVlanType *string `json:"templateVlanType,omitempty"`
+
+	// The translated VPN subnet if VPN and VPN subnet translation are enabled on the VLAN
+	VpnNatSubnet string `json:"vpnNatSubnet,omitempty"`
+}
+
+// Validate validates this update network appliance vlan o k body
+func (o *UpdateNetworkApplianceVlanOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateDhcpHandling(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateDhcpLeaseTime(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateDhcpOptions(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateIPV6(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateMandatoryDhcp(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateReservedIPRanges(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTemplateVlanType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkApplianceVlanOKBodyTypeDhcpHandlingPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Do not respond to DHCP requests","Relay DHCP to another server","Run a DHCP server"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkApplianceVlanOKBodyTypeDhcpHandlingPropEnum = append(updateNetworkApplianceVlanOKBodyTypeDhcpHandlingPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkApplianceVlanOKBodyDhcpHandlingDoNotRespondToDHCPRequests captures enum value "Do not respond to DHCP requests"
+	UpdateNetworkApplianceVlanOKBodyDhcpHandlingDoNotRespondToDHCPRequests string = "Do not respond to DHCP requests"
+
+	// UpdateNetworkApplianceVlanOKBodyDhcpHandlingRelayDHCPToAnotherServer captures enum value "Relay DHCP to another server"
+	UpdateNetworkApplianceVlanOKBodyDhcpHandlingRelayDHCPToAnotherServer string = "Relay DHCP to another server"
+
+	// UpdateNetworkApplianceVlanOKBodyDhcpHandlingRunaDHCPServer captures enum value "Run a DHCP server"
+	UpdateNetworkApplianceVlanOKBodyDhcpHandlingRunaDHCPServer string = "Run a DHCP server"
+)
+
+// prop value enum
+func (o *UpdateNetworkApplianceVlanOKBody) validateDhcpHandlingEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkApplianceVlanOKBodyTypeDhcpHandlingPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanOKBody) validateDhcpHandling(formats strfmt.Registry) error {
+	if swag.IsZero(o.DhcpHandling) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateDhcpHandlingEnum("updateNetworkApplianceVlanOK"+"."+"dhcpHandling", "body", o.DhcpHandling); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var updateNetworkApplianceVlanOKBodyTypeDhcpLeaseTimePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["1 day","1 hour","1 week","12 hours","30 minutes","4 hours"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkApplianceVlanOKBodyTypeDhcpLeaseTimePropEnum = append(updateNetworkApplianceVlanOKBodyTypeDhcpLeaseTimePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkApplianceVlanOKBodyDhcpLeaseTimeNr1Day captures enum value "1 day"
+	UpdateNetworkApplianceVlanOKBodyDhcpLeaseTimeNr1Day string = "1 day"
+
+	// UpdateNetworkApplianceVlanOKBodyDhcpLeaseTimeNr1Hour captures enum value "1 hour"
+	UpdateNetworkApplianceVlanOKBodyDhcpLeaseTimeNr1Hour string = "1 hour"
+
+	// UpdateNetworkApplianceVlanOKBodyDhcpLeaseTimeNr1Week captures enum value "1 week"
+	UpdateNetworkApplianceVlanOKBodyDhcpLeaseTimeNr1Week string = "1 week"
+
+	// UpdateNetworkApplianceVlanOKBodyDhcpLeaseTimeNr12Hours captures enum value "12 hours"
+	UpdateNetworkApplianceVlanOKBodyDhcpLeaseTimeNr12Hours string = "12 hours"
+
+	// UpdateNetworkApplianceVlanOKBodyDhcpLeaseTimeNr30Minutes captures enum value "30 minutes"
+	UpdateNetworkApplianceVlanOKBodyDhcpLeaseTimeNr30Minutes string = "30 minutes"
+
+	// UpdateNetworkApplianceVlanOKBodyDhcpLeaseTimeNr4Hours captures enum value "4 hours"
+	UpdateNetworkApplianceVlanOKBodyDhcpLeaseTimeNr4Hours string = "4 hours"
+)
+
+// prop value enum
+func (o *UpdateNetworkApplianceVlanOKBody) validateDhcpLeaseTimeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkApplianceVlanOKBodyTypeDhcpLeaseTimePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanOKBody) validateDhcpLeaseTime(formats strfmt.Registry) error {
+	if swag.IsZero(o.DhcpLeaseTime) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateDhcpLeaseTimeEnum("updateNetworkApplianceVlanOK"+"."+"dhcpLeaseTime", "body", o.DhcpLeaseTime); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanOKBody) validateDhcpOptions(formats strfmt.Registry) error {
+	if swag.IsZero(o.DhcpOptions) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.DhcpOptions); i++ {
+		if swag.IsZero(o.DhcpOptions[i]) { // not required
+			continue
+		}
+
+		if o.DhcpOptions[i] != nil {
+			if err := o.DhcpOptions[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkApplianceVlanOK" + "." + "dhcpOptions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkApplianceVlanOK" + "." + "dhcpOptions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanOKBody) validateIPV6(formats strfmt.Registry) error {
+	if swag.IsZero(o.IPV6) { // not required
+		return nil
+	}
+
+	if o.IPV6 != nil {
+		if err := o.IPV6.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkApplianceVlanOK" + "." + "ipv6")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkApplianceVlanOK" + "." + "ipv6")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanOKBody) validateMandatoryDhcp(formats strfmt.Registry) error {
+	if swag.IsZero(o.MandatoryDhcp) { // not required
+		return nil
+	}
+
+	if o.MandatoryDhcp != nil {
+		if err := o.MandatoryDhcp.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkApplianceVlanOK" + "." + "mandatoryDhcp")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkApplianceVlanOK" + "." + "mandatoryDhcp")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanOKBody) validateReservedIPRanges(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReservedIPRanges) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.ReservedIPRanges); i++ {
+		if swag.IsZero(o.ReservedIPRanges[i]) { // not required
+			continue
+		}
+
+		if o.ReservedIPRanges[i] != nil {
+			if err := o.ReservedIPRanges[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkApplianceVlanOK" + "." + "reservedIpRanges" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkApplianceVlanOK" + "." + "reservedIpRanges" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+var updateNetworkApplianceVlanOKBodyTypeTemplateVlanTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["same","unique"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkApplianceVlanOKBodyTypeTemplateVlanTypePropEnum = append(updateNetworkApplianceVlanOKBodyTypeTemplateVlanTypePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkApplianceVlanOKBodyTemplateVlanTypeSame captures enum value "same"
+	UpdateNetworkApplianceVlanOKBodyTemplateVlanTypeSame string = "same"
+
+	// UpdateNetworkApplianceVlanOKBodyTemplateVlanTypeUnique captures enum value "unique"
+	UpdateNetworkApplianceVlanOKBodyTemplateVlanTypeUnique string = "unique"
+)
+
+// prop value enum
+func (o *UpdateNetworkApplianceVlanOKBody) validateTemplateVlanTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkApplianceVlanOKBodyTypeTemplateVlanTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanOKBody) validateTemplateVlanType(formats strfmt.Registry) error {
+	if swag.IsZero(o.TemplateVlanType) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateTemplateVlanTypeEnum("updateNetworkApplianceVlanOK"+"."+"templateVlanType", "body", *o.TemplateVlanType); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network appliance vlan o k body based on the context it is used
+func (o *UpdateNetworkApplianceVlanOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateDhcpOptions(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateIPV6(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateMandatoryDhcp(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateReservedIPRanges(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanOKBody) contextValidateDhcpOptions(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.DhcpOptions); i++ {
+
+		if o.DhcpOptions[i] != nil {
+
+			if swag.IsZero(o.DhcpOptions[i]) { // not required
+				return nil
+			}
+
+			if err := o.DhcpOptions[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkApplianceVlanOK" + "." + "dhcpOptions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkApplianceVlanOK" + "." + "dhcpOptions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanOKBody) contextValidateIPV6(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.IPV6 != nil {
+
+		if swag.IsZero(o.IPV6) { // not required
+			return nil
+		}
+
+		if err := o.IPV6.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkApplianceVlanOK" + "." + "ipv6")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkApplianceVlanOK" + "." + "ipv6")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanOKBody) contextValidateMandatoryDhcp(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.MandatoryDhcp != nil {
+
+		if swag.IsZero(o.MandatoryDhcp) { // not required
+			return nil
+		}
+
+		if err := o.MandatoryDhcp.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkApplianceVlanOK" + "." + "mandatoryDhcp")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkApplianceVlanOK" + "." + "mandatoryDhcp")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanOKBody) contextValidateReservedIPRanges(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.ReservedIPRanges); i++ {
+
+		if o.ReservedIPRanges[i] != nil {
+
+			if swag.IsZero(o.ReservedIPRanges[i]) { // not required
+				return nil
+			}
+
+			if err := o.ReservedIPRanges[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkApplianceVlanOK" + "." + "reservedIpRanges" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkApplianceVlanOK" + "." + "reservedIpRanges" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVlanOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVlanOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceVlanOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceVlanOKBodyDhcpOptionsItems0 update network appliance vlan o k body dhcp options items0
+swagger:model UpdateNetworkApplianceVlanOKBodyDhcpOptionsItems0
+*/
+type UpdateNetworkApplianceVlanOKBodyDhcpOptionsItems0 struct {
+
+	// The code for the DHCP option. This should be an integer between 2 and 254.
+	// Required: true
+	Code *string `json:"code"`
+
+	// The type for the DHCP option. One of: 'text', 'ip', 'hex' or 'integer'
+	// Required: true
+	// Enum: [hex integer ip text]
+	Type *string `json:"type"`
+
+	// The value for the DHCP option
+	// Required: true
+	Value *string `json:"value"`
+}
+
+// Validate validates this update network appliance vlan o k body dhcp options items0
+func (o *UpdateNetworkApplianceVlanOKBodyDhcpOptionsItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateCode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateValue(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanOKBodyDhcpOptionsItems0) validateCode(formats strfmt.Registry) error {
+
+	if err := validate.Required("code", "body", o.Code); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var updateNetworkApplianceVlanOKBodyDhcpOptionsItems0TypeTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["hex","integer","ip","text"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkApplianceVlanOKBodyDhcpOptionsItems0TypeTypePropEnum = append(updateNetworkApplianceVlanOKBodyDhcpOptionsItems0TypeTypePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkApplianceVlanOKBodyDhcpOptionsItems0TypeHex captures enum value "hex"
+	UpdateNetworkApplianceVlanOKBodyDhcpOptionsItems0TypeHex string = "hex"
+
+	// UpdateNetworkApplianceVlanOKBodyDhcpOptionsItems0TypeInteger captures enum value "integer"
+	UpdateNetworkApplianceVlanOKBodyDhcpOptionsItems0TypeInteger string = "integer"
+
+	// UpdateNetworkApplianceVlanOKBodyDhcpOptionsItems0TypeIP captures enum value "ip"
+	UpdateNetworkApplianceVlanOKBodyDhcpOptionsItems0TypeIP string = "ip"
+
+	// UpdateNetworkApplianceVlanOKBodyDhcpOptionsItems0TypeText captures enum value "text"
+	UpdateNetworkApplianceVlanOKBodyDhcpOptionsItems0TypeText string = "text"
+)
+
+// prop value enum
+func (o *UpdateNetworkApplianceVlanOKBodyDhcpOptionsItems0) validateTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkApplianceVlanOKBodyDhcpOptionsItems0TypeTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanOKBodyDhcpOptionsItems0) validateType(formats strfmt.Registry) error {
+
+	if err := validate.Required("type", "body", o.Type); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := o.validateTypeEnum("type", "body", *o.Type); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanOKBodyDhcpOptionsItems0) validateValue(formats strfmt.Registry) error {
+
+	if err := validate.Required("value", "body", o.Value); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network appliance vlan o k body dhcp options items0 based on context it is used
+func (o *UpdateNetworkApplianceVlanOKBodyDhcpOptionsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVlanOKBodyDhcpOptionsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVlanOKBodyDhcpOptionsItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceVlanOKBodyDhcpOptionsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceVlanOKBodyIPV6 IPv6 configuration on the VLAN
+swagger:model UpdateNetworkApplianceVlanOKBodyIPV6
+*/
+type UpdateNetworkApplianceVlanOKBodyIPV6 struct {
+
+	// Enable IPv6 on VLAN
+	Enabled bool `json:"enabled,omitempty"`
+
+	// Prefix assignments on the VLAN
+	PrefixAssignments []*UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0 `json:"prefixAssignments"`
+}
+
+// Validate validates this update network appliance vlan o k body IP v6
+func (o *UpdateNetworkApplianceVlanOKBodyIPV6) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validatePrefixAssignments(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanOKBodyIPV6) validatePrefixAssignments(formats strfmt.Registry) error {
+	if swag.IsZero(o.PrefixAssignments) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.PrefixAssignments); i++ {
+		if swag.IsZero(o.PrefixAssignments[i]) { // not required
+			continue
+		}
+
+		if o.PrefixAssignments[i] != nil {
+			if err := o.PrefixAssignments[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkApplianceVlanOK" + "." + "ipv6" + "." + "prefixAssignments" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkApplianceVlanOK" + "." + "ipv6" + "." + "prefixAssignments" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network appliance vlan o k body IP v6 based on the context it is used
+func (o *UpdateNetworkApplianceVlanOKBodyIPV6) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidatePrefixAssignments(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanOKBodyIPV6) contextValidatePrefixAssignments(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.PrefixAssignments); i++ {
+
+		if o.PrefixAssignments[i] != nil {
+
+			if swag.IsZero(o.PrefixAssignments[i]) { // not required
+				return nil
+			}
+
+			if err := o.PrefixAssignments[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkApplianceVlanOK" + "." + "ipv6" + "." + "prefixAssignments" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkApplianceVlanOK" + "." + "ipv6" + "." + "prefixAssignments" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVlanOKBodyIPV6) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVlanOKBodyIPV6) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceVlanOKBodyIPV6
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0 update network appliance vlan o k body IP v6 prefix assignments items0
+swagger:model UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0
+*/
+type UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0 struct {
+
+	// Auto assign a /64 prefix from the origin to the VLAN
+	Autonomous bool `json:"autonomous,omitempty"`
+
+	// origin
+	Origin *UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0Origin `json:"origin,omitempty"`
+
+	// Manual configuration of the IPv6 Appliance IP
+	StaticApplianceIp6 string `json:"staticApplianceIp6,omitempty"`
+
+	// Manual configuration of a /64 prefix on the VLAN
+	StaticPrefix string `json:"staticPrefix,omitempty"`
+}
+
+// Validate validates this update network appliance vlan o k body IP v6 prefix assignments items0
+func (o *UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateOrigin(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0) validateOrigin(formats strfmt.Registry) error {
+	if swag.IsZero(o.Origin) { // not required
+		return nil
+	}
+
+	if o.Origin != nil {
+		if err := o.Origin.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("origin")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("origin")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network appliance vlan o k body IP v6 prefix assignments items0 based on the context it is used
+func (o *UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateOrigin(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0) contextValidateOrigin(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Origin != nil {
+
+		if swag.IsZero(o.Origin) { // not required
+			return nil
+		}
+
+		if err := o.Origin.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("origin")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("origin")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0Origin The origin of the prefix
+swagger:model UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0Origin
+*/
+type UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0Origin struct {
+
+	// Interfaces associated with the prefix
+	Interfaces []string `json:"interfaces"`
+
+	// Type of the origin
+	// Enum: [independent internet]
+	Type string `json:"type,omitempty"`
+}
+
+// Validate validates this update network appliance vlan o k body IP v6 prefix assignments items0 origin
+func (o *UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0Origin) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkApplianceVlanOKBodyIpV6PrefixAssignmentsItems0OriginTypeTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["independent","internet"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkApplianceVlanOKBodyIpV6PrefixAssignmentsItems0OriginTypeTypePropEnum = append(updateNetworkApplianceVlanOKBodyIpV6PrefixAssignmentsItems0OriginTypeTypePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0OriginTypeIndependent captures enum value "independent"
+	UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0OriginTypeIndependent string = "independent"
+
+	// UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0OriginTypeInternet captures enum value "internet"
+	UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0OriginTypeInternet string = "internet"
+)
+
+// prop value enum
+func (o *UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0Origin) validateTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkApplianceVlanOKBodyIpV6PrefixAssignmentsItems0OriginTypeTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0Origin) validateType(formats strfmt.Registry) error {
+	if swag.IsZero(o.Type) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateTypeEnum("origin"+"."+"type", "body", o.Type); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network appliance vlan o k body IP v6 prefix assignments items0 origin based on context it is used
+func (o *UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0Origin) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0Origin) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0Origin) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceVlanOKBodyIPV6PrefixAssignmentsItems0Origin
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceVlanOKBodyMandatoryDhcp Mandatory DHCP will enforce that clients connecting to this VLAN must use the IP address assigned by the DHCP server. Clients who use a static IP address won't be able to associate. Only available on firmware versions 17.0 and above
+swagger:model UpdateNetworkApplianceVlanOKBodyMandatoryDhcp
+*/
+type UpdateNetworkApplianceVlanOKBodyMandatoryDhcp struct {
+
+	// Enable Mandatory DHCP on VLAN.
+	Enabled bool `json:"enabled,omitempty"`
+}
+
+// Validate validates this update network appliance vlan o k body mandatory dhcp
+func (o *UpdateNetworkApplianceVlanOKBodyMandatoryDhcp) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network appliance vlan o k body mandatory dhcp based on context it is used
+func (o *UpdateNetworkApplianceVlanOKBodyMandatoryDhcp) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVlanOKBodyMandatoryDhcp) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVlanOKBodyMandatoryDhcp) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceVlanOKBodyMandatoryDhcp
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceVlanOKBodyReservedIPRangesItems0 update network appliance vlan o k body reserved IP ranges items0
+swagger:model UpdateNetworkApplianceVlanOKBodyReservedIPRangesItems0
+*/
+type UpdateNetworkApplianceVlanOKBodyReservedIPRangesItems0 struct {
+
+	// A text comment for the reserved range
+	Comment string `json:"comment,omitempty"`
+
+	// The last IP in the reserved range
+	End string `json:"end,omitempty"`
+
+	// The first IP in the reserved range
+	Start string `json:"start,omitempty"`
+}
+
+// Validate validates this update network appliance vlan o k body reserved IP ranges items0
+func (o *UpdateNetworkApplianceVlanOKBodyReservedIPRangesItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network appliance vlan o k body reserved IP ranges items0 based on context it is used
+func (o *UpdateNetworkApplianceVlanOKBodyReservedIPRangesItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVlanOKBodyReservedIPRangesItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVlanOKBodyReservedIPRangesItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceVlanOKBodyReservedIPRangesItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceVlanParamsBodyDhcpOptionsItems0 update network appliance vlan params body dhcp options items0
 swagger:model UpdateNetworkApplianceVlanParamsBodyDhcpOptionsItems0
 */
 type UpdateNetworkApplianceVlanParamsBodyDhcpOptionsItems0 struct {
@@ -416,7 +1597,7 @@ type UpdateNetworkApplianceVlanParamsBodyDhcpOptionsItems0 struct {
 
 	// The type for the DHCP option. One of: 'text', 'ip', 'hex' or 'integer'
 	// Required: true
-	// Enum: [text ip hex integer]
+	// Enum: [hex integer ip text]
 	Type *string `json:"type"`
 
 	// The value for the DHCP option
@@ -459,7 +1640,7 @@ var updateNetworkApplianceVlanParamsBodyDhcpOptionsItems0TypeTypePropEnum []inte
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["text","ip","hex","integer"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["hex","integer","ip","text"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -469,17 +1650,17 @@ func init() {
 
 const (
 
-	// UpdateNetworkApplianceVlanParamsBodyDhcpOptionsItems0TypeText captures enum value "text"
-	UpdateNetworkApplianceVlanParamsBodyDhcpOptionsItems0TypeText string = "text"
-
-	// UpdateNetworkApplianceVlanParamsBodyDhcpOptionsItems0TypeIP captures enum value "ip"
-	UpdateNetworkApplianceVlanParamsBodyDhcpOptionsItems0TypeIP string = "ip"
-
 	// UpdateNetworkApplianceVlanParamsBodyDhcpOptionsItems0TypeHex captures enum value "hex"
 	UpdateNetworkApplianceVlanParamsBodyDhcpOptionsItems0TypeHex string = "hex"
 
 	// UpdateNetworkApplianceVlanParamsBodyDhcpOptionsItems0TypeInteger captures enum value "integer"
 	UpdateNetworkApplianceVlanParamsBodyDhcpOptionsItems0TypeInteger string = "integer"
+
+	// UpdateNetworkApplianceVlanParamsBodyDhcpOptionsItems0TypeIP captures enum value "ip"
+	UpdateNetworkApplianceVlanParamsBodyDhcpOptionsItems0TypeIP string = "ip"
+
+	// UpdateNetworkApplianceVlanParamsBodyDhcpOptionsItems0TypeText captures enum value "text"
+	UpdateNetworkApplianceVlanParamsBodyDhcpOptionsItems0TypeText string = "text"
 )
 
 // prop value enum
@@ -536,7 +1717,356 @@ func (o *UpdateNetworkApplianceVlanParamsBodyDhcpOptionsItems0) UnmarshalBinary(
 	return nil
 }
 
-/*UpdateNetworkApplianceVlanParamsBodyReservedIPRangesItems0 update network appliance vlan params body reserved IP ranges items0
+/*
+UpdateNetworkApplianceVlanParamsBodyIPV6 IPv6 configuration on the VLAN
+swagger:model UpdateNetworkApplianceVlanParamsBodyIPV6
+*/
+type UpdateNetworkApplianceVlanParamsBodyIPV6 struct {
+
+	// Enable IPv6 on VLAN.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// Prefix assignments on the VLAN
+	PrefixAssignments []*UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0 `json:"prefixAssignments"`
+}
+
+// Validate validates this update network appliance vlan params body IP v6
+func (o *UpdateNetworkApplianceVlanParamsBodyIPV6) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validatePrefixAssignments(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanParamsBodyIPV6) validatePrefixAssignments(formats strfmt.Registry) error {
+	if swag.IsZero(o.PrefixAssignments) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.PrefixAssignments); i++ {
+		if swag.IsZero(o.PrefixAssignments[i]) { // not required
+			continue
+		}
+
+		if o.PrefixAssignments[i] != nil {
+			if err := o.PrefixAssignments[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkApplianceVlan" + "." + "ipv6" + "." + "prefixAssignments" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkApplianceVlan" + "." + "ipv6" + "." + "prefixAssignments" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network appliance vlan params body IP v6 based on the context it is used
+func (o *UpdateNetworkApplianceVlanParamsBodyIPV6) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidatePrefixAssignments(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanParamsBodyIPV6) contextValidatePrefixAssignments(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.PrefixAssignments); i++ {
+
+		if o.PrefixAssignments[i] != nil {
+
+			if swag.IsZero(o.PrefixAssignments[i]) { // not required
+				return nil
+			}
+
+			if err := o.PrefixAssignments[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkApplianceVlan" + "." + "ipv6" + "." + "prefixAssignments" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkApplianceVlan" + "." + "ipv6" + "." + "prefixAssignments" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVlanParamsBodyIPV6) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVlanParamsBodyIPV6) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceVlanParamsBodyIPV6
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0 update network appliance vlan params body IP v6 prefix assignments items0
+swagger:model UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0
+*/
+type UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0 struct {
+
+	// Auto assign a /64 prefix from the origin to the VLAN
+	Autonomous bool `json:"autonomous,omitempty"`
+
+	// origin
+	Origin *UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0Origin `json:"origin,omitempty"`
+
+	// Manual configuration of the IPv6 Appliance IP
+	StaticApplianceIp6 string `json:"staticApplianceIp6,omitempty"`
+
+	// Manual configuration of a /64 prefix on the VLAN
+	StaticPrefix string `json:"staticPrefix,omitempty"`
+}
+
+// Validate validates this update network appliance vlan params body IP v6 prefix assignments items0
+func (o *UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateOrigin(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0) validateOrigin(formats strfmt.Registry) error {
+	if swag.IsZero(o.Origin) { // not required
+		return nil
+	}
+
+	if o.Origin != nil {
+		if err := o.Origin.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("origin")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("origin")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network appliance vlan params body IP v6 prefix assignments items0 based on the context it is used
+func (o *UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateOrigin(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0) contextValidateOrigin(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Origin != nil {
+
+		if swag.IsZero(o.Origin) { // not required
+			return nil
+		}
+
+		if err := o.Origin.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("origin")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("origin")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0Origin The origin of the prefix
+swagger:model UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0Origin
+*/
+type UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0Origin struct {
+
+	// Interfaces associated with the prefix
+	Interfaces []string `json:"interfaces"`
+
+	// Type of the origin
+	// Required: true
+	// Enum: [independent internet]
+	Type *string `json:"type"`
+}
+
+// Validate validates this update network appliance vlan params body IP v6 prefix assignments items0 origin
+func (o *UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0Origin) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkApplianceVlanParamsBodyIpV6PrefixAssignmentsItems0OriginTypeTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["independent","internet"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkApplianceVlanParamsBodyIpV6PrefixAssignmentsItems0OriginTypeTypePropEnum = append(updateNetworkApplianceVlanParamsBodyIpV6PrefixAssignmentsItems0OriginTypeTypePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0OriginTypeIndependent captures enum value "independent"
+	UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0OriginTypeIndependent string = "independent"
+
+	// UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0OriginTypeInternet captures enum value "internet"
+	UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0OriginTypeInternet string = "internet"
+)
+
+// prop value enum
+func (o *UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0Origin) validateTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkApplianceVlanParamsBodyIpV6PrefixAssignmentsItems0OriginTypeTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0Origin) validateType(formats strfmt.Registry) error {
+
+	if err := validate.Required("origin"+"."+"type", "body", o.Type); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := o.validateTypeEnum("origin"+"."+"type", "body", *o.Type); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network appliance vlan params body IP v6 prefix assignments items0 origin based on context it is used
+func (o *UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0Origin) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0Origin) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0Origin) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceVlanParamsBodyIPV6PrefixAssignmentsItems0Origin
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceVlanParamsBodyMandatoryDhcp Mandatory DHCP will enforce that clients connecting to this VLAN must use the IP address assigned by the DHCP server. Clients who use a static IP address won't be able to associate. Only available on firmware versions 17.0 and above
+swagger:model UpdateNetworkApplianceVlanParamsBodyMandatoryDhcp
+*/
+type UpdateNetworkApplianceVlanParamsBodyMandatoryDhcp struct {
+
+	// Enable Mandatory DHCP on VLAN.
+	Enabled bool `json:"enabled,omitempty"`
+}
+
+// Validate validates this update network appliance vlan params body mandatory dhcp
+func (o *UpdateNetworkApplianceVlanParamsBodyMandatoryDhcp) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network appliance vlan params body mandatory dhcp based on context it is used
+func (o *UpdateNetworkApplianceVlanParamsBodyMandatoryDhcp) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVlanParamsBodyMandatoryDhcp) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVlanParamsBodyMandatoryDhcp) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceVlanParamsBodyMandatoryDhcp
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceVlanParamsBodyReservedIPRangesItems0 update network appliance vlan params body reserved IP ranges items0
 swagger:model UpdateNetworkApplianceVlanParamsBodyReservedIPRangesItems0
 */
 type UpdateNetworkApplianceVlanParamsBodyReservedIPRangesItems0 struct {

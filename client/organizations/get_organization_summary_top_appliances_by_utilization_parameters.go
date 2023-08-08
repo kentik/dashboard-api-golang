@@ -53,14 +53,19 @@ func NewGetOrganizationSummaryTopAppliancesByUtilizationParamsWithHTTPClient(cli
 	}
 }
 
-/* GetOrganizationSummaryTopAppliancesByUtilizationParams contains all the parameters to send to the API endpoint
-   for the get organization summary top appliances by utilization operation.
+/*
+GetOrganizationSummaryTopAppliancesByUtilizationParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization summary top appliances by utilization operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationSummaryTopAppliancesByUtilizationParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	/* T0.

@@ -10,6 +10,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
@@ -33,7 +34,7 @@ func (o *CreateOrganizationReader) ReadResponse(response runtime.ClientResponse,
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /organizations] createOrganization", response, response.Code())
 	}
 }
 
@@ -42,7 +43,8 @@ func NewCreateOrganizationCreated() *CreateOrganizationCreated {
 	return &CreateOrganizationCreated{}
 }
 
-/* CreateOrganizationCreated describes a response with status code 201, with default header values.
+/*
+CreateOrganizationCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
@@ -75,6 +77,11 @@ func (o *CreateOrganizationCreated) IsCode(code int) bool {
 	return code == 201
 }
 
+// Code gets the status code for the create organization created response
+func (o *CreateOrganizationCreated) Code() int {
+	return 201
+}
+
 func (o *CreateOrganizationCreated) Error() string {
 	return fmt.Sprintf("[POST /organizations][%d] createOrganizationCreated  %+v", 201, o.Payload)
 }
@@ -99,11 +106,15 @@ func (o *CreateOrganizationCreated) readResponse(response runtime.ClientResponse
 	return nil
 }
 
-/*CreateOrganizationBody create organization body
-// Example: {"name":"My organization"}
+/*
+CreateOrganizationBody create organization body
+// Example: {"management":{"details":[{"name":"MSP ID","value":"123456"}]},"name":"My organization"}
 swagger:model CreateOrganizationBody
 */
 type CreateOrganizationBody struct {
+
+	// management
+	Management *CreateOrganizationParamsBodyManagement `json:"management,omitempty"`
 
 	// The name of the organization
 	// Required: true
@@ -114,6 +125,10 @@ type CreateOrganizationBody struct {
 func (o *CreateOrganizationBody) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := o.validateManagement(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := o.validateName(formats); err != nil {
 		res = append(res, err)
 	}
@@ -121,6 +136,25 @@ func (o *CreateOrganizationBody) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (o *CreateOrganizationBody) validateManagement(formats strfmt.Registry) error {
+	if swag.IsZero(o.Management) { // not required
+		return nil
+	}
+
+	if o.Management != nil {
+		if err := o.Management.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createOrganization" + "." + "management")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createOrganization" + "." + "management")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -133,8 +167,38 @@ func (o *CreateOrganizationBody) validateName(formats strfmt.Registry) error {
 	return nil
 }
 
-// ContextValidate validates this create organization body based on context it is used
+// ContextValidate validate this create organization body based on the context it is used
 func (o *CreateOrganizationBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateManagement(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBody) contextValidateManagement(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Management != nil {
+
+		if swag.IsZero(o.Management) { // not required
+			return nil
+		}
+
+		if err := o.Management.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createOrganization" + "." + "management")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createOrganization" + "." + "management")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -156,7 +220,8 @@ func (o *CreateOrganizationBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*CreateOrganizationCreatedBody create organization created body
+/*
+CreateOrganizationCreatedBody create organization created body
 swagger:model CreateOrganizationCreatedBody
 */
 type CreateOrganizationCreatedBody struct {
@@ -172,6 +237,9 @@ type CreateOrganizationCreatedBody struct {
 
 	// licensing
 	Licensing *CreateOrganizationCreatedBodyLicensing `json:"licensing,omitempty"`
+
+	// management
+	Management *CreateOrganizationCreatedBodyManagement `json:"management,omitempty"`
 
 	// Organization name
 	Name string `json:"name,omitempty"`
@@ -193,6 +261,10 @@ func (o *CreateOrganizationCreatedBody) Validate(formats strfmt.Registry) error 
 	}
 
 	if err := o.validateLicensing(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateManagement(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -259,6 +331,25 @@ func (o *CreateOrganizationCreatedBody) validateLicensing(formats strfmt.Registr
 	return nil
 }
 
+func (o *CreateOrganizationCreatedBody) validateManagement(formats strfmt.Registry) error {
+	if swag.IsZero(o.Management) { // not required
+		return nil
+	}
+
+	if o.Management != nil {
+		if err := o.Management.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createOrganizationCreated" + "." + "management")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createOrganizationCreated" + "." + "management")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 // ContextValidate validate this create organization created body based on the context it is used
 func (o *CreateOrganizationCreatedBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
@@ -275,6 +366,10 @@ func (o *CreateOrganizationCreatedBody) ContextValidate(ctx context.Context, for
 		res = append(res, err)
 	}
 
+	if err := o.contextValidateManagement(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -284,6 +379,11 @@ func (o *CreateOrganizationCreatedBody) ContextValidate(ctx context.Context, for
 func (o *CreateOrganizationCreatedBody) contextValidateAPI(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.API != nil {
+
+		if swag.IsZero(o.API) { // not required
+			return nil
+		}
+
 		if err := o.API.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createOrganizationCreated" + "." + "api")
@@ -300,6 +400,11 @@ func (o *CreateOrganizationCreatedBody) contextValidateAPI(ctx context.Context, 
 func (o *CreateOrganizationCreatedBody) contextValidateCloud(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Cloud != nil {
+
+		if swag.IsZero(o.Cloud) { // not required
+			return nil
+		}
+
 		if err := o.Cloud.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createOrganizationCreated" + "." + "cloud")
@@ -316,11 +421,37 @@ func (o *CreateOrganizationCreatedBody) contextValidateCloud(ctx context.Context
 func (o *CreateOrganizationCreatedBody) contextValidateLicensing(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Licensing != nil {
+
+		if swag.IsZero(o.Licensing) { // not required
+			return nil
+		}
+
 		if err := o.Licensing.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createOrganizationCreated" + "." + "licensing")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("createOrganizationCreated" + "." + "licensing")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *CreateOrganizationCreatedBody) contextValidateManagement(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Management != nil {
+
+		if swag.IsZero(o.Management) { // not required
+			return nil
+		}
+
+		if err := o.Management.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createOrganizationCreated" + "." + "management")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createOrganizationCreated" + "." + "management")
 			}
 			return err
 		}
@@ -347,7 +478,8 @@ func (o *CreateOrganizationCreatedBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*CreateOrganizationCreatedBodyAPI API related settings
+/*
+CreateOrganizationCreatedBodyAPI API related settings
 swagger:model CreateOrganizationCreatedBodyAPI
 */
 type CreateOrganizationCreatedBodyAPI struct {
@@ -384,7 +516,8 @@ func (o *CreateOrganizationCreatedBodyAPI) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*CreateOrganizationCreatedBodyCloud Data for this organization
+/*
+CreateOrganizationCreatedBodyCloud Data for this organization
 swagger:model CreateOrganizationCreatedBodyCloud
 */
 type CreateOrganizationCreatedBodyCloud struct {
@@ -443,6 +576,11 @@ func (o *CreateOrganizationCreatedBodyCloud) ContextValidate(ctx context.Context
 func (o *CreateOrganizationCreatedBodyCloud) contextValidateRegion(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Region != nil {
+
+		if swag.IsZero(o.Region) { // not required
+			return nil
+		}
+
 		if err := o.Region.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createOrganizationCreated" + "." + "cloud" + "." + "region")
@@ -474,7 +612,8 @@ func (o *CreateOrganizationCreatedBodyCloud) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*CreateOrganizationCreatedBodyCloudRegion Region info
+/*
+CreateOrganizationCreatedBodyCloudRegion Region info
 swagger:model CreateOrganizationCreatedBodyCloudRegion
 */
 type CreateOrganizationCreatedBodyCloudRegion struct {
@@ -511,7 +650,8 @@ func (o *CreateOrganizationCreatedBodyCloudRegion) UnmarshalBinary(b []byte) err
 	return nil
 }
 
-/*CreateOrganizationCreatedBodyLicensing Licensing related settings
+/*
+CreateOrganizationCreatedBodyLicensing Licensing related settings
 swagger:model CreateOrganizationCreatedBodyLicensing
 */
 type CreateOrganizationCreatedBodyLicensing struct {
@@ -596,6 +736,302 @@ func (o *CreateOrganizationCreatedBodyLicensing) MarshalBinary() ([]byte, error)
 // UnmarshalBinary interface implementation
 func (o *CreateOrganizationCreatedBodyLicensing) UnmarshalBinary(b []byte) error {
 	var res CreateOrganizationCreatedBodyLicensing
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateOrganizationCreatedBodyManagement Information about the organization's management system
+swagger:model CreateOrganizationCreatedBodyManagement
+*/
+type CreateOrganizationCreatedBodyManagement struct {
+
+	// Details related to organization management, possibly empty
+	Details []*CreateOrganizationCreatedBodyManagementDetailsItems0 `json:"details"`
+}
+
+// Validate validates this create organization created body management
+func (o *CreateOrganizationCreatedBodyManagement) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateDetails(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateOrganizationCreatedBodyManagement) validateDetails(formats strfmt.Registry) error {
+	if swag.IsZero(o.Details) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Details); i++ {
+		if swag.IsZero(o.Details[i]) { // not required
+			continue
+		}
+
+		if o.Details[i] != nil {
+			if err := o.Details[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("createOrganizationCreated" + "." + "management" + "." + "details" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("createOrganizationCreated" + "." + "management" + "." + "details" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this create organization created body management based on the context it is used
+func (o *CreateOrganizationCreatedBodyManagement) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateDetails(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateOrganizationCreatedBodyManagement) contextValidateDetails(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Details); i++ {
+
+		if o.Details[i] != nil {
+
+			if swag.IsZero(o.Details[i]) { // not required
+				return nil
+			}
+
+			if err := o.Details[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("createOrganizationCreated" + "." + "management" + "." + "details" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("createOrganizationCreated" + "." + "management" + "." + "details" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateOrganizationCreatedBodyManagement) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateOrganizationCreatedBodyManagement) UnmarshalBinary(b []byte) error {
+	var res CreateOrganizationCreatedBodyManagement
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateOrganizationCreatedBodyManagementDetailsItems0 create organization created body management details items0
+swagger:model CreateOrganizationCreatedBodyManagementDetailsItems0
+*/
+type CreateOrganizationCreatedBodyManagementDetailsItems0 struct {
+
+	// Name of management data
+	Name string `json:"name,omitempty"`
+
+	// Value of management data
+	Value string `json:"value,omitempty"`
+}
+
+// Validate validates this create organization created body management details items0
+func (o *CreateOrganizationCreatedBodyManagementDetailsItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this create organization created body management details items0 based on context it is used
+func (o *CreateOrganizationCreatedBodyManagementDetailsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateOrganizationCreatedBodyManagementDetailsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateOrganizationCreatedBodyManagementDetailsItems0) UnmarshalBinary(b []byte) error {
+	var res CreateOrganizationCreatedBodyManagementDetailsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateOrganizationParamsBodyManagement Information about the organization's management system
+swagger:model CreateOrganizationParamsBodyManagement
+*/
+type CreateOrganizationParamsBodyManagement struct {
+
+	// Details related to organization management, possibly empty
+	Details []*CreateOrganizationParamsBodyManagementDetailsItems0 `json:"details"`
+}
+
+// Validate validates this create organization params body management
+func (o *CreateOrganizationParamsBodyManagement) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateDetails(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateOrganizationParamsBodyManagement) validateDetails(formats strfmt.Registry) error {
+	if swag.IsZero(o.Details) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Details); i++ {
+		if swag.IsZero(o.Details[i]) { // not required
+			continue
+		}
+
+		if o.Details[i] != nil {
+			if err := o.Details[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("createOrganization" + "." + "management" + "." + "details" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("createOrganization" + "." + "management" + "." + "details" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this create organization params body management based on the context it is used
+func (o *CreateOrganizationParamsBodyManagement) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateDetails(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateOrganizationParamsBodyManagement) contextValidateDetails(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Details); i++ {
+
+		if o.Details[i] != nil {
+
+			if swag.IsZero(o.Details[i]) { // not required
+				return nil
+			}
+
+			if err := o.Details[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("createOrganization" + "." + "management" + "." + "details" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("createOrganization" + "." + "management" + "." + "details" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateOrganizationParamsBodyManagement) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateOrganizationParamsBodyManagement) UnmarshalBinary(b []byte) error {
+	var res CreateOrganizationParamsBodyManagement
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateOrganizationParamsBodyManagementDetailsItems0 create organization params body management details items0
+swagger:model CreateOrganizationParamsBodyManagementDetailsItems0
+*/
+type CreateOrganizationParamsBodyManagementDetailsItems0 struct {
+
+	// Name of management data
+	Name string `json:"name,omitempty"`
+
+	// Value of management data
+	Value string `json:"value,omitempty"`
+}
+
+// Validate validates this create organization params body management details items0
+func (o *CreateOrganizationParamsBodyManagementDetailsItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this create organization params body management details items0 based on context it is used
+func (o *CreateOrganizationParamsBodyManagementDetailsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateOrganizationParamsBodyManagementDetailsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateOrganizationParamsBodyManagementDetailsItems0) UnmarshalBinary(b []byte) error {
+	var res CreateOrganizationParamsBodyManagementDetailsItems0
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

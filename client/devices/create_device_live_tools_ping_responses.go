@@ -32,7 +32,7 @@ func (o *CreateDeviceLiveToolsPingReader) ReadResponse(response runtime.ClientRe
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /devices/{serial}/liveTools/ping] createDeviceLiveToolsPing", response, response.Code())
 	}
 }
 
@@ -41,12 +41,13 @@ func NewCreateDeviceLiveToolsPingCreated() *CreateDeviceLiveToolsPingCreated {
 	return &CreateDeviceLiveToolsPingCreated{}
 }
 
-/* CreateDeviceLiveToolsPingCreated describes a response with status code 201, with default header values.
+/*
+CreateDeviceLiveToolsPingCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
 type CreateDeviceLiveToolsPingCreated struct {
-	Payload interface{}
+	Payload *CreateDeviceLiveToolsPingCreatedBody
 }
 
 // IsSuccess returns true when this create device live tools ping created response has a 2xx status code
@@ -74,6 +75,11 @@ func (o *CreateDeviceLiveToolsPingCreated) IsCode(code int) bool {
 	return code == 201
 }
 
+// Code gets the status code for the create device live tools ping created response
+func (o *CreateDeviceLiveToolsPingCreated) Code() int {
+	return 201
+}
+
 func (o *CreateDeviceLiveToolsPingCreated) Error() string {
 	return fmt.Sprintf("[POST /devices/{serial}/liveTools/ping][%d] createDeviceLiveToolsPingCreated  %+v", 201, o.Payload)
 }
@@ -82,21 +88,24 @@ func (o *CreateDeviceLiveToolsPingCreated) String() string {
 	return fmt.Sprintf("[POST /devices/{serial}/liveTools/ping][%d] createDeviceLiveToolsPingCreated  %+v", 201, o.Payload)
 }
 
-func (o *CreateDeviceLiveToolsPingCreated) GetPayload() interface{} {
+func (o *CreateDeviceLiveToolsPingCreated) GetPayload() *CreateDeviceLiveToolsPingCreatedBody {
 	return o.Payload
 }
 
 func (o *CreateDeviceLiveToolsPingCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(CreateDeviceLiveToolsPingCreatedBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*CreateDeviceLiveToolsPingBody create device live tools ping body
+/*
+CreateDeviceLiveToolsPingBody create device live tools ping body
 // Example: {"count":2,"target":"75.75.75.75"}
 swagger:model CreateDeviceLiveToolsPingBody
 */
@@ -149,6 +158,155 @@ func (o *CreateDeviceLiveToolsPingBody) MarshalBinary() ([]byte, error) {
 // UnmarshalBinary interface implementation
 func (o *CreateDeviceLiveToolsPingBody) UnmarshalBinary(b []byte) error {
 	var res CreateDeviceLiveToolsPingBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateDeviceLiveToolsPingCreatedBody create device live tools ping created body
+swagger:model CreateDeviceLiveToolsPingCreatedBody
+*/
+type CreateDeviceLiveToolsPingCreatedBody struct {
+
+	// Id to check the status of your ping request.
+	PingID string `json:"pingId,omitempty"`
+
+	// request
+	Request *CreateDeviceLiveToolsPingCreatedBodyRequest `json:"request,omitempty"`
+
+	// Status of the ping request.
+	Status string `json:"status,omitempty"`
+
+	// GET this url to check the status of your ping request.
+	URL string `json:"url,omitempty"`
+}
+
+// Validate validates this create device live tools ping created body
+func (o *CreateDeviceLiveToolsPingCreatedBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateRequest(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateDeviceLiveToolsPingCreatedBody) validateRequest(formats strfmt.Registry) error {
+	if swag.IsZero(o.Request) { // not required
+		return nil
+	}
+
+	if o.Request != nil {
+		if err := o.Request.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createDeviceLiveToolsPingCreated" + "." + "request")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createDeviceLiveToolsPingCreated" + "." + "request")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this create device live tools ping created body based on the context it is used
+func (o *CreateDeviceLiveToolsPingCreatedBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateRequest(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateDeviceLiveToolsPingCreatedBody) contextValidateRequest(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Request != nil {
+
+		if swag.IsZero(o.Request) { // not required
+			return nil
+		}
+
+		if err := o.Request.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createDeviceLiveToolsPingCreated" + "." + "request")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createDeviceLiveToolsPingCreated" + "." + "request")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateDeviceLiveToolsPingCreatedBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateDeviceLiveToolsPingCreatedBody) UnmarshalBinary(b []byte) error {
+	var res CreateDeviceLiveToolsPingCreatedBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateDeviceLiveToolsPingCreatedBodyRequest Ping request parameters
+swagger:model CreateDeviceLiveToolsPingCreatedBodyRequest
+*/
+type CreateDeviceLiveToolsPingCreatedBodyRequest struct {
+
+	// Number of pings to send
+	Count int64 `json:"count,omitempty"`
+
+	// Device serial number
+	Serial string `json:"serial,omitempty"`
+
+	// IP address or FQDN to ping
+	Target string `json:"target,omitempty"`
+}
+
+// Validate validates this create device live tools ping created body request
+func (o *CreateDeviceLiveToolsPingCreatedBodyRequest) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this create device live tools ping created body request based on context it is used
+func (o *CreateDeviceLiveToolsPingCreatedBodyRequest) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateDeviceLiveToolsPingCreatedBodyRequest) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateDeviceLiveToolsPingCreatedBodyRequest) UnmarshalBinary(b []byte) error {
+	var res CreateDeviceLiveToolsPingCreatedBodyRequest
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

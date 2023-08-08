@@ -53,10 +53,12 @@ func NewGetNetworkWirelessDataRateHistoryParamsWithHTTPClient(client *http.Clien
 	}
 }
 
-/* GetNetworkWirelessDataRateHistoryParams contains all the parameters to send to the API endpoint
-   for the get network wireless data rate history operation.
+/*
+GetNetworkWirelessDataRateHistoryParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network wireless data rate history operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkWirelessDataRateHistoryParams struct {
 
@@ -90,7 +92,10 @@ type GetNetworkWirelessDataRateHistoryParams struct {
 	*/
 	DeviceSerial *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* Resolution.

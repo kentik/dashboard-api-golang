@@ -34,7 +34,7 @@ func (o *GetOrganizationLicenseReader) ReadResponse(response runtime.ClientRespo
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/licenses/{licenseId}] getOrganizationLicense", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewGetOrganizationLicenseOK() *GetOrganizationLicenseOK {
 	return &GetOrganizationLicenseOK{}
 }
 
-/* GetOrganizationLicenseOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationLicenseOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *GetOrganizationLicenseOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get organization license o k response
+func (o *GetOrganizationLicenseOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationLicenseOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/licenses/{licenseId}][%d] getOrganizationLicenseOK  %+v", 200, o.Payload)
 }
@@ -100,7 +106,8 @@ func (o *GetOrganizationLicenseOK) readResponse(response runtime.ClientResponse,
 	return nil
 }
 
-/*GetOrganizationLicenseOKBody get organization license o k body
+/*
+GetOrganizationLicenseOKBody get organization license o k body
 swagger:model GetOrganizationLicenseOKBody
 */
 type GetOrganizationLicenseOKBody struct {
@@ -120,6 +127,9 @@ type GetOrganizationLicenseOKBody struct {
 	// The date the license will expire
 	ExpirationDate string `json:"expirationDate,omitempty"`
 
+	// The id of the head license this license is queued behind. If there is no head license, it returns nil.
+	HeadLicenseID string `json:"headLicenseId,omitempty"`
+
 	// License ID
 	ID string `json:"id,omitempty"`
 
@@ -135,14 +145,14 @@ type GetOrganizationLicenseOKBody struct {
 	// Order number
 	OrderNumber string `json:"orderNumber,omitempty"`
 
-	// List of permanently queued licenses attached to the license
+	// DEPRECATED List of permanently queued licenses attached to the license. Instead, use /organizations/{organizationId}/licenses?deviceSerial= to retrieved queued licenses for a given device.
 	PermanentlyQueuedLicenses []*GetOrganizationLicenseOKBodyPermanentlyQueuedLicensesItems0 `json:"permanentlyQueuedLicenses"`
 
 	// The number of seats of the license. Only applicable to SM licenses.
 	SeatCount int64 `json:"seatCount,omitempty"`
 
-	// The state of the license
-	// Enum: [active expired expiring unused unusedActive recentlyQueued]
+	// The state of the license. All queued licenses have a status of `recentlyQueued`.
+	// Enum: [active expired expiring recentlyQueued unused unusedActive]
 	State string `json:"state,omitempty"`
 
 	// The duration of the license plus all permanently queued licenses associated with it
@@ -197,7 +207,7 @@ var getOrganizationLicenseOKBodyTypeStatePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["active","expired","expiring","unused","unusedActive","recentlyQueued"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["active","expired","expiring","recentlyQueued","unused","unusedActive"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -216,14 +226,14 @@ const (
 	// GetOrganizationLicenseOKBodyStateExpiring captures enum value "expiring"
 	GetOrganizationLicenseOKBodyStateExpiring string = "expiring"
 
+	// GetOrganizationLicenseOKBodyStateRecentlyQueued captures enum value "recentlyQueued"
+	GetOrganizationLicenseOKBodyStateRecentlyQueued string = "recentlyQueued"
+
 	// GetOrganizationLicenseOKBodyStateUnused captures enum value "unused"
 	GetOrganizationLicenseOKBodyStateUnused string = "unused"
 
 	// GetOrganizationLicenseOKBodyStateUnusedActive captures enum value "unusedActive"
 	GetOrganizationLicenseOKBodyStateUnusedActive string = "unusedActive"
-
-	// GetOrganizationLicenseOKBodyStateRecentlyQueued captures enum value "recentlyQueued"
-	GetOrganizationLicenseOKBodyStateRecentlyQueued string = "recentlyQueued"
 )
 
 // prop value enum
@@ -266,6 +276,11 @@ func (o *GetOrganizationLicenseOKBody) contextValidatePermanentlyQueuedLicenses(
 	for i := 0; i < len(o.PermanentlyQueuedLicenses); i++ {
 
 		if o.PermanentlyQueuedLicenses[i] != nil {
+
+			if swag.IsZero(o.PermanentlyQueuedLicenses[i]) { // not required
+				return nil
+			}
+
 			if err := o.PermanentlyQueuedLicenses[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("getOrganizationLicenseOK" + "." + "permanentlyQueuedLicenses" + "." + strconv.Itoa(i))
@@ -299,7 +314,8 @@ func (o *GetOrganizationLicenseOKBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*GetOrganizationLicenseOKBodyPermanentlyQueuedLicensesItems0 get organization license o k body permanently queued licenses items0
+/*
+GetOrganizationLicenseOKBodyPermanentlyQueuedLicensesItems0 get organization license o k body permanently queued licenses items0
 swagger:model GetOrganizationLicenseOKBodyPermanentlyQueuedLicensesItems0
 */
 type GetOrganizationLicenseOKBodyPermanentlyQueuedLicensesItems0 struct {

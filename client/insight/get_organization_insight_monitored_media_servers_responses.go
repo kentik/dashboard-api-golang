@@ -6,11 +6,13 @@ package insight
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetOrganizationInsightMonitoredMediaServersReader is a Reader for the GetOrganizationInsightMonitoredMediaServers structure.
@@ -28,7 +30,7 @@ func (o *GetOrganizationInsightMonitoredMediaServersReader) ReadResponse(respons
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/insight/monitoredMediaServers] getOrganizationInsightMonitoredMediaServers", response, response.Code())
 	}
 }
 
@@ -37,12 +39,13 @@ func NewGetOrganizationInsightMonitoredMediaServersOK() *GetOrganizationInsightM
 	return &GetOrganizationInsightMonitoredMediaServersOK{}
 }
 
-/* GetOrganizationInsightMonitoredMediaServersOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationInsightMonitoredMediaServersOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetOrganizationInsightMonitoredMediaServersOK struct {
-	Payload []interface{}
+	Payload []*GetOrganizationInsightMonitoredMediaServersOKBodyItems0
 }
 
 // IsSuccess returns true when this get organization insight monitored media servers o k response has a 2xx status code
@@ -70,6 +73,11 @@ func (o *GetOrganizationInsightMonitoredMediaServersOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get organization insight monitored media servers o k response
+func (o *GetOrganizationInsightMonitoredMediaServersOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationInsightMonitoredMediaServersOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/insight/monitoredMediaServers][%d] getOrganizationInsightMonitoredMediaServersOK  %+v", 200, o.Payload)
 }
@@ -78,7 +86,7 @@ func (o *GetOrganizationInsightMonitoredMediaServersOK) String() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/insight/monitoredMediaServers][%d] getOrganizationInsightMonitoredMediaServersOK  %+v", 200, o.Payload)
 }
 
-func (o *GetOrganizationInsightMonitoredMediaServersOK) GetPayload() []interface{} {
+func (o *GetOrganizationInsightMonitoredMediaServersOK) GetPayload() []*GetOrganizationInsightMonitoredMediaServersOKBodyItems0 {
 	return o.Payload
 }
 
@@ -89,5 +97,52 @@ func (o *GetOrganizationInsightMonitoredMediaServersOK) readResponse(response ru
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetOrganizationInsightMonitoredMediaServersOKBodyItems0 get organization insight monitored media servers o k body items0
+swagger:model GetOrganizationInsightMonitoredMediaServersOKBodyItems0
+*/
+type GetOrganizationInsightMonitoredMediaServersOKBodyItems0 struct {
+
+	// The IP address (IPv4 only) or hostname of the media server to monitor
+	Address string `json:"address,omitempty"`
+
+	// Indicates that if the media server doesn't respond to ICMP pings, the nearest hop will be used in its stead
+	BestEffortMonitoringEnabled bool `json:"bestEffortMonitoringEnabled,omitempty"`
+
+	// Monitored media server id
+	ID string `json:"id,omitempty"`
+
+	// The name of the VoIP provider
+	Name string `json:"name,omitempty"`
+}
+
+// Validate validates this get organization insight monitored media servers o k body items0
+func (o *GetOrganizationInsightMonitoredMediaServersOKBodyItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get organization insight monitored media servers o k body items0 based on context it is used
+func (o *GetOrganizationInsightMonitoredMediaServersOKBodyItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetOrganizationInsightMonitoredMediaServersOKBodyItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetOrganizationInsightMonitoredMediaServersOKBodyItems0) UnmarshalBinary(b []byte) error {
+	var res GetOrganizationInsightMonitoredMediaServersOKBodyItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

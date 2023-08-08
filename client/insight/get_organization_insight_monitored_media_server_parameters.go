@@ -52,17 +52,25 @@ func NewGetOrganizationInsightMonitoredMediaServerParamsWithHTTPClient(client *h
 	}
 }
 
-/* GetOrganizationInsightMonitoredMediaServerParams contains all the parameters to send to the API endpoint
-   for the get organization insight monitored media server operation.
+/*
+GetOrganizationInsightMonitoredMediaServerParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization insight monitored media server operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationInsightMonitoredMediaServerParams struct {
 
-	// MonitoredMediaServerID.
+	/* MonitoredMediaServerID.
+
+	   Monitored media server ID
+	*/
 	MonitoredMediaServerID string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

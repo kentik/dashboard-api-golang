@@ -31,7 +31,7 @@ func (o *GetOrganizationSummaryTopClientsByUsageReader) ReadResponse(response ru
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/summary/top/clients/byUsage] getOrganizationSummaryTopClientsByUsage", response, response.Code())
 	}
 }
 
@@ -40,7 +40,8 @@ func NewGetOrganizationSummaryTopClientsByUsageOK() *GetOrganizationSummaryTopCl
 	return &GetOrganizationSummaryTopClientsByUsageOK{}
 }
 
-/* GetOrganizationSummaryTopClientsByUsageOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationSummaryTopClientsByUsageOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -73,6 +74,11 @@ func (o *GetOrganizationSummaryTopClientsByUsageOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get organization summary top clients by usage o k response
+func (o *GetOrganizationSummaryTopClientsByUsageOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationSummaryTopClientsByUsageOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/summary/top/clients/byUsage][%d] getOrganizationSummaryTopClientsByUsageOK  %+v", 200, o.Payload)
 }
@@ -95,7 +101,8 @@ func (o *GetOrganizationSummaryTopClientsByUsageOK) readResponse(response runtim
 	return nil
 }
 
-/*GetOrganizationSummaryTopClientsByUsageOKBodyItems0 get organization summary top clients by usage o k body items0
+/*
+GetOrganizationSummaryTopClientsByUsageOKBodyItems0 get organization summary top clients by usage o k body items0
 swagger:model GetOrganizationSummaryTopClientsByUsageOKBodyItems0
 */
 type GetOrganizationSummaryTopClientsByUsageOKBodyItems0 struct {
@@ -193,6 +200,11 @@ func (o *GetOrganizationSummaryTopClientsByUsageOKBodyItems0) ContextValidate(ct
 func (o *GetOrganizationSummaryTopClientsByUsageOKBodyItems0) contextValidateNetwork(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Network != nil {
+
+		if swag.IsZero(o.Network) { // not required
+			return nil
+		}
+
 		if err := o.Network.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("network")
@@ -209,6 +221,11 @@ func (o *GetOrganizationSummaryTopClientsByUsageOKBodyItems0) contextValidateNet
 func (o *GetOrganizationSummaryTopClientsByUsageOKBodyItems0) contextValidateUsage(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Usage != nil {
+
+		if swag.IsZero(o.Usage) { // not required
+			return nil
+		}
+
 		if err := o.Usage.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("usage")
@@ -240,7 +257,8 @@ func (o *GetOrganizationSummaryTopClientsByUsageOKBodyItems0) UnmarshalBinary(b 
 	return nil
 }
 
-/*GetOrganizationSummaryTopClientsByUsageOKBodyItems0Network get organization summary top clients by usage o k body items0 network
+/*
+GetOrganizationSummaryTopClientsByUsageOKBodyItems0Network get organization summary top clients by usage o k body items0 network
 swagger:model GetOrganizationSummaryTopClientsByUsageOKBodyItems0Network
 */
 type GetOrganizationSummaryTopClientsByUsageOKBodyItems0Network struct {
@@ -280,7 +298,8 @@ func (o *GetOrganizationSummaryTopClientsByUsageOKBodyItems0Network) UnmarshalBi
 	return nil
 }
 
-/*GetOrganizationSummaryTopClientsByUsageOKBodyItems0Usage Data usage information
+/*
+GetOrganizationSummaryTopClientsByUsageOKBodyItems0Usage Data usage information
 swagger:model GetOrganizationSummaryTopClientsByUsageOKBodyItems0Usage
 */
 type GetOrganizationSummaryTopClientsByUsageOKBodyItems0Usage struct {

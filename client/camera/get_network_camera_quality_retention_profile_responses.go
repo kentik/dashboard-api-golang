@@ -28,7 +28,7 @@ func (o *GetNetworkCameraQualityRetentionProfileReader) ReadResponse(response ru
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/camera/qualityRetentionProfiles/{qualityRetentionProfileId}] getNetworkCameraQualityRetentionProfile", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetNetworkCameraQualityRetentionProfileOK() *GetNetworkCameraQualityRete
 	return &GetNetworkCameraQualityRetentionProfileOK{}
 }
 
-/* GetNetworkCameraQualityRetentionProfileOK describes a response with status code 200, with default header values.
+/*
+GetNetworkCameraQualityRetentionProfileOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetNetworkCameraQualityRetentionProfileOK) IsServerError() bool {
 // IsCode returns true when this get network camera quality retention profile o k response a status code equal to that given
 func (o *GetNetworkCameraQualityRetentionProfileOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get network camera quality retention profile o k response
+func (o *GetNetworkCameraQualityRetentionProfileOK) Code() int {
+	return 200
 }
 
 func (o *GetNetworkCameraQualityRetentionProfileOK) Error() string {

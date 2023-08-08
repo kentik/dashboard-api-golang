@@ -52,17 +52,25 @@ func NewGetNetworkMerakiAuthUserParamsWithHTTPClient(client *http.Client) *GetNe
 	}
 }
 
-/* GetNetworkMerakiAuthUserParams contains all the parameters to send to the API endpoint
-   for the get network meraki auth user operation.
+/*
+GetNetworkMerakiAuthUserParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network meraki auth user operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkMerakiAuthUserParams struct {
 
-	// MerakiAuthUserID.
+	/* MerakiAuthUserID.
+
+	   Meraki auth user ID
+	*/
 	MerakiAuthUserID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

@@ -53,10 +53,12 @@ func NewGetNetworkSmUserAccessDevicesParamsWithHTTPClient(client *http.Client) *
 	}
 }
 
-/* GetNetworkSmUserAccessDevicesParams contains all the parameters to send to the API endpoint
-   for the get network sm user access devices operation.
+/*
+GetNetworkSmUserAccessDevicesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network sm user access devices operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSmUserAccessDevicesParams struct {
 
@@ -66,7 +68,10 @@ type GetNetworkSmUserAccessDevicesParams struct {
 	*/
 	EndingBefore *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* PerPage.

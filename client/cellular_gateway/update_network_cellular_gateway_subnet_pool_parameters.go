@@ -52,14 +52,19 @@ func NewUpdateNetworkCellularGatewaySubnetPoolParamsWithHTTPClient(client *http.
 	}
 }
 
-/* UpdateNetworkCellularGatewaySubnetPoolParams contains all the parameters to send to the API endpoint
-   for the update network cellular gateway subnet pool operation.
+/*
+UpdateNetworkCellularGatewaySubnetPoolParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network cellular gateway subnet pool operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkCellularGatewaySubnetPoolParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkCellularGatewaySubnetPool.

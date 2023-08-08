@@ -52,17 +52,22 @@ func NewLockNetworkSmDevicesParamsWithHTTPClient(client *http.Client) *LockNetwo
 	}
 }
 
-/* LockNetworkSmDevicesParams contains all the parameters to send to the API endpoint
-   for the lock network sm devices operation.
+/*
+LockNetworkSmDevicesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the lock network sm devices operation.
+
+	Typically these are written to a http.Request.
 */
 type LockNetworkSmDevicesParams struct {
 
 	// LockNetworkSmDevices.
 	LockNetworkSmDevices LockNetworkSmDevicesBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

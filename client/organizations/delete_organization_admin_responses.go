@@ -27,7 +27,7 @@ func (o *DeleteOrganizationAdminReader) ReadResponse(response runtime.ClientResp
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[DELETE /organizations/{organizationId}/admins/{adminId}] deleteOrganizationAdmin", response, response.Code())
 	}
 }
 
@@ -36,7 +36,8 @@ func NewDeleteOrganizationAdminNoContent() *DeleteOrganizationAdminNoContent {
 	return &DeleteOrganizationAdminNoContent{}
 }
 
-/* DeleteOrganizationAdminNoContent describes a response with status code 204, with default header values.
+/*
+DeleteOrganizationAdminNoContent describes a response with status code 204, with default header values.
 
 Successful operation
 */
@@ -66,6 +67,11 @@ func (o *DeleteOrganizationAdminNoContent) IsServerError() bool {
 // IsCode returns true when this delete organization admin no content response a status code equal to that given
 func (o *DeleteOrganizationAdminNoContent) IsCode(code int) bool {
 	return code == 204
+}
+
+// Code gets the status code for the delete organization admin no content response
+func (o *DeleteOrganizationAdminNoContent) Code() int {
+	return 204
 }
 
 func (o *DeleteOrganizationAdminNoContent) Error() string {

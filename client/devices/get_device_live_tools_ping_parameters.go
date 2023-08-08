@@ -52,17 +52,25 @@ func NewGetDeviceLiveToolsPingParamsWithHTTPClient(client *http.Client) *GetDevi
 	}
 }
 
-/* GetDeviceLiveToolsPingParams contains all the parameters to send to the API endpoint
-   for the get device live tools ping operation.
+/*
+GetDeviceLiveToolsPingParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get device live tools ping operation.
+
+	Typically these are written to a http.Request.
 */
 type GetDeviceLiveToolsPingParams struct {
 
-	// ID.
+	/* ID.
+
+	   ID
+	*/
 	ID string
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	timeout    time.Duration

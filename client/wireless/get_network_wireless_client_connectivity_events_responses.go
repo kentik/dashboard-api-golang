@@ -28,7 +28,7 @@ func (o *GetNetworkWirelessClientConnectivityEventsReader) ReadResponse(response
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/wireless/clients/{clientId}/connectivityEvents] getNetworkWirelessClientConnectivityEvents", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetNetworkWirelessClientConnectivityEventsOK() *GetNetworkWirelessClient
 	return &GetNetworkWirelessClientConnectivityEventsOK{}
 }
 
-/* GetNetworkWirelessClientConnectivityEventsOK describes a response with status code 200, with default header values.
+/*
+GetNetworkWirelessClientConnectivityEventsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -73,6 +74,11 @@ func (o *GetNetworkWirelessClientConnectivityEventsOK) IsServerError() bool {
 // IsCode returns true when this get network wireless client connectivity events o k response a status code equal to that given
 func (o *GetNetworkWirelessClientConnectivityEventsOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get network wireless client connectivity events o k response
+func (o *GetNetworkWirelessClientConnectivityEventsOK) Code() int {
+	return 200
 }
 
 func (o *GetNetworkWirelessClientConnectivityEventsOK) Error() string {

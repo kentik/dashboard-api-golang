@@ -52,14 +52,19 @@ func NewGetOrganizationActionBatchesParamsWithHTTPClient(client *http.Client) *G
 	}
 }
 
-/* GetOrganizationActionBatchesParams contains all the parameters to send to the API endpoint
-   for the get organization action batches operation.
+/*
+GetOrganizationActionBatchesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization action batches operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationActionBatchesParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	/* Status.

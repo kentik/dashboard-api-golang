@@ -52,17 +52,22 @@ func NewCreateNetworkSmBypassActivationLockAttemptParamsWithHTTPClient(client *h
 	}
 }
 
-/* CreateNetworkSmBypassActivationLockAttemptParams contains all the parameters to send to the API endpoint
-   for the create network sm bypass activation lock attempt operation.
+/*
+CreateNetworkSmBypassActivationLockAttemptParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create network sm bypass activation lock attempt operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateNetworkSmBypassActivationLockAttemptParams struct {
 
 	// CreateNetworkSmBypassActivationLockAttempt.
 	CreateNetworkSmBypassActivationLockAttempt CreateNetworkSmBypassActivationLockAttemptBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

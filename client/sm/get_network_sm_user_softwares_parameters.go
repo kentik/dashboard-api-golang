@@ -52,17 +52,25 @@ func NewGetNetworkSmUserSoftwaresParamsWithHTTPClient(client *http.Client) *GetN
 	}
 }
 
-/* GetNetworkSmUserSoftwaresParams contains all the parameters to send to the API endpoint
-   for the get network sm user softwares operation.
+/*
+GetNetworkSmUserSoftwaresParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network sm user softwares operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSmUserSoftwaresParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// UserID.
+	/* UserID.
+
+	   User ID
+	*/
 	UserID string
 
 	timeout    time.Duration

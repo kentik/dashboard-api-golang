@@ -53,14 +53,19 @@ func NewGetNetworkApplianceUplinksUsageHistoryParamsWithHTTPClient(client *http.
 	}
 }
 
-/* GetNetworkApplianceUplinksUsageHistoryParams contains all the parameters to send to the API endpoint
-   for the get network appliance uplinks usage history operation.
+/*
+GetNetworkApplianceUplinksUsageHistoryParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network appliance uplinks usage history operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkApplianceUplinksUsageHistoryParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* Resolution.

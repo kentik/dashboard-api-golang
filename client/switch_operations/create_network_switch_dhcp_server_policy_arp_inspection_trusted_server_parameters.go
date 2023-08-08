@@ -52,17 +52,22 @@ func NewCreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerParamsWithH
 	}
 }
 
-/* CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerParams contains all the parameters to send to the API endpoint
-   for the create network switch dhcp server policy arp inspection trusted server operation.
+/*
+CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create network switch dhcp server policy arp inspection trusted server operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerParams struct {
 
 	// CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServer.
 	CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServer CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration
