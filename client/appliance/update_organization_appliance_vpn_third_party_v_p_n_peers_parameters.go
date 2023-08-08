@@ -52,14 +52,19 @@ func NewUpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsWithHTTPClient(cli
 	}
 }
 
-/* UpdateOrganizationApplianceVpnThirdPartyVPNPeersParams contains all the parameters to send to the API endpoint
-   for the update organization appliance vpn third party v p n peers operation.
+/*
+UpdateOrganizationApplianceVpnThirdPartyVPNPeersParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update organization appliance vpn third party v p n peers operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateOrganizationApplianceVpnThirdPartyVPNPeersParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	// UpdateOrganizationApplianceVpnThirdPartyVPNPeers.

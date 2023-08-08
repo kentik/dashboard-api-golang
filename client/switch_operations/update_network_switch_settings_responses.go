@@ -34,7 +34,7 @@ func (o *UpdateNetworkSwitchSettingsReader) ReadResponse(response runtime.Client
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/switch/settings] updateNetworkSwitchSettings", response, response.Code())
 	}
 }
 
@@ -43,12 +43,13 @@ func NewUpdateNetworkSwitchSettingsOK() *UpdateNetworkSwitchSettingsOK {
 	return &UpdateNetworkSwitchSettingsOK{}
 }
 
-/* UpdateNetworkSwitchSettingsOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSwitchSettingsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateNetworkSwitchSettingsOK struct {
-	Payload interface{}
+	Payload *UpdateNetworkSwitchSettingsOKBody
 }
 
 // IsSuccess returns true when this update network switch settings o k response has a 2xx status code
@@ -76,6 +77,11 @@ func (o *UpdateNetworkSwitchSettingsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network switch settings o k response
+func (o *UpdateNetworkSwitchSettingsOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSwitchSettingsOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/switch/settings][%d] updateNetworkSwitchSettingsOK  %+v", 200, o.Payload)
 }
@@ -84,28 +90,34 @@ func (o *UpdateNetworkSwitchSettingsOK) String() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/switch/settings][%d] updateNetworkSwitchSettingsOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateNetworkSwitchSettingsOK) GetPayload() interface{} {
+func (o *UpdateNetworkSwitchSettingsOK) GetPayload() *UpdateNetworkSwitchSettingsOKBody {
 	return o.Payload
 }
 
 func (o *UpdateNetworkSwitchSettingsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateNetworkSwitchSettingsOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateNetworkSwitchSettingsBody update network switch settings body
-// Example: {"powerExceptions":[{"powerType":"redundant","serial":"Q234-ABCD-0001"},{"powerType":"combined","serial":"Q234-ABCD-0002"},{"powerType":"redundant","serial":"Q234-ABCD-0003"},{"powerType":"useNetworkSetting","serial":"Q234-ABCD-0004"}],"useCombinedPower":false,"vlan":100}
+/*
+UpdateNetworkSwitchSettingsBody update network switch settings body
+// Example: {}
 swagger:model UpdateNetworkSwitchSettingsBody
 */
 type UpdateNetworkSwitchSettingsBody struct {
 
 	// Exceptions on a per switch basis to "useCombinedPower"
 	PowerExceptions []*UpdateNetworkSwitchSettingsParamsBodyPowerExceptionsItems0 `json:"powerExceptions"`
+
+	// uplink client sampling
+	UplinkClientSampling *UpdateNetworkSwitchSettingsParamsBodyUplinkClientSampling `json:"uplinkClientSampling,omitempty"`
 
 	// The use Combined Power as the default behavior of secondary power supplies on supported devices.
 	UseCombinedPower bool `json:"useCombinedPower,omitempty"`
@@ -119,6 +131,10 @@ func (o *UpdateNetworkSwitchSettingsBody) Validate(formats strfmt.Registry) erro
 	var res []error
 
 	if err := o.validatePowerExceptions(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateUplinkClientSampling(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -154,11 +170,34 @@ func (o *UpdateNetworkSwitchSettingsBody) validatePowerExceptions(formats strfmt
 	return nil
 }
 
+func (o *UpdateNetworkSwitchSettingsBody) validateUplinkClientSampling(formats strfmt.Registry) error {
+	if swag.IsZero(o.UplinkClientSampling) { // not required
+		return nil
+	}
+
+	if o.UplinkClientSampling != nil {
+		if err := o.UplinkClientSampling.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkSwitchSettings" + "." + "uplinkClientSampling")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkSwitchSettings" + "." + "uplinkClientSampling")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 // ContextValidate validate this update network switch settings body based on the context it is used
 func (o *UpdateNetworkSwitchSettingsBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
 	if err := o.contextValidatePowerExceptions(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateUplinkClientSampling(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -173,6 +212,11 @@ func (o *UpdateNetworkSwitchSettingsBody) contextValidatePowerExceptions(ctx con
 	for i := 0; i < len(o.PowerExceptions); i++ {
 
 		if o.PowerExceptions[i] != nil {
+
+			if swag.IsZero(o.PowerExceptions[i]) { // not required
+				return nil
+			}
+
 			if err := o.PowerExceptions[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkSwitchSettings" + "." + "powerExceptions" + "." + strconv.Itoa(i))
@@ -183,6 +227,27 @@ func (o *UpdateNetworkSwitchSettingsBody) contextValidatePowerExceptions(ctx con
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkSwitchSettingsBody) contextValidateUplinkClientSampling(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.UplinkClientSampling != nil {
+
+		if swag.IsZero(o.UplinkClientSampling) { // not required
+			return nil
+		}
+
+		if err := o.UplinkClientSampling.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkSwitchSettings" + "." + "uplinkClientSampling")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkSwitchSettings" + "." + "uplinkClientSampling")
+			}
+			return err
+		}
 	}
 
 	return nil
@@ -206,7 +271,306 @@ func (o *UpdateNetworkSwitchSettingsBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateNetworkSwitchSettingsParamsBodyPowerExceptionsItems0 update network switch settings params body power exceptions items0
+/*
+UpdateNetworkSwitchSettingsOKBody update network switch settings o k body
+swagger:model UpdateNetworkSwitchSettingsOKBody
+*/
+type UpdateNetworkSwitchSettingsOKBody struct {
+
+	// Exceptions on a per switch basis to "useCombinedPower"
+	PowerExceptions []*UpdateNetworkSwitchSettingsOKBodyPowerExceptionsItems0 `json:"powerExceptions"`
+
+	// uplink client sampling
+	UplinkClientSampling *UpdateNetworkSwitchSettingsOKBodyUplinkClientSampling `json:"uplinkClientSampling,omitempty"`
+
+	// The use Combined Power as the default behavior of secondary power supplies on supported devices.
+	UseCombinedPower bool `json:"useCombinedPower,omitempty"`
+
+	// Management VLAN
+	Vlan int64 `json:"vlan,omitempty"`
+}
+
+// Validate validates this update network switch settings o k body
+func (o *UpdateNetworkSwitchSettingsOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validatePowerExceptions(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateUplinkClientSampling(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkSwitchSettingsOKBody) validatePowerExceptions(formats strfmt.Registry) error {
+	if swag.IsZero(o.PowerExceptions) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.PowerExceptions); i++ {
+		if swag.IsZero(o.PowerExceptions[i]) { // not required
+			continue
+		}
+
+		if o.PowerExceptions[i] != nil {
+			if err := o.PowerExceptions[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkSwitchSettingsOK" + "." + "powerExceptions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkSwitchSettingsOK" + "." + "powerExceptions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkSwitchSettingsOKBody) validateUplinkClientSampling(formats strfmt.Registry) error {
+	if swag.IsZero(o.UplinkClientSampling) { // not required
+		return nil
+	}
+
+	if o.UplinkClientSampling != nil {
+		if err := o.UplinkClientSampling.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkSwitchSettingsOK" + "." + "uplinkClientSampling")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkSwitchSettingsOK" + "." + "uplinkClientSampling")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network switch settings o k body based on the context it is used
+func (o *UpdateNetworkSwitchSettingsOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidatePowerExceptions(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateUplinkClientSampling(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkSwitchSettingsOKBody) contextValidatePowerExceptions(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.PowerExceptions); i++ {
+
+		if o.PowerExceptions[i] != nil {
+
+			if swag.IsZero(o.PowerExceptions[i]) { // not required
+				return nil
+			}
+
+			if err := o.PowerExceptions[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkSwitchSettingsOK" + "." + "powerExceptions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkSwitchSettingsOK" + "." + "powerExceptions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkSwitchSettingsOKBody) contextValidateUplinkClientSampling(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.UplinkClientSampling != nil {
+
+		if swag.IsZero(o.UplinkClientSampling) { // not required
+			return nil
+		}
+
+		if err := o.UplinkClientSampling.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkSwitchSettingsOK" + "." + "uplinkClientSampling")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkSwitchSettingsOK" + "." + "uplinkClientSampling")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkSwitchSettingsOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkSwitchSettingsOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkSwitchSettingsOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkSwitchSettingsOKBodyPowerExceptionsItems0 update network switch settings o k body power exceptions items0
+swagger:model UpdateNetworkSwitchSettingsOKBodyPowerExceptionsItems0
+*/
+type UpdateNetworkSwitchSettingsOKBodyPowerExceptionsItems0 struct {
+
+	// Per switch exception (combined, redundant, useNetworkSetting)
+	// Enum: [combined redundant useNetworkSetting]
+	PowerType string `json:"powerType,omitempty"`
+
+	// Serial number of the switch
+	Serial string `json:"serial,omitempty"`
+}
+
+// Validate validates this update network switch settings o k body power exceptions items0
+func (o *UpdateNetworkSwitchSettingsOKBodyPowerExceptionsItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validatePowerType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkSwitchSettingsOKBodyPowerExceptionsItems0TypePowerTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["combined","redundant","useNetworkSetting"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkSwitchSettingsOKBodyPowerExceptionsItems0TypePowerTypePropEnum = append(updateNetworkSwitchSettingsOKBodyPowerExceptionsItems0TypePowerTypePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkSwitchSettingsOKBodyPowerExceptionsItems0PowerTypeCombined captures enum value "combined"
+	UpdateNetworkSwitchSettingsOKBodyPowerExceptionsItems0PowerTypeCombined string = "combined"
+
+	// UpdateNetworkSwitchSettingsOKBodyPowerExceptionsItems0PowerTypeRedundant captures enum value "redundant"
+	UpdateNetworkSwitchSettingsOKBodyPowerExceptionsItems0PowerTypeRedundant string = "redundant"
+
+	// UpdateNetworkSwitchSettingsOKBodyPowerExceptionsItems0PowerTypeUseNetworkSetting captures enum value "useNetworkSetting"
+	UpdateNetworkSwitchSettingsOKBodyPowerExceptionsItems0PowerTypeUseNetworkSetting string = "useNetworkSetting"
+)
+
+// prop value enum
+func (o *UpdateNetworkSwitchSettingsOKBodyPowerExceptionsItems0) validatePowerTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkSwitchSettingsOKBodyPowerExceptionsItems0TypePowerTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkSwitchSettingsOKBodyPowerExceptionsItems0) validatePowerType(formats strfmt.Registry) error {
+	if swag.IsZero(o.PowerType) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validatePowerTypeEnum("powerType", "body", o.PowerType); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network switch settings o k body power exceptions items0 based on context it is used
+func (o *UpdateNetworkSwitchSettingsOKBodyPowerExceptionsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkSwitchSettingsOKBodyPowerExceptionsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkSwitchSettingsOKBodyPowerExceptionsItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkSwitchSettingsOKBodyPowerExceptionsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkSwitchSettingsOKBodyUplinkClientSampling Uplink client sampling
+swagger:model UpdateNetworkSwitchSettingsOKBodyUplinkClientSampling
+*/
+type UpdateNetworkSwitchSettingsOKBodyUplinkClientSampling struct {
+
+	// Enable client sampling on uplink
+	Enabled bool `json:"enabled,omitempty"`
+}
+
+// Validate validates this update network switch settings o k body uplink client sampling
+func (o *UpdateNetworkSwitchSettingsOKBodyUplinkClientSampling) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network switch settings o k body uplink client sampling based on context it is used
+func (o *UpdateNetworkSwitchSettingsOKBodyUplinkClientSampling) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkSwitchSettingsOKBodyUplinkClientSampling) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkSwitchSettingsOKBodyUplinkClientSampling) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkSwitchSettingsOKBodyUplinkClientSampling
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkSwitchSettingsParamsBodyPowerExceptionsItems0 update network switch settings params body power exceptions items0
 swagger:model UpdateNetworkSwitchSettingsParamsBodyPowerExceptionsItems0
 */
 type UpdateNetworkSwitchSettingsParamsBodyPowerExceptionsItems0 struct {
@@ -310,6 +674,44 @@ func (o *UpdateNetworkSwitchSettingsParamsBodyPowerExceptionsItems0) MarshalBina
 // UnmarshalBinary interface implementation
 func (o *UpdateNetworkSwitchSettingsParamsBodyPowerExceptionsItems0) UnmarshalBinary(b []byte) error {
 	var res UpdateNetworkSwitchSettingsParamsBodyPowerExceptionsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkSwitchSettingsParamsBodyUplinkClientSampling Uplink client sampling
+swagger:model UpdateNetworkSwitchSettingsParamsBodyUplinkClientSampling
+*/
+type UpdateNetworkSwitchSettingsParamsBodyUplinkClientSampling struct {
+
+	// Enable uplink client sampling
+	Enabled bool `json:"enabled,omitempty"`
+}
+
+// Validate validates this update network switch settings params body uplink client sampling
+func (o *UpdateNetworkSwitchSettingsParamsBodyUplinkClientSampling) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network switch settings params body uplink client sampling based on context it is used
+func (o *UpdateNetworkSwitchSettingsParamsBodyUplinkClientSampling) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkSwitchSettingsParamsBodyUplinkClientSampling) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkSwitchSettingsParamsBodyUplinkClientSampling) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkSwitchSettingsParamsBodyUplinkClientSampling
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

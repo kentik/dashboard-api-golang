@@ -30,7 +30,7 @@ func (o *UpdateNetworkSwitchStormControlReader) ReadResponse(response runtime.Cl
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/switch/stormControl] updateNetworkSwitchStormControl", response, response.Code())
 	}
 }
 
@@ -39,7 +39,8 @@ func NewUpdateNetworkSwitchStormControlOK() *UpdateNetworkSwitchStormControlOK {
 	return &UpdateNetworkSwitchStormControlOK{}
 }
 
-/* UpdateNetworkSwitchStormControlOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSwitchStormControlOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -72,6 +73,11 @@ func (o *UpdateNetworkSwitchStormControlOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network switch storm control o k response
+func (o *UpdateNetworkSwitchStormControlOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSwitchStormControlOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/switch/stormControl][%d] updateNetworkSwitchStormControlOK  %+v", 200, o.Payload)
 }
@@ -94,7 +100,8 @@ func (o *UpdateNetworkSwitchStormControlOK) readResponse(response runtime.Client
 	return nil
 }
 
-/*UpdateNetworkSwitchStormControlBody update network switch storm control body
+/*
+UpdateNetworkSwitchStormControlBody update network switch storm control body
 // Example: {"broadcastThreshold":30,"multicastThreshold":30,"unknownUnicastThreshold":30}
 swagger:model UpdateNetworkSwitchStormControlBody
 */

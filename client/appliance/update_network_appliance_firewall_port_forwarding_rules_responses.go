@@ -34,7 +34,7 @@ func (o *UpdateNetworkApplianceFirewallPortForwardingRulesReader) ReadResponse(r
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/appliance/firewall/portForwardingRules] updateNetworkApplianceFirewallPortForwardingRules", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewUpdateNetworkApplianceFirewallPortForwardingRulesOK() *UpdateNetworkAppl
 	return &UpdateNetworkApplianceFirewallPortForwardingRulesOK{}
 }
 
-/* UpdateNetworkApplianceFirewallPortForwardingRulesOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkApplianceFirewallPortForwardingRulesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *UpdateNetworkApplianceFirewallPortForwardingRulesOK) IsCode(code int) b
 	return code == 200
 }
 
+// Code gets the status code for the update network appliance firewall port forwarding rules o k response
+func (o *UpdateNetworkApplianceFirewallPortForwardingRulesOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkApplianceFirewallPortForwardingRulesOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/appliance/firewall/portForwardingRules][%d] updateNetworkApplianceFirewallPortForwardingRulesOK  %+v", 200, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *UpdateNetworkApplianceFirewallPortForwardingRulesOK) readResponse(respo
 	return nil
 }
 
-/*UpdateNetworkApplianceFirewallPortForwardingRulesBody update network appliance firewall port forwarding rules body
+/*
+UpdateNetworkApplianceFirewallPortForwardingRulesBody update network appliance firewall port forwarding rules body
 // Example: {"rules":[{"allowedIps":["any"],"lanIp":"192.168.128.1","localPort":"442-443","name":"Description of Port Forwarding Rule","protocol":"tcp","publicPort":"8100-8101","uplink":"both"}]}
 swagger:model UpdateNetworkApplianceFirewallPortForwardingRulesBody
 */
@@ -169,6 +176,11 @@ func (o *UpdateNetworkApplianceFirewallPortForwardingRulesBody) contextValidateR
 	for i := 0; i < len(o.Rules); i++ {
 
 		if o.Rules[i] != nil {
+
+			if swag.IsZero(o.Rules[i]) { // not required
+				return nil
+			}
+
 			if err := o.Rules[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkApplianceFirewallPortForwardingRules" + "." + "rules" + "." + strconv.Itoa(i))
@@ -202,7 +214,8 @@ func (o *UpdateNetworkApplianceFirewallPortForwardingRulesBody) UnmarshalBinary(
 	return nil
 }
 
-/*UpdateNetworkApplianceFirewallPortForwardingRulesParamsBodyRulesItems0 update network appliance firewall port forwarding rules params body rules items0
+/*
+UpdateNetworkApplianceFirewallPortForwardingRulesParamsBodyRulesItems0 update network appliance firewall port forwarding rules params body rules items0
 swagger:model UpdateNetworkApplianceFirewallPortForwardingRulesParamsBodyRulesItems0
 */
 type UpdateNetworkApplianceFirewallPortForwardingRulesParamsBodyRulesItems0 struct {
@@ -232,7 +245,7 @@ type UpdateNetworkApplianceFirewallPortForwardingRulesParamsBodyRulesItems0 stru
 	PublicPort *string `json:"publicPort"`
 
 	// The physical WAN interface on which the traffic will arrive ('internet1' or, if available, 'internet2' or 'both')
-	// Enum: [internet1 internet2 both]
+	// Enum: [both internet1 internet2]
 	Uplink string `json:"uplink,omitempty"`
 }
 
@@ -353,7 +366,7 @@ var updateNetworkApplianceFirewallPortForwardingRulesParamsBodyRulesItems0TypeUp
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["internet1","internet2","both"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["both","internet1","internet2"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -363,14 +376,14 @@ func init() {
 
 const (
 
+	// UpdateNetworkApplianceFirewallPortForwardingRulesParamsBodyRulesItems0UplinkBoth captures enum value "both"
+	UpdateNetworkApplianceFirewallPortForwardingRulesParamsBodyRulesItems0UplinkBoth string = "both"
+
 	// UpdateNetworkApplianceFirewallPortForwardingRulesParamsBodyRulesItems0UplinkInternet1 captures enum value "internet1"
 	UpdateNetworkApplianceFirewallPortForwardingRulesParamsBodyRulesItems0UplinkInternet1 string = "internet1"
 
 	// UpdateNetworkApplianceFirewallPortForwardingRulesParamsBodyRulesItems0UplinkInternet2 captures enum value "internet2"
 	UpdateNetworkApplianceFirewallPortForwardingRulesParamsBodyRulesItems0UplinkInternet2 string = "internet2"
-
-	// UpdateNetworkApplianceFirewallPortForwardingRulesParamsBodyRulesItems0UplinkBoth captures enum value "both"
-	UpdateNetworkApplianceFirewallPortForwardingRulesParamsBodyRulesItems0UplinkBoth string = "both"
 )
 
 // prop value enum

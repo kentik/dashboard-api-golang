@@ -52,20 +52,28 @@ func NewCreateNetworkSwitchStackRoutingStaticRouteParamsWithHTTPClient(client *h
 	}
 }
 
-/* CreateNetworkSwitchStackRoutingStaticRouteParams contains all the parameters to send to the API endpoint
-   for the create network switch stack routing static route operation.
+/*
+CreateNetworkSwitchStackRoutingStaticRouteParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create network switch stack routing static route operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateNetworkSwitchStackRoutingStaticRouteParams struct {
 
 	// CreateNetworkSwitchStackRoutingStaticRoute.
 	CreateNetworkSwitchStackRoutingStaticRoute CreateNetworkSwitchStackRoutingStaticRouteBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// SwitchStackID.
+	/* SwitchStackID.
+
+	   Switch stack ID
+	*/
 	SwitchStackID string
 
 	timeout    time.Duration

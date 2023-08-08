@@ -32,7 +32,7 @@ func (o *CreateNetworkSmBypassActivationLockAttemptReader) ReadResponse(response
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/sm/bypassActivationLockAttempts] createNetworkSmBypassActivationLockAttempt", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewCreateNetworkSmBypassActivationLockAttemptCreated() *CreateNetworkSmBypa
 	return &CreateNetworkSmBypassActivationLockAttemptCreated{}
 }
 
-/* CreateNetworkSmBypassActivationLockAttemptCreated describes a response with status code 201, with default header values.
+/*
+CreateNetworkSmBypassActivationLockAttemptCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *CreateNetworkSmBypassActivationLockAttemptCreated) IsCode(code int) boo
 	return code == 201
 }
 
+// Code gets the status code for the create network sm bypass activation lock attempt created response
+func (o *CreateNetworkSmBypassActivationLockAttemptCreated) Code() int {
+	return 201
+}
+
 func (o *CreateNetworkSmBypassActivationLockAttemptCreated) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/sm/bypassActivationLockAttempts][%d] createNetworkSmBypassActivationLockAttemptCreated  %+v", 201, o.Payload)
 }
@@ -96,7 +102,8 @@ func (o *CreateNetworkSmBypassActivationLockAttemptCreated) readResponse(respons
 	return nil
 }
 
-/*CreateNetworkSmBypassActivationLockAttemptBody create network sm bypass activation lock attempt body
+/*
+CreateNetworkSmBypassActivationLockAttemptBody create network sm bypass activation lock attempt body
 // Example: {"ids":["1284392014819","2983092129865"]}
 swagger:model CreateNetworkSmBypassActivationLockAttemptBody
 */

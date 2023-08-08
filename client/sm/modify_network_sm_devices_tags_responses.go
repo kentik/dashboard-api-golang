@@ -32,7 +32,7 @@ func (o *ModifyNetworkSmDevicesTagsReader) ReadResponse(response runtime.ClientR
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/sm/devices/modifyTags] modifyNetworkSmDevicesTags", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewModifyNetworkSmDevicesTagsOK() *ModifyNetworkSmDevicesTagsOK {
 	return &ModifyNetworkSmDevicesTagsOK{}
 }
 
-/* ModifyNetworkSmDevicesTagsOK describes a response with status code 200, with default header values.
+/*
+ModifyNetworkSmDevicesTagsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *ModifyNetworkSmDevicesTagsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the modify network sm devices tags o k response
+func (o *ModifyNetworkSmDevicesTagsOK) Code() int {
+	return 200
+}
+
 func (o *ModifyNetworkSmDevicesTagsOK) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/sm/devices/modifyTags][%d] modifyNetworkSmDevicesTagsOK  %+v", 200, o.Payload)
 }
@@ -96,7 +102,8 @@ func (o *ModifyNetworkSmDevicesTagsOK) readResponse(response runtime.ClientRespo
 	return nil
 }
 
-/*ModifyNetworkSmDevicesTagsBody modify network sm devices tags body
+/*
+ModifyNetworkSmDevicesTagsBody modify network sm devices tags body
 // Example: {"ids":["1284392014819","2983092129865"],"scope":["withAny, old_tag"],"serials":["Q234-ABCD-0001","Q234-ABCD-0002","Q234-ABCD-0003"],"tags":["tag1","tag2"],"updateAction":"add","wifiMacs":["00:11:22:33:44:55"]}
 swagger:model ModifyNetworkSmDevicesTagsBody
 */
@@ -182,7 +189,8 @@ func (o *ModifyNetworkSmDevicesTagsBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*ModifyNetworkSmDevicesTagsOKBodyItems0 modify network sm devices tags o k body items0
+/*
+ModifyNetworkSmDevicesTagsOKBodyItems0 modify network sm devices tags o k body items0
 swagger:model ModifyNetworkSmDevicesTagsOKBodyItems0
 */
 type ModifyNetworkSmDevicesTagsOKBodyItems0 struct {

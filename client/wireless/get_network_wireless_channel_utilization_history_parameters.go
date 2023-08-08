@@ -53,10 +53,12 @@ func NewGetNetworkWirelessChannelUtilizationHistoryParamsWithHTTPClient(client *
 	}
 }
 
-/* GetNetworkWirelessChannelUtilizationHistoryParams contains all the parameters to send to the API endpoint
-   for the get network wireless channel utilization history operation.
+/*
+GetNetworkWirelessChannelUtilizationHistoryParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network wireless channel utilization history operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkWirelessChannelUtilizationHistoryParams struct {
 
@@ -90,7 +92,10 @@ type GetNetworkWirelessChannelUtilizationHistoryParams struct {
 	*/
 	DeviceSerial *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* Resolution.

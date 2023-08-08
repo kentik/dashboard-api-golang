@@ -28,7 +28,7 @@ func (o *GetNetworkApplianceTrafficShapingCustomPerformanceClassesReader) ReadRe
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/appliance/trafficShaping/customPerformanceClasses] getNetworkApplianceTrafficShapingCustomPerformanceClasses", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetNetworkApplianceTrafficShapingCustomPerformanceClassesOK() *GetNetwor
 	return &GetNetworkApplianceTrafficShapingCustomPerformanceClassesOK{}
 }
 
-/* GetNetworkApplianceTrafficShapingCustomPerformanceClassesOK describes a response with status code 200, with default header values.
+/*
+GetNetworkApplianceTrafficShapingCustomPerformanceClassesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetNetworkApplianceTrafficShapingCustomPerformanceClassesOK) IsServerEr
 // IsCode returns true when this get network appliance traffic shaping custom performance classes o k response a status code equal to that given
 func (o *GetNetworkApplianceTrafficShapingCustomPerformanceClassesOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get network appliance traffic shaping custom performance classes o k response
+func (o *GetNetworkApplianceTrafficShapingCustomPerformanceClassesOK) Code() int {
+	return 200
 }
 
 func (o *GetNetworkApplianceTrafficShapingCustomPerformanceClassesOK) Error() string {

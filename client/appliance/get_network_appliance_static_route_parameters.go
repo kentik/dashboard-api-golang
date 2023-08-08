@@ -52,17 +52,25 @@ func NewGetNetworkApplianceStaticRouteParamsWithHTTPClient(client *http.Client) 
 	}
 }
 
-/* GetNetworkApplianceStaticRouteParams contains all the parameters to send to the API endpoint
-   for the get network appliance static route operation.
+/*
+GetNetworkApplianceStaticRouteParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network appliance static route operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkApplianceStaticRouteParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// StaticRouteID.
+	/* StaticRouteID.
+
+	   Static route ID
+	*/
 	StaticRouteID string
 
 	timeout    time.Duration

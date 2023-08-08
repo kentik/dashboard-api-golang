@@ -52,14 +52,19 @@ func NewGetNetworkApplianceVpnSiteToSiteVpnParamsWithHTTPClient(client *http.Cli
 	}
 }
 
-/* GetNetworkApplianceVpnSiteToSiteVpnParams contains all the parameters to send to the API endpoint
-   for the get network appliance vpn site to site vpn operation.
+/*
+GetNetworkApplianceVpnSiteToSiteVpnParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network appliance vpn site to site vpn operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkApplianceVpnSiteToSiteVpnParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

@@ -52,14 +52,19 @@ func NewUpdateOrganizationApplianceVpnVpnFirewallRulesParamsWithHTTPClient(clien
 	}
 }
 
-/* UpdateOrganizationApplianceVpnVpnFirewallRulesParams contains all the parameters to send to the API endpoint
-   for the update organization appliance vpn vpn firewall rules operation.
+/*
+UpdateOrganizationApplianceVpnVpnFirewallRulesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update organization appliance vpn vpn firewall rules operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateOrganizationApplianceVpnVpnFirewallRulesParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	// UpdateOrganizationApplianceVpnVpnFirewallRules.

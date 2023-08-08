@@ -32,7 +32,7 @@ func (o *GetNetworkWirelessDataRateHistoryReader) ReadResponse(response runtime.
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/wireless/dataRateHistory] getNetworkWirelessDataRateHistory", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewGetNetworkWirelessDataRateHistoryOK() *GetNetworkWirelessDataRateHistory
 	return &GetNetworkWirelessDataRateHistoryOK{}
 }
 
-/* GetNetworkWirelessDataRateHistoryOK describes a response with status code 200, with default header values.
+/*
+GetNetworkWirelessDataRateHistoryOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *GetNetworkWirelessDataRateHistoryOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network wireless data rate history o k response
+func (o *GetNetworkWirelessDataRateHistoryOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkWirelessDataRateHistoryOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/wireless/dataRateHistory][%d] getNetworkWirelessDataRateHistoryOK  %+v", 200, o.Payload)
 }
@@ -96,7 +102,8 @@ func (o *GetNetworkWirelessDataRateHistoryOK) readResponse(response runtime.Clie
 	return nil
 }
 
-/*GetNetworkWirelessDataRateHistoryOKBodyItems0 get network wireless data rate history o k body items0
+/*
+GetNetworkWirelessDataRateHistoryOKBodyItems0 get network wireless data rate history o k body items0
 swagger:model GetNetworkWirelessDataRateHistoryOKBodyItems0
 */
 type GetNetworkWirelessDataRateHistoryOKBodyItems0 struct {

@@ -52,14 +52,19 @@ func NewGetOrganizationApplianceVpnVpnFirewallRulesParamsWithHTTPClient(client *
 	}
 }
 
-/* GetOrganizationApplianceVpnVpnFirewallRulesParams contains all the parameters to send to the API endpoint
-   for the get organization appliance vpn vpn firewall rules operation.
+/*
+GetOrganizationApplianceVpnVpnFirewallRulesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization appliance vpn vpn firewall rules operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationApplianceVpnVpnFirewallRulesParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

@@ -52,14 +52,19 @@ func NewGetNetworkTrafficShapingApplicationCategoriesParamsWithHTTPClient(client
 	}
 }
 
-/* GetNetworkTrafficShapingApplicationCategoriesParams contains all the parameters to send to the API endpoint
-   for the get network traffic shaping application categories operation.
+/*
+GetNetworkTrafficShapingApplicationCategoriesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network traffic shaping application categories operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkTrafficShapingApplicationCategoriesParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

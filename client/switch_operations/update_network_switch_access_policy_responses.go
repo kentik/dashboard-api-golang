@@ -34,7 +34,7 @@ func (o *UpdateNetworkSwitchAccessPolicyReader) ReadResponse(response runtime.Cl
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/switch/accessPolicies/{accessPolicyNumber}] updateNetworkSwitchAccessPolicy", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewUpdateNetworkSwitchAccessPolicyOK() *UpdateNetworkSwitchAccessPolicyOK {
 	return &UpdateNetworkSwitchAccessPolicyOK{}
 }
 
-/* UpdateNetworkSwitchAccessPolicyOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSwitchAccessPolicyOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *UpdateNetworkSwitchAccessPolicyOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network switch access policy o k response
+func (o *UpdateNetworkSwitchAccessPolicyOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSwitchAccessPolicyOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/switch/accessPolicies/{accessPolicyNumber}][%d] updateNetworkSwitchAccessPolicyOK  %+v", 200, o.Payload)
 }
@@ -100,24 +106,28 @@ func (o *UpdateNetworkSwitchAccessPolicyOK) readResponse(response runtime.Client
 	return nil
 }
 
-/*UpdateNetworkSwitchAccessPolicyBody update network switch access policy body
-// Example: {"accessPolicyType":"Hybrid authentication","dot1x":{"controlDirection":"inbound"},"guestVlanId":100,"hostMode":"Single-Host","increaseAccessSpeed":false,"name":"Access policy #1","radius":{"criticalAuth":{"dataVlanId":100,"suspendPortBounce":true,"voiceVlanId":100},"failedAuthVlanId":100,"reAuthenticationInterval":120},"radiusAccountingEnabled":true,"radiusAccountingServers":[{"host":"1.2.3.4","port":22,"secret":"secret"}],"radiusCoaSupportEnabled":false,"radiusGroupAttribute":"11","radiusServers":[{"host":"1.2.3.4","port":22,"secret":"secret"}],"radiusTestingEnabled":false,"urlRedirectWalledGardenEnabled":true,"urlRedirectWalledGardenRanges":["192.168.1.0/24"],"voiceVlanClients":true}
+/*
+UpdateNetworkSwitchAccessPolicyBody update network switch access policy body
+// Example: {"accessPolicyType":"Hybrid authentication","dot1x":{"controlDirection":"inbound"},"guestPortBouncing":false,"guestVlanId":100,"hostMode":"Single-Host","increaseAccessSpeed":false,"name":"Access policy #1","radius":{"criticalAuth":{"dataVlanId":100,"suspendPortBounce":true,"voiceVlanId":100},"failedAuthVlanId":100,"reAuthenticationInterval":120},"radiusAccountingEnabled":true,"radiusAccountingServers":[{"host":"1.2.3.4","port":22,"secret":"secret"}],"radiusCoaSupportEnabled":false,"radiusGroupAttribute":"11","radiusServers":[{"host":"1.2.3.4","port":22,"secret":"secret"}],"radiusTestingEnabled":false,"urlRedirectWalledGardenEnabled":true,"urlRedirectWalledGardenRanges":["192.168.1.0/24"],"voiceVlanClients":true}
 swagger:model UpdateNetworkSwitchAccessPolicyBody
 */
 type UpdateNetworkSwitchAccessPolicyBody struct {
 
 	// Access Type of the policy. Automatically 'Hybrid authentication' when hostMode is 'Multi-Domain'.
-	// Enum: [802.1x MAC authentication bypass Hybrid authentication]
+	// Enum: [802.1x Hybrid authentication MAC authentication bypass]
 	AccessPolicyType string `json:"accessPolicyType,omitempty"`
 
 	// dot1x
 	Dot1x *UpdateNetworkSwitchAccessPolicyParamsBodyDot1x `json:"dot1x,omitempty"`
 
+	// If enabled, Meraki devices will periodically send access-request messages to these RADIUS servers
+	GuestPortBouncing bool `json:"guestPortBouncing,omitempty"`
+
 	// ID for the guest VLAN allow unauthorized devices access to limited network resources
 	GuestVlanID int64 `json:"guestVlanId,omitempty"`
 
 	// Choose the Host Mode for the access policy.
-	// Enum: [Single-Host Multi-Domain Multi-Host Multi-Auth]
+	// Enum: [Multi-Auth Multi-Domain Multi-Host Single-Host]
 	HostMode string `json:"hostMode,omitempty"`
 
 	// Enabling this option will make switches execute 802.1X and MAC-bypass authentication simultaneously so that clients authenticate faster. Only required when accessPolicyType is 'Hybrid Authentication.
@@ -195,7 +205,7 @@ var updateNetworkSwitchAccessPolicyBodyTypeAccessPolicyTypePropEnum []interface{
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["802.1x","MAC authentication bypass","Hybrid authentication"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["802.1x","Hybrid authentication","MAC authentication bypass"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -208,11 +218,11 @@ const (
 	// UpdateNetworkSwitchAccessPolicyBodyAccessPolicyTypeNr802Dot1x captures enum value "802.1x"
 	UpdateNetworkSwitchAccessPolicyBodyAccessPolicyTypeNr802Dot1x string = "802.1x"
 
-	// UpdateNetworkSwitchAccessPolicyBodyAccessPolicyTypeMACAuthenticationBypass captures enum value "MAC authentication bypass"
-	UpdateNetworkSwitchAccessPolicyBodyAccessPolicyTypeMACAuthenticationBypass string = "MAC authentication bypass"
-
 	// UpdateNetworkSwitchAccessPolicyBodyAccessPolicyTypeHybridAuthentication captures enum value "Hybrid authentication"
 	UpdateNetworkSwitchAccessPolicyBodyAccessPolicyTypeHybridAuthentication string = "Hybrid authentication"
+
+	// UpdateNetworkSwitchAccessPolicyBodyAccessPolicyTypeMACAuthenticationBypass captures enum value "MAC authentication bypass"
+	UpdateNetworkSwitchAccessPolicyBodyAccessPolicyTypeMACAuthenticationBypass string = "MAC authentication bypass"
 )
 
 // prop value enum
@@ -259,7 +269,7 @@ var updateNetworkSwitchAccessPolicyBodyTypeHostModePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Single-Host","Multi-Domain","Multi-Host","Multi-Auth"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Multi-Auth","Multi-Domain","Multi-Host","Single-Host"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -269,8 +279,8 @@ func init() {
 
 const (
 
-	// UpdateNetworkSwitchAccessPolicyBodyHostModeSingleDashHost captures enum value "Single-Host"
-	UpdateNetworkSwitchAccessPolicyBodyHostModeSingleDashHost string = "Single-Host"
+	// UpdateNetworkSwitchAccessPolicyBodyHostModeMultiDashAuth captures enum value "Multi-Auth"
+	UpdateNetworkSwitchAccessPolicyBodyHostModeMultiDashAuth string = "Multi-Auth"
 
 	// UpdateNetworkSwitchAccessPolicyBodyHostModeMultiDashDomain captures enum value "Multi-Domain"
 	UpdateNetworkSwitchAccessPolicyBodyHostModeMultiDashDomain string = "Multi-Domain"
@@ -278,8 +288,8 @@ const (
 	// UpdateNetworkSwitchAccessPolicyBodyHostModeMultiDashHost captures enum value "Multi-Host"
 	UpdateNetworkSwitchAccessPolicyBodyHostModeMultiDashHost string = "Multi-Host"
 
-	// UpdateNetworkSwitchAccessPolicyBodyHostModeMultiDashAuth captures enum value "Multi-Auth"
-	UpdateNetworkSwitchAccessPolicyBodyHostModeMultiDashAuth string = "Multi-Auth"
+	// UpdateNetworkSwitchAccessPolicyBodyHostModeSingleDashHost captures enum value "Single-Host"
+	UpdateNetworkSwitchAccessPolicyBodyHostModeSingleDashHost string = "Single-Host"
 )
 
 // prop value enum
@@ -403,6 +413,11 @@ func (o *UpdateNetworkSwitchAccessPolicyBody) ContextValidate(ctx context.Contex
 func (o *UpdateNetworkSwitchAccessPolicyBody) contextValidateDot1x(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Dot1x != nil {
+
+		if swag.IsZero(o.Dot1x) { // not required
+			return nil
+		}
+
 		if err := o.Dot1x.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchAccessPolicy" + "." + "dot1x")
@@ -419,6 +434,11 @@ func (o *UpdateNetworkSwitchAccessPolicyBody) contextValidateDot1x(ctx context.C
 func (o *UpdateNetworkSwitchAccessPolicyBody) contextValidateRadius(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Radius != nil {
+
+		if swag.IsZero(o.Radius) { // not required
+			return nil
+		}
+
 		if err := o.Radius.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchAccessPolicy" + "." + "radius")
@@ -437,6 +457,11 @@ func (o *UpdateNetworkSwitchAccessPolicyBody) contextValidateRadiusAccountingSer
 	for i := 0; i < len(o.RadiusAccountingServers); i++ {
 
 		if o.RadiusAccountingServers[i] != nil {
+
+			if swag.IsZero(o.RadiusAccountingServers[i]) { // not required
+				return nil
+			}
+
 			if err := o.RadiusAccountingServers[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkSwitchAccessPolicy" + "." + "radiusAccountingServers" + "." + strconv.Itoa(i))
@@ -457,6 +482,11 @@ func (o *UpdateNetworkSwitchAccessPolicyBody) contextValidateRadiusServers(ctx c
 	for i := 0; i < len(o.RadiusServers); i++ {
 
 		if o.RadiusServers[i] != nil {
+
+			if swag.IsZero(o.RadiusServers[i]) { // not required
+				return nil
+			}
+
 			if err := o.RadiusServers[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkSwitchAccessPolicy" + "." + "radiusServers" + "." + strconv.Itoa(i))
@@ -490,23 +520,27 @@ func (o *UpdateNetworkSwitchAccessPolicyBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateNetworkSwitchAccessPolicyOKBody update network switch access policy o k body
+/*
+UpdateNetworkSwitchAccessPolicyOKBody update network switch access policy o k body
 swagger:model UpdateNetworkSwitchAccessPolicyOKBody
 */
 type UpdateNetworkSwitchAccessPolicyOKBody struct {
 
 	// Access Type of the policy. Automatically 'Hybrid authentication' when hostMode is 'Multi-Domain'.
-	// Enum: [802.1x MAC authentication bypass Hybrid authentication]
+	// Enum: [802.1x Hybrid authentication MAC authentication bypass]
 	AccessPolicyType string `json:"accessPolicyType,omitempty"`
 
 	// dot1x
 	Dot1x *UpdateNetworkSwitchAccessPolicyOKBodyDot1x `json:"dot1x,omitempty"`
 
+	// If enabled, Meraki devices will periodically send access-request messages to these RADIUS servers
+	GuestPortBouncing bool `json:"guestPortBouncing,omitempty"`
+
 	// ID for the guest VLAN allow unauthorized devices access to limited network resources
 	GuestVlanID int64 `json:"guestVlanId,omitempty"`
 
 	// Choose the Host Mode for the access policy.
-	// Enum: [Single-Host Multi-Domain Multi-Host Multi-Auth]
+	// Enum: [Multi-Auth Multi-Domain Multi-Host Single-Host]
 	HostMode string `json:"hostMode,omitempty"`
 
 	// Enabling this option will make switches execute 802.1X and MAC-bypass authentication simultaneously so that clients authenticate faster. Only required when accessPolicyType is 'Hybrid Authentication.
@@ -584,7 +618,7 @@ var updateNetworkSwitchAccessPolicyOKBodyTypeAccessPolicyTypePropEnum []interfac
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["802.1x","MAC authentication bypass","Hybrid authentication"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["802.1x","Hybrid authentication","MAC authentication bypass"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -597,11 +631,11 @@ const (
 	// UpdateNetworkSwitchAccessPolicyOKBodyAccessPolicyTypeNr802Dot1x captures enum value "802.1x"
 	UpdateNetworkSwitchAccessPolicyOKBodyAccessPolicyTypeNr802Dot1x string = "802.1x"
 
-	// UpdateNetworkSwitchAccessPolicyOKBodyAccessPolicyTypeMACAuthenticationBypass captures enum value "MAC authentication bypass"
-	UpdateNetworkSwitchAccessPolicyOKBodyAccessPolicyTypeMACAuthenticationBypass string = "MAC authentication bypass"
-
 	// UpdateNetworkSwitchAccessPolicyOKBodyAccessPolicyTypeHybridAuthentication captures enum value "Hybrid authentication"
 	UpdateNetworkSwitchAccessPolicyOKBodyAccessPolicyTypeHybridAuthentication string = "Hybrid authentication"
+
+	// UpdateNetworkSwitchAccessPolicyOKBodyAccessPolicyTypeMACAuthenticationBypass captures enum value "MAC authentication bypass"
+	UpdateNetworkSwitchAccessPolicyOKBodyAccessPolicyTypeMACAuthenticationBypass string = "MAC authentication bypass"
 )
 
 // prop value enum
@@ -648,7 +682,7 @@ var updateNetworkSwitchAccessPolicyOKBodyTypeHostModePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Single-Host","Multi-Domain","Multi-Host","Multi-Auth"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Multi-Auth","Multi-Domain","Multi-Host","Single-Host"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -658,8 +692,8 @@ func init() {
 
 const (
 
-	// UpdateNetworkSwitchAccessPolicyOKBodyHostModeSingleDashHost captures enum value "Single-Host"
-	UpdateNetworkSwitchAccessPolicyOKBodyHostModeSingleDashHost string = "Single-Host"
+	// UpdateNetworkSwitchAccessPolicyOKBodyHostModeMultiDashAuth captures enum value "Multi-Auth"
+	UpdateNetworkSwitchAccessPolicyOKBodyHostModeMultiDashAuth string = "Multi-Auth"
 
 	// UpdateNetworkSwitchAccessPolicyOKBodyHostModeMultiDashDomain captures enum value "Multi-Domain"
 	UpdateNetworkSwitchAccessPolicyOKBodyHostModeMultiDashDomain string = "Multi-Domain"
@@ -667,8 +701,8 @@ const (
 	// UpdateNetworkSwitchAccessPolicyOKBodyHostModeMultiDashHost captures enum value "Multi-Host"
 	UpdateNetworkSwitchAccessPolicyOKBodyHostModeMultiDashHost string = "Multi-Host"
 
-	// UpdateNetworkSwitchAccessPolicyOKBodyHostModeMultiDashAuth captures enum value "Multi-Auth"
-	UpdateNetworkSwitchAccessPolicyOKBodyHostModeMultiDashAuth string = "Multi-Auth"
+	// UpdateNetworkSwitchAccessPolicyOKBodyHostModeSingleDashHost captures enum value "Single-Host"
+	UpdateNetworkSwitchAccessPolicyOKBodyHostModeSingleDashHost string = "Single-Host"
 )
 
 // prop value enum
@@ -792,6 +826,11 @@ func (o *UpdateNetworkSwitchAccessPolicyOKBody) ContextValidate(ctx context.Cont
 func (o *UpdateNetworkSwitchAccessPolicyOKBody) contextValidateDot1x(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Dot1x != nil {
+
+		if swag.IsZero(o.Dot1x) { // not required
+			return nil
+		}
+
 		if err := o.Dot1x.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchAccessPolicyOK" + "." + "dot1x")
@@ -808,6 +847,11 @@ func (o *UpdateNetworkSwitchAccessPolicyOKBody) contextValidateDot1x(ctx context
 func (o *UpdateNetworkSwitchAccessPolicyOKBody) contextValidateRadius(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Radius != nil {
+
+		if swag.IsZero(o.Radius) { // not required
+			return nil
+		}
+
 		if err := o.Radius.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchAccessPolicyOK" + "." + "radius")
@@ -826,6 +870,11 @@ func (o *UpdateNetworkSwitchAccessPolicyOKBody) contextValidateRadiusAccountingS
 	for i := 0; i < len(o.RadiusAccountingServers); i++ {
 
 		if o.RadiusAccountingServers[i] != nil {
+
+			if swag.IsZero(o.RadiusAccountingServers[i]) { // not required
+				return nil
+			}
+
 			if err := o.RadiusAccountingServers[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkSwitchAccessPolicyOK" + "." + "radiusAccountingServers" + "." + strconv.Itoa(i))
@@ -846,6 +895,11 @@ func (o *UpdateNetworkSwitchAccessPolicyOKBody) contextValidateRadiusServers(ctx
 	for i := 0; i < len(o.RadiusServers); i++ {
 
 		if o.RadiusServers[i] != nil {
+
+			if swag.IsZero(o.RadiusServers[i]) { // not required
+				return nil
+			}
+
 			if err := o.RadiusServers[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkSwitchAccessPolicyOK" + "." + "radiusServers" + "." + strconv.Itoa(i))
@@ -879,13 +933,14 @@ func (o *UpdateNetworkSwitchAccessPolicyOKBody) UnmarshalBinary(b []byte) error 
 	return nil
 }
 
-/*UpdateNetworkSwitchAccessPolicyOKBodyDot1x 802.1x Settings
+/*
+UpdateNetworkSwitchAccessPolicyOKBodyDot1x 802.1x Settings
 swagger:model UpdateNetworkSwitchAccessPolicyOKBodyDot1x
 */
 type UpdateNetworkSwitchAccessPolicyOKBodyDot1x struct {
 
 	// Supports either 'both' or 'inbound'. Set to 'inbound' to allow unauthorized egress on the switchport. Set to 'both' to control both traffic directions with authorization. Defaults to 'both'
-	// Enum: [inbound both]
+	// Enum: [both inbound]
 	ControlDirection string `json:"controlDirection,omitempty"`
 }
 
@@ -907,7 +962,7 @@ var updateNetworkSwitchAccessPolicyOKBodyDot1xTypeControlDirectionPropEnum []int
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["inbound","both"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["both","inbound"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -917,11 +972,11 @@ func init() {
 
 const (
 
-	// UpdateNetworkSwitchAccessPolicyOKBodyDot1xControlDirectionInbound captures enum value "inbound"
-	UpdateNetworkSwitchAccessPolicyOKBodyDot1xControlDirectionInbound string = "inbound"
-
 	// UpdateNetworkSwitchAccessPolicyOKBodyDot1xControlDirectionBoth captures enum value "both"
 	UpdateNetworkSwitchAccessPolicyOKBodyDot1xControlDirectionBoth string = "both"
+
+	// UpdateNetworkSwitchAccessPolicyOKBodyDot1xControlDirectionInbound captures enum value "inbound"
+	UpdateNetworkSwitchAccessPolicyOKBodyDot1xControlDirectionInbound string = "inbound"
 )
 
 // prop value enum
@@ -968,7 +1023,8 @@ func (o *UpdateNetworkSwitchAccessPolicyOKBodyDot1x) UnmarshalBinary(b []byte) e
 	return nil
 }
 
-/*UpdateNetworkSwitchAccessPolicyOKBodyRadius Object for RADIUS Settings
+/*
+UpdateNetworkSwitchAccessPolicyOKBodyRadius Object for RADIUS Settings
 swagger:model UpdateNetworkSwitchAccessPolicyOKBodyRadius
 */
 type UpdateNetworkSwitchAccessPolicyOKBodyRadius struct {
@@ -1033,6 +1089,11 @@ func (o *UpdateNetworkSwitchAccessPolicyOKBodyRadius) ContextValidate(ctx contex
 func (o *UpdateNetworkSwitchAccessPolicyOKBodyRadius) contextValidateCriticalAuth(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.CriticalAuth != nil {
+
+		if swag.IsZero(o.CriticalAuth) { // not required
+			return nil
+		}
+
 		if err := o.CriticalAuth.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchAccessPolicyOK" + "." + "radius" + "." + "criticalAuth")
@@ -1064,7 +1125,8 @@ func (o *UpdateNetworkSwitchAccessPolicyOKBodyRadius) UnmarshalBinary(b []byte) 
 	return nil
 }
 
-/*UpdateNetworkSwitchAccessPolicyOKBodyRadiusAccountingServersItems0 update network switch access policy o k body radius accounting servers items0
+/*
+UpdateNetworkSwitchAccessPolicyOKBodyRadiusAccountingServersItems0 update network switch access policy o k body radius accounting servers items0
 swagger:model UpdateNetworkSwitchAccessPolicyOKBodyRadiusAccountingServersItems0
 */
 type UpdateNetworkSwitchAccessPolicyOKBodyRadiusAccountingServersItems0 struct {
@@ -1104,7 +1166,8 @@ func (o *UpdateNetworkSwitchAccessPolicyOKBodyRadiusAccountingServersItems0) Unm
 	return nil
 }
 
-/*UpdateNetworkSwitchAccessPolicyOKBodyRadiusCriticalAuth Critical auth settings for when authentication is rejected by the RADIUS server
+/*
+UpdateNetworkSwitchAccessPolicyOKBodyRadiusCriticalAuth Critical auth settings for when authentication is rejected by the RADIUS server
 swagger:model UpdateNetworkSwitchAccessPolicyOKBodyRadiusCriticalAuth
 */
 type UpdateNetworkSwitchAccessPolicyOKBodyRadiusCriticalAuth struct {
@@ -1147,7 +1210,8 @@ func (o *UpdateNetworkSwitchAccessPolicyOKBodyRadiusCriticalAuth) UnmarshalBinar
 	return nil
 }
 
-/*UpdateNetworkSwitchAccessPolicyOKBodyRadiusServersItems0 update network switch access policy o k body radius servers items0
+/*
+UpdateNetworkSwitchAccessPolicyOKBodyRadiusServersItems0 update network switch access policy o k body radius servers items0
 swagger:model UpdateNetworkSwitchAccessPolicyOKBodyRadiusServersItems0
 */
 type UpdateNetworkSwitchAccessPolicyOKBodyRadiusServersItems0 struct {
@@ -1187,13 +1251,14 @@ func (o *UpdateNetworkSwitchAccessPolicyOKBodyRadiusServersItems0) UnmarshalBina
 	return nil
 }
 
-/*UpdateNetworkSwitchAccessPolicyParamsBodyDot1x 802.1x Settings
+/*
+UpdateNetworkSwitchAccessPolicyParamsBodyDot1x 802.1x Settings
 swagger:model UpdateNetworkSwitchAccessPolicyParamsBodyDot1x
 */
 type UpdateNetworkSwitchAccessPolicyParamsBodyDot1x struct {
 
 	// Supports either 'both' or 'inbound'. Set to 'inbound' to allow unauthorized egress on the switchport. Set to 'both' to control both traffic directions with authorization. Defaults to 'both'
-	// Enum: [inbound both]
+	// Enum: [both inbound]
 	ControlDirection string `json:"controlDirection,omitempty"`
 }
 
@@ -1215,7 +1280,7 @@ var updateNetworkSwitchAccessPolicyParamsBodyDot1xTypeControlDirectionPropEnum [
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["inbound","both"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["both","inbound"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1225,11 +1290,11 @@ func init() {
 
 const (
 
-	// UpdateNetworkSwitchAccessPolicyParamsBodyDot1xControlDirectionInbound captures enum value "inbound"
-	UpdateNetworkSwitchAccessPolicyParamsBodyDot1xControlDirectionInbound string = "inbound"
-
 	// UpdateNetworkSwitchAccessPolicyParamsBodyDot1xControlDirectionBoth captures enum value "both"
 	UpdateNetworkSwitchAccessPolicyParamsBodyDot1xControlDirectionBoth string = "both"
+
+	// UpdateNetworkSwitchAccessPolicyParamsBodyDot1xControlDirectionInbound captures enum value "inbound"
+	UpdateNetworkSwitchAccessPolicyParamsBodyDot1xControlDirectionInbound string = "inbound"
 )
 
 // prop value enum
@@ -1276,7 +1341,8 @@ func (o *UpdateNetworkSwitchAccessPolicyParamsBodyDot1x) UnmarshalBinary(b []byt
 	return nil
 }
 
-/*UpdateNetworkSwitchAccessPolicyParamsBodyRadius Object for RADIUS Settings
+/*
+UpdateNetworkSwitchAccessPolicyParamsBodyRadius Object for RADIUS Settings
 swagger:model UpdateNetworkSwitchAccessPolicyParamsBodyRadius
 */
 type UpdateNetworkSwitchAccessPolicyParamsBodyRadius struct {
@@ -1341,6 +1407,11 @@ func (o *UpdateNetworkSwitchAccessPolicyParamsBodyRadius) ContextValidate(ctx co
 func (o *UpdateNetworkSwitchAccessPolicyParamsBodyRadius) contextValidateCriticalAuth(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.CriticalAuth != nil {
+
+		if swag.IsZero(o.CriticalAuth) { // not required
+			return nil
+		}
+
 		if err := o.CriticalAuth.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchAccessPolicy" + "." + "radius" + "." + "criticalAuth")
@@ -1372,7 +1443,8 @@ func (o *UpdateNetworkSwitchAccessPolicyParamsBodyRadius) UnmarshalBinary(b []by
 	return nil
 }
 
-/*UpdateNetworkSwitchAccessPolicyParamsBodyRadiusAccountingServersItems0 update network switch access policy params body radius accounting servers items0
+/*
+UpdateNetworkSwitchAccessPolicyParamsBodyRadiusAccountingServersItems0 update network switch access policy params body radius accounting servers items0
 swagger:model UpdateNetworkSwitchAccessPolicyParamsBodyRadiusAccountingServersItems0
 */
 type UpdateNetworkSwitchAccessPolicyParamsBodyRadiusAccountingServersItems0 struct {
@@ -1462,7 +1534,8 @@ func (o *UpdateNetworkSwitchAccessPolicyParamsBodyRadiusAccountingServersItems0)
 	return nil
 }
 
-/*UpdateNetworkSwitchAccessPolicyParamsBodyRadiusCriticalAuth Critical auth settings for when authentication is rejected by the RADIUS server
+/*
+UpdateNetworkSwitchAccessPolicyParamsBodyRadiusCriticalAuth Critical auth settings for when authentication is rejected by the RADIUS server
 swagger:model UpdateNetworkSwitchAccessPolicyParamsBodyRadiusCriticalAuth
 */
 type UpdateNetworkSwitchAccessPolicyParamsBodyRadiusCriticalAuth struct {
@@ -1505,7 +1578,8 @@ func (o *UpdateNetworkSwitchAccessPolicyParamsBodyRadiusCriticalAuth) UnmarshalB
 	return nil
 }
 
-/*UpdateNetworkSwitchAccessPolicyParamsBodyRadiusServersItems0 update network switch access policy params body radius servers items0
+/*
+UpdateNetworkSwitchAccessPolicyParamsBodyRadiusServersItems0 update network switch access policy params body radius servers items0
 swagger:model UpdateNetworkSwitchAccessPolicyParamsBodyRadiusServersItems0
 */
 type UpdateNetworkSwitchAccessPolicyParamsBodyRadiusServersItems0 struct {

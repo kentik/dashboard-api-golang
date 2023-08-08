@@ -53,16 +53,18 @@ func NewGetOrganizationSwitchPortsBySwitchParamsWithHTTPClient(client *http.Clie
 	}
 }
 
-/* GetOrganizationSwitchPortsBySwitchParams contains all the parameters to send to the API endpoint
-   for the get organization switch ports by switch operation.
+/*
+GetOrganizationSwitchPortsBySwitchParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization switch ports by switch operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationSwitchPortsBySwitchParams struct {
 
 	/* ConfigurationUpdatedAfter.
 
-	   Optional parameter to filter results by switches where the configuration has been updated after the given timestamp
+	   Optional parameter to filter results by switches where the configuration has been updated after the given timestamp.
 	*/
 	ConfigurationUpdatedAfter *string
 
@@ -80,7 +82,7 @@ type GetOrganizationSwitchPortsBySwitchParams struct {
 
 	/* Macs.
 
-	   Optional parameter to filter switchports by one or more  MAC addresses belonging to devices. All switchports returned belong to MAC addresses of switches that are an exact match.
+	   Optional parameter to filter switchports by one or more MAC addresses belonging to devices. All switchports returned belong to MAC addresses of switches that are an exact match.
 	*/
 	Macs []string
 
@@ -96,7 +98,10 @@ type GetOrganizationSwitchPortsBySwitchParams struct {
 	*/
 	NetworkIds []string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	/* PerPage.
@@ -105,9 +110,15 @@ type GetOrganizationSwitchPortsBySwitchParams struct {
 	*/
 	PerPage *int64
 
+	/* PortProfileIds.
+
+	   Optional parameter to filter switchports belonging to the specified port profiles.
+	*/
+	PortProfileIds []string
+
 	/* Serial.
 
-	   Optional parameter to filter switchports belonging to switches by serial number.  All returned switches will have a serial number that contains the search term or is an exact match.
+	   Optional parameter to filter switchports belonging to switches by serial number. All returned switches will have a serial number that contains the search term or is an exact match.
 	*/
 	Serial *string
 
@@ -264,6 +275,17 @@ func (o *GetOrganizationSwitchPortsBySwitchParams) SetPerPage(perPage *int64) {
 	o.PerPage = perPage
 }
 
+// WithPortProfileIds adds the portProfileIds to the get organization switch ports by switch params
+func (o *GetOrganizationSwitchPortsBySwitchParams) WithPortProfileIds(portProfileIds []string) *GetOrganizationSwitchPortsBySwitchParams {
+	o.SetPortProfileIds(portProfileIds)
+	return o
+}
+
+// SetPortProfileIds adds the portProfileIds to the get organization switch ports by switch params
+func (o *GetOrganizationSwitchPortsBySwitchParams) SetPortProfileIds(portProfileIds []string) {
+	o.PortProfileIds = portProfileIds
+}
+
 // WithSerial adds the serial to the get organization switch ports by switch params
 func (o *GetOrganizationSwitchPortsBySwitchParams) WithSerial(serial *string) *GetOrganizationSwitchPortsBySwitchParams {
 	o.SetSerial(serial)
@@ -417,6 +439,17 @@ func (o *GetOrganizationSwitchPortsBySwitchParams) WriteToRequest(r runtime.Clie
 		}
 	}
 
+	if o.PortProfileIds != nil {
+
+		// binding items for portProfileIds
+		joinedPortProfileIds := o.bindParamPortProfileIds(reg)
+
+		// query array param portProfileIds
+		if err := r.SetQueryParam("portProfileIds", joinedPortProfileIds...); err != nil {
+			return err
+		}
+	}
+
 	if o.Serial != nil {
 
 		// query param serial
@@ -500,6 +533,23 @@ func (o *GetOrganizationSwitchPortsBySwitchParams) bindParamNetworkIds(formats s
 	networkIdsIS := swag.JoinByFormat(networkIdsIC, "")
 
 	return networkIdsIS
+}
+
+// bindParamGetOrganizationSwitchPortsBySwitch binds the parameter portProfileIds
+func (o *GetOrganizationSwitchPortsBySwitchParams) bindParamPortProfileIds(formats strfmt.Registry) []string {
+	portProfileIdsIR := o.PortProfileIds
+
+	var portProfileIdsIC []string
+	for _, portProfileIdsIIR := range portProfileIdsIR { // explode []string
+
+		portProfileIdsIIV := portProfileIdsIIR // string as string
+		portProfileIdsIC = append(portProfileIdsIC, portProfileIdsIIV)
+	}
+
+	// items.CollectionFormat: ""
+	portProfileIdsIS := swag.JoinByFormat(portProfileIdsIC, "")
+
+	return portProfileIdsIS
 }
 
 // bindParamGetOrganizationSwitchPortsBySwitch binds the parameter serials

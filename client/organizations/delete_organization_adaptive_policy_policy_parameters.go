@@ -52,17 +52,25 @@ func NewDeleteOrganizationAdaptivePolicyPolicyParamsWithHTTPClient(client *http.
 	}
 }
 
-/* DeleteOrganizationAdaptivePolicyPolicyParams contains all the parameters to send to the API endpoint
-   for the delete organization adaptive policy policy operation.
+/*
+DeleteOrganizationAdaptivePolicyPolicyParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete organization adaptive policy policy operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteOrganizationAdaptivePolicyPolicyParams struct {
 
-	// AdaptivePolicyID.
-	AdaptivePolicyID string
+	/* ID.
 
-	// OrganizationID.
+	   ID
+	*/
+	ID string
+
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration
@@ -118,15 +126,15 @@ func (o *DeleteOrganizationAdaptivePolicyPolicyParams) SetHTTPClient(client *htt
 	o.HTTPClient = client
 }
 
-// WithAdaptivePolicyID adds the adaptivePolicyID to the delete organization adaptive policy policy params
-func (o *DeleteOrganizationAdaptivePolicyPolicyParams) WithAdaptivePolicyID(adaptivePolicyID string) *DeleteOrganizationAdaptivePolicyPolicyParams {
-	o.SetAdaptivePolicyID(adaptivePolicyID)
+// WithID adds the id to the delete organization adaptive policy policy params
+func (o *DeleteOrganizationAdaptivePolicyPolicyParams) WithID(id string) *DeleteOrganizationAdaptivePolicyPolicyParams {
+	o.SetID(id)
 	return o
 }
 
-// SetAdaptivePolicyID adds the adaptivePolicyId to the delete organization adaptive policy policy params
-func (o *DeleteOrganizationAdaptivePolicyPolicyParams) SetAdaptivePolicyID(adaptivePolicyID string) {
-	o.AdaptivePolicyID = adaptivePolicyID
+// SetID adds the id to the delete organization adaptive policy policy params
+func (o *DeleteOrganizationAdaptivePolicyPolicyParams) SetID(id string) {
+	o.ID = id
 }
 
 // WithOrganizationID adds the organizationID to the delete organization adaptive policy policy params
@@ -148,8 +156,8 @@ func (o *DeleteOrganizationAdaptivePolicyPolicyParams) WriteToRequest(r runtime.
 	}
 	var res []error
 
-	// path param adaptivePolicyId
-	if err := r.SetPathParam("adaptivePolicyId", o.AdaptivePolicyID); err != nil {
+	// path param id
+	if err := r.SetPathParam("id", o.ID); err != nil {
 		return err
 	}
 

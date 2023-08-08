@@ -52,17 +52,25 @@ func NewGetNetworkFloorPlanParamsWithHTTPClient(client *http.Client) *GetNetwork
 	}
 }
 
-/* GetNetworkFloorPlanParams contains all the parameters to send to the API endpoint
-   for the get network floor plan operation.
+/*
+GetNetworkFloorPlanParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network floor plan operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkFloorPlanParams struct {
 
-	// FloorPlanID.
+	/* FloorPlanID.
+
+	   Floor plan ID
+	*/
 	FloorPlanID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

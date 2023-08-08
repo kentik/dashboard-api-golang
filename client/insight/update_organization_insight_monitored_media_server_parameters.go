@@ -52,17 +52,25 @@ func NewUpdateOrganizationInsightMonitoredMediaServerParamsWithHTTPClient(client
 	}
 }
 
-/* UpdateOrganizationInsightMonitoredMediaServerParams contains all the parameters to send to the API endpoint
-   for the update organization insight monitored media server operation.
+/*
+UpdateOrganizationInsightMonitoredMediaServerParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update organization insight monitored media server operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateOrganizationInsightMonitoredMediaServerParams struct {
 
-	// MonitoredMediaServerID.
+	/* MonitoredMediaServerID.
+
+	   Monitored media server ID
+	*/
 	MonitoredMediaServerID string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	// UpdateOrganizationInsightMonitoredMediaServer.

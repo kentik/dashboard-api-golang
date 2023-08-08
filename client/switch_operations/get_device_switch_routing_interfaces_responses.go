@@ -6,11 +6,14 @@ package switch_operations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetDeviceSwitchRoutingInterfacesReader is a Reader for the GetDeviceSwitchRoutingInterfaces structure.
@@ -28,7 +31,7 @@ func (o *GetDeviceSwitchRoutingInterfacesReader) ReadResponse(response runtime.C
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /devices/{serial}/switch/routing/interfaces] getDeviceSwitchRoutingInterfaces", response, response.Code())
 	}
 }
 
@@ -37,12 +40,13 @@ func NewGetDeviceSwitchRoutingInterfacesOK() *GetDeviceSwitchRoutingInterfacesOK
 	return &GetDeviceSwitchRoutingInterfacesOK{}
 }
 
-/* GetDeviceSwitchRoutingInterfacesOK describes a response with status code 200, with default header values.
+/*
+GetDeviceSwitchRoutingInterfacesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetDeviceSwitchRoutingInterfacesOK struct {
-	Payload []interface{}
+	Payload []*GetDeviceSwitchRoutingInterfacesOKBodyItems0
 }
 
 // IsSuccess returns true when this get device switch routing interfaces o k response has a 2xx status code
@@ -70,6 +74,11 @@ func (o *GetDeviceSwitchRoutingInterfacesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get device switch routing interfaces o k response
+func (o *GetDeviceSwitchRoutingInterfacesOK) Code() int {
+	return 200
+}
+
 func (o *GetDeviceSwitchRoutingInterfacesOK) Error() string {
 	return fmt.Sprintf("[GET /devices/{serial}/switch/routing/interfaces][%d] getDeviceSwitchRoutingInterfacesOK  %+v", 200, o.Payload)
 }
@@ -78,7 +87,7 @@ func (o *GetDeviceSwitchRoutingInterfacesOK) String() string {
 	return fmt.Sprintf("[GET /devices/{serial}/switch/routing/interfaces][%d] getDeviceSwitchRoutingInterfacesOK  %+v", 200, o.Payload)
 }
 
-func (o *GetDeviceSwitchRoutingInterfacesOK) GetPayload() []interface{} {
+func (o *GetDeviceSwitchRoutingInterfacesOK) GetPayload() []*GetDeviceSwitchRoutingInterfacesOKBodyItems0 {
 	return o.Payload
 }
 
@@ -89,5 +98,359 @@ func (o *GetDeviceSwitchRoutingInterfacesOK) readResponse(response runtime.Clien
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetDeviceSwitchRoutingInterfacesOKBodyItems0 get device switch routing interfaces o k body items0
+swagger:model GetDeviceSwitchRoutingInterfacesOKBodyItems0
+*/
+type GetDeviceSwitchRoutingInterfacesOKBodyItems0 struct {
+
+	// IPv4 default gateway
+	DefaultGateway string `json:"defaultGateway,omitempty"`
+
+	// The id
+	InterfaceID string `json:"interfaceId,omitempty"`
+
+	// IPv4 address
+	InterfaceIP string `json:"interfaceIp,omitempty"`
+
+	// ipv6
+	IPV6 *GetDeviceSwitchRoutingInterfacesOKBodyItems0IPV6 `json:"ipv6,omitempty"`
+
+	// Multicast routing status
+	MulticastRouting string `json:"multicastRouting,omitempty"`
+
+	// The name
+	Name string `json:"name,omitempty"`
+
+	// ospf settings
+	OspfSettings *GetDeviceSwitchRoutingInterfacesOKBodyItems0OspfSettings `json:"ospfSettings,omitempty"`
+
+	// ospf v3
+	OspfV3 *GetDeviceSwitchRoutingInterfacesOKBodyItems0OspfV3 `json:"ospfV3,omitempty"`
+
+	// IPv4 subnet
+	Subnet string `json:"subnet,omitempty"`
+
+	// VLAN id
+	VlanID int64 `json:"vlanId,omitempty"`
+}
+
+// Validate validates this get device switch routing interfaces o k body items0
+func (o *GetDeviceSwitchRoutingInterfacesOKBodyItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateIPV6(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateOspfSettings(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateOspfV3(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetDeviceSwitchRoutingInterfacesOKBodyItems0) validateIPV6(formats strfmt.Registry) error {
+	if swag.IsZero(o.IPV6) { // not required
+		return nil
+	}
+
+	if o.IPV6 != nil {
+		if err := o.IPV6.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ipv6")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("ipv6")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetDeviceSwitchRoutingInterfacesOKBodyItems0) validateOspfSettings(formats strfmt.Registry) error {
+	if swag.IsZero(o.OspfSettings) { // not required
+		return nil
+	}
+
+	if o.OspfSettings != nil {
+		if err := o.OspfSettings.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ospfSettings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("ospfSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetDeviceSwitchRoutingInterfacesOKBodyItems0) validateOspfV3(formats strfmt.Registry) error {
+	if swag.IsZero(o.OspfV3) { // not required
+		return nil
+	}
+
+	if o.OspfV3 != nil {
+		if err := o.OspfV3.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ospfV3")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("ospfV3")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get device switch routing interfaces o k body items0 based on the context it is used
+func (o *GetDeviceSwitchRoutingInterfacesOKBodyItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateIPV6(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateOspfSettings(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateOspfV3(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetDeviceSwitchRoutingInterfacesOKBodyItems0) contextValidateIPV6(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.IPV6 != nil {
+
+		if swag.IsZero(o.IPV6) { // not required
+			return nil
+		}
+
+		if err := o.IPV6.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ipv6")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("ipv6")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetDeviceSwitchRoutingInterfacesOKBodyItems0) contextValidateOspfSettings(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.OspfSettings != nil {
+
+		if swag.IsZero(o.OspfSettings) { // not required
+			return nil
+		}
+
+		if err := o.OspfSettings.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ospfSettings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("ospfSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetDeviceSwitchRoutingInterfacesOKBodyItems0) contextValidateOspfV3(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.OspfV3 != nil {
+
+		if swag.IsZero(o.OspfV3) { // not required
+			return nil
+		}
+
+		if err := o.OspfV3.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ospfV3")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("ospfV3")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetDeviceSwitchRoutingInterfacesOKBodyItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetDeviceSwitchRoutingInterfacesOKBodyItems0) UnmarshalBinary(b []byte) error {
+	var res GetDeviceSwitchRoutingInterfacesOKBodyItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetDeviceSwitchRoutingInterfacesOKBodyItems0IPV6 IPv6 addressing
+swagger:model GetDeviceSwitchRoutingInterfacesOKBodyItems0IPV6
+*/
+type GetDeviceSwitchRoutingInterfacesOKBodyItems0IPV6 struct {
+
+	// IPv6 address
+	Address string `json:"address,omitempty"`
+
+	// Assignment mode
+	AssignmentMode string `json:"assignmentMode,omitempty"`
+
+	// IPv6 gateway
+	Gateway string `json:"gateway,omitempty"`
+
+	// IPv6 subnet
+	Prefix string `json:"prefix,omitempty"`
+}
+
+// Validate validates this get device switch routing interfaces o k body items0 IP v6
+func (o *GetDeviceSwitchRoutingInterfacesOKBodyItems0IPV6) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get device switch routing interfaces o k body items0 IP v6 based on context it is used
+func (o *GetDeviceSwitchRoutingInterfacesOKBodyItems0IPV6) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetDeviceSwitchRoutingInterfacesOKBodyItems0IPV6) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetDeviceSwitchRoutingInterfacesOKBodyItems0IPV6) UnmarshalBinary(b []byte) error {
+	var res GetDeviceSwitchRoutingInterfacesOKBodyItems0IPV6
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetDeviceSwitchRoutingInterfacesOKBodyItems0OspfSettings IPv4 OSPF Settings
+swagger:model GetDeviceSwitchRoutingInterfacesOKBodyItems0OspfSettings
+*/
+type GetDeviceSwitchRoutingInterfacesOKBodyItems0OspfSettings struct {
+
+	// Area id
+	Area string `json:"area,omitempty"`
+
+	// OSPF Cost
+	Cost int64 `json:"cost,omitempty"`
+
+	// Disable sending Hello packets on this interface's IPv4 area
+	IsPassiveEnabled bool `json:"isPassiveEnabled,omitempty"`
+}
+
+// Validate validates this get device switch routing interfaces o k body items0 ospf settings
+func (o *GetDeviceSwitchRoutingInterfacesOKBodyItems0OspfSettings) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get device switch routing interfaces o k body items0 ospf settings based on context it is used
+func (o *GetDeviceSwitchRoutingInterfacesOKBodyItems0OspfSettings) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetDeviceSwitchRoutingInterfacesOKBodyItems0OspfSettings) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetDeviceSwitchRoutingInterfacesOKBodyItems0OspfSettings) UnmarshalBinary(b []byte) error {
+	var res GetDeviceSwitchRoutingInterfacesOKBodyItems0OspfSettings
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetDeviceSwitchRoutingInterfacesOKBodyItems0OspfV3 IPv6 OSPF Settings
+swagger:model GetDeviceSwitchRoutingInterfacesOKBodyItems0OspfV3
+*/
+type GetDeviceSwitchRoutingInterfacesOKBodyItems0OspfV3 struct {
+
+	// Area id
+	Area string `json:"area,omitempty"`
+
+	// OSPF Cost
+	Cost int64 `json:"cost,omitempty"`
+
+	// Disable sending Hello packets on this interface's IPv6 area
+	IsPassiveEnabled bool `json:"isPassiveEnabled,omitempty"`
+}
+
+// Validate validates this get device switch routing interfaces o k body items0 ospf v3
+func (o *GetDeviceSwitchRoutingInterfacesOKBodyItems0OspfV3) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get device switch routing interfaces o k body items0 ospf v3 based on context it is used
+func (o *GetDeviceSwitchRoutingInterfacesOKBodyItems0OspfV3) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetDeviceSwitchRoutingInterfacesOKBodyItems0OspfV3) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetDeviceSwitchRoutingInterfacesOKBodyItems0OspfV3) UnmarshalBinary(b []byte) error {
+	var res GetDeviceSwitchRoutingInterfacesOKBodyItems0OspfV3
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

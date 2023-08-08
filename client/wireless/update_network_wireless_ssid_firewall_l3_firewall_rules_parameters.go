@@ -52,17 +52,25 @@ func NewUpdateNetworkWirelessSsidFirewallL3FirewallRulesParamsWithHTTPClient(cli
 	}
 }
 
-/* UpdateNetworkWirelessSsidFirewallL3FirewallRulesParams contains all the parameters to send to the API endpoint
-   for the update network wireless ssid firewall l3 firewall rules operation.
+/*
+UpdateNetworkWirelessSsidFirewallL3FirewallRulesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network wireless ssid firewall l3 firewall rules operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkWirelessSsidFirewallL3FirewallRulesParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// Number.
+	/* Number.
+
+	   Number
+	*/
 	Number string
 
 	// UpdateNetworkWirelessSsidFirewallL3FirewallRules.

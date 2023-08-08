@@ -53,10 +53,12 @@ func NewGetOrganizationCameraOnboardingStatusesParamsWithHTTPClient(client *http
 	}
 }
 
-/* GetOrganizationCameraOnboardingStatusesParams contains all the parameters to send to the API endpoint
-   for the get organization camera onboarding statuses operation.
+/*
+GetOrganizationCameraOnboardingStatusesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization camera onboarding statuses operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationCameraOnboardingStatusesParams struct {
 
@@ -66,7 +68,10 @@ type GetOrganizationCameraOnboardingStatusesParams struct {
 	*/
 	NetworkIds []string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	/* Serials.

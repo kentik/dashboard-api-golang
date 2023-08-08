@@ -34,7 +34,7 @@ func (o *UpdateNetworkApplianceFirewallOneToManyNatRulesReader) ReadResponse(res
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/appliance/firewall/oneToManyNatRules] updateNetworkApplianceFirewallOneToManyNatRules", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewUpdateNetworkApplianceFirewallOneToManyNatRulesOK() *UpdateNetworkApplia
 	return &UpdateNetworkApplianceFirewallOneToManyNatRulesOK{}
 }
 
-/* UpdateNetworkApplianceFirewallOneToManyNatRulesOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkApplianceFirewallOneToManyNatRulesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *UpdateNetworkApplianceFirewallOneToManyNatRulesOK) IsCode(code int) boo
 	return code == 200
 }
 
+// Code gets the status code for the update network appliance firewall one to many nat rules o k response
+func (o *UpdateNetworkApplianceFirewallOneToManyNatRulesOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkApplianceFirewallOneToManyNatRulesOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/appliance/firewall/oneToManyNatRules][%d] updateNetworkApplianceFirewallOneToManyNatRulesOK  %+v", 200, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *UpdateNetworkApplianceFirewallOneToManyNatRulesOK) readResponse(respons
 	return nil
 }
 
-/*UpdateNetworkApplianceFirewallOneToManyNatRulesBody update network appliance firewall one to many nat rules body
+/*
+UpdateNetworkApplianceFirewallOneToManyNatRulesBody update network appliance firewall one to many nat rules body
 // Example: {"rules":[{"portRules":[{"allowedIps":["any"],"localIp":"192.168.128.1","localPort":"443","name":"Rule 1","protocol":"tcp","publicPort":"9443"},{"allowedIps":["10.82.110.0/24","10.82.111.0/24"],"localIp":"192.168.128.1","localPort":"80","name":"Rule 2","protocol":"tcp","publicPort":"8080"}],"publicIp":"146.11.11.13","uplink":"internet1"}]}
 swagger:model UpdateNetworkApplianceFirewallOneToManyNatRulesBody
 */
@@ -169,6 +176,11 @@ func (o *UpdateNetworkApplianceFirewallOneToManyNatRulesBody) contextValidateRul
 	for i := 0; i < len(o.Rules); i++ {
 
 		if o.Rules[i] != nil {
+
+			if swag.IsZero(o.Rules[i]) { // not required
+				return nil
+			}
+
 			if err := o.Rules[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkApplianceFirewallOneToManyNatRules" + "." + "rules" + "." + strconv.Itoa(i))
@@ -202,7 +214,8 @@ func (o *UpdateNetworkApplianceFirewallOneToManyNatRulesBody) UnmarshalBinary(b 
 	return nil
 }
 
-/*UpdateNetworkApplianceFirewallOneToManyNatRulesParamsBodyRulesItems0 update network appliance firewall one to many nat rules params body rules items0
+/*
+UpdateNetworkApplianceFirewallOneToManyNatRulesParamsBodyRulesItems0 update network appliance firewall one to many nat rules params body rules items0
 swagger:model UpdateNetworkApplianceFirewallOneToManyNatRulesParamsBodyRulesItems0
 */
 type UpdateNetworkApplianceFirewallOneToManyNatRulesParamsBodyRulesItems0 struct {
@@ -341,6 +354,11 @@ func (o *UpdateNetworkApplianceFirewallOneToManyNatRulesParamsBodyRulesItems0) c
 	for i := 0; i < len(o.PortRules); i++ {
 
 		if o.PortRules[i] != nil {
+
+			if swag.IsZero(o.PortRules[i]) { // not required
+				return nil
+			}
+
 			if err := o.PortRules[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("portRules" + "." + strconv.Itoa(i))
@@ -374,7 +392,8 @@ func (o *UpdateNetworkApplianceFirewallOneToManyNatRulesParamsBodyRulesItems0) U
 	return nil
 }
 
-/*UpdateNetworkApplianceFirewallOneToManyNatRulesParamsBodyRulesItems0PortRulesItems0 update network appliance firewall one to many nat rules params body rules items0 port rules items0
+/*
+UpdateNetworkApplianceFirewallOneToManyNatRulesParamsBodyRulesItems0PortRulesItems0 update network appliance firewall one to many nat rules params body rules items0 port rules items0
 swagger:model UpdateNetworkApplianceFirewallOneToManyNatRulesParamsBodyRulesItems0PortRulesItems0
 */
 type UpdateNetworkApplianceFirewallOneToManyNatRulesParamsBodyRulesItems0PortRulesItems0 struct {

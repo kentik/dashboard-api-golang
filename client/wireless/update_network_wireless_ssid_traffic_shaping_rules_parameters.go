@@ -52,17 +52,25 @@ func NewUpdateNetworkWirelessSsidTrafficShapingRulesParamsWithHTTPClient(client 
 	}
 }
 
-/* UpdateNetworkWirelessSsidTrafficShapingRulesParams contains all the parameters to send to the API endpoint
-   for the update network wireless ssid traffic shaping rules operation.
+/*
+UpdateNetworkWirelessSsidTrafficShapingRulesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network wireless ssid traffic shaping rules operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkWirelessSsidTrafficShapingRulesParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// Number.
+	/* Number.
+
+	   Number
+	*/
 	Number string
 
 	// UpdateNetworkWirelessSsidTrafficShapingRules.

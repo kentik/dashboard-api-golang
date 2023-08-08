@@ -52,17 +52,25 @@ func NewGetNetworkSmDeviceCellularUsageHistoryParamsWithHTTPClient(client *http.
 	}
 }
 
-/* GetNetworkSmDeviceCellularUsageHistoryParams contains all the parameters to send to the API endpoint
-   for the get network sm device cellular usage history operation.
+/*
+GetNetworkSmDeviceCellularUsageHistoryParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network sm device cellular usage history operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSmDeviceCellularUsageHistoryParams struct {
 
-	// DeviceID.
+	/* DeviceID.
+
+	   Device ID
+	*/
 	DeviceID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

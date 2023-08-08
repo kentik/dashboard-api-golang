@@ -27,7 +27,7 @@ func (o *DeleteOrganizationAdaptivePolicyACLReader) ReadResponse(response runtim
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[DELETE /organizations/{organizationId}/adaptivePolicy/acls/{aclId}] deleteOrganizationAdaptivePolicyAcl", response, response.Code())
 	}
 }
 
@@ -36,7 +36,8 @@ func NewDeleteOrganizationAdaptivePolicyACLNoContent() *DeleteOrganizationAdapti
 	return &DeleteOrganizationAdaptivePolicyACLNoContent{}
 }
 
-/* DeleteOrganizationAdaptivePolicyACLNoContent describes a response with status code 204, with default header values.
+/*
+DeleteOrganizationAdaptivePolicyACLNoContent describes a response with status code 204, with default header values.
 
 Successful operation
 */
@@ -68,12 +69,17 @@ func (o *DeleteOrganizationAdaptivePolicyACLNoContent) IsCode(code int) bool {
 	return code == 204
 }
 
+// Code gets the status code for the delete organization adaptive policy Acl no content response
+func (o *DeleteOrganizationAdaptivePolicyACLNoContent) Code() int {
+	return 204
+}
+
 func (o *DeleteOrganizationAdaptivePolicyACLNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /organizations/{organizationId}/adaptivePolicy/acls/{id}][%d] deleteOrganizationAdaptivePolicyAclNoContent ", 204)
+	return fmt.Sprintf("[DELETE /organizations/{organizationId}/adaptivePolicy/acls/{aclId}][%d] deleteOrganizationAdaptivePolicyAclNoContent ", 204)
 }
 
 func (o *DeleteOrganizationAdaptivePolicyACLNoContent) String() string {
-	return fmt.Sprintf("[DELETE /organizations/{organizationId}/adaptivePolicy/acls/{id}][%d] deleteOrganizationAdaptivePolicyAclNoContent ", 204)
+	return fmt.Sprintf("[DELETE /organizations/{organizationId}/adaptivePolicy/acls/{aclId}][%d] deleteOrganizationAdaptivePolicyAclNoContent ", 204)
 }
 
 func (o *DeleteOrganizationAdaptivePolicyACLNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

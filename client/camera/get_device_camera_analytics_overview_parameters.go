@@ -53,10 +53,12 @@ func NewGetDeviceCameraAnalyticsOverviewParamsWithHTTPClient(client *http.Client
 	}
 }
 
-/* GetDeviceCameraAnalyticsOverviewParams contains all the parameters to send to the API endpoint
-   for the get device camera analytics overview operation.
+/*
+GetDeviceCameraAnalyticsOverviewParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get device camera analytics overview operation.
+
+	Typically these are written to a http.Request.
 */
 type GetDeviceCameraAnalyticsOverviewParams struct {
 
@@ -66,7 +68,10 @@ type GetDeviceCameraAnalyticsOverviewParams struct {
 	*/
 	ObjectType *string
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	/* T0.

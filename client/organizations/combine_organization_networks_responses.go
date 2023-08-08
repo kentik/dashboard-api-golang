@@ -32,7 +32,7 @@ func (o *CombineOrganizationNetworksReader) ReadResponse(response runtime.Client
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /organizations/{organizationId}/networks/combine] combineOrganizationNetworks", response, response.Code())
 	}
 }
 
@@ -41,12 +41,13 @@ func NewCombineOrganizationNetworksOK() *CombineOrganizationNetworksOK {
 	return &CombineOrganizationNetworksOK{}
 }
 
-/* CombineOrganizationNetworksOK describes a response with status code 200, with default header values.
+/*
+CombineOrganizationNetworksOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type CombineOrganizationNetworksOK struct {
-	Payload interface{}
+	Payload *CombineOrganizationNetworksOKBody
 }
 
 // IsSuccess returns true when this combine organization networks o k response has a 2xx status code
@@ -74,6 +75,11 @@ func (o *CombineOrganizationNetworksOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the combine organization networks o k response
+func (o *CombineOrganizationNetworksOK) Code() int {
+	return 200
+}
+
 func (o *CombineOrganizationNetworksOK) Error() string {
 	return fmt.Sprintf("[POST /organizations/{organizationId}/networks/combine][%d] combineOrganizationNetworksOK  %+v", 200, o.Payload)
 }
@@ -82,22 +88,25 @@ func (o *CombineOrganizationNetworksOK) String() string {
 	return fmt.Sprintf("[POST /organizations/{organizationId}/networks/combine][%d] combineOrganizationNetworksOK  %+v", 200, o.Payload)
 }
 
-func (o *CombineOrganizationNetworksOK) GetPayload() interface{} {
+func (o *CombineOrganizationNetworksOK) GetPayload() *CombineOrganizationNetworksOKBody {
 	return o.Payload
 }
 
 func (o *CombineOrganizationNetworksOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(CombineOrganizationNetworksOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*CombineOrganizationNetworksBody combine organization networks body
-// Example: {"name":"Long Island Office","networkIds":["N_1234","N_5678"]}
+/*
+CombineOrganizationNetworksBody combine organization networks body
+// Example: {"enrollmentString":"my-enrollment-string","name":"Long Island Office","networkIds":["N_1234","N_5678"]}
 swagger:model CombineOrganizationNetworksBody
 */
 type CombineOrganizationNetworksBody struct {
@@ -166,6 +175,167 @@ func (o *CombineOrganizationNetworksBody) MarshalBinary() ([]byte, error) {
 // UnmarshalBinary interface implementation
 func (o *CombineOrganizationNetworksBody) UnmarshalBinary(b []byte) error {
 	var res CombineOrganizationNetworksBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CombineOrganizationNetworksOKBody combine organization networks o k body
+swagger:model CombineOrganizationNetworksOKBody
+*/
+type CombineOrganizationNetworksOKBody struct {
+
+	// resulting network
+	ResultingNetwork *CombineOrganizationNetworksOKBodyResultingNetwork `json:"resultingNetwork,omitempty"`
+}
+
+// Validate validates this combine organization networks o k body
+func (o *CombineOrganizationNetworksOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateResultingNetwork(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CombineOrganizationNetworksOKBody) validateResultingNetwork(formats strfmt.Registry) error {
+	if swag.IsZero(o.ResultingNetwork) { // not required
+		return nil
+	}
+
+	if o.ResultingNetwork != nil {
+		if err := o.ResultingNetwork.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("combineOrganizationNetworksOK" + "." + "resultingNetwork")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("combineOrganizationNetworksOK" + "." + "resultingNetwork")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this combine organization networks o k body based on the context it is used
+func (o *CombineOrganizationNetworksOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateResultingNetwork(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CombineOrganizationNetworksOKBody) contextValidateResultingNetwork(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ResultingNetwork != nil {
+
+		if swag.IsZero(o.ResultingNetwork) { // not required
+			return nil
+		}
+
+		if err := o.ResultingNetwork.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("combineOrganizationNetworksOK" + "." + "resultingNetwork")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("combineOrganizationNetworksOK" + "." + "resultingNetwork")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CombineOrganizationNetworksOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CombineOrganizationNetworksOKBody) UnmarshalBinary(b []byte) error {
+	var res CombineOrganizationNetworksOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CombineOrganizationNetworksOKBodyResultingNetwork Network after the combination
+swagger:model CombineOrganizationNetworksOKBodyResultingNetwork
+*/
+type CombineOrganizationNetworksOKBodyResultingNetwork struct {
+
+	// Enrollment string for the network
+	EnrollmentString string `json:"enrollmentString,omitempty"`
+
+	// Network ID
+	ID string `json:"id,omitempty"`
+
+	// If the network is bound to a config template
+	IsBoundToConfigTemplate bool `json:"isBoundToConfigTemplate,omitempty"`
+
+	// Network name
+	Name string `json:"name,omitempty"`
+
+	// Notes for the network
+	Notes string `json:"notes,omitempty"`
+
+	// Organization ID
+	OrganizationID string `json:"organizationId,omitempty"`
+
+	// List of the product types that the network supports
+	ProductTypes []string `json:"productTypes"`
+
+	// Network tags
+	Tags []string `json:"tags"`
+
+	// Timezone of the network
+	TimeZone string `json:"timeZone,omitempty"`
+
+	// URL to the network Dashboard UI
+	URL string `json:"url,omitempty"`
+}
+
+// Validate validates this combine organization networks o k body resulting network
+func (o *CombineOrganizationNetworksOKBodyResultingNetwork) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this combine organization networks o k body resulting network based on context it is used
+func (o *CombineOrganizationNetworksOKBodyResultingNetwork) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CombineOrganizationNetworksOKBodyResultingNetwork) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CombineOrganizationNetworksOKBodyResultingNetwork) UnmarshalBinary(b []byte) error {
+	var res CombineOrganizationNetworksOKBodyResultingNetwork
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

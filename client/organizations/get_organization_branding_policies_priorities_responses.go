@@ -6,11 +6,13 @@ package organizations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetOrganizationBrandingPoliciesPrioritiesReader is a Reader for the GetOrganizationBrandingPoliciesPriorities structure.
@@ -28,7 +30,7 @@ func (o *GetOrganizationBrandingPoliciesPrioritiesReader) ReadResponse(response 
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/brandingPolicies/priorities] getOrganizationBrandingPoliciesPriorities", response, response.Code())
 	}
 }
 
@@ -37,12 +39,13 @@ func NewGetOrganizationBrandingPoliciesPrioritiesOK() *GetOrganizationBrandingPo
 	return &GetOrganizationBrandingPoliciesPrioritiesOK{}
 }
 
-/* GetOrganizationBrandingPoliciesPrioritiesOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationBrandingPoliciesPrioritiesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetOrganizationBrandingPoliciesPrioritiesOK struct {
-	Payload interface{}
+	Payload *GetOrganizationBrandingPoliciesPrioritiesOKBody
 }
 
 // IsSuccess returns true when this get organization branding policies priorities o k response has a 2xx status code
@@ -70,6 +73,11 @@ func (o *GetOrganizationBrandingPoliciesPrioritiesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get organization branding policies priorities o k response
+func (o *GetOrganizationBrandingPoliciesPrioritiesOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationBrandingPoliciesPrioritiesOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/brandingPolicies/priorities][%d] getOrganizationBrandingPoliciesPrioritiesOK  %+v", 200, o.Payload)
 }
@@ -78,16 +86,57 @@ func (o *GetOrganizationBrandingPoliciesPrioritiesOK) String() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/brandingPolicies/priorities][%d] getOrganizationBrandingPoliciesPrioritiesOK  %+v", 200, o.Payload)
 }
 
-func (o *GetOrganizationBrandingPoliciesPrioritiesOK) GetPayload() interface{} {
+func (o *GetOrganizationBrandingPoliciesPrioritiesOK) GetPayload() *GetOrganizationBrandingPoliciesPrioritiesOKBody {
 	return o.Payload
 }
 
 func (o *GetOrganizationBrandingPoliciesPrioritiesOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetOrganizationBrandingPoliciesPrioritiesOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetOrganizationBrandingPoliciesPrioritiesOKBody get organization branding policies priorities o k body
+swagger:model GetOrganizationBrandingPoliciesPrioritiesOKBody
+*/
+type GetOrganizationBrandingPoliciesPrioritiesOKBody struct {
+
+	//       An ordered list of branding policy IDs that determines the priority order of how to apply the policies
+	//
+	BrandingPolicyIds []string `json:"brandingPolicyIds"`
+}
+
+// Validate validates this get organization branding policies priorities o k body
+func (o *GetOrganizationBrandingPoliciesPrioritiesOKBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get organization branding policies priorities o k body based on context it is used
+func (o *GetOrganizationBrandingPoliciesPrioritiesOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetOrganizationBrandingPoliciesPrioritiesOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetOrganizationBrandingPoliciesPrioritiesOKBody) UnmarshalBinary(b []byte) error {
+	var res GetOrganizationBrandingPoliciesPrioritiesOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

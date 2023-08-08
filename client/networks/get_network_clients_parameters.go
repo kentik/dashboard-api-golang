@@ -53,10 +53,12 @@ func NewGetNetworkClientsParamsWithHTTPClient(client *http.Client) *GetNetworkCl
 	}
 }
 
-/* GetNetworkClientsParams contains all the parameters to send to the API endpoint
-   for the get network clients operation.
+/*
+GetNetworkClientsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network clients operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkClientsParams struct {
 
@@ -96,7 +98,10 @@ type GetNetworkClientsParams struct {
 	*/
 	Mac *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* Os.
@@ -110,6 +115,12 @@ type GetNetworkClientsParams struct {
 	   The number of entries per page returned. Acceptable range is 3 - 1000. Default is 10.
 	*/
 	PerPage *int64
+
+	/* PskGroup.
+
+	   Filters clients based on partial or full match for the iPSK name field.
+	*/
+	PskGroup *string
 
 	/* RecentDeviceConnections.
 
@@ -299,6 +310,17 @@ func (o *GetNetworkClientsParams) WithPerPage(perPage *int64) *GetNetworkClients
 // SetPerPage adds the perPage to the get network clients params
 func (o *GetNetworkClientsParams) SetPerPage(perPage *int64) {
 	o.PerPage = perPage
+}
+
+// WithPskGroup adds the pskGroup to the get network clients params
+func (o *GetNetworkClientsParams) WithPskGroup(pskGroup *string) *GetNetworkClientsParams {
+	o.SetPskGroup(pskGroup)
+	return o
+}
+
+// SetPskGroup adds the pskGroup to the get network clients params
+func (o *GetNetworkClientsParams) SetPskGroup(pskGroup *string) {
+	o.PskGroup = pskGroup
 }
 
 // WithRecentDeviceConnections adds the recentDeviceConnections to the get network clients params
@@ -511,6 +533,23 @@ func (o *GetNetworkClientsParams) WriteToRequest(r runtime.ClientRequest, reg st
 		if qPerPage != "" {
 
 			if err := r.SetQueryParam("perPage", qPerPage); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.PskGroup != nil {
+
+		// query param pskGroup
+		var qrPskGroup string
+
+		if o.PskGroup != nil {
+			qrPskGroup = *o.PskGroup
+		}
+		qPskGroup := qrPskGroup
+		if qPskGroup != "" {
+
+			if err := r.SetQueryParam("pskGroup", qPskGroup); err != nil {
 				return err
 			}
 		}

@@ -6,11 +6,17 @@ package wireless
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+	"encoding/json"
 	"fmt"
 	"io"
+	"strconv"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // GetNetworkWirelessSsidReader is a Reader for the GetNetworkWirelessSsid structure.
@@ -28,7 +34,7 @@ func (o *GetNetworkWirelessSsidReader) ReadResponse(response runtime.ClientRespo
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/wireless/ssids/{number}] getNetworkWirelessSsid", response, response.Code())
 	}
 }
 
@@ -37,12 +43,13 @@ func NewGetNetworkWirelessSsidOK() *GetNetworkWirelessSsidOK {
 	return &GetNetworkWirelessSsidOK{}
 }
 
-/* GetNetworkWirelessSsidOK describes a response with status code 200, with default header values.
+/*
+GetNetworkWirelessSsidOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkWirelessSsidOK struct {
-	Payload interface{}
+	Payload *GetNetworkWirelessSsidOKBody
 }
 
 // IsSuccess returns true when this get network wireless ssid o k response has a 2xx status code
@@ -70,6 +77,11 @@ func (o *GetNetworkWirelessSsidOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network wireless ssid o k response
+func (o *GetNetworkWirelessSsidOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkWirelessSsidOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/wireless/ssids/{number}][%d] getNetworkWirelessSsidOK  %+v", 200, o.Payload)
 }
@@ -78,16 +90,890 @@ func (o *GetNetworkWirelessSsidOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/wireless/ssids/{number}][%d] getNetworkWirelessSsidOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkWirelessSsidOK) GetPayload() interface{} {
+func (o *GetNetworkWirelessSsidOK) GetPayload() *GetNetworkWirelessSsidOKBody {
 	return o.Payload
 }
 
 func (o *GetNetworkWirelessSsidOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetNetworkWirelessSsidOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkWirelessSsidOKBody get network wireless ssid o k body
+swagger:model GetNetworkWirelessSsidOKBody
+*/
+type GetNetworkWirelessSsidOKBody struct {
+
+	// URL for the admin splash page
+	AdminSplashURL string `json:"adminSplashUrl,omitempty"`
+
+	// The association control method for the SSID
+	// Enum: [8021x-google 8021x-localradius 8021x-meraki 8021x-nac 8021x-radius ipsk-with-nac ipsk-with-radius ipsk-without-radius open open-enhanced open-with-nac open-with-radius psk]
+	AuthMode string `json:"authMode,omitempty"`
+
+	// List of tags for this SSID. If availableOnAllAps is false, then the SSID is only broadcast by APs with tags matching any of the tags in this list
+	AvailabilityTags []string `json:"availabilityTags"`
+
+	// Whether all APs broadcast the SSID or if it's restricted to APs matching any availability tags
+	AvailableOnAllAps bool `json:"availableOnAllAps,omitempty"`
+
+	// The client-serving radio frequencies of this SSID in the default indoor RF profile
+	// Enum: [5 GHz band only Dual band operation Dual band operation with Band Steering]
+	BandSelection string `json:"bandSelection,omitempty"`
+
+	// Whether or not the SSID is enabled
+	Enabled bool `json:"enabled,omitempty"`
+
+	// The psk encryption mode for the SSID
+	// Enum: [wep wpa]
+	EncryptionMode string `json:"encryptionMode,omitempty"`
+
+	// The client IP assignment mode
+	// Enum: [Bridge mode Ethernet over GRE Layer 3 roaming Layer 3 roaming with a concentrator NAT mode VPN]
+	IPAssignmentMode string `json:"ipAssignmentMode,omitempty"`
+
+	// Whether clients connecting to this SSID must use the IP address assigned by the DHCP server
+	MandatoryDhcpEnabled bool `json:"mandatoryDhcpEnabled,omitempty"`
+
+	// The minimum bitrate in Mbps of this SSID in the default indoor RF profile
+	MinBitrate int64 `json:"minBitrate,omitempty"`
+
+	// The name of the SSID
+	Name string `json:"name,omitempty"`
+
+	// Unique identifier of the SSID
+	Number int64 `json:"number,omitempty"`
+
+	// The download bandwidth limit in Kbps. (0 represents no limit.)
+	PerClientBandwidthLimitDown int64 `json:"perClientBandwidthLimitDown,omitempty"`
+
+	// The upload bandwidth limit in Kbps. (0 represents no limit.)
+	PerClientBandwidthLimitUp int64 `json:"perClientBandwidthLimitUp,omitempty"`
+
+	// The total download bandwidth limit in Kbps (0 represents no limit)
+	PerSsidBandwidthLimitDown int64 `json:"perSsidBandwidthLimitDown,omitempty"`
+
+	// The total upload bandwidth limit in Kbps (0 represents no limit)
+	PerSsidBandwidthLimitUp int64 `json:"perSsidBandwidthLimitUp,omitempty"`
+
+	// Whether or not RADIUS accounting is enabled
+	RadiusAccountingEnabled bool `json:"radiusAccountingEnabled,omitempty"`
+
+	// List of RADIUS accounting 802.1X servers to be used for authentication
+	RadiusAccountingServers []*GetNetworkWirelessSsidOKBodyRadiusAccountingServersItems0 `json:"radiusAccountingServers"`
+
+	// RADIUS attribute used to look up group policies
+	// Enum: [Airespace-ACL-Name Aruba-User-Role Filter-Id Reply-Message]
+	RadiusAttributeForGroupPolicies string `json:"radiusAttributeForGroupPolicies,omitempty"`
+
+	// Whether RADIUS authentication is enabled
+	RadiusEnabled bool `json:"radiusEnabled,omitempty"`
+
+	// Policy which determines how authentication requests should be handled in the event that all of the configured RADIUS servers are unreachable
+	// Enum: [Allow access Deny access]
+	RadiusFailoverPolicy string `json:"radiusFailoverPolicy,omitempty"`
+
+	// Policy which determines which RADIUS server will be contacted first in an authentication attempt, and the ordering of any necessary retry attempts
+	// Enum: [Round robin Strict priority order]
+	RadiusLoadBalancingPolicy string `json:"radiusLoadBalancingPolicy,omitempty"`
+
+	// List of RADIUS 802.1X servers to be used for authentication
+	RadiusServers []*GetNetworkWirelessSsidOKBodyRadiusServersItems0 `json:"radiusServers"`
+
+	// The type of splash page for the SSID
+	// Enum: [Billing Cisco ISE Click-through splash page Facebook Wi-Fi Google Apps domain Google OAuth None Password-protected with Active Directory Password-protected with LDAP Password-protected with Meraki RADIUS Password-protected with custom RADIUS SMS authentication Sponsored guest Systems Manager Sentry]
+	SplashPage string `json:"splashPage,omitempty"`
+
+	// Splash page timeout
+	SplashTimeout string `json:"splashTimeout,omitempty"`
+
+	// SSID Administrator access status
+	SsidAdminAccessible bool `json:"ssidAdminAccessible,omitempty"`
+
+	// Whether the SSID is advertised or hidden by the AP
+	Visible bool `json:"visible,omitempty"`
+
+	// Allow users to access a configurable list of IP ranges prior to sign-on
+	WalledGardenEnabled bool `json:"walledGardenEnabled,omitempty"`
+
+	// Domain names and IP address ranges available in Walled Garden mode
+	WalledGardenRanges []string `json:"walledGardenRanges"`
+
+	// The types of WPA encryption
+	// Enum: [WPA1 and WPA2 WPA1 only WPA2 only WPA3 192-bit Security WPA3 Transition Mode WPA3 only]
+	WpaEncryptionMode string `json:"wpaEncryptionMode,omitempty"`
+}
+
+// Validate validates this get network wireless ssid o k body
+func (o *GetNetworkWirelessSsidOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateAuthMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateBandSelection(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateEncryptionMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateIPAssignmentMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateRadiusAccountingServers(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateRadiusAttributeForGroupPolicies(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateRadiusFailoverPolicy(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateRadiusLoadBalancingPolicy(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateRadiusServers(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSplashPage(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateWpaEncryptionMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var getNetworkWirelessSsidOKBodyTypeAuthModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["8021x-google","8021x-localradius","8021x-meraki","8021x-nac","8021x-radius","ipsk-with-nac","ipsk-with-radius","ipsk-without-radius","open","open-enhanced","open-with-nac","open-with-radius","psk"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getNetworkWirelessSsidOKBodyTypeAuthModePropEnum = append(getNetworkWirelessSsidOKBodyTypeAuthModePropEnum, v)
+	}
+}
+
+const (
+
+	// GetNetworkWirelessSsidOKBodyAuthModeNr8021xDashGoogle captures enum value "8021x-google"
+	GetNetworkWirelessSsidOKBodyAuthModeNr8021xDashGoogle string = "8021x-google"
+
+	// GetNetworkWirelessSsidOKBodyAuthModeNr8021xDashLocalradius captures enum value "8021x-localradius"
+	GetNetworkWirelessSsidOKBodyAuthModeNr8021xDashLocalradius string = "8021x-localradius"
+
+	// GetNetworkWirelessSsidOKBodyAuthModeNr8021xDashMeraki captures enum value "8021x-meraki"
+	GetNetworkWirelessSsidOKBodyAuthModeNr8021xDashMeraki string = "8021x-meraki"
+
+	// GetNetworkWirelessSsidOKBodyAuthModeNr8021xDashNac captures enum value "8021x-nac"
+	GetNetworkWirelessSsidOKBodyAuthModeNr8021xDashNac string = "8021x-nac"
+
+	// GetNetworkWirelessSsidOKBodyAuthModeNr8021xDashRadius captures enum value "8021x-radius"
+	GetNetworkWirelessSsidOKBodyAuthModeNr8021xDashRadius string = "8021x-radius"
+
+	// GetNetworkWirelessSsidOKBodyAuthModeIpskDashWithDashNac captures enum value "ipsk-with-nac"
+	GetNetworkWirelessSsidOKBodyAuthModeIpskDashWithDashNac string = "ipsk-with-nac"
+
+	// GetNetworkWirelessSsidOKBodyAuthModeIpskDashWithDashRadius captures enum value "ipsk-with-radius"
+	GetNetworkWirelessSsidOKBodyAuthModeIpskDashWithDashRadius string = "ipsk-with-radius"
+
+	// GetNetworkWirelessSsidOKBodyAuthModeIpskDashWithoutDashRadius captures enum value "ipsk-without-radius"
+	GetNetworkWirelessSsidOKBodyAuthModeIpskDashWithoutDashRadius string = "ipsk-without-radius"
+
+	// GetNetworkWirelessSsidOKBodyAuthModeOpen captures enum value "open"
+	GetNetworkWirelessSsidOKBodyAuthModeOpen string = "open"
+
+	// GetNetworkWirelessSsidOKBodyAuthModeOpenDashEnhanced captures enum value "open-enhanced"
+	GetNetworkWirelessSsidOKBodyAuthModeOpenDashEnhanced string = "open-enhanced"
+
+	// GetNetworkWirelessSsidOKBodyAuthModeOpenDashWithDashNac captures enum value "open-with-nac"
+	GetNetworkWirelessSsidOKBodyAuthModeOpenDashWithDashNac string = "open-with-nac"
+
+	// GetNetworkWirelessSsidOKBodyAuthModeOpenDashWithDashRadius captures enum value "open-with-radius"
+	GetNetworkWirelessSsidOKBodyAuthModeOpenDashWithDashRadius string = "open-with-radius"
+
+	// GetNetworkWirelessSsidOKBodyAuthModePsk captures enum value "psk"
+	GetNetworkWirelessSsidOKBodyAuthModePsk string = "psk"
+)
+
+// prop value enum
+func (o *GetNetworkWirelessSsidOKBody) validateAuthModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getNetworkWirelessSsidOKBodyTypeAuthModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidOKBody) validateAuthMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.AuthMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateAuthModeEnum("getNetworkWirelessSsidOK"+"."+"authMode", "body", o.AuthMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var getNetworkWirelessSsidOKBodyTypeBandSelectionPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["5 GHz band only","Dual band operation","Dual band operation with Band Steering"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getNetworkWirelessSsidOKBodyTypeBandSelectionPropEnum = append(getNetworkWirelessSsidOKBodyTypeBandSelectionPropEnum, v)
+	}
+}
+
+const (
+
+	// GetNetworkWirelessSsidOKBodyBandSelectionNr5GHzBandOnly captures enum value "5 GHz band only"
+	GetNetworkWirelessSsidOKBodyBandSelectionNr5GHzBandOnly string = "5 GHz band only"
+
+	// GetNetworkWirelessSsidOKBodyBandSelectionDualBandOperation captures enum value "Dual band operation"
+	GetNetworkWirelessSsidOKBodyBandSelectionDualBandOperation string = "Dual band operation"
+
+	// GetNetworkWirelessSsidOKBodyBandSelectionDualBandOperationWithBandSteering captures enum value "Dual band operation with Band Steering"
+	GetNetworkWirelessSsidOKBodyBandSelectionDualBandOperationWithBandSteering string = "Dual band operation with Band Steering"
+)
+
+// prop value enum
+func (o *GetNetworkWirelessSsidOKBody) validateBandSelectionEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getNetworkWirelessSsidOKBodyTypeBandSelectionPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidOKBody) validateBandSelection(formats strfmt.Registry) error {
+	if swag.IsZero(o.BandSelection) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateBandSelectionEnum("getNetworkWirelessSsidOK"+"."+"bandSelection", "body", o.BandSelection); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var getNetworkWirelessSsidOKBodyTypeEncryptionModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["wep","wpa"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getNetworkWirelessSsidOKBodyTypeEncryptionModePropEnum = append(getNetworkWirelessSsidOKBodyTypeEncryptionModePropEnum, v)
+	}
+}
+
+const (
+
+	// GetNetworkWirelessSsidOKBodyEncryptionModeWep captures enum value "wep"
+	GetNetworkWirelessSsidOKBodyEncryptionModeWep string = "wep"
+
+	// GetNetworkWirelessSsidOKBodyEncryptionModeWpa captures enum value "wpa"
+	GetNetworkWirelessSsidOKBodyEncryptionModeWpa string = "wpa"
+)
+
+// prop value enum
+func (o *GetNetworkWirelessSsidOKBody) validateEncryptionModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getNetworkWirelessSsidOKBodyTypeEncryptionModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidOKBody) validateEncryptionMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.EncryptionMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateEncryptionModeEnum("getNetworkWirelessSsidOK"+"."+"encryptionMode", "body", o.EncryptionMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var getNetworkWirelessSsidOKBodyTypeIPAssignmentModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Bridge mode","Ethernet over GRE","Layer 3 roaming","Layer 3 roaming with a concentrator","NAT mode","VPN"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getNetworkWirelessSsidOKBodyTypeIPAssignmentModePropEnum = append(getNetworkWirelessSsidOKBodyTypeIPAssignmentModePropEnum, v)
+	}
+}
+
+const (
+
+	// GetNetworkWirelessSsidOKBodyIPAssignmentModeBridgeMode captures enum value "Bridge mode"
+	GetNetworkWirelessSsidOKBodyIPAssignmentModeBridgeMode string = "Bridge mode"
+
+	// GetNetworkWirelessSsidOKBodyIPAssignmentModeEthernetOverGRE captures enum value "Ethernet over GRE"
+	GetNetworkWirelessSsidOKBodyIPAssignmentModeEthernetOverGRE string = "Ethernet over GRE"
+
+	// GetNetworkWirelessSsidOKBodyIPAssignmentModeLayer3Roaming captures enum value "Layer 3 roaming"
+	GetNetworkWirelessSsidOKBodyIPAssignmentModeLayer3Roaming string = "Layer 3 roaming"
+
+	// GetNetworkWirelessSsidOKBodyIPAssignmentModeLayer3RoamingWithaConcentrator captures enum value "Layer 3 roaming with a concentrator"
+	GetNetworkWirelessSsidOKBodyIPAssignmentModeLayer3RoamingWithaConcentrator string = "Layer 3 roaming with a concentrator"
+
+	// GetNetworkWirelessSsidOKBodyIPAssignmentModeNATMode captures enum value "NAT mode"
+	GetNetworkWirelessSsidOKBodyIPAssignmentModeNATMode string = "NAT mode"
+
+	// GetNetworkWirelessSsidOKBodyIPAssignmentModeVPN captures enum value "VPN"
+	GetNetworkWirelessSsidOKBodyIPAssignmentModeVPN string = "VPN"
+)
+
+// prop value enum
+func (o *GetNetworkWirelessSsidOKBody) validateIPAssignmentModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getNetworkWirelessSsidOKBodyTypeIPAssignmentModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidOKBody) validateIPAssignmentMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.IPAssignmentMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateIPAssignmentModeEnum("getNetworkWirelessSsidOK"+"."+"ipAssignmentMode", "body", o.IPAssignmentMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidOKBody) validateRadiusAccountingServers(formats strfmt.Registry) error {
+	if swag.IsZero(o.RadiusAccountingServers) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.RadiusAccountingServers); i++ {
+		if swag.IsZero(o.RadiusAccountingServers[i]) { // not required
+			continue
+		}
+
+		if o.RadiusAccountingServers[i] != nil {
+			if err := o.RadiusAccountingServers[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkWirelessSsidOK" + "." + "radiusAccountingServers" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkWirelessSsidOK" + "." + "radiusAccountingServers" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+var getNetworkWirelessSsidOKBodyTypeRadiusAttributeForGroupPoliciesPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Airespace-ACL-Name","Aruba-User-Role","Filter-Id","Reply-Message"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getNetworkWirelessSsidOKBodyTypeRadiusAttributeForGroupPoliciesPropEnum = append(getNetworkWirelessSsidOKBodyTypeRadiusAttributeForGroupPoliciesPropEnum, v)
+	}
+}
+
+const (
+
+	// GetNetworkWirelessSsidOKBodyRadiusAttributeForGroupPoliciesAirespaceDashACLDashName captures enum value "Airespace-ACL-Name"
+	GetNetworkWirelessSsidOKBodyRadiusAttributeForGroupPoliciesAirespaceDashACLDashName string = "Airespace-ACL-Name"
+
+	// GetNetworkWirelessSsidOKBodyRadiusAttributeForGroupPoliciesArubaDashUserDashRole captures enum value "Aruba-User-Role"
+	GetNetworkWirelessSsidOKBodyRadiusAttributeForGroupPoliciesArubaDashUserDashRole string = "Aruba-User-Role"
+
+	// GetNetworkWirelessSsidOKBodyRadiusAttributeForGroupPoliciesFilterDashID captures enum value "Filter-Id"
+	GetNetworkWirelessSsidOKBodyRadiusAttributeForGroupPoliciesFilterDashID string = "Filter-Id"
+
+	// GetNetworkWirelessSsidOKBodyRadiusAttributeForGroupPoliciesReplyDashMessage captures enum value "Reply-Message"
+	GetNetworkWirelessSsidOKBodyRadiusAttributeForGroupPoliciesReplyDashMessage string = "Reply-Message"
+)
+
+// prop value enum
+func (o *GetNetworkWirelessSsidOKBody) validateRadiusAttributeForGroupPoliciesEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getNetworkWirelessSsidOKBodyTypeRadiusAttributeForGroupPoliciesPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidOKBody) validateRadiusAttributeForGroupPolicies(formats strfmt.Registry) error {
+	if swag.IsZero(o.RadiusAttributeForGroupPolicies) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateRadiusAttributeForGroupPoliciesEnum("getNetworkWirelessSsidOK"+"."+"radiusAttributeForGroupPolicies", "body", o.RadiusAttributeForGroupPolicies); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var getNetworkWirelessSsidOKBodyTypeRadiusFailoverPolicyPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Allow access","Deny access"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getNetworkWirelessSsidOKBodyTypeRadiusFailoverPolicyPropEnum = append(getNetworkWirelessSsidOKBodyTypeRadiusFailoverPolicyPropEnum, v)
+	}
+}
+
+const (
+
+	// GetNetworkWirelessSsidOKBodyRadiusFailoverPolicyAllowAccess captures enum value "Allow access"
+	GetNetworkWirelessSsidOKBodyRadiusFailoverPolicyAllowAccess string = "Allow access"
+
+	// GetNetworkWirelessSsidOKBodyRadiusFailoverPolicyDenyAccess captures enum value "Deny access"
+	GetNetworkWirelessSsidOKBodyRadiusFailoverPolicyDenyAccess string = "Deny access"
+)
+
+// prop value enum
+func (o *GetNetworkWirelessSsidOKBody) validateRadiusFailoverPolicyEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getNetworkWirelessSsidOKBodyTypeRadiusFailoverPolicyPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidOKBody) validateRadiusFailoverPolicy(formats strfmt.Registry) error {
+	if swag.IsZero(o.RadiusFailoverPolicy) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateRadiusFailoverPolicyEnum("getNetworkWirelessSsidOK"+"."+"radiusFailoverPolicy", "body", o.RadiusFailoverPolicy); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var getNetworkWirelessSsidOKBodyTypeRadiusLoadBalancingPolicyPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Round robin","Strict priority order"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getNetworkWirelessSsidOKBodyTypeRadiusLoadBalancingPolicyPropEnum = append(getNetworkWirelessSsidOKBodyTypeRadiusLoadBalancingPolicyPropEnum, v)
+	}
+}
+
+const (
+
+	// GetNetworkWirelessSsidOKBodyRadiusLoadBalancingPolicyRoundRobin captures enum value "Round robin"
+	GetNetworkWirelessSsidOKBodyRadiusLoadBalancingPolicyRoundRobin string = "Round robin"
+
+	// GetNetworkWirelessSsidOKBodyRadiusLoadBalancingPolicyStrictPriorityOrder captures enum value "Strict priority order"
+	GetNetworkWirelessSsidOKBodyRadiusLoadBalancingPolicyStrictPriorityOrder string = "Strict priority order"
+)
+
+// prop value enum
+func (o *GetNetworkWirelessSsidOKBody) validateRadiusLoadBalancingPolicyEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getNetworkWirelessSsidOKBodyTypeRadiusLoadBalancingPolicyPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidOKBody) validateRadiusLoadBalancingPolicy(formats strfmt.Registry) error {
+	if swag.IsZero(o.RadiusLoadBalancingPolicy) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateRadiusLoadBalancingPolicyEnum("getNetworkWirelessSsidOK"+"."+"radiusLoadBalancingPolicy", "body", o.RadiusLoadBalancingPolicy); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidOKBody) validateRadiusServers(formats strfmt.Registry) error {
+	if swag.IsZero(o.RadiusServers) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.RadiusServers); i++ {
+		if swag.IsZero(o.RadiusServers[i]) { // not required
+			continue
+		}
+
+		if o.RadiusServers[i] != nil {
+			if err := o.RadiusServers[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkWirelessSsidOK" + "." + "radiusServers" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkWirelessSsidOK" + "." + "radiusServers" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+var getNetworkWirelessSsidOKBodyTypeSplashPagePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Billing","Cisco ISE","Click-through splash page","Facebook Wi-Fi","Google Apps domain","Google OAuth","None","Password-protected with Active Directory","Password-protected with LDAP","Password-protected with Meraki RADIUS","Password-protected with custom RADIUS","SMS authentication","Sponsored guest","Systems Manager Sentry"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getNetworkWirelessSsidOKBodyTypeSplashPagePropEnum = append(getNetworkWirelessSsidOKBodyTypeSplashPagePropEnum, v)
+	}
+}
+
+const (
+
+	// GetNetworkWirelessSsidOKBodySplashPageBilling captures enum value "Billing"
+	GetNetworkWirelessSsidOKBodySplashPageBilling string = "Billing"
+
+	// GetNetworkWirelessSsidOKBodySplashPageCiscoISE captures enum value "Cisco ISE"
+	GetNetworkWirelessSsidOKBodySplashPageCiscoISE string = "Cisco ISE"
+
+	// GetNetworkWirelessSsidOKBodySplashPageClickDashThroughSplashPage captures enum value "Click-through splash page"
+	GetNetworkWirelessSsidOKBodySplashPageClickDashThroughSplashPage string = "Click-through splash page"
+
+	// GetNetworkWirelessSsidOKBodySplashPageFacebookWiDashFi captures enum value "Facebook Wi-Fi"
+	GetNetworkWirelessSsidOKBodySplashPageFacebookWiDashFi string = "Facebook Wi-Fi"
+
+	// GetNetworkWirelessSsidOKBodySplashPageGoogleAppsDomain captures enum value "Google Apps domain"
+	GetNetworkWirelessSsidOKBodySplashPageGoogleAppsDomain string = "Google Apps domain"
+
+	// GetNetworkWirelessSsidOKBodySplashPageGoogleOAuth captures enum value "Google OAuth"
+	GetNetworkWirelessSsidOKBodySplashPageGoogleOAuth string = "Google OAuth"
+
+	// GetNetworkWirelessSsidOKBodySplashPageNone captures enum value "None"
+	GetNetworkWirelessSsidOKBodySplashPageNone string = "None"
+
+	// GetNetworkWirelessSsidOKBodySplashPagePasswordDashProtectedWithActiveDirectory captures enum value "Password-protected with Active Directory"
+	GetNetworkWirelessSsidOKBodySplashPagePasswordDashProtectedWithActiveDirectory string = "Password-protected with Active Directory"
+
+	// GetNetworkWirelessSsidOKBodySplashPagePasswordDashProtectedWithLDAP captures enum value "Password-protected with LDAP"
+	GetNetworkWirelessSsidOKBodySplashPagePasswordDashProtectedWithLDAP string = "Password-protected with LDAP"
+
+	// GetNetworkWirelessSsidOKBodySplashPagePasswordDashProtectedWithMerakiRADIUS captures enum value "Password-protected with Meraki RADIUS"
+	GetNetworkWirelessSsidOKBodySplashPagePasswordDashProtectedWithMerakiRADIUS string = "Password-protected with Meraki RADIUS"
+
+	// GetNetworkWirelessSsidOKBodySplashPagePasswordDashProtectedWithCustomRADIUS captures enum value "Password-protected with custom RADIUS"
+	GetNetworkWirelessSsidOKBodySplashPagePasswordDashProtectedWithCustomRADIUS string = "Password-protected with custom RADIUS"
+
+	// GetNetworkWirelessSsidOKBodySplashPageSMSAuthentication captures enum value "SMS authentication"
+	GetNetworkWirelessSsidOKBodySplashPageSMSAuthentication string = "SMS authentication"
+
+	// GetNetworkWirelessSsidOKBodySplashPageSponsoredGuest captures enum value "Sponsored guest"
+	GetNetworkWirelessSsidOKBodySplashPageSponsoredGuest string = "Sponsored guest"
+
+	// GetNetworkWirelessSsidOKBodySplashPageSystemsManagerSentry captures enum value "Systems Manager Sentry"
+	GetNetworkWirelessSsidOKBodySplashPageSystemsManagerSentry string = "Systems Manager Sentry"
+)
+
+// prop value enum
+func (o *GetNetworkWirelessSsidOKBody) validateSplashPageEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getNetworkWirelessSsidOKBodyTypeSplashPagePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidOKBody) validateSplashPage(formats strfmt.Registry) error {
+	if swag.IsZero(o.SplashPage) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateSplashPageEnum("getNetworkWirelessSsidOK"+"."+"splashPage", "body", o.SplashPage); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var getNetworkWirelessSsidOKBodyTypeWpaEncryptionModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["WPA1 and WPA2","WPA1 only","WPA2 only","WPA3 192-bit Security","WPA3 Transition Mode","WPA3 only"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getNetworkWirelessSsidOKBodyTypeWpaEncryptionModePropEnum = append(getNetworkWirelessSsidOKBodyTypeWpaEncryptionModePropEnum, v)
+	}
+}
+
+const (
+
+	// GetNetworkWirelessSsidOKBodyWpaEncryptionModeWPA1AndWPA2 captures enum value "WPA1 and WPA2"
+	GetNetworkWirelessSsidOKBodyWpaEncryptionModeWPA1AndWPA2 string = "WPA1 and WPA2"
+
+	// GetNetworkWirelessSsidOKBodyWpaEncryptionModeWPA1Only captures enum value "WPA1 only"
+	GetNetworkWirelessSsidOKBodyWpaEncryptionModeWPA1Only string = "WPA1 only"
+
+	// GetNetworkWirelessSsidOKBodyWpaEncryptionModeWPA2Only captures enum value "WPA2 only"
+	GetNetworkWirelessSsidOKBodyWpaEncryptionModeWPA2Only string = "WPA2 only"
+
+	// GetNetworkWirelessSsidOKBodyWpaEncryptionModeWPA3192DashBitSecurity captures enum value "WPA3 192-bit Security"
+	GetNetworkWirelessSsidOKBodyWpaEncryptionModeWPA3192DashBitSecurity string = "WPA3 192-bit Security"
+
+	// GetNetworkWirelessSsidOKBodyWpaEncryptionModeWPA3TransitionMode captures enum value "WPA3 Transition Mode"
+	GetNetworkWirelessSsidOKBodyWpaEncryptionModeWPA3TransitionMode string = "WPA3 Transition Mode"
+
+	// GetNetworkWirelessSsidOKBodyWpaEncryptionModeWPA3Only captures enum value "WPA3 only"
+	GetNetworkWirelessSsidOKBodyWpaEncryptionModeWPA3Only string = "WPA3 only"
+)
+
+// prop value enum
+func (o *GetNetworkWirelessSsidOKBody) validateWpaEncryptionModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getNetworkWirelessSsidOKBodyTypeWpaEncryptionModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidOKBody) validateWpaEncryptionMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.WpaEncryptionMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateWpaEncryptionModeEnum("getNetworkWirelessSsidOK"+"."+"wpaEncryptionMode", "body", o.WpaEncryptionMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network wireless ssid o k body based on the context it is used
+func (o *GetNetworkWirelessSsidOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateRadiusAccountingServers(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateRadiusServers(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidOKBody) contextValidateRadiusAccountingServers(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.RadiusAccountingServers); i++ {
+
+		if o.RadiusAccountingServers[i] != nil {
+
+			if swag.IsZero(o.RadiusAccountingServers[i]) { // not required
+				return nil
+			}
+
+			if err := o.RadiusAccountingServers[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkWirelessSsidOK" + "." + "radiusAccountingServers" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkWirelessSsidOK" + "." + "radiusAccountingServers" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *GetNetworkWirelessSsidOKBody) contextValidateRadiusServers(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.RadiusServers); i++ {
+
+		if o.RadiusServers[i] != nil {
+
+			if swag.IsZero(o.RadiusServers[i]) { // not required
+				return nil
+			}
+
+			if err := o.RadiusServers[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkWirelessSsidOK" + "." + "radiusServers" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkWirelessSsidOK" + "." + "radiusServers" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidOKBody) UnmarshalBinary(b []byte) error {
+	var res GetNetworkWirelessSsidOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkWirelessSsidOKBodyRadiusAccountingServersItems0 get network wireless ssid o k body radius accounting servers items0
+swagger:model GetNetworkWirelessSsidOKBodyRadiusAccountingServersItems0
+*/
+type GetNetworkWirelessSsidOKBodyRadiusAccountingServersItems0 struct {
+
+	// Certificate used for authorization for the RADSEC Server
+	CaCertificate string `json:"caCertificate,omitempty"`
+
+	// IP address (or FQDN) to which the APs will send RADIUS accounting messages
+	Host string `json:"host,omitempty"`
+
+	// The ID of the Openroaming Certificate attached to radius server
+	OpenRoamingCertificateID int64 `json:"openRoamingCertificateId,omitempty"`
+
+	// Port on the RADIUS server that is listening for accounting messages
+	Port int64 `json:"port,omitempty"`
+}
+
+// Validate validates this get network wireless ssid o k body radius accounting servers items0
+func (o *GetNetworkWirelessSsidOKBodyRadiusAccountingServersItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network wireless ssid o k body radius accounting servers items0 based on context it is used
+func (o *GetNetworkWirelessSsidOKBodyRadiusAccountingServersItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidOKBodyRadiusAccountingServersItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidOKBodyRadiusAccountingServersItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkWirelessSsidOKBodyRadiusAccountingServersItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkWirelessSsidOKBodyRadiusServersItems0 get network wireless ssid o k body radius servers items0
+swagger:model GetNetworkWirelessSsidOKBodyRadiusServersItems0
+*/
+type GetNetworkWirelessSsidOKBodyRadiusServersItems0 struct {
+
+	// Certificate used for authorization for the RADSEC Server
+	CaCertificate string `json:"caCertificate,omitempty"`
+
+	// IP address (or FQDN) of your RADIUS server
+	Host string `json:"host,omitempty"`
+
+	// The ID of the Openroaming Certificate attached to radius server
+	OpenRoamingCertificateID int64 `json:"openRoamingCertificateId,omitempty"`
+
+	// UDP port the RADIUS server listens on for Access-requests
+	Port int64 `json:"port,omitempty"`
+}
+
+// Validate validates this get network wireless ssid o k body radius servers items0
+func (o *GetNetworkWirelessSsidOKBodyRadiusServersItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network wireless ssid o k body radius servers items0 based on context it is used
+func (o *GetNetworkWirelessSsidOKBodyRadiusServersItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidOKBodyRadiusServersItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkWirelessSsidOKBodyRadiusServersItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkWirelessSsidOKBodyRadiusServersItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

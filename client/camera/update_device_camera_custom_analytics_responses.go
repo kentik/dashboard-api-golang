@@ -33,7 +33,7 @@ func (o *UpdateDeviceCameraCustomAnalyticsReader) ReadResponse(response runtime.
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /devices/{serial}/camera/customAnalytics] updateDeviceCameraCustomAnalytics", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateDeviceCameraCustomAnalyticsOK() *UpdateDeviceCameraCustomAnalytics
 	return &UpdateDeviceCameraCustomAnalyticsOK{}
 }
 
-/* UpdateDeviceCameraCustomAnalyticsOK describes a response with status code 200, with default header values.
+/*
+UpdateDeviceCameraCustomAnalyticsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateDeviceCameraCustomAnalyticsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update device camera custom analytics o k response
+func (o *UpdateDeviceCameraCustomAnalyticsOK) Code() int {
+	return 200
+}
+
 func (o *UpdateDeviceCameraCustomAnalyticsOK) Error() string {
 	return fmt.Sprintf("[PUT /devices/{serial}/camera/customAnalytics][%d] updateDeviceCameraCustomAnalyticsOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateDeviceCameraCustomAnalyticsOK) readResponse(response runtime.Clie
 	return nil
 }
 
-/*UpdateDeviceCameraCustomAnalyticsBody update device camera custom analytics body
+/*
+UpdateDeviceCameraCustomAnalyticsBody update device camera custom analytics body
 // Example: {"artifactId":"1","enabled":true,"parameters":[{"name":"detection_threshold","value":"0.5"}]}
 swagger:model UpdateDeviceCameraCustomAnalyticsBody
 */
@@ -172,6 +179,11 @@ func (o *UpdateDeviceCameraCustomAnalyticsBody) contextValidateParameters(ctx co
 	for i := 0; i < len(o.Parameters); i++ {
 
 		if o.Parameters[i] != nil {
+
+			if swag.IsZero(o.Parameters[i]) { // not required
+				return nil
+			}
+
 			if err := o.Parameters[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateDeviceCameraCustomAnalytics" + "." + "parameters" + "." + strconv.Itoa(i))
@@ -205,7 +217,8 @@ func (o *UpdateDeviceCameraCustomAnalyticsBody) UnmarshalBinary(b []byte) error 
 	return nil
 }
 
-/*UpdateDeviceCameraCustomAnalyticsParamsBodyParametersItems0 update device camera custom analytics params body parameters items0
+/*
+UpdateDeviceCameraCustomAnalyticsParamsBodyParametersItems0 update device camera custom analytics params body parameters items0
 swagger:model UpdateDeviceCameraCustomAnalyticsParamsBodyParametersItems0
 */
 type UpdateDeviceCameraCustomAnalyticsParamsBodyParametersItems0 struct {

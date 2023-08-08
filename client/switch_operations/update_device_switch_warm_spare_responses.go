@@ -32,7 +32,7 @@ func (o *UpdateDeviceSwitchWarmSpareReader) ReadResponse(response runtime.Client
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /devices/{serial}/switch/warmSpare] updateDeviceSwitchWarmSpare", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewUpdateDeviceSwitchWarmSpareOK() *UpdateDeviceSwitchWarmSpareOK {
 	return &UpdateDeviceSwitchWarmSpareOK{}
 }
 
-/* UpdateDeviceSwitchWarmSpareOK describes a response with status code 200, with default header values.
+/*
+UpdateDeviceSwitchWarmSpareOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *UpdateDeviceSwitchWarmSpareOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update device switch warm spare o k response
+func (o *UpdateDeviceSwitchWarmSpareOK) Code() int {
+	return 200
+}
+
 func (o *UpdateDeviceSwitchWarmSpareOK) Error() string {
 	return fmt.Sprintf("[PUT /devices/{serial}/switch/warmSpare][%d] updateDeviceSwitchWarmSpareOK  %+v", 200, o.Payload)
 }
@@ -96,7 +102,8 @@ func (o *UpdateDeviceSwitchWarmSpareOK) readResponse(response runtime.ClientResp
 	return nil
 }
 
-/*UpdateDeviceSwitchWarmSpareBody update device switch warm spare body
+/*
+UpdateDeviceSwitchWarmSpareBody update device switch warm spare body
 // Example: {"enabled":true,"spareSerial":"Q234-ABCD-0002"}
 swagger:model UpdateDeviceSwitchWarmSpareBody
 */

@@ -53,10 +53,12 @@ func NewGetOrganizationNetworksParamsWithHTTPClient(client *http.Client) *GetOrg
 	}
 }
 
-/* GetOrganizationNetworksParams contains all the parameters to send to the API endpoint
-   for the get organization networks operation.
+/*
+GetOrganizationNetworksParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization networks operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationNetworksParams struct {
 
@@ -78,7 +80,10 @@ type GetOrganizationNetworksParams struct {
 	*/
 	IsBoundToConfigTemplate *bool
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	/* PerPage.

@@ -52,14 +52,19 @@ func NewGetNetworkCellularGatewayConnectivityMonitoringDestinationsParamsWithHTT
 	}
 }
 
-/* GetNetworkCellularGatewayConnectivityMonitoringDestinationsParams contains all the parameters to send to the API endpoint
-   for the get network cellular gateway connectivity monitoring destinations operation.
+/*
+GetNetworkCellularGatewayConnectivityMonitoringDestinationsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network cellular gateway connectivity monitoring destinations operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkCellularGatewayConnectivityMonitoringDestinationsParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

@@ -31,7 +31,7 @@ func (o *ClaimNetworkDevicesReader) ReadResponse(response runtime.ClientResponse
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/devices/claim] claimNetworkDevices", response, response.Code())
 	}
 }
 
@@ -40,7 +40,8 @@ func NewClaimNetworkDevicesOK() *ClaimNetworkDevicesOK {
 	return &ClaimNetworkDevicesOK{}
 }
 
-/* ClaimNetworkDevicesOK describes a response with status code 200, with default header values.
+/*
+ClaimNetworkDevicesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -72,6 +73,11 @@ func (o *ClaimNetworkDevicesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the claim network devices o k response
+func (o *ClaimNetworkDevicesOK) Code() int {
+	return 200
+}
+
 func (o *ClaimNetworkDevicesOK) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/devices/claim][%d] claimNetworkDevicesOK ", 200)
 }
@@ -85,7 +91,8 @@ func (o *ClaimNetworkDevicesOK) readResponse(response runtime.ClientResponse, co
 	return nil
 }
 
-/*ClaimNetworkDevicesBody claim network devices body
+/*
+ClaimNetworkDevicesBody claim network devices body
 // Example: {"serials":["Q234-ABCD-0001","Q234-ABCD-0002","Q234-ABCD-0003"]}
 swagger:model ClaimNetworkDevicesBody
 */

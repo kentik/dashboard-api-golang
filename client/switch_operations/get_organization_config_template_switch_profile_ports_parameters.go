@@ -52,20 +52,31 @@ func NewGetOrganizationConfigTemplateSwitchProfilePortsParamsWithHTTPClient(clie
 	}
 }
 
-/* GetOrganizationConfigTemplateSwitchProfilePortsParams contains all the parameters to send to the API endpoint
-   for the get organization config template switch profile ports operation.
+/*
+GetOrganizationConfigTemplateSwitchProfilePortsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization config template switch profile ports operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationConfigTemplateSwitchProfilePortsParams struct {
 
-	// ConfigTemplateID.
+	/* ConfigTemplateID.
+
+	   Config template ID
+	*/
 	ConfigTemplateID string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
-	// ProfileID.
+	/* ProfileID.
+
+	   Profile ID
+	*/
 	ProfileID string
 
 	timeout    time.Duration

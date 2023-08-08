@@ -104,9 +104,9 @@ type ClientService interface {
 }
 
 /*
-  CreateNetworkCameraQualityRetentionProfile creates new quality retention profile for this network
+CreateNetworkCameraQualityRetentionProfile creates new quality retention profile for this network
 
-  Creates new quality retention profile for this network.
+Creates new quality retention profile for this network.
 */
 func (a *Client) CreateNetworkCameraQualityRetentionProfile(params *CreateNetworkCameraQualityRetentionProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkCameraQualityRetentionProfileOK, error) {
 	// TODO: Validate the params before sending
@@ -145,9 +145,9 @@ func (a *Client) CreateNetworkCameraQualityRetentionProfile(params *CreateNetwor
 }
 
 /*
-  CreateNetworkCameraWirelessProfile creates a new camera wireless profile for this network
+CreateNetworkCameraWirelessProfile creates a new camera wireless profile for this network
 
-  Creates a new camera wireless profile for this network.
+Creates a new camera wireless profile for this network.
 */
 func (a *Client) CreateNetworkCameraWirelessProfile(params *CreateNetworkCameraWirelessProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkCameraWirelessProfileOK, error) {
 	// TODO: Validate the params before sending
@@ -186,9 +186,9 @@ func (a *Client) CreateNetworkCameraWirelessProfile(params *CreateNetworkCameraW
 }
 
 /*
-  CreateOrganizationCameraCustomAnalyticsArtifact creates custom analytics artifact
+CreateOrganizationCameraCustomAnalyticsArtifact creates custom analytics artifact
 
-  Create custom analytics artifact. Returns an artifact upload URL with expiry time. Upload the artifact file with a put request to the returned upload URL before its expiry.
+Create custom analytics artifact. Returns an artifact upload URL with expiry time. Upload the artifact file with a put request to the returned upload URL before its expiry.
 */
 func (a *Client) CreateOrganizationCameraCustomAnalyticsArtifact(params *CreateOrganizationCameraCustomAnalyticsArtifactParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationCameraCustomAnalyticsArtifactCreated, error) {
 	// TODO: Validate the params before sending
@@ -227,9 +227,9 @@ func (a *Client) CreateOrganizationCameraCustomAnalyticsArtifact(params *CreateO
 }
 
 /*
-  DeleteNetworkCameraQualityRetentionProfile deletes an existing quality retention profile for this network
+DeleteNetworkCameraQualityRetentionProfile deletes an existing quality retention profile for this network
 
-  Delete an existing quality retention profile for this network.
+Delete an existing quality retention profile for this network.
 */
 func (a *Client) DeleteNetworkCameraQualityRetentionProfile(params *DeleteNetworkCameraQualityRetentionProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkCameraQualityRetentionProfileNoContent, error) {
 	// TODO: Validate the params before sending
@@ -268,9 +268,9 @@ func (a *Client) DeleteNetworkCameraQualityRetentionProfile(params *DeleteNetwor
 }
 
 /*
-  DeleteNetworkCameraWirelessProfile deletes an existing camera wireless profile for this network
+DeleteNetworkCameraWirelessProfile deletes an existing camera wireless profile for this network
 
-  Delete an existing camera wireless profile for this network.
+Delete an existing camera wireless profile for this network.
 */
 func (a *Client) DeleteNetworkCameraWirelessProfile(params *DeleteNetworkCameraWirelessProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkCameraWirelessProfileNoContent, error) {
 	// TODO: Validate the params before sending
@@ -309,9 +309,9 @@ func (a *Client) DeleteNetworkCameraWirelessProfile(params *DeleteNetworkCameraW
 }
 
 /*
-  DeleteOrganizationCameraCustomAnalyticsArtifact deletes custom analytics artifact
+DeleteOrganizationCameraCustomAnalyticsArtifact deletes custom analytics artifact
 
-  Delete Custom Analytics Artifact
+Delete Custom Analytics Artifact
 */
 func (a *Client) DeleteOrganizationCameraCustomAnalyticsArtifact(params *DeleteOrganizationCameraCustomAnalyticsArtifactParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationCameraCustomAnalyticsArtifactNoContent, error) {
 	// TODO: Validate the params before sending
@@ -350,9 +350,9 @@ func (a *Client) DeleteOrganizationCameraCustomAnalyticsArtifact(params *DeleteO
 }
 
 /*
-  GenerateDeviceCameraSnapshot generates a snapshot of what the camera sees at the specified time and return a link to that image
+GenerateDeviceCameraSnapshot generates a snapshot of what the camera sees at the specified time and return a link to that image
 
-  Generate a snapshot of what the camera sees at the specified time and return a link to that image.
+Generate a snapshot of what the camera sees at the specified time and return a link to that image.
 */
 func (a *Client) GenerateDeviceCameraSnapshot(params *GenerateDeviceCameraSnapshotParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GenerateDeviceCameraSnapshotAccepted, error) {
 	// TODO: Validate the params before sending
@@ -391,9 +391,9 @@ func (a *Client) GenerateDeviceCameraSnapshot(params *GenerateDeviceCameraSnapsh
 }
 
 /*
-  GetDeviceCameraAnalyticsLive returns live state from camera of analytics zones
+GetDeviceCameraAnalyticsLive returns live state from camera of analytics zones
 
-  Returns live state from camera of analytics zones
+Returns live state from camera of analytics zones
 */
 func (a *Client) GetDeviceCameraAnalyticsLive(params *GetDeviceCameraAnalyticsLiveParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceCameraAnalyticsLiveOK, error) {
 	// TODO: Validate the params before sending
@@ -432,9 +432,9 @@ func (a *Client) GetDeviceCameraAnalyticsLive(params *GetDeviceCameraAnalyticsLi
 }
 
 /*
-  GetDeviceCameraAnalyticsOverview returns an overview of aggregate analytics data for a timespan
+GetDeviceCameraAnalyticsOverview returns an overview of aggregate analytics data for a timespan
 
-  Returns an overview of aggregate analytics data for a timespan
+Returns an overview of aggregate analytics data for a timespan
 */
 func (a *Client) GetDeviceCameraAnalyticsOverview(params *GetDeviceCameraAnalyticsOverviewParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceCameraAnalyticsOverviewOK, error) {
 	// TODO: Validate the params before sending
@@ -473,9 +473,9 @@ func (a *Client) GetDeviceCameraAnalyticsOverview(params *GetDeviceCameraAnalyti
 }
 
 /*
-  GetDeviceCameraAnalyticsRecent returns most recent record for analytics zones
+GetDeviceCameraAnalyticsRecent returns most recent record for analytics zones
 
-  Returns most recent record for analytics zones
+Returns most recent record for analytics zones
 */
 func (a *Client) GetDeviceCameraAnalyticsRecent(params *GetDeviceCameraAnalyticsRecentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceCameraAnalyticsRecentOK, error) {
 	// TODO: Validate the params before sending
@@ -514,9 +514,9 @@ func (a *Client) GetDeviceCameraAnalyticsRecent(params *GetDeviceCameraAnalytics
 }
 
 /*
-  GetDeviceCameraAnalyticsZoneHistory returns historical records for analytic zones
+GetDeviceCameraAnalyticsZoneHistory returns historical records for analytic zones
 
-  Return historical records for analytic zones
+Return historical records for analytic zones
 */
 func (a *Client) GetDeviceCameraAnalyticsZoneHistory(params *GetDeviceCameraAnalyticsZoneHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceCameraAnalyticsZoneHistoryOK, error) {
 	// TODO: Validate the params before sending
@@ -555,9 +555,9 @@ func (a *Client) GetDeviceCameraAnalyticsZoneHistory(params *GetDeviceCameraAnal
 }
 
 /*
-  GetDeviceCameraAnalyticsZones returns all configured analytic zones for this camera
+GetDeviceCameraAnalyticsZones returns all configured analytic zones for this camera
 
-  Returns all configured analytic zones for this camera
+Returns all configured analytic zones for this camera
 */
 func (a *Client) GetDeviceCameraAnalyticsZones(params *GetDeviceCameraAnalyticsZonesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceCameraAnalyticsZonesOK, error) {
 	// TODO: Validate the params before sending
@@ -596,9 +596,9 @@ func (a *Client) GetDeviceCameraAnalyticsZones(params *GetDeviceCameraAnalyticsZ
 }
 
 /*
-  GetDeviceCameraCustomAnalytics returns custom analytics settings for a camera
+GetDeviceCameraCustomAnalytics returns custom analytics settings for a camera
 
-  Return custom analytics settings for a camera
+Return custom analytics settings for a camera
 */
 func (a *Client) GetDeviceCameraCustomAnalytics(params *GetDeviceCameraCustomAnalyticsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceCameraCustomAnalyticsOK, error) {
 	// TODO: Validate the params before sending
@@ -637,9 +637,9 @@ func (a *Client) GetDeviceCameraCustomAnalytics(params *GetDeviceCameraCustomAna
 }
 
 /*
-  GetDeviceCameraQualityAndRetention returns quality and retention settings for the given camera
+GetDeviceCameraQualityAndRetention returns quality and retention settings for the given camera
 
-  Returns quality and retention settings for the given camera
+Returns quality and retention settings for the given camera
 */
 func (a *Client) GetDeviceCameraQualityAndRetention(params *GetDeviceCameraQualityAndRetentionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceCameraQualityAndRetentionOK, error) {
 	// TODO: Validate the params before sending
@@ -678,9 +678,9 @@ func (a *Client) GetDeviceCameraQualityAndRetention(params *GetDeviceCameraQuali
 }
 
 /*
-  GetDeviceCameraSense returns sense settings for a given camera
+GetDeviceCameraSense returns sense settings for a given camera
 
-  Returns sense settings for a given camera
+Returns sense settings for a given camera
 */
 func (a *Client) GetDeviceCameraSense(params *GetDeviceCameraSenseParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceCameraSenseOK, error) {
 	// TODO: Validate the params before sending
@@ -719,9 +719,9 @@ func (a *Client) GetDeviceCameraSense(params *GetDeviceCameraSenseParams, authIn
 }
 
 /*
-  GetDeviceCameraSenseObjectDetectionModels returns the m v sense object detection model list for the given camera
+GetDeviceCameraSenseObjectDetectionModels returns the m v sense object detection model list for the given camera
 
-  Returns the MV Sense object detection model list for the given camera
+Returns the MV Sense object detection model list for the given camera
 */
 func (a *Client) GetDeviceCameraSenseObjectDetectionModels(params *GetDeviceCameraSenseObjectDetectionModelsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceCameraSenseObjectDetectionModelsOK, error) {
 	// TODO: Validate the params before sending
@@ -760,9 +760,9 @@ func (a *Client) GetDeviceCameraSenseObjectDetectionModels(params *GetDeviceCame
 }
 
 /*
-  GetDeviceCameraVideoLink returns video link to the specified camera
+GetDeviceCameraVideoLink returns video link to the specified camera
 
-  Returns video link to the specified camera. If a timestamp is supplied, it links to that timestamp.
+Returns video link to the specified camera. If a timestamp is supplied, it links to that timestamp.
 */
 func (a *Client) GetDeviceCameraVideoLink(params *GetDeviceCameraVideoLinkParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceCameraVideoLinkOK, error) {
 	// TODO: Validate the params before sending
@@ -801,9 +801,9 @@ func (a *Client) GetDeviceCameraVideoLink(params *GetDeviceCameraVideoLinkParams
 }
 
 /*
-  GetDeviceCameraVideoSettings returns video settings for the given camera
+GetDeviceCameraVideoSettings returns video settings for the given camera
 
-  Returns video settings for the given camera
+Returns video settings for the given camera
 */
 func (a *Client) GetDeviceCameraVideoSettings(params *GetDeviceCameraVideoSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceCameraVideoSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -842,9 +842,9 @@ func (a *Client) GetDeviceCameraVideoSettings(params *GetDeviceCameraVideoSettin
 }
 
 /*
-  GetDeviceCameraWirelessProfiles returns wireless profile assigned to the given camera
+GetDeviceCameraWirelessProfiles returns wireless profile assigned to the given camera
 
-  Returns wireless profile assigned to the given camera
+Returns wireless profile assigned to the given camera
 */
 func (a *Client) GetDeviceCameraWirelessProfiles(params *GetDeviceCameraWirelessProfilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceCameraWirelessProfilesOK, error) {
 	// TODO: Validate the params before sending
@@ -883,9 +883,9 @@ func (a *Client) GetDeviceCameraWirelessProfiles(params *GetDeviceCameraWireless
 }
 
 /*
-  GetNetworkCameraQualityRetentionProfile retrieves a single quality retention profile
+GetNetworkCameraQualityRetentionProfile retrieves a single quality retention profile
 
-  Retrieve a single quality retention profile
+Retrieve a single quality retention profile
 */
 func (a *Client) GetNetworkCameraQualityRetentionProfile(params *GetNetworkCameraQualityRetentionProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkCameraQualityRetentionProfileOK, error) {
 	// TODO: Validate the params before sending
@@ -924,9 +924,9 @@ func (a *Client) GetNetworkCameraQualityRetentionProfile(params *GetNetworkCamer
 }
 
 /*
-  GetNetworkCameraQualityRetentionProfiles lists the quality retention profiles for this network
+GetNetworkCameraQualityRetentionProfiles lists the quality retention profiles for this network
 
-  List the quality retention profiles for this network
+List the quality retention profiles for this network
 */
 func (a *Client) GetNetworkCameraQualityRetentionProfiles(params *GetNetworkCameraQualityRetentionProfilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkCameraQualityRetentionProfilesOK, error) {
 	// TODO: Validate the params before sending
@@ -965,9 +965,9 @@ func (a *Client) GetNetworkCameraQualityRetentionProfiles(params *GetNetworkCame
 }
 
 /*
-  GetNetworkCameraSchedules returns a list of all camera recording schedules
+GetNetworkCameraSchedules returns a list of all camera recording schedules
 
-  Returns a list of all camera recording schedules.
+Returns a list of all camera recording schedules.
 */
 func (a *Client) GetNetworkCameraSchedules(params *GetNetworkCameraSchedulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkCameraSchedulesOK, error) {
 	// TODO: Validate the params before sending
@@ -1006,9 +1006,9 @@ func (a *Client) GetNetworkCameraSchedules(params *GetNetworkCameraSchedulesPara
 }
 
 /*
-  GetNetworkCameraWirelessProfile retrieves a single camera wireless profile
+GetNetworkCameraWirelessProfile retrieves a single camera wireless profile
 
-  Retrieve a single camera wireless profile.
+Retrieve a single camera wireless profile.
 */
 func (a *Client) GetNetworkCameraWirelessProfile(params *GetNetworkCameraWirelessProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkCameraWirelessProfileOK, error) {
 	// TODO: Validate the params before sending
@@ -1047,9 +1047,9 @@ func (a *Client) GetNetworkCameraWirelessProfile(params *GetNetworkCameraWireles
 }
 
 /*
-  GetNetworkCameraWirelessProfiles lists the camera wireless profiles for this network
+GetNetworkCameraWirelessProfiles lists the camera wireless profiles for this network
 
-  List the camera wireless profiles for this network.
+List the camera wireless profiles for this network.
 */
 func (a *Client) GetNetworkCameraWirelessProfiles(params *GetNetworkCameraWirelessProfilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkCameraWirelessProfilesOK, error) {
 	// TODO: Validate the params before sending
@@ -1088,9 +1088,9 @@ func (a *Client) GetNetworkCameraWirelessProfiles(params *GetNetworkCameraWirele
 }
 
 /*
-  GetOrganizationCameraCustomAnalyticsArtifact gets custom analytics artifact
+GetOrganizationCameraCustomAnalyticsArtifact gets custom analytics artifact
 
-  Get Custom Analytics Artifact
+Get Custom Analytics Artifact
 */
 func (a *Client) GetOrganizationCameraCustomAnalyticsArtifact(params *GetOrganizationCameraCustomAnalyticsArtifactParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationCameraCustomAnalyticsArtifactOK, error) {
 	// TODO: Validate the params before sending
@@ -1129,9 +1129,9 @@ func (a *Client) GetOrganizationCameraCustomAnalyticsArtifact(params *GetOrganiz
 }
 
 /*
-  GetOrganizationCameraCustomAnalyticsArtifacts lists custom analytics artifacts
+GetOrganizationCameraCustomAnalyticsArtifacts lists custom analytics artifacts
 
-  List Custom Analytics Artifacts
+List Custom Analytics Artifacts
 */
 func (a *Client) GetOrganizationCameraCustomAnalyticsArtifacts(params *GetOrganizationCameraCustomAnalyticsArtifactsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationCameraCustomAnalyticsArtifactsOK, error) {
 	// TODO: Validate the params before sending
@@ -1170,9 +1170,9 @@ func (a *Client) GetOrganizationCameraCustomAnalyticsArtifacts(params *GetOrgani
 }
 
 /*
-  GetOrganizationCameraOnboardingStatuses fetches onboarding status of cameras
+GetOrganizationCameraOnboardingStatuses fetches onboarding status of cameras
 
-  Fetch onboarding status of cameras
+Fetch onboarding status of cameras
 */
 func (a *Client) GetOrganizationCameraOnboardingStatuses(params *GetOrganizationCameraOnboardingStatusesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationCameraOnboardingStatusesOK, error) {
 	// TODO: Validate the params before sending
@@ -1211,9 +1211,9 @@ func (a *Client) GetOrganizationCameraOnboardingStatuses(params *GetOrganization
 }
 
 /*
-  UpdateDeviceCameraCustomAnalytics updates custom analytics settings for a camera
+UpdateDeviceCameraCustomAnalytics updates custom analytics settings for a camera
 
-  Update custom analytics settings for a camera
+Update custom analytics settings for a camera
 */
 func (a *Client) UpdateDeviceCameraCustomAnalytics(params *UpdateDeviceCameraCustomAnalyticsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceCameraCustomAnalyticsOK, error) {
 	// TODO: Validate the params before sending
@@ -1252,9 +1252,9 @@ func (a *Client) UpdateDeviceCameraCustomAnalytics(params *UpdateDeviceCameraCus
 }
 
 /*
-  UpdateDeviceCameraQualityAndRetention updates quality and retention settings for the given camera
+UpdateDeviceCameraQualityAndRetention updates quality and retention settings for the given camera
 
-  Update quality and retention settings for the given camera
+Update quality and retention settings for the given camera
 */
 func (a *Client) UpdateDeviceCameraQualityAndRetention(params *UpdateDeviceCameraQualityAndRetentionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceCameraQualityAndRetentionOK, error) {
 	// TODO: Validate the params before sending
@@ -1293,9 +1293,9 @@ func (a *Client) UpdateDeviceCameraQualityAndRetention(params *UpdateDeviceCamer
 }
 
 /*
-  UpdateDeviceCameraSense updates sense settings for the given camera
+UpdateDeviceCameraSense updates sense settings for the given camera
 
-  Update sense settings for the given camera
+Update sense settings for the given camera
 */
 func (a *Client) UpdateDeviceCameraSense(params *UpdateDeviceCameraSenseParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceCameraSenseOK, error) {
 	// TODO: Validate the params before sending
@@ -1334,9 +1334,9 @@ func (a *Client) UpdateDeviceCameraSense(params *UpdateDeviceCameraSenseParams, 
 }
 
 /*
-  UpdateDeviceCameraVideoSettings updates video settings for the given camera
+UpdateDeviceCameraVideoSettings updates video settings for the given camera
 
-  Update video settings for the given camera
+Update video settings for the given camera
 */
 func (a *Client) UpdateDeviceCameraVideoSettings(params *UpdateDeviceCameraVideoSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceCameraVideoSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -1375,9 +1375,9 @@ func (a *Client) UpdateDeviceCameraVideoSettings(params *UpdateDeviceCameraVideo
 }
 
 /*
-  UpdateDeviceCameraWirelessProfiles assigns wireless profiles to the given camera
+UpdateDeviceCameraWirelessProfiles assigns wireless profiles to the given camera
 
-  Assign wireless profiles to the given camera. Incremental updates are not supported, all profile assignment need to be supplied at once.
+Assign wireless profiles to the given camera. Incremental updates are not supported, all profile assignment need to be supplied at once.
 */
 func (a *Client) UpdateDeviceCameraWirelessProfiles(params *UpdateDeviceCameraWirelessProfilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceCameraWirelessProfilesOK, error) {
 	// TODO: Validate the params before sending
@@ -1416,9 +1416,9 @@ func (a *Client) UpdateDeviceCameraWirelessProfiles(params *UpdateDeviceCameraWi
 }
 
 /*
-  UpdateNetworkCameraQualityRetentionProfile updates an existing quality retention profile for this network
+UpdateNetworkCameraQualityRetentionProfile updates an existing quality retention profile for this network
 
-  Update an existing quality retention profile for this network.
+Update an existing quality retention profile for this network.
 */
 func (a *Client) UpdateNetworkCameraQualityRetentionProfile(params *UpdateNetworkCameraQualityRetentionProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkCameraQualityRetentionProfileOK, error) {
 	// TODO: Validate the params before sending
@@ -1457,9 +1457,9 @@ func (a *Client) UpdateNetworkCameraQualityRetentionProfile(params *UpdateNetwor
 }
 
 /*
-  UpdateNetworkCameraWirelessProfile updates an existing camera wireless profile in this network
+UpdateNetworkCameraWirelessProfile updates an existing camera wireless profile in this network
 
-  Update an existing camera wireless profile in this network.
+Update an existing camera wireless profile in this network.
 */
 func (a *Client) UpdateNetworkCameraWirelessProfile(params *UpdateNetworkCameraWirelessProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkCameraWirelessProfileOK, error) {
 	// TODO: Validate the params before sending
@@ -1498,9 +1498,9 @@ func (a *Client) UpdateNetworkCameraWirelessProfile(params *UpdateNetworkCameraW
 }
 
 /*
-  UpdateOrganizationCameraOnboardingStatuses notifies that credential handoff to camera has completed
+UpdateOrganizationCameraOnboardingStatuses notifies that credential handoff to camera has completed
 
-  Notify that credential handoff to camera has completed
+Notify that credential handoff to camera has completed
 */
 func (a *Client) UpdateOrganizationCameraOnboardingStatuses(params *UpdateOrganizationCameraOnboardingStatusesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationCameraOnboardingStatusesOK, error) {
 	// TODO: Validate the params before sending

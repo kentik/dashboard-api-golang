@@ -52,17 +52,22 @@ func NewCreateNetworkGroupPolicyParamsWithHTTPClient(client *http.Client) *Creat
 	}
 }
 
-/* CreateNetworkGroupPolicyParams contains all the parameters to send to the API endpoint
-   for the create network group policy operation.
+/*
+CreateNetworkGroupPolicyParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create network group policy operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateNetworkGroupPolicyParams struct {
 
 	// CreateNetworkGroupPolicy.
 	CreateNetworkGroupPolicy CreateNetworkGroupPolicyBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

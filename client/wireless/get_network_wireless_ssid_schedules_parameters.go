@@ -52,17 +52,25 @@ func NewGetNetworkWirelessSsidSchedulesParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* GetNetworkWirelessSsidSchedulesParams contains all the parameters to send to the API endpoint
-   for the get network wireless ssid schedules operation.
+/*
+GetNetworkWirelessSsidSchedulesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network wireless ssid schedules operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkWirelessSsidSchedulesParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// Number.
+	/* Number.
+
+	   Number
+	*/
 	Number string
 
 	timeout    time.Duration

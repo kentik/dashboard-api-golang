@@ -6,11 +6,15 @@ package networks
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
+	"strconv"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetNetworkFloorPlanReader is a Reader for the GetNetworkFloorPlan structure.
@@ -28,7 +32,7 @@ func (o *GetNetworkFloorPlanReader) ReadResponse(response runtime.ClientResponse
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/floorPlans/{floorPlanId}] getNetworkFloorPlan", response, response.Code())
 	}
 }
 
@@ -37,12 +41,13 @@ func NewGetNetworkFloorPlanOK() *GetNetworkFloorPlanOK {
 	return &GetNetworkFloorPlanOK{}
 }
 
-/* GetNetworkFloorPlanOK describes a response with status code 200, with default header values.
+/*
+GetNetworkFloorPlanOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkFloorPlanOK struct {
-	Payload interface{}
+	Payload *GetNetworkFloorPlanOKBody
 }
 
 // IsSuccess returns true when this get network floor plan o k response has a 2xx status code
@@ -70,6 +75,11 @@ func (o *GetNetworkFloorPlanOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network floor plan o k response
+func (o *GetNetworkFloorPlanOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkFloorPlanOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/floorPlans/{floorPlanId}][%d] getNetworkFloorPlanOK  %+v", 200, o.Payload)
 }
@@ -78,16 +88,684 @@ func (o *GetNetworkFloorPlanOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/floorPlans/{floorPlanId}][%d] getNetworkFloorPlanOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkFloorPlanOK) GetPayload() interface{} {
+func (o *GetNetworkFloorPlanOK) GetPayload() *GetNetworkFloorPlanOKBody {
 	return o.Payload
 }
 
 func (o *GetNetworkFloorPlanOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetNetworkFloorPlanOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkFloorPlanOKBody get network floor plan o k body
+swagger:model GetNetworkFloorPlanOKBody
+*/
+type GetNetworkFloorPlanOKBody struct {
+
+	// bottom left corner
+	BottomLeftCorner *GetNetworkFloorPlanOKBodyBottomLeftCorner `json:"bottomLeftCorner,omitempty"`
+
+	// bottom right corner
+	BottomRightCorner *GetNetworkFloorPlanOKBodyBottomRightCorner `json:"bottomRightCorner,omitempty"`
+
+	// center
+	Center *GetNetworkFloorPlanOKBodyCenter `json:"center,omitempty"`
+
+	// List of devices for the floorplan
+	Devices []*GetNetworkFloorPlanOKBodyDevicesItems0 `json:"devices"`
+
+	// Floor plan ID
+	FloorPlanID string `json:"floorPlanId,omitempty"`
+
+	// The height of your floor plan.
+	Height float32 `json:"height,omitempty"`
+
+	// The format type of the image.
+	ImageExtension string `json:"imageExtension,omitempty"`
+
+	// The file contents (a base 64 encoded string) of your new image. Supported formats are PNG, GIF, and JPG. Note that all images are saved as PNG files, regardless of the format they are uploaded in. If you upload a new image, and you do NOT specify any new geolocation fields ('center, 'topLeftCorner', etc), the floor plan will be recentered with no rotation in order to maintain the aspect ratio of your new image.
+	// Format: byte
+	ImageMd5 strfmt.Base64 `json:"imageMd5,omitempty"`
+
+	// The url link for the floor plan image.
+	ImageURL string `json:"imageUrl,omitempty"`
+
+	// The time the image url link will expire.
+	ImageURLExpiresAt string `json:"imageUrlExpiresAt,omitempty"`
+
+	// The name of your floor plan.
+	Name string `json:"name,omitempty"`
+
+	// top left corner
+	TopLeftCorner *GetNetworkFloorPlanOKBodyTopLeftCorner `json:"topLeftCorner,omitempty"`
+
+	// top right corner
+	TopRightCorner *GetNetworkFloorPlanOKBodyTopRightCorner `json:"topRightCorner,omitempty"`
+
+	// The width of your floor plan.
+	Width float32 `json:"width,omitempty"`
+}
+
+// Validate validates this get network floor plan o k body
+func (o *GetNetworkFloorPlanOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBottomLeftCorner(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateBottomRightCorner(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateCenter(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateDevices(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTopLeftCorner(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTopRightCorner(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkFloorPlanOKBody) validateBottomLeftCorner(formats strfmt.Registry) error {
+	if swag.IsZero(o.BottomLeftCorner) { // not required
+		return nil
+	}
+
+	if o.BottomLeftCorner != nil {
+		if err := o.BottomLeftCorner.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkFloorPlanOK" + "." + "bottomLeftCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkFloorPlanOK" + "." + "bottomLeftCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkFloorPlanOKBody) validateBottomRightCorner(formats strfmt.Registry) error {
+	if swag.IsZero(o.BottomRightCorner) { // not required
+		return nil
+	}
+
+	if o.BottomRightCorner != nil {
+		if err := o.BottomRightCorner.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkFloorPlanOK" + "." + "bottomRightCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkFloorPlanOK" + "." + "bottomRightCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkFloorPlanOKBody) validateCenter(formats strfmt.Registry) error {
+	if swag.IsZero(o.Center) { // not required
+		return nil
+	}
+
+	if o.Center != nil {
+		if err := o.Center.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkFloorPlanOK" + "." + "center")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkFloorPlanOK" + "." + "center")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkFloorPlanOKBody) validateDevices(formats strfmt.Registry) error {
+	if swag.IsZero(o.Devices) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Devices); i++ {
+		if swag.IsZero(o.Devices[i]) { // not required
+			continue
+		}
+
+		if o.Devices[i] != nil {
+			if err := o.Devices[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkFloorPlanOK" + "." + "devices" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkFloorPlanOK" + "." + "devices" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *GetNetworkFloorPlanOKBody) validateTopLeftCorner(formats strfmt.Registry) error {
+	if swag.IsZero(o.TopLeftCorner) { // not required
+		return nil
+	}
+
+	if o.TopLeftCorner != nil {
+		if err := o.TopLeftCorner.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkFloorPlanOK" + "." + "topLeftCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkFloorPlanOK" + "." + "topLeftCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkFloorPlanOKBody) validateTopRightCorner(formats strfmt.Registry) error {
+	if swag.IsZero(o.TopRightCorner) { // not required
+		return nil
+	}
+
+	if o.TopRightCorner != nil {
+		if err := o.TopRightCorner.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkFloorPlanOK" + "." + "topRightCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkFloorPlanOK" + "." + "topRightCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network floor plan o k body based on the context it is used
+func (o *GetNetworkFloorPlanOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBottomLeftCorner(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateBottomRightCorner(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateCenter(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateDevices(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateTopLeftCorner(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateTopRightCorner(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkFloorPlanOKBody) contextValidateBottomLeftCorner(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.BottomLeftCorner != nil {
+
+		if swag.IsZero(o.BottomLeftCorner) { // not required
+			return nil
+		}
+
+		if err := o.BottomLeftCorner.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkFloorPlanOK" + "." + "bottomLeftCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkFloorPlanOK" + "." + "bottomLeftCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkFloorPlanOKBody) contextValidateBottomRightCorner(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.BottomRightCorner != nil {
+
+		if swag.IsZero(o.BottomRightCorner) { // not required
+			return nil
+		}
+
+		if err := o.BottomRightCorner.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkFloorPlanOK" + "." + "bottomRightCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkFloorPlanOK" + "." + "bottomRightCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkFloorPlanOKBody) contextValidateCenter(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Center != nil {
+
+		if swag.IsZero(o.Center) { // not required
+			return nil
+		}
+
+		if err := o.Center.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkFloorPlanOK" + "." + "center")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkFloorPlanOK" + "." + "center")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkFloorPlanOKBody) contextValidateDevices(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Devices); i++ {
+
+		if o.Devices[i] != nil {
+
+			if swag.IsZero(o.Devices[i]) { // not required
+				return nil
+			}
+
+			if err := o.Devices[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkFloorPlanOK" + "." + "devices" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkFloorPlanOK" + "." + "devices" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *GetNetworkFloorPlanOKBody) contextValidateTopLeftCorner(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.TopLeftCorner != nil {
+
+		if swag.IsZero(o.TopLeftCorner) { // not required
+			return nil
+		}
+
+		if err := o.TopLeftCorner.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkFloorPlanOK" + "." + "topLeftCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkFloorPlanOK" + "." + "topLeftCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkFloorPlanOKBody) contextValidateTopRightCorner(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.TopRightCorner != nil {
+
+		if swag.IsZero(o.TopRightCorner) { // not required
+			return nil
+		}
+
+		if err := o.TopRightCorner.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkFloorPlanOK" + "." + "topRightCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkFloorPlanOK" + "." + "topRightCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkFloorPlanOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkFloorPlanOKBody) UnmarshalBinary(b []byte) error {
+	var res GetNetworkFloorPlanOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkFloorPlanOKBodyBottomLeftCorner The longitude and latitude of the bottom left corner of your floor plan.
+swagger:model GetNetworkFloorPlanOKBodyBottomLeftCorner
+*/
+type GetNetworkFloorPlanOKBodyBottomLeftCorner struct {
+
+	// Latitude
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude
+	Lng float32 `json:"lng,omitempty"`
+}
+
+// Validate validates this get network floor plan o k body bottom left corner
+func (o *GetNetworkFloorPlanOKBodyBottomLeftCorner) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network floor plan o k body bottom left corner based on context it is used
+func (o *GetNetworkFloorPlanOKBodyBottomLeftCorner) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkFloorPlanOKBodyBottomLeftCorner) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkFloorPlanOKBodyBottomLeftCorner) UnmarshalBinary(b []byte) error {
+	var res GetNetworkFloorPlanOKBodyBottomLeftCorner
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkFloorPlanOKBodyBottomRightCorner The longitude and latitude of the bottom right corner of your floor plan.
+swagger:model GetNetworkFloorPlanOKBodyBottomRightCorner
+*/
+type GetNetworkFloorPlanOKBodyBottomRightCorner struct {
+
+	// Latitude
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude
+	Lng float32 `json:"lng,omitempty"`
+}
+
+// Validate validates this get network floor plan o k body bottom right corner
+func (o *GetNetworkFloorPlanOKBodyBottomRightCorner) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network floor plan o k body bottom right corner based on context it is used
+func (o *GetNetworkFloorPlanOKBodyBottomRightCorner) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkFloorPlanOKBodyBottomRightCorner) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkFloorPlanOKBodyBottomRightCorner) UnmarshalBinary(b []byte) error {
+	var res GetNetworkFloorPlanOKBodyBottomRightCorner
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkFloorPlanOKBodyCenter The longitude and latitude of the center of your floor plan. The 'center' or two adjacent corners (e.g. 'topLeftCorner' and 'bottomLeftCorner') must be specified. If 'center' is specified, the floor plan is placed over that point with no rotation. If two adjacent corners are specified, the floor plan is rotated to line up with the two specified points. The aspect ratio of the floor plan's image is preserved regardless of which corners/center are specified. (This means if that more than two corners are specified, only two corners may be used to preserve the floor plan's aspect ratio.). No two points can have the same latitude, longitude pair.
+swagger:model GetNetworkFloorPlanOKBodyCenter
+*/
+type GetNetworkFloorPlanOKBodyCenter struct {
+
+	// Latitude
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude
+	Lng float32 `json:"lng,omitempty"`
+}
+
+// Validate validates this get network floor plan o k body center
+func (o *GetNetworkFloorPlanOKBodyCenter) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network floor plan o k body center based on context it is used
+func (o *GetNetworkFloorPlanOKBodyCenter) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkFloorPlanOKBodyCenter) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkFloorPlanOKBodyCenter) UnmarshalBinary(b []byte) error {
+	var res GetNetworkFloorPlanOKBodyCenter
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkFloorPlanOKBodyDevicesItems0 get network floor plan o k body devices items0
+swagger:model GetNetworkFloorPlanOKBodyDevicesItems0
+*/
+type GetNetworkFloorPlanOKBodyDevicesItems0 struct {
+
+	// Physical address of the device
+	Address string `json:"address,omitempty"`
+
+	// Firmware version of the device
+	Firmware string `json:"firmware,omitempty"`
+
+	// LAN IP address of the device
+	LanIP string `json:"lanIp,omitempty"`
+
+	// Latitude of the device
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude of the device
+	Lng float32 `json:"lng,omitempty"`
+
+	// MAC address of the device
+	Mac string `json:"mac,omitempty"`
+
+	// Model of the device
+	Model string `json:"model,omitempty"`
+
+	// Name of the device
+	Name string `json:"name,omitempty"`
+
+	// ID of the network the device belongs to
+	NetworkID string `json:"networkId,omitempty"`
+
+	// Notes for the device, limited to 255 characters
+	Notes string `json:"notes,omitempty"`
+
+	// Product type of the device
+	ProductType string `json:"productType,omitempty"`
+
+	// Serial number of the device
+	Serial string `json:"serial,omitempty"`
+
+	// List of tags assigned to the device
+	Tags []string `json:"tags"`
+}
+
+// Validate validates this get network floor plan o k body devices items0
+func (o *GetNetworkFloorPlanOKBodyDevicesItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network floor plan o k body devices items0 based on context it is used
+func (o *GetNetworkFloorPlanOKBodyDevicesItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkFloorPlanOKBodyDevicesItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkFloorPlanOKBodyDevicesItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkFloorPlanOKBodyDevicesItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkFloorPlanOKBodyTopLeftCorner The longitude and latitude of the top left corner of your floor plan.
+swagger:model GetNetworkFloorPlanOKBodyTopLeftCorner
+*/
+type GetNetworkFloorPlanOKBodyTopLeftCorner struct {
+
+	// Latitude
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude
+	Lng float32 `json:"lng,omitempty"`
+}
+
+// Validate validates this get network floor plan o k body top left corner
+func (o *GetNetworkFloorPlanOKBodyTopLeftCorner) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network floor plan o k body top left corner based on context it is used
+func (o *GetNetworkFloorPlanOKBodyTopLeftCorner) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkFloorPlanOKBodyTopLeftCorner) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkFloorPlanOKBodyTopLeftCorner) UnmarshalBinary(b []byte) error {
+	var res GetNetworkFloorPlanOKBodyTopLeftCorner
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkFloorPlanOKBodyTopRightCorner The longitude and latitude of the top right corner of your floor plan.
+swagger:model GetNetworkFloorPlanOKBodyTopRightCorner
+*/
+type GetNetworkFloorPlanOKBodyTopRightCorner struct {
+
+	// Latitude
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude
+	Lng float32 `json:"lng,omitempty"`
+}
+
+// Validate validates this get network floor plan o k body top right corner
+func (o *GetNetworkFloorPlanOKBodyTopRightCorner) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network floor plan o k body top right corner based on context it is used
+func (o *GetNetworkFloorPlanOKBodyTopRightCorner) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkFloorPlanOKBodyTopRightCorner) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkFloorPlanOKBodyTopRightCorner) UnmarshalBinary(b []byte) error {
+	var res GetNetworkFloorPlanOKBodyTopRightCorner
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

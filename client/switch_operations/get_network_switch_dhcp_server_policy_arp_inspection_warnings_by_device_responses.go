@@ -30,7 +30,7 @@ func (o *GetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDeviceReader) Re
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/switch/dhcpServerPolicy/arpInspection/warnings/byDevice] getNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDevice", response, response.Code())
 	}
 }
 
@@ -39,7 +39,8 @@ func NewGetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDeviceOK() *GetNe
 	return &GetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDeviceOK{}
 }
 
-/* GetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDeviceOK describes a response with status code 200, with default header values.
+/*
+GetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDeviceOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -77,6 +78,11 @@ func (o *GetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDeviceOK) IsCode
 	return code == 200
 }
 
+// Code gets the status code for the get network switch dhcp server policy arp inspection warnings by device o k response
+func (o *GetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDeviceOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDeviceOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/switch/dhcpServerPolicy/arpInspection/warnings/byDevice][%d] getNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDeviceOK  %+v", 200, o.Payload)
 }
@@ -106,7 +112,8 @@ func (o *GetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDeviceOK) readRe
 	return nil
 }
 
-/*GetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDeviceOKBodyItems0 get network switch dhcp server policy arp inspection warnings by device o k body items0
+/*
+GetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDeviceOKBodyItems0 get network switch dhcp server policy arp inspection warnings by device o k body items0
 swagger:model GetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDeviceOKBodyItems0
 */
 type GetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDeviceOKBodyItems0 struct {

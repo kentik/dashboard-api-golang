@@ -52,17 +52,25 @@ func NewDeleteDeviceSwitchRoutingInterfaceParamsWithHTTPClient(client *http.Clie
 	}
 }
 
-/* DeleteDeviceSwitchRoutingInterfaceParams contains all the parameters to send to the API endpoint
-   for the delete device switch routing interface operation.
+/*
+DeleteDeviceSwitchRoutingInterfaceParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete device switch routing interface operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteDeviceSwitchRoutingInterfaceParams struct {
 
-	// InterfaceID.
+	/* InterfaceID.
+
+	   Interface ID
+	*/
 	InterfaceID string
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	timeout    time.Duration

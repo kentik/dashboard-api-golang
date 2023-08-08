@@ -52,17 +52,25 @@ func NewDeleteOrganizationAdaptivePolicyGroupParamsWithHTTPClient(client *http.C
 	}
 }
 
-/* DeleteOrganizationAdaptivePolicyGroupParams contains all the parameters to send to the API endpoint
-   for the delete organization adaptive policy group operation.
+/*
+DeleteOrganizationAdaptivePolicyGroupParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete organization adaptive policy group operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteOrganizationAdaptivePolicyGroupParams struct {
 
-	// GroupID.
-	GroupID string
+	/* ID.
 
-	// OrganizationID.
+	   ID
+	*/
+	ID string
+
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration
@@ -118,15 +126,15 @@ func (o *DeleteOrganizationAdaptivePolicyGroupParams) SetHTTPClient(client *http
 	o.HTTPClient = client
 }
 
-// WithGroupID adds the groupID to the delete organization adaptive policy group params
-func (o *DeleteOrganizationAdaptivePolicyGroupParams) WithGroupID(groupID string) *DeleteOrganizationAdaptivePolicyGroupParams {
-	o.SetGroupID(groupID)
+// WithID adds the id to the delete organization adaptive policy group params
+func (o *DeleteOrganizationAdaptivePolicyGroupParams) WithID(id string) *DeleteOrganizationAdaptivePolicyGroupParams {
+	o.SetID(id)
 	return o
 }
 
-// SetGroupID adds the groupId to the delete organization adaptive policy group params
-func (o *DeleteOrganizationAdaptivePolicyGroupParams) SetGroupID(groupID string) {
-	o.GroupID = groupID
+// SetID adds the id to the delete organization adaptive policy group params
+func (o *DeleteOrganizationAdaptivePolicyGroupParams) SetID(id string) {
+	o.ID = id
 }
 
 // WithOrganizationID adds the organizationID to the delete organization adaptive policy group params
@@ -148,8 +156,8 @@ func (o *DeleteOrganizationAdaptivePolicyGroupParams) WriteToRequest(r runtime.C
 	}
 	var res []error
 
-	// path param groupId
-	if err := r.SetPathParam("groupId", o.GroupID); err != nil {
+	// path param id
+	if err := r.SetPathParam("id", o.ID); err != nil {
 		return err
 	}
 

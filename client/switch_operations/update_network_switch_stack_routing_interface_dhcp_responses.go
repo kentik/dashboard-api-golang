@@ -34,7 +34,7 @@ func (o *UpdateNetworkSwitchStackRoutingInterfaceDhcpReader) ReadResponse(respon
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/switch/stacks/{switchStackId}/routing/interfaces/{interfaceId}/dhcp] updateNetworkSwitchStackRoutingInterfaceDhcp", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewUpdateNetworkSwitchStackRoutingInterfaceDhcpOK() *UpdateNetworkSwitchSta
 	return &UpdateNetworkSwitchStackRoutingInterfaceDhcpOK{}
 }
 
-/* UpdateNetworkSwitchStackRoutingInterfaceDhcpOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSwitchStackRoutingInterfaceDhcpOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *UpdateNetworkSwitchStackRoutingInterfaceDhcpOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network switch stack routing interface dhcp o k response
+func (o *UpdateNetworkSwitchStackRoutingInterfaceDhcpOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSwitchStackRoutingInterfaceDhcpOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/switch/stacks/{switchStackId}/routing/interfaces/{interfaceId}/dhcp][%d] updateNetworkSwitchStackRoutingInterfaceDhcpOK  %+v", 200, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *UpdateNetworkSwitchStackRoutingInterfaceDhcpOK) readResponse(response r
 	return nil
 }
 
-/*UpdateNetworkSwitchStackRoutingInterfaceDhcpBody update network switch stack routing interface dhcp body
+/*
+UpdateNetworkSwitchStackRoutingInterfaceDhcpBody update network switch stack routing interface dhcp body
 // Example: {"bootFileName":"home_boot_file","bootNextServer":"1.2.3.4","bootOptionsEnabled":true,"dhcpLeaseTime":"1 day","dhcpMode":"dhcpServer","dhcpOptions":[{"code":"5","type":"text","value":"five"}],"dnsCustomNameservers":["8.8.8.8, 8.8.4.4"],"dnsNameserversOption":"custom","fixedIpAssignments":[{"ip":"192.168.1.12","mac":"22:33:44:55:66:77","name":"Cisco Meraki valued client"}],"reservedIpRanges":[{"comment":"A reserved IP range","end":"192.168.1.10","start":"192.168.1.1"}]}
 swagger:model UpdateNetworkSwitchStackRoutingInterfaceDhcpBody
 */
@@ -110,28 +117,34 @@ type UpdateNetworkSwitchStackRoutingInterfaceDhcpBody struct {
 	// The PXE boot server IP for the DHCP server running on the switch stack interface
 	BootNextServer string `json:"bootNextServer,omitempty"`
 
-	// Enable DHCP boot options to provide PXE boot options configs for the dhcp server running on the switch stack interface
+	// Enable DHCP boot options to provide PXE boot options configs for the dhcp server running on the switch
+	//         stack interface
 	BootOptionsEnabled bool `json:"bootOptionsEnabled,omitempty"`
 
-	// The DHCP lease time config for the dhcp server running on switch stack interface ('30 minutes', '1 hour', '4 hours', '12 hours', '1 day' or '1 week')
-	// Enum: [30 minutes 1 hour 4 hours 12 hours 1 day 1 week]
+	// The DHCP lease time config for the dhcp server running on switch stack interface
+	//         ('30 minutes', '1 hour', '4 hours', '12 hours', '1 day' or '1 week')
+	// Enum: [1 day 1 hour 1 week 12 hours 30 minutes 4 hours]
 	DhcpLeaseTime string `json:"dhcpLeaseTime,omitempty"`
 
-	// The DHCP mode options for the switch stack interface ('dhcpDisabled', 'dhcpRelay' or 'dhcpServer')
+	// The DHCP mode options for the switch stack interface
+	//         ('dhcpDisabled', 'dhcpRelay' or 'dhcpServer')
 	// Enum: [dhcpDisabled dhcpRelay dhcpServer]
 	DhcpMode string `json:"dhcpMode,omitempty"`
 
-	// Array of DHCP options consisting of code, type and value for the DHCP server running on the switch stack interface
+	// Array of DHCP options consisting of code, type and value for the DHCP server running on the
+	//         switch stack interface
 	DhcpOptions []*UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyDhcpOptionsItems0 `json:"dhcpOptions"`
 
 	// The DHCP relay server IPs to which DHCP packets would get relayed for the switch stack interface
 	DhcpRelayServerIps []string `json:"dhcpRelayServerIps"`
 
-	// The DHCP name server IPs when DHCP name server option is 'custom'
+	// The DHCP name server IPs when DHCP name server option is '
+	//         custom'
 	DNSCustomNameservers []string `json:"dnsCustomNameservers"`
 
-	// The DHCP name server option for the dhcp server running on the switch stack interface ('googlePublicDns', 'openDns' or 'custom')
-	// Enum: [googlePublicDns openDns custom]
+	// The DHCP name server option for the dhcp server running on the switch stack interface
+	//         ('googlePublicDns', 'openDns' or 'custom')
+	// Enum: [custom googlePublicDns openDns]
 	DNSNameserversOption string `json:"dnsNameserversOption,omitempty"`
 
 	// Array of DHCP fixed IP assignments for the DHCP server running on the switch stack interface
@@ -179,7 +192,7 @@ var updateNetworkSwitchStackRoutingInterfaceDhcpBodyTypeDhcpLeaseTimePropEnum []
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["30 minutes","1 hour","4 hours","12 hours","1 day","1 week"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["1 day","1 hour","1 week","12 hours","30 minutes","4 hours"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -189,23 +202,23 @@ func init() {
 
 const (
 
-	// UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDhcpLeaseTimeNr30Minutes captures enum value "30 minutes"
-	UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDhcpLeaseTimeNr30Minutes string = "30 minutes"
+	// UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDhcpLeaseTimeNr1Day captures enum value "1 day"
+	UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDhcpLeaseTimeNr1Day string = "1 day"
 
 	// UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDhcpLeaseTimeNr1Hour captures enum value "1 hour"
 	UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDhcpLeaseTimeNr1Hour string = "1 hour"
 
-	// UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDhcpLeaseTimeNr4Hours captures enum value "4 hours"
-	UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDhcpLeaseTimeNr4Hours string = "4 hours"
+	// UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDhcpLeaseTimeNr1Week captures enum value "1 week"
+	UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDhcpLeaseTimeNr1Week string = "1 week"
 
 	// UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDhcpLeaseTimeNr12Hours captures enum value "12 hours"
 	UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDhcpLeaseTimeNr12Hours string = "12 hours"
 
-	// UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDhcpLeaseTimeNr1Day captures enum value "1 day"
-	UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDhcpLeaseTimeNr1Day string = "1 day"
+	// UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDhcpLeaseTimeNr30Minutes captures enum value "30 minutes"
+	UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDhcpLeaseTimeNr30Minutes string = "30 minutes"
 
-	// UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDhcpLeaseTimeNr1Week captures enum value "1 week"
-	UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDhcpLeaseTimeNr1Week string = "1 week"
+	// UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDhcpLeaseTimeNr4Hours captures enum value "4 hours"
+	UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDhcpLeaseTimeNr4Hours string = "4 hours"
 )
 
 // prop value enum
@@ -304,7 +317,7 @@ var updateNetworkSwitchStackRoutingInterfaceDhcpBodyTypeDNSNameserversOptionProp
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["googlePublicDns","openDns","custom"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["custom","googlePublicDns","openDns"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -314,14 +327,14 @@ func init() {
 
 const (
 
+	// UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDNSNameserversOptionCustom captures enum value "custom"
+	UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDNSNameserversOptionCustom string = "custom"
+
 	// UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDNSNameserversOptionGooglePublicDNS captures enum value "googlePublicDns"
 	UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDNSNameserversOptionGooglePublicDNS string = "googlePublicDns"
 
 	// UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDNSNameserversOptionOpenDNS captures enum value "openDns"
 	UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDNSNameserversOptionOpenDNS string = "openDns"
-
-	// UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDNSNameserversOptionCustom captures enum value "custom"
-	UpdateNetworkSwitchStackRoutingInterfaceDhcpBodyDNSNameserversOptionCustom string = "custom"
 )
 
 // prop value enum
@@ -424,6 +437,11 @@ func (o *UpdateNetworkSwitchStackRoutingInterfaceDhcpBody) contextValidateDhcpOp
 	for i := 0; i < len(o.DhcpOptions); i++ {
 
 		if o.DhcpOptions[i] != nil {
+
+			if swag.IsZero(o.DhcpOptions[i]) { // not required
+				return nil
+			}
+
 			if err := o.DhcpOptions[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkSwitchStackRoutingInterfaceDhcp" + "." + "dhcpOptions" + "." + strconv.Itoa(i))
@@ -444,6 +462,11 @@ func (o *UpdateNetworkSwitchStackRoutingInterfaceDhcpBody) contextValidateFixedI
 	for i := 0; i < len(o.FixedIPAssignments); i++ {
 
 		if o.FixedIPAssignments[i] != nil {
+
+			if swag.IsZero(o.FixedIPAssignments[i]) { // not required
+				return nil
+			}
+
 			if err := o.FixedIPAssignments[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkSwitchStackRoutingInterfaceDhcp" + "." + "fixedIpAssignments" + "." + strconv.Itoa(i))
@@ -464,6 +487,11 @@ func (o *UpdateNetworkSwitchStackRoutingInterfaceDhcpBody) contextValidateReserv
 	for i := 0; i < len(o.ReservedIPRanges); i++ {
 
 		if o.ReservedIPRanges[i] != nil {
+
+			if swag.IsZero(o.ReservedIPRanges[i]) { // not required
+				return nil
+			}
+
 			if err := o.ReservedIPRanges[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkSwitchStackRoutingInterfaceDhcp" + "." + "reservedIpRanges" + "." + strconv.Itoa(i))
@@ -497,7 +525,8 @@ func (o *UpdateNetworkSwitchStackRoutingInterfaceDhcpBody) UnmarshalBinary(b []b
 	return nil
 }
 
-/*UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyDhcpOptionsItems0 update network switch stack routing interface dhcp params body dhcp options items0
+/*
+UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyDhcpOptionsItems0 update network switch stack routing interface dhcp params body dhcp options items0
 swagger:model UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyDhcpOptionsItems0
 */
 type UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyDhcpOptionsItems0 struct {
@@ -506,9 +535,10 @@ type UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyDhcpOptionsItems0 str
 	// Required: true
 	Code *string `json:"code"`
 
-	// The type of the DHCP option which should be one of ('text', 'ip', 'integer' or 'hex')
+	// The type of the DHCP option which should be one of
+	//           ('text', 'ip', 'integer' or 'hex')
 	// Required: true
-	// Enum: [text ip integer hex]
+	// Enum: [hex integer ip text]
 	Type *string `json:"type"`
 
 	// The value of the DHCP option
@@ -551,7 +581,7 @@ var updateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyDhcpOptionsItems0TypeT
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["text","ip","integer","hex"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["hex","integer","ip","text"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -561,17 +591,17 @@ func init() {
 
 const (
 
-	// UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyDhcpOptionsItems0TypeText captures enum value "text"
-	UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyDhcpOptionsItems0TypeText string = "text"
-
-	// UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyDhcpOptionsItems0TypeIP captures enum value "ip"
-	UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyDhcpOptionsItems0TypeIP string = "ip"
+	// UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyDhcpOptionsItems0TypeHex captures enum value "hex"
+	UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyDhcpOptionsItems0TypeHex string = "hex"
 
 	// UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyDhcpOptionsItems0TypeInteger captures enum value "integer"
 	UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyDhcpOptionsItems0TypeInteger string = "integer"
 
-	// UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyDhcpOptionsItems0TypeHex captures enum value "hex"
-	UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyDhcpOptionsItems0TypeHex string = "hex"
+	// UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyDhcpOptionsItems0TypeIP captures enum value "ip"
+	UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyDhcpOptionsItems0TypeIP string = "ip"
+
+	// UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyDhcpOptionsItems0TypeText captures enum value "text"
+	UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyDhcpOptionsItems0TypeText string = "text"
 )
 
 // prop value enum
@@ -628,7 +658,8 @@ func (o *UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyDhcpOptionsItems0
 	return nil
 }
 
-/*UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyFixedIPAssignmentsItems0 update network switch stack routing interface dhcp params body fixed IP assignments items0
+/*
+UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyFixedIPAssignmentsItems0 update network switch stack routing interface dhcp params body fixed IP assignments items0
 swagger:model UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyFixedIPAssignmentsItems0
 */
 type UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyFixedIPAssignmentsItems0 struct {
@@ -718,7 +749,8 @@ func (o *UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyFixedIPAssignment
 	return nil
 }
 
-/*UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyReservedIPRangesItems0 update network switch stack routing interface dhcp params body reserved IP ranges items0
+/*
+UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyReservedIPRangesItems0 update network switch stack routing interface dhcp params body reserved IP ranges items0
 swagger:model UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyReservedIPRangesItems0
 */
 type UpdateNetworkSwitchStackRoutingInterfaceDhcpParamsBodyReservedIPRangesItems0 struct {

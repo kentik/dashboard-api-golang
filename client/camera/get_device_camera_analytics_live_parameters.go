@@ -52,14 +52,19 @@ func NewGetDeviceCameraAnalyticsLiveParamsWithHTTPClient(client *http.Client) *G
 	}
 }
 
-/* GetDeviceCameraAnalyticsLiveParams contains all the parameters to send to the API endpoint
-   for the get device camera analytics live operation.
+/*
+GetDeviceCameraAnalyticsLiveParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get device camera analytics live operation.
+
+	Typically these are written to a http.Request.
 */
 type GetDeviceCameraAnalyticsLiveParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	timeout    time.Duration

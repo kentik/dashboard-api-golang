@@ -52,17 +52,25 @@ func NewUpdateNetworkWirelessSsidSchedulesParamsWithHTTPClient(client *http.Clie
 	}
 }
 
-/* UpdateNetworkWirelessSsidSchedulesParams contains all the parameters to send to the API endpoint
-   for the update network wireless ssid schedules operation.
+/*
+UpdateNetworkWirelessSsidSchedulesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network wireless ssid schedules operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkWirelessSsidSchedulesParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// Number.
+	/* Number.
+
+	   Number
+	*/
 	Number string
 
 	// UpdateNetworkWirelessSsidSchedules.

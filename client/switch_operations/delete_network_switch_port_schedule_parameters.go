@@ -52,17 +52,25 @@ func NewDeleteNetworkSwitchPortScheduleParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* DeleteNetworkSwitchPortScheduleParams contains all the parameters to send to the API endpoint
-   for the delete network switch port schedule operation.
+/*
+DeleteNetworkSwitchPortScheduleParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete network switch port schedule operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteNetworkSwitchPortScheduleParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// PortScheduleID.
+	/* PortScheduleID.
+
+	   Port schedule ID
+	*/
 	PortScheduleID string
 
 	timeout    time.Duration

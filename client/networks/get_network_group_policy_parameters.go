@@ -52,17 +52,25 @@ func NewGetNetworkGroupPolicyParamsWithHTTPClient(client *http.Client) *GetNetwo
 	}
 }
 
-/* GetNetworkGroupPolicyParams contains all the parameters to send to the API endpoint
-   for the get network group policy operation.
+/*
+GetNetworkGroupPolicyParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network group policy operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkGroupPolicyParams struct {
 
-	// GroupPolicyID.
+	/* GroupPolicyID.
+
+	   Group policy ID
+	*/
 	GroupPolicyID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

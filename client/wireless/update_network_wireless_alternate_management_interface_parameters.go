@@ -52,14 +52,19 @@ func NewUpdateNetworkWirelessAlternateManagementInterfaceParamsWithHTTPClient(cl
 	}
 }
 
-/* UpdateNetworkWirelessAlternateManagementInterfaceParams contains all the parameters to send to the API endpoint
-   for the update network wireless alternate management interface operation.
+/*
+UpdateNetworkWirelessAlternateManagementInterfaceParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network wireless alternate management interface operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkWirelessAlternateManagementInterfaceParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkWirelessAlternateManagementInterface.

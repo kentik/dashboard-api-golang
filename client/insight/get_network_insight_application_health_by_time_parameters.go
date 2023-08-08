@@ -53,17 +53,25 @@ func NewGetNetworkInsightApplicationHealthByTimeParamsWithHTTPClient(client *htt
 	}
 }
 
-/* GetNetworkInsightApplicationHealthByTimeParams contains all the parameters to send to the API endpoint
-   for the get network insight application health by time operation.
+/*
+GetNetworkInsightApplicationHealthByTimeParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network insight application health by time operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkInsightApplicationHealthByTimeParams struct {
 
-	// ApplicationID.
+	/* ApplicationID.
+
+	   Application ID
+	*/
 	ApplicationID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* Resolution.

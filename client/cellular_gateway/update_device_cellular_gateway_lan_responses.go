@@ -33,7 +33,7 @@ func (o *UpdateDeviceCellularGatewayLanReader) ReadResponse(response runtime.Cli
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /devices/{serial}/cellularGateway/lan] updateDeviceCellularGatewayLan", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateDeviceCellularGatewayLanOK() *UpdateDeviceCellularGatewayLanOK {
 	return &UpdateDeviceCellularGatewayLanOK{}
 }
 
-/* UpdateDeviceCellularGatewayLanOK describes a response with status code 200, with default header values.
+/*
+UpdateDeviceCellularGatewayLanOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateDeviceCellularGatewayLanOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update device cellular gateway lan o k response
+func (o *UpdateDeviceCellularGatewayLanOK) Code() int {
+	return 200
+}
+
 func (o *UpdateDeviceCellularGatewayLanOK) Error() string {
 	return fmt.Sprintf("[PUT /devices/{serial}/cellularGateway/lan][%d] updateDeviceCellularGatewayLanOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateDeviceCellularGatewayLanOK) readResponse(response runtime.ClientR
 	return nil
 }
 
-/*UpdateDeviceCellularGatewayLanBody update device cellular gateway lan body
+/*
+UpdateDeviceCellularGatewayLanBody update device cellular gateway lan body
 // Example: {"deviceLanIp":"192.168.0.33","deviceName":"name of the MG","deviceSubnet":"192.168.0.32/27","fixedIpAssignments":[{"ip":"192.168.0.10","mac":"0b:00:00:00:00:ac","name":"server 1"},{"ip":"192.168.0.20","mac":"0b:00:00:00:00:ab","name":"server 2"}],"reservedIpRanges":[{"comment":"A reserved IP range","end":"192.168.1.1","start":"192.168.1.0"}]}
 swagger:model UpdateDeviceCellularGatewayLanBody
 */
@@ -203,6 +210,11 @@ func (o *UpdateDeviceCellularGatewayLanBody) contextValidateFixedIPAssignments(c
 	for i := 0; i < len(o.FixedIPAssignments); i++ {
 
 		if o.FixedIPAssignments[i] != nil {
+
+			if swag.IsZero(o.FixedIPAssignments[i]) { // not required
+				return nil
+			}
+
 			if err := o.FixedIPAssignments[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateDeviceCellularGatewayLan" + "." + "fixedIpAssignments" + "." + strconv.Itoa(i))
@@ -223,6 +235,11 @@ func (o *UpdateDeviceCellularGatewayLanBody) contextValidateReservedIPRanges(ctx
 	for i := 0; i < len(o.ReservedIPRanges); i++ {
 
 		if o.ReservedIPRanges[i] != nil {
+
+			if swag.IsZero(o.ReservedIPRanges[i]) { // not required
+				return nil
+			}
+
 			if err := o.ReservedIPRanges[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateDeviceCellularGatewayLan" + "." + "reservedIpRanges" + "." + strconv.Itoa(i))
@@ -256,7 +273,8 @@ func (o *UpdateDeviceCellularGatewayLanBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateDeviceCellularGatewayLanParamsBodyFixedIPAssignmentsItems0 update device cellular gateway lan params body fixed IP assignments items0
+/*
+UpdateDeviceCellularGatewayLanParamsBodyFixedIPAssignmentsItems0 update device cellular gateway lan params body fixed IP assignments items0
 swagger:model UpdateDeviceCellularGatewayLanParamsBodyFixedIPAssignmentsItems0
 */
 type UpdateDeviceCellularGatewayLanParamsBodyFixedIPAssignmentsItems0 struct {
@@ -332,7 +350,8 @@ func (o *UpdateDeviceCellularGatewayLanParamsBodyFixedIPAssignmentsItems0) Unmar
 	return nil
 }
 
-/*UpdateDeviceCellularGatewayLanParamsBodyReservedIPRangesItems0 update device cellular gateway lan params body reserved IP ranges items0
+/*
+UpdateDeviceCellularGatewayLanParamsBodyReservedIPRangesItems0 update device cellular gateway lan params body reserved IP ranges items0
 swagger:model UpdateDeviceCellularGatewayLanParamsBodyReservedIPRangesItems0
 */
 type UpdateDeviceCellularGatewayLanParamsBodyReservedIPRangesItems0 struct {

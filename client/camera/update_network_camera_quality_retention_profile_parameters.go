@@ -52,17 +52,25 @@ func NewUpdateNetworkCameraQualityRetentionProfileParamsWithHTTPClient(client *h
 	}
 }
 
-/* UpdateNetworkCameraQualityRetentionProfileParams contains all the parameters to send to the API endpoint
-   for the update network camera quality retention profile operation.
+/*
+UpdateNetworkCameraQualityRetentionProfileParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network camera quality retention profile operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkCameraQualityRetentionProfileParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// QualityRetentionProfileID.
+	/* QualityRetentionProfileID.
+
+	   Quality retention profile ID
+	*/
 	QualityRetentionProfileID string
 
 	// UpdateNetworkCameraQualityRetentionProfile.

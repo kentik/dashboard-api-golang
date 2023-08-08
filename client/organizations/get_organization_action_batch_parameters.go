@@ -52,17 +52,25 @@ func NewGetOrganizationActionBatchParamsWithHTTPClient(client *http.Client) *Get
 	}
 }
 
-/* GetOrganizationActionBatchParams contains all the parameters to send to the API endpoint
-   for the get organization action batch operation.
+/*
+GetOrganizationActionBatchParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization action batch operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationActionBatchParams struct {
 
-	// ActionBatchID.
+	/* ActionBatchID.
+
+	   Action batch ID
+	*/
 	ActionBatchID string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

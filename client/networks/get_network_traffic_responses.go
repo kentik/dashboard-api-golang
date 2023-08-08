@@ -28,7 +28,7 @@ func (o *GetNetworkTrafficReader) ReadResponse(response runtime.ClientResponse, 
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/traffic] getNetworkTraffic", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetNetworkTrafficOK() *GetNetworkTrafficOK {
 	return &GetNetworkTrafficOK{}
 }
 
-/* GetNetworkTrafficOK describes a response with status code 200, with default header values.
+/*
+GetNetworkTrafficOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetNetworkTrafficOK) IsServerError() bool {
 // IsCode returns true when this get network traffic o k response a status code equal to that given
 func (o *GetNetworkTrafficOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get network traffic o k response
+func (o *GetNetworkTrafficOK) Code() int {
+	return 200
 }
 
 func (o *GetNetworkTrafficOK) Error() string {

@@ -52,14 +52,19 @@ func NewUpdateNetworkSyslogServersParamsWithHTTPClient(client *http.Client) *Upd
 	}
 }
 
-/* UpdateNetworkSyslogServersParams contains all the parameters to send to the API endpoint
-   for the update network syslog servers operation.
+/*
+UpdateNetworkSyslogServersParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network syslog servers operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkSyslogServersParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkSyslogServers.

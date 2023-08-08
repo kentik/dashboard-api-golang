@@ -28,7 +28,7 @@ func (o *GetOrganizationInsightMonitoredMediaServerReader) ReadResponse(response
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/insight/monitoredMediaServers/{monitoredMediaServerId}] getOrganizationInsightMonitoredMediaServer", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetOrganizationInsightMonitoredMediaServerOK() *GetOrganizationInsightMo
 	return &GetOrganizationInsightMonitoredMediaServerOK{}
 }
 
-/* GetOrganizationInsightMonitoredMediaServerOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationInsightMonitoredMediaServerOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetOrganizationInsightMonitoredMediaServerOK) IsServerError() bool {
 // IsCode returns true when this get organization insight monitored media server o k response a status code equal to that given
 func (o *GetOrganizationInsightMonitoredMediaServerOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get organization insight monitored media server o k response
+func (o *GetOrganizationInsightMonitoredMediaServerOK) Code() int {
+	return 200
 }
 
 func (o *GetOrganizationInsightMonitoredMediaServerOK) Error() string {

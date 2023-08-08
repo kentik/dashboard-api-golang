@@ -27,7 +27,7 @@ func (o *DeleteOrganizationAdaptivePolicyGroupReader) ReadResponse(response runt
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[DELETE /organizations/{organizationId}/adaptivePolicy/groups/{id}] deleteOrganizationAdaptivePolicyGroup", response, response.Code())
 	}
 }
 
@@ -36,7 +36,8 @@ func NewDeleteOrganizationAdaptivePolicyGroupNoContent() *DeleteOrganizationAdap
 	return &DeleteOrganizationAdaptivePolicyGroupNoContent{}
 }
 
-/* DeleteOrganizationAdaptivePolicyGroupNoContent describes a response with status code 204, with default header values.
+/*
+DeleteOrganizationAdaptivePolicyGroupNoContent describes a response with status code 204, with default header values.
 
 Successful operation
 */
@@ -68,12 +69,17 @@ func (o *DeleteOrganizationAdaptivePolicyGroupNoContent) IsCode(code int) bool {
 	return code == 204
 }
 
+// Code gets the status code for the delete organization adaptive policy group no content response
+func (o *DeleteOrganizationAdaptivePolicyGroupNoContent) Code() int {
+	return 204
+}
+
 func (o *DeleteOrganizationAdaptivePolicyGroupNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /organizations/{organizationId}/adaptivePolicy/groups/{groupId}][%d] deleteOrganizationAdaptivePolicyGroupNoContent ", 204)
+	return fmt.Sprintf("[DELETE /organizations/{organizationId}/adaptivePolicy/groups/{id}][%d] deleteOrganizationAdaptivePolicyGroupNoContent ", 204)
 }
 
 func (o *DeleteOrganizationAdaptivePolicyGroupNoContent) String() string {
-	return fmt.Sprintf("[DELETE /organizations/{organizationId}/adaptivePolicy/groups/{groupId}][%d] deleteOrganizationAdaptivePolicyGroupNoContent ", 204)
+	return fmt.Sprintf("[DELETE /organizations/{organizationId}/adaptivePolicy/groups/{id}][%d] deleteOrganizationAdaptivePolicyGroupNoContent ", 204)
 }
 
 func (o *DeleteOrganizationAdaptivePolicyGroupNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

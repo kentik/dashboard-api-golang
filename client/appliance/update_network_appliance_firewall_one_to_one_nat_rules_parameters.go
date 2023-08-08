@@ -52,14 +52,19 @@ func NewUpdateNetworkApplianceFirewallOneToOneNatRulesParamsWithHTTPClient(clien
 	}
 }
 
-/* UpdateNetworkApplianceFirewallOneToOneNatRulesParams contains all the parameters to send to the API endpoint
-   for the update network appliance firewall one to one nat rules operation.
+/*
+UpdateNetworkApplianceFirewallOneToOneNatRulesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network appliance firewall one to one nat rules operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkApplianceFirewallOneToOneNatRulesParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkApplianceFirewallOneToOneNatRules.

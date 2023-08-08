@@ -53,14 +53,19 @@ func NewGetDeviceSwitchPortsStatusesParamsWithHTTPClient(client *http.Client) *G
 	}
 }
 
-/* GetDeviceSwitchPortsStatusesParams contains all the parameters to send to the API endpoint
-   for the get device switch ports statuses operation.
+/*
+GetDeviceSwitchPortsStatusesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get device switch ports statuses operation.
+
+	Typically these are written to a http.Request.
 */
 type GetDeviceSwitchPortsStatusesParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	/* T0.

@@ -52,14 +52,19 @@ func NewUpdateNetworkApplianceSingleLanParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* UpdateNetworkApplianceSingleLanParams contains all the parameters to send to the API endpoint
-   for the update network appliance single lan operation.
+/*
+UpdateNetworkApplianceSingleLanParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network appliance single lan operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkApplianceSingleLanParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkApplianceSingleLan.

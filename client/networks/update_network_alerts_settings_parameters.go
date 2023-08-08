@@ -52,14 +52,19 @@ func NewUpdateNetworkAlertsSettingsParamsWithHTTPClient(client *http.Client) *Up
 	}
 }
 
-/* UpdateNetworkAlertsSettingsParams contains all the parameters to send to the API endpoint
-   for the update network alerts settings operation.
+/*
+UpdateNetworkAlertsSettingsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network alerts settings operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkAlertsSettingsParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkAlertsSettings.

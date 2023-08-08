@@ -9,6 +9,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
@@ -31,7 +32,7 @@ func (o *UpdateNetworkFloorPlanReader) ReadResponse(response runtime.ClientRespo
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/floorPlans/{floorPlanId}] updateNetworkFloorPlan", response, response.Code())
 	}
 }
 
@@ -40,12 +41,13 @@ func NewUpdateNetworkFloorPlanOK() *UpdateNetworkFloorPlanOK {
 	return &UpdateNetworkFloorPlanOK{}
 }
 
-/* UpdateNetworkFloorPlanOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkFloorPlanOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateNetworkFloorPlanOK struct {
-	Payload interface{}
+	Payload *UpdateNetworkFloorPlanOKBody
 }
 
 // IsSuccess returns true when this update network floor plan o k response has a 2xx status code
@@ -73,6 +75,11 @@ func (o *UpdateNetworkFloorPlanOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network floor plan o k response
+func (o *UpdateNetworkFloorPlanOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkFloorPlanOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/floorPlans/{floorPlanId}][%d] updateNetworkFloorPlanOK  %+v", 200, o.Payload)
 }
@@ -81,22 +88,25 @@ func (o *UpdateNetworkFloorPlanOK) String() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/floorPlans/{floorPlanId}][%d] updateNetworkFloorPlanOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateNetworkFloorPlanOK) GetPayload() interface{} {
+func (o *UpdateNetworkFloorPlanOK) GetPayload() *UpdateNetworkFloorPlanOKBody {
 	return o.Payload
 }
 
 func (o *UpdateNetworkFloorPlanOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateNetworkFloorPlanOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateNetworkFloorPlanBody update network floor plan body
-// Example: {}
+/*
+UpdateNetworkFloorPlanBody update network floor plan body
+// Example: {"bottomLeftCorner":{"lat":37.770040510499996,"lng":-122.38714009525},"bottomRightCorner":{"lat":37.770040510499996,"lng":-122.38714009525},"center":{"lat":37.770040510499996,"lng":-122.38714009525},"imageContents":"2a9edd3f4ffd80130c647d13eacb59f3","name":"HQ Floor Plan","topLeftCorner":{"lat":37.770040510499996,"lng":-122.38714009525},"topRightCorner":{"lat":37.770040510499996,"lng":-122.38714009525}}
 swagger:model UpdateNetworkFloorPlanBody
 */
 type UpdateNetworkFloorPlanBody struct {
@@ -282,6 +292,11 @@ func (o *UpdateNetworkFloorPlanBody) ContextValidate(ctx context.Context, format
 func (o *UpdateNetworkFloorPlanBody) contextValidateBottomLeftCorner(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.BottomLeftCorner != nil {
+
+		if swag.IsZero(o.BottomLeftCorner) { // not required
+			return nil
+		}
+
 		if err := o.BottomLeftCorner.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFloorPlan" + "." + "bottomLeftCorner")
@@ -298,6 +313,11 @@ func (o *UpdateNetworkFloorPlanBody) contextValidateBottomLeftCorner(ctx context
 func (o *UpdateNetworkFloorPlanBody) contextValidateBottomRightCorner(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.BottomRightCorner != nil {
+
+		if swag.IsZero(o.BottomRightCorner) { // not required
+			return nil
+		}
+
 		if err := o.BottomRightCorner.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFloorPlan" + "." + "bottomRightCorner")
@@ -314,6 +334,11 @@ func (o *UpdateNetworkFloorPlanBody) contextValidateBottomRightCorner(ctx contex
 func (o *UpdateNetworkFloorPlanBody) contextValidateCenter(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Center != nil {
+
+		if swag.IsZero(o.Center) { // not required
+			return nil
+		}
+
 		if err := o.Center.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFloorPlan" + "." + "center")
@@ -330,6 +355,11 @@ func (o *UpdateNetworkFloorPlanBody) contextValidateCenter(ctx context.Context, 
 func (o *UpdateNetworkFloorPlanBody) contextValidateTopLeftCorner(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.TopLeftCorner != nil {
+
+		if swag.IsZero(o.TopLeftCorner) { // not required
+			return nil
+		}
+
 		if err := o.TopLeftCorner.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFloorPlan" + "." + "topLeftCorner")
@@ -346,6 +376,11 @@ func (o *UpdateNetworkFloorPlanBody) contextValidateTopLeftCorner(ctx context.Co
 func (o *UpdateNetworkFloorPlanBody) contextValidateTopRightCorner(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.TopRightCorner != nil {
+
+		if swag.IsZero(o.TopRightCorner) { // not required
+			return nil
+		}
+
 		if err := o.TopRightCorner.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFloorPlan" + "." + "topRightCorner")
@@ -377,7 +412,674 @@ func (o *UpdateNetworkFloorPlanBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateNetworkFloorPlanParamsBodyBottomLeftCorner The longitude and latitude of the bottom left corner of your floor plan.
+/*
+UpdateNetworkFloorPlanOKBody update network floor plan o k body
+swagger:model UpdateNetworkFloorPlanOKBody
+*/
+type UpdateNetworkFloorPlanOKBody struct {
+
+	// bottom left corner
+	BottomLeftCorner *UpdateNetworkFloorPlanOKBodyBottomLeftCorner `json:"bottomLeftCorner,omitempty"`
+
+	// bottom right corner
+	BottomRightCorner *UpdateNetworkFloorPlanOKBodyBottomRightCorner `json:"bottomRightCorner,omitempty"`
+
+	// center
+	Center *UpdateNetworkFloorPlanOKBodyCenter `json:"center,omitempty"`
+
+	// List of devices for the floorplan
+	Devices []*UpdateNetworkFloorPlanOKBodyDevicesItems0 `json:"devices"`
+
+	// Floor plan ID
+	FloorPlanID string `json:"floorPlanId,omitempty"`
+
+	// The height of your floor plan.
+	Height float32 `json:"height,omitempty"`
+
+	// The format type of the image.
+	ImageExtension string `json:"imageExtension,omitempty"`
+
+	// The file contents (a base 64 encoded string) of your new image. Supported formats are PNG, GIF, and JPG. Note that all images are saved as PNG files, regardless of the format they are uploaded in. If you upload a new image, and you do NOT specify any new geolocation fields ('center, 'topLeftCorner', etc), the floor plan will be recentered with no rotation in order to maintain the aspect ratio of your new image.
+	// Format: byte
+	ImageMd5 strfmt.Base64 `json:"imageMd5,omitempty"`
+
+	// The url link for the floor plan image.
+	ImageURL string `json:"imageUrl,omitempty"`
+
+	// The time the image url link will expire.
+	ImageURLExpiresAt string `json:"imageUrlExpiresAt,omitempty"`
+
+	// The name of your floor plan.
+	Name string `json:"name,omitempty"`
+
+	// top left corner
+	TopLeftCorner *UpdateNetworkFloorPlanOKBodyTopLeftCorner `json:"topLeftCorner,omitempty"`
+
+	// top right corner
+	TopRightCorner *UpdateNetworkFloorPlanOKBodyTopRightCorner `json:"topRightCorner,omitempty"`
+
+	// The width of your floor plan.
+	Width float32 `json:"width,omitempty"`
+}
+
+// Validate validates this update network floor plan o k body
+func (o *UpdateNetworkFloorPlanOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateBottomLeftCorner(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateBottomRightCorner(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateCenter(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateDevices(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTopLeftCorner(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTopRightCorner(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFloorPlanOKBody) validateBottomLeftCorner(formats strfmt.Registry) error {
+	if swag.IsZero(o.BottomLeftCorner) { // not required
+		return nil
+	}
+
+	if o.BottomLeftCorner != nil {
+		if err := o.BottomLeftCorner.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFloorPlanOK" + "." + "bottomLeftCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFloorPlanOK" + "." + "bottomLeftCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFloorPlanOKBody) validateBottomRightCorner(formats strfmt.Registry) error {
+	if swag.IsZero(o.BottomRightCorner) { // not required
+		return nil
+	}
+
+	if o.BottomRightCorner != nil {
+		if err := o.BottomRightCorner.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFloorPlanOK" + "." + "bottomRightCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFloorPlanOK" + "." + "bottomRightCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFloorPlanOKBody) validateCenter(formats strfmt.Registry) error {
+	if swag.IsZero(o.Center) { // not required
+		return nil
+	}
+
+	if o.Center != nil {
+		if err := o.Center.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFloorPlanOK" + "." + "center")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFloorPlanOK" + "." + "center")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFloorPlanOKBody) validateDevices(formats strfmt.Registry) error {
+	if swag.IsZero(o.Devices) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Devices); i++ {
+		if swag.IsZero(o.Devices[i]) { // not required
+			continue
+		}
+
+		if o.Devices[i] != nil {
+			if err := o.Devices[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkFloorPlanOK" + "." + "devices" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkFloorPlanOK" + "." + "devices" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFloorPlanOKBody) validateTopLeftCorner(formats strfmt.Registry) error {
+	if swag.IsZero(o.TopLeftCorner) { // not required
+		return nil
+	}
+
+	if o.TopLeftCorner != nil {
+		if err := o.TopLeftCorner.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFloorPlanOK" + "." + "topLeftCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFloorPlanOK" + "." + "topLeftCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFloorPlanOKBody) validateTopRightCorner(formats strfmt.Registry) error {
+	if swag.IsZero(o.TopRightCorner) { // not required
+		return nil
+	}
+
+	if o.TopRightCorner != nil {
+		if err := o.TopRightCorner.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFloorPlanOK" + "." + "topRightCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFloorPlanOK" + "." + "topRightCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network floor plan o k body based on the context it is used
+func (o *UpdateNetworkFloorPlanOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateBottomLeftCorner(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateBottomRightCorner(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateCenter(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateDevices(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateTopLeftCorner(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateTopRightCorner(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFloorPlanOKBody) contextValidateBottomLeftCorner(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.BottomLeftCorner != nil {
+
+		if swag.IsZero(o.BottomLeftCorner) { // not required
+			return nil
+		}
+
+		if err := o.BottomLeftCorner.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFloorPlanOK" + "." + "bottomLeftCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFloorPlanOK" + "." + "bottomLeftCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFloorPlanOKBody) contextValidateBottomRightCorner(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.BottomRightCorner != nil {
+
+		if swag.IsZero(o.BottomRightCorner) { // not required
+			return nil
+		}
+
+		if err := o.BottomRightCorner.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFloorPlanOK" + "." + "bottomRightCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFloorPlanOK" + "." + "bottomRightCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFloorPlanOKBody) contextValidateCenter(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Center != nil {
+
+		if swag.IsZero(o.Center) { // not required
+			return nil
+		}
+
+		if err := o.Center.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFloorPlanOK" + "." + "center")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFloorPlanOK" + "." + "center")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFloorPlanOKBody) contextValidateDevices(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Devices); i++ {
+
+		if o.Devices[i] != nil {
+
+			if swag.IsZero(o.Devices[i]) { // not required
+				return nil
+			}
+
+			if err := o.Devices[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkFloorPlanOK" + "." + "devices" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkFloorPlanOK" + "." + "devices" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFloorPlanOKBody) contextValidateTopLeftCorner(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.TopLeftCorner != nil {
+
+		if swag.IsZero(o.TopLeftCorner) { // not required
+			return nil
+		}
+
+		if err := o.TopLeftCorner.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFloorPlanOK" + "." + "topLeftCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFloorPlanOK" + "." + "topLeftCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFloorPlanOKBody) contextValidateTopRightCorner(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.TopRightCorner != nil {
+
+		if swag.IsZero(o.TopRightCorner) { // not required
+			return nil
+		}
+
+		if err := o.TopRightCorner.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFloorPlanOK" + "." + "topRightCorner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFloorPlanOK" + "." + "topRightCorner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFloorPlanOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFloorPlanOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFloorPlanOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFloorPlanOKBodyBottomLeftCorner The longitude and latitude of the bottom left corner of your floor plan.
+swagger:model UpdateNetworkFloorPlanOKBodyBottomLeftCorner
+*/
+type UpdateNetworkFloorPlanOKBodyBottomLeftCorner struct {
+
+	// Latitude
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude
+	Lng float32 `json:"lng,omitempty"`
+}
+
+// Validate validates this update network floor plan o k body bottom left corner
+func (o *UpdateNetworkFloorPlanOKBodyBottomLeftCorner) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network floor plan o k body bottom left corner based on context it is used
+func (o *UpdateNetworkFloorPlanOKBodyBottomLeftCorner) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFloorPlanOKBodyBottomLeftCorner) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFloorPlanOKBodyBottomLeftCorner) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFloorPlanOKBodyBottomLeftCorner
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFloorPlanOKBodyBottomRightCorner The longitude and latitude of the bottom right corner of your floor plan.
+swagger:model UpdateNetworkFloorPlanOKBodyBottomRightCorner
+*/
+type UpdateNetworkFloorPlanOKBodyBottomRightCorner struct {
+
+	// Latitude
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude
+	Lng float32 `json:"lng,omitempty"`
+}
+
+// Validate validates this update network floor plan o k body bottom right corner
+func (o *UpdateNetworkFloorPlanOKBodyBottomRightCorner) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network floor plan o k body bottom right corner based on context it is used
+func (o *UpdateNetworkFloorPlanOKBodyBottomRightCorner) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFloorPlanOKBodyBottomRightCorner) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFloorPlanOKBodyBottomRightCorner) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFloorPlanOKBodyBottomRightCorner
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFloorPlanOKBodyCenter The longitude and latitude of the center of your floor plan. The 'center' or two adjacent corners (e.g. 'topLeftCorner' and 'bottomLeftCorner') must be specified. If 'center' is specified, the floor plan is placed over that point with no rotation. If two adjacent corners are specified, the floor plan is rotated to line up with the two specified points. The aspect ratio of the floor plan's image is preserved regardless of which corners/center are specified. (This means if that more than two corners are specified, only two corners may be used to preserve the floor plan's aspect ratio.). No two points can have the same latitude, longitude pair.
+swagger:model UpdateNetworkFloorPlanOKBodyCenter
+*/
+type UpdateNetworkFloorPlanOKBodyCenter struct {
+
+	// Latitude
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude
+	Lng float32 `json:"lng,omitempty"`
+}
+
+// Validate validates this update network floor plan o k body center
+func (o *UpdateNetworkFloorPlanOKBodyCenter) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network floor plan o k body center based on context it is used
+func (o *UpdateNetworkFloorPlanOKBodyCenter) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFloorPlanOKBodyCenter) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFloorPlanOKBodyCenter) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFloorPlanOKBodyCenter
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFloorPlanOKBodyDevicesItems0 update network floor plan o k body devices items0
+swagger:model UpdateNetworkFloorPlanOKBodyDevicesItems0
+*/
+type UpdateNetworkFloorPlanOKBodyDevicesItems0 struct {
+
+	// Physical address of the device
+	Address string `json:"address,omitempty"`
+
+	// Firmware version of the device
+	Firmware string `json:"firmware,omitempty"`
+
+	// LAN IP address of the device
+	LanIP string `json:"lanIp,omitempty"`
+
+	// Latitude of the device
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude of the device
+	Lng float32 `json:"lng,omitempty"`
+
+	// MAC address of the device
+	Mac string `json:"mac,omitempty"`
+
+	// Model of the device
+	Model string `json:"model,omitempty"`
+
+	// Name of the device
+	Name string `json:"name,omitempty"`
+
+	// ID of the network the device belongs to
+	NetworkID string `json:"networkId,omitempty"`
+
+	// Notes for the device, limited to 255 characters
+	Notes string `json:"notes,omitempty"`
+
+	// Product type of the device
+	ProductType string `json:"productType,omitempty"`
+
+	// Serial number of the device
+	Serial string `json:"serial,omitempty"`
+
+	// List of tags assigned to the device
+	Tags []string `json:"tags"`
+}
+
+// Validate validates this update network floor plan o k body devices items0
+func (o *UpdateNetworkFloorPlanOKBodyDevicesItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network floor plan o k body devices items0 based on context it is used
+func (o *UpdateNetworkFloorPlanOKBodyDevicesItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFloorPlanOKBodyDevicesItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFloorPlanOKBodyDevicesItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFloorPlanOKBodyDevicesItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFloorPlanOKBodyTopLeftCorner The longitude and latitude of the top left corner of your floor plan.
+swagger:model UpdateNetworkFloorPlanOKBodyTopLeftCorner
+*/
+type UpdateNetworkFloorPlanOKBodyTopLeftCorner struct {
+
+	// Latitude
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude
+	Lng float32 `json:"lng,omitempty"`
+}
+
+// Validate validates this update network floor plan o k body top left corner
+func (o *UpdateNetworkFloorPlanOKBodyTopLeftCorner) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network floor plan o k body top left corner based on context it is used
+func (o *UpdateNetworkFloorPlanOKBodyTopLeftCorner) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFloorPlanOKBodyTopLeftCorner) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFloorPlanOKBodyTopLeftCorner) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFloorPlanOKBodyTopLeftCorner
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFloorPlanOKBodyTopRightCorner The longitude and latitude of the top right corner of your floor plan.
+swagger:model UpdateNetworkFloorPlanOKBodyTopRightCorner
+*/
+type UpdateNetworkFloorPlanOKBodyTopRightCorner struct {
+
+	// Latitude
+	Lat float32 `json:"lat,omitempty"`
+
+	// Longitude
+	Lng float32 `json:"lng,omitempty"`
+}
+
+// Validate validates this update network floor plan o k body top right corner
+func (o *UpdateNetworkFloorPlanOKBodyTopRightCorner) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network floor plan o k body top right corner based on context it is used
+func (o *UpdateNetworkFloorPlanOKBodyTopRightCorner) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFloorPlanOKBodyTopRightCorner) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFloorPlanOKBodyTopRightCorner) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFloorPlanOKBodyTopRightCorner
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFloorPlanParamsBodyBottomLeftCorner The longitude and latitude of the bottom left corner of your floor plan.
 swagger:model UpdateNetworkFloorPlanParamsBodyBottomLeftCorner
 */
 type UpdateNetworkFloorPlanParamsBodyBottomLeftCorner struct {
@@ -417,7 +1119,8 @@ func (o *UpdateNetworkFloorPlanParamsBodyBottomLeftCorner) UnmarshalBinary(b []b
 	return nil
 }
 
-/*UpdateNetworkFloorPlanParamsBodyBottomRightCorner The longitude and latitude of the bottom right corner of your floor plan.
+/*
+UpdateNetworkFloorPlanParamsBodyBottomRightCorner The longitude and latitude of the bottom right corner of your floor plan.
 swagger:model UpdateNetworkFloorPlanParamsBodyBottomRightCorner
 */
 type UpdateNetworkFloorPlanParamsBodyBottomRightCorner struct {
@@ -457,7 +1160,8 @@ func (o *UpdateNetworkFloorPlanParamsBodyBottomRightCorner) UnmarshalBinary(b []
 	return nil
 }
 
-/*UpdateNetworkFloorPlanParamsBodyCenter The longitude and latitude of the center of your floor plan. If you want to change the geolocation data of your floor plan, either the 'center' or two adjacent corners (e.g. 'topLeftCorner' and 'bottomLeftCorner') must be specified. If 'center' is specified, the floor plan is placed over that point with no rotation. If two adjacent corners are specified, the floor plan is rotated to line up with the two specified points. The aspect ratio of the floor plan's image is preserved regardless of which corners/center are specified. (This means if that more than two corners are specified, only two corners may be used to preserve the floor plan's aspect ratio.). No two points can have the same latitude, longitude pair.
+/*
+UpdateNetworkFloorPlanParamsBodyCenter The longitude and latitude of the center of your floor plan. If you want to change the geolocation data of your floor plan, either the 'center' or two adjacent corners (e.g. 'topLeftCorner' and 'bottomLeftCorner') must be specified. If 'center' is specified, the floor plan is placed over that point with no rotation. If two adjacent corners are specified, the floor plan is rotated to line up with the two specified points. The aspect ratio of the floor plan's image is preserved regardless of which corners/center are specified. (This means if that more than two corners are specified, only two corners may be used to preserve the floor plan's aspect ratio.). No two points can have the same latitude, longitude pair.
 swagger:model UpdateNetworkFloorPlanParamsBodyCenter
 */
 type UpdateNetworkFloorPlanParamsBodyCenter struct {
@@ -497,7 +1201,8 @@ func (o *UpdateNetworkFloorPlanParamsBodyCenter) UnmarshalBinary(b []byte) error
 	return nil
 }
 
-/*UpdateNetworkFloorPlanParamsBodyTopLeftCorner The longitude and latitude of the top left corner of your floor plan.
+/*
+UpdateNetworkFloorPlanParamsBodyTopLeftCorner The longitude and latitude of the top left corner of your floor plan.
 swagger:model UpdateNetworkFloorPlanParamsBodyTopLeftCorner
 */
 type UpdateNetworkFloorPlanParamsBodyTopLeftCorner struct {
@@ -537,7 +1242,8 @@ func (o *UpdateNetworkFloorPlanParamsBodyTopLeftCorner) UnmarshalBinary(b []byte
 	return nil
 }
 
-/*UpdateNetworkFloorPlanParamsBodyTopRightCorner The longitude and latitude of the top right corner of your floor plan.
+/*
+UpdateNetworkFloorPlanParamsBodyTopRightCorner The longitude and latitude of the top right corner of your floor plan.
 swagger:model UpdateNetworkFloorPlanParamsBodyTopRightCorner
 */
 type UpdateNetworkFloorPlanParamsBodyTopRightCorner struct {

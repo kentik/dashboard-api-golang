@@ -52,17 +52,22 @@ func NewCreateNetworkSwitchQosRuleParamsWithHTTPClient(client *http.Client) *Cre
 	}
 }
 
-/* CreateNetworkSwitchQosRuleParams contains all the parameters to send to the API endpoint
-   for the create network switch qos rule operation.
+/*
+CreateNetworkSwitchQosRuleParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create network switch qos rule operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateNetworkSwitchQosRuleParams struct {
 
 	// CreateNetworkSwitchQosRule.
 	CreateNetworkSwitchQosRule CreateNetworkSwitchQosRuleBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

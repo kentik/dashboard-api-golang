@@ -53,10 +53,12 @@ func NewGetNetworkWirelessClientLatencyStatsParamsWithHTTPClient(client *http.Cl
 	}
 }
 
-/* GetNetworkWirelessClientLatencyStatsParams contains all the parameters to send to the API endpoint
-   for the get network wireless client latency stats operation.
+/*
+GetNetworkWirelessClientLatencyStatsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network wireless client latency stats operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkWirelessClientLatencyStatsParams struct {
 
@@ -72,7 +74,10 @@ type GetNetworkWirelessClientLatencyStatsParams struct {
 	*/
 	Band *string
 
-	// ClientID.
+	/* ClientID.
+
+	   Client ID
+	*/
 	ClientID string
 
 	/* Fields.
@@ -81,7 +86,10 @@ type GetNetworkWirelessClientLatencyStatsParams struct {
 	*/
 	Fields *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* Ssid.

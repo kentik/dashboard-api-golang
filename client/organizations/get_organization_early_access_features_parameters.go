@@ -52,14 +52,19 @@ func NewGetOrganizationEarlyAccessFeaturesParamsWithHTTPClient(client *http.Clie
 	}
 }
 
-/* GetOrganizationEarlyAccessFeaturesParams contains all the parameters to send to the API endpoint
-   for the get organization early access features operation.
+/*
+GetOrganizationEarlyAccessFeaturesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization early access features operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationEarlyAccessFeaturesParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

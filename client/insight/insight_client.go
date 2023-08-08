@@ -48,9 +48,9 @@ type ClientService interface {
 }
 
 /*
-  CreateOrganizationInsightMonitoredMediaServer adds a media server to be monitored for this organization
+CreateOrganizationInsightMonitoredMediaServer adds a media server to be monitored for this organization
 
-  Add a media server to be monitored for this organization. Only valid for organizations with Meraki Insight.
+Add a media server to be monitored for this organization. Only valid for organizations with Meraki Insight.
 */
 func (a *Client) CreateOrganizationInsightMonitoredMediaServer(params *CreateOrganizationInsightMonitoredMediaServerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrganizationInsightMonitoredMediaServerCreated, error) {
 	// TODO: Validate the params before sending
@@ -89,9 +89,9 @@ func (a *Client) CreateOrganizationInsightMonitoredMediaServer(params *CreateOrg
 }
 
 /*
-  DeleteOrganizationInsightMonitoredMediaServer deletes a monitored media server from this organization
+DeleteOrganizationInsightMonitoredMediaServer deletes a monitored media server from this organization
 
-  Delete a monitored media server from this organization. Only valid for organizations with Meraki Insight.
+Delete a monitored media server from this organization. Only valid for organizations with Meraki Insight.
 */
 func (a *Client) DeleteOrganizationInsightMonitoredMediaServer(params *DeleteOrganizationInsightMonitoredMediaServerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteOrganizationInsightMonitoredMediaServerNoContent, error) {
 	// TODO: Validate the params before sending
@@ -130,9 +130,9 @@ func (a *Client) DeleteOrganizationInsightMonitoredMediaServer(params *DeleteOrg
 }
 
 /*
-  GetNetworkInsightApplicationHealthByTime gets application health by time
+GetNetworkInsightApplicationHealthByTime gets application health by time
 
-  Get application health by time
+Get application health by time
 */
 func (a *Client) GetNetworkInsightApplicationHealthByTime(params *GetNetworkInsightApplicationHealthByTimeParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkInsightApplicationHealthByTimeOK, error) {
 	// TODO: Validate the params before sending
@@ -171,9 +171,9 @@ func (a *Client) GetNetworkInsightApplicationHealthByTime(params *GetNetworkInsi
 }
 
 /*
-  GetOrganizationInsightApplications lists all insight tracked applications
+GetOrganizationInsightApplications lists all insight tracked applications
 
-  List all Insight tracked applications
+List all Insight tracked applications
 */
 func (a *Client) GetOrganizationInsightApplications(params *GetOrganizationInsightApplicationsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationInsightApplicationsOK, error) {
 	// TODO: Validate the params before sending
@@ -212,9 +212,9 @@ func (a *Client) GetOrganizationInsightApplications(params *GetOrganizationInsig
 }
 
 /*
-  GetOrganizationInsightMonitoredMediaServer returns a monitored media server for this organization
+GetOrganizationInsightMonitoredMediaServer returns a monitored media server for this organization
 
-  Return a monitored media server for this organization. Only valid for organizations with Meraki Insight.
+Return a monitored media server for this organization. Only valid for organizations with Meraki Insight.
 */
 func (a *Client) GetOrganizationInsightMonitoredMediaServer(params *GetOrganizationInsightMonitoredMediaServerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationInsightMonitoredMediaServerOK, error) {
 	// TODO: Validate the params before sending
@@ -253,9 +253,9 @@ func (a *Client) GetOrganizationInsightMonitoredMediaServer(params *GetOrganizat
 }
 
 /*
-  GetOrganizationInsightMonitoredMediaServers lists the monitored media servers for this organization
+GetOrganizationInsightMonitoredMediaServers lists the monitored media servers for this organization
 
-  List the monitored media servers for this organization. Only valid for organizations with Meraki Insight.
+List the monitored media servers for this organization. Only valid for organizations with Meraki Insight.
 */
 func (a *Client) GetOrganizationInsightMonitoredMediaServers(params *GetOrganizationInsightMonitoredMediaServersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationInsightMonitoredMediaServersOK, error) {
 	// TODO: Validate the params before sending
@@ -294,9 +294,9 @@ func (a *Client) GetOrganizationInsightMonitoredMediaServers(params *GetOrganiza
 }
 
 /*
-  UpdateOrganizationInsightMonitoredMediaServer updates a monitored media server for this organization
+UpdateOrganizationInsightMonitoredMediaServer updates a monitored media server for this organization
 
-  Update a monitored media server for this organization. Only valid for organizations with Meraki Insight.
+Update a monitored media server for this organization. Only valid for organizations with Meraki Insight.
 */
 func (a *Client) UpdateOrganizationInsightMonitoredMediaServer(params *UpdateOrganizationInsightMonitoredMediaServerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationInsightMonitoredMediaServerOK, error) {
 	// TODO: Validate the params before sending

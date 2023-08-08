@@ -52,17 +52,22 @@ func NewCreateOrganizationAdaptivePolicyPolicyParamsWithHTTPClient(client *http.
 	}
 }
 
-/* CreateOrganizationAdaptivePolicyPolicyParams contains all the parameters to send to the API endpoint
-   for the create organization adaptive policy policy operation.
+/*
+CreateOrganizationAdaptivePolicyPolicyParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create organization adaptive policy policy operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateOrganizationAdaptivePolicyPolicyParams struct {
 
 	// CreateOrganizationAdaptivePolicyPolicy.
 	CreateOrganizationAdaptivePolicyPolicy CreateOrganizationAdaptivePolicyPolicyBody
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

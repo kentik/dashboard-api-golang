@@ -33,7 +33,7 @@ func (o *UpdateNetworkWirelessSsidSchedulesReader) ReadResponse(response runtime
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/wireless/ssids/{number}/schedules] updateNetworkWirelessSsidSchedules", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateNetworkWirelessSsidSchedulesOK() *UpdateNetworkWirelessSsidSchedul
 	return &UpdateNetworkWirelessSsidSchedulesOK{}
 }
 
-/* UpdateNetworkWirelessSsidSchedulesOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkWirelessSsidSchedulesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateNetworkWirelessSsidSchedulesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network wireless ssid schedules o k response
+func (o *UpdateNetworkWirelessSsidSchedulesOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkWirelessSsidSchedulesOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/wireless/ssids/{number}/schedules][%d] updateNetworkWirelessSsidSchedulesOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateNetworkWirelessSsidSchedulesOK) readResponse(response runtime.Cli
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidSchedulesBody update network wireless ssid schedules body
+/*
+UpdateNetworkWirelessSsidSchedulesBody update network wireless ssid schedules body
 // Example: {"enabled":true,"ranges":[{"endDay":"Tuesday","endTime":"05:00","startDay":"Tuesday","startTime":"01:00"},{"endDay":"monday","endTime":"05:00","startDay":"Fri","startTime":"19:00"}]}
 swagger:model UpdateNetworkWirelessSsidSchedulesBody
 */
@@ -206,6 +213,11 @@ func (o *UpdateNetworkWirelessSsidSchedulesBody) contextValidateRanges(ctx conte
 	for i := 0; i < len(o.Ranges); i++ {
 
 		if o.Ranges[i] != nil {
+
+			if swag.IsZero(o.Ranges[i]) { // not required
+				return nil
+			}
+
 			if err := o.Ranges[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkWirelessSsidSchedules" + "." + "ranges" + "." + strconv.Itoa(i))
@@ -226,6 +238,11 @@ func (o *UpdateNetworkWirelessSsidSchedulesBody) contextValidateRangesInSeconds(
 	for i := 0; i < len(o.RangesInSeconds); i++ {
 
 		if o.RangesInSeconds[i] != nil {
+
+			if swag.IsZero(o.RangesInSeconds[i]) { // not required
+				return nil
+			}
+
 			if err := o.RangesInSeconds[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkWirelessSsidSchedules" + "." + "rangesInSeconds" + "." + strconv.Itoa(i))
@@ -259,7 +276,8 @@ func (o *UpdateNetworkWirelessSsidSchedulesBody) UnmarshalBinary(b []byte) error
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidSchedulesParamsBodyRangesInSecondsItems0 update network wireless ssid schedules params body ranges in seconds items0
+/*
+UpdateNetworkWirelessSsidSchedulesParamsBodyRangesInSecondsItems0 update network wireless ssid schedules params body ranges in seconds items0
 swagger:model UpdateNetworkWirelessSsidSchedulesParamsBodyRangesInSecondsItems0
 */
 type UpdateNetworkWirelessSsidSchedulesParamsBodyRangesInSecondsItems0 struct {
@@ -332,7 +350,8 @@ func (o *UpdateNetworkWirelessSsidSchedulesParamsBodyRangesInSecondsItems0) Unma
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidSchedulesParamsBodyRangesItems0 update network wireless ssid schedules params body ranges items0
+/*
+UpdateNetworkWirelessSsidSchedulesParamsBodyRangesItems0 update network wireless ssid schedules params body ranges items0
 swagger:model UpdateNetworkWirelessSsidSchedulesParamsBodyRangesItems0
 */
 type UpdateNetworkWirelessSsidSchedulesParamsBodyRangesItems0 struct {

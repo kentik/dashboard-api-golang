@@ -27,7 +27,7 @@ func (o *RefreshNetworkSmDeviceDetailsReader) ReadResponse(response runtime.Clie
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/sm/devices/{deviceId}/refreshDetails] refreshNetworkSmDeviceDetails", response, response.Code())
 	}
 }
 
@@ -36,7 +36,8 @@ func NewRefreshNetworkSmDeviceDetailsOK() *RefreshNetworkSmDeviceDetailsOK {
 	return &RefreshNetworkSmDeviceDetailsOK{}
 }
 
-/* RefreshNetworkSmDeviceDetailsOK describes a response with status code 200, with default header values.
+/*
+RefreshNetworkSmDeviceDetailsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -66,6 +67,11 @@ func (o *RefreshNetworkSmDeviceDetailsOK) IsServerError() bool {
 // IsCode returns true when this refresh network sm device details o k response a status code equal to that given
 func (o *RefreshNetworkSmDeviceDetailsOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the refresh network sm device details o k response
+func (o *RefreshNetworkSmDeviceDetailsOK) Code() int {
+	return 200
 }
 
 func (o *RefreshNetworkSmDeviceDetailsOK) Error() string {

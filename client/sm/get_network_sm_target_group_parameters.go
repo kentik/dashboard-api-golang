@@ -53,17 +53,25 @@ func NewGetNetworkSmTargetGroupParamsWithHTTPClient(client *http.Client) *GetNet
 	}
 }
 
-/* GetNetworkSmTargetGroupParams contains all the parameters to send to the API endpoint
-   for the get network sm target group operation.
+/*
+GetNetworkSmTargetGroupParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network sm target group operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSmTargetGroupParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// TargetGroupID.
+	/* TargetGroupID.
+
+	   Target group ID
+	*/
 	TargetGroupID string
 
 	/* WithDetails.

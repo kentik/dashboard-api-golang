@@ -52,17 +52,25 @@ func NewDeleteOrganizationCameraCustomAnalyticsArtifactParamsWithHTTPClient(clie
 	}
 }
 
-/* DeleteOrganizationCameraCustomAnalyticsArtifactParams contains all the parameters to send to the API endpoint
-   for the delete organization camera custom analytics artifact operation.
+/*
+DeleteOrganizationCameraCustomAnalyticsArtifactParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete organization camera custom analytics artifact operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteOrganizationCameraCustomAnalyticsArtifactParams struct {
 
-	// ArtifactID.
+	/* ArtifactID.
+
+	   Artifact ID
+	*/
 	ArtifactID string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

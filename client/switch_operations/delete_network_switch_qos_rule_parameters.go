@@ -52,17 +52,25 @@ func NewDeleteNetworkSwitchQosRuleParamsWithHTTPClient(client *http.Client) *Del
 	}
 }
 
-/* DeleteNetworkSwitchQosRuleParams contains all the parameters to send to the API endpoint
-   for the delete network switch qos rule operation.
+/*
+DeleteNetworkSwitchQosRuleParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete network switch qos rule operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteNetworkSwitchQosRuleParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// QosRuleID.
+	/* QosRuleID.
+
+	   Qos rule ID
+	*/
 	QosRuleID string
 
 	timeout    time.Duration

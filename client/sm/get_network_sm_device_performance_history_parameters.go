@@ -53,14 +53,19 @@ func NewGetNetworkSmDevicePerformanceHistoryParamsWithHTTPClient(client *http.Cl
 	}
 }
 
-/* GetNetworkSmDevicePerformanceHistoryParams contains all the parameters to send to the API endpoint
-   for the get network sm device performance history operation.
+/*
+GetNetworkSmDevicePerformanceHistoryParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network sm device performance history operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSmDevicePerformanceHistoryParams struct {
 
-	// DeviceID.
+	/* DeviceID.
+
+	   Device ID
+	*/
 	DeviceID string
 
 	/* EndingBefore.
@@ -69,7 +74,10 @@ type GetNetworkSmDevicePerformanceHistoryParams struct {
 	*/
 	EndingBefore *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* PerPage.

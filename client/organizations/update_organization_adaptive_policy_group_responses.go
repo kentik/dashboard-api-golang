@@ -32,7 +32,7 @@ func (o *UpdateOrganizationAdaptivePolicyGroupReader) ReadResponse(response runt
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /organizations/{organizationId}/adaptivePolicy/groups/{id}] updateOrganizationAdaptivePolicyGroup", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewUpdateOrganizationAdaptivePolicyGroupOK() *UpdateOrganizationAdaptivePol
 	return &UpdateOrganizationAdaptivePolicyGroupOK{}
 }
 
-/* UpdateOrganizationAdaptivePolicyGroupOK describes a response with status code 200, with default header values.
+/*
+UpdateOrganizationAdaptivePolicyGroupOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -74,12 +75,17 @@ func (o *UpdateOrganizationAdaptivePolicyGroupOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update organization adaptive policy group o k response
+func (o *UpdateOrganizationAdaptivePolicyGroupOK) Code() int {
+	return 200
+}
+
 func (o *UpdateOrganizationAdaptivePolicyGroupOK) Error() string {
-	return fmt.Sprintf("[PUT /organizations/{organizationId}/adaptivePolicy/groups/{groupId}][%d] updateOrganizationAdaptivePolicyGroupOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /organizations/{organizationId}/adaptivePolicy/groups/{id}][%d] updateOrganizationAdaptivePolicyGroupOK  %+v", 200, o.Payload)
 }
 
 func (o *UpdateOrganizationAdaptivePolicyGroupOK) String() string {
-	return fmt.Sprintf("[PUT /organizations/{organizationId}/adaptivePolicy/groups/{groupId}][%d] updateOrganizationAdaptivePolicyGroupOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /organizations/{organizationId}/adaptivePolicy/groups/{id}][%d] updateOrganizationAdaptivePolicyGroupOK  %+v", 200, o.Payload)
 }
 
 func (o *UpdateOrganizationAdaptivePolicyGroupOK) GetPayload() interface{} {
@@ -96,7 +102,8 @@ func (o *UpdateOrganizationAdaptivePolicyGroupOK) readResponse(response runtime.
 	return nil
 }
 
-/*UpdateOrganizationAdaptivePolicyGroupBody update organization adaptive policy group body
+/*
+UpdateOrganizationAdaptivePolicyGroupBody update organization adaptive policy group body
 // Example: {"description":"Group of XYZ Corp Employees","isDefaultGroup":false,"name":"Employee Group","policyObjects":[{"id":"2345","name":"Example Policy Object"}],"requiredIpMappings":[],"sgt":1000}
 swagger:model UpdateOrganizationAdaptivePolicyGroupBody
 */
@@ -174,6 +181,11 @@ func (o *UpdateOrganizationAdaptivePolicyGroupBody) contextValidatePolicyObjects
 	for i := 0; i < len(o.PolicyObjects); i++ {
 
 		if o.PolicyObjects[i] != nil {
+
+			if swag.IsZero(o.PolicyObjects[i]) { // not required
+				return nil
+			}
+
 			if err := o.PolicyObjects[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateOrganizationAdaptivePolicyGroup" + "." + "policyObjects" + "." + strconv.Itoa(i))
@@ -207,7 +219,8 @@ func (o *UpdateOrganizationAdaptivePolicyGroupBody) UnmarshalBinary(b []byte) er
 	return nil
 }
 
-/*UpdateOrganizationAdaptivePolicyGroupParamsBodyPolicyObjectsItems0 update organization adaptive policy group params body policy objects items0
+/*
+UpdateOrganizationAdaptivePolicyGroupParamsBodyPolicyObjectsItems0 update organization adaptive policy group params body policy objects items0
 swagger:model UpdateOrganizationAdaptivePolicyGroupParamsBodyPolicyObjectsItems0
 */
 type UpdateOrganizationAdaptivePolicyGroupParamsBodyPolicyObjectsItems0 struct {

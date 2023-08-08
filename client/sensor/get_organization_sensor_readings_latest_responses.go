@@ -34,7 +34,7 @@ func (o *GetOrganizationSensorReadingsLatestReader) ReadResponse(response runtim
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/sensor/readings/latest] getOrganizationSensorReadingsLatest", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewGetOrganizationSensorReadingsLatestOK() *GetOrganizationSensorReadingsLa
 	return &GetOrganizationSensorReadingsLatestOK{}
 }
 
-/* GetOrganizationSensorReadingsLatestOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationSensorReadingsLatestOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -81,6 +82,11 @@ func (o *GetOrganizationSensorReadingsLatestOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get organization sensor readings latest o k response
+func (o *GetOrganizationSensorReadingsLatestOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationSensorReadingsLatestOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/sensor/readings/latest][%d] getOrganizationSensorReadingsLatestOK  %+v", 200, o.Payload)
 }
@@ -110,7 +116,8 @@ func (o *GetOrganizationSensorReadingsLatestOK) readResponse(response runtime.Cl
 	return nil
 }
 
-/*GetOrganizationSensorReadingsLatestOKBodyItems0 get organization sensor readings latest o k body items0
+/*
+GetOrganizationSensorReadingsLatestOKBodyItems0 get organization sensor readings latest o k body items0
 swagger:model GetOrganizationSensorReadingsLatestOKBodyItems0
 */
 type GetOrganizationSensorReadingsLatestOKBodyItems0 struct {
@@ -118,7 +125,7 @@ type GetOrganizationSensorReadingsLatestOKBodyItems0 struct {
 	// network
 	Network *GetOrganizationSensorReadingsLatestOKBodyItems0Network `json:"network,omitempty"`
 
-	// Array of latest readings from the sensor.
+	// Array of latest readings from the sensor. Each object represents a single reading for a single metric.
 	Readings []*GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0 `json:"readings"`
 
 	// Serial number of the sensor that took the readings.
@@ -209,6 +216,11 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0) ContextValidate(ctx co
 func (o *GetOrganizationSensorReadingsLatestOKBodyItems0) contextValidateNetwork(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Network != nil {
+
+		if swag.IsZero(o.Network) { // not required
+			return nil
+		}
+
 		if err := o.Network.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("network")
@@ -227,6 +239,11 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0) contextValidateReading
 	for i := 0; i < len(o.Readings); i++ {
 
 		if o.Readings[i] != nil {
+
+			if swag.IsZero(o.Readings[i]) { // not required
+				return nil
+			}
+
 			if err := o.Readings[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("readings" + "." + strconv.Itoa(i))
@@ -260,7 +277,8 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0) UnmarshalBinary(b []by
 	return nil
 }
 
-/*GetOrganizationSensorReadingsLatestOKBodyItems0Network Network to which the sensor belongs.
+/*
+GetOrganizationSensorReadingsLatestOKBodyItems0Network Network to which the sensor belongs.
 swagger:model GetOrganizationSensorReadingsLatestOKBodyItems0Network
 */
 type GetOrganizationSensorReadingsLatestOKBodyItems0Network struct {
@@ -300,7 +318,8 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0Network) UnmarshalBinary
 	return nil
 }
 
-/*GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0 get organization sensor readings latest o k body items0 readings items0
+/*
+GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0 get organization sensor readings latest o k body items0 readings items0
 swagger:model GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0
 */
 type GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0 struct {
@@ -320,7 +339,8 @@ type GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0 struct {
 	// indoor air quality
 	IndoorAirQuality *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0IndoorAirQuality `json:"indoorAirQuality,omitempty"`
 
-	// Type of sensor reading. Possible values are temperature, humidity, water, door, tvoc, pm25, noise, indoorAirQuality, button, and battery.
+	// Type of sensor reading.
+	// Enum: [battery button door humidity indoorAirQuality noise pm25 temperature tvoc water]
 	Metric string `json:"metric,omitempty"`
 
 	// noise
@@ -363,6 +383,10 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) Validate
 	}
 
 	if err := o.validateIndoorAirQuality(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateMetric(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -482,6 +506,72 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) validate
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+var getOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0TypeMetricPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["battery","button","door","humidity","indoorAirQuality","noise","pm25","temperature","tvoc","water"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0TypeMetricPropEnum = append(getOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0TypeMetricPropEnum, v)
+	}
+}
+
+const (
+
+	// GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0MetricBattery captures enum value "battery"
+	GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0MetricBattery string = "battery"
+
+	// GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0MetricButton captures enum value "button"
+	GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0MetricButton string = "button"
+
+	// GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0MetricDoor captures enum value "door"
+	GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0MetricDoor string = "door"
+
+	// GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0MetricHumidity captures enum value "humidity"
+	GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0MetricHumidity string = "humidity"
+
+	// GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0MetricIndoorAirQuality captures enum value "indoorAirQuality"
+	GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0MetricIndoorAirQuality string = "indoorAirQuality"
+
+	// GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0MetricNoise captures enum value "noise"
+	GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0MetricNoise string = "noise"
+
+	// GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0MetricPm25 captures enum value "pm25"
+	GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0MetricPm25 string = "pm25"
+
+	// GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0MetricTemperature captures enum value "temperature"
+	GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0MetricTemperature string = "temperature"
+
+	// GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0MetricTvoc captures enum value "tvoc"
+	GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0MetricTvoc string = "tvoc"
+
+	// GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0MetricWater captures enum value "water"
+	GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0MetricWater string = "water"
+)
+
+// prop value enum
+func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) validateMetricEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0TypeMetricPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) validateMetric(formats strfmt.Registry) error {
+	if swag.IsZero(o.Metric) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateMetricEnum("metric", "body", o.Metric); err != nil {
+		return err
 	}
 
 	return nil
@@ -635,6 +725,11 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) ContextV
 func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) contextValidateBattery(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Battery != nil {
+
+		if swag.IsZero(o.Battery) { // not required
+			return nil
+		}
+
 		if err := o.Battery.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("battery")
@@ -651,6 +746,11 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) contextV
 func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) contextValidateButton(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Button != nil {
+
+		if swag.IsZero(o.Button) { // not required
+			return nil
+		}
+
 		if err := o.Button.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("button")
@@ -667,6 +767,11 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) contextV
 func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) contextValidateDoor(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Door != nil {
+
+		if swag.IsZero(o.Door) { // not required
+			return nil
+		}
+
 		if err := o.Door.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("door")
@@ -683,6 +788,11 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) contextV
 func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) contextValidateHumidity(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Humidity != nil {
+
+		if swag.IsZero(o.Humidity) { // not required
+			return nil
+		}
+
 		if err := o.Humidity.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("humidity")
@@ -699,6 +809,11 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) contextV
 func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) contextValidateIndoorAirQuality(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.IndoorAirQuality != nil {
+
+		if swag.IsZero(o.IndoorAirQuality) { // not required
+			return nil
+		}
+
 		if err := o.IndoorAirQuality.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("indoorAirQuality")
@@ -715,6 +830,11 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) contextV
 func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) contextValidateNoise(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Noise != nil {
+
+		if swag.IsZero(o.Noise) { // not required
+			return nil
+		}
+
 		if err := o.Noise.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("noise")
@@ -731,6 +851,11 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) contextV
 func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) contextValidatePm25(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Pm25 != nil {
+
+		if swag.IsZero(o.Pm25) { // not required
+			return nil
+		}
+
 		if err := o.Pm25.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("pm25")
@@ -747,6 +872,11 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) contextV
 func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) contextValidateTemperature(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Temperature != nil {
+
+		if swag.IsZero(o.Temperature) { // not required
+			return nil
+		}
+
 		if err := o.Temperature.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("temperature")
@@ -763,6 +893,11 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) contextV
 func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) contextValidateTvoc(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Tvoc != nil {
+
+		if swag.IsZero(o.Tvoc) { // not required
+			return nil
+		}
+
 		if err := o.Tvoc.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("tvoc")
@@ -779,6 +914,11 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) contextV
 func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) contextValidateWater(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Water != nil {
+
+		if swag.IsZero(o.Water) { // not required
+			return nil
+		}
+
 		if err := o.Water.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("water")
@@ -810,7 +950,8 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0) Unmarsha
 	return nil
 }
 
-/*GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Battery Reading for the 'battery' metric.
+/*
+GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Battery Reading for the 'battery' metric. This will only be present if the 'metric' property equals 'battery'.
 swagger:model GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Battery
 */
 type GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Battery struct {
@@ -847,7 +988,8 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Battery) U
 	return nil
 }
 
-/*GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Button Reading for the 'button' metric.
+/*
+GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Button Reading for the 'button' metric. This will only be present if the 'metric' property equals 'button'.
 swagger:model GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Button
 */
 type GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Button struct {
@@ -936,7 +1078,8 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Button) Un
 	return nil
 }
 
-/*GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Door Reading for the 'door' metric.
+/*
+GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Door Reading for the 'door' metric. This will only be present if the 'metric' property equals 'door'.
 swagger:model GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Door
 */
 type GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Door struct {
@@ -973,7 +1116,8 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Door) Unma
 	return nil
 }
 
-/*GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Humidity Reading for the 'humidity' metric.
+/*
+GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Humidity Reading for the 'humidity' metric. This will only be present if the 'metric' property equals 'humidity'.
 swagger:model GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Humidity
 */
 type GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Humidity struct {
@@ -1010,7 +1154,8 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Humidity) 
 	return nil
 }
 
-/*GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0IndoorAirQuality Reading for the 'indoorAirQuality' metric.
+/*
+GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0IndoorAirQuality Reading for the 'indoorAirQuality' metric. This will only be present if the 'metric' property equals 'indoorAirQuality'.
 swagger:model GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0IndoorAirQuality
 */
 type GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0IndoorAirQuality struct {
@@ -1047,7 +1192,8 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0IndoorAirQ
 	return nil
 }
 
-/*GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Noise Reading for the 'noise' metric.
+/*
+GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Noise Reading for the 'noise' metric. This will only be present if the 'metric' property equals 'noise'.
 swagger:model GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Noise
 */
 type GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Noise struct {
@@ -1106,6 +1252,11 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Noise) Con
 func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Noise) contextValidateAmbient(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Ambient != nil {
+
+		if swag.IsZero(o.Ambient) { // not required
+			return nil
+		}
+
 		if err := o.Ambient.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("noise" + "." + "ambient")
@@ -1137,7 +1288,8 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Noise) Unm
 	return nil
 }
 
-/*GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0NoiseAmbient Ambient noise reading.
+/*
+GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0NoiseAmbient Ambient noise reading.
 swagger:model GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0NoiseAmbient
 */
 type GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0NoiseAmbient struct {
@@ -1174,7 +1326,8 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0NoiseAmbie
 	return nil
 }
 
-/*GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Pm25 Reading for the 'pm25' metric.
+/*
+GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Pm25 Reading for the 'pm25' metric. This will only be present if the 'metric' property equals 'pm25'.
 swagger:model GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Pm25
 */
 type GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Pm25 struct {
@@ -1211,7 +1364,8 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Pm25) Unma
 	return nil
 }
 
-/*GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Temperature Reading for the 'temperature' metric.
+/*
+GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Temperature Reading for the 'temperature' metric. This will only be present if the 'metric' property equals 'temperature'.
 swagger:model GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Temperature
 */
 type GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Temperature struct {
@@ -1251,7 +1405,8 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Temperatur
 	return nil
 }
 
-/*GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Tvoc Reading for the 'tvoc' metric.
+/*
+GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Tvoc Reading for the 'tvoc' metric. This will only be present if the 'metric' property equals 'tvoc'.
 swagger:model GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Tvoc
 */
 type GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Tvoc struct {
@@ -1288,7 +1443,8 @@ func (o *GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Tvoc) Unma
 	return nil
 }
 
-/*GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Water Reading for the 'water' metric.
+/*
+GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Water Reading for the 'water' metric. This will only be present if the 'metric' property equals 'water'.
 swagger:model GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Water
 */
 type GetOrganizationSensorReadingsLatestOKBodyItems0ReadingsItems0Water struct {

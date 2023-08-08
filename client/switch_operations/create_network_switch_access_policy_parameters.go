@@ -52,17 +52,22 @@ func NewCreateNetworkSwitchAccessPolicyParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* CreateNetworkSwitchAccessPolicyParams contains all the parameters to send to the API endpoint
-   for the create network switch access policy operation.
+/*
+CreateNetworkSwitchAccessPolicyParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create network switch access policy operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateNetworkSwitchAccessPolicyParams struct {
 
 	// CreateNetworkSwitchAccessPolicy.
 	CreateNetworkSwitchAccessPolicy CreateNetworkSwitchAccessPolicyBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

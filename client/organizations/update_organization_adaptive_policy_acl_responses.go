@@ -34,7 +34,7 @@ func (o *UpdateOrganizationAdaptivePolicyACLReader) ReadResponse(response runtim
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /organizations/{organizationId}/adaptivePolicy/acls/{aclId}] updateOrganizationAdaptivePolicyAcl", response, response.Code())
 	}
 }
 
@@ -43,12 +43,13 @@ func NewUpdateOrganizationAdaptivePolicyACLOK() *UpdateOrganizationAdaptivePolic
 	return &UpdateOrganizationAdaptivePolicyACLOK{}
 }
 
-/* UpdateOrganizationAdaptivePolicyACLOK describes a response with status code 200, with default header values.
+/*
+UpdateOrganizationAdaptivePolicyACLOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateOrganizationAdaptivePolicyACLOK struct {
-	Payload interface{}
+	Payload *UpdateOrganizationAdaptivePolicyACLOKBody
 }
 
 // IsSuccess returns true when this update organization adaptive policy Acl o k response has a 2xx status code
@@ -76,30 +77,38 @@ func (o *UpdateOrganizationAdaptivePolicyACLOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update organization adaptive policy Acl o k response
+func (o *UpdateOrganizationAdaptivePolicyACLOK) Code() int {
+	return 200
+}
+
 func (o *UpdateOrganizationAdaptivePolicyACLOK) Error() string {
-	return fmt.Sprintf("[PUT /organizations/{organizationId}/adaptivePolicy/acls/{id}][%d] updateOrganizationAdaptivePolicyAclOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /organizations/{organizationId}/adaptivePolicy/acls/{aclId}][%d] updateOrganizationAdaptivePolicyAclOK  %+v", 200, o.Payload)
 }
 
 func (o *UpdateOrganizationAdaptivePolicyACLOK) String() string {
-	return fmt.Sprintf("[PUT /organizations/{organizationId}/adaptivePolicy/acls/{id}][%d] updateOrganizationAdaptivePolicyAclOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /organizations/{organizationId}/adaptivePolicy/acls/{aclId}][%d] updateOrganizationAdaptivePolicyAclOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateOrganizationAdaptivePolicyACLOK) GetPayload() interface{} {
+func (o *UpdateOrganizationAdaptivePolicyACLOK) GetPayload() *UpdateOrganizationAdaptivePolicyACLOKBody {
 	return o.Payload
 }
 
 func (o *UpdateOrganizationAdaptivePolicyACLOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateOrganizationAdaptivePolicyACLOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateOrganizationAdaptivePolicyACLBody update organization adaptive policy ACL body
-// Example: {"description":"Blocks sensitive web traffic","ipVersion":"ipv6","name":"Block sensitive web traffic","rules":[{"dstPort":"22-30","policy":"deny","protocol":"tcp","srcPort":"1,33"},{"dstPort":"any","policy":"allow","protocol":"any","srcPort":"any"}]}
+/*
+UpdateOrganizationAdaptivePolicyACLBody update organization adaptive policy ACL body
+// Example: {"description":"Blocks sensitive web traffic","ipVersion":"ipv6","name":"Block sensitive web traffic","rules":[{"dstPort":"22-30","policy":"deny","protocol":"tcp","srcPort":"1,33"}]}
 swagger:model UpdateOrganizationAdaptivePolicyACLBody
 */
 type UpdateOrganizationAdaptivePolicyACLBody struct {
@@ -226,6 +235,11 @@ func (o *UpdateOrganizationAdaptivePolicyACLBody) contextValidateRules(ctx conte
 	for i := 0; i < len(o.Rules); i++ {
 
 		if o.Rules[i] != nil {
+
+			if swag.IsZero(o.Rules[i]) { // not required
+				return nil
+			}
+
 			if err := o.Rules[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateOrganizationAdaptivePolicyAcl" + "." + "rules" + "." + strconv.Itoa(i))
@@ -259,7 +273,214 @@ func (o *UpdateOrganizationAdaptivePolicyACLBody) UnmarshalBinary(b []byte) erro
 	return nil
 }
 
-/*UpdateOrganizationAdaptivePolicyACLParamsBodyRulesItems0 update organization adaptive policy ACL params body rules items0
+/*
+UpdateOrganizationAdaptivePolicyACLOKBody update organization adaptive policy ACL o k body
+swagger:model UpdateOrganizationAdaptivePolicyACLOKBody
+*/
+type UpdateOrganizationAdaptivePolicyACLOKBody struct {
+
+	// ID of the adaptive policy ACL
+	ACLID string `json:"aclId,omitempty"`
+
+	// When the adaptive policy ACL was created
+	// Format: date-time
+	CreatedAt strfmt.DateTime `json:"createdAt,omitempty"`
+
+	// Description of the adaptive policy ACL
+	Description string `json:"description,omitempty"`
+
+	// IP version of adpative policy ACL
+	IPVersion string `json:"ipVersion,omitempty"`
+
+	// Name of the adaptive policy ACL
+	Name string `json:"name,omitempty"`
+
+	// An ordered array of the adaptive policy ACL rules
+	Rules []*UpdateOrganizationAdaptivePolicyACLOKBodyRulesItems0 `json:"rules"`
+
+	// When the adaptive policy ACL was last updated
+	// Format: date-time
+	UpdatedAt strfmt.DateTime `json:"updatedAt,omitempty"`
+}
+
+// Validate validates this update organization adaptive policy ACL o k body
+func (o *UpdateOrganizationAdaptivePolicyACLOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateCreatedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateRules(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateUpdatedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationAdaptivePolicyACLOKBody) validateCreatedAt(formats strfmt.Registry) error {
+	if swag.IsZero(o.CreatedAt) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateOrganizationAdaptivePolicyAclOK"+"."+"createdAt", "body", "date-time", o.CreatedAt.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateOrganizationAdaptivePolicyACLOKBody) validateRules(formats strfmt.Registry) error {
+	if swag.IsZero(o.Rules) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Rules); i++ {
+		if swag.IsZero(o.Rules[i]) { // not required
+			continue
+		}
+
+		if o.Rules[i] != nil {
+			if err := o.Rules[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateOrganizationAdaptivePolicyAclOK" + "." + "rules" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateOrganizationAdaptivePolicyAclOK" + "." + "rules" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateOrganizationAdaptivePolicyACLOKBody) validateUpdatedAt(formats strfmt.Registry) error {
+	if swag.IsZero(o.UpdatedAt) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateOrganizationAdaptivePolicyAclOK"+"."+"updatedAt", "body", "date-time", o.UpdatedAt.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update organization adaptive policy ACL o k body based on the context it is used
+func (o *UpdateOrganizationAdaptivePolicyACLOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateRules(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationAdaptivePolicyACLOKBody) contextValidateRules(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Rules); i++ {
+
+		if o.Rules[i] != nil {
+
+			if swag.IsZero(o.Rules[i]) { // not required
+				return nil
+			}
+
+			if err := o.Rules[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateOrganizationAdaptivePolicyAclOK" + "." + "rules" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateOrganizationAdaptivePolicyAclOK" + "." + "rules" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateOrganizationAdaptivePolicyACLOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateOrganizationAdaptivePolicyACLOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateOrganizationAdaptivePolicyACLOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateOrganizationAdaptivePolicyACLOKBodyRulesItems0 update organization adaptive policy ACL o k body rules items0
+swagger:model UpdateOrganizationAdaptivePolicyACLOKBodyRulesItems0
+*/
+type UpdateOrganizationAdaptivePolicyACLOKBodyRulesItems0 struct {
+
+	// Destination port
+	DstPort string `json:"dstPort,omitempty"`
+
+	// 'allow' or 'deny' traffic specified by this rule
+	Policy string `json:"policy,omitempty"`
+
+	// The type of protocol
+	Protocol string `json:"protocol,omitempty"`
+
+	// Source port
+	SrcPort string `json:"srcPort,omitempty"`
+}
+
+// Validate validates this update organization adaptive policy ACL o k body rules items0
+func (o *UpdateOrganizationAdaptivePolicyACLOKBodyRulesItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update organization adaptive policy ACL o k body rules items0 based on context it is used
+func (o *UpdateOrganizationAdaptivePolicyACLOKBodyRulesItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateOrganizationAdaptivePolicyACLOKBodyRulesItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateOrganizationAdaptivePolicyACLOKBodyRulesItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateOrganizationAdaptivePolicyACLOKBodyRulesItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateOrganizationAdaptivePolicyACLParamsBodyRulesItems0 update organization adaptive policy ACL params body rules items0
 swagger:model UpdateOrganizationAdaptivePolicyACLParamsBodyRulesItems0
 */
 type UpdateOrganizationAdaptivePolicyACLParamsBodyRulesItems0 struct {
@@ -274,7 +495,7 @@ type UpdateOrganizationAdaptivePolicyACLParamsBodyRulesItems0 struct {
 
 	// The type of protocol (must be 'tcp', 'udp', 'icmp' or 'any').
 	// Required: true
-	// Enum: [tcp udp icmp any]
+	// Enum: [any icmp tcp udp]
 	Protocol *string `json:"protocol"`
 
 	// Source port. Must be in the format of single port: '1', port list: '1,2' or port range: '1-10', and in the range of 1-65535, or 'any'. Default is 'any'.
@@ -346,7 +567,7 @@ var updateOrganizationAdaptivePolicyAclParamsBodyRulesItems0TypeProtocolPropEnum
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["tcp","udp","icmp","any"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["any","icmp","tcp","udp"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -356,17 +577,17 @@ func init() {
 
 const (
 
+	// UpdateOrganizationAdaptivePolicyACLParamsBodyRulesItems0ProtocolAny captures enum value "any"
+	UpdateOrganizationAdaptivePolicyACLParamsBodyRulesItems0ProtocolAny string = "any"
+
+	// UpdateOrganizationAdaptivePolicyACLParamsBodyRulesItems0ProtocolIcmp captures enum value "icmp"
+	UpdateOrganizationAdaptivePolicyACLParamsBodyRulesItems0ProtocolIcmp string = "icmp"
+
 	// UpdateOrganizationAdaptivePolicyACLParamsBodyRulesItems0ProtocolTCP captures enum value "tcp"
 	UpdateOrganizationAdaptivePolicyACLParamsBodyRulesItems0ProtocolTCP string = "tcp"
 
 	// UpdateOrganizationAdaptivePolicyACLParamsBodyRulesItems0ProtocolUDP captures enum value "udp"
 	UpdateOrganizationAdaptivePolicyACLParamsBodyRulesItems0ProtocolUDP string = "udp"
-
-	// UpdateOrganizationAdaptivePolicyACLParamsBodyRulesItems0ProtocolIcmp captures enum value "icmp"
-	UpdateOrganizationAdaptivePolicyACLParamsBodyRulesItems0ProtocolIcmp string = "icmp"
-
-	// UpdateOrganizationAdaptivePolicyACLParamsBodyRulesItems0ProtocolAny captures enum value "any"
-	UpdateOrganizationAdaptivePolicyACLParamsBodyRulesItems0ProtocolAny string = "any"
 )
 
 // prop value enum

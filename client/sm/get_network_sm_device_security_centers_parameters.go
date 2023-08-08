@@ -52,17 +52,25 @@ func NewGetNetworkSmDeviceSecurityCentersParamsWithHTTPClient(client *http.Clien
 	}
 }
 
-/* GetNetworkSmDeviceSecurityCentersParams contains all the parameters to send to the API endpoint
-   for the get network sm device security centers operation.
+/*
+GetNetworkSmDeviceSecurityCentersParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network sm device security centers operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSmDeviceSecurityCentersParams struct {
 
-	// DeviceID.
+	/* DeviceID.
+
+	   Device ID
+	*/
 	DeviceID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

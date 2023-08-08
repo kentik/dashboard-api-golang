@@ -52,14 +52,19 @@ func NewGetNetworkCellularGatewaySubnetPoolParamsWithHTTPClient(client *http.Cli
 	}
 }
 
-/* GetNetworkCellularGatewaySubnetPoolParams contains all the parameters to send to the API endpoint
-   for the get network cellular gateway subnet pool operation.
+/*
+GetNetworkCellularGatewaySubnetPoolParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network cellular gateway subnet pool operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkCellularGatewaySubnetPoolParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

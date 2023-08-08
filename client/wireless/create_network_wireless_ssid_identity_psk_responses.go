@@ -32,7 +32,7 @@ func (o *CreateNetworkWirelessSsidIdentityPskReader) ReadResponse(response runti
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/wireless/ssids/{number}/identityPsks] createNetworkWirelessSsidIdentityPsk", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewCreateNetworkWirelessSsidIdentityPskCreated() *CreateNetworkWirelessSsid
 	return &CreateNetworkWirelessSsidIdentityPskCreated{}
 }
 
-/* CreateNetworkWirelessSsidIdentityPskCreated describes a response with status code 201, with default header values.
+/*
+CreateNetworkWirelessSsidIdentityPskCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *CreateNetworkWirelessSsidIdentityPskCreated) IsCode(code int) bool {
 	return code == 201
 }
 
+// Code gets the status code for the create network wireless ssid identity psk created response
+func (o *CreateNetworkWirelessSsidIdentityPskCreated) Code() int {
+	return 201
+}
+
 func (o *CreateNetworkWirelessSsidIdentityPskCreated) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/wireless/ssids/{number}/identityPsks][%d] createNetworkWirelessSsidIdentityPskCreated  %+v", 201, o.Payload)
 }
@@ -96,11 +102,16 @@ func (o *CreateNetworkWirelessSsidIdentityPskCreated) readResponse(response runt
 	return nil
 }
 
-/*CreateNetworkWirelessSsidIdentityPskBody create network wireless ssid identity psk body
-// Example: {"groupPolicyId":"101","id":"1284392014819","name":"Sample Identity PSK","passphrase":"NIalareK"}
+/*
+CreateNetworkWirelessSsidIdentityPskBody create network wireless ssid identity psk body
+// Example: {"expiresAt":"2018-02-11T00:00:00.090210Z","groupPolicyId":"101","id":"1284392014819","name":"Sample Identity PSK","passphrase":"secret"}
 swagger:model CreateNetworkWirelessSsidIdentityPskBody
 */
 type CreateNetworkWirelessSsidIdentityPskBody struct {
+
+	// Timestamp for when the Identity PSK expires. Will not expire if left blank.
+	// Format: date-time
+	ExpiresAt strfmt.DateTime `json:"expiresAt,omitempty"`
 
 	// The group policy to be applied to clients
 	// Required: true
@@ -118,6 +129,10 @@ type CreateNetworkWirelessSsidIdentityPskBody struct {
 func (o *CreateNetworkWirelessSsidIdentityPskBody) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := o.validateExpiresAt(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := o.validateGroupPolicyID(formats); err != nil {
 		res = append(res, err)
 	}
@@ -129,6 +144,18 @@ func (o *CreateNetworkWirelessSsidIdentityPskBody) Validate(formats strfmt.Regis
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (o *CreateNetworkWirelessSsidIdentityPskBody) validateExpiresAt(formats strfmt.Registry) error {
+	if swag.IsZero(o.ExpiresAt) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("createNetworkWirelessSsidIdentityPsk"+"."+"expiresAt", "body", "date-time", o.ExpiresAt.String(), formats); err != nil {
+		return err
+	}
+
 	return nil
 }
 

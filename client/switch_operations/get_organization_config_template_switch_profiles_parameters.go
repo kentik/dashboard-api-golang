@@ -52,17 +52,25 @@ func NewGetOrganizationConfigTemplateSwitchProfilesParamsWithHTTPClient(client *
 	}
 }
 
-/* GetOrganizationConfigTemplateSwitchProfilesParams contains all the parameters to send to the API endpoint
-   for the get organization config template switch profiles operation.
+/*
+GetOrganizationConfigTemplateSwitchProfilesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization config template switch profiles operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationConfigTemplateSwitchProfilesParams struct {
 
-	// ConfigTemplateID.
+	/* ConfigTemplateID.
+
+	   Config template ID
+	*/
 	ConfigTemplateID string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

@@ -52,17 +52,25 @@ func NewGetOrganizationAdaptivePolicyPolicyParamsWithHTTPClient(client *http.Cli
 	}
 }
 
-/* GetOrganizationAdaptivePolicyPolicyParams contains all the parameters to send to the API endpoint
-   for the get organization adaptive policy policy operation.
+/*
+GetOrganizationAdaptivePolicyPolicyParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization adaptive policy policy operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationAdaptivePolicyPolicyParams struct {
 
-	// AdaptivePolicyID.
-	AdaptivePolicyID string
+	/* ID.
 
-	// OrganizationID.
+	   ID
+	*/
+	ID string
+
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration
@@ -118,15 +126,15 @@ func (o *GetOrganizationAdaptivePolicyPolicyParams) SetHTTPClient(client *http.C
 	o.HTTPClient = client
 }
 
-// WithAdaptivePolicyID adds the adaptivePolicyID to the get organization adaptive policy policy params
-func (o *GetOrganizationAdaptivePolicyPolicyParams) WithAdaptivePolicyID(adaptivePolicyID string) *GetOrganizationAdaptivePolicyPolicyParams {
-	o.SetAdaptivePolicyID(adaptivePolicyID)
+// WithID adds the id to the get organization adaptive policy policy params
+func (o *GetOrganizationAdaptivePolicyPolicyParams) WithID(id string) *GetOrganizationAdaptivePolicyPolicyParams {
+	o.SetID(id)
 	return o
 }
 
-// SetAdaptivePolicyID adds the adaptivePolicyId to the get organization adaptive policy policy params
-func (o *GetOrganizationAdaptivePolicyPolicyParams) SetAdaptivePolicyID(adaptivePolicyID string) {
-	o.AdaptivePolicyID = adaptivePolicyID
+// SetID adds the id to the get organization adaptive policy policy params
+func (o *GetOrganizationAdaptivePolicyPolicyParams) SetID(id string) {
+	o.ID = id
 }
 
 // WithOrganizationID adds the organizationID to the get organization adaptive policy policy params
@@ -148,8 +156,8 @@ func (o *GetOrganizationAdaptivePolicyPolicyParams) WriteToRequest(r runtime.Cli
 	}
 	var res []error
 
-	// path param adaptivePolicyId
-	if err := r.SetPathParam("adaptivePolicyId", o.AdaptivePolicyID); err != nil {
+	// path param id
+	if err := r.SetPathParam("id", o.ID); err != nil {
 		return err
 	}
 

@@ -52,17 +52,25 @@ func NewUpdateOrganizationLicenseParamsWithHTTPClient(client *http.Client) *Upda
 	}
 }
 
-/* UpdateOrganizationLicenseParams contains all the parameters to send to the API endpoint
-   for the update organization license operation.
+/*
+UpdateOrganizationLicenseParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update organization license operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateOrganizationLicenseParams struct {
 
-	// LicenseID.
+	/* LicenseID.
+
+	   License ID
+	*/
 	LicenseID string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	// UpdateOrganizationLicense.

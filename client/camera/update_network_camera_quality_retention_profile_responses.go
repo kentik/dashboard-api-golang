@@ -33,7 +33,7 @@ func (o *UpdateNetworkCameraQualityRetentionProfileReader) ReadResponse(response
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/camera/qualityRetentionProfiles/{qualityRetentionProfileId}] updateNetworkCameraQualityRetentionProfile", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateNetworkCameraQualityRetentionProfileOK() *UpdateNetworkCameraQuali
 	return &UpdateNetworkCameraQualityRetentionProfileOK{}
 }
 
-/* UpdateNetworkCameraQualityRetentionProfileOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkCameraQualityRetentionProfileOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateNetworkCameraQualityRetentionProfileOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network camera quality retention profile o k response
+func (o *UpdateNetworkCameraQualityRetentionProfileOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkCameraQualityRetentionProfileOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/camera/qualityRetentionProfiles/{qualityRetentionProfileId}][%d] updateNetworkCameraQualityRetentionProfileOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateNetworkCameraQualityRetentionProfileOK) readResponse(response run
 	return nil
 }
 
-/*UpdateNetworkCameraQualityRetentionProfileBody update network camera quality retention profile body
+/*
+UpdateNetworkCameraQualityRetentionProfileBody update network camera quality retention profile body
 // Example: {}
 swagger:model UpdateNetworkCameraQualityRetentionProfileBody
 */
@@ -181,6 +188,11 @@ func (o *UpdateNetworkCameraQualityRetentionProfileBody) ContextValidate(ctx con
 func (o *UpdateNetworkCameraQualityRetentionProfileBody) contextValidateVideoSettings(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.VideoSettings != nil {
+
+		if swag.IsZero(o.VideoSettings) { // not required
+			return nil
+		}
+
 		if err := o.VideoSettings.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings")
@@ -212,7 +224,8 @@ func (o *UpdateNetworkCameraQualityRetentionProfileBody) UnmarshalBinary(b []byt
 	return nil
 }
 
-/*UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings Video quality and resolution settings for all the camera models.
+/*
+UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings Video quality and resolution settings for all the camera models.
 swagger:model UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings
 */
 type UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings struct {
@@ -223,6 +236,9 @@ type UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings struct {
 	// m v12 w e
 	MV12WE *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12WE `json:"MV12WE,omitempty"`
 
+	// m v13
+	MV13 *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13 `json:"MV13,omitempty"`
+
 	// m v21 m v71
 	MV21MV71 *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV21MV71 `json:"MV21/MV71,omitempty"`
 
@@ -232,8 +248,23 @@ type UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings struct {
 	// m v32
 	MV32 *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV32 `json:"MV32,omitempty"`
 
+	// m v33
+	MV33 *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33 `json:"MV33,omitempty"`
+
 	// m v52
 	MV52 *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV52 `json:"MV52,omitempty"`
+
+	// m v63
+	MV63 *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63 `json:"MV63,omitempty"`
+
+	// m v63 x
+	MV63X *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63X `json:"MV63X,omitempty"`
+
+	// m v93
+	MV93 *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93 `json:"MV93,omitempty"`
+
+	// m v93 x
+	MV93X *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93X `json:"MV93X,omitempty"`
 }
 
 // Validate validates this update network camera quality retention profile params body video settings
@@ -245,6 +276,10 @@ func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) Vali
 	}
 
 	if err := o.validateMV12WE(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateMV13(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -260,7 +295,27 @@ func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) Vali
 		res = append(res, err)
 	}
 
+	if err := o.validateMV33(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := o.validateMV52(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateMV63(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateMV63X(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateMV93(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateMV93X(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -300,6 +355,25 @@ func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) vali
 				return ve.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV12WE")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV12WE")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) validateMV13(formats strfmt.Registry) error {
+	if swag.IsZero(o.MV13) { // not required
+		return nil
+	}
+
+	if o.MV13 != nil {
+		if err := o.MV13.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV13")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV13")
 			}
 			return err
 		}
@@ -365,6 +439,25 @@ func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) vali
 	return nil
 }
 
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) validateMV33(formats strfmt.Registry) error {
+	if swag.IsZero(o.MV33) { // not required
+		return nil
+	}
+
+	if o.MV33 != nil {
+		if err := o.MV33.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV33")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV33")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) validateMV52(formats strfmt.Registry) error {
 	if swag.IsZero(o.MV52) { // not required
 		return nil
@@ -376,6 +469,82 @@ func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) vali
 				return ve.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV52")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV52")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) validateMV63(formats strfmt.Registry) error {
+	if swag.IsZero(o.MV63) { // not required
+		return nil
+	}
+
+	if o.MV63 != nil {
+		if err := o.MV63.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV63")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV63")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) validateMV63X(formats strfmt.Registry) error {
+	if swag.IsZero(o.MV63X) { // not required
+		return nil
+	}
+
+	if o.MV63X != nil {
+		if err := o.MV63X.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV63X")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV63X")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) validateMV93(formats strfmt.Registry) error {
+	if swag.IsZero(o.MV93) { // not required
+		return nil
+	}
+
+	if o.MV93 != nil {
+		if err := o.MV93.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV93")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV93")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) validateMV93X(formats strfmt.Registry) error {
+	if swag.IsZero(o.MV93X) { // not required
+		return nil
+	}
+
+	if o.MV93X != nil {
+		if err := o.MV93X.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV93X")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV93X")
 			}
 			return err
 		}
@@ -396,6 +565,10 @@ func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) Cont
 		res = append(res, err)
 	}
 
+	if err := o.contextValidateMV13(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := o.contextValidateMV21MV71(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -408,7 +581,27 @@ func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) Cont
 		res = append(res, err)
 	}
 
+	if err := o.contextValidateMV33(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := o.contextValidateMV52(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateMV63(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateMV63X(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateMV93(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateMV93X(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -421,6 +614,11 @@ func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) Cont
 func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) contextValidateMV12MV22MV72(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.MV12MV22MV72 != nil {
+
+		if swag.IsZero(o.MV12MV22MV72) { // not required
+			return nil
+		}
+
 		if err := o.MV12MV22MV72.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV12/MV22/MV72")
@@ -437,6 +635,11 @@ func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) cont
 func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) contextValidateMV12WE(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.MV12WE != nil {
+
+		if swag.IsZero(o.MV12WE) { // not required
+			return nil
+		}
+
 		if err := o.MV12WE.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV12WE")
@@ -450,9 +653,35 @@ func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) cont
 	return nil
 }
 
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) contextValidateMV13(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.MV13 != nil {
+
+		if swag.IsZero(o.MV13) { // not required
+			return nil
+		}
+
+		if err := o.MV13.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV13")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV13")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) contextValidateMV21MV71(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.MV21MV71 != nil {
+
+		if swag.IsZero(o.MV21MV71) { // not required
+			return nil
+		}
+
 		if err := o.MV21MV71.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV21/MV71")
@@ -469,6 +698,11 @@ func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) cont
 func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) contextValidateMV22XMV72X(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.MV22XMV72X != nil {
+
+		if swag.IsZero(o.MV22XMV72X) { // not required
+			return nil
+		}
+
 		if err := o.MV22XMV72X.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV22X/MV72X")
@@ -485,6 +719,11 @@ func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) cont
 func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) contextValidateMV32(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.MV32 != nil {
+
+		if swag.IsZero(o.MV32) { // not required
+			return nil
+		}
+
 		if err := o.MV32.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV32")
@@ -498,14 +737,124 @@ func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) cont
 	return nil
 }
 
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) contextValidateMV33(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.MV33 != nil {
+
+		if swag.IsZero(o.MV33) { // not required
+			return nil
+		}
+
+		if err := o.MV33.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV33")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV33")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) contextValidateMV52(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.MV52 != nil {
+
+		if swag.IsZero(o.MV52) { // not required
+			return nil
+		}
+
 		if err := o.MV52.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV52")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV52")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) contextValidateMV63(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.MV63 != nil {
+
+		if swag.IsZero(o.MV63) { // not required
+			return nil
+		}
+
+		if err := o.MV63.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV63")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV63")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) contextValidateMV63X(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.MV63X != nil {
+
+		if swag.IsZero(o.MV63X) { // not required
+			return nil
+		}
+
+		if err := o.MV63X.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV63X")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV63X")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) contextValidateMV93(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.MV93 != nil {
+
+		if swag.IsZero(o.MV93) { // not required
+			return nil
+		}
+
+		if err := o.MV93.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV93")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV93")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) contextValidateMV93X(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.MV93X != nil {
+
+		if swag.IsZero(o.MV93X) { // not required
+			return nil
+		}
+
+		if err := o.MV93X.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV93X")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkCameraQualityRetentionProfile" + "." + "videoSettings" + "." + "MV93X")
 			}
 			return err
 		}
@@ -532,14 +881,15 @@ func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettings) Unma
 	return nil
 }
 
-/*UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12MV22MV72 Quality and resolution for MV12/MV22/MV72 camera models.
+/*
+UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12MV22MV72 Quality and resolution for MV12/MV22/MV72 camera models.
 swagger:model UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12MV22MV72
 */
 type UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12MV22MV72 struct {
 
 	// Quality of the camera. Can be one of 'Standard', 'Enhanced' or 'High'.
 	// Required: true
-	// Enum: [Standard Enhanced High]
+	// Enum: [Enhanced High Standard]
 	Quality *string `json:"quality"`
 
 	// Resolution of the camera. Can be one of '1280x720' or '1920x1080'.
@@ -570,7 +920,7 @@ var updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12MV22MV7
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Standard","Enhanced","High"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Enhanced","High","Standard"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -580,14 +930,14 @@ func init() {
 
 const (
 
-	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12MV22MV72QualityStandard captures enum value "Standard"
-	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12MV22MV72QualityStandard string = "Standard"
-
 	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12MV22MV72QualityEnhanced captures enum value "Enhanced"
 	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12MV22MV72QualityEnhanced string = "Enhanced"
 
 	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12MV22MV72QualityHigh captures enum value "High"
 	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12MV22MV72QualityHigh string = "High"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12MV22MV72QualityStandard captures enum value "Standard"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12MV22MV72QualityStandard string = "Standard"
 )
 
 // prop value enum
@@ -678,14 +1028,15 @@ func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12MV
 	return nil
 }
 
-/*UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12WE Quality and resolution for MV12WE camera models.
+/*
+UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12WE Quality and resolution for MV12WE camera models.
 swagger:model UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12WE
 */
 type UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12WE struct {
 
 	// Quality of the camera. Can be one of 'Standard', 'Enhanced' or 'High'.
 	// Required: true
-	// Enum: [Standard Enhanced High]
+	// Enum: [Enhanced High Standard]
 	Quality *string `json:"quality"`
 
 	// Resolution of the camera. Can be one of '1280x720' or '1920x1080'.
@@ -716,7 +1067,7 @@ var updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12WETypeQ
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Standard","Enhanced","High"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Enhanced","High","Standard"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -726,14 +1077,14 @@ func init() {
 
 const (
 
-	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12WEQualityStandard captures enum value "Standard"
-	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12WEQualityStandard string = "Standard"
-
 	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12WEQualityEnhanced captures enum value "Enhanced"
 	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12WEQualityEnhanced string = "Enhanced"
 
 	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12WEQualityHigh captures enum value "High"
 	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12WEQualityHigh string = "High"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12WEQualityStandard captures enum value "Standard"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12WEQualityStandard string = "Standard"
 )
 
 // prop value enum
@@ -824,14 +1175,162 @@ func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV12WE
 	return nil
 }
 
-/*UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV21MV71 Quality and resolution for MV21/MV71 camera models.
+/*
+UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13 Quality and resolution for MV13 camera models.
+swagger:model UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13
+*/
+type UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13 struct {
+
+	// Quality of the camera. Can be one of 'Standard', 'Enhanced' or 'High'.
+	// Required: true
+	// Enum: [Enhanced High Standard]
+	Quality *string `json:"quality"`
+
+	// Resolution of the camera. Can be one of '1080x1080' or '2688x1512'.
+	// Required: true
+	// Enum: [1080x1080 2688x1512]
+	Resolution *string `json:"resolution"`
+}
+
+// Validate validates this update network camera quality retention profile params body video settings m v13
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateQuality(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateResolution(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13TypeQualityPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Enhanced","High","Standard"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13TypeQualityPropEnum = append(updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13TypeQualityPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13QualityEnhanced captures enum value "Enhanced"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13QualityEnhanced string = "Enhanced"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13QualityHigh captures enum value "High"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13QualityHigh string = "High"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13QualityStandard captures enum value "Standard"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13QualityStandard string = "Standard"
+)
+
+// prop value enum
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13) validateQualityEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13TypeQualityPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13) validateQuality(formats strfmt.Registry) error {
+
+	if err := validate.Required("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV13"+"."+"quality", "body", o.Quality); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := o.validateQualityEnum("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV13"+"."+"quality", "body", *o.Quality); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13TypeResolutionPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["1080x1080","2688x1512"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13TypeResolutionPropEnum = append(updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13TypeResolutionPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13ResolutionNr1080x1080 captures enum value "1080x1080"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13ResolutionNr1080x1080 string = "1080x1080"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13ResolutionNr2688x1512 captures enum value "2688x1512"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13ResolutionNr2688x1512 string = "2688x1512"
+)
+
+// prop value enum
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13) validateResolutionEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13TypeResolutionPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13) validateResolution(formats strfmt.Registry) error {
+
+	if err := validate.Required("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV13"+"."+"resolution", "body", o.Resolution); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := o.validateResolutionEnum("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV13"+"."+"resolution", "body", *o.Resolution); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network camera quality retention profile params body video settings m v13 based on context it is used
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV13
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV21MV71 Quality and resolution for MV21/MV71 camera models.
 swagger:model UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV21MV71
 */
 type UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV21MV71 struct {
 
 	// Quality of the camera. Can be one of 'Standard', 'Enhanced' or 'High'.
 	// Required: true
-	// Enum: [Standard Enhanced High]
+	// Enum: [Enhanced High Standard]
 	Quality *string `json:"quality"`
 
 	// Resolution of the camera. Can be one of '1280x720'.
@@ -862,7 +1361,7 @@ var updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV21MV71Typ
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Standard","Enhanced","High"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Enhanced","High","Standard"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -872,14 +1371,14 @@ func init() {
 
 const (
 
-	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV21MV71QualityStandard captures enum value "Standard"
-	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV21MV71QualityStandard string = "Standard"
-
 	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV21MV71QualityEnhanced captures enum value "Enhanced"
 	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV21MV71QualityEnhanced string = "Enhanced"
 
 	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV21MV71QualityHigh captures enum value "High"
 	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV21MV71QualityHigh string = "High"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV21MV71QualityStandard captures enum value "Standard"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV21MV71QualityStandard string = "Standard"
 )
 
 // prop value enum
@@ -967,14 +1466,15 @@ func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV21MV
 	return nil
 }
 
-/*UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV22XMV72X Quality and resolution for MV22X/MV72X camera models.
+/*
+UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV22XMV72X Quality and resolution for MV22X/MV72X camera models.
 swagger:model UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV22XMV72X
 */
 type UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV22XMV72X struct {
 
 	// Quality of the camera. Can be one of 'Standard', 'Enhanced' or 'High'.
 	// Required: true
-	// Enum: [Standard Enhanced High]
+	// Enum: [Enhanced High Standard]
 	Quality *string `json:"quality"`
 
 	// Resolution of the camera. Can be one of '1280x720', '1920x1080' or '2688x1512'.
@@ -1005,7 +1505,7 @@ var updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV22XMV72XT
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Standard","Enhanced","High"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Enhanced","High","Standard"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1015,14 +1515,14 @@ func init() {
 
 const (
 
-	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV22XMV72XQualityStandard captures enum value "Standard"
-	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV22XMV72XQualityStandard string = "Standard"
-
 	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV22XMV72XQualityEnhanced captures enum value "Enhanced"
 	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV22XMV72XQualityEnhanced string = "Enhanced"
 
 	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV22XMV72XQualityHigh captures enum value "High"
 	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV22XMV72XQualityHigh string = "High"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV22XMV72XQualityStandard captures enum value "Standard"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV22XMV72XQualityStandard string = "Standard"
 )
 
 // prop value enum
@@ -1116,14 +1616,15 @@ func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV22XM
 	return nil
 }
 
-/*UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV32 Quality and resolution for MV32 camera models.
+/*
+UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV32 Quality and resolution for MV32 camera models.
 swagger:model UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV32
 */
 type UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV32 struct {
 
 	// Quality of the camera. Can be one of 'Standard', 'Enhanced' or 'High'.
 	// Required: true
-	// Enum: [Standard Enhanced High]
+	// Enum: [Enhanced High Standard]
 	Quality *string `json:"quality"`
 
 	// Resolution of the camera. Can be one of '1080x1080' or '2058x2058'.
@@ -1154,7 +1655,7 @@ var updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV32TypeQua
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Standard","Enhanced","High"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Enhanced","High","Standard"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1164,14 +1665,14 @@ func init() {
 
 const (
 
-	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV32QualityStandard captures enum value "Standard"
-	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV32QualityStandard string = "Standard"
-
 	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV32QualityEnhanced captures enum value "Enhanced"
 	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV32QualityEnhanced string = "Enhanced"
 
 	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV32QualityHigh captures enum value "High"
 	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV32QualityHigh string = "High"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV32QualityStandard captures enum value "Standard"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV32QualityStandard string = "Standard"
 )
 
 // prop value enum
@@ -1262,14 +1763,162 @@ func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV32) 
 	return nil
 }
 
-/*UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV52 Quality and resolution for MV52 camera models.
+/*
+UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33 Quality and resolution for MV33 camera models.
+swagger:model UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33
+*/
+type UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33 struct {
+
+	// Quality of the camera. Can be one of 'Standard', 'Enhanced' or 'High'.
+	// Required: true
+	// Enum: [Enhanced High Standard]
+	Quality *string `json:"quality"`
+
+	// Resolution of the camera. Can be one of '1080x1080' or '2112x2112'.
+	// Required: true
+	// Enum: [1080x1080 2112x2112]
+	Resolution *string `json:"resolution"`
+}
+
+// Validate validates this update network camera quality retention profile params body video settings m v33
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateQuality(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateResolution(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33TypeQualityPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Enhanced","High","Standard"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33TypeQualityPropEnum = append(updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33TypeQualityPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33QualityEnhanced captures enum value "Enhanced"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33QualityEnhanced string = "Enhanced"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33QualityHigh captures enum value "High"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33QualityHigh string = "High"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33QualityStandard captures enum value "Standard"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33QualityStandard string = "Standard"
+)
+
+// prop value enum
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33) validateQualityEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33TypeQualityPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33) validateQuality(formats strfmt.Registry) error {
+
+	if err := validate.Required("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV33"+"."+"quality", "body", o.Quality); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := o.validateQualityEnum("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV33"+"."+"quality", "body", *o.Quality); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33TypeResolutionPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["1080x1080","2112x2112"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33TypeResolutionPropEnum = append(updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33TypeResolutionPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33ResolutionNr1080x1080 captures enum value "1080x1080"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33ResolutionNr1080x1080 string = "1080x1080"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33ResolutionNr2112x2112 captures enum value "2112x2112"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33ResolutionNr2112x2112 string = "2112x2112"
+)
+
+// prop value enum
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33) validateResolutionEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33TypeResolutionPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33) validateResolution(formats strfmt.Registry) error {
+
+	if err := validate.Required("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV33"+"."+"resolution", "body", o.Resolution); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := o.validateResolutionEnum("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV33"+"."+"resolution", "body", *o.Resolution); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network camera quality retention profile params body video settings m v33 based on context it is used
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV33
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV52 Quality and resolution for MV52 camera models.
 swagger:model UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV52
 */
 type UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV52 struct {
 
 	// Quality of the camera. Can be one of 'Standard', 'Enhanced' or 'High'.
 	// Required: true
-	// Enum: [Standard Enhanced High]
+	// Enum: [Enhanced High Standard]
 	Quality *string `json:"quality"`
 
 	// Resolution of the camera. Can be one of '1280x720', '1920x1080', '2688x1512' or '3840x2160'.
@@ -1300,7 +1949,7 @@ var updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV52TypeQua
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Standard","Enhanced","High"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Enhanced","High","Standard"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1310,14 +1959,14 @@ func init() {
 
 const (
 
-	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV52QualityStandard captures enum value "Standard"
-	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV52QualityStandard string = "Standard"
-
 	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV52QualityEnhanced captures enum value "Enhanced"
 	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV52QualityEnhanced string = "Enhanced"
 
 	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV52QualityHigh captures enum value "High"
 	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV52QualityHigh string = "High"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV52QualityStandard captures enum value "Standard"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV52QualityStandard string = "Standard"
 )
 
 // prop value enum
@@ -1407,6 +2056,600 @@ func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV52) 
 // UnmarshalBinary interface implementation
 func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV52) UnmarshalBinary(b []byte) error {
 	var res UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV52
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63 Quality and resolution for MV63 camera models.
+swagger:model UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63
+*/
+type UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63 struct {
+
+	// Quality of the camera. Can be one of 'Standard', 'Enhanced' or 'High'.
+	// Required: true
+	// Enum: [Enhanced High Standard]
+	Quality *string `json:"quality"`
+
+	// Resolution of the camera. Can be one of '1920x1080' or '2688x1512'.
+	// Required: true
+	// Enum: [1920x1080 2688x1512]
+	Resolution *string `json:"resolution"`
+}
+
+// Validate validates this update network camera quality retention profile params body video settings m v63
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateQuality(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateResolution(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63TypeQualityPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Enhanced","High","Standard"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63TypeQualityPropEnum = append(updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63TypeQualityPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63QualityEnhanced captures enum value "Enhanced"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63QualityEnhanced string = "Enhanced"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63QualityHigh captures enum value "High"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63QualityHigh string = "High"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63QualityStandard captures enum value "Standard"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63QualityStandard string = "Standard"
+)
+
+// prop value enum
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63) validateQualityEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63TypeQualityPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63) validateQuality(formats strfmt.Registry) error {
+
+	if err := validate.Required("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV63"+"."+"quality", "body", o.Quality); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := o.validateQualityEnum("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV63"+"."+"quality", "body", *o.Quality); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63TypeResolutionPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["1920x1080","2688x1512"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63TypeResolutionPropEnum = append(updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63TypeResolutionPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63ResolutionNr1920x1080 captures enum value "1920x1080"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63ResolutionNr1920x1080 string = "1920x1080"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63ResolutionNr2688x1512 captures enum value "2688x1512"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63ResolutionNr2688x1512 string = "2688x1512"
+)
+
+// prop value enum
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63) validateResolutionEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63TypeResolutionPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63) validateResolution(formats strfmt.Registry) error {
+
+	if err := validate.Required("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV63"+"."+"resolution", "body", o.Resolution); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := o.validateResolutionEnum("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV63"+"."+"resolution", "body", *o.Resolution); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network camera quality retention profile params body video settings m v63 based on context it is used
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63X Quality and resolution for MV63X camera models.
+swagger:model UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63X
+*/
+type UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63X struct {
+
+	// Quality of the camera. Can be one of 'Standard', 'Enhanced' or 'High'.
+	// Required: true
+	// Enum: [Enhanced High Standard]
+	Quality *string `json:"quality"`
+
+	// Resolution of the camera. Can be one of '1920x1080', '2688x1512' or '3840x2160'.
+	// Required: true
+	// Enum: [1920x1080 2688x1512 3840x2160]
+	Resolution *string `json:"resolution"`
+}
+
+// Validate validates this update network camera quality retention profile params body video settings m v63 x
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63X) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateQuality(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateResolution(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63XTypeQualityPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Enhanced","High","Standard"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63XTypeQualityPropEnum = append(updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63XTypeQualityPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63XQualityEnhanced captures enum value "Enhanced"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63XQualityEnhanced string = "Enhanced"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63XQualityHigh captures enum value "High"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63XQualityHigh string = "High"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63XQualityStandard captures enum value "Standard"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63XQualityStandard string = "Standard"
+)
+
+// prop value enum
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63X) validateQualityEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63XTypeQualityPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63X) validateQuality(formats strfmt.Registry) error {
+
+	if err := validate.Required("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV63X"+"."+"quality", "body", o.Quality); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := o.validateQualityEnum("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV63X"+"."+"quality", "body", *o.Quality); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63XTypeResolutionPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["1920x1080","2688x1512","3840x2160"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63XTypeResolutionPropEnum = append(updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63XTypeResolutionPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63XResolutionNr1920x1080 captures enum value "1920x1080"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63XResolutionNr1920x1080 string = "1920x1080"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63XResolutionNr2688x1512 captures enum value "2688x1512"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63XResolutionNr2688x1512 string = "2688x1512"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63XResolutionNr3840x2160 captures enum value "3840x2160"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63XResolutionNr3840x2160 string = "3840x2160"
+)
+
+// prop value enum
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63X) validateResolutionEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63XTypeResolutionPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63X) validateResolution(formats strfmt.Registry) error {
+
+	if err := validate.Required("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV63X"+"."+"resolution", "body", o.Resolution); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := o.validateResolutionEnum("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV63X"+"."+"resolution", "body", *o.Resolution); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network camera quality retention profile params body video settings m v63 x based on context it is used
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63X) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63X) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63X) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV63X
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93 Quality and resolution for MV93 camera models.
+swagger:model UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93
+*/
+type UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93 struct {
+
+	// Quality of the camera. Can be one of 'Standard', 'Enhanced' or 'High'.
+	// Required: true
+	// Enum: [Enhanced High Standard]
+	Quality *string `json:"quality"`
+
+	// Resolution of the camera. Can be one of '1080x1080' or '2112x2112'.
+	// Required: true
+	// Enum: [1080x1080 2112x2112]
+	Resolution *string `json:"resolution"`
+}
+
+// Validate validates this update network camera quality retention profile params body video settings m v93
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateQuality(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateResolution(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93TypeQualityPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Enhanced","High","Standard"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93TypeQualityPropEnum = append(updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93TypeQualityPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93QualityEnhanced captures enum value "Enhanced"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93QualityEnhanced string = "Enhanced"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93QualityHigh captures enum value "High"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93QualityHigh string = "High"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93QualityStandard captures enum value "Standard"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93QualityStandard string = "Standard"
+)
+
+// prop value enum
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93) validateQualityEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93TypeQualityPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93) validateQuality(formats strfmt.Registry) error {
+
+	if err := validate.Required("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV93"+"."+"quality", "body", o.Quality); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := o.validateQualityEnum("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV93"+"."+"quality", "body", *o.Quality); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93TypeResolutionPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["1080x1080","2112x2112"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93TypeResolutionPropEnum = append(updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93TypeResolutionPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93ResolutionNr1080x1080 captures enum value "1080x1080"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93ResolutionNr1080x1080 string = "1080x1080"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93ResolutionNr2112x2112 captures enum value "2112x2112"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93ResolutionNr2112x2112 string = "2112x2112"
+)
+
+// prop value enum
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93) validateResolutionEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93TypeResolutionPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93) validateResolution(formats strfmt.Registry) error {
+
+	if err := validate.Required("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV93"+"."+"resolution", "body", o.Resolution); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := o.validateResolutionEnum("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV93"+"."+"resolution", "body", *o.Resolution); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network camera quality retention profile params body video settings m v93 based on context it is used
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93X Quality and resolution for MV93X camera models.
+swagger:model UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93X
+*/
+type UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93X struct {
+
+	// Quality of the camera. Can be one of 'Standard', 'Enhanced' or 'High'.
+	// Required: true
+	// Enum: [Enhanced High Standard]
+	Quality *string `json:"quality"`
+
+	// Resolution of the camera. Can be one of '1080x1080', '2112x2112' or '2880x2880'.
+	// Required: true
+	// Enum: [1080x1080 2112x2112 2880x2880]
+	Resolution *string `json:"resolution"`
+}
+
+// Validate validates this update network camera quality retention profile params body video settings m v93 x
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93X) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateQuality(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateResolution(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93XTypeQualityPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Enhanced","High","Standard"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93XTypeQualityPropEnum = append(updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93XTypeQualityPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93XQualityEnhanced captures enum value "Enhanced"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93XQualityEnhanced string = "Enhanced"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93XQualityHigh captures enum value "High"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93XQualityHigh string = "High"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93XQualityStandard captures enum value "Standard"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93XQualityStandard string = "Standard"
+)
+
+// prop value enum
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93X) validateQualityEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93XTypeQualityPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93X) validateQuality(formats strfmt.Registry) error {
+
+	if err := validate.Required("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV93X"+"."+"quality", "body", o.Quality); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := o.validateQualityEnum("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV93X"+"."+"quality", "body", *o.Quality); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93XTypeResolutionPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["1080x1080","2112x2112","2880x2880"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93XTypeResolutionPropEnum = append(updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93XTypeResolutionPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93XResolutionNr1080x1080 captures enum value "1080x1080"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93XResolutionNr1080x1080 string = "1080x1080"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93XResolutionNr2112x2112 captures enum value "2112x2112"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93XResolutionNr2112x2112 string = "2112x2112"
+
+	// UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93XResolutionNr2880x2880 captures enum value "2880x2880"
+	UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93XResolutionNr2880x2880 string = "2880x2880"
+)
+
+// prop value enum
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93X) validateResolutionEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93XTypeResolutionPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93X) validateResolution(formats strfmt.Registry) error {
+
+	if err := validate.Required("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV93X"+"."+"resolution", "body", o.Resolution); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := o.validateResolutionEnum("updateNetworkCameraQualityRetentionProfile"+"."+"videoSettings"+"."+"MV93X"+"."+"resolution", "body", *o.Resolution); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network camera quality retention profile params body video settings m v93 x based on context it is used
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93X) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93X) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93X) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkCameraQualityRetentionProfileParamsBodyVideoSettingsMV93X
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

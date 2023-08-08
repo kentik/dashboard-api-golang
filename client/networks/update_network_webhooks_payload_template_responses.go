@@ -9,7 +9,9 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"strconv"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -30,7 +32,7 @@ func (o *UpdateNetworkWebhooksPayloadTemplateReader) ReadResponse(response runti
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/webhooks/payloadTemplates/{payloadTemplateId}] updateNetworkWebhooksPayloadTemplate", response, response.Code())
 	}
 }
 
@@ -39,12 +41,13 @@ func NewUpdateNetworkWebhooksPayloadTemplateOK() *UpdateNetworkWebhooksPayloadTe
 	return &UpdateNetworkWebhooksPayloadTemplateOK{}
 }
 
-/* UpdateNetworkWebhooksPayloadTemplateOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkWebhooksPayloadTemplateOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateNetworkWebhooksPayloadTemplateOK struct {
-	Payload interface{}
+	Payload *UpdateNetworkWebhooksPayloadTemplateOKBody
 }
 
 // IsSuccess returns true when this update network webhooks payload template o k response has a 2xx status code
@@ -72,6 +75,11 @@ func (o *UpdateNetworkWebhooksPayloadTemplateOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network webhooks payload template o k response
+func (o *UpdateNetworkWebhooksPayloadTemplateOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkWebhooksPayloadTemplateOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/webhooks/payloadTemplates/{payloadTemplateId}][%d] updateNetworkWebhooksPayloadTemplateOK  %+v", 200, o.Payload)
 }
@@ -80,22 +88,25 @@ func (o *UpdateNetworkWebhooksPayloadTemplateOK) String() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/webhooks/payloadTemplates/{payloadTemplateId}][%d] updateNetworkWebhooksPayloadTemplateOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateNetworkWebhooksPayloadTemplateOK) GetPayload() interface{} {
+func (o *UpdateNetworkWebhooksPayloadTemplateOK) GetPayload() *UpdateNetworkWebhooksPayloadTemplateOKBody {
 	return o.Payload
 }
 
 func (o *UpdateNetworkWebhooksPayloadTemplateOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateNetworkWebhooksPayloadTemplateOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateNetworkWebhooksPayloadTemplateBody update network webhooks payload template body
-// Example: {}
+/*
+UpdateNetworkWebhooksPayloadTemplateBody update network webhooks payload template body
+// Example: {"body":"{\"event_type\":\"{{alertTypeId}}\",\"client_payload\":{\"text\":\"{{alertData}}\"}}","bodyFile":"Qm9keSBGaWxl","headers":[{"name":"Authorization","template":"Bearer {{sharedSecret}}"}],"headersFile":"SGVhZGVycyBGaWxl","name":"Custom Template"}
 swagger:model UpdateNetworkWebhooksPayloadTemplateBody
 */
 type UpdateNetworkWebhooksPayloadTemplateBody struct {
@@ -108,7 +119,7 @@ type UpdateNetworkWebhooksPayloadTemplateBody struct {
 	BodyFile strfmt.Base64 `json:"bodyFile,omitempty"`
 
 	// The liquid template used with the webhook headers.
-	Headers string `json:"headers,omitempty"`
+	Headers []*UpdateNetworkWebhooksPayloadTemplateParamsBodyHeadersItems0 `json:"headers"`
 
 	// A file containing the liquid template used with the webhook headers.
 	// Format: byte
@@ -120,11 +131,80 @@ type UpdateNetworkWebhooksPayloadTemplateBody struct {
 
 // Validate validates this update network webhooks payload template body
 func (o *UpdateNetworkWebhooksPayloadTemplateBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateHeaders(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
 	return nil
 }
 
-// ContextValidate validates this update network webhooks payload template body based on context it is used
+func (o *UpdateNetworkWebhooksPayloadTemplateBody) validateHeaders(formats strfmt.Registry) error {
+	if swag.IsZero(o.Headers) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Headers); i++ {
+		if swag.IsZero(o.Headers[i]) { // not required
+			continue
+		}
+
+		if o.Headers[i] != nil {
+			if err := o.Headers[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkWebhooksPayloadTemplate" + "." + "headers" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkWebhooksPayloadTemplate" + "." + "headers" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network webhooks payload template body based on the context it is used
 func (o *UpdateNetworkWebhooksPayloadTemplateBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateHeaders(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWebhooksPayloadTemplateBody) contextValidateHeaders(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Headers); i++ {
+
+		if o.Headers[i] != nil {
+
+			if swag.IsZero(o.Headers[i]) { // not required
+				return nil
+			}
+
+			if err := o.Headers[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkWebhooksPayloadTemplate" + "." + "headers" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkWebhooksPayloadTemplate" + "." + "headers" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -139,6 +219,392 @@ func (o *UpdateNetworkWebhooksPayloadTemplateBody) MarshalBinary() ([]byte, erro
 // UnmarshalBinary interface implementation
 func (o *UpdateNetworkWebhooksPayloadTemplateBody) UnmarshalBinary(b []byte) error {
 	var res UpdateNetworkWebhooksPayloadTemplateBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWebhooksPayloadTemplateOKBody update network webhooks payload template o k body
+swagger:model UpdateNetworkWebhooksPayloadTemplateOKBody
+*/
+type UpdateNetworkWebhooksPayloadTemplateOKBody struct {
+
+	// The body of the payload template, in liquid template
+	Body string `json:"body,omitempty"`
+
+	// The payload template headers, will be rendered as a key-value pair in the webhook.
+	Headers []*UpdateNetworkWebhooksPayloadTemplateOKBodyHeadersItems0 `json:"headers"`
+
+	// The name of the payload template
+	Name string `json:"name,omitempty"`
+
+	// Webhook payload template Id
+	PayloadTemplateID string `json:"payloadTemplateId,omitempty"`
+
+	// sharing
+	Sharing *UpdateNetworkWebhooksPayloadTemplateOKBodySharing `json:"sharing,omitempty"`
+
+	// The type of the payload template
+	Type string `json:"type,omitempty"`
+}
+
+// Validate validates this update network webhooks payload template o k body
+func (o *UpdateNetworkWebhooksPayloadTemplateOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateHeaders(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSharing(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWebhooksPayloadTemplateOKBody) validateHeaders(formats strfmt.Registry) error {
+	if swag.IsZero(o.Headers) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Headers); i++ {
+		if swag.IsZero(o.Headers[i]) { // not required
+			continue
+		}
+
+		if o.Headers[i] != nil {
+			if err := o.Headers[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkWebhooksPayloadTemplateOK" + "." + "headers" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkWebhooksPayloadTemplateOK" + "." + "headers" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWebhooksPayloadTemplateOKBody) validateSharing(formats strfmt.Registry) error {
+	if swag.IsZero(o.Sharing) { // not required
+		return nil
+	}
+
+	if o.Sharing != nil {
+		if err := o.Sharing.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWebhooksPayloadTemplateOK" + "." + "sharing")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWebhooksPayloadTemplateOK" + "." + "sharing")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network webhooks payload template o k body based on the context it is used
+func (o *UpdateNetworkWebhooksPayloadTemplateOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateHeaders(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateSharing(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWebhooksPayloadTemplateOKBody) contextValidateHeaders(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Headers); i++ {
+
+		if o.Headers[i] != nil {
+
+			if swag.IsZero(o.Headers[i]) { // not required
+				return nil
+			}
+
+			if err := o.Headers[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkWebhooksPayloadTemplateOK" + "." + "headers" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkWebhooksPayloadTemplateOK" + "." + "headers" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWebhooksPayloadTemplateOKBody) contextValidateSharing(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Sharing != nil {
+
+		if swag.IsZero(o.Sharing) { // not required
+			return nil
+		}
+
+		if err := o.Sharing.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWebhooksPayloadTemplateOK" + "." + "sharing")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWebhooksPayloadTemplateOK" + "." + "sharing")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWebhooksPayloadTemplateOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWebhooksPayloadTemplateOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWebhooksPayloadTemplateOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWebhooksPayloadTemplateOKBodyHeadersItems0 update network webhooks payload template o k body headers items0
+swagger:model UpdateNetworkWebhooksPayloadTemplateOKBodyHeadersItems0
+*/
+type UpdateNetworkWebhooksPayloadTemplateOKBodyHeadersItems0 struct {
+
+	// The name of the header attribute
+	Name string `json:"name,omitempty"`
+
+	// The value returned in the header attribute, in liquid template
+	Template string `json:"template,omitempty"`
+}
+
+// Validate validates this update network webhooks payload template o k body headers items0
+func (o *UpdateNetworkWebhooksPayloadTemplateOKBodyHeadersItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network webhooks payload template o k body headers items0 based on context it is used
+func (o *UpdateNetworkWebhooksPayloadTemplateOKBodyHeadersItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWebhooksPayloadTemplateOKBodyHeadersItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWebhooksPayloadTemplateOKBodyHeadersItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWebhooksPayloadTemplateOKBodyHeadersItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWebhooksPayloadTemplateOKBodySharing Information on which entities have access to the template
+swagger:model UpdateNetworkWebhooksPayloadTemplateOKBodySharing
+*/
+type UpdateNetworkWebhooksPayloadTemplateOKBodySharing struct {
+
+	// by network
+	ByNetwork *UpdateNetworkWebhooksPayloadTemplateOKBodySharingByNetwork `json:"byNetwork,omitempty"`
+}
+
+// Validate validates this update network webhooks payload template o k body sharing
+func (o *UpdateNetworkWebhooksPayloadTemplateOKBodySharing) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateByNetwork(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWebhooksPayloadTemplateOKBodySharing) validateByNetwork(formats strfmt.Registry) error {
+	if swag.IsZero(o.ByNetwork) { // not required
+		return nil
+	}
+
+	if o.ByNetwork != nil {
+		if err := o.ByNetwork.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWebhooksPayloadTemplateOK" + "." + "sharing" + "." + "byNetwork")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWebhooksPayloadTemplateOK" + "." + "sharing" + "." + "byNetwork")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network webhooks payload template o k body sharing based on the context it is used
+func (o *UpdateNetworkWebhooksPayloadTemplateOKBodySharing) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateByNetwork(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWebhooksPayloadTemplateOKBodySharing) contextValidateByNetwork(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ByNetwork != nil {
+
+		if swag.IsZero(o.ByNetwork) { // not required
+			return nil
+		}
+
+		if err := o.ByNetwork.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkWebhooksPayloadTemplateOK" + "." + "sharing" + "." + "byNetwork")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkWebhooksPayloadTemplateOK" + "." + "sharing" + "." + "byNetwork")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWebhooksPayloadTemplateOKBodySharing) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWebhooksPayloadTemplateOKBodySharing) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWebhooksPayloadTemplateOKBodySharing
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWebhooksPayloadTemplateOKBodySharingByNetwork Information on network access to the template
+swagger:model UpdateNetworkWebhooksPayloadTemplateOKBodySharingByNetwork
+*/
+type UpdateNetworkWebhooksPayloadTemplateOKBodySharingByNetwork struct {
+
+	// Indicates whether network admins may modify this template
+	AdminsCanModify bool `json:"adminsCanModify,omitempty"`
+}
+
+// Validate validates this update network webhooks payload template o k body sharing by network
+func (o *UpdateNetworkWebhooksPayloadTemplateOKBodySharingByNetwork) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network webhooks payload template o k body sharing by network based on context it is used
+func (o *UpdateNetworkWebhooksPayloadTemplateOKBodySharingByNetwork) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWebhooksPayloadTemplateOKBodySharingByNetwork) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWebhooksPayloadTemplateOKBodySharingByNetwork) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWebhooksPayloadTemplateOKBodySharingByNetwork
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWebhooksPayloadTemplateParamsBodyHeadersItems0 update network webhooks payload template params body headers items0
+swagger:model UpdateNetworkWebhooksPayloadTemplateParamsBodyHeadersItems0
+*/
+type UpdateNetworkWebhooksPayloadTemplateParamsBodyHeadersItems0 struct {
+
+	// The name of the header template
+	Name string `json:"name,omitempty"`
+
+	// The liquid template for the headers
+	Template string `json:"template,omitempty"`
+}
+
+// Validate validates this update network webhooks payload template params body headers items0
+func (o *UpdateNetworkWebhooksPayloadTemplateParamsBodyHeadersItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network webhooks payload template params body headers items0 based on context it is used
+func (o *UpdateNetworkWebhooksPayloadTemplateParamsBodyHeadersItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWebhooksPayloadTemplateParamsBodyHeadersItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWebhooksPayloadTemplateParamsBodyHeadersItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWebhooksPayloadTemplateParamsBodyHeadersItems0
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

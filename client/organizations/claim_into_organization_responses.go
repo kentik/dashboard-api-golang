@@ -34,7 +34,7 @@ func (o *ClaimIntoOrganizationReader) ReadResponse(response runtime.ClientRespon
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /organizations/{organizationId}/claim] claimIntoOrganization", response, response.Code())
 	}
 }
 
@@ -43,12 +43,13 @@ func NewClaimIntoOrganizationOK() *ClaimIntoOrganizationOK {
 	return &ClaimIntoOrganizationOK{}
 }
 
-/* ClaimIntoOrganizationOK describes a response with status code 200, with default header values.
+/*
+ClaimIntoOrganizationOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type ClaimIntoOrganizationOK struct {
-	Payload interface{}
+	Payload *ClaimIntoOrganizationOKBody
 }
 
 // IsSuccess returns true when this claim into organization o k response has a 2xx status code
@@ -76,6 +77,11 @@ func (o *ClaimIntoOrganizationOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the claim into organization o k response
+func (o *ClaimIntoOrganizationOK) Code() int {
+	return 200
+}
+
 func (o *ClaimIntoOrganizationOK) Error() string {
 	return fmt.Sprintf("[POST /organizations/{organizationId}/claim][%d] claimIntoOrganizationOK  %+v", 200, o.Payload)
 }
@@ -84,21 +90,24 @@ func (o *ClaimIntoOrganizationOK) String() string {
 	return fmt.Sprintf("[POST /organizations/{organizationId}/claim][%d] claimIntoOrganizationOK  %+v", 200, o.Payload)
 }
 
-func (o *ClaimIntoOrganizationOK) GetPayload() interface{} {
+func (o *ClaimIntoOrganizationOK) GetPayload() *ClaimIntoOrganizationOKBody {
 	return o.Payload
 }
 
 func (o *ClaimIntoOrganizationOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(ClaimIntoOrganizationOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*ClaimIntoOrganizationBody claim into organization body
+/*
+ClaimIntoOrganizationBody claim into organization body
 // Example: {"licenses":[{"key":"Z2XXXXXXXXXX","mode":"addDevices"}],"orders":["4CXXXXXXX"],"serials":["Q234-ABCD-5678"]}
 swagger:model ClaimIntoOrganizationBody
 */
@@ -173,6 +182,11 @@ func (o *ClaimIntoOrganizationBody) contextValidateLicenses(ctx context.Context,
 	for i := 0; i < len(o.Licenses); i++ {
 
 		if o.Licenses[i] != nil {
+
+			if swag.IsZero(o.Licenses[i]) { // not required
+				return nil
+			}
+
 			if err := o.Licenses[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("claimIntoOrganization" + "." + "licenses" + "." + strconv.Itoa(i))
@@ -206,7 +220,162 @@ func (o *ClaimIntoOrganizationBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*ClaimIntoOrganizationParamsBodyLicensesItems0 claim into organization params body licenses items0
+/*
+ClaimIntoOrganizationOKBody claim into organization o k body
+swagger:model ClaimIntoOrganizationOKBody
+*/
+type ClaimIntoOrganizationOKBody struct {
+
+	// The licenses claimed
+	Licenses []*ClaimIntoOrganizationOKBodyLicensesItems0 `json:"licenses"`
+
+	// The numbers of the orders claimed
+	Orders []string `json:"orders"`
+
+	// The serials of the devices claimed
+	Serials []string `json:"serials"`
+}
+
+// Validate validates this claim into organization o k body
+func (o *ClaimIntoOrganizationOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateLicenses(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *ClaimIntoOrganizationOKBody) validateLicenses(formats strfmt.Registry) error {
+	if swag.IsZero(o.Licenses) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Licenses); i++ {
+		if swag.IsZero(o.Licenses[i]) { // not required
+			continue
+		}
+
+		if o.Licenses[i] != nil {
+			if err := o.Licenses[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("claimIntoOrganizationOK" + "." + "licenses" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("claimIntoOrganizationOK" + "." + "licenses" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this claim into organization o k body based on the context it is used
+func (o *ClaimIntoOrganizationOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateLicenses(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *ClaimIntoOrganizationOKBody) contextValidateLicenses(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Licenses); i++ {
+
+		if o.Licenses[i] != nil {
+
+			if swag.IsZero(o.Licenses[i]) { // not required
+				return nil
+			}
+
+			if err := o.Licenses[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("claimIntoOrganizationOK" + "." + "licenses" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("claimIntoOrganizationOK" + "." + "licenses" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *ClaimIntoOrganizationOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *ClaimIntoOrganizationOKBody) UnmarshalBinary(b []byte) error {
+	var res ClaimIntoOrganizationOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+ClaimIntoOrganizationOKBodyLicensesItems0 claim into organization o k body licenses items0
+swagger:model ClaimIntoOrganizationOKBodyLicensesItems0
+*/
+type ClaimIntoOrganizationOKBodyLicensesItems0 struct {
+
+	// The key of the license
+	Key string `json:"key,omitempty"`
+
+	// The mode of the license
+	Mode string `json:"mode,omitempty"`
+}
+
+// Validate validates this claim into organization o k body licenses items0
+func (o *ClaimIntoOrganizationOKBodyLicensesItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this claim into organization o k body licenses items0 based on context it is used
+func (o *ClaimIntoOrganizationOKBodyLicensesItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *ClaimIntoOrganizationOKBodyLicensesItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *ClaimIntoOrganizationOKBodyLicensesItems0) UnmarshalBinary(b []byte) error {
+	var res ClaimIntoOrganizationOKBodyLicensesItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+ClaimIntoOrganizationParamsBodyLicensesItems0 claim into organization params body licenses items0
 swagger:model ClaimIntoOrganizationParamsBodyLicensesItems0
 */
 type ClaimIntoOrganizationParamsBodyLicensesItems0 struct {

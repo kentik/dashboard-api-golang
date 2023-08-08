@@ -33,7 +33,7 @@ func (o *CreateOrganizationAdaptivePolicyGroupReader) ReadResponse(response runt
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /organizations/{organizationId}/adaptivePolicy/groups] createOrganizationAdaptivePolicyGroup", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewCreateOrganizationAdaptivePolicyGroupCreated() *CreateOrganizationAdapti
 	return &CreateOrganizationAdaptivePolicyGroupCreated{}
 }
 
-/* CreateOrganizationAdaptivePolicyGroupCreated describes a response with status code 201, with default header values.
+/*
+CreateOrganizationAdaptivePolicyGroupCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *CreateOrganizationAdaptivePolicyGroupCreated) IsCode(code int) bool {
 	return code == 201
 }
 
+// Code gets the status code for the create organization adaptive policy group created response
+func (o *CreateOrganizationAdaptivePolicyGroupCreated) Code() int {
+	return 201
+}
+
 func (o *CreateOrganizationAdaptivePolicyGroupCreated) Error() string {
 	return fmt.Sprintf("[POST /organizations/{organizationId}/adaptivePolicy/groups][%d] createOrganizationAdaptivePolicyGroupCreated  %+v", 201, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *CreateOrganizationAdaptivePolicyGroupCreated) readResponse(response run
 	return nil
 }
 
-/*CreateOrganizationAdaptivePolicyGroupBody create organization adaptive policy group body
+/*
+CreateOrganizationAdaptivePolicyGroupBody create organization adaptive policy group body
 // Example: {"description":"Group of XYZ Corp Employees","isDefaultGroup":false,"name":"Employee Group","policyObjects":[{"id":"2345","name":"Example Policy Object"}],"requiredIpMappings":[],"sgt":1000}
 swagger:model CreateOrganizationAdaptivePolicyGroupBody
 */
@@ -203,6 +210,11 @@ func (o *CreateOrganizationAdaptivePolicyGroupBody) contextValidatePolicyObjects
 	for i := 0; i < len(o.PolicyObjects); i++ {
 
 		if o.PolicyObjects[i] != nil {
+
+			if swag.IsZero(o.PolicyObjects[i]) { // not required
+				return nil
+			}
+
 			if err := o.PolicyObjects[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("createOrganizationAdaptivePolicyGroup" + "." + "policyObjects" + "." + strconv.Itoa(i))
@@ -236,7 +248,8 @@ func (o *CreateOrganizationAdaptivePolicyGroupBody) UnmarshalBinary(b []byte) er
 	return nil
 }
 
-/*CreateOrganizationAdaptivePolicyGroupParamsBodyPolicyObjectsItems0 create organization adaptive policy group params body policy objects items0
+/*
+CreateOrganizationAdaptivePolicyGroupParamsBodyPolicyObjectsItems0 create organization adaptive policy group params body policy objects items0
 swagger:model CreateOrganizationAdaptivePolicyGroupParamsBodyPolicyObjectsItems0
 */
 type CreateOrganizationAdaptivePolicyGroupParamsBodyPolicyObjectsItems0 struct {

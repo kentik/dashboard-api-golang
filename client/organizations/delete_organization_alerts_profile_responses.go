@@ -27,7 +27,7 @@ func (o *DeleteOrganizationAlertsProfileReader) ReadResponse(response runtime.Cl
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[DELETE /organizations/{organizationId}/alerts/profiles/{alertConfigId}] deleteOrganizationAlertsProfile", response, response.Code())
 	}
 }
 
@@ -36,7 +36,8 @@ func NewDeleteOrganizationAlertsProfileNoContent() *DeleteOrganizationAlertsProf
 	return &DeleteOrganizationAlertsProfileNoContent{}
 }
 
-/* DeleteOrganizationAlertsProfileNoContent describes a response with status code 204, with default header values.
+/*
+DeleteOrganizationAlertsProfileNoContent describes a response with status code 204, with default header values.
 
 Successful operation
 */
@@ -66,6 +67,11 @@ func (o *DeleteOrganizationAlertsProfileNoContent) IsServerError() bool {
 // IsCode returns true when this delete organization alerts profile no content response a status code equal to that given
 func (o *DeleteOrganizationAlertsProfileNoContent) IsCode(code int) bool {
 	return code == 204
+}
+
+// Code gets the status code for the delete organization alerts profile no content response
+func (o *DeleteOrganizationAlertsProfileNoContent) Code() int {
+	return 204
 }
 
 func (o *DeleteOrganizationAlertsProfileNoContent) Error() string {

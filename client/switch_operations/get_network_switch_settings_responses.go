@@ -6,11 +6,17 @@ package switch_operations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+	"encoding/json"
 	"fmt"
 	"io"
+	"strconv"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // GetNetworkSwitchSettingsReader is a Reader for the GetNetworkSwitchSettings structure.
@@ -28,7 +34,7 @@ func (o *GetNetworkSwitchSettingsReader) ReadResponse(response runtime.ClientRes
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/switch/settings] getNetworkSwitchSettings", response, response.Code())
 	}
 }
 
@@ -37,12 +43,13 @@ func NewGetNetworkSwitchSettingsOK() *GetNetworkSwitchSettingsOK {
 	return &GetNetworkSwitchSettingsOK{}
 }
 
-/* GetNetworkSwitchSettingsOK describes a response with status code 200, with default header values.
+/*
+GetNetworkSwitchSettingsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkSwitchSettingsOK struct {
-	Payload interface{}
+	Payload *GetNetworkSwitchSettingsOKBody
 }
 
 // IsSuccess returns true when this get network switch settings o k response has a 2xx status code
@@ -70,6 +77,11 @@ func (o *GetNetworkSwitchSettingsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network switch settings o k response
+func (o *GetNetworkSwitchSettingsOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkSwitchSettingsOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/switch/settings][%d] getNetworkSwitchSettingsOK  %+v", 200, o.Payload)
 }
@@ -78,16 +90,316 @@ func (o *GetNetworkSwitchSettingsOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/switch/settings][%d] getNetworkSwitchSettingsOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkSwitchSettingsOK) GetPayload() interface{} {
+func (o *GetNetworkSwitchSettingsOK) GetPayload() *GetNetworkSwitchSettingsOKBody {
 	return o.Payload
 }
 
 func (o *GetNetworkSwitchSettingsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetNetworkSwitchSettingsOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkSwitchSettingsOKBody get network switch settings o k body
+swagger:model GetNetworkSwitchSettingsOKBody
+*/
+type GetNetworkSwitchSettingsOKBody struct {
+
+	// Exceptions on a per switch basis to "useCombinedPower"
+	PowerExceptions []*GetNetworkSwitchSettingsOKBodyPowerExceptionsItems0 `json:"powerExceptions"`
+
+	// uplink client sampling
+	UplinkClientSampling *GetNetworkSwitchSettingsOKBodyUplinkClientSampling `json:"uplinkClientSampling,omitempty"`
+
+	// The use Combined Power as the default behavior of secondary power supplies on supported devices.
+	UseCombinedPower bool `json:"useCombinedPower,omitempty"`
+
+	// Management VLAN
+	Vlan int64 `json:"vlan,omitempty"`
+}
+
+// Validate validates this get network switch settings o k body
+func (o *GetNetworkSwitchSettingsOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validatePowerExceptions(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateUplinkClientSampling(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkSwitchSettingsOKBody) validatePowerExceptions(formats strfmt.Registry) error {
+	if swag.IsZero(o.PowerExceptions) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.PowerExceptions); i++ {
+		if swag.IsZero(o.PowerExceptions[i]) { // not required
+			continue
+		}
+
+		if o.PowerExceptions[i] != nil {
+			if err := o.PowerExceptions[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkSwitchSettingsOK" + "." + "powerExceptions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkSwitchSettingsOK" + "." + "powerExceptions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSwitchSettingsOKBody) validateUplinkClientSampling(formats strfmt.Registry) error {
+	if swag.IsZero(o.UplinkClientSampling) { // not required
+		return nil
+	}
+
+	if o.UplinkClientSampling != nil {
+		if err := o.UplinkClientSampling.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkSwitchSettingsOK" + "." + "uplinkClientSampling")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkSwitchSettingsOK" + "." + "uplinkClientSampling")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network switch settings o k body based on the context it is used
+func (o *GetNetworkSwitchSettingsOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidatePowerExceptions(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateUplinkClientSampling(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkSwitchSettingsOKBody) contextValidatePowerExceptions(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.PowerExceptions); i++ {
+
+		if o.PowerExceptions[i] != nil {
+
+			if swag.IsZero(o.PowerExceptions[i]) { // not required
+				return nil
+			}
+
+			if err := o.PowerExceptions[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkSwitchSettingsOK" + "." + "powerExceptions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkSwitchSettingsOK" + "." + "powerExceptions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSwitchSettingsOKBody) contextValidateUplinkClientSampling(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.UplinkClientSampling != nil {
+
+		if swag.IsZero(o.UplinkClientSampling) { // not required
+			return nil
+		}
+
+		if err := o.UplinkClientSampling.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkSwitchSettingsOK" + "." + "uplinkClientSampling")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkSwitchSettingsOK" + "." + "uplinkClientSampling")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchSettingsOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchSettingsOKBody) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchSettingsOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSwitchSettingsOKBodyPowerExceptionsItems0 get network switch settings o k body power exceptions items0
+swagger:model GetNetworkSwitchSettingsOKBodyPowerExceptionsItems0
+*/
+type GetNetworkSwitchSettingsOKBodyPowerExceptionsItems0 struct {
+
+	// Per switch exception (combined, redundant, useNetworkSetting)
+	// Enum: [combined redundant useNetworkSetting]
+	PowerType string `json:"powerType,omitempty"`
+
+	// Serial number of the switch
+	Serial string `json:"serial,omitempty"`
+}
+
+// Validate validates this get network switch settings o k body power exceptions items0
+func (o *GetNetworkSwitchSettingsOKBodyPowerExceptionsItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validatePowerType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var getNetworkSwitchSettingsOKBodyPowerExceptionsItems0TypePowerTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["combined","redundant","useNetworkSetting"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getNetworkSwitchSettingsOKBodyPowerExceptionsItems0TypePowerTypePropEnum = append(getNetworkSwitchSettingsOKBodyPowerExceptionsItems0TypePowerTypePropEnum, v)
+	}
+}
+
+const (
+
+	// GetNetworkSwitchSettingsOKBodyPowerExceptionsItems0PowerTypeCombined captures enum value "combined"
+	GetNetworkSwitchSettingsOKBodyPowerExceptionsItems0PowerTypeCombined string = "combined"
+
+	// GetNetworkSwitchSettingsOKBodyPowerExceptionsItems0PowerTypeRedundant captures enum value "redundant"
+	GetNetworkSwitchSettingsOKBodyPowerExceptionsItems0PowerTypeRedundant string = "redundant"
+
+	// GetNetworkSwitchSettingsOKBodyPowerExceptionsItems0PowerTypeUseNetworkSetting captures enum value "useNetworkSetting"
+	GetNetworkSwitchSettingsOKBodyPowerExceptionsItems0PowerTypeUseNetworkSetting string = "useNetworkSetting"
+)
+
+// prop value enum
+func (o *GetNetworkSwitchSettingsOKBodyPowerExceptionsItems0) validatePowerTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getNetworkSwitchSettingsOKBodyPowerExceptionsItems0TypePowerTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetNetworkSwitchSettingsOKBodyPowerExceptionsItems0) validatePowerType(formats strfmt.Registry) error {
+	if swag.IsZero(o.PowerType) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validatePowerTypeEnum("powerType", "body", o.PowerType); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this get network switch settings o k body power exceptions items0 based on context it is used
+func (o *GetNetworkSwitchSettingsOKBodyPowerExceptionsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchSettingsOKBodyPowerExceptionsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchSettingsOKBodyPowerExceptionsItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchSettingsOKBodyPowerExceptionsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSwitchSettingsOKBodyUplinkClientSampling Uplink client sampling
+swagger:model GetNetworkSwitchSettingsOKBodyUplinkClientSampling
+*/
+type GetNetworkSwitchSettingsOKBodyUplinkClientSampling struct {
+
+	// Enable client sampling on uplink
+	Enabled bool `json:"enabled,omitempty"`
+}
+
+// Validate validates this get network switch settings o k body uplink client sampling
+func (o *GetNetworkSwitchSettingsOKBodyUplinkClientSampling) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network switch settings o k body uplink client sampling based on context it is used
+func (o *GetNetworkSwitchSettingsOKBodyUplinkClientSampling) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchSettingsOKBodyUplinkClientSampling) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchSettingsOKBodyUplinkClientSampling) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchSettingsOKBodyUplinkClientSampling
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

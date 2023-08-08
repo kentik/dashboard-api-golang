@@ -110,9 +110,9 @@ type ClientService interface {
 }
 
 /*
-  CheckinNetworkSmDevices forces check in a set of devices
+CheckinNetworkSmDevices forces check in a set of devices
 
-  Force check-in a set of devices
+Force check-in a set of devices
 */
 func (a *Client) CheckinNetworkSmDevices(params *CheckinNetworkSmDevicesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CheckinNetworkSmDevicesOK, error) {
 	// TODO: Validate the params before sending
@@ -151,9 +151,9 @@ func (a *Client) CheckinNetworkSmDevices(params *CheckinNetworkSmDevicesParams, 
 }
 
 /*
-  CreateNetworkSmBypassActivationLockAttempt bypasses activation lock attempt
+CreateNetworkSmBypassActivationLockAttempt bypasses activation lock attempt
 
-  Bypass activation lock attempt
+Bypass activation lock attempt
 */
 func (a *Client) CreateNetworkSmBypassActivationLockAttempt(params *CreateNetworkSmBypassActivationLockAttemptParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkSmBypassActivationLockAttemptCreated, error) {
 	// TODO: Validate the params before sending
@@ -192,9 +192,9 @@ func (a *Client) CreateNetworkSmBypassActivationLockAttempt(params *CreateNetwor
 }
 
 /*
-  CreateNetworkSmTargetGroup adds a target group
+CreateNetworkSmTargetGroup adds a target group
 
-  Add a target group
+Add a target group
 */
 func (a *Client) CreateNetworkSmTargetGroup(params *CreateNetworkSmTargetGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkSmTargetGroupCreated, error) {
 	// TODO: Validate the params before sending
@@ -233,9 +233,9 @@ func (a *Client) CreateNetworkSmTargetGroup(params *CreateNetworkSmTargetGroupPa
 }
 
 /*
-  DeleteNetworkSmTargetGroup deletes a target group from a network
+DeleteNetworkSmTargetGroup deletes a target group from a network
 
-  Delete a target group from a network
+Delete a target group from a network
 */
 func (a *Client) DeleteNetworkSmTargetGroup(params *DeleteNetworkSmTargetGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkSmTargetGroupNoContent, error) {
 	// TODO: Validate the params before sending
@@ -274,9 +274,9 @@ func (a *Client) DeleteNetworkSmTargetGroup(params *DeleteNetworkSmTargetGroupPa
 }
 
 /*
-  DeleteNetworkSmUserAccessDevice deletes a user access device
+DeleteNetworkSmUserAccessDevice deletes a user access device
 
-  Delete a User Access Device
+Delete a User Access Device
 */
 func (a *Client) DeleteNetworkSmUserAccessDevice(params *DeleteNetworkSmUserAccessDeviceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkSmUserAccessDeviceNoContent, error) {
 	// TODO: Validate the params before sending
@@ -315,9 +315,9 @@ func (a *Client) DeleteNetworkSmUserAccessDevice(params *DeleteNetworkSmUserAcce
 }
 
 /*
-  GetNetworkSmBypassActivationLockAttempt bypasses activation lock attempt status
+GetNetworkSmBypassActivationLockAttempt bypasses activation lock attempt status
 
-  Bypass activation lock attempt status
+Bypass activation lock attempt status
 */
 func (a *Client) GetNetworkSmBypassActivationLockAttempt(params *GetNetworkSmBypassActivationLockAttemptParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSmBypassActivationLockAttemptOK, error) {
 	// TODO: Validate the params before sending
@@ -356,9 +356,9 @@ func (a *Client) GetNetworkSmBypassActivationLockAttempt(params *GetNetworkSmByp
 }
 
 /*
-  GetNetworkSmDeviceCellularUsageHistory returns the client s daily cellular data usage history
+GetNetworkSmDeviceCellularUsageHistory returns the client s daily cellular data usage history
 
-  Return the client's daily cellular data usage history. Usage data is in kilobytes.
+Return the client's daily cellular data usage history. Usage data is in kilobytes.
 */
 func (a *Client) GetNetworkSmDeviceCellularUsageHistory(params *GetNetworkSmDeviceCellularUsageHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSmDeviceCellularUsageHistoryOK, error) {
 	// TODO: Validate the params before sending
@@ -397,9 +397,9 @@ func (a *Client) GetNetworkSmDeviceCellularUsageHistory(params *GetNetworkSmDevi
 }
 
 /*
-  GetNetworkSmDeviceCerts lists the certs on a device
+GetNetworkSmDeviceCerts lists the certs on a device
 
-  List the certs on a device
+List the certs on a device
 */
 func (a *Client) GetNetworkSmDeviceCerts(params *GetNetworkSmDeviceCertsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSmDeviceCertsOK, error) {
 	// TODO: Validate the params before sending
@@ -438,9 +438,9 @@ func (a *Client) GetNetworkSmDeviceCerts(params *GetNetworkSmDeviceCertsParams, 
 }
 
 /*
-  GetNetworkSmDeviceConnectivity returns historical connectivity data whether a device is regularly checking in to dashboard
+GetNetworkSmDeviceConnectivity returns historical connectivity data whether a device is regularly checking in to dashboard
 
-  Returns historical connectivity data (whether a device is regularly checking in to Dashboard).
+Returns historical connectivity data (whether a device is regularly checking in to Dashboard).
 */
 func (a *Client) GetNetworkSmDeviceConnectivity(params *GetNetworkSmDeviceConnectivityParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSmDeviceConnectivityOK, error) {
 	// TODO: Validate the params before sending
@@ -479,9 +479,9 @@ func (a *Client) GetNetworkSmDeviceConnectivity(params *GetNetworkSmDeviceConnec
 }
 
 /*
-  GetNetworkSmDeviceDesktopLogs returns historical records of various systems manager network connection details for desktop devices
+GetNetworkSmDeviceDesktopLogs returns historical records of various systems manager network connection details for desktop devices
 
-  Return historical records of various Systems Manager network connection details for desktop devices.
+Return historical records of various Systems Manager network connection details for desktop devices.
 */
 func (a *Client) GetNetworkSmDeviceDesktopLogs(params *GetNetworkSmDeviceDesktopLogsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSmDeviceDesktopLogsOK, error) {
 	// TODO: Validate the params before sending
@@ -520,9 +520,9 @@ func (a *Client) GetNetworkSmDeviceDesktopLogs(params *GetNetworkSmDeviceDesktop
 }
 
 /*
-  GetNetworkSmDeviceDeviceCommandLogs returns historical records of commands sent to systems manager devices
+GetNetworkSmDeviceDeviceCommandLogs returns historical records of commands sent to systems manager devices
 
-  Return historical records of commands sent to Systems Manager devices. Note that this will include the name of the Dashboard user who initiated the command if it was generated by a Dashboard admin rather than the automatic behavior of the system; you may wish to filter this out of any reports.
+Return historical records of commands sent to Systems Manager devices. Note that this will include the name of the Dashboard user who initiated the command if it was generated by a Dashboard admin rather than the automatic behavior of the system; you may wish to filter this out of any reports.
 */
 func (a *Client) GetNetworkSmDeviceDeviceCommandLogs(params *GetNetworkSmDeviceDeviceCommandLogsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSmDeviceDeviceCommandLogsOK, error) {
 	// TODO: Validate the params before sending
@@ -561,9 +561,9 @@ func (a *Client) GetNetworkSmDeviceDeviceCommandLogs(params *GetNetworkSmDeviceD
 }
 
 /*
-  GetNetworkSmDeviceDeviceProfiles gets the installed profiles associated with a device
+GetNetworkSmDeviceDeviceProfiles gets the installed profiles associated with a device
 
-  Get the installed profiles associated with a device
+Get the installed profiles associated with a device
 */
 func (a *Client) GetNetworkSmDeviceDeviceProfiles(params *GetNetworkSmDeviceDeviceProfilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSmDeviceDeviceProfilesOK, error) {
 	// TODO: Validate the params before sending
@@ -602,9 +602,9 @@ func (a *Client) GetNetworkSmDeviceDeviceProfiles(params *GetNetworkSmDeviceDevi
 }
 
 /*
-  GetNetworkSmDeviceNetworkAdapters lists the network adapters of a device
+GetNetworkSmDeviceNetworkAdapters lists the network adapters of a device
 
-  List the network adapters of a device
+List the network adapters of a device
 */
 func (a *Client) GetNetworkSmDeviceNetworkAdapters(params *GetNetworkSmDeviceNetworkAdaptersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSmDeviceNetworkAdaptersOK, error) {
 	// TODO: Validate the params before sending
@@ -643,9 +643,9 @@ func (a *Client) GetNetworkSmDeviceNetworkAdapters(params *GetNetworkSmDeviceNet
 }
 
 /*
-  GetNetworkSmDevicePerformanceHistory returns historical records of various systems manager client metrics for desktop devices
+GetNetworkSmDevicePerformanceHistory returns historical records of various systems manager client metrics for desktop devices
 
-  Return historical records of various Systems Manager client metrics for desktop devices.
+Return historical records of various Systems Manager client metrics for desktop devices.
 */
 func (a *Client) GetNetworkSmDevicePerformanceHistory(params *GetNetworkSmDevicePerformanceHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSmDevicePerformanceHistoryOK, error) {
 	// TODO: Validate the params before sending
@@ -684,9 +684,9 @@ func (a *Client) GetNetworkSmDevicePerformanceHistory(params *GetNetworkSmDevice
 }
 
 /*
-  GetNetworkSmDeviceRestrictions lists the restrictions on a device
+GetNetworkSmDeviceRestrictions lists the restrictions on a device
 
-  List the restrictions on a device
+List the restrictions on a device
 */
 func (a *Client) GetNetworkSmDeviceRestrictions(params *GetNetworkSmDeviceRestrictionsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSmDeviceRestrictionsOK, error) {
 	// TODO: Validate the params before sending
@@ -725,9 +725,9 @@ func (a *Client) GetNetworkSmDeviceRestrictions(params *GetNetworkSmDeviceRestri
 }
 
 /*
-  GetNetworkSmDeviceSecurityCenters lists the security centers on a device
+GetNetworkSmDeviceSecurityCenters lists the security centers on a device
 
-  List the security centers on a device
+List the security centers on a device
 */
 func (a *Client) GetNetworkSmDeviceSecurityCenters(params *GetNetworkSmDeviceSecurityCentersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSmDeviceSecurityCentersOK, error) {
 	// TODO: Validate the params before sending
@@ -766,9 +766,9 @@ func (a *Client) GetNetworkSmDeviceSecurityCenters(params *GetNetworkSmDeviceSec
 }
 
 /*
-  GetNetworkSmDeviceSoftwares gets a list of softwares associated with a device
+GetNetworkSmDeviceSoftwares gets a list of softwares associated with a device
 
-  Get a list of softwares associated with a device
+Get a list of softwares associated with a device
 */
 func (a *Client) GetNetworkSmDeviceSoftwares(params *GetNetworkSmDeviceSoftwaresParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSmDeviceSoftwaresOK, error) {
 	// TODO: Validate the params before sending
@@ -807,9 +807,9 @@ func (a *Client) GetNetworkSmDeviceSoftwares(params *GetNetworkSmDeviceSoftwares
 }
 
 /*
-  GetNetworkSmDeviceWlanLists lists the saved s s ID names on a device
+GetNetworkSmDeviceWlanLists lists the saved s s ID names on a device
 
-  List the saved SSID names on a device
+List the saved SSID names on a device
 */
 func (a *Client) GetNetworkSmDeviceWlanLists(params *GetNetworkSmDeviceWlanListsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSmDeviceWlanListsOK, error) {
 	// TODO: Validate the params before sending
@@ -848,9 +848,9 @@ func (a *Client) GetNetworkSmDeviceWlanLists(params *GetNetworkSmDeviceWlanLists
 }
 
 /*
-  GetNetworkSmDevices lists the devices enrolled in an s m network with various specified fields and filters
+GetNetworkSmDevices lists the devices enrolled in an s m network with various specified fields and filters
 
-  List the devices enrolled in an SM network with various specified fields and filters
+List the devices enrolled in an SM network with various specified fields and filters
 */
 func (a *Client) GetNetworkSmDevices(params *GetNetworkSmDevicesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSmDevicesOK, error) {
 	// TODO: Validate the params before sending
@@ -889,9 +889,9 @@ func (a *Client) GetNetworkSmDevices(params *GetNetworkSmDevicesParams, authInfo
 }
 
 /*
-  GetNetworkSmProfiles lists all profiles in a network
+GetNetworkSmProfiles lists all the profiles in the network
 
-  List all profiles in a network
+List all the profiles in the network
 */
 func (a *Client) GetNetworkSmProfiles(params *GetNetworkSmProfilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSmProfilesOK, error) {
 	// TODO: Validate the params before sending
@@ -930,9 +930,9 @@ func (a *Client) GetNetworkSmProfiles(params *GetNetworkSmProfilesParams, authIn
 }
 
 /*
-  GetNetworkSmTargetGroup returns a target group
+GetNetworkSmTargetGroup returns a target group
 
-  Return a target group
+Return a target group
 */
 func (a *Client) GetNetworkSmTargetGroup(params *GetNetworkSmTargetGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSmTargetGroupOK, error) {
 	// TODO: Validate the params before sending
@@ -971,9 +971,9 @@ func (a *Client) GetNetworkSmTargetGroup(params *GetNetworkSmTargetGroupParams, 
 }
 
 /*
-  GetNetworkSmTargetGroups lists the target groups in this network
+GetNetworkSmTargetGroups lists the target groups in this network
 
-  List the target groups in this network
+List the target groups in this network
 */
 func (a *Client) GetNetworkSmTargetGroups(params *GetNetworkSmTargetGroupsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSmTargetGroupsOK, error) {
 	// TODO: Validate the params before sending
@@ -1012,9 +1012,9 @@ func (a *Client) GetNetworkSmTargetGroups(params *GetNetworkSmTargetGroupsParams
 }
 
 /*
-  GetNetworkSmTrustedAccessConfigs lists trusted access configs
+GetNetworkSmTrustedAccessConfigs lists trusted access configs
 
-  List Trusted Access Configs
+List Trusted Access Configs
 */
 func (a *Client) GetNetworkSmTrustedAccessConfigs(params *GetNetworkSmTrustedAccessConfigsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSmTrustedAccessConfigsOK, error) {
 	// TODO: Validate the params before sending
@@ -1053,9 +1053,9 @@ func (a *Client) GetNetworkSmTrustedAccessConfigs(params *GetNetworkSmTrustedAcc
 }
 
 /*
-  GetNetworkSmUserAccessDevices lists user access devices and its trusted access connections
+GetNetworkSmUserAccessDevices lists user access devices and its trusted access connections
 
-  List User Access Devices and its Trusted Access Connections
+List User Access Devices and its Trusted Access Connections
 */
 func (a *Client) GetNetworkSmUserAccessDevices(params *GetNetworkSmUserAccessDevicesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSmUserAccessDevicesOK, error) {
 	// TODO: Validate the params before sending
@@ -1094,9 +1094,9 @@ func (a *Client) GetNetworkSmUserAccessDevices(params *GetNetworkSmUserAccessDev
 }
 
 /*
-  GetNetworkSmUserDeviceProfiles gets the profiles associated with a user
+GetNetworkSmUserDeviceProfiles gets the profiles associated with a user
 
-  Get the profiles associated with a user
+Get the profiles associated with a user
 */
 func (a *Client) GetNetworkSmUserDeviceProfiles(params *GetNetworkSmUserDeviceProfilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSmUserDeviceProfilesOK, error) {
 	// TODO: Validate the params before sending
@@ -1135,9 +1135,9 @@ func (a *Client) GetNetworkSmUserDeviceProfiles(params *GetNetworkSmUserDevicePr
 }
 
 /*
-  GetNetworkSmUserSoftwares gets a list of softwares associated with a user
+GetNetworkSmUserSoftwares gets a list of softwares associated with a user
 
-  Get a list of softwares associated with a user
+Get a list of softwares associated with a user
 */
 func (a *Client) GetNetworkSmUserSoftwares(params *GetNetworkSmUserSoftwaresParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSmUserSoftwaresOK, error) {
 	// TODO: Validate the params before sending
@@ -1176,9 +1176,9 @@ func (a *Client) GetNetworkSmUserSoftwares(params *GetNetworkSmUserSoftwaresPara
 }
 
 /*
-  GetNetworkSmUsers lists the owners in an s m network with various specified fields and filters
+GetNetworkSmUsers lists the owners in an s m network with various specified fields and filters
 
-  List the owners in an SM network with various specified fields and filters
+List the owners in an SM network with various specified fields and filters
 */
 func (a *Client) GetNetworkSmUsers(params *GetNetworkSmUsersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSmUsersOK, error) {
 	// TODO: Validate the params before sending
@@ -1217,9 +1217,9 @@ func (a *Client) GetNetworkSmUsers(params *GetNetworkSmUsersParams, authInfo run
 }
 
 /*
-  GetOrganizationSmApnsCert gets the organization s a p n s certificate
+GetOrganizationSmApnsCert gets the organization s a p n s certificate
 
-  Get the organization's APNS certificate
+Get the organization's APNS certificate
 */
 func (a *Client) GetOrganizationSmApnsCert(params *GetOrganizationSmApnsCertParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSmApnsCertOK, error) {
 	// TODO: Validate the params before sending
@@ -1258,9 +1258,9 @@ func (a *Client) GetOrganizationSmApnsCert(params *GetOrganizationSmApnsCertPara
 }
 
 /*
-  GetOrganizationSmVppAccount gets a hash containing the unparsed token of the v p p account with the given ID
+GetOrganizationSmVppAccount gets a hash containing the unparsed token of the v p p account with the given ID
 
-  Get a hash containing the unparsed token of the VPP account with the given ID
+Get a hash containing the unparsed token of the VPP account with the given ID
 */
 func (a *Client) GetOrganizationSmVppAccount(params *GetOrganizationSmVppAccountParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSmVppAccountOK, error) {
 	// TODO: Validate the params before sending
@@ -1299,9 +1299,9 @@ func (a *Client) GetOrganizationSmVppAccount(params *GetOrganizationSmVppAccount
 }
 
 /*
-  GetOrganizationSmVppAccounts lists the v p p accounts in the organization
+GetOrganizationSmVppAccounts lists the v p p accounts in the organization
 
-  List the VPP accounts in the organization
+List the VPP accounts in the organization
 */
 func (a *Client) GetOrganizationSmVppAccounts(params *GetOrganizationSmVppAccountsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSmVppAccountsOK, error) {
 	// TODO: Validate the params before sending
@@ -1340,9 +1340,9 @@ func (a *Client) GetOrganizationSmVppAccounts(params *GetOrganizationSmVppAccoun
 }
 
 /*
-  LockNetworkSmDevices locks a set of devices
+LockNetworkSmDevices locks a set of devices
 
-  Lock a set of devices
+Lock a set of devices
 */
 func (a *Client) LockNetworkSmDevices(params *LockNetworkSmDevicesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*LockNetworkSmDevicesOK, error) {
 	// TODO: Validate the params before sending
@@ -1381,9 +1381,9 @@ func (a *Client) LockNetworkSmDevices(params *LockNetworkSmDevicesParams, authIn
 }
 
 /*
-  ModifyNetworkSmDevicesTags adds delete or update the tags of a set of devices
+ModifyNetworkSmDevicesTags adds delete or update the tags of a set of devices
 
-  Add, delete, or update the tags of a set of devices
+Add, delete, or update the tags of a set of devices
 */
 func (a *Client) ModifyNetworkSmDevicesTags(params *ModifyNetworkSmDevicesTagsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ModifyNetworkSmDevicesTagsOK, error) {
 	// TODO: Validate the params before sending
@@ -1422,9 +1422,9 @@ func (a *Client) ModifyNetworkSmDevicesTags(params *ModifyNetworkSmDevicesTagsPa
 }
 
 /*
-  MoveNetworkSmDevices moves a set of devices to a new network
+MoveNetworkSmDevices moves a set of devices to a new network
 
-  Move a set of devices to a new network
+Move a set of devices to a new network
 */
 func (a *Client) MoveNetworkSmDevices(params *MoveNetworkSmDevicesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*MoveNetworkSmDevicesOK, error) {
 	// TODO: Validate the params before sending
@@ -1463,9 +1463,9 @@ func (a *Client) MoveNetworkSmDevices(params *MoveNetworkSmDevicesParams, authIn
 }
 
 /*
-  RefreshNetworkSmDeviceDetails refreshes the details of a device
+RefreshNetworkSmDeviceDetails refreshes the details of a device
 
-  Refresh the details of a device
+Refresh the details of a device
 */
 func (a *Client) RefreshNetworkSmDeviceDetails(params *RefreshNetworkSmDeviceDetailsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RefreshNetworkSmDeviceDetailsOK, error) {
 	// TODO: Validate the params before sending
@@ -1504,9 +1504,9 @@ func (a *Client) RefreshNetworkSmDeviceDetails(params *RefreshNetworkSmDeviceDet
 }
 
 /*
-  UnenrollNetworkSmDevice unenrolls a device
+UnenrollNetworkSmDevice unenrolls a device
 
-  Unenroll a device
+Unenroll a device
 */
 func (a *Client) UnenrollNetworkSmDevice(params *UnenrollNetworkSmDeviceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UnenrollNetworkSmDeviceOK, error) {
 	// TODO: Validate the params before sending
@@ -1545,9 +1545,9 @@ func (a *Client) UnenrollNetworkSmDevice(params *UnenrollNetworkSmDeviceParams, 
 }
 
 /*
-  UpdateNetworkSmDevicesFields modifies the fields of a device
+UpdateNetworkSmDevicesFields modifies the fields of a device
 
-  Modify the fields of a device
+Modify the fields of a device
 */
 func (a *Client) UpdateNetworkSmDevicesFields(params *UpdateNetworkSmDevicesFieldsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSmDevicesFieldsOK, error) {
 	// TODO: Validate the params before sending
@@ -1586,9 +1586,9 @@ func (a *Client) UpdateNetworkSmDevicesFields(params *UpdateNetworkSmDevicesFiel
 }
 
 /*
-  UpdateNetworkSmTargetGroup updates a target group
+UpdateNetworkSmTargetGroup updates a target group
 
-  Update a target group
+Update a target group
 */
 func (a *Client) UpdateNetworkSmTargetGroup(params *UpdateNetworkSmTargetGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSmTargetGroupOK, error) {
 	// TODO: Validate the params before sending
@@ -1627,9 +1627,9 @@ func (a *Client) UpdateNetworkSmTargetGroup(params *UpdateNetworkSmTargetGroupPa
 }
 
 /*
-  WipeNetworkSmDevices wipes a device
+WipeNetworkSmDevices wipes a device
 
-  Wipe a device
+Wipe a device
 */
 func (a *Client) WipeNetworkSmDevices(params *WipeNetworkSmDevicesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*WipeNetworkSmDevicesOK, error) {
 	// TODO: Validate the params before sending

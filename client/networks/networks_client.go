@@ -36,6 +36,10 @@ type ClientService interface {
 
 	CreateNetworkFirmwareUpgradesRollback(params *CreateNetworkFirmwareUpgradesRollbackParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkFirmwareUpgradesRollbackOK, error)
 
+	CreateNetworkFirmwareUpgradesStagedEvent(params *CreateNetworkFirmwareUpgradesStagedEventParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkFirmwareUpgradesStagedEventOK, error)
+
+	CreateNetworkFirmwareUpgradesStagedGroup(params *CreateNetworkFirmwareUpgradesStagedGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkFirmwareUpgradesStagedGroupOK, error)
+
 	CreateNetworkFloorPlan(params *CreateNetworkFloorPlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkFloorPlanCreated, error)
 
 	CreateNetworkGroupPolicy(params *CreateNetworkGroupPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkGroupPolicyCreated, error)
@@ -52,7 +56,11 @@ type ClientService interface {
 
 	CreateNetworkWebhooksWebhookTest(params *CreateNetworkWebhooksWebhookTestParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkWebhooksWebhookTestCreated, error)
 
+	DeferNetworkFirmwareUpgradesStagedEvents(params *DeferNetworkFirmwareUpgradesStagedEventsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeferNetworkFirmwareUpgradesStagedEventsOK, error)
+
 	DeleteNetwork(params *DeleteNetworkParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkNoContent, error)
+
+	DeleteNetworkFirmwareUpgradesStagedGroup(params *DeleteNetworkFirmwareUpgradesStagedGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkFirmwareUpgradesStagedGroupNoContent, error)
 
 	DeleteNetworkFloorPlan(params *DeleteNetworkFloorPlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkFloorPlanNoContent, error)
 
@@ -69,6 +77,8 @@ type ClientService interface {
 	DeleteNetworkWebhooksPayloadTemplate(params *DeleteNetworkWebhooksPayloadTemplateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkWebhooksPayloadTemplateNoContent, error)
 
 	GetNetwork(params *GetNetworkParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkOK, error)
+
+	GetNetworkAlertsHistory(params *GetNetworkAlertsHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkAlertsHistoryOK, error)
 
 	GetNetworkAlertsSettings(params *GetNetworkAlertsSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkAlertsSettingsOK, error)
 
@@ -103,6 +113,14 @@ type ClientService interface {
 	GetNetworkEventsEventTypes(params *GetNetworkEventsEventTypesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkEventsEventTypesOK, error)
 
 	GetNetworkFirmwareUpgrades(params *GetNetworkFirmwareUpgradesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkFirmwareUpgradesOK, error)
+
+	GetNetworkFirmwareUpgradesStagedEvents(params *GetNetworkFirmwareUpgradesStagedEventsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkFirmwareUpgradesStagedEventsOK, error)
+
+	GetNetworkFirmwareUpgradesStagedGroup(params *GetNetworkFirmwareUpgradesStagedGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkFirmwareUpgradesStagedGroupOK, error)
+
+	GetNetworkFirmwareUpgradesStagedGroups(params *GetNetworkFirmwareUpgradesStagedGroupsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkFirmwareUpgradesStagedGroupsOK, error)
+
+	GetNetworkFirmwareUpgradesStagedStages(params *GetNetworkFirmwareUpgradesStagedStagesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkFirmwareUpgradesStagedStagesOK, error)
 
 	GetNetworkFloorPlan(params *GetNetworkFloorPlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkFloorPlanOK, error)
 
@@ -170,6 +188,8 @@ type ClientService interface {
 
 	RemoveNetworkDevices(params *RemoveNetworkDevicesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RemoveNetworkDevicesNoContent, error)
 
+	RollbacksNetworkFirmwareUpgradesStagedEvents(params *RollbacksNetworkFirmwareUpgradesStagedEventsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RollbacksNetworkFirmwareUpgradesStagedEventsOK, error)
+
 	SplitNetwork(params *SplitNetworkParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*SplitNetworkOK, error)
 
 	UnbindNetwork(params *UnbindNetworkParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UnbindNetworkOK, error)
@@ -183,6 +203,12 @@ type ClientService interface {
 	UpdateNetworkClientSplashAuthorizationStatus(params *UpdateNetworkClientSplashAuthorizationStatusParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkClientSplashAuthorizationStatusOK, error)
 
 	UpdateNetworkFirmwareUpgrades(params *UpdateNetworkFirmwareUpgradesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkFirmwareUpgradesOK, error)
+
+	UpdateNetworkFirmwareUpgradesStagedEvents(params *UpdateNetworkFirmwareUpgradesStagedEventsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkFirmwareUpgradesStagedEventsOK, error)
+
+	UpdateNetworkFirmwareUpgradesStagedGroup(params *UpdateNetworkFirmwareUpgradesStagedGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkFirmwareUpgradesStagedGroupOK, error)
+
+	UpdateNetworkFirmwareUpgradesStagedStages(params *UpdateNetworkFirmwareUpgradesStagedStagesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkFirmwareUpgradesStagedStagesOK, error)
 
 	UpdateNetworkFloorPlan(params *UpdateNetworkFloorPlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkFloorPlanOK, error)
 
@@ -212,9 +238,9 @@ type ClientService interface {
 }
 
 /*
-  BindNetwork binds a network to a template
+BindNetwork binds a network to a template
 
-  Bind a network to a template.
+Bind a network to a template.
 */
 func (a *Client) BindNetwork(params *BindNetworkParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*BindNetworkOK, error) {
 	// TODO: Validate the params before sending
@@ -253,9 +279,9 @@ func (a *Client) BindNetwork(params *BindNetworkParams, authInfo runtime.ClientA
 }
 
 /*
-  ClaimNetworkDevices claims devices into a network note for recently claimed devices it may take a few minutes for API requsts against that device to succeed
+ClaimNetworkDevices claims devices into a network note for recently claimed devices it may take a few minutes for API requsts against that device to succeed
 
-  Claim devices into a network. (Note: for recently claimed devices, it may take a few minutes for API requsts against that device to succeed)
+Claim devices into a network. (Note: for recently claimed devices, it may take a few minutes for API requsts against that device to succeed)
 */
 func (a *Client) ClaimNetworkDevices(params *ClaimNetworkDevicesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ClaimNetworkDevicesOK, error) {
 	// TODO: Validate the params before sending
@@ -294,9 +320,9 @@ func (a *Client) ClaimNetworkDevices(params *ClaimNetworkDevicesParams, authInfo
 }
 
 /*
-  CreateNetworkFirmwareUpgradesRollback rollbacks a firmware upgrade for a network
+CreateNetworkFirmwareUpgradesRollback rollbacks a firmware upgrade for a network
 
-  Rollback a Firmware Upgrade For A Network
+Rollback a Firmware Upgrade For A Network
 */
 func (a *Client) CreateNetworkFirmwareUpgradesRollback(params *CreateNetworkFirmwareUpgradesRollbackParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkFirmwareUpgradesRollbackOK, error) {
 	// TODO: Validate the params before sending
@@ -335,9 +361,91 @@ func (a *Client) CreateNetworkFirmwareUpgradesRollback(params *CreateNetworkFirm
 }
 
 /*
-  CreateNetworkFloorPlan uploads a floor plan
+CreateNetworkFirmwareUpgradesStagedEvent creates a staged upgrade event for a network
 
-  Upload a floor plan
+Create a Staged Upgrade Event for a network
+*/
+func (a *Client) CreateNetworkFirmwareUpgradesStagedEvent(params *CreateNetworkFirmwareUpgradesStagedEventParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkFirmwareUpgradesStagedEventOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateNetworkFirmwareUpgradesStagedEventParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "createNetworkFirmwareUpgradesStagedEvent",
+		Method:             "POST",
+		PathPattern:        "/networks/{networkId}/firmwareUpgrades/staged/events",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &CreateNetworkFirmwareUpgradesStagedEventReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*CreateNetworkFirmwareUpgradesStagedEventOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for createNetworkFirmwareUpgradesStagedEvent: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+CreateNetworkFirmwareUpgradesStagedGroup creates a staged upgrade group for a network
+
+Create a Staged Upgrade Group for a network
+*/
+func (a *Client) CreateNetworkFirmwareUpgradesStagedGroup(params *CreateNetworkFirmwareUpgradesStagedGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkFirmwareUpgradesStagedGroupOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateNetworkFirmwareUpgradesStagedGroupParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "createNetworkFirmwareUpgradesStagedGroup",
+		Method:             "POST",
+		PathPattern:        "/networks/{networkId}/firmwareUpgrades/staged/groups",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &CreateNetworkFirmwareUpgradesStagedGroupReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*CreateNetworkFirmwareUpgradesStagedGroupOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for createNetworkFirmwareUpgradesStagedGroup: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+CreateNetworkFloorPlan uploads a floor plan
+
+Upload a floor plan
 */
 func (a *Client) CreateNetworkFloorPlan(params *CreateNetworkFloorPlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkFloorPlanCreated, error) {
 	// TODO: Validate the params before sending
@@ -376,9 +484,9 @@ func (a *Client) CreateNetworkFloorPlan(params *CreateNetworkFloorPlanParams, au
 }
 
 /*
-  CreateNetworkGroupPolicy creates a group policy
+CreateNetworkGroupPolicy creates a group policy
 
-  Create a group policy
+Create a group policy
 */
 func (a *Client) CreateNetworkGroupPolicy(params *CreateNetworkGroupPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkGroupPolicyCreated, error) {
 	// TODO: Validate the params before sending
@@ -417,9 +525,9 @@ func (a *Client) CreateNetworkGroupPolicy(params *CreateNetworkGroupPolicyParams
 }
 
 /*
-  CreateNetworkMerakiAuthUser authorizes a user configured with meraki authentication for a network currently supports 802 1 x splash guest and client v p n users and currently organizations have a 50 000 user cap
+CreateNetworkMerakiAuthUser authorizes a user configured with meraki authentication for a network currently supports 802 1 x splash guest and client v p n users and currently organizations have a 50 000 user cap
 
-  Authorize a user configured with Meraki Authentication for a network (currently supports 802.1X, splash guest, and client VPN users, and currently, organizations have a 50,000 user cap)
+Authorize a user configured with Meraki Authentication for a network (currently supports 802.1X, splash guest, and client VPN users, and currently, organizations have a 50,000 user cap)
 */
 func (a *Client) CreateNetworkMerakiAuthUser(params *CreateNetworkMerakiAuthUserParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkMerakiAuthUserCreated, error) {
 	// TODO: Validate the params before sending
@@ -458,9 +566,9 @@ func (a *Client) CreateNetworkMerakiAuthUser(params *CreateNetworkMerakiAuthUser
 }
 
 /*
-  CreateNetworkMqttBroker adds an m q t t broker
+CreateNetworkMqttBroker adds an m q t t broker
 
-  Add an MQTT broker
+Add an MQTT broker
 */
 func (a *Client) CreateNetworkMqttBroker(params *CreateNetworkMqttBrokerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkMqttBrokerCreated, error) {
 	// TODO: Validate the params before sending
@@ -499,9 +607,9 @@ func (a *Client) CreateNetworkMqttBroker(params *CreateNetworkMqttBrokerParams, 
 }
 
 /*
-  CreateNetworkPiiRequest submits a new delete or restrict processing p i i request
+	CreateNetworkPiiRequest submits a new delete or restrict processing p i i request
 
-  Submit a new delete or restrict processing PII request
+	Submit a new delete or restrict processing PII request
 
 ## ALTERNATE PATH
 
@@ -546,9 +654,9 @@ func (a *Client) CreateNetworkPiiRequest(params *CreateNetworkPiiRequestParams, 
 }
 
 /*
-  CreateNetworkWebhooksHTTPServer adds an HTTP server to a network
+CreateNetworkWebhooksHTTPServer adds an HTTP server to a network
 
-  Add an HTTP server to a network
+Add an HTTP server to a network
 */
 func (a *Client) CreateNetworkWebhooksHTTPServer(params *CreateNetworkWebhooksHTTPServerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkWebhooksHTTPServerCreated, error) {
 	// TODO: Validate the params before sending
@@ -587,9 +695,9 @@ func (a *Client) CreateNetworkWebhooksHTTPServer(params *CreateNetworkWebhooksHT
 }
 
 /*
-  CreateNetworkWebhooksPayloadTemplate creates a webhook payload template for a network
+CreateNetworkWebhooksPayloadTemplate creates a webhook payload template for a network
 
-  Create a webhook payload template for a network
+Create a webhook payload template for a network
 */
 func (a *Client) CreateNetworkWebhooksPayloadTemplate(params *CreateNetworkWebhooksPayloadTemplateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkWebhooksPayloadTemplateCreated, error) {
 	// TODO: Validate the params before sending
@@ -628,9 +736,9 @@ func (a *Client) CreateNetworkWebhooksPayloadTemplate(params *CreateNetworkWebho
 }
 
 /*
-  CreateNetworkWebhooksWebhookTest sends a test webhook for a network
+CreateNetworkWebhooksWebhookTest sends a test webhook for a network
 
-  Send a test webhook for a network
+Send a test webhook for a network
 */
 func (a *Client) CreateNetworkWebhooksWebhookTest(params *CreateNetworkWebhooksWebhookTestParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkWebhooksWebhookTestCreated, error) {
 	// TODO: Validate the params before sending
@@ -669,9 +777,50 @@ func (a *Client) CreateNetworkWebhooksWebhookTest(params *CreateNetworkWebhooksW
 }
 
 /*
-  DeleteNetwork deletes a network
+DeferNetworkFirmwareUpgradesStagedEvents postpones by 1 week all pending staged upgrade stages for a network
 
-  Delete a network
+Postpone by 1 week all pending staged upgrade stages for a network
+*/
+func (a *Client) DeferNetworkFirmwareUpgradesStagedEvents(params *DeferNetworkFirmwareUpgradesStagedEventsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeferNetworkFirmwareUpgradesStagedEventsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeferNetworkFirmwareUpgradesStagedEventsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "deferNetworkFirmwareUpgradesStagedEvents",
+		Method:             "POST",
+		PathPattern:        "/networks/{networkId}/firmwareUpgrades/staged/events/defer",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DeferNetworkFirmwareUpgradesStagedEventsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DeferNetworkFirmwareUpgradesStagedEventsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for deferNetworkFirmwareUpgradesStagedEvents: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+DeleteNetwork deletes a network
+
+Delete a network
 */
 func (a *Client) DeleteNetwork(params *DeleteNetworkParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkNoContent, error) {
 	// TODO: Validate the params before sending
@@ -710,9 +859,50 @@ func (a *Client) DeleteNetwork(params *DeleteNetworkParams, authInfo runtime.Cli
 }
 
 /*
-  DeleteNetworkFloorPlan destroys a floor plan
+DeleteNetworkFirmwareUpgradesStagedGroup deletes a staged upgrade group
 
-  Destroy a floor plan
+Delete a Staged Upgrade Group
+*/
+func (a *Client) DeleteNetworkFirmwareUpgradesStagedGroup(params *DeleteNetworkFirmwareUpgradesStagedGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkFirmwareUpgradesStagedGroupNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteNetworkFirmwareUpgradesStagedGroupParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "deleteNetworkFirmwareUpgradesStagedGroup",
+		Method:             "DELETE",
+		PathPattern:        "/networks/{networkId}/firmwareUpgrades/staged/groups/{groupId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DeleteNetworkFirmwareUpgradesStagedGroupReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DeleteNetworkFirmwareUpgradesStagedGroupNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for deleteNetworkFirmwareUpgradesStagedGroup: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+DeleteNetworkFloorPlan destroys a floor plan
+
+Destroy a floor plan
 */
 func (a *Client) DeleteNetworkFloorPlan(params *DeleteNetworkFloorPlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkFloorPlanNoContent, error) {
 	// TODO: Validate the params before sending
@@ -751,9 +941,9 @@ func (a *Client) DeleteNetworkFloorPlan(params *DeleteNetworkFloorPlanParams, au
 }
 
 /*
-  DeleteNetworkGroupPolicy deletes a group policy
+DeleteNetworkGroupPolicy deletes a group policy
 
-  Delete a group policy
+Delete a group policy
 */
 func (a *Client) DeleteNetworkGroupPolicy(params *DeleteNetworkGroupPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkGroupPolicyNoContent, error) {
 	// TODO: Validate the params before sending
@@ -792,9 +982,9 @@ func (a *Client) DeleteNetworkGroupPolicy(params *DeleteNetworkGroupPolicyParams
 }
 
 /*
-  DeleteNetworkMerakiAuthUser deauthorizes a user
+DeleteNetworkMerakiAuthUser deletes an 802 1 x r a d i u s user or deauthorize and optionally delete a splash guest or client v p n user
 
-  Deauthorize a user. To reauthorize a user after deauthorizing them, POST to this endpoint. (Currently, 802.1X RADIUS, splash guest, and client VPN users can be deauthorized.)
+Delete an 802.1X RADIUS user, or deauthorize and optionally delete a splash guest or client VPN user.
 */
 func (a *Client) DeleteNetworkMerakiAuthUser(params *DeleteNetworkMerakiAuthUserParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkMerakiAuthUserNoContent, error) {
 	// TODO: Validate the params before sending
@@ -833,9 +1023,9 @@ func (a *Client) DeleteNetworkMerakiAuthUser(params *DeleteNetworkMerakiAuthUser
 }
 
 /*
-  DeleteNetworkMqttBroker deletes an m q t t broker
+DeleteNetworkMqttBroker deletes an m q t t broker
 
-  Delete an MQTT broker
+Delete an MQTT broker
 */
 func (a *Client) DeleteNetworkMqttBroker(params *DeleteNetworkMqttBrokerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkMqttBrokerNoContent, error) {
 	// TODO: Validate the params before sending
@@ -874,9 +1064,9 @@ func (a *Client) DeleteNetworkMqttBroker(params *DeleteNetworkMqttBrokerParams, 
 }
 
 /*
-  DeleteNetworkPiiRequest deletes a restrict processing p i i request
+	DeleteNetworkPiiRequest deletes a restrict processing p i i request
 
-  Delete a restrict processing PII request
+	Delete a restrict processing PII request
 
 ## ALTERNATE PATH
 
@@ -921,9 +1111,9 @@ func (a *Client) DeleteNetworkPiiRequest(params *DeleteNetworkPiiRequestParams, 
 }
 
 /*
-  DeleteNetworkWebhooksHTTPServer deletes an HTTP server from a network
+DeleteNetworkWebhooksHTTPServer deletes an HTTP server from a network
 
-  Delete an HTTP server from a network
+Delete an HTTP server from a network
 */
 func (a *Client) DeleteNetworkWebhooksHTTPServer(params *DeleteNetworkWebhooksHTTPServerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkWebhooksHTTPServerNoContent, error) {
 	// TODO: Validate the params before sending
@@ -962,9 +1152,9 @@ func (a *Client) DeleteNetworkWebhooksHTTPServer(params *DeleteNetworkWebhooksHT
 }
 
 /*
-  DeleteNetworkWebhooksPayloadTemplate destroys a webhook payload template for a network
+DeleteNetworkWebhooksPayloadTemplate destroys a webhook payload template for a network
 
-  Destroy a webhook payload template for a network. Does not work for included templates ('wpt_00001', 'wpt_00002', 'wpt_00003' or 'wpt_00004')
+Destroy a webhook payload template for a network. Does not work for included templates ('wpt_00001', 'wpt_00002', 'wpt_00003', 'wpt_00004', 'wpt_00005' or 'wpt_00006')
 */
 func (a *Client) DeleteNetworkWebhooksPayloadTemplate(params *DeleteNetworkWebhooksPayloadTemplateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkWebhooksPayloadTemplateNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1003,9 +1193,9 @@ func (a *Client) DeleteNetworkWebhooksPayloadTemplate(params *DeleteNetworkWebho
 }
 
 /*
-  GetNetwork returns a network
+GetNetwork returns a network
 
-  Return a network
+Return a network
 */
 func (a *Client) GetNetwork(params *GetNetworkParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkOK, error) {
 	// TODO: Validate the params before sending
@@ -1044,9 +1234,50 @@ func (a *Client) GetNetwork(params *GetNetworkParams, authInfo runtime.ClientAut
 }
 
 /*
-  GetNetworkAlertsSettings returns the alert configuration for this network
+GetNetworkAlertsHistory returns the alert history for this network
 
-  Return the alert configuration for this network
+Return the alert history for this network
+*/
+func (a *Client) GetNetworkAlertsHistory(params *GetNetworkAlertsHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkAlertsHistoryOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetNetworkAlertsHistoryParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getNetworkAlertsHistory",
+		Method:             "GET",
+		PathPattern:        "/networks/{networkId}/alerts/history",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetNetworkAlertsHistoryReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetNetworkAlertsHistoryOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getNetworkAlertsHistory: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetNetworkAlertsSettings returns the alert configuration for this network
+
+Return the alert configuration for this network
 */
 func (a *Client) GetNetworkAlertsSettings(params *GetNetworkAlertsSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkAlertsSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -1085,9 +1316,9 @@ func (a *Client) GetNetworkAlertsSettings(params *GetNetworkAlertsSettingsParams
 }
 
 /*
-  GetNetworkBluetoothClient returns a bluetooth client
+GetNetworkBluetoothClient returns a bluetooth client
 
-  Return a Bluetooth client. Bluetooth clients can be identified by their ID or their MAC.
+Return a Bluetooth client. Bluetooth clients can be identified by their ID or their MAC.
 */
 func (a *Client) GetNetworkBluetoothClient(params *GetNetworkBluetoothClientParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkBluetoothClientOK, error) {
 	// TODO: Validate the params before sending
@@ -1126,9 +1357,9 @@ func (a *Client) GetNetworkBluetoothClient(params *GetNetworkBluetoothClientPara
 }
 
 /*
-  GetNetworkBluetoothClients lists the bluetooth clients seen by a ps in this network
+GetNetworkBluetoothClients lists the bluetooth clients seen by a ps in this network
 
-  List the Bluetooth clients seen by APs in this network
+List the Bluetooth clients seen by APs in this network
 */
 func (a *Client) GetNetworkBluetoothClients(params *GetNetworkBluetoothClientsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkBluetoothClientsOK, error) {
 	// TODO: Validate the params before sending
@@ -1167,9 +1398,9 @@ func (a *Client) GetNetworkBluetoothClients(params *GetNetworkBluetoothClientsPa
 }
 
 /*
-  GetNetworkClient returns the client associated with the given identifier
+GetNetworkClient returns the client associated with the given identifier
 
-  Return the client associated with the given identifier. Clients can be identified by a client key or either the MAC or IP depending on whether the network uses Track-by-IP.
+Return the client associated with the given identifier. Clients can be identified by a client key or either the MAC or IP depending on whether the network uses Track-by-IP.
 */
 func (a *Client) GetNetworkClient(params *GetNetworkClientParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkClientOK, error) {
 	// TODO: Validate the params before sending
@@ -1208,9 +1439,9 @@ func (a *Client) GetNetworkClient(params *GetNetworkClientParams, authInfo runti
 }
 
 /*
-  GetNetworkClientPolicy returns the policy assigned to a client on the network
+GetNetworkClientPolicy returns the policy assigned to a client on the network
 
-  Return the policy assigned to a client on the network. Clients can be identified by a client key or either the MAC or IP depending on whether the network uses Track-by-IP.
+Return the policy assigned to a client on the network. Clients can be identified by a client key or either the MAC or IP depending on whether the network uses Track-by-IP.
 */
 func (a *Client) GetNetworkClientPolicy(params *GetNetworkClientPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkClientPolicyOK, error) {
 	// TODO: Validate the params before sending
@@ -1249,9 +1480,9 @@ func (a *Client) GetNetworkClientPolicy(params *GetNetworkClientPolicyParams, au
 }
 
 /*
-  GetNetworkClientSplashAuthorizationStatus returns the splash authorization for a client for each s s ID they ve associated with through splash
+GetNetworkClientSplashAuthorizationStatus returns the splash authorization for a client for each s s ID they ve associated with through splash
 
-  Return the splash authorization for a client, for each SSID they've associated with through splash. Only enabled SSIDs with Click-through splash enabled will be included. Clients can be identified by a client key or either the MAC or IP depending on whether the network uses Track-by-IP.
+Return the splash authorization for a client, for each SSID they've associated with through splash. Only enabled SSIDs with Click-through splash enabled will be included. Clients can be identified by a client key or either the MAC or IP depending on whether the network uses Track-by-IP.
 */
 func (a *Client) GetNetworkClientSplashAuthorizationStatus(params *GetNetworkClientSplashAuthorizationStatusParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkClientSplashAuthorizationStatusOK, error) {
 	// TODO: Validate the params before sending
@@ -1290,9 +1521,9 @@ func (a *Client) GetNetworkClientSplashAuthorizationStatus(params *GetNetworkCli
 }
 
 /*
-  GetNetworkClientTrafficHistory returns the client s network traffic data over time
+GetNetworkClientTrafficHistory returns the client s network traffic data over time
 
-  Return the client's network traffic data over time. Usage data is in kilobytes. This endpoint requires detailed traffic analysis to be enabled on the Network-wide > General page. Clients can be identified by a client key or either the MAC or IP depending on whether the network uses Track-by-IP.
+Return the client's network traffic data over time. Usage data is in kilobytes. This endpoint requires detailed traffic analysis to be enabled on the Network-wide > General page. Clients can be identified by a client key or either the MAC or IP depending on whether the network uses Track-by-IP.
 */
 func (a *Client) GetNetworkClientTrafficHistory(params *GetNetworkClientTrafficHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkClientTrafficHistoryOK, error) {
 	// TODO: Validate the params before sending
@@ -1331,9 +1562,9 @@ func (a *Client) GetNetworkClientTrafficHistory(params *GetNetworkClientTrafficH
 }
 
 /*
-  GetNetworkClientUsageHistory returns the client s daily usage history
+GetNetworkClientUsageHistory returns the client s daily usage history
 
-  Return the client's daily usage history. Usage data is in kilobytes. Clients can be identified by a client key or either the MAC or IP depending on whether the network uses Track-by-IP.
+Return the client's daily usage history. Usage data is in kilobytes. Clients can be identified by a client key or either the MAC or IP depending on whether the network uses Track-by-IP.
 */
 func (a *Client) GetNetworkClientUsageHistory(params *GetNetworkClientUsageHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkClientUsageHistoryOK, error) {
 	// TODO: Validate the params before sending
@@ -1372,9 +1603,9 @@ func (a *Client) GetNetworkClientUsageHistory(params *GetNetworkClientUsageHisto
 }
 
 /*
-  GetNetworkClients lists the clients that have used this network in the timespan
+GetNetworkClients lists the clients that have used this network in the timespan
 
-  List the clients that have used this network in the timespan
+List the clients that have used this network in the timespan
 */
 func (a *Client) GetNetworkClients(params *GetNetworkClientsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkClientsOK, error) {
 	// TODO: Validate the params before sending
@@ -1413,9 +1644,9 @@ func (a *Client) GetNetworkClients(params *GetNetworkClientsParams, authInfo run
 }
 
 /*
-  GetNetworkClientsApplicationUsage returns the application usage data for clients
+GetNetworkClientsApplicationUsage returns the application usage data for clients
 
-  Return the application usage data for clients. Usage data is in kilobytes. Clients can be identified by client keys or either the MACs or IPs depending on whether the network uses Track-by-IP.
+Return the application usage data for clients. Usage data is in kilobytes. Clients can be identified by client keys or either the MACs or IPs depending on whether the network uses Track-by-IP.
 */
 func (a *Client) GetNetworkClientsApplicationUsage(params *GetNetworkClientsApplicationUsageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkClientsApplicationUsageOK, error) {
 	// TODO: Validate the params before sending
@@ -1454,9 +1685,9 @@ func (a *Client) GetNetworkClientsApplicationUsage(params *GetNetworkClientsAppl
 }
 
 /*
-  GetNetworkClientsBandwidthUsageHistory returns a timeseries of total traffic consumption rates for all clients on a network within a given timespan in megabits per second
+GetNetworkClientsBandwidthUsageHistory returns a timeseries of total traffic consumption rates for all clients on a network within a given timespan in megabits per second
 
-  Returns a timeseries of total traffic consumption rates for all clients on a network within a given timespan, in megabits per second.
+Returns a timeseries of total traffic consumption rates for all clients on a network within a given timespan, in megabits per second.
 */
 func (a *Client) GetNetworkClientsBandwidthUsageHistory(params *GetNetworkClientsBandwidthUsageHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkClientsBandwidthUsageHistoryOK, error) {
 	// TODO: Validate the params before sending
@@ -1495,9 +1726,9 @@ func (a *Client) GetNetworkClientsBandwidthUsageHistory(params *GetNetworkClient
 }
 
 /*
-  GetNetworkClientsOverview returns overview statistics for network clients
+GetNetworkClientsOverview returns overview statistics for network clients
 
-  Return overview statistics for network clients
+Return overview statistics for network clients
 */
 func (a *Client) GetNetworkClientsOverview(params *GetNetworkClientsOverviewParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkClientsOverviewOK, error) {
 	// TODO: Validate the params before sending
@@ -1536,9 +1767,9 @@ func (a *Client) GetNetworkClientsOverview(params *GetNetworkClientsOverviewPara
 }
 
 /*
-  GetNetworkClientsUsageHistories returns the usage histories for clients
+GetNetworkClientsUsageHistories returns the usage histories for clients
 
-  Return the usage histories for clients. Usage data is in kilobytes. Clients can be identified by client keys or either the MACs or IPs depending on whether the network uses Track-by-IP.
+Return the usage histories for clients. Usage data is in kilobytes. Clients can be identified by client keys or either the MACs or IPs depending on whether the network uses Track-by-IP.
 */
 func (a *Client) GetNetworkClientsUsageHistories(params *GetNetworkClientsUsageHistoriesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkClientsUsageHistoriesOK, error) {
 	// TODO: Validate the params before sending
@@ -1577,9 +1808,9 @@ func (a *Client) GetNetworkClientsUsageHistories(params *GetNetworkClientsUsageH
 }
 
 /*
-  GetNetworkDevices lists the devices in a network
+GetNetworkDevices lists the devices in a network
 
-  List the devices in a network
+List the devices in a network
 */
 func (a *Client) GetNetworkDevices(params *GetNetworkDevicesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkDevicesOK, error) {
 	// TODO: Validate the params before sending
@@ -1618,9 +1849,9 @@ func (a *Client) GetNetworkDevices(params *GetNetworkDevicesParams, authInfo run
 }
 
 /*
-  GetNetworkEvents lists the events for the network
+GetNetworkEvents lists the events for the network
 
-  List the events for the network
+List the events for the network
 */
 func (a *Client) GetNetworkEvents(params *GetNetworkEventsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkEventsOK, error) {
 	// TODO: Validate the params before sending
@@ -1659,9 +1890,9 @@ func (a *Client) GetNetworkEvents(params *GetNetworkEventsParams, authInfo runti
 }
 
 /*
-  GetNetworkEventsEventTypes lists the event type to human readable description
+GetNetworkEventsEventTypes lists the event type to human readable description
 
-  List the event type to human-readable description
+List the event type to human-readable description
 */
 func (a *Client) GetNetworkEventsEventTypes(params *GetNetworkEventsEventTypesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkEventsEventTypesOK, error) {
 	// TODO: Validate the params before sending
@@ -1700,9 +1931,9 @@ func (a *Client) GetNetworkEventsEventTypes(params *GetNetworkEventsEventTypesPa
 }
 
 /*
-  GetNetworkFirmwareUpgrades gets firmware upgrade information for a network
+GetNetworkFirmwareUpgrades gets firmware upgrade information for a network
 
-  Get firmware upgrade information for a network
+Get firmware upgrade information for a network
 */
 func (a *Client) GetNetworkFirmwareUpgrades(params *GetNetworkFirmwareUpgradesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkFirmwareUpgradesOK, error) {
 	// TODO: Validate the params before sending
@@ -1741,9 +1972,173 @@ func (a *Client) GetNetworkFirmwareUpgrades(params *GetNetworkFirmwareUpgradesPa
 }
 
 /*
-  GetNetworkFloorPlan finds a floor plan by ID
+GetNetworkFirmwareUpgradesStagedEvents gets the staged upgrade event from a network
 
-  Find a floor plan by ID
+Get the Staged Upgrade Event from a network
+*/
+func (a *Client) GetNetworkFirmwareUpgradesStagedEvents(params *GetNetworkFirmwareUpgradesStagedEventsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkFirmwareUpgradesStagedEventsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetNetworkFirmwareUpgradesStagedEventsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getNetworkFirmwareUpgradesStagedEvents",
+		Method:             "GET",
+		PathPattern:        "/networks/{networkId}/firmwareUpgrades/staged/events",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetNetworkFirmwareUpgradesStagedEventsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetNetworkFirmwareUpgradesStagedEventsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getNetworkFirmwareUpgradesStagedEvents: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetNetworkFirmwareUpgradesStagedGroup gets a staged upgrade group from a network
+
+Get a Staged Upgrade Group from a network
+*/
+func (a *Client) GetNetworkFirmwareUpgradesStagedGroup(params *GetNetworkFirmwareUpgradesStagedGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkFirmwareUpgradesStagedGroupOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetNetworkFirmwareUpgradesStagedGroupParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getNetworkFirmwareUpgradesStagedGroup",
+		Method:             "GET",
+		PathPattern:        "/networks/{networkId}/firmwareUpgrades/staged/groups/{groupId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetNetworkFirmwareUpgradesStagedGroupReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetNetworkFirmwareUpgradesStagedGroupOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getNetworkFirmwareUpgradesStagedGroup: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetNetworkFirmwareUpgradesStagedGroups lists of staged upgrade groups in a network
+
+List of Staged Upgrade Groups in a network
+*/
+func (a *Client) GetNetworkFirmwareUpgradesStagedGroups(params *GetNetworkFirmwareUpgradesStagedGroupsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkFirmwareUpgradesStagedGroupsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetNetworkFirmwareUpgradesStagedGroupsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getNetworkFirmwareUpgradesStagedGroups",
+		Method:             "GET",
+		PathPattern:        "/networks/{networkId}/firmwareUpgrades/staged/groups",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetNetworkFirmwareUpgradesStagedGroupsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetNetworkFirmwareUpgradesStagedGroupsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getNetworkFirmwareUpgradesStagedGroups: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetNetworkFirmwareUpgradesStagedStages orders of staged upgrade groups in a network
+
+Order of Staged Upgrade Groups in a network
+*/
+func (a *Client) GetNetworkFirmwareUpgradesStagedStages(params *GetNetworkFirmwareUpgradesStagedStagesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkFirmwareUpgradesStagedStagesOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetNetworkFirmwareUpgradesStagedStagesParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getNetworkFirmwareUpgradesStagedStages",
+		Method:             "GET",
+		PathPattern:        "/networks/{networkId}/firmwareUpgrades/staged/stages",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetNetworkFirmwareUpgradesStagedStagesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetNetworkFirmwareUpgradesStagedStagesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getNetworkFirmwareUpgradesStagedStages: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetNetworkFloorPlan finds a floor plan by ID
+
+Find a floor plan by ID
 */
 func (a *Client) GetNetworkFloorPlan(params *GetNetworkFloorPlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkFloorPlanOK, error) {
 	// TODO: Validate the params before sending
@@ -1782,9 +2177,9 @@ func (a *Client) GetNetworkFloorPlan(params *GetNetworkFloorPlanParams, authInfo
 }
 
 /*
-  GetNetworkFloorPlans lists the floor plans that belong to your network
+GetNetworkFloorPlans lists the floor plans that belong to your network
 
-  List the floor plans that belong to your network
+List the floor plans that belong to your network
 */
 func (a *Client) GetNetworkFloorPlans(params *GetNetworkFloorPlansParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkFloorPlansOK, error) {
 	// TODO: Validate the params before sending
@@ -1823,9 +2218,9 @@ func (a *Client) GetNetworkFloorPlans(params *GetNetworkFloorPlansParams, authIn
 }
 
 /*
-  GetNetworkGroupPolicies lists the group policies in a network
+GetNetworkGroupPolicies lists the group policies in a network
 
-  List the group policies in a network
+List the group policies in a network
 */
 func (a *Client) GetNetworkGroupPolicies(params *GetNetworkGroupPoliciesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkGroupPoliciesOK, error) {
 	// TODO: Validate the params before sending
@@ -1864,9 +2259,9 @@ func (a *Client) GetNetworkGroupPolicies(params *GetNetworkGroupPoliciesParams, 
 }
 
 /*
-  GetNetworkGroupPolicy displays a group policy
+GetNetworkGroupPolicy displays a group policy
 
-  Display a group policy
+Display a group policy
 */
 func (a *Client) GetNetworkGroupPolicy(params *GetNetworkGroupPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkGroupPolicyOK, error) {
 	// TODO: Validate the params before sending
@@ -1905,9 +2300,9 @@ func (a *Client) GetNetworkGroupPolicy(params *GetNetworkGroupPolicyParams, auth
 }
 
 /*
-  GetNetworkHealthAlerts returns all global alerts on this network
+GetNetworkHealthAlerts returns all global alerts on this network
 
-  Return all global alerts on this network
+Return all global alerts on this network
 */
 func (a *Client) GetNetworkHealthAlerts(params *GetNetworkHealthAlertsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkHealthAlertsOK, error) {
 	// TODO: Validate the params before sending
@@ -1946,9 +2341,9 @@ func (a *Client) GetNetworkHealthAlerts(params *GetNetworkHealthAlertsParams, au
 }
 
 /*
-  GetNetworkMerakiAuthUser returns the meraki auth splash guest r a d i u s or client v p n user
+GetNetworkMerakiAuthUser returns the meraki auth splash guest r a d i u s or client v p n user
 
-  Return the Meraki Auth splash guest, RADIUS, or client VPN user
+Return the Meraki Auth splash guest, RADIUS, or client VPN user
 */
 func (a *Client) GetNetworkMerakiAuthUser(params *GetNetworkMerakiAuthUserParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkMerakiAuthUserOK, error) {
 	// TODO: Validate the params before sending
@@ -1987,9 +2382,9 @@ func (a *Client) GetNetworkMerakiAuthUser(params *GetNetworkMerakiAuthUserParams
 }
 
 /*
-  GetNetworkMerakiAuthUsers lists the users configured under meraki authentication for a network splash guest or r a d i u s users for a wireless network or client v p n users for a wired network
+GetNetworkMerakiAuthUsers lists the users configured under meraki authentication for a network splash guest or r a d i u s users for a wireless network or client v p n users for a m x network
 
-  List the users configured under Meraki Authentication for a network (splash guest or RADIUS users for a wireless network, or client VPN users for a wired network)
+List the users configured under Meraki Authentication for a network (splash guest or RADIUS users for a wireless network, or client VPN users for a MX network)
 */
 func (a *Client) GetNetworkMerakiAuthUsers(params *GetNetworkMerakiAuthUsersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkMerakiAuthUsersOK, error) {
 	// TODO: Validate the params before sending
@@ -2028,9 +2423,9 @@ func (a *Client) GetNetworkMerakiAuthUsers(params *GetNetworkMerakiAuthUsersPara
 }
 
 /*
-  GetNetworkMqttBroker returns an m q t t broker
+GetNetworkMqttBroker returns an m q t t broker
 
-  Return an MQTT broker
+Return an MQTT broker
 */
 func (a *Client) GetNetworkMqttBroker(params *GetNetworkMqttBrokerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkMqttBrokerOK, error) {
 	// TODO: Validate the params before sending
@@ -2069,9 +2464,9 @@ func (a *Client) GetNetworkMqttBroker(params *GetNetworkMqttBrokerParams, authIn
 }
 
 /*
-  GetNetworkMqttBrokers lists the m q t t brokers for this network
+GetNetworkMqttBrokers lists the m q t t brokers for this network
 
-  List the MQTT brokers for this network
+List the MQTT brokers for this network
 */
 func (a *Client) GetNetworkMqttBrokers(params *GetNetworkMqttBrokersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkMqttBrokersOK, error) {
 	// TODO: Validate the params before sending
@@ -2110,9 +2505,9 @@ func (a *Client) GetNetworkMqttBrokers(params *GetNetworkMqttBrokersParams, auth
 }
 
 /*
-  GetNetworkNetflow returns the net flow traffic reporting settings for a network
+GetNetworkNetflow returns the net flow traffic reporting settings for a network
 
-  Return the NetFlow traffic reporting settings for a network
+Return the NetFlow traffic reporting settings for a network
 */
 func (a *Client) GetNetworkNetflow(params *GetNetworkNetflowParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkNetflowOK, error) {
 	// TODO: Validate the params before sending
@@ -2151,9 +2546,9 @@ func (a *Client) GetNetworkNetflow(params *GetNetworkNetflowParams, authInfo run
 }
 
 /*
-  GetNetworkNetworkHealthChannelUtilization gets the channel utilization over each radio for all a ps in a network
+GetNetworkNetworkHealthChannelUtilization gets the channel utilization over each radio for all a ps in a network
 
-  Get the channel utilization over each radio for all APs in a network.
+Get the channel utilization over each radio for all APs in a network.
 */
 func (a *Client) GetNetworkNetworkHealthChannelUtilization(params *GetNetworkNetworkHealthChannelUtilizationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkNetworkHealthChannelUtilizationOK, error) {
 	// TODO: Validate the params before sending
@@ -2192,9 +2587,9 @@ func (a *Client) GetNetworkNetworkHealthChannelUtilization(params *GetNetworkNet
 }
 
 /*
-  GetNetworkPiiPiiKeys lists the keys required to access personally identifiable information p i i for a given identifier
+	GetNetworkPiiPiiKeys lists the keys required to access personally identifiable information p i i for a given identifier
 
-  List the keys required to access Personally Identifiable Information (PII) for a given identifier. Exactly one identifier will be accepted. If the organization contains org-wide Systems Manager users matching the key provided then there will be an entry with the key "0" containing the applicable keys.
+	List the keys required to access Personally Identifiable Information (PII) for a given identifier. Exactly one identifier will be accepted. If the organization contains org-wide Systems Manager users matching the key provided then there will be an entry with the key "0" containing the applicable keys.
 
 ## ALTERNATE PATH
 
@@ -2239,9 +2634,9 @@ func (a *Client) GetNetworkPiiPiiKeys(params *GetNetworkPiiPiiKeysParams, authIn
 }
 
 /*
-  GetNetworkPiiRequest returns a p i i request
+	GetNetworkPiiRequest returns a p i i request
 
-  Return a PII request
+	Return a PII request
 
 ## ALTERNATE PATH
 
@@ -2286,9 +2681,9 @@ func (a *Client) GetNetworkPiiRequest(params *GetNetworkPiiRequestParams, authIn
 }
 
 /*
-  GetNetworkPiiRequests lists the p i i requests for this network or organization
+	GetNetworkPiiRequests lists the p i i requests for this network or organization
 
-  List the PII requests for this network or organization
+	List the PII requests for this network or organization
 
 ## ALTERNATE PATH
 
@@ -2333,9 +2728,9 @@ func (a *Client) GetNetworkPiiRequests(params *GetNetworkPiiRequestsParams, auth
 }
 
 /*
-  GetNetworkPiiSmDevicesForKey givens a piece of personally identifiable information p i i return the systems manager device ID s associated with that identifier
+	GetNetworkPiiSmDevicesForKey givens a piece of personally identifiable information p i i return the systems manager device ID s associated with that identifier
 
-  Given a piece of Personally Identifiable Information (PII), return the Systems Manager device ID(s) associated with that identifier. These device IDs can be used with the Systems Manager API endpoints to retrieve device details. Exactly one identifier will be accepted.
+	Given a piece of Personally Identifiable Information (PII), return the Systems Manager device ID(s) associated with that identifier. These device IDs can be used with the Systems Manager API endpoints to retrieve device details. Exactly one identifier will be accepted.
 
 ## ALTERNATE PATH
 
@@ -2380,9 +2775,9 @@ func (a *Client) GetNetworkPiiSmDevicesForKey(params *GetNetworkPiiSmDevicesForK
 }
 
 /*
-  GetNetworkPiiSmOwnersForKey givens a piece of personally identifiable information p i i return the systems manager owner ID s associated with that identifier
+	GetNetworkPiiSmOwnersForKey givens a piece of personally identifiable information p i i return the systems manager owner ID s associated with that identifier
 
-  Given a piece of Personally Identifiable Information (PII), return the Systems Manager owner ID(s) associated with that identifier. These owner IDs can be used with the Systems Manager API endpoints to retrieve owner details. Exactly one identifier will be accepted.
+	Given a piece of Personally Identifiable Information (PII), return the Systems Manager owner ID(s) associated with that identifier. These owner IDs can be used with the Systems Manager API endpoints to retrieve owner details. Exactly one identifier will be accepted.
 
 ## ALTERNATE PATH
 
@@ -2427,9 +2822,9 @@ func (a *Client) GetNetworkPiiSmOwnersForKey(params *GetNetworkPiiSmOwnersForKey
 }
 
 /*
-  GetNetworkPoliciesByClient gets policies for all clients with policies
+GetNetworkPoliciesByClient gets policies for all clients with policies
 
-  Get policies for all clients with policies
+Get policies for all clients with policies
 */
 func (a *Client) GetNetworkPoliciesByClient(params *GetNetworkPoliciesByClientParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkPoliciesByClientOK, error) {
 	// TODO: Validate the params before sending
@@ -2468,9 +2863,9 @@ func (a *Client) GetNetworkPoliciesByClient(params *GetNetworkPoliciesByClientPa
 }
 
 /*
-  GetNetworkSettings returns the settings for a network
+GetNetworkSettings returns the settings for a network
 
-  Return the settings for a network
+Return the settings for a network
 */
 func (a *Client) GetNetworkSettings(params *GetNetworkSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -2509,9 +2904,9 @@ func (a *Client) GetNetworkSettings(params *GetNetworkSettingsParams, authInfo r
 }
 
 /*
-  GetNetworkSnmp returns the s n m p settings for a network
+GetNetworkSnmp returns the s n m p settings for a network
 
-  Return the SNMP settings for a network
+Return the SNMP settings for a network
 */
 func (a *Client) GetNetworkSnmp(params *GetNetworkSnmpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSnmpOK, error) {
 	// TODO: Validate the params before sending
@@ -2550,9 +2945,9 @@ func (a *Client) GetNetworkSnmp(params *GetNetworkSnmpParams, authInfo runtime.C
 }
 
 /*
-  GetNetworkSplashLoginAttempts lists the splash login attempts for a network
+GetNetworkSplashLoginAttempts lists the splash login attempts for a network
 
-  List the splash login attempts for a network
+List the splash login attempts for a network
 */
 func (a *Client) GetNetworkSplashLoginAttempts(params *GetNetworkSplashLoginAttemptsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSplashLoginAttemptsOK, error) {
 	// TODO: Validate the params before sending
@@ -2591,9 +2986,9 @@ func (a *Client) GetNetworkSplashLoginAttempts(params *GetNetworkSplashLoginAtte
 }
 
 /*
-  GetNetworkSyslogServers lists the syslog servers for a network
+GetNetworkSyslogServers lists the syslog servers for a network
 
-  List the syslog servers for a network
+List the syslog servers for a network
 */
 func (a *Client) GetNetworkSyslogServers(params *GetNetworkSyslogServersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSyslogServersOK, error) {
 	// TODO: Validate the params before sending
@@ -2632,9 +3027,9 @@ func (a *Client) GetNetworkSyslogServers(params *GetNetworkSyslogServersParams, 
 }
 
 /*
-  GetNetworkTopologyLinkLayer lists of devices and connections among them within the network
+GetNetworkTopologyLinkLayer lists the l l d p and c d p information for all discovered devices and connections in a network
 
-  List of devices and connections among them within the network.
+List the LLDP and CDP information for all discovered devices and connections in a network. At least one MX or MS device must be in the network in order to build the topology.
 */
 func (a *Client) GetNetworkTopologyLinkLayer(params *GetNetworkTopologyLinkLayerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkTopologyLinkLayerOK, error) {
 	// TODO: Validate the params before sending
@@ -2673,9 +3068,9 @@ func (a *Client) GetNetworkTopologyLinkLayer(params *GetNetworkTopologyLinkLayer
 }
 
 /*
-  GetNetworkTraffic returns the traffic analysis data for this network
+GetNetworkTraffic returns the traffic analysis data for this network
 
-  Return the traffic analysis data for this network. Traffic analysis with hostname visibility must be enabled on the network.
+Return the traffic analysis data for this network. Traffic analysis with hostname visibility must be enabled on the network.
 */
 func (a *Client) GetNetworkTraffic(params *GetNetworkTrafficParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkTrafficOK, error) {
 	// TODO: Validate the params before sending
@@ -2714,9 +3109,9 @@ func (a *Client) GetNetworkTraffic(params *GetNetworkTrafficParams, authInfo run
 }
 
 /*
-  GetNetworkTrafficAnalysis returns the traffic analysis settings for a network
+GetNetworkTrafficAnalysis returns the traffic analysis settings for a network
 
-  Return the traffic analysis settings for a network
+Return the traffic analysis settings for a network
 */
 func (a *Client) GetNetworkTrafficAnalysis(params *GetNetworkTrafficAnalysisParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkTrafficAnalysisOK, error) {
 	// TODO: Validate the params before sending
@@ -2755,9 +3150,9 @@ func (a *Client) GetNetworkTrafficAnalysis(params *GetNetworkTrafficAnalysisPara
 }
 
 /*
-  GetNetworkTrafficShapingApplicationCategories returns the application categories for traffic shaping rules
+GetNetworkTrafficShapingApplicationCategories returns the application categories for traffic shaping rules
 
-  Returns the application categories for traffic shaping rules.
+Returns the application categories for traffic shaping rules.
 */
 func (a *Client) GetNetworkTrafficShapingApplicationCategories(params *GetNetworkTrafficShapingApplicationCategoriesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkTrafficShapingApplicationCategoriesOK, error) {
 	// TODO: Validate the params before sending
@@ -2796,9 +3191,9 @@ func (a *Client) GetNetworkTrafficShapingApplicationCategories(params *GetNetwor
 }
 
 /*
-  GetNetworkTrafficShapingDscpTaggingOptions returns the available d s c p tagging options for your traffic shaping rules
+GetNetworkTrafficShapingDscpTaggingOptions returns the available d s c p tagging options for your traffic shaping rules
 
-  Returns the available DSCP tagging options for your traffic shaping rules.
+Returns the available DSCP tagging options for your traffic shaping rules.
 */
 func (a *Client) GetNetworkTrafficShapingDscpTaggingOptions(params *GetNetworkTrafficShapingDscpTaggingOptionsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkTrafficShapingDscpTaggingOptionsOK, error) {
 	// TODO: Validate the params before sending
@@ -2837,9 +3232,9 @@ func (a *Client) GetNetworkTrafficShapingDscpTaggingOptions(params *GetNetworkTr
 }
 
 /*
-  GetNetworkWebhooksHTTPServer returns an HTTP server for a network
+GetNetworkWebhooksHTTPServer returns an HTTP server for a network
 
-  Return an HTTP server for a network
+Return an HTTP server for a network
 */
 func (a *Client) GetNetworkWebhooksHTTPServer(params *GetNetworkWebhooksHTTPServerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWebhooksHTTPServerOK, error) {
 	// TODO: Validate the params before sending
@@ -2878,9 +3273,9 @@ func (a *Client) GetNetworkWebhooksHTTPServer(params *GetNetworkWebhooksHTTPServ
 }
 
 /*
-  GetNetworkWebhooksHTTPServers lists the HTTP servers for a network
+GetNetworkWebhooksHTTPServers lists the HTTP servers for a network
 
-  List the HTTP servers for a network
+List the HTTP servers for a network
 */
 func (a *Client) GetNetworkWebhooksHTTPServers(params *GetNetworkWebhooksHTTPServersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWebhooksHTTPServersOK, error) {
 	// TODO: Validate the params before sending
@@ -2919,9 +3314,9 @@ func (a *Client) GetNetworkWebhooksHTTPServers(params *GetNetworkWebhooksHTTPSer
 }
 
 /*
-  GetNetworkWebhooksPayloadTemplate gets the webhook payload template for a network
+GetNetworkWebhooksPayloadTemplate gets the webhook payload template for a network
 
-  Get the webhook payload template for a network
+Get the webhook payload template for a network
 */
 func (a *Client) GetNetworkWebhooksPayloadTemplate(params *GetNetworkWebhooksPayloadTemplateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWebhooksPayloadTemplateOK, error) {
 	// TODO: Validate the params before sending
@@ -2960,9 +3355,9 @@ func (a *Client) GetNetworkWebhooksPayloadTemplate(params *GetNetworkWebhooksPay
 }
 
 /*
-  GetNetworkWebhooksPayloadTemplates lists the webhook payload templates for a network
+GetNetworkWebhooksPayloadTemplates lists the webhook payload templates for a network
 
-  List the webhook payload templates for a network
+List the webhook payload templates for a network
 */
 func (a *Client) GetNetworkWebhooksPayloadTemplates(params *GetNetworkWebhooksPayloadTemplatesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWebhooksPayloadTemplatesOK, error) {
 	// TODO: Validate the params before sending
@@ -3001,9 +3396,9 @@ func (a *Client) GetNetworkWebhooksPayloadTemplates(params *GetNetworkWebhooksPa
 }
 
 /*
-  GetNetworkWebhooksWebhookTest returns the status of a webhook test for a network
+GetNetworkWebhooksWebhookTest returns the status of a webhook test for a network
 
-  Return the status of a webhook test for a network
+Return the status of a webhook test for a network
 */
 func (a *Client) GetNetworkWebhooksWebhookTest(params *GetNetworkWebhooksWebhookTestParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkWebhooksWebhookTestOK, error) {
 	// TODO: Validate the params before sending
@@ -3042,9 +3437,9 @@ func (a *Client) GetNetworkWebhooksWebhookTest(params *GetNetworkWebhooksWebhook
 }
 
 /*
-  ProvisionNetworkClients provisions a client with a name and policy
+ProvisionNetworkClients provisions a client with a name and policy
 
-  Provisions a client with a name and policy. Clients can be provisioned before they associate to the network.
+Provisions a client with a name and policy. Clients can be provisioned before they associate to the network.
 */
 func (a *Client) ProvisionNetworkClients(params *ProvisionNetworkClientsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProvisionNetworkClientsCreated, error) {
 	// TODO: Validate the params before sending
@@ -3083,9 +3478,9 @@ func (a *Client) ProvisionNetworkClients(params *ProvisionNetworkClientsParams, 
 }
 
 /*
-  RemoveNetworkDevices removes a single device
+RemoveNetworkDevices removes a single device
 
-  Remove a single device
+Remove a single device
 */
 func (a *Client) RemoveNetworkDevices(params *RemoveNetworkDevicesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RemoveNetworkDevicesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -3124,9 +3519,50 @@ func (a *Client) RemoveNetworkDevices(params *RemoveNetworkDevicesParams, authIn
 }
 
 /*
-  SplitNetwork splits a combined network into individual networks for each type of device
+RollbacksNetworkFirmwareUpgradesStagedEvents rollbacks a staged upgrade event for a network
 
-  Split a combined network into individual networks for each type of device
+Rollback a Staged Upgrade Event for a network
+*/
+func (a *Client) RollbacksNetworkFirmwareUpgradesStagedEvents(params *RollbacksNetworkFirmwareUpgradesStagedEventsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RollbacksNetworkFirmwareUpgradesStagedEventsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewRollbacksNetworkFirmwareUpgradesStagedEventsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "rollbacksNetworkFirmwareUpgradesStagedEvents",
+		Method:             "POST",
+		PathPattern:        "/networks/{networkId}/firmwareUpgrades/staged/events/rollbacks",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &RollbacksNetworkFirmwareUpgradesStagedEventsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*RollbacksNetworkFirmwareUpgradesStagedEventsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for rollbacksNetworkFirmwareUpgradesStagedEvents: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+SplitNetwork splits a combined network into individual networks for each type of device
+
+Split a combined network into individual networks for each type of device
 */
 func (a *Client) SplitNetwork(params *SplitNetworkParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*SplitNetworkOK, error) {
 	// TODO: Validate the params before sending
@@ -3165,9 +3601,9 @@ func (a *Client) SplitNetwork(params *SplitNetworkParams, authInfo runtime.Clien
 }
 
 /*
-  UnbindNetwork unbinds a network from a template
+UnbindNetwork unbinds a network from a template
 
-  Unbind a network from a template.
+Unbind a network from a template.
 */
 func (a *Client) UnbindNetwork(params *UnbindNetworkParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UnbindNetworkOK, error) {
 	// TODO: Validate the params before sending
@@ -3206,9 +3642,9 @@ func (a *Client) UnbindNetwork(params *UnbindNetworkParams, authInfo runtime.Cli
 }
 
 /*
-  UpdateNetwork updates a network
+UpdateNetwork updates a network
 
-  Update a network
+Update a network
 */
 func (a *Client) UpdateNetwork(params *UpdateNetworkParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkOK, error) {
 	// TODO: Validate the params before sending
@@ -3247,9 +3683,9 @@ func (a *Client) UpdateNetwork(params *UpdateNetworkParams, authInfo runtime.Cli
 }
 
 /*
-  UpdateNetworkAlertsSettings updates the alert configuration for this network
+UpdateNetworkAlertsSettings updates the alert configuration for this network
 
-  Update the alert configuration for this network
+Update the alert configuration for this network
 */
 func (a *Client) UpdateNetworkAlertsSettings(params *UpdateNetworkAlertsSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkAlertsSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -3288,9 +3724,9 @@ func (a *Client) UpdateNetworkAlertsSettings(params *UpdateNetworkAlertsSettings
 }
 
 /*
-  UpdateNetworkClientPolicy updates the policy assigned to a client on the network
+UpdateNetworkClientPolicy updates the policy assigned to a client on the network
 
-  Update the policy assigned to a client on the network. Clients can be identified by a client key or either the MAC or IP depending on whether the network uses Track-by-IP.
+Update the policy assigned to a client on the network. Clients can be identified by a client key or either the MAC or IP depending on whether the network uses Track-by-IP.
 */
 func (a *Client) UpdateNetworkClientPolicy(params *UpdateNetworkClientPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkClientPolicyOK, error) {
 	// TODO: Validate the params before sending
@@ -3329,9 +3765,9 @@ func (a *Client) UpdateNetworkClientPolicy(params *UpdateNetworkClientPolicyPara
 }
 
 /*
-  UpdateNetworkClientSplashAuthorizationStatus updates a client s splash authorization
+UpdateNetworkClientSplashAuthorizationStatus updates a client s splash authorization
 
-  Update a client's splash authorization. Clients can be identified by a client key or either the MAC or IP depending on whether the network uses Track-by-IP.
+Update a client's splash authorization. Clients can be identified by a client key or either the MAC or IP depending on whether the network uses Track-by-IP.
 */
 func (a *Client) UpdateNetworkClientSplashAuthorizationStatus(params *UpdateNetworkClientSplashAuthorizationStatusParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkClientSplashAuthorizationStatusOK, error) {
 	// TODO: Validate the params before sending
@@ -3370,9 +3806,9 @@ func (a *Client) UpdateNetworkClientSplashAuthorizationStatus(params *UpdateNetw
 }
 
 /*
-  UpdateNetworkFirmwareUpgrades updates firmware upgrade information for a network
+UpdateNetworkFirmwareUpgrades updates firmware upgrade information for a network
 
-  Update firmware upgrade information for a network
+Update firmware upgrade information for a network
 */
 func (a *Client) UpdateNetworkFirmwareUpgrades(params *UpdateNetworkFirmwareUpgradesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkFirmwareUpgradesOK, error) {
 	// TODO: Validate the params before sending
@@ -3411,9 +3847,132 @@ func (a *Client) UpdateNetworkFirmwareUpgrades(params *UpdateNetworkFirmwareUpgr
 }
 
 /*
-  UpdateNetworkFloorPlan updates a floor plan s geolocation and other meta data
+UpdateNetworkFirmwareUpgradesStagedEvents updates the staged upgrade event for a network
 
-  Update a floor plan's geolocation and other meta data
+Update the Staged Upgrade Event for a network
+*/
+func (a *Client) UpdateNetworkFirmwareUpgradesStagedEvents(params *UpdateNetworkFirmwareUpgradesStagedEventsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkFirmwareUpgradesStagedEventsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateNetworkFirmwareUpgradesStagedEventsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "updateNetworkFirmwareUpgradesStagedEvents",
+		Method:             "PUT",
+		PathPattern:        "/networks/{networkId}/firmwareUpgrades/staged/events",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateNetworkFirmwareUpgradesStagedEventsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateNetworkFirmwareUpgradesStagedEventsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for updateNetworkFirmwareUpgradesStagedEvents: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UpdateNetworkFirmwareUpgradesStagedGroup updates a staged upgrade group for a network
+
+Update a Staged Upgrade Group for a network
+*/
+func (a *Client) UpdateNetworkFirmwareUpgradesStagedGroup(params *UpdateNetworkFirmwareUpgradesStagedGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkFirmwareUpgradesStagedGroupOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateNetworkFirmwareUpgradesStagedGroupParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "updateNetworkFirmwareUpgradesStagedGroup",
+		Method:             "PUT",
+		PathPattern:        "/networks/{networkId}/firmwareUpgrades/staged/groups/{groupId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateNetworkFirmwareUpgradesStagedGroupReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateNetworkFirmwareUpgradesStagedGroupOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for updateNetworkFirmwareUpgradesStagedGroup: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UpdateNetworkFirmwareUpgradesStagedStages assigns staged upgrade group order in the sequence
+
+Assign Staged Upgrade Group order in the sequence.
+*/
+func (a *Client) UpdateNetworkFirmwareUpgradesStagedStages(params *UpdateNetworkFirmwareUpgradesStagedStagesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkFirmwareUpgradesStagedStagesOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateNetworkFirmwareUpgradesStagedStagesParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "updateNetworkFirmwareUpgradesStagedStages",
+		Method:             "PUT",
+		PathPattern:        "/networks/{networkId}/firmwareUpgrades/staged/stages",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateNetworkFirmwareUpgradesStagedStagesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateNetworkFirmwareUpgradesStagedStagesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for updateNetworkFirmwareUpgradesStagedStages: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UpdateNetworkFloorPlan updates a floor plan s geolocation and other meta data
+
+Update a floor plan's geolocation and other meta data
 */
 func (a *Client) UpdateNetworkFloorPlan(params *UpdateNetworkFloorPlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkFloorPlanOK, error) {
 	// TODO: Validate the params before sending
@@ -3452,9 +4011,9 @@ func (a *Client) UpdateNetworkFloorPlan(params *UpdateNetworkFloorPlanParams, au
 }
 
 /*
-  UpdateNetworkGroupPolicy updates a group policy
+UpdateNetworkGroupPolicy updates a group policy
 
-  Update a group policy
+Update a group policy
 */
 func (a *Client) UpdateNetworkGroupPolicy(params *UpdateNetworkGroupPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkGroupPolicyOK, error) {
 	// TODO: Validate the params before sending
@@ -3493,9 +4052,9 @@ func (a *Client) UpdateNetworkGroupPolicy(params *UpdateNetworkGroupPolicyParams
 }
 
 /*
-  UpdateNetworkMerakiAuthUser updates a user configured with meraki authentication currently 802 1 x r a d i u s splash guest and client v p n users can be updated
+UpdateNetworkMerakiAuthUser updates a user configured with meraki authentication currently 802 1 x r a d i u s splash guest and client v p n users can be updated
 
-  Update a user configured with Meraki Authentication (currently, 802.1X RADIUS, splash guest, and client VPN users can be updated)
+Update a user configured with Meraki Authentication (currently, 802.1X RADIUS, splash guest, and client VPN users can be updated)
 */
 func (a *Client) UpdateNetworkMerakiAuthUser(params *UpdateNetworkMerakiAuthUserParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkMerakiAuthUserOK, error) {
 	// TODO: Validate the params before sending
@@ -3534,9 +4093,9 @@ func (a *Client) UpdateNetworkMerakiAuthUser(params *UpdateNetworkMerakiAuthUser
 }
 
 /*
-  UpdateNetworkMqttBroker updates an m q t t broker
+UpdateNetworkMqttBroker updates an m q t t broker
 
-  Update an MQTT broker
+Update an MQTT broker
 */
 func (a *Client) UpdateNetworkMqttBroker(params *UpdateNetworkMqttBrokerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkMqttBrokerOK, error) {
 	// TODO: Validate the params before sending
@@ -3575,9 +4134,9 @@ func (a *Client) UpdateNetworkMqttBroker(params *UpdateNetworkMqttBrokerParams, 
 }
 
 /*
-  UpdateNetworkNetflow updates the net flow traffic reporting settings for a network
+UpdateNetworkNetflow updates the net flow traffic reporting settings for a network
 
-  Update the NetFlow traffic reporting settings for a network
+Update the NetFlow traffic reporting settings for a network
 */
 func (a *Client) UpdateNetworkNetflow(params *UpdateNetworkNetflowParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkNetflowOK, error) {
 	// TODO: Validate the params before sending
@@ -3616,9 +4175,9 @@ func (a *Client) UpdateNetworkNetflow(params *UpdateNetworkNetflowParams, authIn
 }
 
 /*
-  UpdateNetworkSettings updates the settings for a network
+UpdateNetworkSettings updates the settings for a network
 
-  Update the settings for a network
+Update the settings for a network
 */
 func (a *Client) UpdateNetworkSettings(params *UpdateNetworkSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -3657,9 +4216,9 @@ func (a *Client) UpdateNetworkSettings(params *UpdateNetworkSettingsParams, auth
 }
 
 /*
-  UpdateNetworkSnmp updates the s n m p settings for a network
+UpdateNetworkSnmp updates the s n m p settings for a network
 
-  Update the SNMP settings for a network
+Update the SNMP settings for a network
 */
 func (a *Client) UpdateNetworkSnmp(params *UpdateNetworkSnmpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSnmpOK, error) {
 	// TODO: Validate the params before sending
@@ -3698,9 +4257,9 @@ func (a *Client) UpdateNetworkSnmp(params *UpdateNetworkSnmpParams, authInfo run
 }
 
 /*
-  UpdateNetworkSyslogServers updates the syslog servers for a network
+UpdateNetworkSyslogServers updates the syslog servers for a network
 
-  Update the syslog servers for a network
+Update the syslog servers for a network
 */
 func (a *Client) UpdateNetworkSyslogServers(params *UpdateNetworkSyslogServersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSyslogServersOK, error) {
 	// TODO: Validate the params before sending
@@ -3739,9 +4298,9 @@ func (a *Client) UpdateNetworkSyslogServers(params *UpdateNetworkSyslogServersPa
 }
 
 /*
-  UpdateNetworkTrafficAnalysis updates the traffic analysis settings for a network
+UpdateNetworkTrafficAnalysis updates the traffic analysis settings for a network
 
-  Update the traffic analysis settings for a network
+Update the traffic analysis settings for a network
 */
 func (a *Client) UpdateNetworkTrafficAnalysis(params *UpdateNetworkTrafficAnalysisParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkTrafficAnalysisOK, error) {
 	// TODO: Validate the params before sending
@@ -3780,9 +4339,9 @@ func (a *Client) UpdateNetworkTrafficAnalysis(params *UpdateNetworkTrafficAnalys
 }
 
 /*
-  UpdateNetworkWebhooksHTTPServer updates an HTTP server
+UpdateNetworkWebhooksHTTPServer updates an HTTP server
 
-  Update an HTTP server. To change a URL, create a new HTTP server.
+Update an HTTP server. To change a URL, create a new HTTP server.
 */
 func (a *Client) UpdateNetworkWebhooksHTTPServer(params *UpdateNetworkWebhooksHTTPServerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkWebhooksHTTPServerOK, error) {
 	// TODO: Validate the params before sending
@@ -3821,9 +4380,9 @@ func (a *Client) UpdateNetworkWebhooksHTTPServer(params *UpdateNetworkWebhooksHT
 }
 
 /*
-  UpdateNetworkWebhooksPayloadTemplate updates a webhook payload template for a network
+UpdateNetworkWebhooksPayloadTemplate updates a webhook payload template for a network
 
-  Update a webhook payload template for a network
+Update a webhook payload template for a network
 */
 func (a *Client) UpdateNetworkWebhooksPayloadTemplate(params *UpdateNetworkWebhooksPayloadTemplateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkWebhooksPayloadTemplateOK, error) {
 	// TODO: Validate the params before sending
@@ -3862,9 +4421,9 @@ func (a *Client) UpdateNetworkWebhooksPayloadTemplate(params *UpdateNetworkWebho
 }
 
 /*
-  VmxNetworkDevicesClaim claims a v m x into a network
+VmxNetworkDevicesClaim claims a v m x into a network
 
-  Claim a vMX into a network
+Claim a vMX into a network
 */
 func (a *Client) VmxNetworkDevicesClaim(params *VmxNetworkDevicesClaimParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*VmxNetworkDevicesClaimOK, error) {
 	// TODO: Validate the params before sending

@@ -30,7 +30,7 @@ func (o *UpdateOrganizationActionBatchReader) ReadResponse(response runtime.Clie
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /organizations/{organizationId}/actionBatches/{actionBatchId}] updateOrganizationActionBatch", response, response.Code())
 	}
 }
 
@@ -39,7 +39,8 @@ func NewUpdateOrganizationActionBatchOK() *UpdateOrganizationActionBatchOK {
 	return &UpdateOrganizationActionBatchOK{}
 }
 
-/* UpdateOrganizationActionBatchOK describes a response with status code 200, with default header values.
+/*
+UpdateOrganizationActionBatchOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -72,6 +73,11 @@ func (o *UpdateOrganizationActionBatchOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update organization action batch o k response
+func (o *UpdateOrganizationActionBatchOK) Code() int {
+	return 200
+}
+
 func (o *UpdateOrganizationActionBatchOK) Error() string {
 	return fmt.Sprintf("[PUT /organizations/{organizationId}/actionBatches/{actionBatchId}][%d] updateOrganizationActionBatchOK  %+v", 200, o.Payload)
 }
@@ -94,7 +100,8 @@ func (o *UpdateOrganizationActionBatchOK) readResponse(response runtime.ClientRe
 	return nil
 }
 
-/*UpdateOrganizationActionBatchBody update organization action batch body
+/*
+UpdateOrganizationActionBatchBody update organization action batch body
 // Example: {"confirmed":true,"synchronous":false}
 swagger:model UpdateOrganizationActionBatchBody
 */

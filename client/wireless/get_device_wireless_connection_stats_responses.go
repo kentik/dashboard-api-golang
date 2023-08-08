@@ -31,7 +31,7 @@ func (o *GetDeviceWirelessConnectionStatsReader) ReadResponse(response runtime.C
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /devices/{serial}/wireless/connectionStats] getDeviceWirelessConnectionStats", response, response.Code())
 	}
 }
 
@@ -40,7 +40,8 @@ func NewGetDeviceWirelessConnectionStatsOK() *GetDeviceWirelessConnectionStatsOK
 	return &GetDeviceWirelessConnectionStatsOK{}
 }
 
-/* GetDeviceWirelessConnectionStatsOK describes a response with status code 200, with default header values.
+/*
+GetDeviceWirelessConnectionStatsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -73,6 +74,11 @@ func (o *GetDeviceWirelessConnectionStatsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get device wireless connection stats o k response
+func (o *GetDeviceWirelessConnectionStatsOK) Code() int {
+	return 200
+}
+
 func (o *GetDeviceWirelessConnectionStatsOK) Error() string {
 	return fmt.Sprintf("[GET /devices/{serial}/wireless/connectionStats][%d] getDeviceWirelessConnectionStatsOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *GetDeviceWirelessConnectionStatsOK) readResponse(response runtime.Clien
 	return nil
 }
 
-/*GetDeviceWirelessConnectionStatsOKBody get device wireless connection stats o k body
+/*
+GetDeviceWirelessConnectionStatsOKBody get device wireless connection stats o k body
 swagger:model GetDeviceWirelessConnectionStatsOKBody
 */
 type GetDeviceWirelessConnectionStatsOKBody struct {
@@ -159,6 +166,11 @@ func (o *GetDeviceWirelessConnectionStatsOKBody) ContextValidate(ctx context.Con
 func (o *GetDeviceWirelessConnectionStatsOKBody) contextValidateConnectionStats(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.ConnectionStats != nil {
+
+		if swag.IsZero(o.ConnectionStats) { // not required
+			return nil
+		}
+
 		if err := o.ConnectionStats.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("getDeviceWirelessConnectionStatsOK" + "." + "connectionStats")
@@ -190,7 +202,8 @@ func (o *GetDeviceWirelessConnectionStatsOKBody) UnmarshalBinary(b []byte) error
 	return nil
 }
 
-/*GetDeviceWirelessConnectionStatsOKBodyConnectionStats The connection stats of the device
+/*
+GetDeviceWirelessConnectionStatsOKBodyConnectionStats The connection stats of the device
 swagger:model GetDeviceWirelessConnectionStatsOKBodyConnectionStats
 */
 type GetDeviceWirelessConnectionStatsOKBodyConnectionStats struct {

@@ -52,17 +52,25 @@ func NewUpdateNetworkSmTargetGroupParamsWithHTTPClient(client *http.Client) *Upd
 	}
 }
 
-/* UpdateNetworkSmTargetGroupParams contains all the parameters to send to the API endpoint
-   for the update network sm target group operation.
+/*
+UpdateNetworkSmTargetGroupParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network sm target group operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkSmTargetGroupParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// TargetGroupID.
+	/* TargetGroupID.
+
+	   Target group ID
+	*/
 	TargetGroupID string
 
 	// UpdateNetworkSmTargetGroup.

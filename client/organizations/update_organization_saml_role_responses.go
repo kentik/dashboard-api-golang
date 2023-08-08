@@ -34,7 +34,7 @@ func (o *UpdateOrganizationSamlRoleReader) ReadResponse(response runtime.ClientR
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /organizations/{organizationId}/samlRoles/{samlRoleId}] updateOrganizationSamlRole", response, response.Code())
 	}
 }
 
@@ -43,12 +43,13 @@ func NewUpdateOrganizationSamlRoleOK() *UpdateOrganizationSamlRoleOK {
 	return &UpdateOrganizationSamlRoleOK{}
 }
 
-/* UpdateOrganizationSamlRoleOK describes a response with status code 200, with default header values.
+/*
+UpdateOrganizationSamlRoleOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateOrganizationSamlRoleOK struct {
-	Payload interface{}
+	Payload *UpdateOrganizationSamlRoleOKBody
 }
 
 // IsSuccess returns true when this update organization saml role o k response has a 2xx status code
@@ -76,6 +77,11 @@ func (o *UpdateOrganizationSamlRoleOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update organization saml role o k response
+func (o *UpdateOrganizationSamlRoleOK) Code() int {
+	return 200
+}
+
 func (o *UpdateOrganizationSamlRoleOK) Error() string {
 	return fmt.Sprintf("[PUT /organizations/{organizationId}/samlRoles/{samlRoleId}][%d] updateOrganizationSamlRoleOK  %+v", 200, o.Payload)
 }
@@ -84,22 +90,25 @@ func (o *UpdateOrganizationSamlRoleOK) String() string {
 	return fmt.Sprintf("[PUT /organizations/{organizationId}/samlRoles/{samlRoleId}][%d] updateOrganizationSamlRoleOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateOrganizationSamlRoleOK) GetPayload() interface{} {
+func (o *UpdateOrganizationSamlRoleOK) GetPayload() *UpdateOrganizationSamlRoleOKBody {
 	return o.Payload
 }
 
 func (o *UpdateOrganizationSamlRoleOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateOrganizationSamlRoleOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateOrganizationSamlRoleBody update organization saml role body
-// Example: {"networks":[{"access":"full","id":"N_1234"}],"orgAccess":"none","tags":[{"access":"read-only","tag":"west"}]}
+/*
+UpdateOrganizationSamlRoleBody update organization saml role body
+// Example: {"networks":[{"access":"full","id":"N_24329156"}],"orgAccess":"none","role":"myrole","tags":[{"access":"read-only","tag":"west"}]}
 swagger:model UpdateOrganizationSamlRoleBody
 */
 type UpdateOrganizationSamlRoleBody struct {
@@ -107,14 +116,14 @@ type UpdateOrganizationSamlRoleBody struct {
 	// The list of networks that the SAML administrator has privileges on
 	Networks []*UpdateOrganizationSamlRoleParamsBodyNetworksItems0 `json:"networks"`
 
-	// The privilege of the SAML administrator on the organization. Can be one of 'none', 'read-only' or 'full'
-	// Enum: [none read-only full]
+	// The privilege of the SAML administrator on the organization. Can be one of 'none', 'read-only', 'full' or 'enterprise'
+	// Enum: [enterprise full none read-only]
 	OrgAccess string `json:"orgAccess,omitempty"`
 
 	// The role of the SAML administrator
 	Role string `json:"role,omitempty"`
 
-	// The list of tags that the SAML administrator has privleges on
+	// The list of tags that the SAML administrator has privileges on
 	Tags []*UpdateOrganizationSamlRoleParamsBodyTagsItems0 `json:"tags"`
 }
 
@@ -170,7 +179,7 @@ var updateOrganizationSamlRoleBodyTypeOrgAccessPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["none","read-only","full"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["enterprise","full","none","read-only"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -180,14 +189,17 @@ func init() {
 
 const (
 
+	// UpdateOrganizationSamlRoleBodyOrgAccessEnterprise captures enum value "enterprise"
+	UpdateOrganizationSamlRoleBodyOrgAccessEnterprise string = "enterprise"
+
+	// UpdateOrganizationSamlRoleBodyOrgAccessFull captures enum value "full"
+	UpdateOrganizationSamlRoleBodyOrgAccessFull string = "full"
+
 	// UpdateOrganizationSamlRoleBodyOrgAccessNone captures enum value "none"
 	UpdateOrganizationSamlRoleBodyOrgAccessNone string = "none"
 
 	// UpdateOrganizationSamlRoleBodyOrgAccessReadDashOnly captures enum value "read-only"
 	UpdateOrganizationSamlRoleBodyOrgAccessReadDashOnly string = "read-only"
-
-	// UpdateOrganizationSamlRoleBodyOrgAccessFull captures enum value "full"
-	UpdateOrganizationSamlRoleBodyOrgAccessFull string = "full"
 )
 
 // prop value enum
@@ -260,6 +272,11 @@ func (o *UpdateOrganizationSamlRoleBody) contextValidateNetworks(ctx context.Con
 	for i := 0; i < len(o.Networks); i++ {
 
 		if o.Networks[i] != nil {
+
+			if swag.IsZero(o.Networks[i]) { // not required
+				return nil
+			}
+
 			if err := o.Networks[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateOrganizationSamlRole" + "." + "networks" + "." + strconv.Itoa(i))
@@ -280,6 +297,11 @@ func (o *UpdateOrganizationSamlRoleBody) contextValidateTags(ctx context.Context
 	for i := 0; i < len(o.Tags); i++ {
 
 		if o.Tags[i] != nil {
+
+			if swag.IsZero(o.Tags[i]) { // not required
+				return nil
+			}
+
 			if err := o.Tags[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateOrganizationSamlRole" + "." + "tags" + "." + strconv.Itoa(i))
@@ -313,14 +335,275 @@ func (o *UpdateOrganizationSamlRoleBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateOrganizationSamlRoleParamsBodyNetworksItems0 update organization saml role params body networks items0
+/*
+UpdateOrganizationSamlRoleOKBody update organization saml role o k body
+swagger:model UpdateOrganizationSamlRoleOKBody
+*/
+type UpdateOrganizationSamlRoleOKBody struct {
+
+	// ID associated with the SAML role
+	ID string `json:"id,omitempty"`
+
+	// The list of networks that the SAML administrator has privileges on
+	Networks []*UpdateOrganizationSamlRoleOKBodyNetworksItems0 `json:"networks"`
+
+	// The privilege of the SAML administrator on the organization
+	OrgAccess string `json:"orgAccess,omitempty"`
+
+	// The role of the SAML administrator
+	Role string `json:"role,omitempty"`
+
+	// The list of tags that the SAML administrator has privleges on
+	Tags []*UpdateOrganizationSamlRoleOKBodyTagsItems0 `json:"tags"`
+}
+
+// Validate validates this update organization saml role o k body
+func (o *UpdateOrganizationSamlRoleOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateNetworks(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTags(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationSamlRoleOKBody) validateNetworks(formats strfmt.Registry) error {
+	if swag.IsZero(o.Networks) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Networks); i++ {
+		if swag.IsZero(o.Networks[i]) { // not required
+			continue
+		}
+
+		if o.Networks[i] != nil {
+			if err := o.Networks[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateOrganizationSamlRoleOK" + "." + "networks" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateOrganizationSamlRoleOK" + "." + "networks" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateOrganizationSamlRoleOKBody) validateTags(formats strfmt.Registry) error {
+	if swag.IsZero(o.Tags) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Tags); i++ {
+		if swag.IsZero(o.Tags[i]) { // not required
+			continue
+		}
+
+		if o.Tags[i] != nil {
+			if err := o.Tags[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateOrganizationSamlRoleOK" + "." + "tags" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateOrganizationSamlRoleOK" + "." + "tags" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update organization saml role o k body based on the context it is used
+func (o *UpdateOrganizationSamlRoleOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateNetworks(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateTags(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationSamlRoleOKBody) contextValidateNetworks(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Networks); i++ {
+
+		if o.Networks[i] != nil {
+
+			if swag.IsZero(o.Networks[i]) { // not required
+				return nil
+			}
+
+			if err := o.Networks[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateOrganizationSamlRoleOK" + "." + "networks" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateOrganizationSamlRoleOK" + "." + "networks" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateOrganizationSamlRoleOKBody) contextValidateTags(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Tags); i++ {
+
+		if o.Tags[i] != nil {
+
+			if swag.IsZero(o.Tags[i]) { // not required
+				return nil
+			}
+
+			if err := o.Tags[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateOrganizationSamlRoleOK" + "." + "tags" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateOrganizationSamlRoleOK" + "." + "tags" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateOrganizationSamlRoleOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateOrganizationSamlRoleOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateOrganizationSamlRoleOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateOrganizationSamlRoleOKBodyNetworksItems0 update organization saml role o k body networks items0
+swagger:model UpdateOrganizationSamlRoleOKBodyNetworksItems0
+*/
+type UpdateOrganizationSamlRoleOKBodyNetworksItems0 struct {
+
+	// The privilege of the SAML administrator on the network
+	Access string `json:"access,omitempty"`
+
+	// The network ID
+	ID string `json:"id,omitempty"`
+}
+
+// Validate validates this update organization saml role o k body networks items0
+func (o *UpdateOrganizationSamlRoleOKBodyNetworksItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update organization saml role o k body networks items0 based on context it is used
+func (o *UpdateOrganizationSamlRoleOKBodyNetworksItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateOrganizationSamlRoleOKBodyNetworksItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateOrganizationSamlRoleOKBodyNetworksItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateOrganizationSamlRoleOKBodyNetworksItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateOrganizationSamlRoleOKBodyTagsItems0 update organization saml role o k body tags items0
+swagger:model UpdateOrganizationSamlRoleOKBodyTagsItems0
+*/
+type UpdateOrganizationSamlRoleOKBodyTagsItems0 struct {
+
+	// The privilege of the SAML administrator on the tag
+	Access string `json:"access,omitempty"`
+
+	// The name of the tag
+	Tag string `json:"tag,omitempty"`
+}
+
+// Validate validates this update organization saml role o k body tags items0
+func (o *UpdateOrganizationSamlRoleOKBodyTagsItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update organization saml role o k body tags items0 based on context it is used
+func (o *UpdateOrganizationSamlRoleOKBodyTagsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateOrganizationSamlRoleOKBodyTagsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateOrganizationSamlRoleOKBodyTagsItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateOrganizationSamlRoleOKBodyTagsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateOrganizationSamlRoleParamsBodyNetworksItems0 update organization saml role params body networks items0
 swagger:model UpdateOrganizationSamlRoleParamsBodyNetworksItems0
 */
 type UpdateOrganizationSamlRoleParamsBodyNetworksItems0 struct {
 
-	// The privilege of the SAML administrator on the network. Can be one of 'full', 'read-only', 'guest-ambassador' or 'monitor-only'
+	// The privilege of the SAML administrator on the network. Can be one of 'full', 'read-only', 'guest-ambassador', 'monitor-only' or 'ssid-admin'
 	// Required: true
-	// Enum: [full read-only guest-ambassador monitor-only]
+	// Enum: [full guest-ambassador monitor-only read-only ssid-admin]
 	Access *string `json:"access"`
 
 	// The network ID
@@ -350,7 +633,7 @@ var updateOrganizationSamlRoleParamsBodyNetworksItems0TypeAccessPropEnum []inter
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["full","read-only","guest-ambassador","monitor-only"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["full","guest-ambassador","monitor-only","read-only","ssid-admin"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -363,14 +646,17 @@ const (
 	// UpdateOrganizationSamlRoleParamsBodyNetworksItems0AccessFull captures enum value "full"
 	UpdateOrganizationSamlRoleParamsBodyNetworksItems0AccessFull string = "full"
 
-	// UpdateOrganizationSamlRoleParamsBodyNetworksItems0AccessReadDashOnly captures enum value "read-only"
-	UpdateOrganizationSamlRoleParamsBodyNetworksItems0AccessReadDashOnly string = "read-only"
-
 	// UpdateOrganizationSamlRoleParamsBodyNetworksItems0AccessGuestDashAmbassador captures enum value "guest-ambassador"
 	UpdateOrganizationSamlRoleParamsBodyNetworksItems0AccessGuestDashAmbassador string = "guest-ambassador"
 
 	// UpdateOrganizationSamlRoleParamsBodyNetworksItems0AccessMonitorDashOnly captures enum value "monitor-only"
 	UpdateOrganizationSamlRoleParamsBodyNetworksItems0AccessMonitorDashOnly string = "monitor-only"
+
+	// UpdateOrganizationSamlRoleParamsBodyNetworksItems0AccessReadDashOnly captures enum value "read-only"
+	UpdateOrganizationSamlRoleParamsBodyNetworksItems0AccessReadDashOnly string = "read-only"
+
+	// UpdateOrganizationSamlRoleParamsBodyNetworksItems0AccessSsidDashAdmin captures enum value "ssid-admin"
+	UpdateOrganizationSamlRoleParamsBodyNetworksItems0AccessSsidDashAdmin string = "ssid-admin"
 )
 
 // prop value enum
@@ -427,14 +713,15 @@ func (o *UpdateOrganizationSamlRoleParamsBodyNetworksItems0) UnmarshalBinary(b [
 	return nil
 }
 
-/*UpdateOrganizationSamlRoleParamsBodyTagsItems0 update organization saml role params body tags items0
+/*
+UpdateOrganizationSamlRoleParamsBodyTagsItems0 update organization saml role params body tags items0
 swagger:model UpdateOrganizationSamlRoleParamsBodyTagsItems0
 */
 type UpdateOrganizationSamlRoleParamsBodyTagsItems0 struct {
 
 	// The privilege of the SAML administrator on the tag. Can be one of 'full', 'read-only', 'guest-ambassador' or 'monitor-only'
 	// Required: true
-	// Enum: [full read-only guest-ambassador monitor-only]
+	// Enum: [full guest-ambassador monitor-only read-only]
 	Access *string `json:"access"`
 
 	// The name of the tag
@@ -464,7 +751,7 @@ var updateOrganizationSamlRoleParamsBodyTagsItems0TypeAccessPropEnum []interface
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["full","read-only","guest-ambassador","monitor-only"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["full","guest-ambassador","monitor-only","read-only"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -477,14 +764,14 @@ const (
 	// UpdateOrganizationSamlRoleParamsBodyTagsItems0AccessFull captures enum value "full"
 	UpdateOrganizationSamlRoleParamsBodyTagsItems0AccessFull string = "full"
 
-	// UpdateOrganizationSamlRoleParamsBodyTagsItems0AccessReadDashOnly captures enum value "read-only"
-	UpdateOrganizationSamlRoleParamsBodyTagsItems0AccessReadDashOnly string = "read-only"
-
 	// UpdateOrganizationSamlRoleParamsBodyTagsItems0AccessGuestDashAmbassador captures enum value "guest-ambassador"
 	UpdateOrganizationSamlRoleParamsBodyTagsItems0AccessGuestDashAmbassador string = "guest-ambassador"
 
 	// UpdateOrganizationSamlRoleParamsBodyTagsItems0AccessMonitorDashOnly captures enum value "monitor-only"
 	UpdateOrganizationSamlRoleParamsBodyTagsItems0AccessMonitorDashOnly string = "monitor-only"
+
+	// UpdateOrganizationSamlRoleParamsBodyTagsItems0AccessReadDashOnly captures enum value "read-only"
+	UpdateOrganizationSamlRoleParamsBodyTagsItems0AccessReadDashOnly string = "read-only"
 )
 
 // prop value enum

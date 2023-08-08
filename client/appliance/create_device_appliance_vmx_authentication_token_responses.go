@@ -6,11 +6,13 @@ package appliance
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // CreateDeviceApplianceVmxAuthenticationTokenReader is a Reader for the CreateDeviceApplianceVmxAuthenticationToken structure.
@@ -28,7 +30,7 @@ func (o *CreateDeviceApplianceVmxAuthenticationTokenReader) ReadResponse(respons
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /devices/{serial}/appliance/vmx/authenticationToken] createDeviceApplianceVmxAuthenticationToken", response, response.Code())
 	}
 }
 
@@ -37,12 +39,13 @@ func NewCreateDeviceApplianceVmxAuthenticationTokenCreated() *CreateDeviceApplia
 	return &CreateDeviceApplianceVmxAuthenticationTokenCreated{}
 }
 
-/* CreateDeviceApplianceVmxAuthenticationTokenCreated describes a response with status code 201, with default header values.
+/*
+CreateDeviceApplianceVmxAuthenticationTokenCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
 type CreateDeviceApplianceVmxAuthenticationTokenCreated struct {
-	Payload interface{}
+	Payload *CreateDeviceApplianceVmxAuthenticationTokenCreatedBody
 }
 
 // IsSuccess returns true when this create device appliance vmx authentication token created response has a 2xx status code
@@ -70,6 +73,11 @@ func (o *CreateDeviceApplianceVmxAuthenticationTokenCreated) IsCode(code int) bo
 	return code == 201
 }
 
+// Code gets the status code for the create device appliance vmx authentication token created response
+func (o *CreateDeviceApplianceVmxAuthenticationTokenCreated) Code() int {
+	return 201
+}
+
 func (o *CreateDeviceApplianceVmxAuthenticationTokenCreated) Error() string {
 	return fmt.Sprintf("[POST /devices/{serial}/appliance/vmx/authenticationToken][%d] createDeviceApplianceVmxAuthenticationTokenCreated  %+v", 201, o.Payload)
 }
@@ -78,16 +86,59 @@ func (o *CreateDeviceApplianceVmxAuthenticationTokenCreated) String() string {
 	return fmt.Sprintf("[POST /devices/{serial}/appliance/vmx/authenticationToken][%d] createDeviceApplianceVmxAuthenticationTokenCreated  %+v", 201, o.Payload)
 }
 
-func (o *CreateDeviceApplianceVmxAuthenticationTokenCreated) GetPayload() interface{} {
+func (o *CreateDeviceApplianceVmxAuthenticationTokenCreated) GetPayload() *CreateDeviceApplianceVmxAuthenticationTokenCreatedBody {
 	return o.Payload
 }
 
 func (o *CreateDeviceApplianceVmxAuthenticationTokenCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(CreateDeviceApplianceVmxAuthenticationTokenCreatedBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+CreateDeviceApplianceVmxAuthenticationTokenCreatedBody create device appliance vmx authentication token created body
+swagger:model CreateDeviceApplianceVmxAuthenticationTokenCreatedBody
+*/
+type CreateDeviceApplianceVmxAuthenticationTokenCreatedBody struct {
+
+	// The expiration time for the token, in ISO 8601 format
+	ExpiresAt string `json:"expiresAt,omitempty"`
+
+	// The newly generated authentication token for the vMX instance
+	Token string `json:"token,omitempty"`
+}
+
+// Validate validates this create device appliance vmx authentication token created body
+func (o *CreateDeviceApplianceVmxAuthenticationTokenCreatedBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this create device appliance vmx authentication token created body based on context it is used
+func (o *CreateDeviceApplianceVmxAuthenticationTokenCreatedBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateDeviceApplianceVmxAuthenticationTokenCreatedBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateDeviceApplianceVmxAuthenticationTokenCreatedBody) UnmarshalBinary(b []byte) error {
+	var res CreateDeviceApplianceVmxAuthenticationTokenCreatedBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

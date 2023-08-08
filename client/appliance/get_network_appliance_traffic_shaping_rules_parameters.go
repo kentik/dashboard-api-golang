@@ -52,14 +52,19 @@ func NewGetNetworkApplianceTrafficShapingRulesParamsWithHTTPClient(client *http.
 	}
 }
 
-/* GetNetworkApplianceTrafficShapingRulesParams contains all the parameters to send to the API endpoint
-   for the get network appliance traffic shaping rules operation.
+/*
+GetNetworkApplianceTrafficShapingRulesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network appliance traffic shaping rules operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkApplianceTrafficShapingRulesParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

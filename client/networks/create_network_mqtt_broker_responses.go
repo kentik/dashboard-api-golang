@@ -32,7 +32,7 @@ func (o *CreateNetworkMqttBrokerReader) ReadResponse(response runtime.ClientResp
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/mqttBrokers] createNetworkMqttBroker", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewCreateNetworkMqttBrokerCreated() *CreateNetworkMqttBrokerCreated {
 	return &CreateNetworkMqttBrokerCreated{}
 }
 
-/* CreateNetworkMqttBrokerCreated describes a response with status code 201, with default header values.
+/*
+CreateNetworkMqttBrokerCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *CreateNetworkMqttBrokerCreated) IsCode(code int) bool {
 	return code == 201
 }
 
+// Code gets the status code for the create network mqtt broker created response
+func (o *CreateNetworkMqttBrokerCreated) Code() int {
+	return 201
+}
+
 func (o *CreateNetworkMqttBrokerCreated) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/mqttBrokers][%d] createNetworkMqttBrokerCreated  %+v", 201, o.Payload)
 }
@@ -96,7 +102,8 @@ func (o *CreateNetworkMqttBrokerCreated) readResponse(response runtime.ClientRes
 	return nil
 }
 
-/*CreateNetworkMqttBrokerBody create network mqtt broker body
+/*
+CreateNetworkMqttBrokerBody create network mqtt broker body
 // Example: {"authentication":{"username":"Username"},"host":"1.1.1.1","name":"MQTT_Broker_1","port":1234,"security":{"mode":"tls","tls":{"hasCaCertificate":true,"verifyHostnames":true}}}
 swagger:model CreateNetworkMqttBrokerBody
 */
@@ -210,6 +217,11 @@ func (o *CreateNetworkMqttBrokerBody) ContextValidate(ctx context.Context, forma
 func (o *CreateNetworkMqttBrokerBody) contextValidateSecurity(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Security != nil {
+
+		if swag.IsZero(o.Security) { // not required
+			return nil
+		}
+
 		if err := o.Security.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkMqttBroker" + "." + "security")
@@ -241,7 +253,8 @@ func (o *CreateNetworkMqttBrokerBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*CreateNetworkMqttBrokerParamsBodySecurity Security settings of the MQTT broker.
+/*
+CreateNetworkMqttBrokerParamsBodySecurity Security settings of the MQTT broker.
 swagger:model CreateNetworkMqttBrokerParamsBodySecurity
 */
 type CreateNetworkMqttBrokerParamsBodySecurity struct {
@@ -303,6 +316,11 @@ func (o *CreateNetworkMqttBrokerParamsBodySecurity) ContextValidate(ctx context.
 func (o *CreateNetworkMqttBrokerParamsBodySecurity) contextValidateSecurity(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Security != nil {
+
+		if swag.IsZero(o.Security) { // not required
+			return nil
+		}
+
 		if err := o.Security.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkMqttBroker" + "." + "security" + "." + "security")
@@ -334,7 +352,8 @@ func (o *CreateNetworkMqttBrokerParamsBodySecurity) UnmarshalBinary(b []byte) er
 	return nil
 }
 
-/*CreateNetworkMqttBrokerParamsBodySecuritySecurity TLS settings of the MQTT broker.
+/*
+CreateNetworkMqttBrokerParamsBodySecuritySecurity TLS settings of the MQTT broker.
 swagger:model CreateNetworkMqttBrokerParamsBodySecuritySecurity
 */
 type CreateNetworkMqttBrokerParamsBodySecuritySecurity struct {

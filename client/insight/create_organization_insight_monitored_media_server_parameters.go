@@ -52,17 +52,22 @@ func NewCreateOrganizationInsightMonitoredMediaServerParamsWithHTTPClient(client
 	}
 }
 
-/* CreateOrganizationInsightMonitoredMediaServerParams contains all the parameters to send to the API endpoint
-   for the create organization insight monitored media server operation.
+/*
+CreateOrganizationInsightMonitoredMediaServerParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create organization insight monitored media server operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateOrganizationInsightMonitoredMediaServerParams struct {
 
 	// CreateOrganizationInsightMonitoredMediaServer.
 	CreateOrganizationInsightMonitoredMediaServer CreateOrganizationInsightMonitoredMediaServerBody
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

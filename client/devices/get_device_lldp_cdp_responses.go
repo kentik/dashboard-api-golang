@@ -28,7 +28,7 @@ func (o *GetDeviceLldpCdpReader) ReadResponse(response runtime.ClientResponse, c
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /devices/{serial}/lldpCdp] getDeviceLldpCdp", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetDeviceLldpCdpOK() *GetDeviceLldpCdpOK {
 	return &GetDeviceLldpCdpOK{}
 }
 
-/* GetDeviceLldpCdpOK describes a response with status code 200, with default header values.
+/*
+GetDeviceLldpCdpOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetDeviceLldpCdpOK) IsServerError() bool {
 // IsCode returns true when this get device lldp cdp o k response a status code equal to that given
 func (o *GetDeviceLldpCdpOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get device lldp cdp o k response
+func (o *GetDeviceLldpCdpOK) Code() int {
+	return 200
 }
 
 func (o *GetDeviceLldpCdpOK) Error() string {

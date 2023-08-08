@@ -28,7 +28,7 @@ func (o *GetOrganizationApplianceVpnStatusesReader) ReadResponse(response runtim
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/appliance/vpn/statuses] getOrganizationApplianceVpnStatuses", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetOrganizationApplianceVpnStatusesOK() *GetOrganizationApplianceVpnStat
 	return &GetOrganizationApplianceVpnStatusesOK{}
 }
 
-/* GetOrganizationApplianceVpnStatusesOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationApplianceVpnStatusesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -73,6 +74,11 @@ func (o *GetOrganizationApplianceVpnStatusesOK) IsServerError() bool {
 // IsCode returns true when this get organization appliance vpn statuses o k response a status code equal to that given
 func (o *GetOrganizationApplianceVpnStatusesOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get organization appliance vpn statuses o k response
+func (o *GetOrganizationApplianceVpnStatusesOK) Code() int {
+	return 200
 }
 
 func (o *GetOrganizationApplianceVpnStatusesOK) Error() string {

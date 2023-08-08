@@ -52,14 +52,19 @@ func NewProvisionNetworkClientsParamsWithHTTPClient(client *http.Client) *Provis
 	}
 }
 
-/* ProvisionNetworkClientsParams contains all the parameters to send to the API endpoint
-   for the provision network clients operation.
+/*
+ProvisionNetworkClientsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the provision network clients operation.
+
+	Typically these are written to a http.Request.
 */
 type ProvisionNetworkClientsParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// ProvisionNetworkClients.

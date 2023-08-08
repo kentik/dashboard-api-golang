@@ -52,17 +52,25 @@ func NewDeleteOrganizationActionBatchParamsWithHTTPClient(client *http.Client) *
 	}
 }
 
-/* DeleteOrganizationActionBatchParams contains all the parameters to send to the API endpoint
-   for the delete organization action batch operation.
+/*
+DeleteOrganizationActionBatchParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete organization action batch operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteOrganizationActionBatchParams struct {
 
-	// ActionBatchID.
+	/* ActionBatchID.
+
+	   Action batch ID
+	*/
 	ActionBatchID string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

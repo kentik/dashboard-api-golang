@@ -28,7 +28,7 @@ func (o *GetOrganizationLicensesOverviewReader) ReadResponse(response runtime.Cl
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/licenses/overview] getOrganizationLicensesOverview", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetOrganizationLicensesOverviewOK() *GetOrganizationLicensesOverviewOK {
 	return &GetOrganizationLicensesOverviewOK{}
 }
 
-/* GetOrganizationLicensesOverviewOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationLicensesOverviewOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetOrganizationLicensesOverviewOK) IsServerError() bool {
 // IsCode returns true when this get organization licenses overview o k response a status code equal to that given
 func (o *GetOrganizationLicensesOverviewOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get organization licenses overview o k response
+func (o *GetOrganizationLicensesOverviewOK) Code() int {
+	return 200
 }
 
 func (o *GetOrganizationLicensesOverviewOK) Error() string {

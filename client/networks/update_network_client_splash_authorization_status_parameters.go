@@ -52,17 +52,25 @@ func NewUpdateNetworkClientSplashAuthorizationStatusParamsWithHTTPClient(client 
 	}
 }
 
-/* UpdateNetworkClientSplashAuthorizationStatusParams contains all the parameters to send to the API endpoint
-   for the update network client splash authorization status operation.
+/*
+UpdateNetworkClientSplashAuthorizationStatusParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network client splash authorization status operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkClientSplashAuthorizationStatusParams struct {
 
-	// ClientID.
+	/* ClientID.
+
+	   Client ID
+	*/
 	ClientID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkClientSplashAuthorizationStatus.

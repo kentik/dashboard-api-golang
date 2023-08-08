@@ -32,7 +32,7 @@ func (o *CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerReader) Re
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/switch/dhcpServerPolicy/arpInspection/trustedServers] createNetworkSwitchDhcpServerPolicyArpInspectionTrustedServer", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewCreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerCreated() *
 	return &CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerCreated{}
 }
 
-/* CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerCreated describes a response with status code 201, with default header values.
+/*
+CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerCreated) I
 	return code == 201
 }
 
+// Code gets the status code for the create network switch dhcp server policy arp inspection trusted server created response
+func (o *CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerCreated) Code() int {
+	return 201
+}
+
 func (o *CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerCreated) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/switch/dhcpServerPolicy/arpInspection/trustedServers][%d] createNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerCreated  %+v", 201, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerCreated) r
 	return nil
 }
 
-/*CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerBody create network switch dhcp server policy arp inspection trusted server body
+/*
+CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerBody create network switch dhcp server policy arp inspection trusted server body
 // Example: {"ipv4":{"address":"1.2.3.4"},"mac":"00:11:22:33:44:55","vlan":100}
 swagger:model CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerBody
 */
@@ -194,6 +201,7 @@ func (o *CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerBody) Cont
 func (o *CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerBody) contextValidateIPV4(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.IPV4 != nil {
+
 		if err := o.IPV4.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkSwitchDhcpServerPolicyArpInspectionTrustedServer" + "." + "ipv4")
@@ -225,7 +233,8 @@ func (o *CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerBody) Unma
 	return nil
 }
 
-/*CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerCreatedBody create network switch dhcp server policy arp inspection trusted server created body
+/*
+CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerCreatedBody create network switch dhcp server policy arp inspection trusted server created body
 swagger:model CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerCreatedBody
 */
 type CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerCreatedBody struct {
@@ -293,6 +302,11 @@ func (o *CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerCreatedBod
 func (o *CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerCreatedBody) contextValidateIPV4(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.IPV4 != nil {
+
+		if swag.IsZero(o.IPV4) { // not required
+			return nil
+		}
+
 		if err := o.IPV4.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerCreated" + "." + "ipv4")
@@ -324,7 +338,8 @@ func (o *CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerCreatedBod
 	return nil
 }
 
-/*CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerCreatedBodyIPV4 IPv4 attributes of the trusted server.
+/*
+CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerCreatedBodyIPV4 IPv4 attributes of the trusted server.
 swagger:model CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerCreatedBodyIPV4
 */
 type CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerCreatedBodyIPV4 struct {
@@ -361,7 +376,8 @@ func (o *CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerCreatedBod
 	return nil
 }
 
-/*CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerParamsBodyIPV4 The IPv4 attributes of the trusted server being added
+/*
+CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerParamsBodyIPV4 The IPv4 attributes of the trusted server being added
 swagger:model CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerParamsBodyIPV4
 */
 type CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerParamsBodyIPV4 struct {

@@ -33,7 +33,7 @@ func (o *GetNetworkWebhooksWebhookTestReader) ReadResponse(response runtime.Clie
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/webhooks/webhookTests/{webhookTestId}] getNetworkWebhooksWebhookTest", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewGetNetworkWebhooksWebhookTestOK() *GetNetworkWebhooksWebhookTestOK {
 	return &GetNetworkWebhooksWebhookTestOK{}
 }
 
-/* GetNetworkWebhooksWebhookTestOK describes a response with status code 200, with default header values.
+/*
+GetNetworkWebhooksWebhookTestOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *GetNetworkWebhooksWebhookTestOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network webhooks webhook test o k response
+func (o *GetNetworkWebhooksWebhookTestOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkWebhooksWebhookTestOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/webhooks/webhookTests/{webhookTestId}][%d] getNetworkWebhooksWebhookTestOK  %+v", 200, o.Payload)
 }
@@ -99,7 +105,8 @@ func (o *GetNetworkWebhooksWebhookTestOK) readResponse(response runtime.ClientRe
 	return nil
 }
 
-/*GetNetworkWebhooksWebhookTestOKBody get network webhooks webhook test o k body
+/*
+GetNetworkWebhooksWebhookTestOKBody get network webhooks webhook test o k body
 swagger:model GetNetworkWebhooksWebhookTestOKBody
 */
 type GetNetworkWebhooksWebhookTestOKBody struct {
@@ -108,7 +115,7 @@ type GetNetworkWebhooksWebhookTestOKBody struct {
 	ID string `json:"id,omitempty"`
 
 	// Current status of the webhook delivery
-	// Enum: [abandoned delivered retrying enqueued processing]
+	// Enum: [abandoned delivered enqueued processing retrying]
 	Status string `json:"status,omitempty"`
 
 	// URL where the webhook was delivered
@@ -133,7 +140,7 @@ var getNetworkWebhooksWebhookTestOKBodyTypeStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["abandoned","delivered","retrying","enqueued","processing"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["abandoned","delivered","enqueued","processing","retrying"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -149,14 +156,14 @@ const (
 	// GetNetworkWebhooksWebhookTestOKBodyStatusDelivered captures enum value "delivered"
 	GetNetworkWebhooksWebhookTestOKBodyStatusDelivered string = "delivered"
 
-	// GetNetworkWebhooksWebhookTestOKBodyStatusRetrying captures enum value "retrying"
-	GetNetworkWebhooksWebhookTestOKBodyStatusRetrying string = "retrying"
-
 	// GetNetworkWebhooksWebhookTestOKBodyStatusEnqueued captures enum value "enqueued"
 	GetNetworkWebhooksWebhookTestOKBodyStatusEnqueued string = "enqueued"
 
 	// GetNetworkWebhooksWebhookTestOKBodyStatusProcessing captures enum value "processing"
 	GetNetworkWebhooksWebhookTestOKBodyStatusProcessing string = "processing"
+
+	// GetNetworkWebhooksWebhookTestOKBodyStatusRetrying captures enum value "retrying"
+	GetNetworkWebhooksWebhookTestOKBodyStatusRetrying string = "retrying"
 )
 
 // prop value enum

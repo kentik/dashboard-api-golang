@@ -52,14 +52,19 @@ func NewGetNetworkApplianceFirewallPortForwardingRulesParamsWithHTTPClient(clien
 	}
 }
 
-/* GetNetworkApplianceFirewallPortForwardingRulesParams contains all the parameters to send to the API endpoint
-   for the get network appliance firewall port forwarding rules operation.
+/*
+GetNetworkApplianceFirewallPortForwardingRulesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network appliance firewall port forwarding rules operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkApplianceFirewallPortForwardingRulesParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

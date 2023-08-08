@@ -224,9 +224,9 @@ type ClientService interface {
 }
 
 /*
-  AddNetworkSwitchStack adds a switch to a stack
+AddNetworkSwitchStack adds a switch to a stack
 
-  Add a switch to a stack
+Add a switch to a stack
 */
 func (a *Client) AddNetworkSwitchStack(params *AddNetworkSwitchStackParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*AddNetworkSwitchStackOK, error) {
 	// TODO: Validate the params before sending
@@ -265,9 +265,9 @@ func (a *Client) AddNetworkSwitchStack(params *AddNetworkSwitchStackParams, auth
 }
 
 /*
-  CloneOrganizationSwitchDevices clones port level and some switch level configuration settings from a source switch to one or more target switches
+CloneOrganizationSwitchDevices clones port level and some switch level configuration settings from a source switch to one or more target switches
 
-  Clone port-level and some switch-level configuration settings from a source switch to one or more target switches. Cloned settings include: Aggregation Groups, Power Settings, Multicast Settings, MTU Configuration, STP Bridge priority, Port Mirroring
+Clone port-level and some switch-level configuration settings from a source switch to one or more target switches. Cloned settings include: Aggregation Groups, Power Settings, Multicast Settings, MTU Configuration, STP Bridge priority, Port Mirroring
 */
 func (a *Client) CloneOrganizationSwitchDevices(params *CloneOrganizationSwitchDevicesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CloneOrganizationSwitchDevicesOK, error) {
 	// TODO: Validate the params before sending
@@ -306,9 +306,9 @@ func (a *Client) CloneOrganizationSwitchDevices(params *CloneOrganizationSwitchD
 }
 
 /*
-  CreateDeviceSwitchRoutingInterface creates a layer 3 interface for a switch
+CreateDeviceSwitchRoutingInterface creates a layer 3 interface for a switch
 
-  Create a layer 3 interface for a switch
+Create a layer 3 interface for a switch
 */
 func (a *Client) CreateDeviceSwitchRoutingInterface(params *CreateDeviceSwitchRoutingInterfaceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateDeviceSwitchRoutingInterfaceCreated, error) {
 	// TODO: Validate the params before sending
@@ -347,9 +347,9 @@ func (a *Client) CreateDeviceSwitchRoutingInterface(params *CreateDeviceSwitchRo
 }
 
 /*
-  CreateDeviceSwitchRoutingStaticRoute creates a layer 3 static route for a switch
+CreateDeviceSwitchRoutingStaticRoute creates a layer 3 static route for a switch
 
-  Create a layer 3 static route for a switch
+Create a layer 3 static route for a switch
 */
 func (a *Client) CreateDeviceSwitchRoutingStaticRoute(params *CreateDeviceSwitchRoutingStaticRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateDeviceSwitchRoutingStaticRouteCreated, error) {
 	// TODO: Validate the params before sending
@@ -388,9 +388,9 @@ func (a *Client) CreateDeviceSwitchRoutingStaticRoute(params *CreateDeviceSwitch
 }
 
 /*
-  CreateNetworkSwitchAccessPolicy creates an access policy for a switch network
+CreateNetworkSwitchAccessPolicy creates an access policy for a switch network
 
-  Create an access policy for a switch network. If you would like to enable Meraki Authentication, set radiusServers to empty array.
+Create an access policy for a switch network. If you would like to enable Meraki Authentication, set radiusServers to empty array.
 */
 func (a *Client) CreateNetworkSwitchAccessPolicy(params *CreateNetworkSwitchAccessPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkSwitchAccessPolicyCreated, error) {
 	// TODO: Validate the params before sending
@@ -429,9 +429,9 @@ func (a *Client) CreateNetworkSwitchAccessPolicy(params *CreateNetworkSwitchAcce
 }
 
 /*
-  CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServer adds a server to be trusted by dynamic a r p inspection on this network
+CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServer adds a server to be trusted by dynamic a r p inspection on this network
 
-  Add a server to be trusted by Dynamic ARP Inspection on this network
+Add a server to be trusted by Dynamic ARP Inspection on this network
 */
 func (a *Client) CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServer(params *CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerCreated, error) {
 	// TODO: Validate the params before sending
@@ -470,9 +470,9 @@ func (a *Client) CreateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServer(p
 }
 
 /*
-  CreateNetworkSwitchLinkAggregation creates a link aggregation group
+CreateNetworkSwitchLinkAggregation creates a link aggregation group
 
-  Create a link aggregation group
+Create a link aggregation group
 */
 func (a *Client) CreateNetworkSwitchLinkAggregation(params *CreateNetworkSwitchLinkAggregationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkSwitchLinkAggregationCreated, error) {
 	// TODO: Validate the params before sending
@@ -511,9 +511,9 @@ func (a *Client) CreateNetworkSwitchLinkAggregation(params *CreateNetworkSwitchL
 }
 
 /*
-  CreateNetworkSwitchPortSchedule adds a switch port schedule
+CreateNetworkSwitchPortSchedule adds a switch port schedule
 
-  Add a switch port schedule
+Add a switch port schedule
 */
 func (a *Client) CreateNetworkSwitchPortSchedule(params *CreateNetworkSwitchPortScheduleParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkSwitchPortScheduleCreated, error) {
 	// TODO: Validate the params before sending
@@ -552,9 +552,9 @@ func (a *Client) CreateNetworkSwitchPortSchedule(params *CreateNetworkSwitchPort
 }
 
 /*
-  CreateNetworkSwitchQosRule adds a quality of service rule
+CreateNetworkSwitchQosRule adds a quality of service rule
 
-  Add a quality of service rule
+Add a quality of service rule
 */
 func (a *Client) CreateNetworkSwitchQosRule(params *CreateNetworkSwitchQosRuleParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkSwitchQosRuleCreated, error) {
 	// TODO: Validate the params before sending
@@ -593,9 +593,9 @@ func (a *Client) CreateNetworkSwitchQosRule(params *CreateNetworkSwitchQosRulePa
 }
 
 /*
-  CreateNetworkSwitchRoutingMulticastRendezvousPoint creates a multicast rendezvous point
+CreateNetworkSwitchRoutingMulticastRendezvousPoint creates a multicast rendezvous point
 
-  Create a multicast rendezvous point
+Create a multicast rendezvous point
 */
 func (a *Client) CreateNetworkSwitchRoutingMulticastRendezvousPoint(params *CreateNetworkSwitchRoutingMulticastRendezvousPointParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkSwitchRoutingMulticastRendezvousPointCreated, error) {
 	// TODO: Validate the params before sending
@@ -634,9 +634,9 @@ func (a *Client) CreateNetworkSwitchRoutingMulticastRendezvousPoint(params *Crea
 }
 
 /*
-  CreateNetworkSwitchStack creates a stack
+CreateNetworkSwitchStack creates a stack
 
-  Create a stack
+Create a stack
 */
 func (a *Client) CreateNetworkSwitchStack(params *CreateNetworkSwitchStackParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkSwitchStackCreated, error) {
 	// TODO: Validate the params before sending
@@ -675,9 +675,9 @@ func (a *Client) CreateNetworkSwitchStack(params *CreateNetworkSwitchStackParams
 }
 
 /*
-  CreateNetworkSwitchStackRoutingInterface creates a layer 3 interface for a switch stack
+CreateNetworkSwitchStackRoutingInterface creates a layer 3 interface for a switch stack
 
-  Create a layer 3 interface for a switch stack
+Create a layer 3 interface for a switch stack
 */
 func (a *Client) CreateNetworkSwitchStackRoutingInterface(params *CreateNetworkSwitchStackRoutingInterfaceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkSwitchStackRoutingInterfaceCreated, error) {
 	// TODO: Validate the params before sending
@@ -716,9 +716,9 @@ func (a *Client) CreateNetworkSwitchStackRoutingInterface(params *CreateNetworkS
 }
 
 /*
-  CreateNetworkSwitchStackRoutingStaticRoute creates a layer 3 static route for a switch stack
+CreateNetworkSwitchStackRoutingStaticRoute creates a layer 3 static route for a switch stack
 
-  Create a layer 3 static route for a switch stack
+Create a layer 3 static route for a switch stack
 */
 func (a *Client) CreateNetworkSwitchStackRoutingStaticRoute(params *CreateNetworkSwitchStackRoutingStaticRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkSwitchStackRoutingStaticRouteCreated, error) {
 	// TODO: Validate the params before sending
@@ -757,9 +757,9 @@ func (a *Client) CreateNetworkSwitchStackRoutingStaticRoute(params *CreateNetwor
 }
 
 /*
-  CycleDeviceSwitchPorts cycles a set of switch ports
+CycleDeviceSwitchPorts cycles a set of switch ports
 
-  Cycle a set of switch ports
+Cycle a set of switch ports
 */
 func (a *Client) CycleDeviceSwitchPorts(params *CycleDeviceSwitchPortsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CycleDeviceSwitchPortsOK, error) {
 	// TODO: Validate the params before sending
@@ -798,9 +798,9 @@ func (a *Client) CycleDeviceSwitchPorts(params *CycleDeviceSwitchPortsParams, au
 }
 
 /*
-  DeleteDeviceSwitchRoutingInterface deletes a layer 3 interface from the switch
+DeleteDeviceSwitchRoutingInterface deletes a layer 3 interface from the switch
 
-  Delete a layer 3 interface from the switch
+Delete a layer 3 interface from the switch
 */
 func (a *Client) DeleteDeviceSwitchRoutingInterface(params *DeleteDeviceSwitchRoutingInterfaceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteDeviceSwitchRoutingInterfaceNoContent, error) {
 	// TODO: Validate the params before sending
@@ -839,9 +839,9 @@ func (a *Client) DeleteDeviceSwitchRoutingInterface(params *DeleteDeviceSwitchRo
 }
 
 /*
-  DeleteDeviceSwitchRoutingStaticRoute deletes a layer 3 static route for a switch
+DeleteDeviceSwitchRoutingStaticRoute deletes a layer 3 static route for a switch
 
-  Delete a layer 3 static route for a switch
+Delete a layer 3 static route for a switch
 */
 func (a *Client) DeleteDeviceSwitchRoutingStaticRoute(params *DeleteDeviceSwitchRoutingStaticRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteDeviceSwitchRoutingStaticRouteNoContent, error) {
 	// TODO: Validate the params before sending
@@ -880,9 +880,9 @@ func (a *Client) DeleteDeviceSwitchRoutingStaticRoute(params *DeleteDeviceSwitch
 }
 
 /*
-  DeleteNetworkSwitchAccessPolicy deletes an access policy for a switch network
+DeleteNetworkSwitchAccessPolicy deletes an access policy for a switch network
 
-  Delete an access policy for a switch network
+Delete an access policy for a switch network
 */
 func (a *Client) DeleteNetworkSwitchAccessPolicy(params *DeleteNetworkSwitchAccessPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkSwitchAccessPolicyNoContent, error) {
 	// TODO: Validate the params before sending
@@ -921,9 +921,9 @@ func (a *Client) DeleteNetworkSwitchAccessPolicy(params *DeleteNetworkSwitchAcce
 }
 
 /*
-  DeleteNetworkSwitchDhcpServerPolicyArpInspectionTrustedServer removes a server from being trusted by dynamic a r p inspection on this network
+DeleteNetworkSwitchDhcpServerPolicyArpInspectionTrustedServer removes a server from being trusted by dynamic a r p inspection on this network
 
-  Remove a server from being trusted by Dynamic ARP Inspection on this network
+Remove a server from being trusted by Dynamic ARP Inspection on this network
 */
 func (a *Client) DeleteNetworkSwitchDhcpServerPolicyArpInspectionTrustedServer(params *DeleteNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerNoContent, error) {
 	// TODO: Validate the params before sending
@@ -962,9 +962,9 @@ func (a *Client) DeleteNetworkSwitchDhcpServerPolicyArpInspectionTrustedServer(p
 }
 
 /*
-  DeleteNetworkSwitchLinkAggregation splits a link aggregation group into separate ports
+DeleteNetworkSwitchLinkAggregation splits a link aggregation group into separate ports
 
-  Split a link aggregation group into separate ports
+Split a link aggregation group into separate ports
 */
 func (a *Client) DeleteNetworkSwitchLinkAggregation(params *DeleteNetworkSwitchLinkAggregationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkSwitchLinkAggregationNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1003,9 +1003,9 @@ func (a *Client) DeleteNetworkSwitchLinkAggregation(params *DeleteNetworkSwitchL
 }
 
 /*
-  DeleteNetworkSwitchPortSchedule deletes a switch port schedule
+DeleteNetworkSwitchPortSchedule deletes a switch port schedule
 
-  Delete a switch port schedule
+Delete a switch port schedule
 */
 func (a *Client) DeleteNetworkSwitchPortSchedule(params *DeleteNetworkSwitchPortScheduleParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkSwitchPortScheduleNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1044,9 +1044,9 @@ func (a *Client) DeleteNetworkSwitchPortSchedule(params *DeleteNetworkSwitchPort
 }
 
 /*
-  DeleteNetworkSwitchQosRule deletes a quality of service rule
+DeleteNetworkSwitchQosRule deletes a quality of service rule
 
-  Delete a quality of service rule
+Delete a quality of service rule
 */
 func (a *Client) DeleteNetworkSwitchQosRule(params *DeleteNetworkSwitchQosRuleParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkSwitchQosRuleNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1085,9 +1085,9 @@ func (a *Client) DeleteNetworkSwitchQosRule(params *DeleteNetworkSwitchQosRulePa
 }
 
 /*
-  DeleteNetworkSwitchRoutingMulticastRendezvousPoint deletes a multicast rendezvous point
+DeleteNetworkSwitchRoutingMulticastRendezvousPoint deletes a multicast rendezvous point
 
-  Delete a multicast rendezvous point
+Delete a multicast rendezvous point
 */
 func (a *Client) DeleteNetworkSwitchRoutingMulticastRendezvousPoint(params *DeleteNetworkSwitchRoutingMulticastRendezvousPointParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkSwitchRoutingMulticastRendezvousPointNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1126,9 +1126,9 @@ func (a *Client) DeleteNetworkSwitchRoutingMulticastRendezvousPoint(params *Dele
 }
 
 /*
-  DeleteNetworkSwitchStack deletes a stack
+DeleteNetworkSwitchStack deletes a stack
 
-  Delete a stack
+Delete a stack
 */
 func (a *Client) DeleteNetworkSwitchStack(params *DeleteNetworkSwitchStackParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkSwitchStackNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1167,9 +1167,9 @@ func (a *Client) DeleteNetworkSwitchStack(params *DeleteNetworkSwitchStackParams
 }
 
 /*
-  DeleteNetworkSwitchStackRoutingInterface deletes a layer 3 interface from a switch stack
+DeleteNetworkSwitchStackRoutingInterface deletes a layer 3 interface from a switch stack
 
-  Delete a layer 3 interface from a switch stack
+Delete a layer 3 interface from a switch stack
 */
 func (a *Client) DeleteNetworkSwitchStackRoutingInterface(params *DeleteNetworkSwitchStackRoutingInterfaceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkSwitchStackRoutingInterfaceNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1208,9 +1208,9 @@ func (a *Client) DeleteNetworkSwitchStackRoutingInterface(params *DeleteNetworkS
 }
 
 /*
-  DeleteNetworkSwitchStackRoutingStaticRoute deletes a layer 3 static route for a switch stack
+DeleteNetworkSwitchStackRoutingStaticRoute deletes a layer 3 static route for a switch stack
 
-  Delete a layer 3 static route for a switch stack
+Delete a layer 3 static route for a switch stack
 */
 func (a *Client) DeleteNetworkSwitchStackRoutingStaticRoute(params *DeleteNetworkSwitchStackRoutingStaticRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkSwitchStackRoutingStaticRouteNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1249,9 +1249,9 @@ func (a *Client) DeleteNetworkSwitchStackRoutingStaticRoute(params *DeleteNetwor
 }
 
 /*
-  GetDeviceSwitchPort returns a switch port
+GetDeviceSwitchPort returns a switch port
 
-  Return a switch port
+Return a switch port
 */
 func (a *Client) GetDeviceSwitchPort(params *GetDeviceSwitchPortParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceSwitchPortOK, error) {
 	// TODO: Validate the params before sending
@@ -1290,9 +1290,9 @@ func (a *Client) GetDeviceSwitchPort(params *GetDeviceSwitchPortParams, authInfo
 }
 
 /*
-  GetDeviceSwitchPorts lists the switch ports for a switch
+GetDeviceSwitchPorts lists the switch ports for a switch
 
-  List the switch ports for a switch
+List the switch ports for a switch
 */
 func (a *Client) GetDeviceSwitchPorts(params *GetDeviceSwitchPortsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceSwitchPortsOK, error) {
 	// TODO: Validate the params before sending
@@ -1331,9 +1331,9 @@ func (a *Client) GetDeviceSwitchPorts(params *GetDeviceSwitchPortsParams, authIn
 }
 
 /*
-  GetDeviceSwitchPortsStatuses returns the status for all the ports of a switch
+GetDeviceSwitchPortsStatuses returns the status for all the ports of a switch
 
-  Return the status for all the ports of a switch
+Return the status for all the ports of a switch
 */
 func (a *Client) GetDeviceSwitchPortsStatuses(params *GetDeviceSwitchPortsStatusesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceSwitchPortsStatusesOK, error) {
 	// TODO: Validate the params before sending
@@ -1372,9 +1372,9 @@ func (a *Client) GetDeviceSwitchPortsStatuses(params *GetDeviceSwitchPortsStatus
 }
 
 /*
-  GetDeviceSwitchPortsStatusesPackets returns the packet counters for all the ports of a switch
+GetDeviceSwitchPortsStatusesPackets returns the packet counters for all the ports of a switch
 
-  Return the packet counters for all the ports of a switch
+Return the packet counters for all the ports of a switch
 */
 func (a *Client) GetDeviceSwitchPortsStatusesPackets(params *GetDeviceSwitchPortsStatusesPacketsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceSwitchPortsStatusesPacketsOK, error) {
 	// TODO: Validate the params before sending
@@ -1413,9 +1413,9 @@ func (a *Client) GetDeviceSwitchPortsStatusesPackets(params *GetDeviceSwitchPort
 }
 
 /*
-  GetDeviceSwitchRoutingInterface returns a layer 3 interface for a switch
+GetDeviceSwitchRoutingInterface returns a layer 3 interface for a switch
 
-  Return a layer 3 interface for a switch
+Return a layer 3 interface for a switch
 */
 func (a *Client) GetDeviceSwitchRoutingInterface(params *GetDeviceSwitchRoutingInterfaceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceSwitchRoutingInterfaceOK, error) {
 	// TODO: Validate the params before sending
@@ -1454,9 +1454,9 @@ func (a *Client) GetDeviceSwitchRoutingInterface(params *GetDeviceSwitchRoutingI
 }
 
 /*
-  GetDeviceSwitchRoutingInterfaceDhcp returns a layer 3 interface d h c p configuration for a switch
+GetDeviceSwitchRoutingInterfaceDhcp returns a layer 3 interface d h c p configuration for a switch
 
-  Return a layer 3 interface DHCP configuration for a switch
+Return a layer 3 interface DHCP configuration for a switch
 */
 func (a *Client) GetDeviceSwitchRoutingInterfaceDhcp(params *GetDeviceSwitchRoutingInterfaceDhcpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceSwitchRoutingInterfaceDhcpOK, error) {
 	// TODO: Validate the params before sending
@@ -1495,9 +1495,9 @@ func (a *Client) GetDeviceSwitchRoutingInterfaceDhcp(params *GetDeviceSwitchRout
 }
 
 /*
-  GetDeviceSwitchRoutingInterfaces lists layer 3 interfaces for a switch
+GetDeviceSwitchRoutingInterfaces lists layer 3 interfaces for a switch
 
-  List layer 3 interfaces for a switch. Those for a stack may be found under switch stack routing.
+List layer 3 interfaces for a switch. Those for a stack may be found under switch stack routing.
 */
 func (a *Client) GetDeviceSwitchRoutingInterfaces(params *GetDeviceSwitchRoutingInterfacesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceSwitchRoutingInterfacesOK, error) {
 	// TODO: Validate the params before sending
@@ -1536,9 +1536,9 @@ func (a *Client) GetDeviceSwitchRoutingInterfaces(params *GetDeviceSwitchRouting
 }
 
 /*
-  GetDeviceSwitchRoutingStaticRoute returns a layer 3 static route for a switch
+GetDeviceSwitchRoutingStaticRoute returns a layer 3 static route for a switch
 
-  Return a layer 3 static route for a switch
+Return a layer 3 static route for a switch
 */
 func (a *Client) GetDeviceSwitchRoutingStaticRoute(params *GetDeviceSwitchRoutingStaticRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceSwitchRoutingStaticRouteOK, error) {
 	// TODO: Validate the params before sending
@@ -1577,9 +1577,9 @@ func (a *Client) GetDeviceSwitchRoutingStaticRoute(params *GetDeviceSwitchRoutin
 }
 
 /*
-  GetDeviceSwitchRoutingStaticRoutes lists layer 3 static routes for a switch
+GetDeviceSwitchRoutingStaticRoutes lists layer 3 static routes for a switch
 
-  List layer 3 static routes for a switch
+List layer 3 static routes for a switch
 */
 func (a *Client) GetDeviceSwitchRoutingStaticRoutes(params *GetDeviceSwitchRoutingStaticRoutesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceSwitchRoutingStaticRoutesOK, error) {
 	// TODO: Validate the params before sending
@@ -1618,9 +1618,9 @@ func (a *Client) GetDeviceSwitchRoutingStaticRoutes(params *GetDeviceSwitchRouti
 }
 
 /*
-  GetDeviceSwitchWarmSpare returns warm spare configuration for a switch
+GetDeviceSwitchWarmSpare returns warm spare configuration for a switch
 
-  Return warm spare configuration for a switch
+Return warm spare configuration for a switch
 */
 func (a *Client) GetDeviceSwitchWarmSpare(params *GetDeviceSwitchWarmSpareParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceSwitchWarmSpareOK, error) {
 	// TODO: Validate the params before sending
@@ -1659,9 +1659,9 @@ func (a *Client) GetDeviceSwitchWarmSpare(params *GetDeviceSwitchWarmSpareParams
 }
 
 /*
-  GetNetworkSwitchAccessControlLists returns the access control lists for a m s network
+GetNetworkSwitchAccessControlLists returns the access control lists for a m s network
 
-  Return the access control lists for a MS network
+Return the access control lists for a MS network
 */
 func (a *Client) GetNetworkSwitchAccessControlLists(params *GetNetworkSwitchAccessControlListsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchAccessControlListsOK, error) {
 	// TODO: Validate the params before sending
@@ -1700,9 +1700,9 @@ func (a *Client) GetNetworkSwitchAccessControlLists(params *GetNetworkSwitchAcce
 }
 
 /*
-  GetNetworkSwitchAccessPolicies lists the access policies for a switch network
+GetNetworkSwitchAccessPolicies lists the access policies for a switch network
 
-  List the access policies for a switch network. Only returns access policies with 'my RADIUS server' as authentication method
+List the access policies for a switch network. Only returns access policies with 'my RADIUS server' as authentication method
 */
 func (a *Client) GetNetworkSwitchAccessPolicies(params *GetNetworkSwitchAccessPoliciesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchAccessPoliciesOK, error) {
 	// TODO: Validate the params before sending
@@ -1741,9 +1741,9 @@ func (a *Client) GetNetworkSwitchAccessPolicies(params *GetNetworkSwitchAccessPo
 }
 
 /*
-  GetNetworkSwitchAccessPolicy returns a specific access policy for a switch network
+GetNetworkSwitchAccessPolicy returns a specific access policy for a switch network
 
-  Return a specific access policy for a switch network
+Return a specific access policy for a switch network
 */
 func (a *Client) GetNetworkSwitchAccessPolicy(params *GetNetworkSwitchAccessPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchAccessPolicyOK, error) {
 	// TODO: Validate the params before sending
@@ -1782,9 +1782,9 @@ func (a *Client) GetNetworkSwitchAccessPolicy(params *GetNetworkSwitchAccessPoli
 }
 
 /*
-  GetNetworkSwitchAlternateManagementInterface returns the switch alternate management interface for the network
+GetNetworkSwitchAlternateManagementInterface returns the switch alternate management interface for the network
 
-  Return the switch alternate management interface for the network
+Return the switch alternate management interface for the network
 */
 func (a *Client) GetNetworkSwitchAlternateManagementInterface(params *GetNetworkSwitchAlternateManagementInterfaceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchAlternateManagementInterfaceOK, error) {
 	// TODO: Validate the params before sending
@@ -1823,9 +1823,9 @@ func (a *Client) GetNetworkSwitchAlternateManagementInterface(params *GetNetwork
 }
 
 /*
-  GetNetworkSwitchDhcpServerPolicy returns the d h c p server settings
+GetNetworkSwitchDhcpServerPolicy returns the d h c p server settings
 
-  Return the DHCP server settings. Blocked/allowed servers are only applied when default policy is allow/block, respectively
+Return the DHCP server settings. Blocked/allowed servers are only applied when default policy is allow/block, respectively
 */
 func (a *Client) GetNetworkSwitchDhcpServerPolicy(params *GetNetworkSwitchDhcpServerPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchDhcpServerPolicyOK, error) {
 	// TODO: Validate the params before sending
@@ -1864,9 +1864,9 @@ func (a *Client) GetNetworkSwitchDhcpServerPolicy(params *GetNetworkSwitchDhcpSe
 }
 
 /*
-  GetNetworkSwitchDhcpServerPolicyArpInspectionTrustedServers returns the list of servers trusted by dynamic a r p inspection on this network
+GetNetworkSwitchDhcpServerPolicyArpInspectionTrustedServers returns the list of servers trusted by dynamic a r p inspection on this network
 
-  Return the list of servers trusted by Dynamic ARP Inspection on this network. These are also known as whitelisted snoop entries
+Return the list of servers trusted by Dynamic ARP Inspection on this network. These are also known as allow listed snoop entries
 */
 func (a *Client) GetNetworkSwitchDhcpServerPolicyArpInspectionTrustedServers(params *GetNetworkSwitchDhcpServerPolicyArpInspectionTrustedServersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchDhcpServerPolicyArpInspectionTrustedServersOK, error) {
 	// TODO: Validate the params before sending
@@ -1905,9 +1905,9 @@ func (a *Client) GetNetworkSwitchDhcpServerPolicyArpInspectionTrustedServers(par
 }
 
 /*
-  GetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDevice returns the devices that have a dynamic a r p inspection warning and their warnings
+GetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDevice returns the devices that have a dynamic a r p inspection warning and their warnings
 
-  Return the devices that have a Dynamic ARP Inspection warning and their warnings
+Return the devices that have a Dynamic ARP Inspection warning and their warnings
 */
 func (a *Client) GetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDevice(params *GetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDeviceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDeviceOK, error) {
 	// TODO: Validate the params before sending
@@ -1946,9 +1946,9 @@ func (a *Client) GetNetworkSwitchDhcpServerPolicyArpInspectionWarningsByDevice(p
 }
 
 /*
-  GetNetworkSwitchDhcpV4ServersSeen returns the network s d h c pv4 servers seen within the selected timeframe default 1 day
+GetNetworkSwitchDhcpV4ServersSeen returns the network s d h c pv4 servers seen within the selected timeframe default 1 day
 
-  Return the network's DHCPv4 servers seen within the selected timeframe (default 1 day)
+Return the network's DHCPv4 servers seen within the selected timeframe (default 1 day)
 */
 func (a *Client) GetNetworkSwitchDhcpV4ServersSeen(params *GetNetworkSwitchDhcpV4ServersSeenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchDhcpV4ServersSeenOK, error) {
 	// TODO: Validate the params before sending
@@ -1987,9 +1987,9 @@ func (a *Client) GetNetworkSwitchDhcpV4ServersSeen(params *GetNetworkSwitchDhcpV
 }
 
 /*
-  GetNetworkSwitchDscpToCosMappings returns the d s c p to co s mappings
+GetNetworkSwitchDscpToCosMappings returns the d s c p to co s mappings
 
-  Return the DSCP to CoS mappings
+Return the DSCP to CoS mappings
 */
 func (a *Client) GetNetworkSwitchDscpToCosMappings(params *GetNetworkSwitchDscpToCosMappingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchDscpToCosMappingsOK, error) {
 	// TODO: Validate the params before sending
@@ -2028,9 +2028,9 @@ func (a *Client) GetNetworkSwitchDscpToCosMappings(params *GetNetworkSwitchDscpT
 }
 
 /*
-  GetNetworkSwitchLinkAggregations lists link aggregation groups
+GetNetworkSwitchLinkAggregations lists link aggregation groups
 
-  List link aggregation groups
+List link aggregation groups
 */
 func (a *Client) GetNetworkSwitchLinkAggregations(params *GetNetworkSwitchLinkAggregationsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchLinkAggregationsOK, error) {
 	// TODO: Validate the params before sending
@@ -2069,9 +2069,9 @@ func (a *Client) GetNetworkSwitchLinkAggregations(params *GetNetworkSwitchLinkAg
 }
 
 /*
-  GetNetworkSwitchMtu returns the m t u configuration
+GetNetworkSwitchMtu returns the m t u configuration
 
-  Return the MTU configuration
+Return the MTU configuration
 */
 func (a *Client) GetNetworkSwitchMtu(params *GetNetworkSwitchMtuParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchMtuOK, error) {
 	// TODO: Validate the params before sending
@@ -2110,9 +2110,9 @@ func (a *Client) GetNetworkSwitchMtu(params *GetNetworkSwitchMtuParams, authInfo
 }
 
 /*
-  GetNetworkSwitchPortSchedules lists switch port schedules
+GetNetworkSwitchPortSchedules lists switch port schedules
 
-  List switch port schedules
+List switch port schedules
 */
 func (a *Client) GetNetworkSwitchPortSchedules(params *GetNetworkSwitchPortSchedulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchPortSchedulesOK, error) {
 	// TODO: Validate the params before sending
@@ -2151,9 +2151,9 @@ func (a *Client) GetNetworkSwitchPortSchedules(params *GetNetworkSwitchPortSched
 }
 
 /*
-  GetNetworkSwitchQosRule returns a quality of service rule
+GetNetworkSwitchQosRule returns a quality of service rule
 
-  Return a quality of service rule
+Return a quality of service rule
 */
 func (a *Client) GetNetworkSwitchQosRule(params *GetNetworkSwitchQosRuleParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchQosRuleOK, error) {
 	// TODO: Validate the params before sending
@@ -2192,9 +2192,9 @@ func (a *Client) GetNetworkSwitchQosRule(params *GetNetworkSwitchQosRuleParams, 
 }
 
 /*
-  GetNetworkSwitchQosRules lists quality of service rules
+GetNetworkSwitchQosRules lists quality of service rules
 
-  List quality of service rules
+List quality of service rules
 */
 func (a *Client) GetNetworkSwitchQosRules(params *GetNetworkSwitchQosRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchQosRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -2233,9 +2233,9 @@ func (a *Client) GetNetworkSwitchQosRules(params *GetNetworkSwitchQosRulesParams
 }
 
 /*
-  GetNetworkSwitchQosRulesOrder returns the quality of service rule i ds by order in which they will be processed by the switch
+GetNetworkSwitchQosRulesOrder returns the quality of service rule i ds by order in which they will be processed by the switch
 
-  Return the quality of service rule IDs by order in which they will be processed by the switch
+Return the quality of service rule IDs by order in which they will be processed by the switch
 */
 func (a *Client) GetNetworkSwitchQosRulesOrder(params *GetNetworkSwitchQosRulesOrderParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchQosRulesOrderOK, error) {
 	// TODO: Validate the params before sending
@@ -2274,9 +2274,9 @@ func (a *Client) GetNetworkSwitchQosRulesOrder(params *GetNetworkSwitchQosRulesO
 }
 
 /*
-  GetNetworkSwitchRoutingMulticast returns multicast settings for a network
+GetNetworkSwitchRoutingMulticast returns multicast settings for a network
 
-  Return multicast settings for a network
+Return multicast settings for a network
 */
 func (a *Client) GetNetworkSwitchRoutingMulticast(params *GetNetworkSwitchRoutingMulticastParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchRoutingMulticastOK, error) {
 	// TODO: Validate the params before sending
@@ -2315,9 +2315,9 @@ func (a *Client) GetNetworkSwitchRoutingMulticast(params *GetNetworkSwitchRoutin
 }
 
 /*
-  GetNetworkSwitchRoutingMulticastRendezvousPoint returns a multicast rendezvous point
+GetNetworkSwitchRoutingMulticastRendezvousPoint returns a multicast rendezvous point
 
-  Return a multicast rendezvous point
+Return a multicast rendezvous point
 */
 func (a *Client) GetNetworkSwitchRoutingMulticastRendezvousPoint(params *GetNetworkSwitchRoutingMulticastRendezvousPointParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchRoutingMulticastRendezvousPointOK, error) {
 	// TODO: Validate the params before sending
@@ -2356,9 +2356,9 @@ func (a *Client) GetNetworkSwitchRoutingMulticastRendezvousPoint(params *GetNetw
 }
 
 /*
-  GetNetworkSwitchRoutingMulticastRendezvousPoints lists multicast rendezvous points
+GetNetworkSwitchRoutingMulticastRendezvousPoints lists multicast rendezvous points
 
-  List multicast rendezvous points
+List multicast rendezvous points
 */
 func (a *Client) GetNetworkSwitchRoutingMulticastRendezvousPoints(params *GetNetworkSwitchRoutingMulticastRendezvousPointsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchRoutingMulticastRendezvousPointsOK, error) {
 	// TODO: Validate the params before sending
@@ -2397,9 +2397,9 @@ func (a *Client) GetNetworkSwitchRoutingMulticastRendezvousPoints(params *GetNet
 }
 
 /*
-  GetNetworkSwitchRoutingOspf returns layer 3 o s p f routing configuration
+GetNetworkSwitchRoutingOspf returns layer 3 o s p f routing configuration
 
-  Return layer 3 OSPF routing configuration
+Return layer 3 OSPF routing configuration
 */
 func (a *Client) GetNetworkSwitchRoutingOspf(params *GetNetworkSwitchRoutingOspfParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchRoutingOspfOK, error) {
 	// TODO: Validate the params before sending
@@ -2438,9 +2438,9 @@ func (a *Client) GetNetworkSwitchRoutingOspf(params *GetNetworkSwitchRoutingOspf
 }
 
 /*
-  GetNetworkSwitchSettings returns the switch network settings
+GetNetworkSwitchSettings returns the switch network settings
 
-  Returns the switch network settings
+Returns the switch network settings
 */
 func (a *Client) GetNetworkSwitchSettings(params *GetNetworkSwitchSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -2479,9 +2479,9 @@ func (a *Client) GetNetworkSwitchSettings(params *GetNetworkSwitchSettingsParams
 }
 
 /*
-  GetNetworkSwitchStack shows a switch stack
+GetNetworkSwitchStack shows a switch stack
 
-  Show a switch stack
+Show a switch stack
 */
 func (a *Client) GetNetworkSwitchStack(params *GetNetworkSwitchStackParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchStackOK, error) {
 	// TODO: Validate the params before sending
@@ -2520,9 +2520,9 @@ func (a *Client) GetNetworkSwitchStack(params *GetNetworkSwitchStackParams, auth
 }
 
 /*
-  GetNetworkSwitchStackRoutingInterface returns a layer 3 interface from a switch stack
+GetNetworkSwitchStackRoutingInterface returns a layer 3 interface from a switch stack
 
-  Return a layer 3 interface from a switch stack
+Return a layer 3 interface from a switch stack
 */
 func (a *Client) GetNetworkSwitchStackRoutingInterface(params *GetNetworkSwitchStackRoutingInterfaceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchStackRoutingInterfaceOK, error) {
 	// TODO: Validate the params before sending
@@ -2561,9 +2561,9 @@ func (a *Client) GetNetworkSwitchStackRoutingInterface(params *GetNetworkSwitchS
 }
 
 /*
-  GetNetworkSwitchStackRoutingInterfaceDhcp returns a layer 3 interface d h c p configuration for a switch stack
+GetNetworkSwitchStackRoutingInterfaceDhcp returns a layer 3 interface d h c p configuration for a switch stack
 
-  Return a layer 3 interface DHCP configuration for a switch stack
+Return a layer 3 interface DHCP configuration for a switch stack
 */
 func (a *Client) GetNetworkSwitchStackRoutingInterfaceDhcp(params *GetNetworkSwitchStackRoutingInterfaceDhcpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchStackRoutingInterfaceDhcpOK, error) {
 	// TODO: Validate the params before sending
@@ -2602,9 +2602,9 @@ func (a *Client) GetNetworkSwitchStackRoutingInterfaceDhcp(params *GetNetworkSwi
 }
 
 /*
-  GetNetworkSwitchStackRoutingInterfaces lists layer 3 interfaces for a switch stack
+GetNetworkSwitchStackRoutingInterfaces lists layer 3 interfaces for a switch stack
 
-  List layer 3 interfaces for a switch stack
+List layer 3 interfaces for a switch stack
 */
 func (a *Client) GetNetworkSwitchStackRoutingInterfaces(params *GetNetworkSwitchStackRoutingInterfacesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchStackRoutingInterfacesOK, error) {
 	// TODO: Validate the params before sending
@@ -2643,9 +2643,9 @@ func (a *Client) GetNetworkSwitchStackRoutingInterfaces(params *GetNetworkSwitch
 }
 
 /*
-  GetNetworkSwitchStackRoutingStaticRoute returns a layer 3 static route for a switch stack
+GetNetworkSwitchStackRoutingStaticRoute returns a layer 3 static route for a switch stack
 
-  Return a layer 3 static route for a switch stack
+Return a layer 3 static route for a switch stack
 */
 func (a *Client) GetNetworkSwitchStackRoutingStaticRoute(params *GetNetworkSwitchStackRoutingStaticRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchStackRoutingStaticRouteOK, error) {
 	// TODO: Validate the params before sending
@@ -2684,9 +2684,9 @@ func (a *Client) GetNetworkSwitchStackRoutingStaticRoute(params *GetNetworkSwitc
 }
 
 /*
-  GetNetworkSwitchStackRoutingStaticRoutes lists layer 3 static routes for a switch stack
+GetNetworkSwitchStackRoutingStaticRoutes lists layer 3 static routes for a switch stack
 
-  List layer 3 static routes for a switch stack
+List layer 3 static routes for a switch stack
 */
 func (a *Client) GetNetworkSwitchStackRoutingStaticRoutes(params *GetNetworkSwitchStackRoutingStaticRoutesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchStackRoutingStaticRoutesOK, error) {
 	// TODO: Validate the params before sending
@@ -2725,9 +2725,9 @@ func (a *Client) GetNetworkSwitchStackRoutingStaticRoutes(params *GetNetworkSwit
 }
 
 /*
-  GetNetworkSwitchStacks lists the switch stacks in a network
+GetNetworkSwitchStacks lists the switch stacks in a network
 
-  List the switch stacks in a network
+List the switch stacks in a network
 */
 func (a *Client) GetNetworkSwitchStacks(params *GetNetworkSwitchStacksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchStacksOK, error) {
 	// TODO: Validate the params before sending
@@ -2766,9 +2766,9 @@ func (a *Client) GetNetworkSwitchStacks(params *GetNetworkSwitchStacksParams, au
 }
 
 /*
-  GetNetworkSwitchStormControl returns the storm control configuration for a switch network
+GetNetworkSwitchStormControl returns the storm control configuration for a switch network
 
-  Return the storm control configuration for a switch network
+Return the storm control configuration for a switch network
 */
 func (a *Client) GetNetworkSwitchStormControl(params *GetNetworkSwitchStormControlParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchStormControlOK, error) {
 	// TODO: Validate the params before sending
@@ -2807,9 +2807,9 @@ func (a *Client) GetNetworkSwitchStormControl(params *GetNetworkSwitchStormContr
 }
 
 /*
-  GetNetworkSwitchStp returns s t p settings
+GetNetworkSwitchStp returns s t p settings
 
-  Returns STP settings
+Returns STP settings
 */
 func (a *Client) GetNetworkSwitchStp(params *GetNetworkSwitchStpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSwitchStpOK, error) {
 	// TODO: Validate the params before sending
@@ -2848,9 +2848,9 @@ func (a *Client) GetNetworkSwitchStp(params *GetNetworkSwitchStpParams, authInfo
 }
 
 /*
-  GetOrganizationConfigTemplateSwitchProfilePort returns a switch profile port
+GetOrganizationConfigTemplateSwitchProfilePort returns a switch template port
 
-  Return a switch profile port
+Return a switch template port
 */
 func (a *Client) GetOrganizationConfigTemplateSwitchProfilePort(params *GetOrganizationConfigTemplateSwitchProfilePortParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationConfigTemplateSwitchProfilePortOK, error) {
 	// TODO: Validate the params before sending
@@ -2889,9 +2889,9 @@ func (a *Client) GetOrganizationConfigTemplateSwitchProfilePort(params *GetOrgan
 }
 
 /*
-  GetOrganizationConfigTemplateSwitchProfilePorts returns all the ports of a switch profile
+GetOrganizationConfigTemplateSwitchProfilePorts returns all the ports of a switch template
 
-  Return all the ports of a switch profile
+Return all the ports of a switch template
 */
 func (a *Client) GetOrganizationConfigTemplateSwitchProfilePorts(params *GetOrganizationConfigTemplateSwitchProfilePortsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationConfigTemplateSwitchProfilePortsOK, error) {
 	// TODO: Validate the params before sending
@@ -2930,9 +2930,9 @@ func (a *Client) GetOrganizationConfigTemplateSwitchProfilePorts(params *GetOrga
 }
 
 /*
-  GetOrganizationConfigTemplateSwitchProfiles lists the switch profiles for your switch template configuration
+GetOrganizationConfigTemplateSwitchProfiles lists the switch templates for your switch template configuration
 
-  List the switch profiles for your switch template configuration
+List the switch templates for your switch template configuration
 */
 func (a *Client) GetOrganizationConfigTemplateSwitchProfiles(params *GetOrganizationConfigTemplateSwitchProfilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationConfigTemplateSwitchProfilesOK, error) {
 	// TODO: Validate the params before sending
@@ -2971,9 +2971,9 @@ func (a *Client) GetOrganizationConfigTemplateSwitchProfiles(params *GetOrganiza
 }
 
 /*
-  GetOrganizationSwitchPortsBySwitch lists the switchports in an organization by switch
+GetOrganizationSwitchPortsBySwitch lists the switchports in an organization by switch
 
-  List the switchports in an organization by switch
+List the switchports in an organization by switch
 */
 func (a *Client) GetOrganizationSwitchPortsBySwitch(params *GetOrganizationSwitchPortsBySwitchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSwitchPortsBySwitchOK, error) {
 	// TODO: Validate the params before sending
@@ -3012,9 +3012,9 @@ func (a *Client) GetOrganizationSwitchPortsBySwitch(params *GetOrganizationSwitc
 }
 
 /*
-  RemoveNetworkSwitchStack removes a switch from a stack
+RemoveNetworkSwitchStack removes a switch from a stack
 
-  Remove a switch from a stack
+Remove a switch from a stack
 */
 func (a *Client) RemoveNetworkSwitchStack(params *RemoveNetworkSwitchStackParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RemoveNetworkSwitchStackOK, error) {
 	// TODO: Validate the params before sending
@@ -3053,9 +3053,9 @@ func (a *Client) RemoveNetworkSwitchStack(params *RemoveNetworkSwitchStackParams
 }
 
 /*
-  UpdateDeviceSwitchPort updates a switch port
+UpdateDeviceSwitchPort updates a switch port
 
-  Update a switch port
+Update a switch port
 */
 func (a *Client) UpdateDeviceSwitchPort(params *UpdateDeviceSwitchPortParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceSwitchPortOK, error) {
 	// TODO: Validate the params before sending
@@ -3094,9 +3094,9 @@ func (a *Client) UpdateDeviceSwitchPort(params *UpdateDeviceSwitchPortParams, au
 }
 
 /*
-  UpdateDeviceSwitchRoutingInterface updates a layer 3 interface for a switch
+UpdateDeviceSwitchRoutingInterface updates a layer 3 interface for a switch
 
-  Update a layer 3 interface for a switch
+Update a layer 3 interface for a switch
 */
 func (a *Client) UpdateDeviceSwitchRoutingInterface(params *UpdateDeviceSwitchRoutingInterfaceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceSwitchRoutingInterfaceOK, error) {
 	// TODO: Validate the params before sending
@@ -3135,9 +3135,9 @@ func (a *Client) UpdateDeviceSwitchRoutingInterface(params *UpdateDeviceSwitchRo
 }
 
 /*
-  UpdateDeviceSwitchRoutingInterfaceDhcp updates a layer 3 interface d h c p configuration for a switch
+UpdateDeviceSwitchRoutingInterfaceDhcp updates a layer 3 interface d h c p configuration for a switch
 
-  Update a layer 3 interface DHCP configuration for a switch
+Update a layer 3 interface DHCP configuration for a switch
 */
 func (a *Client) UpdateDeviceSwitchRoutingInterfaceDhcp(params *UpdateDeviceSwitchRoutingInterfaceDhcpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceSwitchRoutingInterfaceDhcpOK, error) {
 	// TODO: Validate the params before sending
@@ -3176,9 +3176,9 @@ func (a *Client) UpdateDeviceSwitchRoutingInterfaceDhcp(params *UpdateDeviceSwit
 }
 
 /*
-  UpdateDeviceSwitchRoutingStaticRoute updates a layer 3 static route for a switch
+UpdateDeviceSwitchRoutingStaticRoute updates a layer 3 static route for a switch
 
-  Update a layer 3 static route for a switch
+Update a layer 3 static route for a switch
 */
 func (a *Client) UpdateDeviceSwitchRoutingStaticRoute(params *UpdateDeviceSwitchRoutingStaticRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceSwitchRoutingStaticRouteOK, error) {
 	// TODO: Validate the params before sending
@@ -3217,9 +3217,9 @@ func (a *Client) UpdateDeviceSwitchRoutingStaticRoute(params *UpdateDeviceSwitch
 }
 
 /*
-  UpdateDeviceSwitchWarmSpare updates warm spare configuration for a switch
+UpdateDeviceSwitchWarmSpare updates warm spare configuration for a switch
 
-  Update warm spare configuration for a switch. The spare will use the same L3 configuration as the primary. Note that this will irreversibly destroy any existing L3 configuration on the spare.
+Update warm spare configuration for a switch. The spare will use the same L3 configuration as the primary. Note that this will irreversibly destroy any existing L3 configuration on the spare.
 */
 func (a *Client) UpdateDeviceSwitchWarmSpare(params *UpdateDeviceSwitchWarmSpareParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceSwitchWarmSpareOK, error) {
 	// TODO: Validate the params before sending
@@ -3258,9 +3258,9 @@ func (a *Client) UpdateDeviceSwitchWarmSpare(params *UpdateDeviceSwitchWarmSpare
 }
 
 /*
-  UpdateNetworkSwitchAccessControlLists updates the access control lists for a m s network
+UpdateNetworkSwitchAccessControlLists updates the access control lists for a m s network
 
-  Update the access control lists for a MS network
+Update the access control lists for a MS network
 */
 func (a *Client) UpdateNetworkSwitchAccessControlLists(params *UpdateNetworkSwitchAccessControlListsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSwitchAccessControlListsOK, error) {
 	// TODO: Validate the params before sending
@@ -3299,9 +3299,9 @@ func (a *Client) UpdateNetworkSwitchAccessControlLists(params *UpdateNetworkSwit
 }
 
 /*
-  UpdateNetworkSwitchAccessPolicy updates an access policy for a switch network
+UpdateNetworkSwitchAccessPolicy updates an access policy for a switch network
 
-  Update an access policy for a switch network. If you would like to enable Meraki Authentication, set radiusServers to empty array.
+Update an access policy for a switch network. If you would like to enable Meraki Authentication, set radiusServers to empty array.
 */
 func (a *Client) UpdateNetworkSwitchAccessPolicy(params *UpdateNetworkSwitchAccessPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSwitchAccessPolicyOK, error) {
 	// TODO: Validate the params before sending
@@ -3340,9 +3340,9 @@ func (a *Client) UpdateNetworkSwitchAccessPolicy(params *UpdateNetworkSwitchAcce
 }
 
 /*
-  UpdateNetworkSwitchAlternateManagementInterface updates the switch alternate management interface for the network
+UpdateNetworkSwitchAlternateManagementInterface updates the switch alternate management interface for the network
 
-  Update the switch alternate management interface for the network
+Update the switch alternate management interface for the network
 */
 func (a *Client) UpdateNetworkSwitchAlternateManagementInterface(params *UpdateNetworkSwitchAlternateManagementInterfaceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSwitchAlternateManagementInterfaceOK, error) {
 	// TODO: Validate the params before sending
@@ -3381,9 +3381,9 @@ func (a *Client) UpdateNetworkSwitchAlternateManagementInterface(params *UpdateN
 }
 
 /*
-  UpdateNetworkSwitchDhcpServerPolicy updates the d h c p server settings
+UpdateNetworkSwitchDhcpServerPolicy updates the d h c p server settings
 
-  Update the DHCP server settings. Blocked/allowed servers are only applied when default policy is allow/block, respectively
+Update the DHCP server settings. Blocked/allowed servers are only applied when default policy is allow/block, respectively
 */
 func (a *Client) UpdateNetworkSwitchDhcpServerPolicy(params *UpdateNetworkSwitchDhcpServerPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSwitchDhcpServerPolicyOK, error) {
 	// TODO: Validate the params before sending
@@ -3422,9 +3422,9 @@ func (a *Client) UpdateNetworkSwitchDhcpServerPolicy(params *UpdateNetworkSwitch
 }
 
 /*
-  UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServer updates a server that is trusted by dynamic a r p inspection on this network
+UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServer updates a server that is trusted by dynamic a r p inspection on this network
 
-  Update a server that is trusted by Dynamic ARP Inspection on this network
+Update a server that is trusted by Dynamic ARP Inspection on this network
 */
 func (a *Client) UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServer(params *UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerOK, error) {
 	// TODO: Validate the params before sending
@@ -3463,9 +3463,9 @@ func (a *Client) UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServer(p
 }
 
 /*
-  UpdateNetworkSwitchDscpToCosMappings updates the d s c p to co s mappings
+UpdateNetworkSwitchDscpToCosMappings updates the d s c p to co s mappings
 
-  Update the DSCP to CoS mappings
+Update the DSCP to CoS mappings
 */
 func (a *Client) UpdateNetworkSwitchDscpToCosMappings(params *UpdateNetworkSwitchDscpToCosMappingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSwitchDscpToCosMappingsOK, error) {
 	// TODO: Validate the params before sending
@@ -3504,9 +3504,9 @@ func (a *Client) UpdateNetworkSwitchDscpToCosMappings(params *UpdateNetworkSwitc
 }
 
 /*
-  UpdateNetworkSwitchLinkAggregation updates a link aggregation group
+UpdateNetworkSwitchLinkAggregation updates a link aggregation group
 
-  Update a link aggregation group
+Update a link aggregation group
 */
 func (a *Client) UpdateNetworkSwitchLinkAggregation(params *UpdateNetworkSwitchLinkAggregationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSwitchLinkAggregationOK, error) {
 	// TODO: Validate the params before sending
@@ -3545,9 +3545,9 @@ func (a *Client) UpdateNetworkSwitchLinkAggregation(params *UpdateNetworkSwitchL
 }
 
 /*
-  UpdateNetworkSwitchMtu updates the m t u configuration
+UpdateNetworkSwitchMtu updates the m t u configuration
 
-  Update the MTU configuration
+Update the MTU configuration
 */
 func (a *Client) UpdateNetworkSwitchMtu(params *UpdateNetworkSwitchMtuParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSwitchMtuOK, error) {
 	// TODO: Validate the params before sending
@@ -3586,9 +3586,9 @@ func (a *Client) UpdateNetworkSwitchMtu(params *UpdateNetworkSwitchMtuParams, au
 }
 
 /*
-  UpdateNetworkSwitchPortSchedule updates a switch port schedule
+UpdateNetworkSwitchPortSchedule updates a switch port schedule
 
-  Update a switch port schedule
+Update a switch port schedule
 */
 func (a *Client) UpdateNetworkSwitchPortSchedule(params *UpdateNetworkSwitchPortScheduleParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSwitchPortScheduleOK, error) {
 	// TODO: Validate the params before sending
@@ -3627,9 +3627,9 @@ func (a *Client) UpdateNetworkSwitchPortSchedule(params *UpdateNetworkSwitchPort
 }
 
 /*
-  UpdateNetworkSwitchQosRule updates a quality of service rule
+UpdateNetworkSwitchQosRule updates a quality of service rule
 
-  Update a quality of service rule
+Update a quality of service rule
 */
 func (a *Client) UpdateNetworkSwitchQosRule(params *UpdateNetworkSwitchQosRuleParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSwitchQosRuleOK, error) {
 	// TODO: Validate the params before sending
@@ -3668,9 +3668,9 @@ func (a *Client) UpdateNetworkSwitchQosRule(params *UpdateNetworkSwitchQosRulePa
 }
 
 /*
-  UpdateNetworkSwitchQosRulesOrder updates the order in which the rules should be processed by the switch
+UpdateNetworkSwitchQosRulesOrder updates the order in which the rules should be processed by the switch
 
-  Update the order in which the rules should be processed by the switch
+Update the order in which the rules should be processed by the switch
 */
 func (a *Client) UpdateNetworkSwitchQosRulesOrder(params *UpdateNetworkSwitchQosRulesOrderParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSwitchQosRulesOrderOK, error) {
 	// TODO: Validate the params before sending
@@ -3709,9 +3709,9 @@ func (a *Client) UpdateNetworkSwitchQosRulesOrder(params *UpdateNetworkSwitchQos
 }
 
 /*
-  UpdateNetworkSwitchRoutingMulticast updates multicast settings for a network
+UpdateNetworkSwitchRoutingMulticast updates multicast settings for a network
 
-  Update multicast settings for a network
+Update multicast settings for a network
 */
 func (a *Client) UpdateNetworkSwitchRoutingMulticast(params *UpdateNetworkSwitchRoutingMulticastParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSwitchRoutingMulticastOK, error) {
 	// TODO: Validate the params before sending
@@ -3750,9 +3750,9 @@ func (a *Client) UpdateNetworkSwitchRoutingMulticast(params *UpdateNetworkSwitch
 }
 
 /*
-  UpdateNetworkSwitchRoutingMulticastRendezvousPoint updates a multicast rendezvous point
+UpdateNetworkSwitchRoutingMulticastRendezvousPoint updates a multicast rendezvous point
 
-  Update a multicast rendezvous point
+Update a multicast rendezvous point
 */
 func (a *Client) UpdateNetworkSwitchRoutingMulticastRendezvousPoint(params *UpdateNetworkSwitchRoutingMulticastRendezvousPointParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSwitchRoutingMulticastRendezvousPointOK, error) {
 	// TODO: Validate the params before sending
@@ -3791,9 +3791,9 @@ func (a *Client) UpdateNetworkSwitchRoutingMulticastRendezvousPoint(params *Upda
 }
 
 /*
-  UpdateNetworkSwitchRoutingOspf updates layer 3 o s p f routing configuration
+UpdateNetworkSwitchRoutingOspf updates layer 3 o s p f routing configuration
 
-  Update layer 3 OSPF routing configuration
+Update layer 3 OSPF routing configuration
 */
 func (a *Client) UpdateNetworkSwitchRoutingOspf(params *UpdateNetworkSwitchRoutingOspfParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSwitchRoutingOspfOK, error) {
 	// TODO: Validate the params before sending
@@ -3832,9 +3832,9 @@ func (a *Client) UpdateNetworkSwitchRoutingOspf(params *UpdateNetworkSwitchRouti
 }
 
 /*
-  UpdateNetworkSwitchSettings updates switch network settings
+UpdateNetworkSwitchSettings updates switch network settings
 
-  Update switch network settings
+Update switch network settings
 */
 func (a *Client) UpdateNetworkSwitchSettings(params *UpdateNetworkSwitchSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSwitchSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -3873,9 +3873,9 @@ func (a *Client) UpdateNetworkSwitchSettings(params *UpdateNetworkSwitchSettings
 }
 
 /*
-  UpdateNetworkSwitchStackRoutingInterface updates a layer 3 interface for a switch stack
+UpdateNetworkSwitchStackRoutingInterface updates a layer 3 interface for a switch stack
 
-  Update a layer 3 interface for a switch stack
+Update a layer 3 interface for a switch stack
 */
 func (a *Client) UpdateNetworkSwitchStackRoutingInterface(params *UpdateNetworkSwitchStackRoutingInterfaceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSwitchStackRoutingInterfaceOK, error) {
 	// TODO: Validate the params before sending
@@ -3914,9 +3914,9 @@ func (a *Client) UpdateNetworkSwitchStackRoutingInterface(params *UpdateNetworkS
 }
 
 /*
-  UpdateNetworkSwitchStackRoutingInterfaceDhcp updates a layer 3 interface d h c p configuration for a switch stack
+UpdateNetworkSwitchStackRoutingInterfaceDhcp updates a layer 3 interface d h c p configuration for a switch stack
 
-  Update a layer 3 interface DHCP configuration for a switch stack
+Update a layer 3 interface DHCP configuration for a switch stack
 */
 func (a *Client) UpdateNetworkSwitchStackRoutingInterfaceDhcp(params *UpdateNetworkSwitchStackRoutingInterfaceDhcpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSwitchStackRoutingInterfaceDhcpOK, error) {
 	// TODO: Validate the params before sending
@@ -3955,9 +3955,9 @@ func (a *Client) UpdateNetworkSwitchStackRoutingInterfaceDhcp(params *UpdateNetw
 }
 
 /*
-  UpdateNetworkSwitchStackRoutingStaticRoute updates a layer 3 static route for a switch stack
+UpdateNetworkSwitchStackRoutingStaticRoute updates a layer 3 static route for a switch stack
 
-  Update a layer 3 static route for a switch stack
+Update a layer 3 static route for a switch stack
 */
 func (a *Client) UpdateNetworkSwitchStackRoutingStaticRoute(params *UpdateNetworkSwitchStackRoutingStaticRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSwitchStackRoutingStaticRouteOK, error) {
 	// TODO: Validate the params before sending
@@ -3996,9 +3996,9 @@ func (a *Client) UpdateNetworkSwitchStackRoutingStaticRoute(params *UpdateNetwor
 }
 
 /*
-  UpdateNetworkSwitchStormControl updates the storm control configuration for a switch network
+UpdateNetworkSwitchStormControl updates the storm control configuration for a switch network
 
-  Update the storm control configuration for a switch network
+Update the storm control configuration for a switch network
 */
 func (a *Client) UpdateNetworkSwitchStormControl(params *UpdateNetworkSwitchStormControlParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSwitchStormControlOK, error) {
 	// TODO: Validate the params before sending
@@ -4037,9 +4037,9 @@ func (a *Client) UpdateNetworkSwitchStormControl(params *UpdateNetworkSwitchStor
 }
 
 /*
-  UpdateNetworkSwitchStp updates s t p settings
+UpdateNetworkSwitchStp updates s t p settings
 
-  Updates STP settings
+Updates STP settings
 */
 func (a *Client) UpdateNetworkSwitchStp(params *UpdateNetworkSwitchStpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSwitchStpOK, error) {
 	// TODO: Validate the params before sending
@@ -4078,9 +4078,9 @@ func (a *Client) UpdateNetworkSwitchStp(params *UpdateNetworkSwitchStpParams, au
 }
 
 /*
-  UpdateOrganizationConfigTemplateSwitchProfilePort updates a switch profile port
+UpdateOrganizationConfigTemplateSwitchProfilePort updates a switch template port
 
-  Update a switch profile port
+Update a switch template port
 */
 func (a *Client) UpdateOrganizationConfigTemplateSwitchProfilePort(params *UpdateOrganizationConfigTemplateSwitchProfilePortParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationConfigTemplateSwitchProfilePortOK, error) {
 	// TODO: Validate the params before sending

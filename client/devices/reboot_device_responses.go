@@ -6,11 +6,13 @@ package devices
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // RebootDeviceReader is a Reader for the RebootDevice structure.
@@ -28,7 +30,7 @@ func (o *RebootDeviceReader) ReadResponse(response runtime.ClientResponse, consu
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /devices/{serial}/reboot] rebootDevice", response, response.Code())
 	}
 }
 
@@ -37,12 +39,13 @@ func NewRebootDeviceAccepted() *RebootDeviceAccepted {
 	return &RebootDeviceAccepted{}
 }
 
-/* RebootDeviceAccepted describes a response with status code 202, with default header values.
+/*
+RebootDeviceAccepted describes a response with status code 202, with default header values.
 
 Successful operation
 */
 type RebootDeviceAccepted struct {
-	Payload interface{}
+	Payload *RebootDeviceAcceptedBody
 }
 
 // IsSuccess returns true when this reboot device accepted response has a 2xx status code
@@ -70,6 +73,11 @@ func (o *RebootDeviceAccepted) IsCode(code int) bool {
 	return code == 202
 }
 
+// Code gets the status code for the reboot device accepted response
+func (o *RebootDeviceAccepted) Code() int {
+	return 202
+}
+
 func (o *RebootDeviceAccepted) Error() string {
 	return fmt.Sprintf("[POST /devices/{serial}/reboot][%d] rebootDeviceAccepted  %+v", 202, o.Payload)
 }
@@ -78,16 +86,56 @@ func (o *RebootDeviceAccepted) String() string {
 	return fmt.Sprintf("[POST /devices/{serial}/reboot][%d] rebootDeviceAccepted  %+v", 202, o.Payload)
 }
 
-func (o *RebootDeviceAccepted) GetPayload() interface{} {
+func (o *RebootDeviceAccepted) GetPayload() *RebootDeviceAcceptedBody {
 	return o.Payload
 }
 
 func (o *RebootDeviceAccepted) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(RebootDeviceAcceptedBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+RebootDeviceAcceptedBody reboot device accepted body
+swagger:model RebootDeviceAcceptedBody
+*/
+type RebootDeviceAcceptedBody struct {
+
+	// Shows the success of the reboot
+	Success bool `json:"success,omitempty"`
+}
+
+// Validate validates this reboot device accepted body
+func (o *RebootDeviceAcceptedBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this reboot device accepted body based on context it is used
+func (o *RebootDeviceAcceptedBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *RebootDeviceAcceptedBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *RebootDeviceAcceptedBody) UnmarshalBinary(b []byte) error {
+	var res RebootDeviceAcceptedBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

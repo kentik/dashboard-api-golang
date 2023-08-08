@@ -52,14 +52,19 @@ func NewGetDeviceCameraWirelessProfilesParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* GetDeviceCameraWirelessProfilesParams contains all the parameters to send to the API endpoint
-   for the get device camera wireless profiles operation.
+/*
+GetDeviceCameraWirelessProfilesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get device camera wireless profiles operation.
+
+	Typically these are written to a http.Request.
 */
 type GetDeviceCameraWirelessProfilesParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	timeout    time.Duration

@@ -52,14 +52,19 @@ func NewUpdateDeviceManagementInterfaceParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* UpdateDeviceManagementInterfaceParams contains all the parameters to send to the API endpoint
-   for the update device management interface operation.
+/*
+UpdateDeviceManagementInterfaceParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update device management interface operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateDeviceManagementInterfaceParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	// UpdateDeviceManagementInterface.

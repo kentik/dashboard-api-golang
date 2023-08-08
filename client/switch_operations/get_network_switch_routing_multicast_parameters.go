@@ -52,14 +52,19 @@ func NewGetNetworkSwitchRoutingMulticastParamsWithHTTPClient(client *http.Client
 	}
 }
 
-/* GetNetworkSwitchRoutingMulticastParams contains all the parameters to send to the API endpoint
-   for the get network switch routing multicast operation.
+/*
+GetNetworkSwitchRoutingMulticastParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network switch routing multicast operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSwitchRoutingMulticastParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

@@ -53,10 +53,12 @@ func NewGetOrganizationApplianceUplinkStatusesParamsWithHTTPClient(client *http.
 	}
 }
 
-/* GetOrganizationApplianceUplinkStatusesParams contains all the parameters to send to the API endpoint
-   for the get organization appliance uplink statuses operation.
+/*
+GetOrganizationApplianceUplinkStatusesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization appliance uplink statuses operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationApplianceUplinkStatusesParams struct {
 
@@ -78,7 +80,10 @@ type GetOrganizationApplianceUplinkStatusesParams struct {
 	*/
 	NetworkIds []string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	/* PerPage.

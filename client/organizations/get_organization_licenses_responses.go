@@ -34,7 +34,7 @@ func (o *GetOrganizationLicensesReader) ReadResponse(response runtime.ClientResp
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/licenses] getOrganizationLicenses", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewGetOrganizationLicensesOK() *GetOrganizationLicensesOK {
 	return &GetOrganizationLicensesOK{}
 }
 
-/* GetOrganizationLicensesOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationLicensesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -81,6 +82,11 @@ func (o *GetOrganizationLicensesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get organization licenses o k response
+func (o *GetOrganizationLicensesOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationLicensesOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/licenses][%d] getOrganizationLicensesOK  %+v", 200, o.Payload)
 }
@@ -110,7 +116,8 @@ func (o *GetOrganizationLicensesOK) readResponse(response runtime.ClientResponse
 	return nil
 }
 
-/*GetOrganizationLicensesOKBodyItems0 get organization licenses o k body items0
+/*
+GetOrganizationLicensesOKBodyItems0 get organization licenses o k body items0
 swagger:model GetOrganizationLicensesOKBodyItems0
 */
 type GetOrganizationLicensesOKBodyItems0 struct {
@@ -130,6 +137,9 @@ type GetOrganizationLicensesOKBodyItems0 struct {
 	// The date the license will expire
 	ExpirationDate string `json:"expirationDate,omitempty"`
 
+	// The id of the head license this license is queued behind. If there is no head license, it returns nil.
+	HeadLicenseID string `json:"headLicenseId,omitempty"`
+
 	// License ID
 	ID string `json:"id,omitempty"`
 
@@ -145,14 +155,14 @@ type GetOrganizationLicensesOKBodyItems0 struct {
 	// Order number
 	OrderNumber string `json:"orderNumber,omitempty"`
 
-	// List of permanently queued licenses attached to the license
+	// DEPRECATED List of permanently queued licenses attached to the license. Instead, use /organizations/{organizationId}/licenses?deviceSerial= to retrieved queued licenses for a given device.
 	PermanentlyQueuedLicenses []*GetOrganizationLicensesOKBodyItems0PermanentlyQueuedLicensesItems0 `json:"permanentlyQueuedLicenses"`
 
 	// The number of seats of the license. Only applicable to SM licenses.
 	SeatCount int64 `json:"seatCount,omitempty"`
 
-	// The state of the license
-	// Enum: [active expired expiring unused unusedActive recentlyQueued]
+	// The state of the license. All queued licenses have a status of `recentlyQueued`.
+	// Enum: [active expired expiring recentlyQueued unused unusedActive]
 	State string `json:"state,omitempty"`
 
 	// The duration of the license plus all permanently queued licenses associated with it
@@ -207,7 +217,7 @@ var getOrganizationLicensesOKBodyItems0TypeStatePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["active","expired","expiring","unused","unusedActive","recentlyQueued"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["active","expired","expiring","recentlyQueued","unused","unusedActive"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -226,14 +236,14 @@ const (
 	// GetOrganizationLicensesOKBodyItems0StateExpiring captures enum value "expiring"
 	GetOrganizationLicensesOKBodyItems0StateExpiring string = "expiring"
 
+	// GetOrganizationLicensesOKBodyItems0StateRecentlyQueued captures enum value "recentlyQueued"
+	GetOrganizationLicensesOKBodyItems0StateRecentlyQueued string = "recentlyQueued"
+
 	// GetOrganizationLicensesOKBodyItems0StateUnused captures enum value "unused"
 	GetOrganizationLicensesOKBodyItems0StateUnused string = "unused"
 
 	// GetOrganizationLicensesOKBodyItems0StateUnusedActive captures enum value "unusedActive"
 	GetOrganizationLicensesOKBodyItems0StateUnusedActive string = "unusedActive"
-
-	// GetOrganizationLicensesOKBodyItems0StateRecentlyQueued captures enum value "recentlyQueued"
-	GetOrganizationLicensesOKBodyItems0StateRecentlyQueued string = "recentlyQueued"
 )
 
 // prop value enum
@@ -276,6 +286,11 @@ func (o *GetOrganizationLicensesOKBodyItems0) contextValidatePermanentlyQueuedLi
 	for i := 0; i < len(o.PermanentlyQueuedLicenses); i++ {
 
 		if o.PermanentlyQueuedLicenses[i] != nil {
+
+			if swag.IsZero(o.PermanentlyQueuedLicenses[i]) { // not required
+				return nil
+			}
+
 			if err := o.PermanentlyQueuedLicenses[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("permanentlyQueuedLicenses" + "." + strconv.Itoa(i))
@@ -309,7 +324,8 @@ func (o *GetOrganizationLicensesOKBodyItems0) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*GetOrganizationLicensesOKBodyItems0PermanentlyQueuedLicensesItems0 get organization licenses o k body items0 permanently queued licenses items0
+/*
+GetOrganizationLicensesOKBodyItems0PermanentlyQueuedLicensesItems0 get organization licenses o k body items0 permanently queued licenses items0
 swagger:model GetOrganizationLicensesOKBodyItems0PermanentlyQueuedLicensesItems0
 */
 type GetOrganizationLicensesOKBodyItems0PermanentlyQueuedLicensesItems0 struct {

@@ -52,14 +52,19 @@ func NewUpdateNetworkSwitchSettingsParamsWithHTTPClient(client *http.Client) *Up
 	}
 }
 
-/* UpdateNetworkSwitchSettingsParams contains all the parameters to send to the API endpoint
-   for the update network switch settings operation.
+/*
+UpdateNetworkSwitchSettingsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network switch settings operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkSwitchSettingsParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkSwitchSettings.

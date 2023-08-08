@@ -52,17 +52,25 @@ func NewDeleteNetworkCameraQualityRetentionProfileParamsWithHTTPClient(client *h
 	}
 }
 
-/* DeleteNetworkCameraQualityRetentionProfileParams contains all the parameters to send to the API endpoint
-   for the delete network camera quality retention profile operation.
+/*
+DeleteNetworkCameraQualityRetentionProfileParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete network camera quality retention profile operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteNetworkCameraQualityRetentionProfileParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// QualityRetentionProfileID.
+	/* QualityRetentionProfileID.
+
+	   Quality retention profile ID
+	*/
 	QualityRetentionProfileID string
 
 	timeout    time.Duration

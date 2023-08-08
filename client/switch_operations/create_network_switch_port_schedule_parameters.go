@@ -52,17 +52,22 @@ func NewCreateNetworkSwitchPortScheduleParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* CreateNetworkSwitchPortScheduleParams contains all the parameters to send to the API endpoint
-   for the create network switch port schedule operation.
+/*
+CreateNetworkSwitchPortScheduleParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create network switch port schedule operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateNetworkSwitchPortScheduleParams struct {
 
 	// CreateNetworkSwitchPortSchedule.
 	CreateNetworkSwitchPortSchedule CreateNetworkSwitchPortScheduleBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

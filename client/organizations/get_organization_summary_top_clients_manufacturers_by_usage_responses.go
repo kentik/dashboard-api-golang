@@ -31,7 +31,7 @@ func (o *GetOrganizationSummaryTopClientsManufacturersByUsageReader) ReadRespons
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/summary/top/clients/manufacturers/byUsage] getOrganizationSummaryTopClientsManufacturersByUsage", response, response.Code())
 	}
 }
 
@@ -40,7 +40,8 @@ func NewGetOrganizationSummaryTopClientsManufacturersByUsageOK() *GetOrganizatio
 	return &GetOrganizationSummaryTopClientsManufacturersByUsageOK{}
 }
 
-/* GetOrganizationSummaryTopClientsManufacturersByUsageOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationSummaryTopClientsManufacturersByUsageOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -73,6 +74,11 @@ func (o *GetOrganizationSummaryTopClientsManufacturersByUsageOK) IsCode(code int
 	return code == 200
 }
 
+// Code gets the status code for the get organization summary top clients manufacturers by usage o k response
+func (o *GetOrganizationSummaryTopClientsManufacturersByUsageOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationSummaryTopClientsManufacturersByUsageOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/summary/top/clients/manufacturers/byUsage][%d] getOrganizationSummaryTopClientsManufacturersByUsageOK  %+v", 200, o.Payload)
 }
@@ -95,7 +101,8 @@ func (o *GetOrganizationSummaryTopClientsManufacturersByUsageOK) readResponse(re
 	return nil
 }
 
-/*GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0 get organization summary top clients manufacturers by usage o k body items0
+/*
+GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0 get organization summary top clients manufacturers by usage o k body items0
 swagger:model GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0
 */
 type GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0 struct {
@@ -187,6 +194,11 @@ func (o *GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0) Conte
 func (o *GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0) contextValidateClients(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Clients != nil {
+
+		if swag.IsZero(o.Clients) { // not required
+			return nil
+		}
+
 		if err := o.Clients.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("clients")
@@ -203,6 +215,11 @@ func (o *GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0) conte
 func (o *GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0) contextValidateUsage(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Usage != nil {
+
+		if swag.IsZero(o.Usage) { // not required
+			return nil
+		}
+
 		if err := o.Usage.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("usage")
@@ -234,7 +251,8 @@ func (o *GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0) Unmar
 	return nil
 }
 
-/*GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0Clients Clients info
+/*
+GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0Clients Clients info
 swagger:model GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0Clients
 */
 type GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0Clients struct {
@@ -293,6 +311,11 @@ func (o *GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0Clients
 func (o *GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0Clients) contextValidateCounts(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Counts != nil {
+
+		if swag.IsZero(o.Counts) { // not required
+			return nil
+		}
+
 		if err := o.Counts.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("clients" + "." + "counts")
@@ -324,7 +347,8 @@ func (o *GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0Clients
 	return nil
 }
 
-/*GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0ClientsCounts Counts of clients
+/*
+GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0ClientsCounts Counts of clients
 swagger:model GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0ClientsCounts
 */
 type GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0ClientsCounts struct {
@@ -361,7 +385,8 @@ func (o *GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0Clients
 	return nil
 }
 
-/*GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0Usage Clients usage
+/*
+GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0Usage Clients usage
 swagger:model GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0Usage
 */
 type GetOrganizationSummaryTopClientsManufacturersByUsageOKBodyItems0Usage struct {

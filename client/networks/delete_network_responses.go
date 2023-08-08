@@ -27,7 +27,7 @@ func (o *DeleteNetworkReader) ReadResponse(response runtime.ClientResponse, cons
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[DELETE /networks/{networkId}] deleteNetwork", response, response.Code())
 	}
 }
 
@@ -36,7 +36,8 @@ func NewDeleteNetworkNoContent() *DeleteNetworkNoContent {
 	return &DeleteNetworkNoContent{}
 }
 
-/* DeleteNetworkNoContent describes a response with status code 204, with default header values.
+/*
+DeleteNetworkNoContent describes a response with status code 204, with default header values.
 
 Successful operation
 */
@@ -66,6 +67,11 @@ func (o *DeleteNetworkNoContent) IsServerError() bool {
 // IsCode returns true when this delete network no content response a status code equal to that given
 func (o *DeleteNetworkNoContent) IsCode(code int) bool {
 	return code == 204
+}
+
+// Code gets the status code for the delete network no content response
+func (o *DeleteNetworkNoContent) Code() int {
+	return 204
 }
 
 func (o *DeleteNetworkNoContent) Error() string {

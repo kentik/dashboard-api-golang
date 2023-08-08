@@ -53,10 +53,12 @@ func NewGetNetworkWirelessClientsConnectionStatsParamsWithHTTPClient(client *htt
 	}
 }
 
-/* GetNetworkWirelessClientsConnectionStatsParams contains all the parameters to send to the API endpoint
-   for the get network wireless clients connection stats operation.
+/*
+GetNetworkWirelessClientsConnectionStatsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network wireless clients connection stats operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkWirelessClientsConnectionStatsParams struct {
 
@@ -72,7 +74,10 @@ type GetNetworkWirelessClientsConnectionStatsParams struct {
 	*/
 	Band *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* Ssid.

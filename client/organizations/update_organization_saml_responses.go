@@ -30,7 +30,7 @@ func (o *UpdateOrganizationSamlReader) ReadResponse(response runtime.ClientRespo
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /organizations/{organizationId}/saml] updateOrganizationSaml", response, response.Code())
 	}
 }
 
@@ -39,12 +39,13 @@ func NewUpdateOrganizationSamlOK() *UpdateOrganizationSamlOK {
 	return &UpdateOrganizationSamlOK{}
 }
 
-/* UpdateOrganizationSamlOK describes a response with status code 200, with default header values.
+/*
+UpdateOrganizationSamlOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateOrganizationSamlOK struct {
-	Payload interface{}
+	Payload *UpdateOrganizationSamlOKBody
 }
 
 // IsSuccess returns true when this update organization saml o k response has a 2xx status code
@@ -72,6 +73,11 @@ func (o *UpdateOrganizationSamlOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update organization saml o k response
+func (o *UpdateOrganizationSamlOK) Code() int {
+	return 200
+}
+
 func (o *UpdateOrganizationSamlOK) Error() string {
 	return fmt.Sprintf("[PUT /organizations/{organizationId}/saml][%d] updateOrganizationSamlOK  %+v", 200, o.Payload)
 }
@@ -80,21 +86,24 @@ func (o *UpdateOrganizationSamlOK) String() string {
 	return fmt.Sprintf("[PUT /organizations/{organizationId}/saml][%d] updateOrganizationSamlOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateOrganizationSamlOK) GetPayload() interface{} {
+func (o *UpdateOrganizationSamlOK) GetPayload() *UpdateOrganizationSamlOKBody {
 	return o.Payload
 }
 
 func (o *UpdateOrganizationSamlOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateOrganizationSamlOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateOrganizationSamlBody update organization saml body
+/*
+UpdateOrganizationSamlBody update organization saml body
 // Example: {"enabled":true}
 swagger:model UpdateOrganizationSamlBody
 */
@@ -125,6 +134,44 @@ func (o *UpdateOrganizationSamlBody) MarshalBinary() ([]byte, error) {
 // UnmarshalBinary interface implementation
 func (o *UpdateOrganizationSamlBody) UnmarshalBinary(b []byte) error {
 	var res UpdateOrganizationSamlBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateOrganizationSamlOKBody update organization saml o k body
+swagger:model UpdateOrganizationSamlOKBody
+*/
+type UpdateOrganizationSamlOKBody struct {
+
+	// Toggle depicting if SAML SSO settings are enabled
+	Enabled bool `json:"enabled,omitempty"`
+}
+
+// Validate validates this update organization saml o k body
+func (o *UpdateOrganizationSamlOKBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update organization saml o k body based on context it is used
+func (o *UpdateOrganizationSamlOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateOrganizationSamlOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateOrganizationSamlOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateOrganizationSamlOKBody
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

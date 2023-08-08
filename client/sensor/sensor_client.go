@@ -30,17 +30,453 @@ type ClientOption func(*runtime.ClientOperation)
 
 // ClientService is the interface for Client methods
 type ClientService interface {
+	CreateNetworkSensorAlertsProfile(params *CreateNetworkSensorAlertsProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkSensorAlertsProfileOK, error)
+
+	DeleteNetworkSensorAlertsProfile(params *DeleteNetworkSensorAlertsProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkSensorAlertsProfileNoContent, error)
+
+	GetDeviceSensorRelationships(params *GetDeviceSensorRelationshipsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceSensorRelationshipsOK, error)
+
+	GetNetworkSensorAlertsCurrentOverviewByMetric(params *GetNetworkSensorAlertsCurrentOverviewByMetricParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSensorAlertsCurrentOverviewByMetricOK, error)
+
+	GetNetworkSensorAlertsOverviewByMetric(params *GetNetworkSensorAlertsOverviewByMetricParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSensorAlertsOverviewByMetricOK, error)
+
+	GetNetworkSensorAlertsProfile(params *GetNetworkSensorAlertsProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSensorAlertsProfileOK, error)
+
+	GetNetworkSensorAlertsProfiles(params *GetNetworkSensorAlertsProfilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSensorAlertsProfilesOK, error)
+
+	GetNetworkSensorMqttBroker(params *GetNetworkSensorMqttBrokerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSensorMqttBrokerOK, error)
+
+	GetNetworkSensorMqttBrokers(params *GetNetworkSensorMqttBrokersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSensorMqttBrokersOK, error)
+
+	GetNetworkSensorRelationships(params *GetNetworkSensorRelationshipsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSensorRelationshipsOK, error)
+
 	GetOrganizationSensorReadingsHistory(params *GetOrganizationSensorReadingsHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSensorReadingsHistoryOK, error)
 
 	GetOrganizationSensorReadingsLatest(params *GetOrganizationSensorReadingsLatestParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSensorReadingsLatestOK, error)
+
+	UpdateDeviceSensorRelationships(params *UpdateDeviceSensorRelationshipsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceSensorRelationshipsOK, error)
+
+	UpdateNetworkSensorAlertsProfile(params *UpdateNetworkSensorAlertsProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSensorAlertsProfileOK, error)
+
+	UpdateNetworkSensorMqttBroker(params *UpdateNetworkSensorMqttBrokerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSensorMqttBrokerOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  GetOrganizationSensorReadingsHistory returns all reported readings from sensors in a given timespan sorted by timestamp
+CreateNetworkSensorAlertsProfile creates a sensor alert profile for a network
 
-  Return all reported readings from sensors in a given timespan, sorted by timestamp
+Creates a sensor alert profile for a network.
+*/
+func (a *Client) CreateNetworkSensorAlertsProfile(params *CreateNetworkSensorAlertsProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkSensorAlertsProfileOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateNetworkSensorAlertsProfileParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "createNetworkSensorAlertsProfile",
+		Method:             "POST",
+		PathPattern:        "/networks/{networkId}/sensor/alerts/profiles",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &CreateNetworkSensorAlertsProfileReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*CreateNetworkSensorAlertsProfileOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for createNetworkSensorAlertsProfile: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+DeleteNetworkSensorAlertsProfile deletes a sensor alert profile from a network
+
+Deletes a sensor alert profile from a network.
+*/
+func (a *Client) DeleteNetworkSensorAlertsProfile(params *DeleteNetworkSensorAlertsProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkSensorAlertsProfileNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteNetworkSensorAlertsProfileParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "deleteNetworkSensorAlertsProfile",
+		Method:             "DELETE",
+		PathPattern:        "/networks/{networkId}/sensor/alerts/profiles/{id}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DeleteNetworkSensorAlertsProfileReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DeleteNetworkSensorAlertsProfileNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for deleteNetworkSensorAlertsProfile: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetDeviceSensorRelationships lists the sensor roles for a given sensor or camera device
+
+List the sensor roles for a given sensor or camera device.
+*/
+func (a *Client) GetDeviceSensorRelationships(params *GetDeviceSensorRelationshipsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceSensorRelationshipsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetDeviceSensorRelationshipsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getDeviceSensorRelationships",
+		Method:             "GET",
+		PathPattern:        "/devices/{serial}/sensor/relationships",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetDeviceSensorRelationshipsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetDeviceSensorRelationshipsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getDeviceSensorRelationships: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetNetworkSensorAlertsCurrentOverviewByMetric returns an overview of currently alerting sensors by metric
+
+Return an overview of currently alerting sensors by metric
+*/
+func (a *Client) GetNetworkSensorAlertsCurrentOverviewByMetric(params *GetNetworkSensorAlertsCurrentOverviewByMetricParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSensorAlertsCurrentOverviewByMetricOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetNetworkSensorAlertsCurrentOverviewByMetricParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getNetworkSensorAlertsCurrentOverviewByMetric",
+		Method:             "GET",
+		PathPattern:        "/networks/{networkId}/sensor/alerts/current/overview/byMetric",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetNetworkSensorAlertsCurrentOverviewByMetricReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetNetworkSensorAlertsCurrentOverviewByMetricOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getNetworkSensorAlertsCurrentOverviewByMetric: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetNetworkSensorAlertsOverviewByMetric returns an overview of alert occurrences over a timespan by metric
+
+Return an overview of alert occurrences over a timespan, by metric
+*/
+func (a *Client) GetNetworkSensorAlertsOverviewByMetric(params *GetNetworkSensorAlertsOverviewByMetricParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSensorAlertsOverviewByMetricOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetNetworkSensorAlertsOverviewByMetricParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getNetworkSensorAlertsOverviewByMetric",
+		Method:             "GET",
+		PathPattern:        "/networks/{networkId}/sensor/alerts/overview/byMetric",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetNetworkSensorAlertsOverviewByMetricReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetNetworkSensorAlertsOverviewByMetricOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getNetworkSensorAlertsOverviewByMetric: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetNetworkSensorAlertsProfile shows details of a sensor alert profile for a network
+
+Show details of a sensor alert profile for a network.
+*/
+func (a *Client) GetNetworkSensorAlertsProfile(params *GetNetworkSensorAlertsProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSensorAlertsProfileOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetNetworkSensorAlertsProfileParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getNetworkSensorAlertsProfile",
+		Method:             "GET",
+		PathPattern:        "/networks/{networkId}/sensor/alerts/profiles/{id}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetNetworkSensorAlertsProfileReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetNetworkSensorAlertsProfileOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getNetworkSensorAlertsProfile: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetNetworkSensorAlertsProfiles lists all sensor alert profiles for a network
+
+Lists all sensor alert profiles for a network.
+*/
+func (a *Client) GetNetworkSensorAlertsProfiles(params *GetNetworkSensorAlertsProfilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSensorAlertsProfilesOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetNetworkSensorAlertsProfilesParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getNetworkSensorAlertsProfiles",
+		Method:             "GET",
+		PathPattern:        "/networks/{networkId}/sensor/alerts/profiles",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetNetworkSensorAlertsProfilesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetNetworkSensorAlertsProfilesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getNetworkSensorAlertsProfiles: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetNetworkSensorMqttBroker returns the sensor settings of an m q t t broker
+
+Return the sensor settings of an MQTT broker. To get the broker itself, use /networks/{networkId}/mqttBrokers/{mqttBrokerId}.
+*/
+func (a *Client) GetNetworkSensorMqttBroker(params *GetNetworkSensorMqttBrokerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSensorMqttBrokerOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetNetworkSensorMqttBrokerParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getNetworkSensorMqttBroker",
+		Method:             "GET",
+		PathPattern:        "/networks/{networkId}/sensor/mqttBrokers/{mqttBrokerId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetNetworkSensorMqttBrokerReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetNetworkSensorMqttBrokerOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getNetworkSensorMqttBroker: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetNetworkSensorMqttBrokers lists the sensor settings of all m q t t brokers for this network
+
+List the sensor settings of all MQTT brokers for this network. To get the brokers themselves, use /networks/{networkId}/mqttBrokers.
+*/
+func (a *Client) GetNetworkSensorMqttBrokers(params *GetNetworkSensorMqttBrokersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSensorMqttBrokersOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetNetworkSensorMqttBrokersParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getNetworkSensorMqttBrokers",
+		Method:             "GET",
+		PathPattern:        "/networks/{networkId}/sensor/mqttBrokers",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetNetworkSensorMqttBrokersReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetNetworkSensorMqttBrokersOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getNetworkSensorMqttBrokers: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetNetworkSensorRelationships lists the sensor roles for devices in a given network
+
+List the sensor roles for devices in a given network
+*/
+func (a *Client) GetNetworkSensorRelationships(params *GetNetworkSensorRelationshipsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkSensorRelationshipsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetNetworkSensorRelationshipsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getNetworkSensorRelationships",
+		Method:             "GET",
+		PathPattern:        "/networks/{networkId}/sensor/relationships",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetNetworkSensorRelationshipsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetNetworkSensorRelationshipsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getNetworkSensorRelationships: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetOrganizationSensorReadingsHistory returns all reported readings from sensors in a given timespan sorted by timestamp
+
+Return all reported readings from sensors in a given timespan, sorted by timestamp
 */
 func (a *Client) GetOrganizationSensorReadingsHistory(params *GetOrganizationSensorReadingsHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSensorReadingsHistoryOK, error) {
 	// TODO: Validate the params before sending
@@ -79,9 +515,9 @@ func (a *Client) GetOrganizationSensorReadingsHistory(params *GetOrganizationSen
 }
 
 /*
-  GetOrganizationSensorReadingsLatest returns the latest available reading for each metric from each sensor sorted by sensor serial
+GetOrganizationSensorReadingsLatest returns the latest available reading for each metric from each sensor sorted by sensor serial
 
-  Return the latest available reading for each metric from each sensor, sorted by sensor serial
+Return the latest available reading for each metric from each sensor, sorted by sensor serial
 */
 func (a *Client) GetOrganizationSensorReadingsLatest(params *GetOrganizationSensorReadingsLatestParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationSensorReadingsLatestOK, error) {
 	// TODO: Validate the params before sending
@@ -116,6 +552,129 @@ func (a *Client) GetOrganizationSensorReadingsLatest(params *GetOrganizationSens
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
 	msg := fmt.Sprintf("unexpected success response for getOrganizationSensorReadingsLatest: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UpdateDeviceSensorRelationships assigns one or more sensor roles to a given sensor or camera device
+
+Assign one or more sensor roles to a given sensor or camera device.
+*/
+func (a *Client) UpdateDeviceSensorRelationships(params *UpdateDeviceSensorRelationshipsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceSensorRelationshipsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateDeviceSensorRelationshipsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "updateDeviceSensorRelationships",
+		Method:             "PUT",
+		PathPattern:        "/devices/{serial}/sensor/relationships",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateDeviceSensorRelationshipsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateDeviceSensorRelationshipsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for updateDeviceSensorRelationships: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UpdateNetworkSensorAlertsProfile updates a sensor alert profile for a network
+
+Updates a sensor alert profile for a network.
+*/
+func (a *Client) UpdateNetworkSensorAlertsProfile(params *UpdateNetworkSensorAlertsProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSensorAlertsProfileOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateNetworkSensorAlertsProfileParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "updateNetworkSensorAlertsProfile",
+		Method:             "PUT",
+		PathPattern:        "/networks/{networkId}/sensor/alerts/profiles/{id}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateNetworkSensorAlertsProfileReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateNetworkSensorAlertsProfileOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for updateNetworkSensorAlertsProfile: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UpdateNetworkSensorMqttBroker updates the sensor settings of an m q t t broker
+
+Update the sensor settings of an MQTT broker. To update the broker itself, use /networks/{networkId}/mqttBrokers/{mqttBrokerId}.
+*/
+func (a *Client) UpdateNetworkSensorMqttBroker(params *UpdateNetworkSensorMqttBrokerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkSensorMqttBrokerOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateNetworkSensorMqttBrokerParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "updateNetworkSensorMqttBroker",
+		Method:             "PUT",
+		PathPattern:        "/networks/{networkId}/sensor/mqttBrokers/{mqttBrokerId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateNetworkSensorMqttBrokerReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateNetworkSensorMqttBrokerOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for updateNetworkSensorMqttBroker: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

@@ -52,14 +52,19 @@ func NewUpdateNetworkApplianceVpnBgpParamsWithHTTPClient(client *http.Client) *U
 	}
 }
 
-/* UpdateNetworkApplianceVpnBgpParams contains all the parameters to send to the API endpoint
-   for the update network appliance vpn bgp operation.
+/*
+UpdateNetworkApplianceVpnBgpParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network appliance vpn bgp operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkApplianceVpnBgpParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkApplianceVpnBgp.

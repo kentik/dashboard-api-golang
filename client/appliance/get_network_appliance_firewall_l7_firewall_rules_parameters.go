@@ -52,14 +52,19 @@ func NewGetNetworkApplianceFirewallL7FirewallRulesParamsWithHTTPClient(client *h
 	}
 }
 
-/* GetNetworkApplianceFirewallL7FirewallRulesParams contains all the parameters to send to the API endpoint
-   for the get network appliance firewall l7 firewall rules operation.
+/*
+GetNetworkApplianceFirewallL7FirewallRulesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network appliance firewall l7 firewall rules operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkApplianceFirewallL7FirewallRulesParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

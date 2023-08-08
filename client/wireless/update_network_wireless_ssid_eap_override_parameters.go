@@ -52,17 +52,25 @@ func NewUpdateNetworkWirelessSsidEapOverrideParamsWithHTTPClient(client *http.Cl
 	}
 }
 
-/* UpdateNetworkWirelessSsidEapOverrideParams contains all the parameters to send to the API endpoint
-   for the update network wireless ssid eap override operation.
+/*
+UpdateNetworkWirelessSsidEapOverrideParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network wireless ssid eap override operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkWirelessSsidEapOverrideParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// Number.
+	/* Number.
+
+	   Number
+	*/
 	Number string
 
 	// UpdateNetworkWirelessSsidEapOverride.

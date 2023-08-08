@@ -34,7 +34,7 @@ func (o *UpdateNetworkWirelessSsidHotspot20Reader) ReadResponse(response runtime
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/wireless/ssids/{number}/hotspot20] updateNetworkWirelessSsidHotspot20", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewUpdateNetworkWirelessSsidHotspot20OK() *UpdateNetworkWirelessSsidHotspot
 	return &UpdateNetworkWirelessSsidHotspot20OK{}
 }
 
-/* UpdateNetworkWirelessSsidHotspot20OK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkWirelessSsidHotspot20OK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *UpdateNetworkWirelessSsidHotspot20OK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network wireless ssid hotspot20 o k response
+func (o *UpdateNetworkWirelessSsidHotspot20OK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkWirelessSsidHotspot20OK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/wireless/ssids/{number}/hotspot20][%d] updateNetworkWirelessSsidHotspot20OK  %+v", 200, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *UpdateNetworkWirelessSsidHotspot20OK) readResponse(response runtime.Cli
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidHotspot20Body update network wireless ssid hotspot20 body
+/*
+UpdateNetworkWirelessSsidHotspot20Body update network wireless ssid hotspot20 body
 // Example: {"domains":["meraki.local","domain2.com"],"enabled":true,"mccMncs":[{"mcc":"123","mnc":"456"},{"mcc":"563","mnc":"232"}],"naiRealms":[{"format":"1","methods":[{"authenticationTypes":{"credentials":[],"eapInnerAuthentication":["EAP-TTLS with MSCHAPv2"],"nonEapInnerAuthentication":["MSCHAP"],"tunneledEapMethodCredentials":[]},"id":"1"}],"name":"Realm 1"}],"networkAccessType":"Private network","operator":{"name":"Meraki Product Management"},"roamConsortOis":["ABC123","456EFG"],"venue":{"name":"SF Branch","type":"Unspecified Assembly"}}
 swagger:model UpdateNetworkWirelessSsidHotspot20Body
 */
@@ -117,7 +124,7 @@ type UpdateNetworkWirelessSsidHotspot20Body struct {
 	NaiRealms []*UpdateNetworkWirelessSsidHotspot20ParamsBodyNaiRealmsItems0 `json:"naiRealms"`
 
 	// The network type of this SSID ('Private network', 'Private network with guest access', 'Chargeable public network', 'Free public network', 'Personal device network', 'Emergency services only network', 'Test or experimental', 'Wildcard')
-	// Enum: [Private network Private network with guest access Chargeable public network Free public network Personal device network Emergency services only network Test or experimental Wildcard]
+	// Enum: [Chargeable public network Emergency services only network Free public network Personal device network Private network Private network with guest access Test or experimental Wildcard]
 	NetworkAccessType string `json:"networkAccessType,omitempty"`
 
 	// operator
@@ -216,7 +223,7 @@ var updateNetworkWirelessSsidHotspot20BodyTypeNetworkAccessTypePropEnum []interf
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Private network","Private network with guest access","Chargeable public network","Free public network","Personal device network","Emergency services only network","Test or experimental","Wildcard"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Chargeable public network","Emergency services only network","Free public network","Personal device network","Private network","Private network with guest access","Test or experimental","Wildcard"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -226,14 +233,11 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessSsidHotspot20BodyNetworkAccessTypePrivateNetwork captures enum value "Private network"
-	UpdateNetworkWirelessSsidHotspot20BodyNetworkAccessTypePrivateNetwork string = "Private network"
-
-	// UpdateNetworkWirelessSsidHotspot20BodyNetworkAccessTypePrivateNetworkWithGuestAccess captures enum value "Private network with guest access"
-	UpdateNetworkWirelessSsidHotspot20BodyNetworkAccessTypePrivateNetworkWithGuestAccess string = "Private network with guest access"
-
 	// UpdateNetworkWirelessSsidHotspot20BodyNetworkAccessTypeChargeablePublicNetwork captures enum value "Chargeable public network"
 	UpdateNetworkWirelessSsidHotspot20BodyNetworkAccessTypeChargeablePublicNetwork string = "Chargeable public network"
+
+	// UpdateNetworkWirelessSsidHotspot20BodyNetworkAccessTypeEmergencyServicesOnlyNetwork captures enum value "Emergency services only network"
+	UpdateNetworkWirelessSsidHotspot20BodyNetworkAccessTypeEmergencyServicesOnlyNetwork string = "Emergency services only network"
 
 	// UpdateNetworkWirelessSsidHotspot20BodyNetworkAccessTypeFreePublicNetwork captures enum value "Free public network"
 	UpdateNetworkWirelessSsidHotspot20BodyNetworkAccessTypeFreePublicNetwork string = "Free public network"
@@ -241,8 +245,11 @@ const (
 	// UpdateNetworkWirelessSsidHotspot20BodyNetworkAccessTypePersonalDeviceNetwork captures enum value "Personal device network"
 	UpdateNetworkWirelessSsidHotspot20BodyNetworkAccessTypePersonalDeviceNetwork string = "Personal device network"
 
-	// UpdateNetworkWirelessSsidHotspot20BodyNetworkAccessTypeEmergencyServicesOnlyNetwork captures enum value "Emergency services only network"
-	UpdateNetworkWirelessSsidHotspot20BodyNetworkAccessTypeEmergencyServicesOnlyNetwork string = "Emergency services only network"
+	// UpdateNetworkWirelessSsidHotspot20BodyNetworkAccessTypePrivateNetwork captures enum value "Private network"
+	UpdateNetworkWirelessSsidHotspot20BodyNetworkAccessTypePrivateNetwork string = "Private network"
+
+	// UpdateNetworkWirelessSsidHotspot20BodyNetworkAccessTypePrivateNetworkWithGuestAccess captures enum value "Private network with guest access"
+	UpdateNetworkWirelessSsidHotspot20BodyNetworkAccessTypePrivateNetworkWithGuestAccess string = "Private network with guest access"
 
 	// UpdateNetworkWirelessSsidHotspot20BodyNetworkAccessTypeTestOrExperimental captures enum value "Test or experimental"
 	UpdateNetworkWirelessSsidHotspot20BodyNetworkAccessTypeTestOrExperimental string = "Test or experimental"
@@ -341,6 +348,11 @@ func (o *UpdateNetworkWirelessSsidHotspot20Body) contextValidateMccMncs(ctx cont
 	for i := 0; i < len(o.MccMncs); i++ {
 
 		if o.MccMncs[i] != nil {
+
+			if swag.IsZero(o.MccMncs[i]) { // not required
+				return nil
+			}
+
 			if err := o.MccMncs[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkWirelessSsidHotspot20" + "." + "mccMncs" + "." + strconv.Itoa(i))
@@ -361,6 +373,11 @@ func (o *UpdateNetworkWirelessSsidHotspot20Body) contextValidateNaiRealms(ctx co
 	for i := 0; i < len(o.NaiRealms); i++ {
 
 		if o.NaiRealms[i] != nil {
+
+			if swag.IsZero(o.NaiRealms[i]) { // not required
+				return nil
+			}
+
 			if err := o.NaiRealms[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkWirelessSsidHotspot20" + "." + "naiRealms" + "." + strconv.Itoa(i))
@@ -379,6 +396,11 @@ func (o *UpdateNetworkWirelessSsidHotspot20Body) contextValidateNaiRealms(ctx co
 func (o *UpdateNetworkWirelessSsidHotspot20Body) contextValidateOperator(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Operator != nil {
+
+		if swag.IsZero(o.Operator) { // not required
+			return nil
+		}
+
 		if err := o.Operator.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessSsidHotspot20" + "." + "operator")
@@ -395,6 +417,11 @@ func (o *UpdateNetworkWirelessSsidHotspot20Body) contextValidateOperator(ctx con
 func (o *UpdateNetworkWirelessSsidHotspot20Body) contextValidateVenue(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Venue != nil {
+
+		if swag.IsZero(o.Venue) { // not required
+			return nil
+		}
+
 		if err := o.Venue.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessSsidHotspot20" + "." + "venue")
@@ -426,7 +453,8 @@ func (o *UpdateNetworkWirelessSsidHotspot20Body) UnmarshalBinary(b []byte) error
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidHotspot20ParamsBodyMccMncsItems0 update network wireless ssid hotspot20 params body mcc mncs items0
+/*
+UpdateNetworkWirelessSsidHotspot20ParamsBodyMccMncsItems0 update network wireless ssid hotspot20 params body mcc mncs items0
 swagger:model UpdateNetworkWirelessSsidHotspot20ParamsBodyMccMncsItems0
 */
 type UpdateNetworkWirelessSsidHotspot20ParamsBodyMccMncsItems0 struct {
@@ -466,13 +494,14 @@ func (o *UpdateNetworkWirelessSsidHotspot20ParamsBodyMccMncsItems0) UnmarshalBin
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidHotspot20ParamsBodyNaiRealmsItems0 update network wireless ssid hotspot20 params body nai realms items0
+/*
+UpdateNetworkWirelessSsidHotspot20ParamsBodyNaiRealmsItems0 update network wireless ssid hotspot20 params body nai realms items0
 swagger:model UpdateNetworkWirelessSsidHotspot20ParamsBodyNaiRealmsItems0
 */
 type UpdateNetworkWirelessSsidHotspot20ParamsBodyNaiRealmsItems0 struct {
 
 	// The format for the realm ('1' or '0')
-	// Enum: [1 0]
+	// Enum: [0 1]
 	Format string `json:"format,omitempty"`
 
 	// An array of EAP methods for the realm.
@@ -504,7 +533,7 @@ var updateNetworkWirelessSsidHotspot20ParamsBodyNaiRealmsItems0TypeFormatPropEnu
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["1","0"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["0","1"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -514,11 +543,11 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyNaiRealmsItems0FormatNr1 captures enum value "1"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyNaiRealmsItems0FormatNr1 string = "1"
-
 	// UpdateNetworkWirelessSsidHotspot20ParamsBodyNaiRealmsItems0FormatNr0 captures enum value "0"
 	UpdateNetworkWirelessSsidHotspot20ParamsBodyNaiRealmsItems0FormatNr0 string = "0"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyNaiRealmsItems0FormatNr1 captures enum value "1"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyNaiRealmsItems0FormatNr1 string = "1"
 )
 
 // prop value enum
@@ -587,6 +616,11 @@ func (o *UpdateNetworkWirelessSsidHotspot20ParamsBodyNaiRealmsItems0) contextVal
 	for i := 0; i < len(o.Methods); i++ {
 
 		if o.Methods[i] != nil {
+
+			if swag.IsZero(o.Methods[i]) { // not required
+				return nil
+			}
+
 			if err := o.Methods[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("methods" + "." + strconv.Itoa(i))
@@ -620,7 +654,8 @@ func (o *UpdateNetworkWirelessSsidHotspot20ParamsBodyNaiRealmsItems0) UnmarshalB
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidHotspot20ParamsBodyNaiRealmsItems0MethodsItems0 update network wireless ssid hotspot20 params body nai realms items0 methods items0
+/*
+UpdateNetworkWirelessSsidHotspot20ParamsBodyNaiRealmsItems0MethodsItems0 update network wireless ssid hotspot20 params body nai realms items0 methods items0
 swagger:model UpdateNetworkWirelessSsidHotspot20ParamsBodyNaiRealmsItems0MethodsItems0
 */
 type UpdateNetworkWirelessSsidHotspot20ParamsBodyNaiRealmsItems0MethodsItems0 struct {
@@ -660,7 +695,8 @@ func (o *UpdateNetworkWirelessSsidHotspot20ParamsBodyNaiRealmsItems0MethodsItems
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidHotspot20ParamsBodyOperator Operator settings for this SSID
+/*
+UpdateNetworkWirelessSsidHotspot20ParamsBodyOperator Operator settings for this SSID
 swagger:model UpdateNetworkWirelessSsidHotspot20ParamsBodyOperator
 */
 type UpdateNetworkWirelessSsidHotspot20ParamsBodyOperator struct {
@@ -697,7 +733,8 @@ func (o *UpdateNetworkWirelessSsidHotspot20ParamsBodyOperator) UnmarshalBinary(b
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidHotspot20ParamsBodyVenue Venue settings for this SSID
+/*
+UpdateNetworkWirelessSsidHotspot20ParamsBodyVenue Venue settings for this SSID
 swagger:model UpdateNetworkWirelessSsidHotspot20ParamsBodyVenue
 */
 type UpdateNetworkWirelessSsidHotspot20ParamsBodyVenue struct {
@@ -706,7 +743,7 @@ type UpdateNetworkWirelessSsidHotspot20ParamsBodyVenue struct {
 	Name string `json:"name,omitempty"`
 
 	// Venue type ('Unspecified', 'Unspecified Assembly', 'Arena', 'Stadium', 'Passenger Terminal', 'Amphitheater', 'Amusement Park', 'Place of Worship', 'Convention Center', 'Library', 'Museum', 'Restaurant', 'Theater', 'Bar', 'Coffee Shop', 'Zoo or Aquarium', 'Emergency Coordination Center', 'Unspecified Business', 'Doctor or Dentist office', 'Bank', 'Fire Station', 'Police Station', 'Post Office', 'Professional Office', 'Research and Development Facility', 'Attorney Office', 'Unspecified Educational', 'School, Primary', 'School, Secondary', 'University or College', 'Unspecified Factory and Industrial', 'Factory', 'Unspecified Institutional', 'Hospital', 'Long-Term Care Facility', 'Alcohol and Drug Rehabilitation Center', 'Group Home', 'Prison or Jail', 'Unspecified Mercantile', 'Retail Store', 'Grocery Market', 'Automotive Service Station', 'Shopping Mall', 'Gas Station', 'Unspecified Residential', 'Private Residence', 'Hotel or Motel', 'Dormitory', 'Boarding House', 'Unspecified Storage', 'Unspecified Utility and Miscellaneous', 'Unspecified Vehicular', 'Automobile or Truck', 'Airplane', 'Bus', 'Ferry', 'Ship or Boat', 'Train', 'Motor Bike', 'Unspecified Outdoor', 'Muni-mesh Network', 'City Park', 'Rest Area', 'Traffic Control', 'Bus Stop', 'Kiosk')
-	// Enum: [Unspecified Unspecified Assembly Arena Stadium Passenger Terminal Amphitheater Amusement Park Place of Worship Convention Center Library Museum Restaurant Theater Bar Coffee Shop Zoo or Aquarium Emergency Coordination Center Unspecified Business Doctor or Dentist office Bank Fire Station Police Station Post Office Professional Office Research and Development Facility Attorney Office Unspecified Educational School, Primary School, Secondary University or College Unspecified Factory and Industrial Factory Unspecified Institutional Hospital Long-Term Care Facility Alcohol and Drug Rehabilitation Center Group Home Prison or Jail Unspecified Mercantile Retail Store Grocery Market Automotive Service Station Shopping Mall Gas Station Unspecified Residential Private Residence Hotel or Motel Dormitory Boarding House Unspecified Storage Unspecified Utility and Miscellaneous Unspecified Vehicular Automobile or Truck Airplane Bus Ferry Ship or Boat Train Motor Bike Unspecified Outdoor Muni-mesh Network City Park Rest Area Traffic Control Bus Stop Kiosk]
+	// Enum: [Airplane Alcohol and Drug Rehabilitation Center Amphitheater Amusement Park Arena Attorney Office Automobile or Truck Automotive Service Station Bank Bar Boarding House Bus Bus Stop City Park Coffee Shop Convention Center Doctor or Dentist office Dormitory Emergency Coordination Center Factory Ferry Fire Station Gas Station Grocery Market Group Home Hospital Hotel or Motel Kiosk Library Long-Term Care Facility Motor Bike Muni-mesh Network Museum Passenger Terminal Place of Worship Police Station Post Office Prison or Jail Private Residence Professional Office Research and Development Facility Rest Area Restaurant Retail Store School, Primary School, Secondary Ship or Boat Shopping Mall Stadium Theater Traffic Control Train University or College Unspecified Unspecified Assembly Unspecified Business Unspecified Educational Unspecified Factory and Industrial Unspecified Institutional Unspecified Mercantile Unspecified Outdoor Unspecified Residential Unspecified Storage Unspecified Utility and Miscellaneous Unspecified Vehicular Zoo or Aquarium]
 	Type string `json:"type,omitempty"`
 }
 
@@ -728,7 +765,7 @@ var updateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeTypePropEnum []interfac
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Unspecified","Unspecified Assembly","Arena","Stadium","Passenger Terminal","Amphitheater","Amusement Park","Place of Worship","Convention Center","Library","Museum","Restaurant","Theater","Bar","Coffee Shop","Zoo or Aquarium","Emergency Coordination Center","Unspecified Business","Doctor or Dentist office","Bank","Fire Station","Police Station","Post Office","Professional Office","Research and Development Facility","Attorney Office","Unspecified Educational","School, Primary","School, Secondary","University or College","Unspecified Factory and Industrial","Factory","Unspecified Institutional","Hospital","Long-Term Care Facility","Alcohol and Drug Rehabilitation Center","Group Home","Prison or Jail","Unspecified Mercantile","Retail Store","Grocery Market","Automotive Service Station","Shopping Mall","Gas Station","Unspecified Residential","Private Residence","Hotel or Motel","Dormitory","Boarding House","Unspecified Storage","Unspecified Utility and Miscellaneous","Unspecified Vehicular","Automobile or Truck","Airplane","Bus","Ferry","Ship or Boat","Train","Motor Bike","Unspecified Outdoor","Muni-mesh Network","City Park","Rest Area","Traffic Control","Bus Stop","Kiosk"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Airplane","Alcohol and Drug Rehabilitation Center","Amphitheater","Amusement Park","Arena","Attorney Office","Automobile or Truck","Automotive Service Station","Bank","Bar","Boarding House","Bus","Bus Stop","City Park","Coffee Shop","Convention Center","Doctor or Dentist office","Dormitory","Emergency Coordination Center","Factory","Ferry","Fire Station","Gas Station","Grocery Market","Group Home","Hospital","Hotel or Motel","Kiosk","Library","Long-Term Care Facility","Motor Bike","Muni-mesh Network","Museum","Passenger Terminal","Place of Worship","Police Station","Post Office","Prison or Jail","Private Residence","Professional Office","Research and Development Facility","Rest Area","Restaurant","Retail Store","School, Primary","School, Secondary","Ship or Boat","Shopping Mall","Stadium","Theater","Traffic Control","Train","University or College","Unspecified","Unspecified Assembly","Unspecified Business","Unspecified Educational","Unspecified Factory and Industrial","Unspecified Institutional","Unspecified Mercantile","Unspecified Outdoor","Unspecified Residential","Unspecified Storage","Unspecified Utility and Miscellaneous","Unspecified Vehicular","Zoo or Aquarium"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -738,20 +775,11 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecified captures enum value "Unspecified"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecified string = "Unspecified"
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAirplane captures enum value "Airplane"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAirplane string = "Airplane"
 
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedAssembly captures enum value "Unspecified Assembly"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedAssembly string = "Unspecified Assembly"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeArena captures enum value "Arena"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeArena string = "Arena"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeStadium captures enum value "Stadium"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeStadium string = "Stadium"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypePassengerTerminal captures enum value "Passenger Terminal"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypePassengerTerminal string = "Passenger Terminal"
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAlcoholAndDrugRehabilitationCenter captures enum value "Alcohol and Drug Rehabilitation Center"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAlcoholAndDrugRehabilitationCenter string = "Alcohol and Drug Rehabilitation Center"
 
 	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAmphitheater captures enum value "Amphitheater"
 	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAmphitheater string = "Amphitheater"
@@ -759,47 +787,98 @@ const (
 	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAmusementPark captures enum value "Amusement Park"
 	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAmusementPark string = "Amusement Park"
 
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypePlaceOfWorship captures enum value "Place of Worship"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypePlaceOfWorship string = "Place of Worship"
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeArena captures enum value "Arena"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeArena string = "Arena"
 
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeConventionCenter captures enum value "Convention Center"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeConventionCenter string = "Convention Center"
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAttorneyOffice captures enum value "Attorney Office"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAttorneyOffice string = "Attorney Office"
 
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeLibrary captures enum value "Library"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeLibrary string = "Library"
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAutomobileOrTruck captures enum value "Automobile or Truck"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAutomobileOrTruck string = "Automobile or Truck"
 
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeMuseum captures enum value "Museum"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeMuseum string = "Museum"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeRestaurant captures enum value "Restaurant"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeRestaurant string = "Restaurant"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeTheater captures enum value "Theater"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeTheater string = "Theater"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeBar captures enum value "Bar"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeBar string = "Bar"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeCoffeeShop captures enum value "Coffee Shop"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeCoffeeShop string = "Coffee Shop"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeZooOrAquarium captures enum value "Zoo or Aquarium"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeZooOrAquarium string = "Zoo or Aquarium"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeEmergencyCoordinationCenter captures enum value "Emergency Coordination Center"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeEmergencyCoordinationCenter string = "Emergency Coordination Center"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedBusiness captures enum value "Unspecified Business"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedBusiness string = "Unspecified Business"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeDoctorOrDentistOffice captures enum value "Doctor or Dentist office"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeDoctorOrDentistOffice string = "Doctor or Dentist office"
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAutomotiveServiceStation captures enum value "Automotive Service Station"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAutomotiveServiceStation string = "Automotive Service Station"
 
 	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeBank captures enum value "Bank"
 	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeBank string = "Bank"
 
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeBar captures enum value "Bar"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeBar string = "Bar"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeBoardingHouse captures enum value "Boarding House"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeBoardingHouse string = "Boarding House"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeBus captures enum value "Bus"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeBus string = "Bus"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeBusStop captures enum value "Bus Stop"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeBusStop string = "Bus Stop"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeCityPark captures enum value "City Park"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeCityPark string = "City Park"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeCoffeeShop captures enum value "Coffee Shop"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeCoffeeShop string = "Coffee Shop"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeConventionCenter captures enum value "Convention Center"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeConventionCenter string = "Convention Center"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeDoctorOrDentistOffice captures enum value "Doctor or Dentist office"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeDoctorOrDentistOffice string = "Doctor or Dentist office"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeDormitory captures enum value "Dormitory"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeDormitory string = "Dormitory"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeEmergencyCoordinationCenter captures enum value "Emergency Coordination Center"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeEmergencyCoordinationCenter string = "Emergency Coordination Center"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeFactory captures enum value "Factory"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeFactory string = "Factory"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeFerry captures enum value "Ferry"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeFerry string = "Ferry"
+
 	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeFireStation captures enum value "Fire Station"
 	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeFireStation string = "Fire Station"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeGasStation captures enum value "Gas Station"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeGasStation string = "Gas Station"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeGroceryMarket captures enum value "Grocery Market"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeGroceryMarket string = "Grocery Market"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeGroupHome captures enum value "Group Home"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeGroupHome string = "Group Home"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeHospital captures enum value "Hospital"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeHospital string = "Hospital"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeHotelOrMotel captures enum value "Hotel or Motel"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeHotelOrMotel string = "Hotel or Motel"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeKiosk captures enum value "Kiosk"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeKiosk string = "Kiosk"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeLibrary captures enum value "Library"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeLibrary string = "Library"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeLongDashTermCareFacility captures enum value "Long-Term Care Facility"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeLongDashTermCareFacility string = "Long-Term Care Facility"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeMotorBike captures enum value "Motor Bike"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeMotorBike string = "Motor Bike"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeMuniDashMeshNetwork captures enum value "Muni-mesh Network"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeMuniDashMeshNetwork string = "Muni-mesh Network"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeMuseum captures enum value "Museum"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeMuseum string = "Museum"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypePassengerTerminal captures enum value "Passenger Terminal"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypePassengerTerminal string = "Passenger Terminal"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypePlaceOfWorship captures enum value "Place of Worship"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypePlaceOfWorship string = "Place of Worship"
 
 	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypePoliceStation captures enum value "Police Station"
 	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypePoliceStation string = "Police Station"
@@ -807,17 +886,26 @@ const (
 	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypePostOffice captures enum value "Post Office"
 	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypePostOffice string = "Post Office"
 
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypePrisonOrJail captures enum value "Prison or Jail"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypePrisonOrJail string = "Prison or Jail"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypePrivateResidence captures enum value "Private Residence"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypePrivateResidence string = "Private Residence"
+
 	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeProfessionalOffice captures enum value "Professional Office"
 	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeProfessionalOffice string = "Professional Office"
 
 	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeResearchAndDevelopmentFacility captures enum value "Research and Development Facility"
 	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeResearchAndDevelopmentFacility string = "Research and Development Facility"
 
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAttorneyOffice captures enum value "Attorney Office"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAttorneyOffice string = "Attorney Office"
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeRestArea captures enum value "Rest Area"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeRestArea string = "Rest Area"
 
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedEducational captures enum value "Unspecified Educational"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedEducational string = "Unspecified Educational"
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeRestaurant captures enum value "Restaurant"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeRestaurant string = "Restaurant"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeRetailStore captures enum value "Retail Store"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeRetailStore string = "Retail Store"
 
 	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeSchoolPrimary captures enum value "School, Primary"
 	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeSchoolPrimary string = "School, Primary"
@@ -825,65 +913,53 @@ const (
 	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeSchoolSecondary captures enum value "School, Secondary"
 	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeSchoolSecondary string = "School, Secondary"
 
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUniversityOrCollege captures enum value "University or College"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUniversityOrCollege string = "University or College"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedFactoryAndIndustrial captures enum value "Unspecified Factory and Industrial"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedFactoryAndIndustrial string = "Unspecified Factory and Industrial"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeFactory captures enum value "Factory"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeFactory string = "Factory"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedInstitutional captures enum value "Unspecified Institutional"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedInstitutional string = "Unspecified Institutional"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeHospital captures enum value "Hospital"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeHospital string = "Hospital"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeLongDashTermCareFacility captures enum value "Long-Term Care Facility"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeLongDashTermCareFacility string = "Long-Term Care Facility"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAlcoholAndDrugRehabilitationCenter captures enum value "Alcohol and Drug Rehabilitation Center"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAlcoholAndDrugRehabilitationCenter string = "Alcohol and Drug Rehabilitation Center"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeGroupHome captures enum value "Group Home"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeGroupHome string = "Group Home"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypePrisonOrJail captures enum value "Prison or Jail"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypePrisonOrJail string = "Prison or Jail"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedMercantile captures enum value "Unspecified Mercantile"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedMercantile string = "Unspecified Mercantile"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeRetailStore captures enum value "Retail Store"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeRetailStore string = "Retail Store"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeGroceryMarket captures enum value "Grocery Market"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeGroceryMarket string = "Grocery Market"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAutomotiveServiceStation captures enum value "Automotive Service Station"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAutomotiveServiceStation string = "Automotive Service Station"
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeShipOrBoat captures enum value "Ship or Boat"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeShipOrBoat string = "Ship or Boat"
 
 	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeShoppingMall captures enum value "Shopping Mall"
 	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeShoppingMall string = "Shopping Mall"
 
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeGasStation captures enum value "Gas Station"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeGasStation string = "Gas Station"
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeStadium captures enum value "Stadium"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeStadium string = "Stadium"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeTheater captures enum value "Theater"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeTheater string = "Theater"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeTrafficControl captures enum value "Traffic Control"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeTrafficControl string = "Traffic Control"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeTrain captures enum value "Train"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeTrain string = "Train"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUniversityOrCollege captures enum value "University or College"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUniversityOrCollege string = "University or College"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecified captures enum value "Unspecified"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecified string = "Unspecified"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedAssembly captures enum value "Unspecified Assembly"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedAssembly string = "Unspecified Assembly"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedBusiness captures enum value "Unspecified Business"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedBusiness string = "Unspecified Business"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedEducational captures enum value "Unspecified Educational"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedEducational string = "Unspecified Educational"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedFactoryAndIndustrial captures enum value "Unspecified Factory and Industrial"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedFactoryAndIndustrial string = "Unspecified Factory and Industrial"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedInstitutional captures enum value "Unspecified Institutional"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedInstitutional string = "Unspecified Institutional"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedMercantile captures enum value "Unspecified Mercantile"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedMercantile string = "Unspecified Mercantile"
+
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedOutdoor captures enum value "Unspecified Outdoor"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedOutdoor string = "Unspecified Outdoor"
 
 	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedResidential captures enum value "Unspecified Residential"
 	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedResidential string = "Unspecified Residential"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypePrivateResidence captures enum value "Private Residence"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypePrivateResidence string = "Private Residence"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeHotelOrMotel captures enum value "Hotel or Motel"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeHotelOrMotel string = "Hotel or Motel"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeDormitory captures enum value "Dormitory"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeDormitory string = "Dormitory"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeBoardingHouse captures enum value "Boarding House"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeBoardingHouse string = "Boarding House"
 
 	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedStorage captures enum value "Unspecified Storage"
 	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedStorage string = "Unspecified Storage"
@@ -894,47 +970,8 @@ const (
 	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedVehicular captures enum value "Unspecified Vehicular"
 	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedVehicular string = "Unspecified Vehicular"
 
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAutomobileOrTruck captures enum value "Automobile or Truck"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAutomobileOrTruck string = "Automobile or Truck"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAirplane captures enum value "Airplane"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeAirplane string = "Airplane"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeBus captures enum value "Bus"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeBus string = "Bus"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeFerry captures enum value "Ferry"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeFerry string = "Ferry"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeShipOrBoat captures enum value "Ship or Boat"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeShipOrBoat string = "Ship or Boat"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeTrain captures enum value "Train"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeTrain string = "Train"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeMotorBike captures enum value "Motor Bike"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeMotorBike string = "Motor Bike"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedOutdoor captures enum value "Unspecified Outdoor"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeUnspecifiedOutdoor string = "Unspecified Outdoor"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeMuniDashMeshNetwork captures enum value "Muni-mesh Network"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeMuniDashMeshNetwork string = "Muni-mesh Network"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeCityPark captures enum value "City Park"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeCityPark string = "City Park"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeRestArea captures enum value "Rest Area"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeRestArea string = "Rest Area"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeTrafficControl captures enum value "Traffic Control"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeTrafficControl string = "Traffic Control"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeBusStop captures enum value "Bus Stop"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeBusStop string = "Bus Stop"
-
-	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeKiosk captures enum value "Kiosk"
-	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeKiosk string = "Kiosk"
+	// UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeZooOrAquarium captures enum value "Zoo or Aquarium"
+	UpdateNetworkWirelessSsidHotspot20ParamsBodyVenueTypeZooOrAquarium string = "Zoo or Aquarium"
 )
 
 // prop value enum

@@ -31,7 +31,7 @@ func (o *GetNetworkSmDevicePerformanceHistoryReader) ReadResponse(response runti
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/sm/devices/{deviceId}/performanceHistory] getNetworkSmDevicePerformanceHistory", response, response.Code())
 	}
 }
 
@@ -40,7 +40,8 @@ func NewGetNetworkSmDevicePerformanceHistoryOK() *GetNetworkSmDevicePerformanceH
 	return &GetNetworkSmDevicePerformanceHistoryOK{}
 }
 
-/* GetNetworkSmDevicePerformanceHistoryOK describes a response with status code 200, with default header values.
+/*
+GetNetworkSmDevicePerformanceHistoryOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -78,6 +79,11 @@ func (o *GetNetworkSmDevicePerformanceHistoryOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network sm device performance history o k response
+func (o *GetNetworkSmDevicePerformanceHistoryOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkSmDevicePerformanceHistoryOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/sm/devices/{deviceId}/performanceHistory][%d] getNetworkSmDevicePerformanceHistoryOK  %+v", 200, o.Payload)
 }
@@ -107,7 +113,8 @@ func (o *GetNetworkSmDevicePerformanceHistoryOK) readResponse(response runtime.C
 	return nil
 }
 
-/*GetNetworkSmDevicePerformanceHistoryOKBodyItems0 get network sm device performance history o k body items0
+/*
+GetNetworkSmDevicePerformanceHistoryOKBodyItems0 get network sm device performance history o k body items0
 swagger:model GetNetworkSmDevicePerformanceHistoryOKBodyItems0
 */
 type GetNetworkSmDevicePerformanceHistoryOKBodyItems0 struct {
@@ -193,6 +200,11 @@ func (o *GetNetworkSmDevicePerformanceHistoryOKBodyItems0) ContextValidate(ctx c
 func (o *GetNetworkSmDevicePerformanceHistoryOKBodyItems0) contextValidateDiskUsage(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.DiskUsage != nil {
+
+		if swag.IsZero(o.DiskUsage) { // not required
+			return nil
+		}
+
 		if err := o.DiskUsage.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("diskUsage")
@@ -224,7 +236,8 @@ func (o *GetNetworkSmDevicePerformanceHistoryOKBodyItems0) UnmarshalBinary(b []b
 	return nil
 }
 
-/*GetNetworkSmDevicePerformanceHistoryOKBodyItems0DiskUsage An object containing disk usage details.
+/*
+GetNetworkSmDevicePerformanceHistoryOKBodyItems0DiskUsage An object containing disk usage details.
 swagger:model GetNetworkSmDevicePerformanceHistoryOKBodyItems0DiskUsage
 */
 type GetNetworkSmDevicePerformanceHistoryOKBodyItems0DiskUsage struct {
@@ -283,6 +296,11 @@ func (o *GetNetworkSmDevicePerformanceHistoryOKBodyItems0DiskUsage) ContextValid
 func (o *GetNetworkSmDevicePerformanceHistoryOKBodyItems0DiskUsage) contextValidateC(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.C != nil {
+
+		if swag.IsZero(o.C) { // not required
+			return nil
+		}
+
 		if err := o.C.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("diskUsage" + "." + "c")
@@ -314,7 +332,8 @@ func (o *GetNetworkSmDevicePerformanceHistoryOKBodyItems0DiskUsage) UnmarshalBin
 	return nil
 }
 
-/*GetNetworkSmDevicePerformanceHistoryOKBodyItems0DiskUsageC An object containing current disk usage details.
+/*
+GetNetworkSmDevicePerformanceHistoryOKBodyItems0DiskUsageC An object containing current disk usage details.
 swagger:model GetNetworkSmDevicePerformanceHistoryOKBodyItems0DiskUsageC
 */
 type GetNetworkSmDevicePerformanceHistoryOKBodyItems0DiskUsageC struct {

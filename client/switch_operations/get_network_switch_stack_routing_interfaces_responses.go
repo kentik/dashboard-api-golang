@@ -28,7 +28,7 @@ func (o *GetNetworkSwitchStackRoutingInterfacesReader) ReadResponse(response run
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/switch/stacks/{switchStackId}/routing/interfaces] getNetworkSwitchStackRoutingInterfaces", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetNetworkSwitchStackRoutingInterfacesOK() *GetNetworkSwitchStackRouting
 	return &GetNetworkSwitchStackRoutingInterfacesOK{}
 }
 
-/* GetNetworkSwitchStackRoutingInterfacesOK describes a response with status code 200, with default header values.
+/*
+GetNetworkSwitchStackRoutingInterfacesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetNetworkSwitchStackRoutingInterfacesOK) IsServerError() bool {
 // IsCode returns true when this get network switch stack routing interfaces o k response a status code equal to that given
 func (o *GetNetworkSwitchStackRoutingInterfacesOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get network switch stack routing interfaces o k response
+func (o *GetNetworkSwitchStackRoutingInterfacesOK) Code() int {
+	return 200
 }
 
 func (o *GetNetworkSwitchStackRoutingInterfacesOK) Error() string {

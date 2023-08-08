@@ -52,17 +52,25 @@ func NewDeleteOrganizationInsightMonitoredMediaServerParamsWithHTTPClient(client
 	}
 }
 
-/* DeleteOrganizationInsightMonitoredMediaServerParams contains all the parameters to send to the API endpoint
-   for the delete organization insight monitored media server operation.
+/*
+DeleteOrganizationInsightMonitoredMediaServerParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete organization insight monitored media server operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteOrganizationInsightMonitoredMediaServerParams struct {
 
-	// MonitoredMediaServerID.
+	/* MonitoredMediaServerID.
+
+	   Monitored media server ID
+	*/
 	MonitoredMediaServerID string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

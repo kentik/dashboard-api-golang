@@ -6,11 +6,13 @@ package networks
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetNetworkEventsEventTypesReader is a Reader for the GetNetworkEventsEventTypes structure.
@@ -28,7 +30,7 @@ func (o *GetNetworkEventsEventTypesReader) ReadResponse(response runtime.ClientR
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/events/eventTypes] getNetworkEventsEventTypes", response, response.Code())
 	}
 }
 
@@ -37,12 +39,13 @@ func NewGetNetworkEventsEventTypesOK() *GetNetworkEventsEventTypesOK {
 	return &GetNetworkEventsEventTypesOK{}
 }
 
-/* GetNetworkEventsEventTypesOK describes a response with status code 200, with default header values.
+/*
+GetNetworkEventsEventTypesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkEventsEventTypesOK struct {
-	Payload []interface{}
+	Payload []*GetNetworkEventsEventTypesOKBodyItems0
 }
 
 // IsSuccess returns true when this get network events event types o k response has a 2xx status code
@@ -70,6 +73,11 @@ func (o *GetNetworkEventsEventTypesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network events event types o k response
+func (o *GetNetworkEventsEventTypesOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkEventsEventTypesOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/events/eventTypes][%d] getNetworkEventsEventTypesOK  %+v", 200, o.Payload)
 }
@@ -78,7 +86,7 @@ func (o *GetNetworkEventsEventTypesOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/events/eventTypes][%d] getNetworkEventsEventTypesOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkEventsEventTypesOK) GetPayload() []interface{} {
+func (o *GetNetworkEventsEventTypesOK) GetPayload() []*GetNetworkEventsEventTypesOKBodyItems0 {
 	return o.Payload
 }
 
@@ -89,5 +97,49 @@ func (o *GetNetworkEventsEventTypesOK) readResponse(response runtime.ClientRespo
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkEventsEventTypesOKBodyItems0 get network events event types o k body items0
+swagger:model GetNetworkEventsEventTypesOKBodyItems0
+*/
+type GetNetworkEventsEventTypesOKBodyItems0 struct {
+
+	// Event category
+	Category string `json:"category,omitempty"`
+
+	// Description of the event
+	Description string `json:"description,omitempty"`
+
+	// Event type
+	Type string `json:"type,omitempty"`
+}
+
+// Validate validates this get network events event types o k body items0
+func (o *GetNetworkEventsEventTypesOKBodyItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network events event types o k body items0 based on context it is used
+func (o *GetNetworkEventsEventTypesOKBodyItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkEventsEventTypesOKBodyItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkEventsEventTypesOKBodyItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkEventsEventTypesOKBodyItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

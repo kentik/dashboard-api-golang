@@ -27,7 +27,7 @@ func (o *DeleteNetworkApplianceTrafficShapingCustomPerformanceClassReader) ReadR
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[DELETE /networks/{networkId}/appliance/trafficShaping/customPerformanceClasses/{customPerformanceClassId}] deleteNetworkApplianceTrafficShapingCustomPerformanceClass", response, response.Code())
 	}
 }
 
@@ -36,7 +36,8 @@ func NewDeleteNetworkApplianceTrafficShapingCustomPerformanceClassNoContent() *D
 	return &DeleteNetworkApplianceTrafficShapingCustomPerformanceClassNoContent{}
 }
 
-/* DeleteNetworkApplianceTrafficShapingCustomPerformanceClassNoContent describes a response with status code 204, with default header values.
+/*
+DeleteNetworkApplianceTrafficShapingCustomPerformanceClassNoContent describes a response with status code 204, with default header values.
 
 Successful operation
 */
@@ -66,6 +67,11 @@ func (o *DeleteNetworkApplianceTrafficShapingCustomPerformanceClassNoContent) Is
 // IsCode returns true when this delete network appliance traffic shaping custom performance class no content response a status code equal to that given
 func (o *DeleteNetworkApplianceTrafficShapingCustomPerformanceClassNoContent) IsCode(code int) bool {
 	return code == 204
+}
+
+// Code gets the status code for the delete network appliance traffic shaping custom performance class no content response
+func (o *DeleteNetworkApplianceTrafficShapingCustomPerformanceClassNoContent) Code() int {
+	return 204
 }
 
 func (o *DeleteNetworkApplianceTrafficShapingCustomPerformanceClassNoContent) Error() string {

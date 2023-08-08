@@ -34,7 +34,7 @@ func (o *UpdateNetworkApplianceFirewallL3FirewallRulesReader) ReadResponse(respo
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/appliance/firewall/l3FirewallRules] updateNetworkApplianceFirewallL3FirewallRules", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewUpdateNetworkApplianceFirewallL3FirewallRulesOK() *UpdateNetworkApplianc
 	return &UpdateNetworkApplianceFirewallL3FirewallRulesOK{}
 }
 
-/* UpdateNetworkApplianceFirewallL3FirewallRulesOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkApplianceFirewallL3FirewallRulesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *UpdateNetworkApplianceFirewallL3FirewallRulesOK) IsCode(code int) bool 
 	return code == 200
 }
 
+// Code gets the status code for the update network appliance firewall l3 firewall rules o k response
+func (o *UpdateNetworkApplianceFirewallL3FirewallRulesOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkApplianceFirewallL3FirewallRulesOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/appliance/firewall/l3FirewallRules][%d] updateNetworkApplianceFirewallL3FirewallRulesOK  %+v", 200, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *UpdateNetworkApplianceFirewallL3FirewallRulesOK) readResponse(response 
 	return nil
 }
 
-/*UpdateNetworkApplianceFirewallL3FirewallRulesBody update network appliance firewall l3 firewall rules body
+/*
+UpdateNetworkApplianceFirewallL3FirewallRulesBody update network appliance firewall l3 firewall rules body
 // Example: {"rules":[{"comment":"Allow TCP traffic to subnet with HTTP servers.","destCidr":"192.168.1.0/24","destPort":"443","policy":"allow","protocol":"tcp","srcCidr":"Any","srcPort":"Any","syslogEnabled":false}]}
 swagger:model UpdateNetworkApplianceFirewallL3FirewallRulesBody
 */
@@ -170,6 +177,11 @@ func (o *UpdateNetworkApplianceFirewallL3FirewallRulesBody) contextValidateRules
 	for i := 0; i < len(o.Rules); i++ {
 
 		if o.Rules[i] != nil {
+
+			if swag.IsZero(o.Rules[i]) { // not required
+				return nil
+			}
+
 			if err := o.Rules[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkApplianceFirewallL3FirewallRules" + "." + "rules" + "." + strconv.Itoa(i))
@@ -203,7 +215,8 @@ func (o *UpdateNetworkApplianceFirewallL3FirewallRulesBody) UnmarshalBinary(b []
 	return nil
 }
 
-/*UpdateNetworkApplianceFirewallL3FirewallRulesParamsBodyRulesItems0 update network appliance firewall l3 firewall rules params body rules items0
+/*
+UpdateNetworkApplianceFirewallL3FirewallRulesParamsBodyRulesItems0 update network appliance firewall l3 firewall rules params body rules items0
 swagger:model UpdateNetworkApplianceFirewallL3FirewallRulesParamsBodyRulesItems0
 */
 type UpdateNetworkApplianceFirewallL3FirewallRulesParamsBodyRulesItems0 struct {
@@ -225,7 +238,7 @@ type UpdateNetworkApplianceFirewallL3FirewallRulesParamsBodyRulesItems0 struct {
 
 	// The type of protocol (must be 'tcp', 'udp', 'icmp', 'icmp6' or 'any')
 	// Required: true
-	// Enum: [tcp udp icmp icmp6 any]
+	// Enum: [any icmp icmp6 tcp udp]
 	Protocol *string `json:"protocol"`
 
 	// Comma-separated list of source IP address(es) (in IP or CIDR notation), or 'any' (note: FQDN not supported for source addresses)
@@ -321,7 +334,7 @@ var updateNetworkApplianceFirewallL3FirewallRulesParamsBodyRulesItems0TypeProtoc
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["tcp","udp","icmp","icmp6","any"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["any","icmp","icmp6","tcp","udp"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -331,11 +344,8 @@ func init() {
 
 const (
 
-	// UpdateNetworkApplianceFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolTCP captures enum value "tcp"
-	UpdateNetworkApplianceFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolTCP string = "tcp"
-
-	// UpdateNetworkApplianceFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolUDP captures enum value "udp"
-	UpdateNetworkApplianceFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolUDP string = "udp"
+	// UpdateNetworkApplianceFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolAny captures enum value "any"
+	UpdateNetworkApplianceFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolAny string = "any"
 
 	// UpdateNetworkApplianceFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolIcmp captures enum value "icmp"
 	UpdateNetworkApplianceFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolIcmp string = "icmp"
@@ -343,8 +353,11 @@ const (
 	// UpdateNetworkApplianceFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolIcmp6 captures enum value "icmp6"
 	UpdateNetworkApplianceFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolIcmp6 string = "icmp6"
 
-	// UpdateNetworkApplianceFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolAny captures enum value "any"
-	UpdateNetworkApplianceFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolAny string = "any"
+	// UpdateNetworkApplianceFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolTCP captures enum value "tcp"
+	UpdateNetworkApplianceFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolTCP string = "tcp"
+
+	// UpdateNetworkApplianceFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolUDP captures enum value "udp"
+	UpdateNetworkApplianceFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolUDP string = "udp"
 )
 
 // prop value enum

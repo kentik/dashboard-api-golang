@@ -6,11 +6,16 @@ package switch_operations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // GetDeviceSwitchPortsReader is a Reader for the GetDeviceSwitchPorts structure.
@@ -28,7 +33,7 @@ func (o *GetDeviceSwitchPortsReader) ReadResponse(response runtime.ClientRespons
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /devices/{serial}/switch/ports] getDeviceSwitchPorts", response, response.Code())
 	}
 }
 
@@ -37,12 +42,13 @@ func NewGetDeviceSwitchPortsOK() *GetDeviceSwitchPortsOK {
 	return &GetDeviceSwitchPortsOK{}
 }
 
-/* GetDeviceSwitchPortsOK describes a response with status code 200, with default header values.
+/*
+GetDeviceSwitchPortsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetDeviceSwitchPortsOK struct {
-	Payload []interface{}
+	Payload []*GetDeviceSwitchPortsOKBodyItems0
 }
 
 // IsSuccess returns true when this get device switch ports o k response has a 2xx status code
@@ -70,6 +76,11 @@ func (o *GetDeviceSwitchPortsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get device switch ports o k response
+func (o *GetDeviceSwitchPortsOK) Code() int {
+	return 200
+}
+
 func (o *GetDeviceSwitchPortsOK) Error() string {
 	return fmt.Sprintf("[GET /devices/{serial}/switch/ports][%d] getDeviceSwitchPortsOK  %+v", 200, o.Payload)
 }
@@ -78,7 +89,7 @@ func (o *GetDeviceSwitchPortsOK) String() string {
 	return fmt.Sprintf("[GET /devices/{serial}/switch/ports][%d] getDeviceSwitchPortsOK  %+v", 200, o.Payload)
 }
 
-func (o *GetDeviceSwitchPortsOK) GetPayload() []interface{} {
+func (o *GetDeviceSwitchPortsOK) GetPayload() []*GetDeviceSwitchPortsOKBodyItems0 {
 	return o.Payload
 }
 
@@ -89,5 +100,423 @@ func (o *GetDeviceSwitchPortsOK) readResponse(response runtime.ClientResponse, c
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetDeviceSwitchPortsOKBodyItems0 get device switch ports o k body items0
+swagger:model GetDeviceSwitchPortsOKBodyItems0
+*/
+type GetDeviceSwitchPortsOKBodyItems0 struct {
+
+	// The number of a custom access policy to configure on the switch port. Only applicable when 'accessPolicyType' is 'Custom access policy'.
+	AccessPolicyNumber int64 `json:"accessPolicyNumber,omitempty"`
+
+	// The type of the access policy of the switch port. Only applicable to access ports. Can be one of 'Open', 'Custom access policy', 'MAC allow list' or 'Sticky MAC allow list'.
+	// Enum: [Custom access policy MAC allow list Open Sticky MAC allow list]
+	AccessPolicyType string `json:"accessPolicyType,omitempty"`
+
+	// The adaptive policy group ID that will be used to tag traffic through this switch port. This ID must pre-exist during the configuration, else needs to be created using adaptivePolicy/groups API. Cannot be applied to a port on a switch bound to profile.
+	AdaptivePolicyGroupID string `json:"adaptivePolicyGroupId,omitempty"`
+
+	// The VLANs allowed on the switch port. Only applicable to trunk ports.
+	AllowedVlans string `json:"allowedVlans,omitempty"`
+
+	// If true, ARP packets for this port will be considered trusted, and Dynamic ARP Inspection will allow the traffic.
+	DaiTrusted bool `json:"daiTrusted,omitempty"`
+
+	// The status of the switch port.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// For supported switches (e.g. MS420/MS425), whether or not the port has flexible stacking enabled.
+	FlexibleStackingEnabled bool `json:"flexibleStackingEnabled,omitempty"`
+
+	// The isolation status of the switch port.
+	IsolationEnabled bool `json:"isolationEnabled,omitempty"`
+
+	// The link speed for the switch port.
+	LinkNegotiation string `json:"linkNegotiation,omitempty"`
+
+	// Available link speeds for the switch port.
+	LinkNegotiationCapabilities []string `json:"linkNegotiationCapabilities"`
+
+	// Only devices with MAC addresses specified in this list will have access to this port. Up to 20 MAC addresses can be defined. Only applicable when 'accessPolicyType' is 'MAC allow list'.
+	MacAllowList []string `json:"macAllowList"`
+
+	// The name of the switch port.
+	Name string `json:"name,omitempty"`
+
+	// If true, Peer SGT is enabled for traffic through this switch port. Applicable to trunk port only, not access port. Cannot be applied to a port on a switch bound to profile.
+	PeerSgtCapable bool `json:"peerSgtCapable,omitempty"`
+
+	// The PoE status of the switch port.
+	PoeEnabled bool `json:"poeEnabled,omitempty"`
+
+	// The identifier of the switch port.
+	PortID string `json:"portId,omitempty"`
+
+	// The ID of the port schedule. A value of null will clear the port schedule.
+	PortScheduleID string `json:"portScheduleId,omitempty"`
+
+	// profile
+	Profile *GetDeviceSwitchPortsOKBodyItems0Profile `json:"profile,omitempty"`
+
+	// The rapid spanning tree protocol status.
+	RstpEnabled bool `json:"rstpEnabled,omitempty"`
+
+	// The initial list of MAC addresses for sticky Mac allow list. Only applicable when 'accessPolicyType' is 'Sticky MAC allow list'.
+	StickyMacAllowList []string `json:"stickyMacAllowList"`
+
+	// The maximum number of MAC addresses for sticky MAC allow list. Only applicable when 'accessPolicyType' is 'Sticky MAC allow list'.
+	StickyMacAllowListLimit int64 `json:"stickyMacAllowListLimit,omitempty"`
+
+	// The storm control status of the switch port.
+	StormControlEnabled bool `json:"stormControlEnabled,omitempty"`
+
+	// The state of the STP guard ('disabled', 'root guard', 'bpdu guard' or 'loop guard').
+	// Enum: [bpdu guard disabled loop guard root guard]
+	StpGuard string `json:"stpGuard,omitempty"`
+
+	// The list of tags of the switch port.
+	Tags []string `json:"tags"`
+
+	// The type of the switch port ('trunk' or 'access').
+	// Enum: [access trunk]
+	Type string `json:"type,omitempty"`
+
+	// The action to take when Unidirectional Link is detected (Alert only, Enforce). Default configuration is Alert only.
+	// Enum: [Alert only Enforce]
+	Udld string `json:"udld,omitempty"`
+
+	// The VLAN of the switch port. A null value will clear the value set for trunk ports.
+	Vlan int64 `json:"vlan,omitempty"`
+
+	// The voice VLAN of the switch port. Only applicable to access ports.
+	VoiceVlan int64 `json:"voiceVlan,omitempty"`
+}
+
+// Validate validates this get device switch ports o k body items0
+func (o *GetDeviceSwitchPortsOKBodyItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateAccessPolicyType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateProfile(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateStpGuard(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateUdld(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var getDeviceSwitchPortsOKBodyItems0TypeAccessPolicyTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Custom access policy","MAC allow list","Open","Sticky MAC allow list"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getDeviceSwitchPortsOKBodyItems0TypeAccessPolicyTypePropEnum = append(getDeviceSwitchPortsOKBodyItems0TypeAccessPolicyTypePropEnum, v)
+	}
+}
+
+const (
+
+	// GetDeviceSwitchPortsOKBodyItems0AccessPolicyTypeCustomAccessPolicy captures enum value "Custom access policy"
+	GetDeviceSwitchPortsOKBodyItems0AccessPolicyTypeCustomAccessPolicy string = "Custom access policy"
+
+	// GetDeviceSwitchPortsOKBodyItems0AccessPolicyTypeMACAllowList captures enum value "MAC allow list"
+	GetDeviceSwitchPortsOKBodyItems0AccessPolicyTypeMACAllowList string = "MAC allow list"
+
+	// GetDeviceSwitchPortsOKBodyItems0AccessPolicyTypeOpen captures enum value "Open"
+	GetDeviceSwitchPortsOKBodyItems0AccessPolicyTypeOpen string = "Open"
+
+	// GetDeviceSwitchPortsOKBodyItems0AccessPolicyTypeStickyMACAllowList captures enum value "Sticky MAC allow list"
+	GetDeviceSwitchPortsOKBodyItems0AccessPolicyTypeStickyMACAllowList string = "Sticky MAC allow list"
+)
+
+// prop value enum
+func (o *GetDeviceSwitchPortsOKBodyItems0) validateAccessPolicyTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getDeviceSwitchPortsOKBodyItems0TypeAccessPolicyTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetDeviceSwitchPortsOKBodyItems0) validateAccessPolicyType(formats strfmt.Registry) error {
+	if swag.IsZero(o.AccessPolicyType) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateAccessPolicyTypeEnum("accessPolicyType", "body", o.AccessPolicyType); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *GetDeviceSwitchPortsOKBodyItems0) validateProfile(formats strfmt.Registry) error {
+	if swag.IsZero(o.Profile) { // not required
+		return nil
+	}
+
+	if o.Profile != nil {
+		if err := o.Profile.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("profile")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("profile")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+var getDeviceSwitchPortsOKBodyItems0TypeStpGuardPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["bpdu guard","disabled","loop guard","root guard"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getDeviceSwitchPortsOKBodyItems0TypeStpGuardPropEnum = append(getDeviceSwitchPortsOKBodyItems0TypeStpGuardPropEnum, v)
+	}
+}
+
+const (
+
+	// GetDeviceSwitchPortsOKBodyItems0StpGuardBpduGuard captures enum value "bpdu guard"
+	GetDeviceSwitchPortsOKBodyItems0StpGuardBpduGuard string = "bpdu guard"
+
+	// GetDeviceSwitchPortsOKBodyItems0StpGuardDisabled captures enum value "disabled"
+	GetDeviceSwitchPortsOKBodyItems0StpGuardDisabled string = "disabled"
+
+	// GetDeviceSwitchPortsOKBodyItems0StpGuardLoopGuard captures enum value "loop guard"
+	GetDeviceSwitchPortsOKBodyItems0StpGuardLoopGuard string = "loop guard"
+
+	// GetDeviceSwitchPortsOKBodyItems0StpGuardRootGuard captures enum value "root guard"
+	GetDeviceSwitchPortsOKBodyItems0StpGuardRootGuard string = "root guard"
+)
+
+// prop value enum
+func (o *GetDeviceSwitchPortsOKBodyItems0) validateStpGuardEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getDeviceSwitchPortsOKBodyItems0TypeStpGuardPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetDeviceSwitchPortsOKBodyItems0) validateStpGuard(formats strfmt.Registry) error {
+	if swag.IsZero(o.StpGuard) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateStpGuardEnum("stpGuard", "body", o.StpGuard); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var getDeviceSwitchPortsOKBodyItems0TypeTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["access","trunk"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getDeviceSwitchPortsOKBodyItems0TypeTypePropEnum = append(getDeviceSwitchPortsOKBodyItems0TypeTypePropEnum, v)
+	}
+}
+
+const (
+
+	// GetDeviceSwitchPortsOKBodyItems0TypeAccess captures enum value "access"
+	GetDeviceSwitchPortsOKBodyItems0TypeAccess string = "access"
+
+	// GetDeviceSwitchPortsOKBodyItems0TypeTrunk captures enum value "trunk"
+	GetDeviceSwitchPortsOKBodyItems0TypeTrunk string = "trunk"
+)
+
+// prop value enum
+func (o *GetDeviceSwitchPortsOKBodyItems0) validateTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getDeviceSwitchPortsOKBodyItems0TypeTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetDeviceSwitchPortsOKBodyItems0) validateType(formats strfmt.Registry) error {
+	if swag.IsZero(o.Type) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateTypeEnum("type", "body", o.Type); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var getDeviceSwitchPortsOKBodyItems0TypeUdldPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Alert only","Enforce"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getDeviceSwitchPortsOKBodyItems0TypeUdldPropEnum = append(getDeviceSwitchPortsOKBodyItems0TypeUdldPropEnum, v)
+	}
+}
+
+const (
+
+	// GetDeviceSwitchPortsOKBodyItems0UdldAlertOnly captures enum value "Alert only"
+	GetDeviceSwitchPortsOKBodyItems0UdldAlertOnly string = "Alert only"
+
+	// GetDeviceSwitchPortsOKBodyItems0UdldEnforce captures enum value "Enforce"
+	GetDeviceSwitchPortsOKBodyItems0UdldEnforce string = "Enforce"
+)
+
+// prop value enum
+func (o *GetDeviceSwitchPortsOKBodyItems0) validateUdldEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getDeviceSwitchPortsOKBodyItems0TypeUdldPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetDeviceSwitchPortsOKBodyItems0) validateUdld(formats strfmt.Registry) error {
+	if swag.IsZero(o.Udld) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateUdldEnum("udld", "body", o.Udld); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get device switch ports o k body items0 based on the context it is used
+func (o *GetDeviceSwitchPortsOKBodyItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateProfile(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetDeviceSwitchPortsOKBodyItems0) contextValidateProfile(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Profile != nil {
+
+		if swag.IsZero(o.Profile) { // not required
+			return nil
+		}
+
+		if err := o.Profile.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("profile")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("profile")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetDeviceSwitchPortsOKBodyItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetDeviceSwitchPortsOKBodyItems0) UnmarshalBinary(b []byte) error {
+	var res GetDeviceSwitchPortsOKBodyItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetDeviceSwitchPortsOKBodyItems0Profile Profile attributes
+swagger:model GetDeviceSwitchPortsOKBodyItems0Profile
+*/
+type GetDeviceSwitchPortsOKBodyItems0Profile struct {
+
+	// When enabled, override this port's configuration with a port profile.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// When enabled, the ID of the port profile used to override the port's configuration.
+	ID string `json:"id,omitempty"`
+
+	// When enabled, the IName of the profile.
+	Iname string `json:"iname,omitempty"`
+}
+
+// Validate validates this get device switch ports o k body items0 profile
+func (o *GetDeviceSwitchPortsOKBodyItems0Profile) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get device switch ports o k body items0 profile based on context it is used
+func (o *GetDeviceSwitchPortsOKBodyItems0Profile) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetDeviceSwitchPortsOKBodyItems0Profile) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetDeviceSwitchPortsOKBodyItems0Profile) UnmarshalBinary(b []byte) error {
+	var res GetDeviceSwitchPortsOKBodyItems0Profile
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

@@ -27,7 +27,7 @@ func (o *DeleteOrganizationSamlRoleReader) ReadResponse(response runtime.ClientR
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[DELETE /organizations/{organizationId}/samlRoles/{samlRoleId}] deleteOrganizationSamlRole", response, response.Code())
 	}
 }
 
@@ -36,7 +36,8 @@ func NewDeleteOrganizationSamlRoleNoContent() *DeleteOrganizationSamlRoleNoConte
 	return &DeleteOrganizationSamlRoleNoContent{}
 }
 
-/* DeleteOrganizationSamlRoleNoContent describes a response with status code 204, with default header values.
+/*
+DeleteOrganizationSamlRoleNoContent describes a response with status code 204, with default header values.
 
 Successful operation
 */
@@ -66,6 +67,11 @@ func (o *DeleteOrganizationSamlRoleNoContent) IsServerError() bool {
 // IsCode returns true when this delete organization saml role no content response a status code equal to that given
 func (o *DeleteOrganizationSamlRoleNoContent) IsCode(code int) bool {
 	return code == 204
+}
+
+// Code gets the status code for the delete organization saml role no content response
+func (o *DeleteOrganizationSamlRoleNoContent) Code() int {
+	return 204
 }
 
 func (o *DeleteOrganizationSamlRoleNoContent) Error() string {

@@ -53,10 +53,12 @@ func NewGetNetworkEventsParamsWithHTTPClient(client *http.Client) *GetNetworkEve
 	}
 }
 
-/* GetNetworkEventsParams contains all the parameters to send to the API endpoint
-   for the get network events operation.
+/*
+GetNetworkEventsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network events operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkEventsParams struct {
 
@@ -114,7 +116,10 @@ type GetNetworkEventsParams struct {
 	*/
 	IncludedEventTypes []string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* PerPage.
@@ -125,7 +130,7 @@ type GetNetworkEventsParams struct {
 
 	/* ProductType.
 
-	   The product type to fetch events for. This parameter is required for networks with multiple device types. Valid types are wireless, appliance, switch, systemsManager, camera, and cellularGateway
+	   The product type to fetch events for. This parameter is required for networks with multiple device types. Valid types are wireless, appliance, switch, systemsManager, camera, cellularGateway, and cloudGateway
 	*/
 	ProductType *string
 

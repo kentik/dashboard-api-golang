@@ -52,17 +52,25 @@ func NewUpdateNetworkWirelessSsidVpnParamsWithHTTPClient(client *http.Client) *U
 	}
 }
 
-/* UpdateNetworkWirelessSsidVpnParams contains all the parameters to send to the API endpoint
-   for the update network wireless ssid vpn operation.
+/*
+UpdateNetworkWirelessSsidVpnParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network wireless ssid vpn operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkWirelessSsidVpnParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// Number.
+	/* Number.
+
+	   Number
+	*/
 	Number string
 
 	// UpdateNetworkWirelessSsidVpn.

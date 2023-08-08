@@ -53,10 +53,12 @@ func NewGetNetworkWirelessFailedConnectionsParamsWithHTTPClient(client *http.Cli
 	}
 }
 
-/* GetNetworkWirelessFailedConnectionsParams contains all the parameters to send to the API endpoint
-   for the get network wireless failed connections operation.
+/*
+GetNetworkWirelessFailedConnectionsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network wireless failed connections operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkWirelessFailedConnectionsParams struct {
 
@@ -78,7 +80,10 @@ type GetNetworkWirelessFailedConnectionsParams struct {
 	*/
 	ClientID *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* Serial.

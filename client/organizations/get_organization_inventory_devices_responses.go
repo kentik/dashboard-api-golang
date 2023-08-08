@@ -6,11 +6,15 @@ package organizations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // GetOrganizationInventoryDevicesReader is a Reader for the GetOrganizationInventoryDevices structure.
@@ -28,7 +32,7 @@ func (o *GetOrganizationInventoryDevicesReader) ReadResponse(response runtime.Cl
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/inventory/devices] getOrganizationInventoryDevices", response, response.Code())
 	}
 }
 
@@ -37,7 +41,8 @@ func NewGetOrganizationInventoryDevicesOK() *GetOrganizationInventoryDevicesOK {
 	return &GetOrganizationInventoryDevicesOK{}
 }
 
-/* GetOrganizationInventoryDevicesOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationInventoryDevicesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -47,7 +52,7 @@ type GetOrganizationInventoryDevicesOK struct {
 	 */
 	Link string
 
-	Payload []interface{}
+	Payload []*GetOrganizationInventoryDevicesOKBodyItems0
 }
 
 // IsSuccess returns true when this get organization inventory devices o k response has a 2xx status code
@@ -75,6 +80,11 @@ func (o *GetOrganizationInventoryDevicesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get organization inventory devices o k response
+func (o *GetOrganizationInventoryDevicesOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationInventoryDevicesOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/inventory/devices][%d] getOrganizationInventoryDevicesOK  %+v", 200, o.Payload)
 }
@@ -83,7 +93,7 @@ func (o *GetOrganizationInventoryDevicesOK) String() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/inventory/devices][%d] getOrganizationInventoryDevicesOK  %+v", 200, o.Payload)
 }
 
-func (o *GetOrganizationInventoryDevicesOK) GetPayload() []interface{} {
+func (o *GetOrganizationInventoryDevicesOK) GetPayload() []*GetOrganizationInventoryDevicesOKBodyItems0 {
 	return o.Payload
 }
 
@@ -101,5 +111,109 @@ func (o *GetOrganizationInventoryDevicesOK) readResponse(response runtime.Client
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetOrganizationInventoryDevicesOKBodyItems0 get organization inventory devices o k body items0
+swagger:model GetOrganizationInventoryDevicesOKBodyItems0
+*/
+type GetOrganizationInventoryDevicesOKBodyItems0 struct {
+
+	// Claimed time of the device
+	// Format: date-time
+	ClaimedAt strfmt.DateTime `json:"claimedAt,omitempty"`
+
+	// License expiration date of the device
+	// Format: date-time
+	LicenseExpirationDate strfmt.DateTime `json:"licenseExpirationDate,omitempty"`
+
+	// MAC address of the device
+	Mac string `json:"mac,omitempty"`
+
+	// Model type of the device
+	Model string `json:"model,omitempty"`
+
+	// Name of the device
+	Name string `json:"name,omitempty"`
+
+	// Network Id of the device
+	NetworkID string `json:"networkId,omitempty"`
+
+	// Order number of the device
+	OrderNumber string `json:"orderNumber,omitempty"`
+
+	// Product type of the device
+	ProductType string `json:"productType,omitempty"`
+
+	// Serial number of the device
+	Serial string `json:"serial,omitempty"`
+
+	// Device tags
+	Tags []string `json:"tags"`
+}
+
+// Validate validates this get organization inventory devices o k body items0
+func (o *GetOrganizationInventoryDevicesOKBodyItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateClaimedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateLicenseExpirationDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetOrganizationInventoryDevicesOKBodyItems0) validateClaimedAt(formats strfmt.Registry) error {
+	if swag.IsZero(o.ClaimedAt) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("claimedAt", "body", "date-time", o.ClaimedAt.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *GetOrganizationInventoryDevicesOKBodyItems0) validateLicenseExpirationDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.LicenseExpirationDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("licenseExpirationDate", "body", "date-time", o.LicenseExpirationDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this get organization inventory devices o k body items0 based on context it is used
+func (o *GetOrganizationInventoryDevicesOKBodyItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetOrganizationInventoryDevicesOKBodyItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetOrganizationInventoryDevicesOKBodyItems0) UnmarshalBinary(b []byte) error {
+	var res GetOrganizationInventoryDevicesOKBodyItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

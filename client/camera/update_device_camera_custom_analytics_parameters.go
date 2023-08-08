@@ -52,14 +52,19 @@ func NewUpdateDeviceCameraCustomAnalyticsParamsWithHTTPClient(client *http.Clien
 	}
 }
 
-/* UpdateDeviceCameraCustomAnalyticsParams contains all the parameters to send to the API endpoint
-   for the update device camera custom analytics operation.
+/*
+UpdateDeviceCameraCustomAnalyticsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update device camera custom analytics operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateDeviceCameraCustomAnalyticsParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	// UpdateDeviceCameraCustomAnalytics.

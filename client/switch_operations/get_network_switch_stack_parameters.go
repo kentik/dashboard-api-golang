@@ -52,17 +52,25 @@ func NewGetNetworkSwitchStackParamsWithHTTPClient(client *http.Client) *GetNetwo
 	}
 }
 
-/* GetNetworkSwitchStackParams contains all the parameters to send to the API endpoint
-   for the get network switch stack operation.
+/*
+GetNetworkSwitchStackParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network switch stack operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSwitchStackParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// SwitchStackID.
+	/* SwitchStackID.
+
+	   Switch stack ID
+	*/
 	SwitchStackID string
 
 	timeout    time.Duration

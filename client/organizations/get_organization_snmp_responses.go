@@ -28,7 +28,7 @@ func (o *GetOrganizationSnmpReader) ReadResponse(response runtime.ClientResponse
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/snmp] getOrganizationSnmp", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetOrganizationSnmpOK() *GetOrganizationSnmpOK {
 	return &GetOrganizationSnmpOK{}
 }
 
-/* GetOrganizationSnmpOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationSnmpOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetOrganizationSnmpOK) IsServerError() bool {
 // IsCode returns true when this get organization snmp o k response a status code equal to that given
 func (o *GetOrganizationSnmpOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get organization snmp o k response
+func (o *GetOrganizationSnmpOK) Code() int {
+	return 200
 }
 
 func (o *GetOrganizationSnmpOK) Error() string {

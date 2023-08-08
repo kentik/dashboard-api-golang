@@ -52,17 +52,22 @@ func NewCreateOrganizationBrandingPolicyParamsWithHTTPClient(client *http.Client
 	}
 }
 
-/* CreateOrganizationBrandingPolicyParams contains all the parameters to send to the API endpoint
-   for the create organization branding policy operation.
+/*
+CreateOrganizationBrandingPolicyParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create organization branding policy operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateOrganizationBrandingPolicyParams struct {
 
 	// CreateOrganizationBrandingPolicy.
 	CreateOrganizationBrandingPolicy CreateOrganizationBrandingPolicyBody
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

@@ -52,17 +52,22 @@ func NewCreateNetworkWebhooksPayloadTemplateParamsWithHTTPClient(client *http.Cl
 	}
 }
 
-/* CreateNetworkWebhooksPayloadTemplateParams contains all the parameters to send to the API endpoint
-   for the create network webhooks payload template operation.
+/*
+CreateNetworkWebhooksPayloadTemplateParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create network webhooks payload template operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateNetworkWebhooksPayloadTemplateParams struct {
 
 	// CreateNetworkWebhooksPayloadTemplate.
 	CreateNetworkWebhooksPayloadTemplate CreateNetworkWebhooksPayloadTemplateBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

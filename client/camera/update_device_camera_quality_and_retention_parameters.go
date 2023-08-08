@@ -52,14 +52,19 @@ func NewUpdateDeviceCameraQualityAndRetentionParamsWithHTTPClient(client *http.C
 	}
 }
 
-/* UpdateDeviceCameraQualityAndRetentionParams contains all the parameters to send to the API endpoint
-   for the update device camera quality and retention operation.
+/*
+UpdateDeviceCameraQualityAndRetentionParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update device camera quality and retention operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateDeviceCameraQualityAndRetentionParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	// UpdateDeviceCameraQualityAndRetention.

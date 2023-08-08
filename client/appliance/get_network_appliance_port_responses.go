@@ -6,11 +6,13 @@ package appliance
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetNetworkAppliancePortReader is a Reader for the GetNetworkAppliancePort structure.
@@ -28,7 +30,7 @@ func (o *GetNetworkAppliancePortReader) ReadResponse(response runtime.ClientResp
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/appliance/ports/{portId}] getNetworkAppliancePort", response, response.Code())
 	}
 }
 
@@ -37,12 +39,13 @@ func NewGetNetworkAppliancePortOK() *GetNetworkAppliancePortOK {
 	return &GetNetworkAppliancePortOK{}
 }
 
-/* GetNetworkAppliancePortOK describes a response with status code 200, with default header values.
+/*
+GetNetworkAppliancePortOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkAppliancePortOK struct {
-	Payload interface{}
+	Payload *GetNetworkAppliancePortOKBody
 }
 
 // IsSuccess returns true when this get network appliance port o k response has a 2xx status code
@@ -70,6 +73,11 @@ func (o *GetNetworkAppliancePortOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network appliance port o k response
+func (o *GetNetworkAppliancePortOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkAppliancePortOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/appliance/ports/{portId}][%d] getNetworkAppliancePortOK  %+v", 200, o.Payload)
 }
@@ -78,16 +86,74 @@ func (o *GetNetworkAppliancePortOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/appliance/ports/{portId}][%d] getNetworkAppliancePortOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkAppliancePortOK) GetPayload() interface{} {
+func (o *GetNetworkAppliancePortOK) GetPayload() *GetNetworkAppliancePortOKBody {
 	return o.Payload
 }
 
 func (o *GetNetworkAppliancePortOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetNetworkAppliancePortOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkAppliancePortOKBody get network appliance port o k body
+swagger:model GetNetworkAppliancePortOKBody
+*/
+type GetNetworkAppliancePortOKBody struct {
+
+	// The name of the policy. Only applicable to Access ports.
+	AccessPolicy string `json:"accessPolicy,omitempty"`
+
+	// Comma-delimited list of the VLAN ID's allowed on the port, or 'all' to permit all VLAN's on the port.
+	AllowedVlans string `json:"allowedVlans,omitempty"`
+
+	// Whether the trunk port can drop all untagged traffic.
+	DropUntaggedTraffic bool `json:"dropUntaggedTraffic,omitempty"`
+
+	// The status of the port
+	Enabled bool `json:"enabled,omitempty"`
+
+	// Number of the port
+	Number int64 `json:"number,omitempty"`
+
+	// The type of the port: 'access' or 'trunk'.
+	Type string `json:"type,omitempty"`
+
+	// Native VLAN when the port is in Trunk mode. Access VLAN when the port is in Access mode.
+	Vlan int64 `json:"vlan,omitempty"`
+}
+
+// Validate validates this get network appliance port o k body
+func (o *GetNetworkAppliancePortOKBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network appliance port o k body based on context it is used
+func (o *GetNetworkAppliancePortOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkAppliancePortOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkAppliancePortOKBody) UnmarshalBinary(b []byte) error {
+	var res GetNetworkAppliancePortOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

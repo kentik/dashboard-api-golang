@@ -53,14 +53,19 @@ func NewGetNetworkSmDeviceDeviceCommandLogsParamsWithHTTPClient(client *http.Cli
 	}
 }
 
-/* GetNetworkSmDeviceDeviceCommandLogsParams contains all the parameters to send to the API endpoint
-   for the get network sm device device command logs operation.
+/*
+GetNetworkSmDeviceDeviceCommandLogsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network sm device device command logs operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSmDeviceDeviceCommandLogsParams struct {
 
-	// DeviceID.
+	/* DeviceID.
+
+	   Device ID
+	*/
 	DeviceID string
 
 	/* EndingBefore.
@@ -69,7 +74,10 @@ type GetNetworkSmDeviceDeviceCommandLogsParams struct {
 	*/
 	EndingBefore *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* PerPage.

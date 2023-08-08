@@ -52,14 +52,19 @@ func NewUpdateDeviceCameraWirelessProfilesParamsWithHTTPClient(client *http.Clie
 	}
 }
 
-/* UpdateDeviceCameraWirelessProfilesParams contains all the parameters to send to the API endpoint
-   for the update device camera wireless profiles operation.
+/*
+UpdateDeviceCameraWirelessProfilesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update device camera wireless profiles operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateDeviceCameraWirelessProfilesParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	// UpdateDeviceCameraWirelessProfiles.

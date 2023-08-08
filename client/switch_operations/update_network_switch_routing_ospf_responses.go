@@ -34,7 +34,7 @@ func (o *UpdateNetworkSwitchRoutingOspfReader) ReadResponse(response runtime.Cli
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/switch/routing/ospf] updateNetworkSwitchRoutingOspf", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewUpdateNetworkSwitchRoutingOspfOK() *UpdateNetworkSwitchRoutingOspfOK {
 	return &UpdateNetworkSwitchRoutingOspfOK{}
 }
 
-/* UpdateNetworkSwitchRoutingOspfOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSwitchRoutingOspfOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *UpdateNetworkSwitchRoutingOspfOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network switch routing ospf o k response
+func (o *UpdateNetworkSwitchRoutingOspfOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSwitchRoutingOspfOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/switch/routing/ospf][%d] updateNetworkSwitchRoutingOspfOK  %+v", 200, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *UpdateNetworkSwitchRoutingOspfOK) readResponse(response runtime.ClientR
 	return nil
 }
 
-/*UpdateNetworkSwitchRoutingOspfBody update network switch routing ospf body
+/*
+UpdateNetworkSwitchRoutingOspfBody update network switch routing ospf body
 // Example: {"areas":[{"areaId":"1284392014819","areaName":"Backbone","areaType":"normal"}],"deadTimerInSeconds":40,"enabled":true,"helloTimerInSeconds":10,"md5AuthenticationEnabled":true,"md5AuthenticationKey":{"id":1234,"passphrase":"abc1234"},"v3":{"areas":[{"areaId":"1284392014819","areaName":"V3 Backbone","areaType":"normal"}],"deadTimerInSeconds":40,"enabled":true,"helloTimerInSeconds":10}}
 swagger:model UpdateNetworkSwitchRoutingOspfBody
 */
@@ -239,6 +246,11 @@ func (o *UpdateNetworkSwitchRoutingOspfBody) contextValidateAreas(ctx context.Co
 	for i := 0; i < len(o.Areas); i++ {
 
 		if o.Areas[i] != nil {
+
+			if swag.IsZero(o.Areas[i]) { // not required
+				return nil
+			}
+
 			if err := o.Areas[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkSwitchRoutingOspf" + "." + "areas" + "." + strconv.Itoa(i))
@@ -257,6 +269,11 @@ func (o *UpdateNetworkSwitchRoutingOspfBody) contextValidateAreas(ctx context.Co
 func (o *UpdateNetworkSwitchRoutingOspfBody) contextValidateMd5AuthenticationKey(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Md5AuthenticationKey != nil {
+
+		if swag.IsZero(o.Md5AuthenticationKey) { // not required
+			return nil
+		}
+
 		if err := o.Md5AuthenticationKey.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchRoutingOspf" + "." + "md5AuthenticationKey")
@@ -273,6 +290,11 @@ func (o *UpdateNetworkSwitchRoutingOspfBody) contextValidateMd5AuthenticationKey
 func (o *UpdateNetworkSwitchRoutingOspfBody) contextValidateV3(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.V3 != nil {
+
+		if swag.IsZero(o.V3) { // not required
+			return nil
+		}
+
 		if err := o.V3.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchRoutingOspf" + "." + "v3")
@@ -304,7 +326,8 @@ func (o *UpdateNetworkSwitchRoutingOspfBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateNetworkSwitchRoutingOspfParamsBodyAreasItems0 update network switch routing ospf params body areas items0
+/*
+UpdateNetworkSwitchRoutingOspfParamsBodyAreasItems0 update network switch routing ospf params body areas items0
 swagger:model UpdateNetworkSwitchRoutingOspfParamsBodyAreasItems0
 */
 type UpdateNetworkSwitchRoutingOspfParamsBodyAreasItems0 struct {
@@ -319,7 +342,7 @@ type UpdateNetworkSwitchRoutingOspfParamsBodyAreasItems0 struct {
 
 	// Area types in OSPF. Must be one of: ["normal", "stub", "nssa"]
 	// Required: true
-	// Enum: [normal stub nssa]
+	// Enum: [normal nssa stub]
 	AreaType *string `json:"areaType"`
 }
 
@@ -367,7 +390,7 @@ var updateNetworkSwitchRoutingOspfParamsBodyAreasItems0TypeAreaTypePropEnum []in
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["normal","stub","nssa"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["normal","nssa","stub"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -380,11 +403,11 @@ const (
 	// UpdateNetworkSwitchRoutingOspfParamsBodyAreasItems0AreaTypeNormal captures enum value "normal"
 	UpdateNetworkSwitchRoutingOspfParamsBodyAreasItems0AreaTypeNormal string = "normal"
 
-	// UpdateNetworkSwitchRoutingOspfParamsBodyAreasItems0AreaTypeStub captures enum value "stub"
-	UpdateNetworkSwitchRoutingOspfParamsBodyAreasItems0AreaTypeStub string = "stub"
-
 	// UpdateNetworkSwitchRoutingOspfParamsBodyAreasItems0AreaTypeNssa captures enum value "nssa"
 	UpdateNetworkSwitchRoutingOspfParamsBodyAreasItems0AreaTypeNssa string = "nssa"
+
+	// UpdateNetworkSwitchRoutingOspfParamsBodyAreasItems0AreaTypeStub captures enum value "stub"
+	UpdateNetworkSwitchRoutingOspfParamsBodyAreasItems0AreaTypeStub string = "stub"
 )
 
 // prop value enum
@@ -432,7 +455,8 @@ func (o *UpdateNetworkSwitchRoutingOspfParamsBodyAreasItems0) UnmarshalBinary(b 
 	return nil
 }
 
-/*UpdateNetworkSwitchRoutingOspfParamsBodyMd5AuthenticationKey MD5 authentication credentials. This param is only relevant if md5AuthenticationEnabled is true
+/*
+UpdateNetworkSwitchRoutingOspfParamsBodyMd5AuthenticationKey MD5 authentication credentials. This param is only relevant if md5AuthenticationEnabled is true
 swagger:model UpdateNetworkSwitchRoutingOspfParamsBodyMd5AuthenticationKey
 */
 type UpdateNetworkSwitchRoutingOspfParamsBodyMd5AuthenticationKey struct {
@@ -472,7 +496,8 @@ func (o *UpdateNetworkSwitchRoutingOspfParamsBodyMd5AuthenticationKey) Unmarshal
 	return nil
 }
 
-/*UpdateNetworkSwitchRoutingOspfParamsBodyV3 OSPF v3 configuration
+/*
+UpdateNetworkSwitchRoutingOspfParamsBodyV3 OSPF v3 configuration
 swagger:model UpdateNetworkSwitchRoutingOspfParamsBodyV3
 */
 type UpdateNetworkSwitchRoutingOspfParamsBodyV3 struct {
@@ -549,6 +574,11 @@ func (o *UpdateNetworkSwitchRoutingOspfParamsBodyV3) contextValidateAreas(ctx co
 	for i := 0; i < len(o.Areas); i++ {
 
 		if o.Areas[i] != nil {
+
+			if swag.IsZero(o.Areas[i]) { // not required
+				return nil
+			}
+
 			if err := o.Areas[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkSwitchRoutingOspf" + "." + "v3" + "." + "areas" + "." + strconv.Itoa(i))
@@ -582,7 +612,8 @@ func (o *UpdateNetworkSwitchRoutingOspfParamsBodyV3) UnmarshalBinary(b []byte) e
 	return nil
 }
 
-/*UpdateNetworkSwitchRoutingOspfParamsBodyV3AreasItems0 update network switch routing ospf params body v3 areas items0
+/*
+UpdateNetworkSwitchRoutingOspfParamsBodyV3AreasItems0 update network switch routing ospf params body v3 areas items0
 swagger:model UpdateNetworkSwitchRoutingOspfParamsBodyV3AreasItems0
 */
 type UpdateNetworkSwitchRoutingOspfParamsBodyV3AreasItems0 struct {
@@ -597,7 +628,7 @@ type UpdateNetworkSwitchRoutingOspfParamsBodyV3AreasItems0 struct {
 
 	// Area types in OSPF. Must be one of: ["normal", "stub", "nssa"]
 	// Required: true
-	// Enum: [normal stub nssa]
+	// Enum: [normal nssa stub]
 	AreaType *string `json:"areaType"`
 }
 
@@ -645,7 +676,7 @@ var updateNetworkSwitchRoutingOspfParamsBodyV3AreasItems0TypeAreaTypePropEnum []
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["normal","stub","nssa"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["normal","nssa","stub"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -658,11 +689,11 @@ const (
 	// UpdateNetworkSwitchRoutingOspfParamsBodyV3AreasItems0AreaTypeNormal captures enum value "normal"
 	UpdateNetworkSwitchRoutingOspfParamsBodyV3AreasItems0AreaTypeNormal string = "normal"
 
-	// UpdateNetworkSwitchRoutingOspfParamsBodyV3AreasItems0AreaTypeStub captures enum value "stub"
-	UpdateNetworkSwitchRoutingOspfParamsBodyV3AreasItems0AreaTypeStub string = "stub"
-
 	// UpdateNetworkSwitchRoutingOspfParamsBodyV3AreasItems0AreaTypeNssa captures enum value "nssa"
 	UpdateNetworkSwitchRoutingOspfParamsBodyV3AreasItems0AreaTypeNssa string = "nssa"
+
+	// UpdateNetworkSwitchRoutingOspfParamsBodyV3AreasItems0AreaTypeStub captures enum value "stub"
+	UpdateNetworkSwitchRoutingOspfParamsBodyV3AreasItems0AreaTypeStub string = "stub"
 )
 
 // prop value enum

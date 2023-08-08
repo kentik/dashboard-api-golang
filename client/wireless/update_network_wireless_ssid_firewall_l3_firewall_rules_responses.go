@@ -34,7 +34,7 @@ func (o *UpdateNetworkWirelessSsidFirewallL3FirewallRulesReader) ReadResponse(re
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/wireless/ssids/{number}/firewall/l3FirewallRules] updateNetworkWirelessSsidFirewallL3FirewallRules", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewUpdateNetworkWirelessSsidFirewallL3FirewallRulesOK() *UpdateNetworkWirel
 	return &UpdateNetworkWirelessSsidFirewallL3FirewallRulesOK{}
 }
 
-/* UpdateNetworkWirelessSsidFirewallL3FirewallRulesOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkWirelessSsidFirewallL3FirewallRulesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *UpdateNetworkWirelessSsidFirewallL3FirewallRulesOK) IsCode(code int) bo
 	return code == 200
 }
 
+// Code gets the status code for the update network wireless ssid firewall l3 firewall rules o k response
+func (o *UpdateNetworkWirelessSsidFirewallL3FirewallRulesOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkWirelessSsidFirewallL3FirewallRulesOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/wireless/ssids/{number}/firewall/l3FirewallRules][%d] updateNetworkWirelessSsidFirewallL3FirewallRulesOK  %+v", 200, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *UpdateNetworkWirelessSsidFirewallL3FirewallRulesOK) readResponse(respon
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidFirewallL3FirewallRulesBody update network wireless ssid firewall l3 firewall rules body
+/*
+UpdateNetworkWirelessSsidFirewallL3FirewallRulesBody update network wireless ssid firewall l3 firewall rules body
 // Example: {"rules":[{"comment":"Allow TCP traffic to subnet with HTTP servers.","destCidr":"192.168.1.0/24","destPort":"443","policy":"allow","protocol":"tcp"}]}
 swagger:model UpdateNetworkWirelessSsidFirewallL3FirewallRulesBody
 */
@@ -170,6 +177,11 @@ func (o *UpdateNetworkWirelessSsidFirewallL3FirewallRulesBody) contextValidateRu
 	for i := 0; i < len(o.Rules); i++ {
 
 		if o.Rules[i] != nil {
+
+			if swag.IsZero(o.Rules[i]) { // not required
+				return nil
+			}
+
 			if err := o.Rules[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkWirelessSsidFirewallL3FirewallRules" + "." + "rules" + "." + strconv.Itoa(i))
@@ -203,7 +215,8 @@ func (o *UpdateNetworkWirelessSsidFirewallL3FirewallRulesBody) UnmarshalBinary(b
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidFirewallL3FirewallRulesParamsBodyRulesItems0 update network wireless ssid firewall l3 firewall rules params body rules items0
+/*
+UpdateNetworkWirelessSsidFirewallL3FirewallRulesParamsBodyRulesItems0 update network wireless ssid firewall l3 firewall rules params body rules items0
 swagger:model UpdateNetworkWirelessSsidFirewallL3FirewallRulesParamsBodyRulesItems0
 */
 type UpdateNetworkWirelessSsidFirewallL3FirewallRulesParamsBodyRulesItems0 struct {
@@ -225,7 +238,7 @@ type UpdateNetworkWirelessSsidFirewallL3FirewallRulesParamsBodyRulesItems0 struc
 
 	// The type of protocol (must be 'tcp', 'udp', 'icmp', 'icmp6' or 'any')
 	// Required: true
-	// Enum: [tcp udp icmp icmp6 any]
+	// Enum: [any icmp icmp6 tcp udp]
 	Protocol *string `json:"protocol"`
 }
 
@@ -307,7 +320,7 @@ var updateNetworkWirelessSsidFirewallL3FirewallRulesParamsBodyRulesItems0TypePro
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["tcp","udp","icmp","icmp6","any"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["any","icmp","icmp6","tcp","udp"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -317,11 +330,8 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessSsidFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolTCP captures enum value "tcp"
-	UpdateNetworkWirelessSsidFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolTCP string = "tcp"
-
-	// UpdateNetworkWirelessSsidFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolUDP captures enum value "udp"
-	UpdateNetworkWirelessSsidFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolUDP string = "udp"
+	// UpdateNetworkWirelessSsidFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolAny captures enum value "any"
+	UpdateNetworkWirelessSsidFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolAny string = "any"
 
 	// UpdateNetworkWirelessSsidFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolIcmp captures enum value "icmp"
 	UpdateNetworkWirelessSsidFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolIcmp string = "icmp"
@@ -329,8 +339,11 @@ const (
 	// UpdateNetworkWirelessSsidFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolIcmp6 captures enum value "icmp6"
 	UpdateNetworkWirelessSsidFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolIcmp6 string = "icmp6"
 
-	// UpdateNetworkWirelessSsidFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolAny captures enum value "any"
-	UpdateNetworkWirelessSsidFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolAny string = "any"
+	// UpdateNetworkWirelessSsidFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolTCP captures enum value "tcp"
+	UpdateNetworkWirelessSsidFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolTCP string = "tcp"
+
+	// UpdateNetworkWirelessSsidFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolUDP captures enum value "udp"
+	UpdateNetworkWirelessSsidFirewallL3FirewallRulesParamsBodyRulesItems0ProtocolUDP string = "udp"
 )
 
 // prop value enum

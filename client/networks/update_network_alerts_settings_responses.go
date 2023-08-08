@@ -33,7 +33,7 @@ func (o *UpdateNetworkAlertsSettingsReader) ReadResponse(response runtime.Client
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/alerts/settings] updateNetworkAlertsSettings", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateNetworkAlertsSettingsOK() *UpdateNetworkAlertsSettingsOK {
 	return &UpdateNetworkAlertsSettingsOK{}
 }
 
-/* UpdateNetworkAlertsSettingsOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkAlertsSettingsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateNetworkAlertsSettingsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network alerts settings o k response
+func (o *UpdateNetworkAlertsSettingsOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkAlertsSettingsOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/alerts/settings][%d] updateNetworkAlertsSettingsOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateNetworkAlertsSettingsOK) readResponse(response runtime.ClientResp
 	return nil
 }
 
-/*UpdateNetworkAlertsSettingsBody update network alerts settings body
+/*
+UpdateNetworkAlertsSettingsBody update network alerts settings body
 // Example: {"alerts":[{"alertDestinations":{"allAdmins":false,"emails":["miles@meraki.com"],"httpServerIds":["aHR0cHM6Ly93d3cuZXhhbXBsZS5jb20vd2ViaG9va3M="],"snmp":false},"enabled":true,"filters":{"timeout":60},"type":"gatewayDown"}],"defaultDestinations":{"allAdmins":true,"emails":["miles@meraki.com"],"httpServerIds":["aHR0cHM6Ly93d3cuZXhhbXBsZS5jb20vd2ViaG9va3M="],"snmp":true}}
 swagger:model UpdateNetworkAlertsSettingsBody
 */
@@ -108,6 +115,9 @@ type UpdateNetworkAlertsSettingsBody struct {
 
 	// default destinations
 	DefaultDestinations *UpdateNetworkAlertsSettingsParamsBodyDefaultDestinations `json:"defaultDestinations,omitempty"`
+
+	// muting
+	Muting *UpdateNetworkAlertsSettingsParamsBodyMuting `json:"muting,omitempty"`
 }
 
 // Validate validates this update network alerts settings body
@@ -119,6 +129,10 @@ func (o *UpdateNetworkAlertsSettingsBody) Validate(formats strfmt.Registry) erro
 	}
 
 	if err := o.validateDefaultDestinations(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateMuting(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -173,6 +187,25 @@ func (o *UpdateNetworkAlertsSettingsBody) validateDefaultDestinations(formats st
 	return nil
 }
 
+func (o *UpdateNetworkAlertsSettingsBody) validateMuting(formats strfmt.Registry) error {
+	if swag.IsZero(o.Muting) { // not required
+		return nil
+	}
+
+	if o.Muting != nil {
+		if err := o.Muting.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkAlertsSettings" + "." + "muting")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkAlertsSettings" + "." + "muting")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 // ContextValidate validate this update network alerts settings body based on the context it is used
 func (o *UpdateNetworkAlertsSettingsBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
@@ -182,6 +215,10 @@ func (o *UpdateNetworkAlertsSettingsBody) ContextValidate(ctx context.Context, f
 	}
 
 	if err := o.contextValidateDefaultDestinations(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateMuting(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -196,6 +233,11 @@ func (o *UpdateNetworkAlertsSettingsBody) contextValidateAlerts(ctx context.Cont
 	for i := 0; i < len(o.Alerts); i++ {
 
 		if o.Alerts[i] != nil {
+
+			if swag.IsZero(o.Alerts[i]) { // not required
+				return nil
+			}
+
 			if err := o.Alerts[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkAlertsSettings" + "." + "alerts" + "." + strconv.Itoa(i))
@@ -214,11 +256,37 @@ func (o *UpdateNetworkAlertsSettingsBody) contextValidateAlerts(ctx context.Cont
 func (o *UpdateNetworkAlertsSettingsBody) contextValidateDefaultDestinations(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.DefaultDestinations != nil {
+
+		if swag.IsZero(o.DefaultDestinations) { // not required
+			return nil
+		}
+
 		if err := o.DefaultDestinations.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkAlertsSettings" + "." + "defaultDestinations")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("updateNetworkAlertsSettings" + "." + "defaultDestinations")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkAlertsSettingsBody) contextValidateMuting(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Muting != nil {
+
+		if swag.IsZero(o.Muting) { // not required
+			return nil
+		}
+
+		if err := o.Muting.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkAlertsSettings" + "." + "muting")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkAlertsSettings" + "." + "muting")
 			}
 			return err
 		}
@@ -245,7 +313,8 @@ func (o *UpdateNetworkAlertsSettingsBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateNetworkAlertsSettingsParamsBodyAlertsItems0 update network alerts settings params body alerts items0
+/*
+UpdateNetworkAlertsSettingsParamsBodyAlertsItems0 update network alerts settings params body alerts items0
 swagger:model UpdateNetworkAlertsSettingsParamsBodyAlertsItems0
 */
 type UpdateNetworkAlertsSettingsParamsBodyAlertsItems0 struct {
@@ -327,6 +396,11 @@ func (o *UpdateNetworkAlertsSettingsParamsBodyAlertsItems0) ContextValidate(ctx 
 func (o *UpdateNetworkAlertsSettingsParamsBodyAlertsItems0) contextValidateAlertDestinations(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.AlertDestinations != nil {
+
+		if swag.IsZero(o.AlertDestinations) { // not required
+			return nil
+		}
+
 		if err := o.AlertDestinations.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("alertDestinations")
@@ -358,7 +432,8 @@ func (o *UpdateNetworkAlertsSettingsParamsBodyAlertsItems0) UnmarshalBinary(b []
 	return nil
 }
 
-/*UpdateNetworkAlertsSettingsParamsBodyAlertsItems0AlertDestinations A hash of destinations for this specific alert
+/*
+UpdateNetworkAlertsSettingsParamsBodyAlertsItems0AlertDestinations A hash of destinations for this specific alert
 swagger:model UpdateNetworkAlertsSettingsParamsBodyAlertsItems0AlertDestinations
 */
 type UpdateNetworkAlertsSettingsParamsBodyAlertsItems0AlertDestinations struct {
@@ -404,7 +479,8 @@ func (o *UpdateNetworkAlertsSettingsParamsBodyAlertsItems0AlertDestinations) Unm
 	return nil
 }
 
-/*UpdateNetworkAlertsSettingsParamsBodyDefaultDestinations The network-wide destinations for all alerts on the network.
+/*
+UpdateNetworkAlertsSettingsParamsBodyDefaultDestinations The network-wide destinations for all alerts on the network.
 swagger:model UpdateNetworkAlertsSettingsParamsBodyDefaultDestinations
 */
 type UpdateNetworkAlertsSettingsParamsBodyDefaultDestinations struct {
@@ -443,6 +519,140 @@ func (o *UpdateNetworkAlertsSettingsParamsBodyDefaultDestinations) MarshalBinary
 // UnmarshalBinary interface implementation
 func (o *UpdateNetworkAlertsSettingsParamsBodyDefaultDestinations) UnmarshalBinary(b []byte) error {
 	var res UpdateNetworkAlertsSettingsParamsBodyDefaultDestinations
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkAlertsSettingsParamsBodyMuting Mute alerts under certain conditions
+swagger:model UpdateNetworkAlertsSettingsParamsBodyMuting
+*/
+type UpdateNetworkAlertsSettingsParamsBodyMuting struct {
+
+	// by port schedules
+	ByPortSchedules *UpdateNetworkAlertsSettingsParamsBodyMutingByPortSchedules `json:"byPortSchedules,omitempty"`
+}
+
+// Validate validates this update network alerts settings params body muting
+func (o *UpdateNetworkAlertsSettingsParamsBodyMuting) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateByPortSchedules(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkAlertsSettingsParamsBodyMuting) validateByPortSchedules(formats strfmt.Registry) error {
+	if swag.IsZero(o.ByPortSchedules) { // not required
+		return nil
+	}
+
+	if o.ByPortSchedules != nil {
+		if err := o.ByPortSchedules.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkAlertsSettings" + "." + "muting" + "." + "byPortSchedules")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkAlertsSettings" + "." + "muting" + "." + "byPortSchedules")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network alerts settings params body muting based on the context it is used
+func (o *UpdateNetworkAlertsSettingsParamsBodyMuting) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateByPortSchedules(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkAlertsSettingsParamsBodyMuting) contextValidateByPortSchedules(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ByPortSchedules != nil {
+
+		if swag.IsZero(o.ByPortSchedules) { // not required
+			return nil
+		}
+
+		if err := o.ByPortSchedules.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkAlertsSettings" + "." + "muting" + "." + "byPortSchedules")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkAlertsSettings" + "." + "muting" + "." + "byPortSchedules")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkAlertsSettingsParamsBodyMuting) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkAlertsSettingsParamsBodyMuting) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkAlertsSettingsParamsBodyMuting
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkAlertsSettingsParamsBodyMutingByPortSchedules Mute wireless unreachable alerts based on switch port schedules
+swagger:model UpdateNetworkAlertsSettingsParamsBodyMutingByPortSchedules
+*/
+type UpdateNetworkAlertsSettingsParamsBodyMutingByPortSchedules struct {
+
+	// If true, then wireless unreachable alerts will be muted when caused by a port schedule
+	Enabled bool `json:"enabled,omitempty"`
+}
+
+// Validate validates this update network alerts settings params body muting by port schedules
+func (o *UpdateNetworkAlertsSettingsParamsBodyMutingByPortSchedules) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network alerts settings params body muting by port schedules based on context it is used
+func (o *UpdateNetworkAlertsSettingsParamsBodyMutingByPortSchedules) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkAlertsSettingsParamsBodyMutingByPortSchedules) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkAlertsSettingsParamsBodyMutingByPortSchedules) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkAlertsSettingsParamsBodyMutingByPortSchedules
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

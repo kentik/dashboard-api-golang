@@ -33,7 +33,7 @@ func (o *CreateNetworkSwitchStackRoutingInterfaceReader) ReadResponse(response r
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/switch/stacks/{switchStackId}/routing/interfaces] createNetworkSwitchStackRoutingInterface", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewCreateNetworkSwitchStackRoutingInterfaceCreated() *CreateNetworkSwitchSt
 	return &CreateNetworkSwitchStackRoutingInterfaceCreated{}
 }
 
-/* CreateNetworkSwitchStackRoutingInterfaceCreated describes a response with status code 201, with default header values.
+/*
+CreateNetworkSwitchStackRoutingInterfaceCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *CreateNetworkSwitchStackRoutingInterfaceCreated) IsCode(code int) bool 
 	return code == 201
 }
 
+// Code gets the status code for the create network switch stack routing interface created response
+func (o *CreateNetworkSwitchStackRoutingInterfaceCreated) Code() int {
+	return 201
+}
+
 func (o *CreateNetworkSwitchStackRoutingInterfaceCreated) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/switch/stacks/{switchStackId}/routing/interfaces][%d] createNetworkSwitchStackRoutingInterfaceCreated  %+v", 201, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *CreateNetworkSwitchStackRoutingInterfaceCreated) readResponse(response 
 	return nil
 }
 
-/*CreateNetworkSwitchStackRoutingInterfaceBody create network switch stack routing interface body
+/*
+CreateNetworkSwitchStackRoutingInterfaceBody create network switch stack routing interface body
 // Example: {"defaultGateway":"192.168.1.1","interfaceIp":"192.168.1.2","ipv6":{"address":"1:2:3:4::1","assignmentMode":"static","gateway":"1:2:3:4::2","prefix":"1:2:3:4::/48"},"multicastRouting":"disabled","name":"L3 interface","ospfSettings":{"area":"0","cost":1,"isPassiveEnabled":true},"ospfV3":{"area":"1","cost":2,"isPassiveEnabled":true},"subnet":"192.168.1.0/24","vlanId":100}
 swagger:model CreateNetworkSwitchStackRoutingInterfaceBody
 */
@@ -113,7 +120,7 @@ type CreateNetworkSwitchStackRoutingInterfaceBody struct {
 	IPV6 *CreateNetworkSwitchStackRoutingInterfaceParamsBodyIPV6 `json:"ipv6,omitempty"`
 
 	// Enable multicast support if, multicast routing between VLANs is required. Options are, 'disabled', 'enabled' or 'IGMP snooping querier'. Default is 'disabled'.
-	// Enum: [disabled enabled IGMP snooping querier]
+	// Enum: [IGMP snooping querier disabled enabled]
 	MulticastRouting string `json:"multicastRouting,omitempty"`
 
 	// A friendly name or description for the interface or VLAN.
@@ -184,7 +191,7 @@ var createNetworkSwitchStackRoutingInterfaceBodyTypeMulticastRoutingPropEnum []i
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["disabled","enabled","IGMP snooping querier"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["IGMP snooping querier","disabled","enabled"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -194,14 +201,14 @@ func init() {
 
 const (
 
+	// CreateNetworkSwitchStackRoutingInterfaceBodyMulticastRoutingIGMPSnoopingQuerier captures enum value "IGMP snooping querier"
+	CreateNetworkSwitchStackRoutingInterfaceBodyMulticastRoutingIGMPSnoopingQuerier string = "IGMP snooping querier"
+
 	// CreateNetworkSwitchStackRoutingInterfaceBodyMulticastRoutingDisabled captures enum value "disabled"
 	CreateNetworkSwitchStackRoutingInterfaceBodyMulticastRoutingDisabled string = "disabled"
 
 	// CreateNetworkSwitchStackRoutingInterfaceBodyMulticastRoutingEnabled captures enum value "enabled"
 	CreateNetworkSwitchStackRoutingInterfaceBodyMulticastRoutingEnabled string = "enabled"
-
-	// CreateNetworkSwitchStackRoutingInterfaceBodyMulticastRoutingIGMPSnoopingQuerier captures enum value "IGMP snooping querier"
-	CreateNetworkSwitchStackRoutingInterfaceBodyMulticastRoutingIGMPSnoopingQuerier string = "IGMP snooping querier"
 )
 
 // prop value enum
@@ -283,6 +290,11 @@ func (o *CreateNetworkSwitchStackRoutingInterfaceBody) ContextValidate(ctx conte
 func (o *CreateNetworkSwitchStackRoutingInterfaceBody) contextValidateIPV6(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.IPV6 != nil {
+
+		if swag.IsZero(o.IPV6) { // not required
+			return nil
+		}
+
 		if err := o.IPV6.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkSwitchStackRoutingInterface" + "." + "ipv6")
@@ -299,6 +311,11 @@ func (o *CreateNetworkSwitchStackRoutingInterfaceBody) contextValidateIPV6(ctx c
 func (o *CreateNetworkSwitchStackRoutingInterfaceBody) contextValidateOspfSettings(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.OspfSettings != nil {
+
+		if swag.IsZero(o.OspfSettings) { // not required
+			return nil
+		}
+
 		if err := o.OspfSettings.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkSwitchStackRoutingInterface" + "." + "ospfSettings")
@@ -330,7 +347,8 @@ func (o *CreateNetworkSwitchStackRoutingInterfaceBody) UnmarshalBinary(b []byte)
 	return nil
 }
 
-/*CreateNetworkSwitchStackRoutingInterfaceParamsBodyIPV6 The IPv6 settings of the interface.
+/*
+CreateNetworkSwitchStackRoutingInterfaceParamsBodyIPV6 The IPv6 settings of the interface.
 swagger:model CreateNetworkSwitchStackRoutingInterfaceParamsBodyIPV6
 */
 type CreateNetworkSwitchStackRoutingInterfaceParamsBodyIPV6 struct {
@@ -376,7 +394,8 @@ func (o *CreateNetworkSwitchStackRoutingInterfaceParamsBodyIPV6) UnmarshalBinary
 	return nil
 }
 
-/*CreateNetworkSwitchStackRoutingInterfaceParamsBodyOspfSettings The OSPF routing settings of the interface.
+/*
+CreateNetworkSwitchStackRoutingInterfaceParamsBodyOspfSettings The OSPF routing settings of the interface.
 swagger:model CreateNetworkSwitchStackRoutingInterfaceParamsBodyOspfSettings
 */
 type CreateNetworkSwitchStackRoutingInterfaceParamsBodyOspfSettings struct {

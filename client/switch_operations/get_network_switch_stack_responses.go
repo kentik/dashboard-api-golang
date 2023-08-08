@@ -6,11 +6,13 @@ package switch_operations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetNetworkSwitchStackReader is a Reader for the GetNetworkSwitchStack structure.
@@ -28,7 +30,7 @@ func (o *GetNetworkSwitchStackReader) ReadResponse(response runtime.ClientRespon
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/switch/stacks/{switchStackId}] getNetworkSwitchStack", response, response.Code())
 	}
 }
 
@@ -37,12 +39,13 @@ func NewGetNetworkSwitchStackOK() *GetNetworkSwitchStackOK {
 	return &GetNetworkSwitchStackOK{}
 }
 
-/* GetNetworkSwitchStackOK describes a response with status code 200, with default header values.
+/*
+GetNetworkSwitchStackOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkSwitchStackOK struct {
-	Payload interface{}
+	Payload *GetNetworkSwitchStackOKBody
 }
 
 // IsSuccess returns true when this get network switch stack o k response has a 2xx status code
@@ -70,6 +73,11 @@ func (o *GetNetworkSwitchStackOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network switch stack o k response
+func (o *GetNetworkSwitchStackOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkSwitchStackOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/switch/stacks/{switchStackId}][%d] getNetworkSwitchStackOK  %+v", 200, o.Payload)
 }
@@ -78,16 +86,62 @@ func (o *GetNetworkSwitchStackOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/switch/stacks/{switchStackId}][%d] getNetworkSwitchStackOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkSwitchStackOK) GetPayload() interface{} {
+func (o *GetNetworkSwitchStackOK) GetPayload() *GetNetworkSwitchStackOKBody {
 	return o.Payload
 }
 
 func (o *GetNetworkSwitchStackOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetNetworkSwitchStackOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkSwitchStackOKBody get network switch stack o k body
+swagger:model GetNetworkSwitchStackOKBody
+*/
+type GetNetworkSwitchStackOKBody struct {
+
+	// Switch stacks id
+	ID string `json:"id,omitempty"`
+
+	// Switch stacks name
+	Name string `json:"name,omitempty"`
+
+	// Serials of the switches in the switch stack
+	Serials []string `json:"serials"`
+}
+
+// Validate validates this get network switch stack o k body
+func (o *GetNetworkSwitchStackOKBody) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network switch stack o k body based on context it is used
+func (o *GetNetworkSwitchStackOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSwitchStackOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSwitchStackOKBody) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSwitchStackOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

@@ -52,17 +52,25 @@ func NewUpdateNetworkMqttBrokerParamsWithHTTPClient(client *http.Client) *Update
 	}
 }
 
-/* UpdateNetworkMqttBrokerParams contains all the parameters to send to the API endpoint
-   for the update network mqtt broker operation.
+/*
+UpdateNetworkMqttBrokerParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network mqtt broker operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkMqttBrokerParams struct {
 
-	// MqttBrokerID.
+	/* MqttBrokerID.
+
+	   Mqtt broker ID
+	*/
 	MqttBrokerID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkMqttBroker.

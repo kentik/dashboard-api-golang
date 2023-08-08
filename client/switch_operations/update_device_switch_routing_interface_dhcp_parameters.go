@@ -52,17 +52,25 @@ func NewUpdateDeviceSwitchRoutingInterfaceDhcpParamsWithHTTPClient(client *http.
 	}
 }
 
-/* UpdateDeviceSwitchRoutingInterfaceDhcpParams contains all the parameters to send to the API endpoint
-   for the update device switch routing interface dhcp operation.
+/*
+UpdateDeviceSwitchRoutingInterfaceDhcpParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update device switch routing interface dhcp operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateDeviceSwitchRoutingInterfaceDhcpParams struct {
 
-	// InterfaceID.
+	/* InterfaceID.
+
+	   Interface ID
+	*/
 	InterfaceID string
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	// UpdateDeviceSwitchRoutingInterfaceDhcp.

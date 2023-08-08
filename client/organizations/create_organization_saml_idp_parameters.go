@@ -52,17 +52,22 @@ func NewCreateOrganizationSamlIdpParamsWithHTTPClient(client *http.Client) *Crea
 	}
 }
 
-/* CreateOrganizationSamlIdpParams contains all the parameters to send to the API endpoint
-   for the create organization saml idp operation.
+/*
+CreateOrganizationSamlIdpParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create organization saml idp operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateOrganizationSamlIdpParams struct {
 
 	// CreateOrganizationSamlIdp.
 	CreateOrganizationSamlIdp CreateOrganizationSamlIdpBody
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

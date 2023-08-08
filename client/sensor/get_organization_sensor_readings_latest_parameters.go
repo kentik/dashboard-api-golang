@@ -53,10 +53,12 @@ func NewGetOrganizationSensorReadingsLatestParamsWithHTTPClient(client *http.Cli
 	}
 }
 
-/* GetOrganizationSensorReadingsLatestParams contains all the parameters to send to the API endpoint
-   for the get organization sensor readings latest operation.
+/*
+GetOrganizationSensorReadingsLatestParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization sensor readings latest operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationSensorReadingsLatestParams struct {
 
@@ -68,7 +70,7 @@ type GetOrganizationSensorReadingsLatestParams struct {
 
 	/* Metrics.
 
-	   Types of sensor readings to retrieve. If no metrics are supplied, all available types of readings will be retrieved. Allowed values are temperature, humidity, water, door, tvoc, pm25, noise, indoorAirQuality, button, and battery.
+	   Types of sensor readings to retrieve. If no metrics are supplied, all available types of readings will be retrieved. Allowed values are battery, button, door, humidity, indoorAirQuality, noise, pm25, temperature, tvoc, and water.
 	*/
 	Metrics []string
 
@@ -78,7 +80,10 @@ type GetOrganizationSensorReadingsLatestParams struct {
 	*/
 	NetworkIds []string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	/* PerPage.

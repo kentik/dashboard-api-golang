@@ -10,20 +10,22 @@ import (
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 
-	"github.com/go-swagger/go-swagger/client/appliance"
-	"github.com/go-swagger/go-swagger/client/camera"
-	"github.com/go-swagger/go-swagger/client/cellular_gateway"
-	"github.com/go-swagger/go-swagger/client/devices"
-	"github.com/go-swagger/go-swagger/client/insight"
-	"github.com/go-swagger/go-swagger/client/networks"
-	"github.com/go-swagger/go-swagger/client/organizations"
-	"github.com/go-swagger/go-swagger/client/sensor"
-	"github.com/go-swagger/go-swagger/client/sm"
-	"github.com/go-swagger/go-swagger/client/switch_operations"
-	"github.com/go-swagger/go-swagger/client/wireless"
+	"github.com/kentik/dashboard-api-golang/client/administered"
+	"github.com/kentik/dashboard-api-golang/client/appliance"
+	"github.com/kentik/dashboard-api-golang/client/camera"
+	"github.com/kentik/dashboard-api-golang/client/cellular_gateway"
+	"github.com/kentik/dashboard-api-golang/client/devices"
+	"github.com/kentik/dashboard-api-golang/client/insight"
+	"github.com/kentik/dashboard-api-golang/client/licensing"
+	"github.com/kentik/dashboard-api-golang/client/networks"
+	"github.com/kentik/dashboard-api-golang/client/organizations"
+	"github.com/kentik/dashboard-api-golang/client/sensor"
+	"github.com/kentik/dashboard-api-golang/client/sm"
+	"github.com/kentik/dashboard-api-golang/client/switch_operations"
+	"github.com/kentik/dashboard-api-golang/client/wireless"
 )
 
-// Default meraki dashboard HTTP client.
+// Default dashboard API golang HTTP client.
 var Default = NewHTTPClient(nil)
 
 const (
@@ -38,14 +40,14 @@ const (
 // DefaultSchemes are the default schemes found in Meta (info) section of spec file
 var DefaultSchemes = []string{"https"}
 
-// NewHTTPClient creates a new meraki dashboard HTTP client.
-func NewHTTPClient(formats strfmt.Registry) *MerakiDashboard {
+// NewHTTPClient creates a new dashboard API golang HTTP client.
+func NewHTTPClient(formats strfmt.Registry) *DashboardAPIGolang {
 	return NewHTTPClientWithConfig(formats, nil)
 }
 
-// NewHTTPClientWithConfig creates a new meraki dashboard HTTP client,
+// NewHTTPClientWithConfig creates a new dashboard API golang HTTP client,
 // using a customizable transport config.
-func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *MerakiDashboard {
+func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *DashboardAPIGolang {
 	// ensure nullable parameters have default
 	if cfg == nil {
 		cfg = DefaultTransportConfig()
@@ -56,20 +58,22 @@ func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *Mer
 	return New(transport, formats)
 }
 
-// New creates a new meraki dashboard client
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *MerakiDashboard {
+// New creates a new dashboard API golang client
+func New(transport runtime.ClientTransport, formats strfmt.Registry) *DashboardAPIGolang {
 	// ensure nullable parameters have default
 	if formats == nil {
 		formats = strfmt.Default
 	}
 
-	cli := new(MerakiDashboard)
+	cli := new(DashboardAPIGolang)
 	cli.Transport = transport
+	cli.Administered = administered.New(transport, formats)
 	cli.Appliance = appliance.New(transport, formats)
 	cli.Camera = camera.New(transport, formats)
 	cli.CellularGateway = cellular_gateway.New(transport, formats)
 	cli.Devices = devices.New(transport, formats)
 	cli.Insight = insight.New(transport, formats)
+	cli.Licensing = licensing.New(transport, formats)
 	cli.Networks = networks.New(transport, formats)
 	cli.Organizations = organizations.New(transport, formats)
 	cli.Sensor = sensor.New(transport, formats)
@@ -118,8 +122,10 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 	return cfg
 }
 
-// MerakiDashboard is a client for meraki dashboard
-type MerakiDashboard struct {
+// DashboardAPIGolang is a client for dashboard API golang
+type DashboardAPIGolang struct {
+	Administered administered.ClientService
+
 	Appliance appliance.ClientService
 
 	Camera camera.ClientService
@@ -129,6 +135,8 @@ type MerakiDashboard struct {
 	Devices devices.ClientService
 
 	Insight insight.ClientService
+
+	Licensing licensing.ClientService
 
 	Networks networks.ClientService
 
@@ -146,13 +154,15 @@ type MerakiDashboard struct {
 }
 
 // SetTransport changes the transport on the client and all its subresources
-func (c *MerakiDashboard) SetTransport(transport runtime.ClientTransport) {
+func (c *DashboardAPIGolang) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
+	c.Administered.SetTransport(transport)
 	c.Appliance.SetTransport(transport)
 	c.Camera.SetTransport(transport)
 	c.CellularGateway.SetTransport(transport)
 	c.Devices.SetTransport(transport)
 	c.Insight.SetTransport(transport)
+	c.Licensing.SetTransport(transport)
 	c.Networks.SetTransport(transport)
 	c.Organizations.SetTransport(transport)
 	c.Sensor.SetTransport(transport)

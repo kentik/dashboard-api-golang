@@ -32,7 +32,7 @@ func (o *UpdateDeviceCameraWirelessProfilesReader) ReadResponse(response runtime
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /devices/{serial}/camera/wirelessProfiles] updateDeviceCameraWirelessProfiles", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewUpdateDeviceCameraWirelessProfilesOK() *UpdateDeviceCameraWirelessProfil
 	return &UpdateDeviceCameraWirelessProfilesOK{}
 }
 
-/* UpdateDeviceCameraWirelessProfilesOK describes a response with status code 200, with default header values.
+/*
+UpdateDeviceCameraWirelessProfilesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *UpdateDeviceCameraWirelessProfilesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update device camera wireless profiles o k response
+func (o *UpdateDeviceCameraWirelessProfilesOK) Code() int {
+	return 200
+}
+
 func (o *UpdateDeviceCameraWirelessProfilesOK) Error() string {
 	return fmt.Sprintf("[PUT /devices/{serial}/camera/wirelessProfiles][%d] updateDeviceCameraWirelessProfilesOK  %+v", 200, o.Payload)
 }
@@ -96,7 +102,8 @@ func (o *UpdateDeviceCameraWirelessProfilesOK) readResponse(response runtime.Cli
 	return nil
 }
 
-/*UpdateDeviceCameraWirelessProfilesBody update device camera wireless profiles body
+/*
+UpdateDeviceCameraWirelessProfilesBody update device camera wireless profiles body
 // Example: {"ids":{"backup":"1","primary":"3","secondary":"2"}}
 swagger:model UpdateDeviceCameraWirelessProfilesBody
 */
@@ -158,6 +165,7 @@ func (o *UpdateDeviceCameraWirelessProfilesBody) ContextValidate(ctx context.Con
 func (o *UpdateDeviceCameraWirelessProfilesBody) contextValidateIds(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Ids != nil {
+
 		if err := o.Ids.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateDeviceCameraWirelessProfiles" + "." + "ids")
@@ -189,7 +197,8 @@ func (o *UpdateDeviceCameraWirelessProfilesBody) UnmarshalBinary(b []byte) error
 	return nil
 }
 
-/*UpdateDeviceCameraWirelessProfilesParamsBodyIds The ids of the wireless profile to assign to the given camera
+/*
+UpdateDeviceCameraWirelessProfilesParamsBodyIds The ids of the wireless profile to assign to the given camera
 swagger:model UpdateDeviceCameraWirelessProfilesParamsBodyIds
 */
 type UpdateDeviceCameraWirelessProfilesParamsBodyIds struct {

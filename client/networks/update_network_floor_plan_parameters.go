@@ -52,17 +52,25 @@ func NewUpdateNetworkFloorPlanParamsWithHTTPClient(client *http.Client) *UpdateN
 	}
 }
 
-/* UpdateNetworkFloorPlanParams contains all the parameters to send to the API endpoint
-   for the update network floor plan operation.
+/*
+UpdateNetworkFloorPlanParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network floor plan operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkFloorPlanParams struct {
 
-	// FloorPlanID.
+	/* FloorPlanID.
+
+	   Floor plan ID
+	*/
 	FloorPlanID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkFloorPlan.

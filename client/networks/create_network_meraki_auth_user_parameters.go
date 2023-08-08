@@ -52,17 +52,22 @@ func NewCreateNetworkMerakiAuthUserParamsWithHTTPClient(client *http.Client) *Cr
 	}
 }
 
-/* CreateNetworkMerakiAuthUserParams contains all the parameters to send to the API endpoint
-   for the create network meraki auth user operation.
+/*
+CreateNetworkMerakiAuthUserParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create network meraki auth user operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateNetworkMerakiAuthUserParams struct {
 
 	// CreateNetworkMerakiAuthUser.
 	CreateNetworkMerakiAuthUser CreateNetworkMerakiAuthUserBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

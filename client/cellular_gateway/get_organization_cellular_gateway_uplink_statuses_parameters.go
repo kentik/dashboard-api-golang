@@ -53,10 +53,12 @@ func NewGetOrganizationCellularGatewayUplinkStatusesParamsWithHTTPClient(client 
 	}
 }
 
-/* GetOrganizationCellularGatewayUplinkStatusesParams contains all the parameters to send to the API endpoint
-   for the get organization cellular gateway uplink statuses operation.
+/*
+GetOrganizationCellularGatewayUplinkStatusesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization cellular gateway uplink statuses operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationCellularGatewayUplinkStatusesParams struct {
 
@@ -78,7 +80,10 @@ type GetOrganizationCellularGatewayUplinkStatusesParams struct {
 	*/
 	NetworkIds []string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	/* PerPage.

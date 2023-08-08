@@ -52,14 +52,19 @@ func NewUpdateOrganizationCameraOnboardingStatusesParamsWithHTTPClient(client *h
 	}
 }
 
-/* UpdateOrganizationCameraOnboardingStatusesParams contains all the parameters to send to the API endpoint
-   for the update organization camera onboarding statuses operation.
+/*
+UpdateOrganizationCameraOnboardingStatusesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update organization camera onboarding statuses operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateOrganizationCameraOnboardingStatusesParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	// UpdateOrganizationCameraOnboardingStatuses.

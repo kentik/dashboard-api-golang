@@ -34,7 +34,7 @@ func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersReader) ReadResponse(re
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /organizations/{organizationId}/appliance/vpn/thirdPartyVPNPeers] updateOrganizationApplianceVpnThirdPartyVPNPeers", response, response.Code())
 	}
 }
 
@@ -43,12 +43,13 @@ func NewUpdateOrganizationApplianceVpnThirdPartyVPNPeersOK() *UpdateOrganization
 	return &UpdateOrganizationApplianceVpnThirdPartyVPNPeersOK{}
 }
 
-/* UpdateOrganizationApplianceVpnThirdPartyVPNPeersOK describes a response with status code 200, with default header values.
+/*
+UpdateOrganizationApplianceVpnThirdPartyVPNPeersOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateOrganizationApplianceVpnThirdPartyVPNPeersOK struct {
-	Payload interface{}
+	Payload *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBody
 }
 
 // IsSuccess returns true when this update organization appliance vpn third party v p n peers o k response has a 2xx status code
@@ -76,6 +77,11 @@ func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOK) IsCode(code int) bo
 	return code == 200
 }
 
+// Code gets the status code for the update organization appliance vpn third party v p n peers o k response
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOK) Code() int {
+	return 200
+}
+
 func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOK) Error() string {
 	return fmt.Sprintf("[PUT /organizations/{organizationId}/appliance/vpn/thirdPartyVPNPeers][%d] updateOrganizationApplianceVpnThirdPartyVPNPeersOK  %+v", 200, o.Payload)
 }
@@ -84,22 +90,25 @@ func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOK) String() string {
 	return fmt.Sprintf("[PUT /organizations/{organizationId}/appliance/vpn/thirdPartyVPNPeers][%d] updateOrganizationApplianceVpnThirdPartyVPNPeersOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOK) GetPayload() interface{} {
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOK) GetPayload() *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBody {
 	return o.Payload
 }
 
 func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateOrganizationApplianceVpnThirdPartyVPNPeersBody update organization appliance vpn third party v p n peers body
-// Example: {"peers":[{"ikeVersion":"2","ipsecPolicies":{"childAuthAlgo":["sha1"],"childCipherAlgo":["aes128"],"childLifetime":28800,"childPfsGroup":["disabled"],"ikeAuthAlgo":["sha1"],"ikeCipherAlgo":["tripledes"],"ikeDiffieHellmanGroup":["group2"],"ikeLifetime":28800,"ikePrfAlgo":["prfsha1"]},"name":"My peer 1","networkTags":["all"],"privateSubnets":["192.168.1.0/24","192.168.128.0/24"],"publicIp":"123.123.123.1","secret":"asdf1234"},{"ikeVersion":"1","ipsecPoliciesPreset":"default","name":"My peer 2","networkTags":["none"],"privateSubnets":["192.168.2.0/24","192.168.129.0/24"],"publicIp":"123.123.123.2","remoteId":"miles@meraki.com","secret":"asdf56785678567856785678"}]}
+/*
+UpdateOrganizationApplianceVpnThirdPartyVPNPeersBody update organization appliance vpn third party v p n peers body
+// Example: {"peers":[{"ikeVersion":"2","ipsecPolicies":{"childAuthAlgo":["sha1"],"childCipherAlgo":["aes128"],"childLifetime":28800,"childPfsGroup":["disabled"],"ikeAuthAlgo":["sha1"],"ikeCipherAlgo":["tripledes"],"ikeDiffieHellmanGroup":["group2"],"ikeLifetime":28800,"ikePrfAlgo":["prfsha1"]},"ipsecPoliciesPreset":"default","localId":"myMXId@meraki.com","name":"Peer Name","networkTags":["none"],"privateSubnets":["192.168.1.0/24","192.168.128.0/24"],"publicIp":"123.123.123.1","remoteId":"miles@meraki.com","secret":"Sample Password"}]}
 swagger:model UpdateOrganizationApplianceVpnThirdPartyVPNPeersBody
 */
 type UpdateOrganizationApplianceVpnThirdPartyVPNPeersBody struct {
@@ -169,6 +178,11 @@ func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersBody) contextValidatePe
 	for i := 0; i < len(o.Peers); i++ {
 
 		if o.Peers[i] != nil {
+
+			if swag.IsZero(o.Peers[i]) { // not required
+				return nil
+			}
+
 			if err := o.Peers[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateOrganizationApplianceVpnThirdPartyVPNPeers" + "." + "peers" + "." + strconv.Itoa(i))
@@ -202,7 +216,552 @@ func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersBody) UnmarshalBinary(b
 	return nil
 }
 
-/*UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0 update organization appliance vpn third party v p n peers params body peers items0
+/*
+UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBody update organization appliance vpn third party v p n peers o k body
+swagger:model UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBody
+*/
+type UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBody struct {
+
+	// The list of VPN peers
+	Peers []*UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0 `json:"peers"`
+}
+
+// Validate validates this update organization appliance vpn third party v p n peers o k body
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validatePeers(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBody) validatePeers(formats strfmt.Registry) error {
+	if swag.IsZero(o.Peers) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Peers); i++ {
+		if swag.IsZero(o.Peers[i]) { // not required
+			continue
+		}
+
+		if o.Peers[i] != nil {
+			if err := o.Peers[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateOrganizationApplianceVpnThirdPartyVPNPeersOK" + "." + "peers" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateOrganizationApplianceVpnThirdPartyVPNPeersOK" + "." + "peers" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update organization appliance vpn third party v p n peers o k body based on the context it is used
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidatePeers(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBody) contextValidatePeers(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Peers); i++ {
+
+		if o.Peers[i] != nil {
+
+			if swag.IsZero(o.Peers[i]) { // not required
+				return nil
+			}
+
+			if err := o.Peers[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateOrganizationApplianceVpnThirdPartyVPNPeersOK" + "." + "peers" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateOrganizationApplianceVpnThirdPartyVPNPeersOK" + "." + "peers" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0 update organization appliance vpn third party v p n peers o k body peers items0
+swagger:model UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0
+*/
+type UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0 struct {
+
+	// [optional] The IKE version to be used for the IPsec VPN peer configuration. Defaults to '1' when omitted.
+	// Enum: [1 2]
+	IkeVersion *string `json:"ikeVersion,omitempty"`
+
+	// ipsec policies
+	IpsecPolicies *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPolicies `json:"ipsecPolicies,omitempty"`
+
+	// One of the following available presets: 'default', 'aws', 'azure'. If this is provided, the 'ipsecPolicies' parameter is ignored.
+	IpsecPoliciesPreset string `json:"ipsecPoliciesPreset,omitempty"`
+
+	// [optional] The local ID is used to identify the MX to the peer. This will apply to all MXs this peer applies to.
+	LocalID string `json:"localId,omitempty"`
+
+	// The name of the VPN peer
+	Name string `json:"name,omitempty"`
+
+	// A list of network tags that will connect with this peer. Use ['all'] for all networks. Use ['none'] for no networks. If not included, the default is ['all'].
+	NetworkTags []string `json:"networkTags"`
+
+	// The list of the private subnets of the VPN peer
+	PrivateSubnets []string `json:"privateSubnets"`
+
+	// [optional] The public IP of the VPN peer
+	PublicIP string `json:"publicIp,omitempty"`
+
+	// [optional] The remote ID is used to identify the connecting VPN peer. This can either be a valid IPv4 Address, FQDN or User FQDN.
+	RemoteID string `json:"remoteId,omitempty"`
+
+	// The shared secret with the VPN peer
+	Secret string `json:"secret,omitempty"`
+}
+
+// Validate validates this update organization appliance vpn third party v p n peers o k body peers items0
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateIkeVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateIpsecPolicies(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0TypeIkeVersionPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["1","2"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0TypeIkeVersionPropEnum = append(updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0TypeIkeVersionPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IkeVersionNr1 captures enum value "1"
+	UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IkeVersionNr1 string = "1"
+
+	// UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IkeVersionNr2 captures enum value "2"
+	UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IkeVersionNr2 string = "2"
+)
+
+// prop value enum
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0) validateIkeVersionEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0TypeIkeVersionPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0) validateIkeVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.IkeVersion) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateIkeVersionEnum("ikeVersion", "body", *o.IkeVersion); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0) validateIpsecPolicies(formats strfmt.Registry) error {
+	if swag.IsZero(o.IpsecPolicies) { // not required
+		return nil
+	}
+
+	if o.IpsecPolicies != nil {
+		if err := o.IpsecPolicies.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ipsecPolicies")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("ipsecPolicies")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update organization appliance vpn third party v p n peers o k body peers items0 based on the context it is used
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateIpsecPolicies(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0) contextValidateIpsecPolicies(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.IpsecPolicies != nil {
+
+		if swag.IsZero(o.IpsecPolicies) { // not required
+			return nil
+		}
+
+		if err := o.IpsecPolicies.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ipsecPolicies")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("ipsecPolicies")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPolicies Custom IPSec policies for the VPN peer. If not included and a preset has not been chosen, the default preset for IPSec policies will be used.
+swagger:model UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPolicies
+*/
+type UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPolicies struct {
+
+	// This is the authentication algorithms to be used in Phase 2. The value should be an array with one of the following algorithms: 'sha256', 'sha1', 'md5'
+	ChildAuthAlgo []string `json:"childAuthAlgo"`
+
+	// This is the cipher algorithms to be used in Phase 2. The value should be an array with one or more of the following algorithms: 'aes256', 'aes192', 'aes128', 'tripledes', 'des', 'null'
+	ChildCipherAlgo []string `json:"childCipherAlgo"`
+
+	// The lifetime of the Phase 2 SA in seconds.
+	ChildLifetime int64 `json:"childLifetime,omitempty"`
+
+	// This is the Diffie-Hellman group to be used for Perfect Forward Secrecy in Phase 2. The value should be an array with one of the following values: 'disabled','group14', 'group5', 'group2', 'group1'
+	ChildPfsGroup []string `json:"childPfsGroup"`
+
+	// This is the authentication algorithm to be used in Phase 1. The value should be an array with one of the following algorithms: 'sha256', 'sha1', 'md5'
+	IkeAuthAlgo []string `json:"ikeAuthAlgo"`
+
+	// This is the cipher algorithm to be used in Phase 1. The value should be an array with one of the following algorithms: 'aes256', 'aes192', 'aes128', 'tripledes', 'des'
+	IkeCipherAlgo []string `json:"ikeCipherAlgo"`
+
+	// This is the Diffie-Hellman group to be used in Phase 1. The value should be an array with one of the following algorithms: 'group14', 'group5', 'group2', 'group1'
+	IkeDiffieHellmanGroup []string `json:"ikeDiffieHellmanGroup"`
+
+	// The lifetime of the Phase 1 SA in seconds.
+	IkeLifetime int64 `json:"ikeLifetime,omitempty"`
+
+	// [optional] This is the pseudo-random function to be used in IKE_SA. The value should be an array with one of the following algorithms: 'prfsha256', 'prfsha1', 'prfmd5', 'default'. The 'default' option can be used to default to the Authentication algorithm.
+	IkePrfAlgo []string `json:"ikePrfAlgo"`
+}
+
+// Validate validates this update organization appliance vpn third party v p n peers o k body peers items0 ipsec policies
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPolicies) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateChildAuthAlgo(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateChildCipherAlgo(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateIkeAuthAlgo(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateIkeCipherAlgo(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateIkePrfAlgo(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPoliciesChildAuthAlgoItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["md5","sha1","sha256"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPoliciesChildAuthAlgoItemsEnum = append(updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPoliciesChildAuthAlgoItemsEnum, v)
+	}
+}
+
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPolicies) validateChildAuthAlgoItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPoliciesChildAuthAlgoItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPolicies) validateChildAuthAlgo(formats strfmt.Registry) error {
+	if swag.IsZero(o.ChildAuthAlgo) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.ChildAuthAlgo); i++ {
+
+		// value enum
+		if err := o.validateChildAuthAlgoItemsEnum("ipsecPolicies"+"."+"childAuthAlgo"+"."+strconv.Itoa(i), "body", o.ChildAuthAlgo[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+var updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPoliciesChildCipherAlgoItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["aes128","aes192","aes256","des","null","tripledes"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPoliciesChildCipherAlgoItemsEnum = append(updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPoliciesChildCipherAlgoItemsEnum, v)
+	}
+}
+
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPolicies) validateChildCipherAlgoItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPoliciesChildCipherAlgoItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPolicies) validateChildCipherAlgo(formats strfmt.Registry) error {
+	if swag.IsZero(o.ChildCipherAlgo) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.ChildCipherAlgo); i++ {
+
+		// value enum
+		if err := o.validateChildCipherAlgoItemsEnum("ipsecPolicies"+"."+"childCipherAlgo"+"."+strconv.Itoa(i), "body", o.ChildCipherAlgo[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+var updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPoliciesIkeAuthAlgoItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["md5","sha1","sha256"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPoliciesIkeAuthAlgoItemsEnum = append(updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPoliciesIkeAuthAlgoItemsEnum, v)
+	}
+}
+
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPolicies) validateIkeAuthAlgoItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPoliciesIkeAuthAlgoItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPolicies) validateIkeAuthAlgo(formats strfmt.Registry) error {
+	if swag.IsZero(o.IkeAuthAlgo) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.IkeAuthAlgo); i++ {
+
+		// value enum
+		if err := o.validateIkeAuthAlgoItemsEnum("ipsecPolicies"+"."+"ikeAuthAlgo"+"."+strconv.Itoa(i), "body", o.IkeAuthAlgo[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+var updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPoliciesIkeCipherAlgoItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["aes128","aes192","aes256","des","tripledes"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPoliciesIkeCipherAlgoItemsEnum = append(updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPoliciesIkeCipherAlgoItemsEnum, v)
+	}
+}
+
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPolicies) validateIkeCipherAlgoItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPoliciesIkeCipherAlgoItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPolicies) validateIkeCipherAlgo(formats strfmt.Registry) error {
+	if swag.IsZero(o.IkeCipherAlgo) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.IkeCipherAlgo); i++ {
+
+		// value enum
+		if err := o.validateIkeCipherAlgoItemsEnum("ipsecPolicies"+"."+"ikeCipherAlgo"+"."+strconv.Itoa(i), "body", o.IkeCipherAlgo[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+var updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPoliciesIkePrfAlgoItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["default","prfmd5","prfsha1","prfsha256"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPoliciesIkePrfAlgoItemsEnum = append(updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPoliciesIkePrfAlgoItemsEnum, v)
+	}
+}
+
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPolicies) validateIkePrfAlgoItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPoliciesIkePrfAlgoItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPolicies) validateIkePrfAlgo(formats strfmt.Registry) error {
+	if swag.IsZero(o.IkePrfAlgo) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.IkePrfAlgo); i++ {
+
+		// value enum
+		if err := o.validateIkePrfAlgoItemsEnum("ipsecPolicies"+"."+"ikePrfAlgo"+"."+strconv.Itoa(i), "body", o.IkePrfAlgo[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update organization appliance vpn third party v p n peers o k body peers items0 ipsec policies based on context it is used
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPolicies) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPolicies) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPolicies) UnmarshalBinary(b []byte) error {
+	var res UpdateOrganizationApplianceVpnThirdPartyVPNPeersOKBodyPeersItems0IpsecPolicies
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0 update organization appliance vpn third party v p n peers params body peers items0
 swagger:model UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0
 */
 type UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0 struct {
@@ -217,6 +776,9 @@ type UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0 struc
 	// One of the following available presets: 'default', 'aws', 'azure'. If this is provided, the 'ipsecPolicies' parameter is ignored.
 	IpsecPoliciesPreset string `json:"ipsecPoliciesPreset,omitempty"`
 
+	// [optional] The local ID is used to identify the MX to the peer. This will apply to all MXs this peer applies to.
+	LocalID string `json:"localId,omitempty"`
+
 	// The name of the VPN peer
 	// Required: true
 	Name *string `json:"name"`
@@ -228,9 +790,8 @@ type UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0 struc
 	// Required: true
 	PrivateSubnets []string `json:"privateSubnets"`
 
-	// The public IP of the VPN peer
-	// Required: true
-	PublicIP *string `json:"publicIp"`
+	// [optional] The public IP of the VPN peer
+	PublicIP string `json:"publicIp,omitempty"`
 
 	// [optional] The remote ID is used to identify the connecting VPN peer. This can either be a valid IPv4 Address, FQDN or User FQDN.
 	RemoteID string `json:"remoteId,omitempty"`
@@ -257,10 +818,6 @@ func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0) 
 	}
 
 	if err := o.validatePrivateSubnets(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := o.validatePublicIP(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -353,15 +910,6 @@ func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0) 
 	return nil
 }
 
-func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0) validatePublicIP(formats strfmt.Registry) error {
-
-	if err := validate.Required("publicIp", "body", o.PublicIP); err != nil {
-		return err
-	}
-
-	return nil
-}
-
 func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0) validateSecret(formats strfmt.Registry) error {
 
 	if err := validate.Required("secret", "body", o.Secret); err != nil {
@@ -388,6 +936,11 @@ func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0) 
 func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0) contextValidateIpsecPolicies(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.IpsecPolicies != nil {
+
+		if swag.IsZero(o.IpsecPolicies) { // not required
+			return nil
+		}
+
 		if err := o.IpsecPolicies.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("ipsecPolicies")
@@ -419,7 +972,8 @@ func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0) 
 	return nil
 }
 
-/*UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPolicies Custom IPSec policies for the VPN peer. If not included and a preset has not been chosen, the default preset for IPSec policies will be used.
+/*
+UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPolicies Custom IPSec policies for the VPN peer. If not included and a preset has not been chosen, the default preset for IPSec policies will be used.
 swagger:model UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPolicies
 */
 type UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPolicies struct {
@@ -456,6 +1010,22 @@ type UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecP
 func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPolicies) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := o.validateChildAuthAlgo(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateChildCipherAlgo(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateIkeAuthAlgo(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateIkeCipherAlgo(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := o.validateIkePrfAlgo(formats); err != nil {
 		res = append(res, err)
 	}
@@ -466,11 +1036,155 @@ func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0Ip
 	return nil
 }
 
+var updateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPoliciesChildAuthAlgoItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["md5","sha1","sha256"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPoliciesChildAuthAlgoItemsEnum = append(updateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPoliciesChildAuthAlgoItemsEnum, v)
+	}
+}
+
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPolicies) validateChildAuthAlgoItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPoliciesChildAuthAlgoItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPolicies) validateChildAuthAlgo(formats strfmt.Registry) error {
+	if swag.IsZero(o.ChildAuthAlgo) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.ChildAuthAlgo); i++ {
+
+		// value enum
+		if err := o.validateChildAuthAlgoItemsEnum("ipsecPolicies"+"."+"childAuthAlgo"+"."+strconv.Itoa(i), "body", o.ChildAuthAlgo[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+var updateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPoliciesChildCipherAlgoItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["aes128","aes192","aes256","des","null","tripledes"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPoliciesChildCipherAlgoItemsEnum = append(updateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPoliciesChildCipherAlgoItemsEnum, v)
+	}
+}
+
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPolicies) validateChildCipherAlgoItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPoliciesChildCipherAlgoItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPolicies) validateChildCipherAlgo(formats strfmt.Registry) error {
+	if swag.IsZero(o.ChildCipherAlgo) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.ChildCipherAlgo); i++ {
+
+		// value enum
+		if err := o.validateChildCipherAlgoItemsEnum("ipsecPolicies"+"."+"childCipherAlgo"+"."+strconv.Itoa(i), "body", o.ChildCipherAlgo[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+var updateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPoliciesIkeAuthAlgoItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["md5","sha1","sha256"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPoliciesIkeAuthAlgoItemsEnum = append(updateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPoliciesIkeAuthAlgoItemsEnum, v)
+	}
+}
+
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPolicies) validateIkeAuthAlgoItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPoliciesIkeAuthAlgoItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPolicies) validateIkeAuthAlgo(formats strfmt.Registry) error {
+	if swag.IsZero(o.IkeAuthAlgo) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.IkeAuthAlgo); i++ {
+
+		// value enum
+		if err := o.validateIkeAuthAlgoItemsEnum("ipsecPolicies"+"."+"ikeAuthAlgo"+"."+strconv.Itoa(i), "body", o.IkeAuthAlgo[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
+var updateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPoliciesIkeCipherAlgoItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["aes128","aes192","aes256","des","tripledes"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPoliciesIkeCipherAlgoItemsEnum = append(updateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPoliciesIkeCipherAlgoItemsEnum, v)
+	}
+}
+
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPolicies) validateIkeCipherAlgoItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPoliciesIkeCipherAlgoItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPolicies) validateIkeCipherAlgo(formats strfmt.Registry) error {
+	if swag.IsZero(o.IkeCipherAlgo) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.IkeCipherAlgo); i++ {
+
+		// value enum
+		if err := o.validateIkeCipherAlgoItemsEnum("ipsecPolicies"+"."+"ikeCipherAlgo"+"."+strconv.Itoa(i), "body", o.IkeCipherAlgo[i]); err != nil {
+			return err
+		}
+
+	}
+
+	return nil
+}
+
 var updateOrganizationApplianceVpnThirdPartyVPNPeersParamsBodyPeersItems0IpsecPoliciesIkePrfAlgoItemsEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["prfsha256","prfsha1","prfmd5","default"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["default","prfmd5","prfsha1","prfsha256"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

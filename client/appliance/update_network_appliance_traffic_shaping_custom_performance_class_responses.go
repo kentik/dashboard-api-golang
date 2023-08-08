@@ -30,7 +30,7 @@ func (o *UpdateNetworkApplianceTrafficShapingCustomPerformanceClassReader) ReadR
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/appliance/trafficShaping/customPerformanceClasses/{customPerformanceClassId}] updateNetworkApplianceTrafficShapingCustomPerformanceClass", response, response.Code())
 	}
 }
 
@@ -39,7 +39,8 @@ func NewUpdateNetworkApplianceTrafficShapingCustomPerformanceClassOK() *UpdateNe
 	return &UpdateNetworkApplianceTrafficShapingCustomPerformanceClassOK{}
 }
 
-/* UpdateNetworkApplianceTrafficShapingCustomPerformanceClassOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkApplianceTrafficShapingCustomPerformanceClassOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -72,6 +73,11 @@ func (o *UpdateNetworkApplianceTrafficShapingCustomPerformanceClassOK) IsCode(co
 	return code == 200
 }
 
+// Code gets the status code for the update network appliance traffic shaping custom performance class o k response
+func (o *UpdateNetworkApplianceTrafficShapingCustomPerformanceClassOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkApplianceTrafficShapingCustomPerformanceClassOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/appliance/trafficShaping/customPerformanceClasses/{customPerformanceClassId}][%d] updateNetworkApplianceTrafficShapingCustomPerformanceClassOK  %+v", 200, o.Payload)
 }
@@ -94,7 +100,8 @@ func (o *UpdateNetworkApplianceTrafficShapingCustomPerformanceClassOK) readRespo
 	return nil
 }
 
-/*UpdateNetworkApplianceTrafficShapingCustomPerformanceClassBody update network appliance traffic shaping custom performance class body
+/*
+UpdateNetworkApplianceTrafficShapingCustomPerformanceClassBody update network appliance traffic shaping custom performance class body
 // Example: {"maxJitter":100,"maxLatency":100,"maxLossPercentage":5,"name":"myCustomPerformanceClass"}
 swagger:model UpdateNetworkApplianceTrafficShapingCustomPerformanceClassBody
 */

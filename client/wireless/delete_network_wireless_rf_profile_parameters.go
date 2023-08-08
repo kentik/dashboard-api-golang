@@ -52,17 +52,25 @@ func NewDeleteNetworkWirelessRfProfileParamsWithHTTPClient(client *http.Client) 
 	}
 }
 
-/* DeleteNetworkWirelessRfProfileParams contains all the parameters to send to the API endpoint
-   for the delete network wireless rf profile operation.
+/*
+DeleteNetworkWirelessRfProfileParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete network wireless rf profile operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteNetworkWirelessRfProfileParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// RfProfileID.
+	/* RfProfileID.
+
+	   Rf profile ID
+	*/
 	RfProfileID string
 
 	timeout    time.Duration

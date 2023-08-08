@@ -28,7 +28,7 @@ func (o *GetDeviceCameraSenseReader) ReadResponse(response runtime.ClientRespons
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /devices/{serial}/camera/sense] getDeviceCameraSense", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetDeviceCameraSenseOK() *GetDeviceCameraSenseOK {
 	return &GetDeviceCameraSenseOK{}
 }
 
-/* GetDeviceCameraSenseOK describes a response with status code 200, with default header values.
+/*
+GetDeviceCameraSenseOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetDeviceCameraSenseOK) IsServerError() bool {
 // IsCode returns true when this get device camera sense o k response a status code equal to that given
 func (o *GetDeviceCameraSenseOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get device camera sense o k response
+func (o *GetDeviceCameraSenseOK) Code() int {
+	return 200
 }
 
 func (o *GetDeviceCameraSenseOK) Error() string {

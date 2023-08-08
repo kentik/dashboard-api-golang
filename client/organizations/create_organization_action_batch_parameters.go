@@ -52,17 +52,22 @@ func NewCreateOrganizationActionBatchParamsWithHTTPClient(client *http.Client) *
 	}
 }
 
-/* CreateOrganizationActionBatchParams contains all the parameters to send to the API endpoint
-   for the create organization action batch operation.
+/*
+CreateOrganizationActionBatchParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create organization action batch operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateOrganizationActionBatchParams struct {
 
 	// CreateOrganizationActionBatch.
 	CreateOrganizationActionBatch CreateOrganizationActionBatchBody
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

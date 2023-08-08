@@ -30,7 +30,7 @@ func (o *UpdateNetworkNetflowReader) ReadResponse(response runtime.ClientRespons
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/netflow] updateNetworkNetflow", response, response.Code())
 	}
 }
 
@@ -39,7 +39,8 @@ func NewUpdateNetworkNetflowOK() *UpdateNetworkNetflowOK {
 	return &UpdateNetworkNetflowOK{}
 }
 
-/* UpdateNetworkNetflowOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkNetflowOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -72,6 +73,11 @@ func (o *UpdateNetworkNetflowOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network netflow o k response
+func (o *UpdateNetworkNetflowOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkNetflowOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/netflow][%d] updateNetworkNetflowOK  %+v", 200, o.Payload)
 }
@@ -94,7 +100,8 @@ func (o *UpdateNetworkNetflowOK) readResponse(response runtime.ClientResponse, c
 	return nil
 }
 
-/*UpdateNetworkNetflowBody update network netflow body
+/*
+UpdateNetworkNetflowBody update network netflow body
 // Example: {"collectorIp":"1.2.3.4","collectorPort":443,"etaDstPort":443,"etaEnabled":true,"reportingEnabled":true}
 swagger:model UpdateNetworkNetflowBody
 */

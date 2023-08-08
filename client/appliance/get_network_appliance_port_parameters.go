@@ -52,17 +52,25 @@ func NewGetNetworkAppliancePortParamsWithHTTPClient(client *http.Client) *GetNet
 	}
 }
 
-/* GetNetworkAppliancePortParams contains all the parameters to send to the API endpoint
-   for the get network appliance port operation.
+/*
+GetNetworkAppliancePortParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network appliance port operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkAppliancePortParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// PortID.
+	/* PortID.
+
+	   Port ID
+	*/
 	PortID string
 
 	timeout    time.Duration

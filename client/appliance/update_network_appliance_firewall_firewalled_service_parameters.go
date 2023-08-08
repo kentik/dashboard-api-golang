@@ -52,17 +52,25 @@ func NewUpdateNetworkApplianceFirewallFirewalledServiceParamsWithHTTPClient(clie
 	}
 }
 
-/* UpdateNetworkApplianceFirewallFirewalledServiceParams contains all the parameters to send to the API endpoint
-   for the update network appliance firewall firewalled service operation.
+/*
+UpdateNetworkApplianceFirewallFirewalledServiceParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network appliance firewall firewalled service operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkApplianceFirewallFirewalledServiceParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// Service.
+	/* Service.
+
+	   Service
+	*/
 	Service string
 
 	// UpdateNetworkApplianceFirewallFirewalledService.

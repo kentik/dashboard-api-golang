@@ -32,7 +32,7 @@ func (o *CreateOrganizationSamlIdpReader) ReadResponse(response runtime.ClientRe
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /organizations/{organizationId}/saml/idps] createOrganizationSamlIdp", response, response.Code())
 	}
 }
 
@@ -41,12 +41,13 @@ func NewCreateOrganizationSamlIdpCreated() *CreateOrganizationSamlIdpCreated {
 	return &CreateOrganizationSamlIdpCreated{}
 }
 
-/* CreateOrganizationSamlIdpCreated describes a response with status code 201, with default header values.
+/*
+CreateOrganizationSamlIdpCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
 type CreateOrganizationSamlIdpCreated struct {
-	Payload interface{}
+	Payload []*CreateOrganizationSamlIdpCreatedBodyItems0
 }
 
 // IsSuccess returns true when this create organization saml idp created response has a 2xx status code
@@ -74,6 +75,11 @@ func (o *CreateOrganizationSamlIdpCreated) IsCode(code int) bool {
 	return code == 201
 }
 
+// Code gets the status code for the create organization saml idp created response
+func (o *CreateOrganizationSamlIdpCreated) Code() int {
+	return 201
+}
+
 func (o *CreateOrganizationSamlIdpCreated) Error() string {
 	return fmt.Sprintf("[POST /organizations/{organizationId}/saml/idps][%d] createOrganizationSamlIdpCreated  %+v", 201, o.Payload)
 }
@@ -82,7 +88,7 @@ func (o *CreateOrganizationSamlIdpCreated) String() string {
 	return fmt.Sprintf("[POST /organizations/{organizationId}/saml/idps][%d] createOrganizationSamlIdpCreated  %+v", 201, o.Payload)
 }
 
-func (o *CreateOrganizationSamlIdpCreated) GetPayload() interface{} {
+func (o *CreateOrganizationSamlIdpCreated) GetPayload() []*CreateOrganizationSamlIdpCreatedBodyItems0 {
 	return o.Payload
 }
 
@@ -96,8 +102,9 @@ func (o *CreateOrganizationSamlIdpCreated) readResponse(response runtime.ClientR
 	return nil
 }
 
-/*CreateOrganizationSamlIdpBody create organization saml idp body
-// Example: {"idpId":"ab0c1de23Fg","sloLogoutUrl":"https://somewhere.com","x509certSha1Fingerprint":"00:11:22:33:44:55:66:77:88:99:00:11:22:33:44:55:66:77:88:99"}
+/*
+CreateOrganizationSamlIdpBody create organization saml idp body
+// Example: {"sloLogoutUrl":"https://somewhere.com","x509certSha1Fingerprint":"00:11:22:33:44:55:66:77:88:99:00:11:22:33:44:55:66:77:88:99"}
 swagger:model CreateOrganizationSamlIdpBody
 */
 type CreateOrganizationSamlIdpBody struct {
@@ -149,6 +156,53 @@ func (o *CreateOrganizationSamlIdpBody) MarshalBinary() ([]byte, error) {
 // UnmarshalBinary interface implementation
 func (o *CreateOrganizationSamlIdpBody) UnmarshalBinary(b []byte) error {
 	var res CreateOrganizationSamlIdpBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateOrganizationSamlIdpCreatedBodyItems0 create organization saml idp created body items0
+swagger:model CreateOrganizationSamlIdpCreatedBodyItems0
+*/
+type CreateOrganizationSamlIdpCreatedBodyItems0 struct {
+
+	// URL that is consuming SAML Identity Provider (IdP)
+	ConsumerURL string `json:"consumerUrl,omitempty"`
+
+	// ID associated with the SAML Identity Provider (IdP)
+	IdpID string `json:"idpId,omitempty"`
+
+	// Dashboard will redirect users to this URL when they sign out.
+	SloLogoutURL string `json:"sloLogoutUrl,omitempty"`
+
+	// Fingerprint (SHA1) of the SAML certificate provided by your Identity Provider (IdP). This will be used for encryption / validation.
+	X509certSha1Fingerprint string `json:"x509certSha1Fingerprint,omitempty"`
+}
+
+// Validate validates this create organization saml idp created body items0
+func (o *CreateOrganizationSamlIdpCreatedBodyItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this create organization saml idp created body items0 based on context it is used
+func (o *CreateOrganizationSamlIdpCreatedBodyItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateOrganizationSamlIdpCreatedBodyItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateOrganizationSamlIdpCreatedBodyItems0) UnmarshalBinary(b []byte) error {
+	var res CreateOrganizationSamlIdpCreatedBodyItems0
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

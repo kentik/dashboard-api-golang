@@ -52,20 +52,28 @@ func NewAddNetworkSwitchStackParamsWithHTTPClient(client *http.Client) *AddNetwo
 	}
 }
 
-/* AddNetworkSwitchStackParams contains all the parameters to send to the API endpoint
-   for the add network switch stack operation.
+/*
+AddNetworkSwitchStackParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the add network switch stack operation.
+
+	Typically these are written to a http.Request.
 */
 type AddNetworkSwitchStackParams struct {
 
 	// AddNetworkSwitchStack.
 	AddNetworkSwitchStack AddNetworkSwitchStackBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// SwitchStackID.
+	/* SwitchStackID.
+
+	   Switch stack ID
+	*/
 	SwitchStackID string
 
 	timeout    time.Duration

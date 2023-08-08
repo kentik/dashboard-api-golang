@@ -34,7 +34,7 @@ func (o *UpdateNetworkWirelessSsidReader) ReadResponse(response runtime.ClientRe
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/wireless/ssids/{number}] updateNetworkWirelessSsid", response, response.Code())
 	}
 }
 
@@ -43,12 +43,13 @@ func NewUpdateNetworkWirelessSsidOK() *UpdateNetworkWirelessSsidOK {
 	return &UpdateNetworkWirelessSsidOK{}
 }
 
-/* UpdateNetworkWirelessSsidOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkWirelessSsidOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateNetworkWirelessSsidOK struct {
-	Payload interface{}
+	Payload *UpdateNetworkWirelessSsidOKBody
 }
 
 // IsSuccess returns true when this update network wireless ssid o k response has a 2xx status code
@@ -76,6 +77,11 @@ func (o *UpdateNetworkWirelessSsidOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network wireless ssid o k response
+func (o *UpdateNetworkWirelessSsidOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkWirelessSsidOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/wireless/ssids/{number}][%d] updateNetworkWirelessSsidOK  %+v", 200, o.Payload)
 }
@@ -84,22 +90,25 @@ func (o *UpdateNetworkWirelessSsidOK) String() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/wireless/ssids/{number}][%d] updateNetworkWirelessSsidOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateNetworkWirelessSsidOK) GetPayload() interface{} {
+func (o *UpdateNetworkWirelessSsidOK) GetPayload() *UpdateNetworkWirelessSsidOKBody {
 	return o.Payload
 }
 
 func (o *UpdateNetworkWirelessSsidOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateNetworkWirelessSsidOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidBody update network wireless ssid body
-// Example: {"enabled":true,"name":"My SSID"}
+/*
+UpdateNetworkWirelessSsidBody update network wireless ssid body
+// Example: {"activeDirectory":{"credentials":{"logonName":"user","password":"password"},"servers":[{"host":"127.0.0.1","port":3268}]},"adultContentFilteringEnabled":false,"apTagsAndVlanIds":[{"tags":["tag1","tag2"],"vlanId":100}],"authMode":"8021x-radius","availabilityTags":["tag1","tag2"],"availableOnAllAps":false,"bandSelection":"5 GHz band only","concentratorNetworkId":"N_24329156","defaultVlanId":1,"disassociateClientsOnVpnFailover":false,"dnsRewrite":{"dnsCustomNameservers":["8.8.8.8","8.8.4.4"],"enabled":true},"dot11r":{"adaptive":true,"enabled":true},"dot11w":{"enabled":true,"required":false},"enabled":true,"encryptionMode":"wpa","enterpriseAdminAccess":"access enabled","gre":{"concentrator":{"host":"192.168.1.1"},"key":5},"ipAssignmentMode":"NAT mode","lanIsolationEnabled":true,"ldap":{"baseDistinguishedName":"dc=example,dc=com","credentials":{"distinguishedName":"cn=user,dc=example,dc=com","password":"password"},"serverCaCertificate":{"contents":"-----BEGIN CERTIFICATE-----\nMIIEKjCCAxKgAwIBAgIRANb+lsED3eb4+6YKLFFYqEkwDQYJKoZIhvcNAQELBQAw\ngYcxCzAJBgNVBAYTAlVTMRMwEQYDVQQIDApDYWxpZm9ybmlhMREwDwYDVQQHDAhT\nYW4gSm9zZTEcMBoGA1UECgwTQ2lzY28gU3lzdGVtcywgSW5jLjESMBAGA1UECwwJ\nRE5BU3BhY2VzMR4wHAYDVQQDDBVjaXNjby5vcGVucm9hbWluZy5vcmcwHhcNMjAx\nMTA1MjEzMzM1WhcNMjExMTA1MjIzMzM1WjCBpDEcMBoGCgmSJomT8ixkAQETDGRu\nYXNwYWNlczpVUzELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMQ4wDAYDVQQKEwVD\naXNjbzEcMBoGA1UECxMTV0JBOldSSVggRW5kLUVudGl0eTE8MDoGA1UEAxMzNjQ3\nMDcwNDM4NDQ5NjQxMjAwMDAuMTg4MzQuaHMuY2lzY28ub3BlbnJvYW1pbmcub3Jn\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoqjP9QgRGyUO3p7SH9QK\nuTq6UYK7nAyjImgS4yQxeBkyZ5f2EUkX8m/AOcewpPxxPBhjPKRwxGeX3S50ksiA\nayFomUeslR0S0Z7RN9rzJa+CFyi9MwWIHMbLgXpB8tsSpgTAqwrzoTzOGq9fgC6u\npZhdZrBkg3FeJgD88goCi9mZDsY2YAoeGRLFJ2fR8iICqIVQy+Htq9pE22WBLpnS\nKjL3+mR9FArHNFtWlhKF2YHMUqyHHrnZnF/Ns7QNoMMF7/CK18iAKgnb+2wuGKM2\naEMddOeOTtz+i/rgjkp/RGMt011EdCsso0/cTo9qqX/bxOOCE4/Mne/ChMkQPnNU\nCwIDAQABo3IwcDAJBgNVHRMEAjAAMB8GA1UdIwQYMBaAFIG+4l5yiB01gP0sw4ML\nUSopqYcuMB0GA1UdDgQWBBSby1T9leYVOVVdOZXiHCSaDDEMiDAOBgNVHQ8BAf8E\nBAMCBaAwEwYDVR0lBAwwCgYIKwYBBQUHAwIwDQYJKoZIhvcNAQELBQADggEBAEyE\n1mjSUyY6uNp6W4l20w7SskALSJDRKkOeZxAgF3VMxlsCuEl70s9oEfntwIpyQtSa\njON/9yJHbwm/Az824bmk8Dc7AXIPhay+dftXb8j529gPuYB9AKoPNg0NctkyYCQh\na/3YQVdDWX7XgmEiXkL57M7G6+IdcPDONLArfjOcT9qHdkVVq1AIjlMSx3OQQmm/\nuoLb/G9q/97QA2/l8shG/Na8HjVqGLcl5TNZdbNhs2w9ogxr/GNzqdvym6RQ8vT/\nUR2n+uwH4n1MUxmHYYeyot5dnIV1IJ6hQ54JAncM9HvCLFk1WHz6RKshQUCuPBiJ\nwTw70BVktzJnb0VLeDg=\n-----END CERTIFICATE-----"},"servers":[{"host":"127.0.0.1","port":389}]},"localRadius":{"cacheTimeout":60,"certificateAuthentication":{"clientRootCaCertificate":{"contents":"-----BEGIN CERTIFICATE-----\nMIIEKjCCAxKgAwIBAgIRANb+lsED3eb4+6YKLFFYqEkwDQYJKoZIhvcNAQELBQAw\ngYcxCzAJBgNVBAYTAlVTMRMwEQYDVQQIDApDYWxpZm9ybmlhMREwDwYDVQQHDAhT\nYW4gSm9zZTEcMBoGA1UECgwTQ2lzY28gU3lzdGVtcywgSW5jLjESMBAGA1UECwwJ\nRE5BU3BhY2VzMR4wHAYDVQQDDBVjaXNjby5vcGVucm9hbWluZy5vcmcwHhcNMjAx\nMTA1MjEzMzM1WhcNMjExMTA1MjIzMzM1WjCBpDEcMBoGCgmSJomT8ixkAQETDGRu\nYXNwYWNlczpVUzELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMQ4wDAYDVQQKEwVD\naXNjbzEcMBoGA1UECxMTV0JBOldSSVggRW5kLUVudGl0eTE8MDoGA1UEAxMzNjQ3\nMDcwNDM4NDQ5NjQxMjAwMDAuMTg4MzQuaHMuY2lzY28ub3BlbnJvYW1pbmcub3Jn\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoqjP9QgRGyUO3p7SH9QK\nuTq6UYK7nAyjImgS4yQxeBkyZ5f2EUkX8m/AOcewpPxxPBhjPKRwxGeX3S50ksiA\nayFomUeslR0S0Z7RN9rzJa+CFyi9MwWIHMbLgXpB8tsSpgTAqwrzoTzOGq9fgC6u\npZhdZrBkg3FeJgD88goCi9mZDsY2YAoeGRLFJ2fR8iICqIVQy+Htq9pE22WBLpnS\nKjL3+mR9FArHNFtWlhKF2YHMUqyHHrnZnF/Ns7QNoMMF7/CK18iAKgnb+2wuGKM2\naEMddOeOTtz+i/rgjkp/RGMt011EdCsso0/cTo9qqX/bxOOCE4/Mne/ChMkQPnNU\nCwIDAQABo3IwcDAJBgNVHRMEAjAAMB8GA1UdIwQYMBaAFIG+4l5yiB01gP0sw4ML\nUSopqYcuMB0GA1UdDgQWBBSby1T9leYVOVVdOZXiHCSaDDEMiDAOBgNVHQ8BAf8E\nBAMCBaAwEwYDVR0lBAwwCgYIKwYBBQUHAwIwDQYJKoZIhvcNAQELBQADggEBAEyE\n1mjSUyY6uNp6W4l20w7SskALSJDRKkOeZxAgF3VMxlsCuEl70s9oEfntwIpyQtSa\njON/9yJHbwm/Az824bmk8Dc7AXIPhay+dftXb8j529gPuYB9AKoPNg0NctkyYCQh\na/3YQVdDWX7XgmEiXkL57M7G6+IdcPDONLArfjOcT9qHdkVVq1AIjlMSx3OQQmm/\nuoLb/G9q/97QA2/l8shG/Na8HjVqGLcl5TNZdbNhs2w9ogxr/GNzqdvym6RQ8vT/\nUR2n+uwH4n1MUxmHYYeyot5dnIV1IJ6hQ54JAncM9HvCLFk1WHz6RKshQUCuPBiJ\nwTw70BVktzJnb0VLeDg=\n-----END CERTIFICATE-----"},"enabled":true,"ocspResponderUrl":"http://ocsp-server.example.com","useLdap":false,"useOcsp":true},"passwordAuthentication":{"enabled":false}},"mandatoryDhcpEnabled":false,"minBitrate":5.5,"name":"My SSID","oauth":{"allowedDomains":["example.com"]},"perClientBandwidthLimitDown":0,"perClientBandwidthLimitUp":0,"perSsidBandwidthLimitDown":0,"perSsidBandwidthLimitUp":0,"psk":"deadbeef","radiusAccountingEnabled":true,"radiusAccountingInterimInterval":5,"radiusAccountingServers":[{"caCertificate":"-----BEGIN CERTIFICATE-----\nMIIEKjCCAxKgAwIBAgIRANb+lsED3eb4+6YKLFFYqEkwDQYJKoZIhvcNAQELBQAw\ngYcxCzAJBgNVBAYTAlVTMRMwEQYDVQQIDApDYWxpZm9ybmlhMREwDwYDVQQHDAhT\nYW4gSm9zZTEcMBoGA1UECgwTQ2lzY28gU3lzdGVtcywgSW5jLjESMBAGA1UECwwJ\nRE5BU3BhY2VzMR4wHAYDVQQDDBVjaXNjby5vcGVucm9hbWluZy5vcmcwHhcNMjAx\nMTA1MjEzMzM1WhcNMjExMTA1MjIzMzM1WjCBpDEcMBoGCgmSJomT8ixkAQETDGRu\nYXNwYWNlczpVUzELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMQ4wDAYDVQQKEwVD\naXNjbzEcMBoGA1UECxMTV0JBOldSSVggRW5kLUVudGl0eTE8MDoGA1UEAxMzNjQ3\nMDcwNDM4NDQ5NjQxMjAwMDAuMTg4MzQuaHMuY2lzY28ub3BlbnJvYW1pbmcub3Jn\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoqjP9QgRGyUO3p7SH9QK\nuTq6UYK7nAyjImgS4yQxeBkyZ5f2EUkX8m/AOcewpPxxPBhjPKRwxGeX3S50ksiA\nayFomUeslR0S0Z7RN9rzJa+CFyi9MwWIHMbLgXpB8tsSpgTAqwrzoTzOGq9fgC6u\npZhdZrBkg3FeJgD88goCi9mZDsY2YAoeGRLFJ2fR8iICqIVQy+Htq9pE22WBLpnS\nKjL3+mR9FArHNFtWlhKF2YHMUqyHHrnZnF/Ns7QNoMMF7/CK18iAKgnb+2wuGKM2\naEMddOeOTtz+i/rgjkp/RGMt011EdCsso0/cTo9qqX/bxOOCE4/Mne/ChMkQPnNU\nCwIDAQABo3IwcDAJBgNVHRMEAjAAMB8GA1UdIwQYMBaAFIG+4l5yiB01gP0sw4ML\nUSopqYcuMB0GA1UdDgQWBBSby1T9leYVOVVdOZXiHCSaDDEMiDAOBgNVHQ8BAf8E\nBAMCBaAwEwYDVR0lBAwwCgYIKwYBBQUHAwIwDQYJKoZIhvcNAQELBQADggEBAEyE\n1mjSUyY6uNp6W4l20w7SskALSJDRKkOeZxAgF3VMxlsCuEl70s9oEfntwIpyQtSa\njON/9yJHbwm/Az824bmk8Dc7AXIPhay+dftXb8j529gPuYB9AKoPNg0NctkyYCQh\na/3YQVdDWX7XgmEiXkL57M7G6+IdcPDONLArfjOcT9qHdkVVq1AIjlMSx3OQQmm/\nuoLb/G9q/97QA2/l8shG/Na8HjVqGLcl5TNZdbNhs2w9ogxr/GNzqdvym6RQ8vT/\nUR2n+uwH4n1MUxmHYYeyot5dnIV1IJ6hQ54JAncM9HvCLFk1WHz6RKshQUCuPBiJ\nwTw70BVktzJnb0VLeDg=\n-----END CERTIFICATE-----","host":"0.0.0.0","port":3000,"radsecEnabled":true,"secret":"secret-string"}],"radiusAttributeForGroupPolicies":"Filter-Id","radiusAuthenticationNasId":"00-11-22-33-44-55:AP1","radiusCalledStationId":"00-11-22-33-44-55:AP1","radiusCoaEnabled":true,"radiusFailoverPolicy":"Deny access","radiusFallbackEnabled":true,"radiusGuestVlanEnabled":true,"radiusGuestVlanId":1,"radiusLoadBalancingPolicy":"Round robin","radiusOverride":false,"radiusProxyEnabled":false,"radiusServerAttemptsLimit":5,"radiusServerTimeout":5,"radiusServers":[{"caCertificate":"-----BEGIN CERTIFICATE-----\nMIIEKjCCAxKgAwIBAgIRANb+lsED3eb4+6YKLFFYqEkwDQYJKoZIhvcNAQELBQAw\ngYcxCzAJBgNVBAYTAlVTMRMwEQYDVQQIDApDYWxpZm9ybmlhMREwDwYDVQQHDAhT\nYW4gSm9zZTEcMBoGA1UECgwTQ2lzY28gU3lzdGVtcywgSW5jLjESMBAGA1UECwwJ\nRE5BU3BhY2VzMR4wHAYDVQQDDBVjaXNjby5vcGVucm9hbWluZy5vcmcwHhcNMjAx\nMTA1MjEzMzM1WhcNMjExMTA1MjIzMzM1WjCBpDEcMBoGCgmSJomT8ixkAQETDGRu\nYXNwYWNlczpVUzELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMQ4wDAYDVQQKEwVD\naXNjbzEcMBoGA1UECxMTV0JBOldSSVggRW5kLUVudGl0eTE8MDoGA1UEAxMzNjQ3\nMDcwNDM4NDQ5NjQxMjAwMDAuMTg4MzQuaHMuY2lzY28ub3BlbnJvYW1pbmcub3Jn\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoqjP9QgRGyUO3p7SH9QK\nuTq6UYK7nAyjImgS4yQxeBkyZ5f2EUkX8m/AOcewpPxxPBhjPKRwxGeX3S50ksiA\nayFomUeslR0S0Z7RN9rzJa+CFyi9MwWIHMbLgXpB8tsSpgTAqwrzoTzOGq9fgC6u\npZhdZrBkg3FeJgD88goCi9mZDsY2YAoeGRLFJ2fR8iICqIVQy+Htq9pE22WBLpnS\nKjL3+mR9FArHNFtWlhKF2YHMUqyHHrnZnF/Ns7QNoMMF7/CK18iAKgnb+2wuGKM2\naEMddOeOTtz+i/rgjkp/RGMt011EdCsso0/cTo9qqX/bxOOCE4/Mne/ChMkQPnNU\nCwIDAQABo3IwcDAJBgNVHRMEAjAAMB8GA1UdIwQYMBaAFIG+4l5yiB01gP0sw4ML\nUSopqYcuMB0GA1UdDgQWBBSby1T9leYVOVVdOZXiHCSaDDEMiDAOBgNVHQ8BAf8E\nBAMCBaAwEwYDVR0lBAwwCgYIKwYBBQUHAwIwDQYJKoZIhvcNAQELBQADggEBAEyE\n1mjSUyY6uNp6W4l20w7SskALSJDRKkOeZxAgF3VMxlsCuEl70s9oEfntwIpyQtSa\njON/9yJHbwm/Az824bmk8Dc7AXIPhay+dftXb8j529gPuYB9AKoPNg0NctkyYCQh\na/3YQVdDWX7XgmEiXkL57M7G6+IdcPDONLArfjOcT9qHdkVVq1AIjlMSx3OQQmm/\nuoLb/G9q/97QA2/l8shG/Na8HjVqGLcl5TNZdbNhs2w9ogxr/GNzqdvym6RQ8vT/\nUR2n+uwH4n1MUxmHYYeyot5dnIV1IJ6hQ54JAncM9HvCLFk1WHz6RKshQUCuPBiJ\nwTw70BVktzJnb0VLeDg=\n-----END CERTIFICATE-----","host":"0.0.0.0","openRoamingCertificateId":2,"port":3000,"radsecEnabled":true,"secret":"secret-string"}],"radiusTestingEnabled":true,"secondaryConcentratorNetworkId":"disabled","speedBurst":{"enabled":true},"splashGuestSponsorDomains":["example.com"],"splashPage":"Click-through splash page","useVlanTagging":false,"visible":true,"vlanId":10,"walledGardenEnabled":true,"walledGardenRanges":["example.com","1.1.1.1/32"],"wpaEncryptionMode":"WPA2 only"}
 swagger:model UpdateNetworkWirelessSsidBody
 */
 type UpdateNetworkWirelessSsidBody struct {
@@ -113,8 +122,8 @@ type UpdateNetworkWirelessSsidBody struct {
 	// The list of tags and VLAN IDs used for VLAN tagging. This param is only valid when the ipAssignmentMode is 'Bridge mode' or 'Layer 3 roaming'
 	ApTagsAndVlanIds []*UpdateNetworkWirelessSsidParamsBodyApTagsAndVlanIdsItems0 `json:"apTagsAndVlanIds"`
 
-	// The association control method for the SSID ('open', 'open-enhanced', 'psk', 'open-with-radius', '8021x-meraki', '8021x-radius', '8021x-google', '8021x-localradius', 'ipsk-with-radius' or 'ipsk-without-radius')
-	// Enum: [open open-enhanced psk open-with-radius 8021x-meraki 8021x-radius 8021x-google 8021x-localradius ipsk-with-radius ipsk-without-radius]
+	// The association control method for the SSID ('open', 'open-enhanced', 'psk', 'open-with-radius', 'open-with-nac', '8021x-meraki', '8021x-nac', '8021x-radius', '8021x-google', '8021x-localradius', 'ipsk-with-radius', 'ipsk-without-radius' or 'ipsk-with-nac')
+	// Enum: [8021x-google 8021x-localradius 8021x-meraki 8021x-nac 8021x-radius ipsk-with-nac ipsk-with-radius ipsk-without-radius open open-enhanced open-with-nac open-with-radius psk]
 	AuthMode string `json:"authMode,omitempty"`
 
 	// Accepts a list of tags for this SSID. If availableOnAllAps is false, then the SSID will only be broadcast by APs with tags matching any of the tags in this list.
@@ -207,7 +216,7 @@ type UpdateNetworkWirelessSsidBody struct {
 	RadiusAccountingServers []*UpdateNetworkWirelessSsidParamsBodyRadiusAccountingServersItems0 `json:"radiusAccountingServers"`
 
 	// Specify the RADIUS attribute used to look up group policies ('Filter-Id', 'Reply-Message', 'Airespace-ACL-Name' or 'Aruba-User-Role'). Access points must receive this attribute in the RADIUS Access-Accept message
-	// Enum: [Filter-Id Reply-Message Airespace-ACL-Name Aruba-User-Role]
+	// Enum: [Airespace-ACL-Name Aruba-User-Role Filter-Id Reply-Message]
 	RadiusAttributeForGroupPolicies string `json:"radiusAttributeForGroupPolicies,omitempty"`
 
 	// The template of the NAS identifier to be used for RADIUS authentication (ex. $NODE_MAC$:$VAP_NUM$).
@@ -220,7 +229,7 @@ type UpdateNetworkWirelessSsidBody struct {
 	RadiusCoaEnabled bool `json:"radiusCoaEnabled,omitempty"`
 
 	// This policy determines how authentication requests should be handled in the event that all of the configured RADIUS servers are unreachable ('Deny access' or 'Allow access')
-	// Enum: [Deny access Allow access]
+	// Enum: [Allow access Deny access]
 	RadiusFailoverPolicy string `json:"radiusFailoverPolicy,omitempty"`
 
 	// Whether or not higher priority RADIUS servers should be retried after 60 seconds.
@@ -233,7 +242,7 @@ type UpdateNetworkWirelessSsidBody struct {
 	RadiusGuestVlanID int64 `json:"radiusGuestVlanId,omitempty"`
 
 	// This policy determines which RADIUS server will be contacted first in an authentication attempt and the ordering of any necessary retry attempts ('Strict priority order' or 'Round robin')
-	// Enum: [Strict priority order Round robin]
+	// Enum: [Round robin Strict priority order]
 	RadiusLoadBalancingPolicy string `json:"radiusLoadBalancingPolicy,omitempty"`
 
 	// If true, the RADIUS response can override VLAN tag. This is not valid when ipAssignmentMode is 'NAT mode'.
@@ -264,7 +273,7 @@ type UpdateNetworkWirelessSsidBody struct {
 	SplashGuestSponsorDomains []string `json:"splashGuestSponsorDomains"`
 
 	// The type of splash page for the SSID ('None', 'Click-through splash page', 'Billing', 'Password-protected with Meraki RADIUS', 'Password-protected with custom RADIUS', 'Password-protected with Active Directory', 'Password-protected with LDAP', 'SMS authentication', 'Systems Manager Sentry', 'Facebook Wi-Fi', 'Google OAuth', 'Sponsored guest', 'Cisco ISE' or 'Google Apps domain'). This attribute is not supported for template children.
-	// Enum: [None Click-through splash page Billing Password-protected with Meraki RADIUS Password-protected with custom RADIUS Password-protected with Active Directory Password-protected with LDAP SMS authentication Systems Manager Sentry Facebook Wi-Fi Google OAuth Sponsored guest Cisco ISE Google Apps domain]
+	// Enum: [Billing Cisco ISE Click-through splash page Facebook Wi-Fi Google Apps domain Google OAuth None Password-protected with Active Directory Password-protected with LDAP Password-protected with Meraki RADIUS Password-protected with custom RADIUS SMS authentication Sponsored guest Systems Manager Sentry]
 	SplashPage string `json:"splashPage,omitempty"`
 
 	// Whether or not traffic should be directed to use specific VLANs. This param is only valid if the ipAssignmentMode is 'Bridge mode' or 'Layer 3 roaming'
@@ -282,8 +291,8 @@ type UpdateNetworkWirelessSsidBody struct {
 	// Specify your walled garden by entering an array of addresses, ranges using CIDR notation, domain names, and domain wildcards (e.g. '192.168.1.1/24', '192.168.37.10/32', 'www.yahoo.com', '*.google.com']). Meraki's splash page is automatically included in your walled garden.
 	WalledGardenRanges []string `json:"walledGardenRanges"`
 
-	// The types of WPA encryption. ('WPA1 only', 'WPA1 and WPA2', 'WPA2 only', 'WPA3 Transition Mode' or 'WPA3 only')
-	// Enum: [WPA1 only WPA1 and WPA2 WPA2 only WPA3 Transition Mode WPA3 only]
+	// The types of WPA encryption. ('WPA1 only', 'WPA1 and WPA2', 'WPA2 only', 'WPA3 Transition Mode', 'WPA3 only' or 'WPA3 192-bit Security')
+	// Enum: [WPA1 and WPA2 WPA1 only WPA2 only WPA3 192-bit Security WPA3 Transition Mode WPA3 only]
 	WpaEncryptionMode string `json:"wpaEncryptionMode,omitempty"`
 }
 
@@ -426,7 +435,7 @@ var updateNetworkWirelessSsidBodyTypeAuthModePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["open","open-enhanced","psk","open-with-radius","8021x-meraki","8021x-radius","8021x-google","8021x-localradius","ipsk-with-radius","ipsk-without-radius"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["8021x-google","8021x-localradius","8021x-meraki","8021x-nac","8021x-radius","ipsk-with-nac","ipsk-with-radius","ipsk-without-radius","open","open-enhanced","open-with-nac","open-with-radius","psk"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -436,35 +445,44 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessSsidBodyAuthModeOpen captures enum value "open"
-	UpdateNetworkWirelessSsidBodyAuthModeOpen string = "open"
-
-	// UpdateNetworkWirelessSsidBodyAuthModeOpenDashEnhanced captures enum value "open-enhanced"
-	UpdateNetworkWirelessSsidBodyAuthModeOpenDashEnhanced string = "open-enhanced"
-
-	// UpdateNetworkWirelessSsidBodyAuthModePsk captures enum value "psk"
-	UpdateNetworkWirelessSsidBodyAuthModePsk string = "psk"
-
-	// UpdateNetworkWirelessSsidBodyAuthModeOpenDashWithDashRadius captures enum value "open-with-radius"
-	UpdateNetworkWirelessSsidBodyAuthModeOpenDashWithDashRadius string = "open-with-radius"
-
-	// UpdateNetworkWirelessSsidBodyAuthModeNr8021xDashMeraki captures enum value "8021x-meraki"
-	UpdateNetworkWirelessSsidBodyAuthModeNr8021xDashMeraki string = "8021x-meraki"
-
-	// UpdateNetworkWirelessSsidBodyAuthModeNr8021xDashRadius captures enum value "8021x-radius"
-	UpdateNetworkWirelessSsidBodyAuthModeNr8021xDashRadius string = "8021x-radius"
-
 	// UpdateNetworkWirelessSsidBodyAuthModeNr8021xDashGoogle captures enum value "8021x-google"
 	UpdateNetworkWirelessSsidBodyAuthModeNr8021xDashGoogle string = "8021x-google"
 
 	// UpdateNetworkWirelessSsidBodyAuthModeNr8021xDashLocalradius captures enum value "8021x-localradius"
 	UpdateNetworkWirelessSsidBodyAuthModeNr8021xDashLocalradius string = "8021x-localradius"
 
+	// UpdateNetworkWirelessSsidBodyAuthModeNr8021xDashMeraki captures enum value "8021x-meraki"
+	UpdateNetworkWirelessSsidBodyAuthModeNr8021xDashMeraki string = "8021x-meraki"
+
+	// UpdateNetworkWirelessSsidBodyAuthModeNr8021xDashNac captures enum value "8021x-nac"
+	UpdateNetworkWirelessSsidBodyAuthModeNr8021xDashNac string = "8021x-nac"
+
+	// UpdateNetworkWirelessSsidBodyAuthModeNr8021xDashRadius captures enum value "8021x-radius"
+	UpdateNetworkWirelessSsidBodyAuthModeNr8021xDashRadius string = "8021x-radius"
+
+	// UpdateNetworkWirelessSsidBodyAuthModeIpskDashWithDashNac captures enum value "ipsk-with-nac"
+	UpdateNetworkWirelessSsidBodyAuthModeIpskDashWithDashNac string = "ipsk-with-nac"
+
 	// UpdateNetworkWirelessSsidBodyAuthModeIpskDashWithDashRadius captures enum value "ipsk-with-radius"
 	UpdateNetworkWirelessSsidBodyAuthModeIpskDashWithDashRadius string = "ipsk-with-radius"
 
 	// UpdateNetworkWirelessSsidBodyAuthModeIpskDashWithoutDashRadius captures enum value "ipsk-without-radius"
 	UpdateNetworkWirelessSsidBodyAuthModeIpskDashWithoutDashRadius string = "ipsk-without-radius"
+
+	// UpdateNetworkWirelessSsidBodyAuthModeOpen captures enum value "open"
+	UpdateNetworkWirelessSsidBodyAuthModeOpen string = "open"
+
+	// UpdateNetworkWirelessSsidBodyAuthModeOpenDashEnhanced captures enum value "open-enhanced"
+	UpdateNetworkWirelessSsidBodyAuthModeOpenDashEnhanced string = "open-enhanced"
+
+	// UpdateNetworkWirelessSsidBodyAuthModeOpenDashWithDashNac captures enum value "open-with-nac"
+	UpdateNetworkWirelessSsidBodyAuthModeOpenDashWithDashNac string = "open-with-nac"
+
+	// UpdateNetworkWirelessSsidBodyAuthModeOpenDashWithDashRadius captures enum value "open-with-radius"
+	UpdateNetworkWirelessSsidBodyAuthModeOpenDashWithDashRadius string = "open-with-radius"
+
+	// UpdateNetworkWirelessSsidBodyAuthModePsk captures enum value "psk"
+	UpdateNetworkWirelessSsidBodyAuthModePsk string = "psk"
 )
 
 // prop value enum
@@ -735,7 +753,7 @@ var updateNetworkWirelessSsidBodyTypeRadiusAttributeForGroupPoliciesPropEnum []i
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Filter-Id","Reply-Message","Airespace-ACL-Name","Aruba-User-Role"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Airespace-ACL-Name","Aruba-User-Role","Filter-Id","Reply-Message"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -745,17 +763,17 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessSsidBodyRadiusAttributeForGroupPoliciesFilterDashID captures enum value "Filter-Id"
-	UpdateNetworkWirelessSsidBodyRadiusAttributeForGroupPoliciesFilterDashID string = "Filter-Id"
-
-	// UpdateNetworkWirelessSsidBodyRadiusAttributeForGroupPoliciesReplyDashMessage captures enum value "Reply-Message"
-	UpdateNetworkWirelessSsidBodyRadiusAttributeForGroupPoliciesReplyDashMessage string = "Reply-Message"
-
 	// UpdateNetworkWirelessSsidBodyRadiusAttributeForGroupPoliciesAirespaceDashACLDashName captures enum value "Airespace-ACL-Name"
 	UpdateNetworkWirelessSsidBodyRadiusAttributeForGroupPoliciesAirespaceDashACLDashName string = "Airespace-ACL-Name"
 
 	// UpdateNetworkWirelessSsidBodyRadiusAttributeForGroupPoliciesArubaDashUserDashRole captures enum value "Aruba-User-Role"
 	UpdateNetworkWirelessSsidBodyRadiusAttributeForGroupPoliciesArubaDashUserDashRole string = "Aruba-User-Role"
+
+	// UpdateNetworkWirelessSsidBodyRadiusAttributeForGroupPoliciesFilterDashID captures enum value "Filter-Id"
+	UpdateNetworkWirelessSsidBodyRadiusAttributeForGroupPoliciesFilterDashID string = "Filter-Id"
+
+	// UpdateNetworkWirelessSsidBodyRadiusAttributeForGroupPoliciesReplyDashMessage captures enum value "Reply-Message"
+	UpdateNetworkWirelessSsidBodyRadiusAttributeForGroupPoliciesReplyDashMessage string = "Reply-Message"
 )
 
 // prop value enum
@@ -783,7 +801,7 @@ var updateNetworkWirelessSsidBodyTypeRadiusFailoverPolicyPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Deny access","Allow access"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Allow access","Deny access"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -793,11 +811,11 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessSsidBodyRadiusFailoverPolicyDenyAccess captures enum value "Deny access"
-	UpdateNetworkWirelessSsidBodyRadiusFailoverPolicyDenyAccess string = "Deny access"
-
 	// UpdateNetworkWirelessSsidBodyRadiusFailoverPolicyAllowAccess captures enum value "Allow access"
 	UpdateNetworkWirelessSsidBodyRadiusFailoverPolicyAllowAccess string = "Allow access"
+
+	// UpdateNetworkWirelessSsidBodyRadiusFailoverPolicyDenyAccess captures enum value "Deny access"
+	UpdateNetworkWirelessSsidBodyRadiusFailoverPolicyDenyAccess string = "Deny access"
 )
 
 // prop value enum
@@ -825,7 +843,7 @@ var updateNetworkWirelessSsidBodyTypeRadiusLoadBalancingPolicyPropEnum []interfa
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Strict priority order","Round robin"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Round robin","Strict priority order"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -835,11 +853,11 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessSsidBodyRadiusLoadBalancingPolicyStrictPriorityOrder captures enum value "Strict priority order"
-	UpdateNetworkWirelessSsidBodyRadiusLoadBalancingPolicyStrictPriorityOrder string = "Strict priority order"
-
 	// UpdateNetworkWirelessSsidBodyRadiusLoadBalancingPolicyRoundRobin captures enum value "Round robin"
 	UpdateNetworkWirelessSsidBodyRadiusLoadBalancingPolicyRoundRobin string = "Round robin"
+
+	// UpdateNetworkWirelessSsidBodyRadiusLoadBalancingPolicyStrictPriorityOrder captures enum value "Strict priority order"
+	UpdateNetworkWirelessSsidBodyRadiusLoadBalancingPolicyStrictPriorityOrder string = "Strict priority order"
 )
 
 // prop value enum
@@ -912,7 +930,7 @@ var updateNetworkWirelessSsidBodyTypeSplashPagePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["None","Click-through splash page","Billing","Password-protected with Meraki RADIUS","Password-protected with custom RADIUS","Password-protected with Active Directory","Password-protected with LDAP","SMS authentication","Systems Manager Sentry","Facebook Wi-Fi","Google OAuth","Sponsored guest","Cisco ISE","Google Apps domain"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Billing","Cisco ISE","Click-through splash page","Facebook Wi-Fi","Google Apps domain","Google OAuth","None","Password-protected with Active Directory","Password-protected with LDAP","Password-protected with Meraki RADIUS","Password-protected with custom RADIUS","SMS authentication","Sponsored guest","Systems Manager Sentry"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -922,20 +940,26 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessSsidBodySplashPageNone captures enum value "None"
-	UpdateNetworkWirelessSsidBodySplashPageNone string = "None"
+	// UpdateNetworkWirelessSsidBodySplashPageBilling captures enum value "Billing"
+	UpdateNetworkWirelessSsidBodySplashPageBilling string = "Billing"
+
+	// UpdateNetworkWirelessSsidBodySplashPageCiscoISE captures enum value "Cisco ISE"
+	UpdateNetworkWirelessSsidBodySplashPageCiscoISE string = "Cisco ISE"
 
 	// UpdateNetworkWirelessSsidBodySplashPageClickDashThroughSplashPage captures enum value "Click-through splash page"
 	UpdateNetworkWirelessSsidBodySplashPageClickDashThroughSplashPage string = "Click-through splash page"
 
-	// UpdateNetworkWirelessSsidBodySplashPageBilling captures enum value "Billing"
-	UpdateNetworkWirelessSsidBodySplashPageBilling string = "Billing"
+	// UpdateNetworkWirelessSsidBodySplashPageFacebookWiDashFi captures enum value "Facebook Wi-Fi"
+	UpdateNetworkWirelessSsidBodySplashPageFacebookWiDashFi string = "Facebook Wi-Fi"
 
-	// UpdateNetworkWirelessSsidBodySplashPagePasswordDashProtectedWithMerakiRADIUS captures enum value "Password-protected with Meraki RADIUS"
-	UpdateNetworkWirelessSsidBodySplashPagePasswordDashProtectedWithMerakiRADIUS string = "Password-protected with Meraki RADIUS"
+	// UpdateNetworkWirelessSsidBodySplashPageGoogleAppsDomain captures enum value "Google Apps domain"
+	UpdateNetworkWirelessSsidBodySplashPageGoogleAppsDomain string = "Google Apps domain"
 
-	// UpdateNetworkWirelessSsidBodySplashPagePasswordDashProtectedWithCustomRADIUS captures enum value "Password-protected with custom RADIUS"
-	UpdateNetworkWirelessSsidBodySplashPagePasswordDashProtectedWithCustomRADIUS string = "Password-protected with custom RADIUS"
+	// UpdateNetworkWirelessSsidBodySplashPageGoogleOAuth captures enum value "Google OAuth"
+	UpdateNetworkWirelessSsidBodySplashPageGoogleOAuth string = "Google OAuth"
+
+	// UpdateNetworkWirelessSsidBodySplashPageNone captures enum value "None"
+	UpdateNetworkWirelessSsidBodySplashPageNone string = "None"
 
 	// UpdateNetworkWirelessSsidBodySplashPagePasswordDashProtectedWithActiveDirectory captures enum value "Password-protected with Active Directory"
 	UpdateNetworkWirelessSsidBodySplashPagePasswordDashProtectedWithActiveDirectory string = "Password-protected with Active Directory"
@@ -943,26 +967,20 @@ const (
 	// UpdateNetworkWirelessSsidBodySplashPagePasswordDashProtectedWithLDAP captures enum value "Password-protected with LDAP"
 	UpdateNetworkWirelessSsidBodySplashPagePasswordDashProtectedWithLDAP string = "Password-protected with LDAP"
 
+	// UpdateNetworkWirelessSsidBodySplashPagePasswordDashProtectedWithMerakiRADIUS captures enum value "Password-protected with Meraki RADIUS"
+	UpdateNetworkWirelessSsidBodySplashPagePasswordDashProtectedWithMerakiRADIUS string = "Password-protected with Meraki RADIUS"
+
+	// UpdateNetworkWirelessSsidBodySplashPagePasswordDashProtectedWithCustomRADIUS captures enum value "Password-protected with custom RADIUS"
+	UpdateNetworkWirelessSsidBodySplashPagePasswordDashProtectedWithCustomRADIUS string = "Password-protected with custom RADIUS"
+
 	// UpdateNetworkWirelessSsidBodySplashPageSMSAuthentication captures enum value "SMS authentication"
 	UpdateNetworkWirelessSsidBodySplashPageSMSAuthentication string = "SMS authentication"
-
-	// UpdateNetworkWirelessSsidBodySplashPageSystemsManagerSentry captures enum value "Systems Manager Sentry"
-	UpdateNetworkWirelessSsidBodySplashPageSystemsManagerSentry string = "Systems Manager Sentry"
-
-	// UpdateNetworkWirelessSsidBodySplashPageFacebookWiDashFi captures enum value "Facebook Wi-Fi"
-	UpdateNetworkWirelessSsidBodySplashPageFacebookWiDashFi string = "Facebook Wi-Fi"
-
-	// UpdateNetworkWirelessSsidBodySplashPageGoogleOAuth captures enum value "Google OAuth"
-	UpdateNetworkWirelessSsidBodySplashPageGoogleOAuth string = "Google OAuth"
 
 	// UpdateNetworkWirelessSsidBodySplashPageSponsoredGuest captures enum value "Sponsored guest"
 	UpdateNetworkWirelessSsidBodySplashPageSponsoredGuest string = "Sponsored guest"
 
-	// UpdateNetworkWirelessSsidBodySplashPageCiscoISE captures enum value "Cisco ISE"
-	UpdateNetworkWirelessSsidBodySplashPageCiscoISE string = "Cisco ISE"
-
-	// UpdateNetworkWirelessSsidBodySplashPageGoogleAppsDomain captures enum value "Google Apps domain"
-	UpdateNetworkWirelessSsidBodySplashPageGoogleAppsDomain string = "Google Apps domain"
+	// UpdateNetworkWirelessSsidBodySplashPageSystemsManagerSentry captures enum value "Systems Manager Sentry"
+	UpdateNetworkWirelessSsidBodySplashPageSystemsManagerSentry string = "Systems Manager Sentry"
 )
 
 // prop value enum
@@ -990,7 +1008,7 @@ var updateNetworkWirelessSsidBodyTypeWpaEncryptionModePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["WPA1 only","WPA1 and WPA2","WPA2 only","WPA3 Transition Mode","WPA3 only"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["WPA1 and WPA2","WPA1 only","WPA2 only","WPA3 192-bit Security","WPA3 Transition Mode","WPA3 only"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -1000,14 +1018,17 @@ func init() {
 
 const (
 
-	// UpdateNetworkWirelessSsidBodyWpaEncryptionModeWPA1Only captures enum value "WPA1 only"
-	UpdateNetworkWirelessSsidBodyWpaEncryptionModeWPA1Only string = "WPA1 only"
-
 	// UpdateNetworkWirelessSsidBodyWpaEncryptionModeWPA1AndWPA2 captures enum value "WPA1 and WPA2"
 	UpdateNetworkWirelessSsidBodyWpaEncryptionModeWPA1AndWPA2 string = "WPA1 and WPA2"
 
+	// UpdateNetworkWirelessSsidBodyWpaEncryptionModeWPA1Only captures enum value "WPA1 only"
+	UpdateNetworkWirelessSsidBodyWpaEncryptionModeWPA1Only string = "WPA1 only"
+
 	// UpdateNetworkWirelessSsidBodyWpaEncryptionModeWPA2Only captures enum value "WPA2 only"
 	UpdateNetworkWirelessSsidBodyWpaEncryptionModeWPA2Only string = "WPA2 only"
+
+	// UpdateNetworkWirelessSsidBodyWpaEncryptionModeWPA3192DashBitSecurity captures enum value "WPA3 192-bit Security"
+	UpdateNetworkWirelessSsidBodyWpaEncryptionModeWPA3192DashBitSecurity string = "WPA3 192-bit Security"
 
 	// UpdateNetworkWirelessSsidBodyWpaEncryptionModeWPA3TransitionMode captures enum value "WPA3 Transition Mode"
 	UpdateNetworkWirelessSsidBodyWpaEncryptionModeWPA3TransitionMode string = "WPA3 Transition Mode"
@@ -1098,6 +1119,11 @@ func (o *UpdateNetworkWirelessSsidBody) ContextValidate(ctx context.Context, for
 func (o *UpdateNetworkWirelessSsidBody) contextValidateActiveDirectory(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.ActiveDirectory != nil {
+
+		if swag.IsZero(o.ActiveDirectory) { // not required
+			return nil
+		}
+
 		if err := o.ActiveDirectory.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessSsid" + "." + "activeDirectory")
@@ -1116,6 +1142,11 @@ func (o *UpdateNetworkWirelessSsidBody) contextValidateApTagsAndVlanIds(ctx cont
 	for i := 0; i < len(o.ApTagsAndVlanIds); i++ {
 
 		if o.ApTagsAndVlanIds[i] != nil {
+
+			if swag.IsZero(o.ApTagsAndVlanIds[i]) { // not required
+				return nil
+			}
+
 			if err := o.ApTagsAndVlanIds[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkWirelessSsid" + "." + "apTagsAndVlanIds" + "." + strconv.Itoa(i))
@@ -1134,6 +1165,11 @@ func (o *UpdateNetworkWirelessSsidBody) contextValidateApTagsAndVlanIds(ctx cont
 func (o *UpdateNetworkWirelessSsidBody) contextValidateDNSRewrite(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.DNSRewrite != nil {
+
+		if swag.IsZero(o.DNSRewrite) { // not required
+			return nil
+		}
+
 		if err := o.DNSRewrite.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessSsid" + "." + "dnsRewrite")
@@ -1150,6 +1186,11 @@ func (o *UpdateNetworkWirelessSsidBody) contextValidateDNSRewrite(ctx context.Co
 func (o *UpdateNetworkWirelessSsidBody) contextValidateDot11r(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Dot11r != nil {
+
+		if swag.IsZero(o.Dot11r) { // not required
+			return nil
+		}
+
 		if err := o.Dot11r.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessSsid" + "." + "dot11r")
@@ -1166,6 +1207,11 @@ func (o *UpdateNetworkWirelessSsidBody) contextValidateDot11r(ctx context.Contex
 func (o *UpdateNetworkWirelessSsidBody) contextValidateDot11w(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Dot11w != nil {
+
+		if swag.IsZero(o.Dot11w) { // not required
+			return nil
+		}
+
 		if err := o.Dot11w.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessSsid" + "." + "dot11w")
@@ -1182,6 +1228,11 @@ func (o *UpdateNetworkWirelessSsidBody) contextValidateDot11w(ctx context.Contex
 func (o *UpdateNetworkWirelessSsidBody) contextValidateGre(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Gre != nil {
+
+		if swag.IsZero(o.Gre) { // not required
+			return nil
+		}
+
 		if err := o.Gre.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessSsid" + "." + "gre")
@@ -1198,6 +1249,11 @@ func (o *UpdateNetworkWirelessSsidBody) contextValidateGre(ctx context.Context, 
 func (o *UpdateNetworkWirelessSsidBody) contextValidateLdap(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Ldap != nil {
+
+		if swag.IsZero(o.Ldap) { // not required
+			return nil
+		}
+
 		if err := o.Ldap.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessSsid" + "." + "ldap")
@@ -1214,6 +1270,11 @@ func (o *UpdateNetworkWirelessSsidBody) contextValidateLdap(ctx context.Context,
 func (o *UpdateNetworkWirelessSsidBody) contextValidateLocalRadius(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.LocalRadius != nil {
+
+		if swag.IsZero(o.LocalRadius) { // not required
+			return nil
+		}
+
 		if err := o.LocalRadius.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessSsid" + "." + "localRadius")
@@ -1230,6 +1291,11 @@ func (o *UpdateNetworkWirelessSsidBody) contextValidateLocalRadius(ctx context.C
 func (o *UpdateNetworkWirelessSsidBody) contextValidateOauth(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Oauth != nil {
+
+		if swag.IsZero(o.Oauth) { // not required
+			return nil
+		}
+
 		if err := o.Oauth.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessSsid" + "." + "oauth")
@@ -1248,6 +1314,11 @@ func (o *UpdateNetworkWirelessSsidBody) contextValidateRadiusAccountingServers(c
 	for i := 0; i < len(o.RadiusAccountingServers); i++ {
 
 		if o.RadiusAccountingServers[i] != nil {
+
+			if swag.IsZero(o.RadiusAccountingServers[i]) { // not required
+				return nil
+			}
+
 			if err := o.RadiusAccountingServers[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkWirelessSsid" + "." + "radiusAccountingServers" + "." + strconv.Itoa(i))
@@ -1268,6 +1339,11 @@ func (o *UpdateNetworkWirelessSsidBody) contextValidateRadiusServers(ctx context
 	for i := 0; i < len(o.RadiusServers); i++ {
 
 		if o.RadiusServers[i] != nil {
+
+			if swag.IsZero(o.RadiusServers[i]) { // not required
+				return nil
+			}
+
 			if err := o.RadiusServers[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkWirelessSsid" + "." + "radiusServers" + "." + strconv.Itoa(i))
@@ -1286,6 +1362,11 @@ func (o *UpdateNetworkWirelessSsidBody) contextValidateRadiusServers(ctx context
 func (o *UpdateNetworkWirelessSsidBody) contextValidateSpeedBurst(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.SpeedBurst != nil {
+
+		if swag.IsZero(o.SpeedBurst) { // not required
+			return nil
+		}
+
 		if err := o.SpeedBurst.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessSsid" + "." + "speedBurst")
@@ -1317,7 +1398,880 @@ func (o *UpdateNetworkWirelessSsidBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidParamsBodyActiveDirectory The current setting for Active Directory. Only valid if splashPage is 'Password-protected with Active Directory'
+/*
+UpdateNetworkWirelessSsidOKBody update network wireless ssid o k body
+swagger:model UpdateNetworkWirelessSsidOKBody
+*/
+type UpdateNetworkWirelessSsidOKBody struct {
+
+	// URL for the admin splash page
+	AdminSplashURL string `json:"adminSplashUrl,omitempty"`
+
+	// The association control method for the SSID
+	// Enum: [8021x-google 8021x-localradius 8021x-meraki 8021x-nac 8021x-radius ipsk-with-nac ipsk-with-radius ipsk-without-radius open open-enhanced open-with-nac open-with-radius psk]
+	AuthMode string `json:"authMode,omitempty"`
+
+	// List of tags for this SSID. If availableOnAllAps is false, then the SSID is only broadcast by APs with tags matching any of the tags in this list
+	AvailabilityTags []string `json:"availabilityTags"`
+
+	// Whether all APs broadcast the SSID or if it's restricted to APs matching any availability tags
+	AvailableOnAllAps bool `json:"availableOnAllAps,omitempty"`
+
+	// The client-serving radio frequencies of this SSID in the default indoor RF profile
+	// Enum: [5 GHz band only Dual band operation Dual band operation with Band Steering]
+	BandSelection string `json:"bandSelection,omitempty"`
+
+	// Whether or not the SSID is enabled
+	Enabled bool `json:"enabled,omitempty"`
+
+	// The psk encryption mode for the SSID
+	// Enum: [wep wpa]
+	EncryptionMode string `json:"encryptionMode,omitempty"`
+
+	// The client IP assignment mode
+	// Enum: [Bridge mode Ethernet over GRE Layer 3 roaming Layer 3 roaming with a concentrator NAT mode VPN]
+	IPAssignmentMode string `json:"ipAssignmentMode,omitempty"`
+
+	// Whether clients connecting to this SSID must use the IP address assigned by the DHCP server
+	MandatoryDhcpEnabled bool `json:"mandatoryDhcpEnabled,omitempty"`
+
+	// The minimum bitrate in Mbps of this SSID in the default indoor RF profile
+	MinBitrate int64 `json:"minBitrate,omitempty"`
+
+	// The name of the SSID
+	Name string `json:"name,omitempty"`
+
+	// Unique identifier of the SSID
+	Number int64 `json:"number,omitempty"`
+
+	// The download bandwidth limit in Kbps. (0 represents no limit.)
+	PerClientBandwidthLimitDown int64 `json:"perClientBandwidthLimitDown,omitempty"`
+
+	// The upload bandwidth limit in Kbps. (0 represents no limit.)
+	PerClientBandwidthLimitUp int64 `json:"perClientBandwidthLimitUp,omitempty"`
+
+	// The total download bandwidth limit in Kbps (0 represents no limit)
+	PerSsidBandwidthLimitDown int64 `json:"perSsidBandwidthLimitDown,omitempty"`
+
+	// The total upload bandwidth limit in Kbps (0 represents no limit)
+	PerSsidBandwidthLimitUp int64 `json:"perSsidBandwidthLimitUp,omitempty"`
+
+	// Whether or not RADIUS accounting is enabled
+	RadiusAccountingEnabled bool `json:"radiusAccountingEnabled,omitempty"`
+
+	// List of RADIUS accounting 802.1X servers to be used for authentication
+	RadiusAccountingServers []*UpdateNetworkWirelessSsidOKBodyRadiusAccountingServersItems0 `json:"radiusAccountingServers"`
+
+	// RADIUS attribute used to look up group policies
+	// Enum: [Airespace-ACL-Name Aruba-User-Role Filter-Id Reply-Message]
+	RadiusAttributeForGroupPolicies string `json:"radiusAttributeForGroupPolicies,omitempty"`
+
+	// Whether RADIUS authentication is enabled
+	RadiusEnabled bool `json:"radiusEnabled,omitempty"`
+
+	// Policy which determines how authentication requests should be handled in the event that all of the configured RADIUS servers are unreachable
+	// Enum: [Allow access Deny access]
+	RadiusFailoverPolicy string `json:"radiusFailoverPolicy,omitempty"`
+
+	// Policy which determines which RADIUS server will be contacted first in an authentication attempt, and the ordering of any necessary retry attempts
+	// Enum: [Round robin Strict priority order]
+	RadiusLoadBalancingPolicy string `json:"radiusLoadBalancingPolicy,omitempty"`
+
+	// List of RADIUS 802.1X servers to be used for authentication
+	RadiusServers []*UpdateNetworkWirelessSsidOKBodyRadiusServersItems0 `json:"radiusServers"`
+
+	// The type of splash page for the SSID
+	// Enum: [Billing Cisco ISE Click-through splash page Facebook Wi-Fi Google Apps domain Google OAuth None Password-protected with Active Directory Password-protected with LDAP Password-protected with Meraki RADIUS Password-protected with custom RADIUS SMS authentication Sponsored guest Systems Manager Sentry]
+	SplashPage string `json:"splashPage,omitempty"`
+
+	// Splash page timeout
+	SplashTimeout string `json:"splashTimeout,omitempty"`
+
+	// SSID Administrator access status
+	SsidAdminAccessible bool `json:"ssidAdminAccessible,omitempty"`
+
+	// Whether the SSID is advertised or hidden by the AP
+	Visible bool `json:"visible,omitempty"`
+
+	// Allow users to access a configurable list of IP ranges prior to sign-on
+	WalledGardenEnabled bool `json:"walledGardenEnabled,omitempty"`
+
+	// Domain names and IP address ranges available in Walled Garden mode
+	WalledGardenRanges []string `json:"walledGardenRanges"`
+
+	// The types of WPA encryption
+	// Enum: [WPA1 and WPA2 WPA1 only WPA2 only WPA3 192-bit Security WPA3 Transition Mode WPA3 only]
+	WpaEncryptionMode string `json:"wpaEncryptionMode,omitempty"`
+}
+
+// Validate validates this update network wireless ssid o k body
+func (o *UpdateNetworkWirelessSsidOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateAuthMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateBandSelection(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateEncryptionMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateIPAssignmentMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateRadiusAccountingServers(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateRadiusAttributeForGroupPolicies(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateRadiusFailoverPolicy(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateRadiusLoadBalancingPolicy(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateRadiusServers(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSplashPage(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateWpaEncryptionMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkWirelessSsidOKBodyTypeAuthModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["8021x-google","8021x-localradius","8021x-meraki","8021x-nac","8021x-radius","ipsk-with-nac","ipsk-with-radius","ipsk-without-radius","open","open-enhanced","open-with-nac","open-with-radius","psk"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessSsidOKBodyTypeAuthModePropEnum = append(updateNetworkWirelessSsidOKBodyTypeAuthModePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessSsidOKBodyAuthModeNr8021xDashGoogle captures enum value "8021x-google"
+	UpdateNetworkWirelessSsidOKBodyAuthModeNr8021xDashGoogle string = "8021x-google"
+
+	// UpdateNetworkWirelessSsidOKBodyAuthModeNr8021xDashLocalradius captures enum value "8021x-localradius"
+	UpdateNetworkWirelessSsidOKBodyAuthModeNr8021xDashLocalradius string = "8021x-localradius"
+
+	// UpdateNetworkWirelessSsidOKBodyAuthModeNr8021xDashMeraki captures enum value "8021x-meraki"
+	UpdateNetworkWirelessSsidOKBodyAuthModeNr8021xDashMeraki string = "8021x-meraki"
+
+	// UpdateNetworkWirelessSsidOKBodyAuthModeNr8021xDashNac captures enum value "8021x-nac"
+	UpdateNetworkWirelessSsidOKBodyAuthModeNr8021xDashNac string = "8021x-nac"
+
+	// UpdateNetworkWirelessSsidOKBodyAuthModeNr8021xDashRadius captures enum value "8021x-radius"
+	UpdateNetworkWirelessSsidOKBodyAuthModeNr8021xDashRadius string = "8021x-radius"
+
+	// UpdateNetworkWirelessSsidOKBodyAuthModeIpskDashWithDashNac captures enum value "ipsk-with-nac"
+	UpdateNetworkWirelessSsidOKBodyAuthModeIpskDashWithDashNac string = "ipsk-with-nac"
+
+	// UpdateNetworkWirelessSsidOKBodyAuthModeIpskDashWithDashRadius captures enum value "ipsk-with-radius"
+	UpdateNetworkWirelessSsidOKBodyAuthModeIpskDashWithDashRadius string = "ipsk-with-radius"
+
+	// UpdateNetworkWirelessSsidOKBodyAuthModeIpskDashWithoutDashRadius captures enum value "ipsk-without-radius"
+	UpdateNetworkWirelessSsidOKBodyAuthModeIpskDashWithoutDashRadius string = "ipsk-without-radius"
+
+	// UpdateNetworkWirelessSsidOKBodyAuthModeOpen captures enum value "open"
+	UpdateNetworkWirelessSsidOKBodyAuthModeOpen string = "open"
+
+	// UpdateNetworkWirelessSsidOKBodyAuthModeOpenDashEnhanced captures enum value "open-enhanced"
+	UpdateNetworkWirelessSsidOKBodyAuthModeOpenDashEnhanced string = "open-enhanced"
+
+	// UpdateNetworkWirelessSsidOKBodyAuthModeOpenDashWithDashNac captures enum value "open-with-nac"
+	UpdateNetworkWirelessSsidOKBodyAuthModeOpenDashWithDashNac string = "open-with-nac"
+
+	// UpdateNetworkWirelessSsidOKBodyAuthModeOpenDashWithDashRadius captures enum value "open-with-radius"
+	UpdateNetworkWirelessSsidOKBodyAuthModeOpenDashWithDashRadius string = "open-with-radius"
+
+	// UpdateNetworkWirelessSsidOKBodyAuthModePsk captures enum value "psk"
+	UpdateNetworkWirelessSsidOKBodyAuthModePsk string = "psk"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessSsidOKBody) validateAuthModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessSsidOKBodyTypeAuthModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSsidOKBody) validateAuthMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.AuthMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateAuthModeEnum("updateNetworkWirelessSsidOK"+"."+"authMode", "body", o.AuthMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var updateNetworkWirelessSsidOKBodyTypeBandSelectionPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["5 GHz band only","Dual band operation","Dual band operation with Band Steering"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessSsidOKBodyTypeBandSelectionPropEnum = append(updateNetworkWirelessSsidOKBodyTypeBandSelectionPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessSsidOKBodyBandSelectionNr5GHzBandOnly captures enum value "5 GHz band only"
+	UpdateNetworkWirelessSsidOKBodyBandSelectionNr5GHzBandOnly string = "5 GHz band only"
+
+	// UpdateNetworkWirelessSsidOKBodyBandSelectionDualBandOperation captures enum value "Dual band operation"
+	UpdateNetworkWirelessSsidOKBodyBandSelectionDualBandOperation string = "Dual band operation"
+
+	// UpdateNetworkWirelessSsidOKBodyBandSelectionDualBandOperationWithBandSteering captures enum value "Dual band operation with Band Steering"
+	UpdateNetworkWirelessSsidOKBodyBandSelectionDualBandOperationWithBandSteering string = "Dual band operation with Band Steering"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessSsidOKBody) validateBandSelectionEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessSsidOKBodyTypeBandSelectionPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSsidOKBody) validateBandSelection(formats strfmt.Registry) error {
+	if swag.IsZero(o.BandSelection) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateBandSelectionEnum("updateNetworkWirelessSsidOK"+"."+"bandSelection", "body", o.BandSelection); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var updateNetworkWirelessSsidOKBodyTypeEncryptionModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["wep","wpa"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessSsidOKBodyTypeEncryptionModePropEnum = append(updateNetworkWirelessSsidOKBodyTypeEncryptionModePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessSsidOKBodyEncryptionModeWep captures enum value "wep"
+	UpdateNetworkWirelessSsidOKBodyEncryptionModeWep string = "wep"
+
+	// UpdateNetworkWirelessSsidOKBodyEncryptionModeWpa captures enum value "wpa"
+	UpdateNetworkWirelessSsidOKBodyEncryptionModeWpa string = "wpa"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessSsidOKBody) validateEncryptionModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessSsidOKBodyTypeEncryptionModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSsidOKBody) validateEncryptionMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.EncryptionMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateEncryptionModeEnum("updateNetworkWirelessSsidOK"+"."+"encryptionMode", "body", o.EncryptionMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var updateNetworkWirelessSsidOKBodyTypeIPAssignmentModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Bridge mode","Ethernet over GRE","Layer 3 roaming","Layer 3 roaming with a concentrator","NAT mode","VPN"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessSsidOKBodyTypeIPAssignmentModePropEnum = append(updateNetworkWirelessSsidOKBodyTypeIPAssignmentModePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessSsidOKBodyIPAssignmentModeBridgeMode captures enum value "Bridge mode"
+	UpdateNetworkWirelessSsidOKBodyIPAssignmentModeBridgeMode string = "Bridge mode"
+
+	// UpdateNetworkWirelessSsidOKBodyIPAssignmentModeEthernetOverGRE captures enum value "Ethernet over GRE"
+	UpdateNetworkWirelessSsidOKBodyIPAssignmentModeEthernetOverGRE string = "Ethernet over GRE"
+
+	// UpdateNetworkWirelessSsidOKBodyIPAssignmentModeLayer3Roaming captures enum value "Layer 3 roaming"
+	UpdateNetworkWirelessSsidOKBodyIPAssignmentModeLayer3Roaming string = "Layer 3 roaming"
+
+	// UpdateNetworkWirelessSsidOKBodyIPAssignmentModeLayer3RoamingWithaConcentrator captures enum value "Layer 3 roaming with a concentrator"
+	UpdateNetworkWirelessSsidOKBodyIPAssignmentModeLayer3RoamingWithaConcentrator string = "Layer 3 roaming with a concentrator"
+
+	// UpdateNetworkWirelessSsidOKBodyIPAssignmentModeNATMode captures enum value "NAT mode"
+	UpdateNetworkWirelessSsidOKBodyIPAssignmentModeNATMode string = "NAT mode"
+
+	// UpdateNetworkWirelessSsidOKBodyIPAssignmentModeVPN captures enum value "VPN"
+	UpdateNetworkWirelessSsidOKBodyIPAssignmentModeVPN string = "VPN"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessSsidOKBody) validateIPAssignmentModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessSsidOKBodyTypeIPAssignmentModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSsidOKBody) validateIPAssignmentMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.IPAssignmentMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateIPAssignmentModeEnum("updateNetworkWirelessSsidOK"+"."+"ipAssignmentMode", "body", o.IPAssignmentMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSsidOKBody) validateRadiusAccountingServers(formats strfmt.Registry) error {
+	if swag.IsZero(o.RadiusAccountingServers) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.RadiusAccountingServers); i++ {
+		if swag.IsZero(o.RadiusAccountingServers[i]) { // not required
+			continue
+		}
+
+		if o.RadiusAccountingServers[i] != nil {
+			if err := o.RadiusAccountingServers[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkWirelessSsidOK" + "." + "radiusAccountingServers" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkWirelessSsidOK" + "." + "radiusAccountingServers" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+var updateNetworkWirelessSsidOKBodyTypeRadiusAttributeForGroupPoliciesPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Airespace-ACL-Name","Aruba-User-Role","Filter-Id","Reply-Message"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessSsidOKBodyTypeRadiusAttributeForGroupPoliciesPropEnum = append(updateNetworkWirelessSsidOKBodyTypeRadiusAttributeForGroupPoliciesPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessSsidOKBodyRadiusAttributeForGroupPoliciesAirespaceDashACLDashName captures enum value "Airespace-ACL-Name"
+	UpdateNetworkWirelessSsidOKBodyRadiusAttributeForGroupPoliciesAirespaceDashACLDashName string = "Airespace-ACL-Name"
+
+	// UpdateNetworkWirelessSsidOKBodyRadiusAttributeForGroupPoliciesArubaDashUserDashRole captures enum value "Aruba-User-Role"
+	UpdateNetworkWirelessSsidOKBodyRadiusAttributeForGroupPoliciesArubaDashUserDashRole string = "Aruba-User-Role"
+
+	// UpdateNetworkWirelessSsidOKBodyRadiusAttributeForGroupPoliciesFilterDashID captures enum value "Filter-Id"
+	UpdateNetworkWirelessSsidOKBodyRadiusAttributeForGroupPoliciesFilterDashID string = "Filter-Id"
+
+	// UpdateNetworkWirelessSsidOKBodyRadiusAttributeForGroupPoliciesReplyDashMessage captures enum value "Reply-Message"
+	UpdateNetworkWirelessSsidOKBodyRadiusAttributeForGroupPoliciesReplyDashMessage string = "Reply-Message"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessSsidOKBody) validateRadiusAttributeForGroupPoliciesEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessSsidOKBodyTypeRadiusAttributeForGroupPoliciesPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSsidOKBody) validateRadiusAttributeForGroupPolicies(formats strfmt.Registry) error {
+	if swag.IsZero(o.RadiusAttributeForGroupPolicies) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateRadiusAttributeForGroupPoliciesEnum("updateNetworkWirelessSsidOK"+"."+"radiusAttributeForGroupPolicies", "body", o.RadiusAttributeForGroupPolicies); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var updateNetworkWirelessSsidOKBodyTypeRadiusFailoverPolicyPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Allow access","Deny access"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessSsidOKBodyTypeRadiusFailoverPolicyPropEnum = append(updateNetworkWirelessSsidOKBodyTypeRadiusFailoverPolicyPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessSsidOKBodyRadiusFailoverPolicyAllowAccess captures enum value "Allow access"
+	UpdateNetworkWirelessSsidOKBodyRadiusFailoverPolicyAllowAccess string = "Allow access"
+
+	// UpdateNetworkWirelessSsidOKBodyRadiusFailoverPolicyDenyAccess captures enum value "Deny access"
+	UpdateNetworkWirelessSsidOKBodyRadiusFailoverPolicyDenyAccess string = "Deny access"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessSsidOKBody) validateRadiusFailoverPolicyEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessSsidOKBodyTypeRadiusFailoverPolicyPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSsidOKBody) validateRadiusFailoverPolicy(formats strfmt.Registry) error {
+	if swag.IsZero(o.RadiusFailoverPolicy) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateRadiusFailoverPolicyEnum("updateNetworkWirelessSsidOK"+"."+"radiusFailoverPolicy", "body", o.RadiusFailoverPolicy); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var updateNetworkWirelessSsidOKBodyTypeRadiusLoadBalancingPolicyPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Round robin","Strict priority order"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessSsidOKBodyTypeRadiusLoadBalancingPolicyPropEnum = append(updateNetworkWirelessSsidOKBodyTypeRadiusLoadBalancingPolicyPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessSsidOKBodyRadiusLoadBalancingPolicyRoundRobin captures enum value "Round robin"
+	UpdateNetworkWirelessSsidOKBodyRadiusLoadBalancingPolicyRoundRobin string = "Round robin"
+
+	// UpdateNetworkWirelessSsidOKBodyRadiusLoadBalancingPolicyStrictPriorityOrder captures enum value "Strict priority order"
+	UpdateNetworkWirelessSsidOKBodyRadiusLoadBalancingPolicyStrictPriorityOrder string = "Strict priority order"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessSsidOKBody) validateRadiusLoadBalancingPolicyEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessSsidOKBodyTypeRadiusLoadBalancingPolicyPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSsidOKBody) validateRadiusLoadBalancingPolicy(formats strfmt.Registry) error {
+	if swag.IsZero(o.RadiusLoadBalancingPolicy) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateRadiusLoadBalancingPolicyEnum("updateNetworkWirelessSsidOK"+"."+"radiusLoadBalancingPolicy", "body", o.RadiusLoadBalancingPolicy); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSsidOKBody) validateRadiusServers(formats strfmt.Registry) error {
+	if swag.IsZero(o.RadiusServers) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.RadiusServers); i++ {
+		if swag.IsZero(o.RadiusServers[i]) { // not required
+			continue
+		}
+
+		if o.RadiusServers[i] != nil {
+			if err := o.RadiusServers[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkWirelessSsidOK" + "." + "radiusServers" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkWirelessSsidOK" + "." + "radiusServers" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+var updateNetworkWirelessSsidOKBodyTypeSplashPagePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Billing","Cisco ISE","Click-through splash page","Facebook Wi-Fi","Google Apps domain","Google OAuth","None","Password-protected with Active Directory","Password-protected with LDAP","Password-protected with Meraki RADIUS","Password-protected with custom RADIUS","SMS authentication","Sponsored guest","Systems Manager Sentry"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessSsidOKBodyTypeSplashPagePropEnum = append(updateNetworkWirelessSsidOKBodyTypeSplashPagePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessSsidOKBodySplashPageBilling captures enum value "Billing"
+	UpdateNetworkWirelessSsidOKBodySplashPageBilling string = "Billing"
+
+	// UpdateNetworkWirelessSsidOKBodySplashPageCiscoISE captures enum value "Cisco ISE"
+	UpdateNetworkWirelessSsidOKBodySplashPageCiscoISE string = "Cisco ISE"
+
+	// UpdateNetworkWirelessSsidOKBodySplashPageClickDashThroughSplashPage captures enum value "Click-through splash page"
+	UpdateNetworkWirelessSsidOKBodySplashPageClickDashThroughSplashPage string = "Click-through splash page"
+
+	// UpdateNetworkWirelessSsidOKBodySplashPageFacebookWiDashFi captures enum value "Facebook Wi-Fi"
+	UpdateNetworkWirelessSsidOKBodySplashPageFacebookWiDashFi string = "Facebook Wi-Fi"
+
+	// UpdateNetworkWirelessSsidOKBodySplashPageGoogleAppsDomain captures enum value "Google Apps domain"
+	UpdateNetworkWirelessSsidOKBodySplashPageGoogleAppsDomain string = "Google Apps domain"
+
+	// UpdateNetworkWirelessSsidOKBodySplashPageGoogleOAuth captures enum value "Google OAuth"
+	UpdateNetworkWirelessSsidOKBodySplashPageGoogleOAuth string = "Google OAuth"
+
+	// UpdateNetworkWirelessSsidOKBodySplashPageNone captures enum value "None"
+	UpdateNetworkWirelessSsidOKBodySplashPageNone string = "None"
+
+	// UpdateNetworkWirelessSsidOKBodySplashPagePasswordDashProtectedWithActiveDirectory captures enum value "Password-protected with Active Directory"
+	UpdateNetworkWirelessSsidOKBodySplashPagePasswordDashProtectedWithActiveDirectory string = "Password-protected with Active Directory"
+
+	// UpdateNetworkWirelessSsidOKBodySplashPagePasswordDashProtectedWithLDAP captures enum value "Password-protected with LDAP"
+	UpdateNetworkWirelessSsidOKBodySplashPagePasswordDashProtectedWithLDAP string = "Password-protected with LDAP"
+
+	// UpdateNetworkWirelessSsidOKBodySplashPagePasswordDashProtectedWithMerakiRADIUS captures enum value "Password-protected with Meraki RADIUS"
+	UpdateNetworkWirelessSsidOKBodySplashPagePasswordDashProtectedWithMerakiRADIUS string = "Password-protected with Meraki RADIUS"
+
+	// UpdateNetworkWirelessSsidOKBodySplashPagePasswordDashProtectedWithCustomRADIUS captures enum value "Password-protected with custom RADIUS"
+	UpdateNetworkWirelessSsidOKBodySplashPagePasswordDashProtectedWithCustomRADIUS string = "Password-protected with custom RADIUS"
+
+	// UpdateNetworkWirelessSsidOKBodySplashPageSMSAuthentication captures enum value "SMS authentication"
+	UpdateNetworkWirelessSsidOKBodySplashPageSMSAuthentication string = "SMS authentication"
+
+	// UpdateNetworkWirelessSsidOKBodySplashPageSponsoredGuest captures enum value "Sponsored guest"
+	UpdateNetworkWirelessSsidOKBodySplashPageSponsoredGuest string = "Sponsored guest"
+
+	// UpdateNetworkWirelessSsidOKBodySplashPageSystemsManagerSentry captures enum value "Systems Manager Sentry"
+	UpdateNetworkWirelessSsidOKBodySplashPageSystemsManagerSentry string = "Systems Manager Sentry"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessSsidOKBody) validateSplashPageEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessSsidOKBodyTypeSplashPagePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSsidOKBody) validateSplashPage(formats strfmt.Registry) error {
+	if swag.IsZero(o.SplashPage) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateSplashPageEnum("updateNetworkWirelessSsidOK"+"."+"splashPage", "body", o.SplashPage); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var updateNetworkWirelessSsidOKBodyTypeWpaEncryptionModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["WPA1 and WPA2","WPA1 only","WPA2 only","WPA3 192-bit Security","WPA3 Transition Mode","WPA3 only"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkWirelessSsidOKBodyTypeWpaEncryptionModePropEnum = append(updateNetworkWirelessSsidOKBodyTypeWpaEncryptionModePropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkWirelessSsidOKBodyWpaEncryptionModeWPA1AndWPA2 captures enum value "WPA1 and WPA2"
+	UpdateNetworkWirelessSsidOKBodyWpaEncryptionModeWPA1AndWPA2 string = "WPA1 and WPA2"
+
+	// UpdateNetworkWirelessSsidOKBodyWpaEncryptionModeWPA1Only captures enum value "WPA1 only"
+	UpdateNetworkWirelessSsidOKBodyWpaEncryptionModeWPA1Only string = "WPA1 only"
+
+	// UpdateNetworkWirelessSsidOKBodyWpaEncryptionModeWPA2Only captures enum value "WPA2 only"
+	UpdateNetworkWirelessSsidOKBodyWpaEncryptionModeWPA2Only string = "WPA2 only"
+
+	// UpdateNetworkWirelessSsidOKBodyWpaEncryptionModeWPA3192DashBitSecurity captures enum value "WPA3 192-bit Security"
+	UpdateNetworkWirelessSsidOKBodyWpaEncryptionModeWPA3192DashBitSecurity string = "WPA3 192-bit Security"
+
+	// UpdateNetworkWirelessSsidOKBodyWpaEncryptionModeWPA3TransitionMode captures enum value "WPA3 Transition Mode"
+	UpdateNetworkWirelessSsidOKBodyWpaEncryptionModeWPA3TransitionMode string = "WPA3 Transition Mode"
+
+	// UpdateNetworkWirelessSsidOKBodyWpaEncryptionModeWPA3Only captures enum value "WPA3 only"
+	UpdateNetworkWirelessSsidOKBodyWpaEncryptionModeWPA3Only string = "WPA3 only"
+)
+
+// prop value enum
+func (o *UpdateNetworkWirelessSsidOKBody) validateWpaEncryptionModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkWirelessSsidOKBodyTypeWpaEncryptionModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSsidOKBody) validateWpaEncryptionMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.WpaEncryptionMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateWpaEncryptionModeEnum("updateNetworkWirelessSsidOK"+"."+"wpaEncryptionMode", "body", o.WpaEncryptionMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network wireless ssid o k body based on the context it is used
+func (o *UpdateNetworkWirelessSsidOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateRadiusAccountingServers(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateRadiusServers(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSsidOKBody) contextValidateRadiusAccountingServers(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.RadiusAccountingServers); i++ {
+
+		if o.RadiusAccountingServers[i] != nil {
+
+			if swag.IsZero(o.RadiusAccountingServers[i]) { // not required
+				return nil
+			}
+
+			if err := o.RadiusAccountingServers[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkWirelessSsidOK" + "." + "radiusAccountingServers" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkWirelessSsidOK" + "." + "radiusAccountingServers" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkWirelessSsidOKBody) contextValidateRadiusServers(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.RadiusServers); i++ {
+
+		if o.RadiusServers[i] != nil {
+
+			if swag.IsZero(o.RadiusServers[i]) { // not required
+				return nil
+			}
+
+			if err := o.RadiusServers[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkWirelessSsidOK" + "." + "radiusServers" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkWirelessSsidOK" + "." + "radiusServers" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessSsidOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessSsidOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessSsidOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessSsidOKBodyRadiusAccountingServersItems0 update network wireless ssid o k body radius accounting servers items0
+swagger:model UpdateNetworkWirelessSsidOKBodyRadiusAccountingServersItems0
+*/
+type UpdateNetworkWirelessSsidOKBodyRadiusAccountingServersItems0 struct {
+
+	// Certificate used for authorization for the RADSEC Server
+	CaCertificate string `json:"caCertificate,omitempty"`
+
+	// IP address (or FQDN) to which the APs will send RADIUS accounting messages
+	Host string `json:"host,omitempty"`
+
+	// The ID of the Openroaming Certificate attached to radius server
+	OpenRoamingCertificateID int64 `json:"openRoamingCertificateId,omitempty"`
+
+	// Port on the RADIUS server that is listening for accounting messages
+	Port int64 `json:"port,omitempty"`
+}
+
+// Validate validates this update network wireless ssid o k body radius accounting servers items0
+func (o *UpdateNetworkWirelessSsidOKBodyRadiusAccountingServersItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless ssid o k body radius accounting servers items0 based on context it is used
+func (o *UpdateNetworkWirelessSsidOKBodyRadiusAccountingServersItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessSsidOKBodyRadiusAccountingServersItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessSsidOKBodyRadiusAccountingServersItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessSsidOKBodyRadiusAccountingServersItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessSsidOKBodyRadiusServersItems0 update network wireless ssid o k body radius servers items0
+swagger:model UpdateNetworkWirelessSsidOKBodyRadiusServersItems0
+*/
+type UpdateNetworkWirelessSsidOKBodyRadiusServersItems0 struct {
+
+	// Certificate used for authorization for the RADSEC Server
+	CaCertificate string `json:"caCertificate,omitempty"`
+
+	// IP address (or FQDN) of your RADIUS server
+	Host string `json:"host,omitempty"`
+
+	// The ID of the Openroaming Certificate attached to radius server
+	OpenRoamingCertificateID int64 `json:"openRoamingCertificateId,omitempty"`
+
+	// UDP port the RADIUS server listens on for Access-requests
+	Port int64 `json:"port,omitempty"`
+}
+
+// Validate validates this update network wireless ssid o k body radius servers items0
+func (o *UpdateNetworkWirelessSsidOKBodyRadiusServersItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network wireless ssid o k body radius servers items0 based on context it is used
+func (o *UpdateNetworkWirelessSsidOKBodyRadiusServersItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkWirelessSsidOKBodyRadiusServersItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkWirelessSsidOKBodyRadiusServersItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkWirelessSsidOKBodyRadiusServersItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkWirelessSsidParamsBodyActiveDirectory The current setting for Active Directory. Only valid if splashPage is 'Password-protected with Active Directory'
 swagger:model UpdateNetworkWirelessSsidParamsBodyActiveDirectory
 */
 type UpdateNetworkWirelessSsidParamsBodyActiveDirectory struct {
@@ -1413,6 +2367,11 @@ func (o *UpdateNetworkWirelessSsidParamsBodyActiveDirectory) ContextValidate(ctx
 func (o *UpdateNetworkWirelessSsidParamsBodyActiveDirectory) contextValidateCredentials(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Credentials != nil {
+
+		if swag.IsZero(o.Credentials) { // not required
+			return nil
+		}
+
 		if err := o.Credentials.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessSsid" + "." + "activeDirectory" + "." + "credentials")
@@ -1431,6 +2390,11 @@ func (o *UpdateNetworkWirelessSsidParamsBodyActiveDirectory) contextValidateServ
 	for i := 0; i < len(o.Servers); i++ {
 
 		if o.Servers[i] != nil {
+
+			if swag.IsZero(o.Servers[i]) { // not required
+				return nil
+			}
+
 			if err := o.Servers[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkWirelessSsid" + "." + "activeDirectory" + "." + "servers" + "." + strconv.Itoa(i))
@@ -1464,7 +2428,8 @@ func (o *UpdateNetworkWirelessSsidParamsBodyActiveDirectory) UnmarshalBinary(b [
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidParamsBodyActiveDirectoryCredentials (Optional) The credentials of the user account to be used by the AP to bind to your Active Directory server. The Active Directory account should have permissions on all your Active Directory servers. Only valid if the splashPage is 'Password-protected with Active Directory'.
+/*
+UpdateNetworkWirelessSsidParamsBodyActiveDirectoryCredentials (Optional) The credentials of the user account to be used by the AP to bind to your Active Directory server. The Active Directory account should have permissions on all your Active Directory servers. Only valid if the splashPage is 'Password-protected with Active Directory'.
 swagger:model UpdateNetworkWirelessSsidParamsBodyActiveDirectoryCredentials
 */
 type UpdateNetworkWirelessSsidParamsBodyActiveDirectoryCredentials struct {
@@ -1504,7 +2469,8 @@ func (o *UpdateNetworkWirelessSsidParamsBodyActiveDirectoryCredentials) Unmarsha
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidParamsBodyActiveDirectoryServersItems0 update network wireless ssid params body active directory servers items0
+/*
+UpdateNetworkWirelessSsidParamsBodyActiveDirectoryServersItems0 update network wireless ssid params body active directory servers items0
 swagger:model UpdateNetworkWirelessSsidParamsBodyActiveDirectoryServersItems0
 */
 type UpdateNetworkWirelessSsidParamsBodyActiveDirectoryServersItems0 struct {
@@ -1563,7 +2529,8 @@ func (o *UpdateNetworkWirelessSsidParamsBodyActiveDirectoryServersItems0) Unmars
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidParamsBodyApTagsAndVlanIdsItems0 update network wireless ssid params body ap tags and vlan ids items0
+/*
+UpdateNetworkWirelessSsidParamsBodyApTagsAndVlanIdsItems0 update network wireless ssid params body ap tags and vlan ids items0
 swagger:model UpdateNetworkWirelessSsidParamsBodyApTagsAndVlanIdsItems0
 */
 type UpdateNetworkWirelessSsidParamsBodyApTagsAndVlanIdsItems0 struct {
@@ -1603,7 +2570,8 @@ func (o *UpdateNetworkWirelessSsidParamsBodyApTagsAndVlanIdsItems0) UnmarshalBin
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidParamsBodyDNSRewrite DNS servers rewrite settings
+/*
+UpdateNetworkWirelessSsidParamsBodyDNSRewrite DNS servers rewrite settings
 swagger:model UpdateNetworkWirelessSsidParamsBodyDNSRewrite
 */
 type UpdateNetworkWirelessSsidParamsBodyDNSRewrite struct {
@@ -1643,7 +2611,8 @@ func (o *UpdateNetworkWirelessSsidParamsBodyDNSRewrite) UnmarshalBinary(b []byte
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidParamsBodyDot11r The current setting for 802.11r
+/*
+UpdateNetworkWirelessSsidParamsBodyDot11r The current setting for 802.11r
 swagger:model UpdateNetworkWirelessSsidParamsBodyDot11r
 */
 type UpdateNetworkWirelessSsidParamsBodyDot11r struct {
@@ -1683,7 +2652,8 @@ func (o *UpdateNetworkWirelessSsidParamsBodyDot11r) UnmarshalBinary(b []byte) er
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidParamsBodyDot11w The current setting for Protected Management Frames (802.11w).
+/*
+UpdateNetworkWirelessSsidParamsBodyDot11w The current setting for Protected Management Frames (802.11w).
 swagger:model UpdateNetworkWirelessSsidParamsBodyDot11w
 */
 type UpdateNetworkWirelessSsidParamsBodyDot11w struct {
@@ -1723,7 +2693,8 @@ func (o *UpdateNetworkWirelessSsidParamsBodyDot11w) UnmarshalBinary(b []byte) er
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidParamsBodyGre Ethernet over GRE settings
+/*
+UpdateNetworkWirelessSsidParamsBodyGre Ethernet over GRE settings
 swagger:model UpdateNetworkWirelessSsidParamsBodyGre
 */
 type UpdateNetworkWirelessSsidParamsBodyGre struct {
@@ -1785,6 +2756,11 @@ func (o *UpdateNetworkWirelessSsidParamsBodyGre) ContextValidate(ctx context.Con
 func (o *UpdateNetworkWirelessSsidParamsBodyGre) contextValidateConcentrator(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Concentrator != nil {
+
+		if swag.IsZero(o.Concentrator) { // not required
+			return nil
+		}
+
 		if err := o.Concentrator.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessSsid" + "." + "gre" + "." + "concentrator")
@@ -1816,7 +2792,8 @@ func (o *UpdateNetworkWirelessSsidParamsBodyGre) UnmarshalBinary(b []byte) error
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidParamsBodyGreConcentrator The EoGRE concentrator's settings
+/*
+UpdateNetworkWirelessSsidParamsBodyGreConcentrator The EoGRE concentrator's settings
 swagger:model UpdateNetworkWirelessSsidParamsBodyGreConcentrator
 */
 type UpdateNetworkWirelessSsidParamsBodyGreConcentrator struct {
@@ -1872,7 +2849,8 @@ func (o *UpdateNetworkWirelessSsidParamsBodyGreConcentrator) UnmarshalBinary(b [
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidParamsBodyLdap The current setting for LDAP. Only valid if splashPage is 'Password-protected with LDAP'.
+/*
+UpdateNetworkWirelessSsidParamsBodyLdap The current setting for LDAP. Only valid if splashPage is 'Password-protected with LDAP'.
 swagger:model UpdateNetworkWirelessSsidParamsBodyLdap
 */
 type UpdateNetworkWirelessSsidParamsBodyLdap struct {
@@ -2001,6 +2979,11 @@ func (o *UpdateNetworkWirelessSsidParamsBodyLdap) ContextValidate(ctx context.Co
 func (o *UpdateNetworkWirelessSsidParamsBodyLdap) contextValidateCredentials(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Credentials != nil {
+
+		if swag.IsZero(o.Credentials) { // not required
+			return nil
+		}
+
 		if err := o.Credentials.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessSsid" + "." + "ldap" + "." + "credentials")
@@ -2017,6 +3000,11 @@ func (o *UpdateNetworkWirelessSsidParamsBodyLdap) contextValidateCredentials(ctx
 func (o *UpdateNetworkWirelessSsidParamsBodyLdap) contextValidateServerCaCertificate(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.ServerCaCertificate != nil {
+
+		if swag.IsZero(o.ServerCaCertificate) { // not required
+			return nil
+		}
+
 		if err := o.ServerCaCertificate.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessSsid" + "." + "ldap" + "." + "serverCaCertificate")
@@ -2035,6 +3023,11 @@ func (o *UpdateNetworkWirelessSsidParamsBodyLdap) contextValidateServers(ctx con
 	for i := 0; i < len(o.Servers); i++ {
 
 		if o.Servers[i] != nil {
+
+			if swag.IsZero(o.Servers[i]) { // not required
+				return nil
+			}
+
 			if err := o.Servers[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkWirelessSsid" + "." + "ldap" + "." + "servers" + "." + strconv.Itoa(i))
@@ -2068,7 +3061,8 @@ func (o *UpdateNetworkWirelessSsidParamsBodyLdap) UnmarshalBinary(b []byte) erro
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidParamsBodyLdapCredentials (Optional) The credentials of the user account to be used by the AP to bind to your LDAP server. The LDAP account should have permissions on all your LDAP servers.
+/*
+UpdateNetworkWirelessSsidParamsBodyLdapCredentials (Optional) The credentials of the user account to be used by the AP to bind to your LDAP server. The LDAP account should have permissions on all your LDAP servers.
 swagger:model UpdateNetworkWirelessSsidParamsBodyLdapCredentials
 */
 type UpdateNetworkWirelessSsidParamsBodyLdapCredentials struct {
@@ -2108,7 +3102,8 @@ func (o *UpdateNetworkWirelessSsidParamsBodyLdapCredentials) UnmarshalBinary(b [
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidParamsBodyLdapServerCaCertificate The CA certificate used to sign the LDAP server's key.
+/*
+UpdateNetworkWirelessSsidParamsBodyLdapServerCaCertificate The CA certificate used to sign the LDAP server's key.
 swagger:model UpdateNetworkWirelessSsidParamsBodyLdapServerCaCertificate
 */
 type UpdateNetworkWirelessSsidParamsBodyLdapServerCaCertificate struct {
@@ -2145,7 +3140,8 @@ func (o *UpdateNetworkWirelessSsidParamsBodyLdapServerCaCertificate) UnmarshalBi
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidParamsBodyLdapServersItems0 update network wireless ssid params body ldap servers items0
+/*
+UpdateNetworkWirelessSsidParamsBodyLdapServersItems0 update network wireless ssid params body ldap servers items0
 swagger:model UpdateNetworkWirelessSsidParamsBodyLdapServersItems0
 */
 type UpdateNetworkWirelessSsidParamsBodyLdapServersItems0 struct {
@@ -2218,7 +3214,8 @@ func (o *UpdateNetworkWirelessSsidParamsBodyLdapServersItems0) UnmarshalBinary(b
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidParamsBodyLocalRadius The current setting for Local Authentication, a built-in RADIUS server on the access point. Only valid if authMode is '8021x-localradius'.
+/*
+UpdateNetworkWirelessSsidParamsBodyLocalRadius The current setting for Local Authentication, a built-in RADIUS server on the access point. Only valid if authMode is '8021x-localradius'.
 swagger:model UpdateNetworkWirelessSsidParamsBodyLocalRadius
 */
 type UpdateNetworkWirelessSsidParamsBodyLocalRadius struct {
@@ -2310,6 +3307,11 @@ func (o *UpdateNetworkWirelessSsidParamsBodyLocalRadius) ContextValidate(ctx con
 func (o *UpdateNetworkWirelessSsidParamsBodyLocalRadius) contextValidateCertificateAuthentication(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.CertificateAuthentication != nil {
+
+		if swag.IsZero(o.CertificateAuthentication) { // not required
+			return nil
+		}
+
 		if err := o.CertificateAuthentication.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessSsid" + "." + "localRadius" + "." + "certificateAuthentication")
@@ -2326,6 +3328,11 @@ func (o *UpdateNetworkWirelessSsidParamsBodyLocalRadius) contextValidateCertific
 func (o *UpdateNetworkWirelessSsidParamsBodyLocalRadius) contextValidatePasswordAuthentication(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.PasswordAuthentication != nil {
+
+		if swag.IsZero(o.PasswordAuthentication) { // not required
+			return nil
+		}
+
 		if err := o.PasswordAuthentication.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessSsid" + "." + "localRadius" + "." + "passwordAuthentication")
@@ -2357,7 +3364,8 @@ func (o *UpdateNetworkWirelessSsidParamsBodyLocalRadius) UnmarshalBinary(b []byt
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidParamsBodyLocalRadiusCertificateAuthentication The current setting for certificate verification.
+/*
+UpdateNetworkWirelessSsidParamsBodyLocalRadiusCertificateAuthentication The current setting for certificate verification.
 swagger:model UpdateNetworkWirelessSsidParamsBodyLocalRadiusCertificateAuthentication
 */
 type UpdateNetworkWirelessSsidParamsBodyLocalRadiusCertificateAuthentication struct {
@@ -2428,6 +3436,11 @@ func (o *UpdateNetworkWirelessSsidParamsBodyLocalRadiusCertificateAuthentication
 func (o *UpdateNetworkWirelessSsidParamsBodyLocalRadiusCertificateAuthentication) contextValidateClientRootCaCertificate(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.ClientRootCaCertificate != nil {
+
+		if swag.IsZero(o.ClientRootCaCertificate) { // not required
+			return nil
+		}
+
 		if err := o.ClientRootCaCertificate.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkWirelessSsid" + "." + "localRadius" + "." + "certificateAuthentication" + "." + "clientRootCaCertificate")
@@ -2459,7 +3472,8 @@ func (o *UpdateNetworkWirelessSsidParamsBodyLocalRadiusCertificateAuthentication
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidParamsBodyLocalRadiusCertificateAuthenticationClientRootCaCertificate The Client CA Certificate used to sign the client certificate.
+/*
+UpdateNetworkWirelessSsidParamsBodyLocalRadiusCertificateAuthenticationClientRootCaCertificate The Client CA Certificate used to sign the client certificate.
 swagger:model UpdateNetworkWirelessSsidParamsBodyLocalRadiusCertificateAuthenticationClientRootCaCertificate
 */
 type UpdateNetworkWirelessSsidParamsBodyLocalRadiusCertificateAuthenticationClientRootCaCertificate struct {
@@ -2496,7 +3510,8 @@ func (o *UpdateNetworkWirelessSsidParamsBodyLocalRadiusCertificateAuthentication
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidParamsBodyLocalRadiusPasswordAuthentication The current setting for password-based authentication.
+/*
+UpdateNetworkWirelessSsidParamsBodyLocalRadiusPasswordAuthentication The current setting for password-based authentication.
 swagger:model UpdateNetworkWirelessSsidParamsBodyLocalRadiusPasswordAuthentication
 */
 type UpdateNetworkWirelessSsidParamsBodyLocalRadiusPasswordAuthentication struct {
@@ -2533,7 +3548,8 @@ func (o *UpdateNetworkWirelessSsidParamsBodyLocalRadiusPasswordAuthentication) U
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidParamsBodyOauth The OAuth settings of this SSID. Only valid if splashPage is 'Google OAuth'.
+/*
+UpdateNetworkWirelessSsidParamsBodyOauth The OAuth settings of this SSID. Only valid if splashPage is 'Google OAuth'.
 swagger:model UpdateNetworkWirelessSsidParamsBodyOauth
 */
 type UpdateNetworkWirelessSsidParamsBodyOauth struct {
@@ -2570,7 +3586,8 @@ func (o *UpdateNetworkWirelessSsidParamsBodyOauth) UnmarshalBinary(b []byte) err
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidParamsBodyRadiusAccountingServersItems0 update network wireless ssid params body radius accounting servers items0
+/*
+UpdateNetworkWirelessSsidParamsBodyRadiusAccountingServersItems0 update network wireless ssid params body radius accounting servers items0
 swagger:model UpdateNetworkWirelessSsidParamsBodyRadiusAccountingServersItems0
 */
 type UpdateNetworkWirelessSsidParamsBodyRadiusAccountingServersItems0 struct {
@@ -2578,7 +3595,7 @@ type UpdateNetworkWirelessSsidParamsBodyRadiusAccountingServersItems0 struct {
 	// Certificate used for authorization for the RADSEC Server
 	CaCertificate string `json:"caCertificate,omitempty"`
 
-	// IP address to which the APs will send RADIUS accounting messages
+	// IP address (or FQDN) to which the APs will send RADIUS accounting messages
 	// Required: true
 	Host *string `json:"host"`
 
@@ -2638,7 +3655,8 @@ func (o *UpdateNetworkWirelessSsidParamsBodyRadiusAccountingServersItems0) Unmar
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidParamsBodyRadiusServersItems0 update network wireless ssid params body radius servers items0
+/*
+UpdateNetworkWirelessSsidParamsBodyRadiusServersItems0 update network wireless ssid params body radius servers items0
 swagger:model UpdateNetworkWirelessSsidParamsBodyRadiusServersItems0
 */
 type UpdateNetworkWirelessSsidParamsBodyRadiusServersItems0 struct {
@@ -2646,7 +3664,7 @@ type UpdateNetworkWirelessSsidParamsBodyRadiusServersItems0 struct {
 	// Certificate used for authorization for the RADSEC Server
 	CaCertificate string `json:"caCertificate,omitempty"`
 
-	// IP address of your RADIUS server
+	// IP address (or FQDN) of your RADIUS server
 	// Required: true
 	Host *string `json:"host"`
 
@@ -2709,7 +3727,8 @@ func (o *UpdateNetworkWirelessSsidParamsBodyRadiusServersItems0) UnmarshalBinary
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidParamsBodySpeedBurst The SpeedBurst setting for this SSID'
+/*
+UpdateNetworkWirelessSsidParamsBodySpeedBurst The SpeedBurst setting for this SSID'
 swagger:model UpdateNetworkWirelessSsidParamsBodySpeedBurst
 */
 type UpdateNetworkWirelessSsidParamsBodySpeedBurst struct {

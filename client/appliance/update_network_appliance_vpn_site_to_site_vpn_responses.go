@@ -34,7 +34,7 @@ func (o *UpdateNetworkApplianceVpnSiteToSiteVpnReader) ReadResponse(response run
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/appliance/vpn/siteToSiteVpn] updateNetworkApplianceVpnSiteToSiteVpn", response, response.Code())
 	}
 }
 
@@ -43,12 +43,13 @@ func NewUpdateNetworkApplianceVpnSiteToSiteVpnOK() *UpdateNetworkApplianceVpnSit
 	return &UpdateNetworkApplianceVpnSiteToSiteVpnOK{}
 }
 
-/* UpdateNetworkApplianceVpnSiteToSiteVpnOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkApplianceVpnSiteToSiteVpnOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateNetworkApplianceVpnSiteToSiteVpnOK struct {
-	Payload interface{}
+	Payload *UpdateNetworkApplianceVpnSiteToSiteVpnOKBody
 }
 
 // IsSuccess returns true when this update network appliance vpn site to site vpn o k response has a 2xx status code
@@ -76,6 +77,11 @@ func (o *UpdateNetworkApplianceVpnSiteToSiteVpnOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network appliance vpn site to site vpn o k response
+func (o *UpdateNetworkApplianceVpnSiteToSiteVpnOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkApplianceVpnSiteToSiteVpnOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/appliance/vpn/siteToSiteVpn][%d] updateNetworkApplianceVpnSiteToSiteVpnOK  %+v", 200, o.Payload)
 }
@@ -84,22 +90,25 @@ func (o *UpdateNetworkApplianceVpnSiteToSiteVpnOK) String() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/appliance/vpn/siteToSiteVpn][%d] updateNetworkApplianceVpnSiteToSiteVpnOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateNetworkApplianceVpnSiteToSiteVpnOK) GetPayload() interface{} {
+func (o *UpdateNetworkApplianceVpnSiteToSiteVpnOK) GetPayload() *UpdateNetworkApplianceVpnSiteToSiteVpnOKBody {
 	return o.Payload
 }
 
 func (o *UpdateNetworkApplianceVpnSiteToSiteVpnOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateNetworkApplianceVpnSiteToSiteVpnOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateNetworkApplianceVpnSiteToSiteVpnBody update network appliance vpn site to site vpn body
-// Example: {"hubs":[{"hubId":"N_4901849","useDefaultRoute":true},{"hubId":"N_1892489","useDefaultRoute":false}],"mode":"spoke","subnets":[{"localSubnet":"192.168.1.0/24","useVpn":true},{"localSubnet":"192.168.128.0/24","useVpn":true}]}
+/*
+UpdateNetworkApplianceVpnSiteToSiteVpnBody update network appliance vpn site to site vpn body
+// Example: {"hubs":[{"hubId":"N_4901849","useDefaultRoute":true}],"mode":"spoke","subnets":[{"localSubnet":"192.168.1.0/24","useVpn":true}]}
 swagger:model UpdateNetworkApplianceVpnSiteToSiteVpnBody
 */
 type UpdateNetworkApplianceVpnSiteToSiteVpnBody struct {
@@ -109,7 +118,7 @@ type UpdateNetworkApplianceVpnSiteToSiteVpnBody struct {
 
 	// The site-to-site VPN mode. Can be one of 'none', 'spoke' or 'hub'
 	// Required: true
-	// Enum: [none spoke hub]
+	// Enum: [hub none spoke]
 	Mode *string `json:"mode"`
 
 	// The list of subnets and their VPN presence.
@@ -168,7 +177,7 @@ var updateNetworkApplianceVpnSiteToSiteVpnBodyTypeModePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["none","spoke","hub"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["hub","none","spoke"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -178,14 +187,14 @@ func init() {
 
 const (
 
+	// UpdateNetworkApplianceVpnSiteToSiteVpnBodyModeHub captures enum value "hub"
+	UpdateNetworkApplianceVpnSiteToSiteVpnBodyModeHub string = "hub"
+
 	// UpdateNetworkApplianceVpnSiteToSiteVpnBodyModeNone captures enum value "none"
 	UpdateNetworkApplianceVpnSiteToSiteVpnBodyModeNone string = "none"
 
 	// UpdateNetworkApplianceVpnSiteToSiteVpnBodyModeSpoke captures enum value "spoke"
 	UpdateNetworkApplianceVpnSiteToSiteVpnBodyModeSpoke string = "spoke"
-
-	// UpdateNetworkApplianceVpnSiteToSiteVpnBodyModeHub captures enum value "hub"
-	UpdateNetworkApplianceVpnSiteToSiteVpnBodyModeHub string = "hub"
 )
 
 // prop value enum
@@ -259,6 +268,11 @@ func (o *UpdateNetworkApplianceVpnSiteToSiteVpnBody) contextValidateHubs(ctx con
 	for i := 0; i < len(o.Hubs); i++ {
 
 		if o.Hubs[i] != nil {
+
+			if swag.IsZero(o.Hubs[i]) { // not required
+				return nil
+			}
+
 			if err := o.Hubs[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkApplianceVpnSiteToSiteVpn" + "." + "hubs" + "." + strconv.Itoa(i))
@@ -279,6 +293,11 @@ func (o *UpdateNetworkApplianceVpnSiteToSiteVpnBody) contextValidateSubnets(ctx 
 	for i := 0; i < len(o.Subnets); i++ {
 
 		if o.Subnets[i] != nil {
+
+			if swag.IsZero(o.Subnets[i]) { // not required
+				return nil
+			}
+
 			if err := o.Subnets[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkApplianceVpnSiteToSiteVpn" + "." + "subnets" + "." + strconv.Itoa(i))
@@ -312,7 +331,262 @@ func (o *UpdateNetworkApplianceVpnSiteToSiteVpnBody) UnmarshalBinary(b []byte) e
 	return nil
 }
 
-/*UpdateNetworkApplianceVpnSiteToSiteVpnParamsBodyHubsItems0 update network appliance vpn site to site vpn params body hubs items0
+/*
+UpdateNetworkApplianceVpnSiteToSiteVpnOKBody update network appliance vpn site to site vpn o k body
+swagger:model UpdateNetworkApplianceVpnSiteToSiteVpnOKBody
+*/
+type UpdateNetworkApplianceVpnSiteToSiteVpnOKBody struct {
+
+	// The list of VPN hubs, in order of preference.
+	Hubs []*UpdateNetworkApplianceVpnSiteToSiteVpnOKBodyHubsItems0 `json:"hubs"`
+
+	// The site-to-site VPN mode.
+	Mode string `json:"mode,omitempty"`
+
+	// The list of subnets and their VPN presence.
+	Subnets []*UpdateNetworkApplianceVpnSiteToSiteVpnOKBodySubnetsItems0 `json:"subnets"`
+}
+
+// Validate validates this update network appliance vpn site to site vpn o k body
+func (o *UpdateNetworkApplianceVpnSiteToSiteVpnOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateHubs(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSubnets(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVpnSiteToSiteVpnOKBody) validateHubs(formats strfmt.Registry) error {
+	if swag.IsZero(o.Hubs) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Hubs); i++ {
+		if swag.IsZero(o.Hubs[i]) { // not required
+			continue
+		}
+
+		if o.Hubs[i] != nil {
+			if err := o.Hubs[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkApplianceVpnSiteToSiteVpnOK" + "." + "hubs" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkApplianceVpnSiteToSiteVpnOK" + "." + "hubs" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVpnSiteToSiteVpnOKBody) validateSubnets(formats strfmt.Registry) error {
+	if swag.IsZero(o.Subnets) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Subnets); i++ {
+		if swag.IsZero(o.Subnets[i]) { // not required
+			continue
+		}
+
+		if o.Subnets[i] != nil {
+			if err := o.Subnets[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkApplianceVpnSiteToSiteVpnOK" + "." + "subnets" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkApplianceVpnSiteToSiteVpnOK" + "." + "subnets" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network appliance vpn site to site vpn o k body based on the context it is used
+func (o *UpdateNetworkApplianceVpnSiteToSiteVpnOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateHubs(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateSubnets(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVpnSiteToSiteVpnOKBody) contextValidateHubs(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Hubs); i++ {
+
+		if o.Hubs[i] != nil {
+
+			if swag.IsZero(o.Hubs[i]) { // not required
+				return nil
+			}
+
+			if err := o.Hubs[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkApplianceVpnSiteToSiteVpnOK" + "." + "hubs" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkApplianceVpnSiteToSiteVpnOK" + "." + "hubs" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkApplianceVpnSiteToSiteVpnOKBody) contextValidateSubnets(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Subnets); i++ {
+
+		if o.Subnets[i] != nil {
+
+			if swag.IsZero(o.Subnets[i]) { // not required
+				return nil
+			}
+
+			if err := o.Subnets[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkApplianceVpnSiteToSiteVpnOK" + "." + "subnets" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkApplianceVpnSiteToSiteVpnOK" + "." + "subnets" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVpnSiteToSiteVpnOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVpnSiteToSiteVpnOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceVpnSiteToSiteVpnOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceVpnSiteToSiteVpnOKBodyHubsItems0 update network appliance vpn site to site vpn o k body hubs items0
+swagger:model UpdateNetworkApplianceVpnSiteToSiteVpnOKBodyHubsItems0
+*/
+type UpdateNetworkApplianceVpnSiteToSiteVpnOKBodyHubsItems0 struct {
+
+	// The network ID of the hub.
+	HubID string `json:"hubId,omitempty"`
+
+	// Indicates whether default route traffic should be sent to this hub.
+	UseDefaultRoute bool `json:"useDefaultRoute,omitempty"`
+}
+
+// Validate validates this update network appliance vpn site to site vpn o k body hubs items0
+func (o *UpdateNetworkApplianceVpnSiteToSiteVpnOKBodyHubsItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network appliance vpn site to site vpn o k body hubs items0 based on context it is used
+func (o *UpdateNetworkApplianceVpnSiteToSiteVpnOKBodyHubsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVpnSiteToSiteVpnOKBodyHubsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVpnSiteToSiteVpnOKBodyHubsItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceVpnSiteToSiteVpnOKBodyHubsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceVpnSiteToSiteVpnOKBodySubnetsItems0 update network appliance vpn site to site vpn o k body subnets items0
+swagger:model UpdateNetworkApplianceVpnSiteToSiteVpnOKBodySubnetsItems0
+*/
+type UpdateNetworkApplianceVpnSiteToSiteVpnOKBodySubnetsItems0 struct {
+
+	// The CIDR notation subnet used within the VPN
+	LocalSubnet string `json:"localSubnet,omitempty"`
+
+	// Indicates the presence of the subnet in the VPN
+	UseVpn bool `json:"useVpn,omitempty"`
+}
+
+// Validate validates this update network appliance vpn site to site vpn o k body subnets items0
+func (o *UpdateNetworkApplianceVpnSiteToSiteVpnOKBodySubnetsItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network appliance vpn site to site vpn o k body subnets items0 based on context it is used
+func (o *UpdateNetworkApplianceVpnSiteToSiteVpnOKBodySubnetsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVpnSiteToSiteVpnOKBodySubnetsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkApplianceVpnSiteToSiteVpnOKBodySubnetsItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkApplianceVpnSiteToSiteVpnOKBodySubnetsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkApplianceVpnSiteToSiteVpnParamsBodyHubsItems0 update network appliance vpn site to site vpn params body hubs items0
 swagger:model UpdateNetworkApplianceVpnSiteToSiteVpnParamsBodyHubsItems0
 */
 type UpdateNetworkApplianceVpnSiteToSiteVpnParamsBodyHubsItems0 struct {
@@ -371,7 +645,8 @@ func (o *UpdateNetworkApplianceVpnSiteToSiteVpnParamsBodyHubsItems0) UnmarshalBi
 	return nil
 }
 
-/*UpdateNetworkApplianceVpnSiteToSiteVpnParamsBodySubnetsItems0 update network appliance vpn site to site vpn params body subnets items0
+/*
+UpdateNetworkApplianceVpnSiteToSiteVpnParamsBodySubnetsItems0 update network appliance vpn site to site vpn params body subnets items0
 swagger:model UpdateNetworkApplianceVpnSiteToSiteVpnParamsBodySubnetsItems0
 */
 type UpdateNetworkApplianceVpnSiteToSiteVpnParamsBodySubnetsItems0 struct {

@@ -28,7 +28,7 @@ func (o *GetNetworkClientsApplicationUsageReader) ReadResponse(response runtime.
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/clients/applicationUsage] getNetworkClientsApplicationUsage", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetNetworkClientsApplicationUsageOK() *GetNetworkClientsApplicationUsage
 	return &GetNetworkClientsApplicationUsageOK{}
 }
 
-/* GetNetworkClientsApplicationUsageOK describes a response with status code 200, with default header values.
+/*
+GetNetworkClientsApplicationUsageOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -73,6 +74,11 @@ func (o *GetNetworkClientsApplicationUsageOK) IsServerError() bool {
 // IsCode returns true when this get network clients application usage o k response a status code equal to that given
 func (o *GetNetworkClientsApplicationUsageOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get network clients application usage o k response
+func (o *GetNetworkClientsApplicationUsageOK) Code() int {
+	return 200
 }
 
 func (o *GetNetworkClientsApplicationUsageOK) Error() string {

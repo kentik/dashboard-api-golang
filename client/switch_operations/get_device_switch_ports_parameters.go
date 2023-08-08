@@ -52,14 +52,19 @@ func NewGetDeviceSwitchPortsParamsWithHTTPClient(client *http.Client) *GetDevice
 	}
 }
 
-/* GetDeviceSwitchPortsParams contains all the parameters to send to the API endpoint
-   for the get device switch ports operation.
+/*
+GetDeviceSwitchPortsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get device switch ports operation.
+
+	Typically these are written to a http.Request.
 */
 type GetDeviceSwitchPortsParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	timeout    time.Duration

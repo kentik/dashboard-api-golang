@@ -34,7 +34,7 @@ func (o *UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesReader) ReadResponse(re
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/wireless/ssids/{number}/deviceTypeGroupPolicies] updateNetworkWirelessSsidDeviceTypeGroupPolicies", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewUpdateNetworkWirelessSsidDeviceTypeGroupPoliciesOK() *UpdateNetworkWirel
 	return &UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesOK{}
 }
 
-/* UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesOK) IsCode(code int) bo
 	return code == 200
 }
 
+// Code gets the status code for the update network wireless ssid device type group policies o k response
+func (o *UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/wireless/ssids/{number}/deviceTypeGroupPolicies][%d] updateNetworkWirelessSsidDeviceTypeGroupPoliciesOK  %+v", 200, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesOK) readResponse(respon
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesBody update network wireless ssid device type group policies body
+/*
+UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesBody update network wireless ssid device type group policies body
 // Example: {"deviceTypePolicies":[{"devicePolicy":"Allowed","deviceType":"Android"},{"devicePolicy":"Group policy","deviceType":"iPhone","groupPolicyId":101}],"enabled":true}
 swagger:model UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesBody
 */
@@ -170,6 +177,11 @@ func (o *UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesBody) contextValidateDe
 	for i := 0; i < len(o.DeviceTypePolicies); i++ {
 
 		if o.DeviceTypePolicies[i] != nil {
+
+			if swag.IsZero(o.DeviceTypePolicies[i]) { // not required
+				return nil
+			}
+
 			if err := o.DeviceTypePolicies[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkWirelessSsidDeviceTypeGroupPolicies" + "." + "deviceTypePolicies" + "." + strconv.Itoa(i))
@@ -203,7 +215,8 @@ func (o *UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesBody) UnmarshalBinary(b
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0 update network wireless ssid device type group policies params body device type policies items0
+/*
+UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0 update network wireless ssid device type group policies params body device type policies items0
 swagger:model UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0
 */
 type UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0 struct {
@@ -215,7 +228,7 @@ type UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePolicie
 
 	// The device type. Can be one of 'Android', 'BlackBerry', 'Chrome OS', 'iPad', 'iPhone', 'iPod', 'Mac OS X', 'Windows', 'Windows Phone', 'B&N Nook' or 'Other OS'
 	// Required: true
-	// Enum: [Android BlackBerry Chrome OS iPad iPhone iPod Mac OS X Windows Windows Phone B&N Nook Other OS]
+	// Enum: [Android B&N Nook BlackBerry Chrome OS Mac OS X Other OS Windows Windows Phone iPad iPhone iPod]
 	DeviceType *string `json:"deviceType"`
 
 	// ID of the group policy object.
@@ -290,7 +303,7 @@ var updateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePolicies
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Android","BlackBerry","Chrome OS","iPad","iPhone","iPod","Mac OS X","Windows","Windows Phone","B\u0026N Nook","Other OS"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Android","B\u0026N Nook","BlackBerry","Chrome OS","Mac OS X","Other OS","Windows","Windows Phone","iPad","iPhone","iPod"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -303,11 +316,26 @@ const (
 	// UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeAndroid captures enum value "Android"
 	UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeAndroid string = "Android"
 
+	// UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeBAndNNook captures enum value "B&N Nook"
+	UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeBAndNNook string = "B&N Nook"
+
 	// UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeBlackBerry captures enum value "BlackBerry"
 	UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeBlackBerry string = "BlackBerry"
 
 	// UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeChromeOS captures enum value "Chrome OS"
 	UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeChromeOS string = "Chrome OS"
+
+	// UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeMacOSX captures enum value "Mac OS X"
+	UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeMacOSX string = "Mac OS X"
+
+	// UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeOtherOS captures enum value "Other OS"
+	UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeOtherOS string = "Other OS"
+
+	// UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeWindows captures enum value "Windows"
+	UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeWindows string = "Windows"
+
+	// UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeWindowsPhone captures enum value "Windows Phone"
+	UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeWindowsPhone string = "Windows Phone"
 
 	// UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeIPad captures enum value "iPad"
 	UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeIPad string = "iPad"
@@ -317,21 +345,6 @@ const (
 
 	// UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeIPod captures enum value "iPod"
 	UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeIPod string = "iPod"
-
-	// UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeMacOSX captures enum value "Mac OS X"
-	UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeMacOSX string = "Mac OS X"
-
-	// UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeWindows captures enum value "Windows"
-	UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeWindows string = "Windows"
-
-	// UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeWindowsPhone captures enum value "Windows Phone"
-	UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeWindowsPhone string = "Windows Phone"
-
-	// UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeBAndNNook captures enum value "B&N Nook"
-	UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeBAndNNook string = "B&N Nook"
-
-	// UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeOtherOS captures enum value "Other OS"
-	UpdateNetworkWirelessSsidDeviceTypeGroupPoliciesParamsBodyDeviceTypePoliciesItems0DeviceTypeOtherOS string = "Other OS"
 )
 
 // prop value enum

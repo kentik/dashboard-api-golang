@@ -52,20 +52,28 @@ func NewRemoveNetworkSwitchStackParamsWithHTTPClient(client *http.Client) *Remov
 	}
 }
 
-/* RemoveNetworkSwitchStackParams contains all the parameters to send to the API endpoint
-   for the remove network switch stack operation.
+/*
+RemoveNetworkSwitchStackParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the remove network switch stack operation.
+
+	Typically these are written to a http.Request.
 */
 type RemoveNetworkSwitchStackParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// RemoveNetworkSwitchStack.
 	RemoveNetworkSwitchStack RemoveNetworkSwitchStackBody
 
-	// SwitchStackID.
+	/* SwitchStackID.
+
+	   Switch stack ID
+	*/
 	SwitchStackID string
 
 	timeout    time.Duration

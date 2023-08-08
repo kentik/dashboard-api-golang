@@ -52,17 +52,25 @@ func NewUpdateNetworkSwitchAccessPolicyParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* UpdateNetworkSwitchAccessPolicyParams contains all the parameters to send to the API endpoint
-   for the update network switch access policy operation.
+/*
+UpdateNetworkSwitchAccessPolicyParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network switch access policy operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkSwitchAccessPolicyParams struct {
 
-	// AccessPolicyNumber.
+	/* AccessPolicyNumber.
+
+	   Access policy number
+	*/
 	AccessPolicyNumber string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkSwitchAccessPolicy.

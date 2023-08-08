@@ -52,17 +52,25 @@ func NewUnenrollNetworkSmDeviceParamsWithHTTPClient(client *http.Client) *Unenro
 	}
 }
 
-/* UnenrollNetworkSmDeviceParams contains all the parameters to send to the API endpoint
-   for the unenroll network sm device operation.
+/*
+UnenrollNetworkSmDeviceParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the unenroll network sm device operation.
+
+	Typically these are written to a http.Request.
 */
 type UnenrollNetworkSmDeviceParams struct {
 
-	// DeviceID.
+	/* DeviceID.
+
+	   Device ID
+	*/
 	DeviceID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

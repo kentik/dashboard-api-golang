@@ -33,7 +33,7 @@ func (o *UpdateOrganizationApplianceSecurityIntrusionReader) ReadResponse(respon
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /organizations/{organizationId}/appliance/security/intrusion] updateOrganizationApplianceSecurityIntrusion", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateOrganizationApplianceSecurityIntrusionOK() *UpdateOrganizationAppl
 	return &UpdateOrganizationApplianceSecurityIntrusionOK{}
 }
 
-/* UpdateOrganizationApplianceSecurityIntrusionOK describes a response with status code 200, with default header values.
+/*
+UpdateOrganizationApplianceSecurityIntrusionOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateOrganizationApplianceSecurityIntrusionOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update organization appliance security intrusion o k response
+func (o *UpdateOrganizationApplianceSecurityIntrusionOK) Code() int {
+	return 200
+}
+
 func (o *UpdateOrganizationApplianceSecurityIntrusionOK) Error() string {
 	return fmt.Sprintf("[PUT /organizations/{organizationId}/appliance/security/intrusion][%d] updateOrganizationApplianceSecurityIntrusionOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateOrganizationApplianceSecurityIntrusionOK) readResponse(response r
 	return nil
 }
 
-/*UpdateOrganizationApplianceSecurityIntrusionBody update organization appliance security intrusion body
+/*
+UpdateOrganizationApplianceSecurityIntrusionBody update organization appliance security intrusion body
 // Example: {"allowedRules":[{"message":"SQL sa login failed","ruleId":"meraki:intrusion/snort/GID/01/SID/688"},{"message":"MALWARE-OTHER Trackware myway speedbar runtime detection - switch engines","ruleId":"meraki:intrusion/snort/GID/01/SID/5805"}]}
 swagger:model UpdateOrganizationApplianceSecurityIntrusionBody
 */
@@ -168,6 +175,11 @@ func (o *UpdateOrganizationApplianceSecurityIntrusionBody) contextValidateAllowe
 	for i := 0; i < len(o.AllowedRules); i++ {
 
 		if o.AllowedRules[i] != nil {
+
+			if swag.IsZero(o.AllowedRules[i]) { // not required
+				return nil
+			}
+
 			if err := o.AllowedRules[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateOrganizationApplianceSecurityIntrusion" + "." + "allowedRules" + "." + strconv.Itoa(i))
@@ -201,7 +213,8 @@ func (o *UpdateOrganizationApplianceSecurityIntrusionBody) UnmarshalBinary(b []b
 	return nil
 }
 
-/*UpdateOrganizationApplianceSecurityIntrusionParamsBodyAllowedRulesItems0 update organization appliance security intrusion params body allowed rules items0
+/*
+UpdateOrganizationApplianceSecurityIntrusionParamsBodyAllowedRulesItems0 update organization appliance security intrusion params body allowed rules items0
 swagger:model UpdateOrganizationApplianceSecurityIntrusionParamsBodyAllowedRulesItems0
 */
 type UpdateOrganizationApplianceSecurityIntrusionParamsBodyAllowedRulesItems0 struct {

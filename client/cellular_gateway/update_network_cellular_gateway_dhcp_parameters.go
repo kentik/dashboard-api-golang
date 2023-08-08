@@ -52,14 +52,19 @@ func NewUpdateNetworkCellularGatewayDhcpParamsWithHTTPClient(client *http.Client
 	}
 }
 
-/* UpdateNetworkCellularGatewayDhcpParams contains all the parameters to send to the API endpoint
-   for the update network cellular gateway dhcp operation.
+/*
+UpdateNetworkCellularGatewayDhcpParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network cellular gateway dhcp operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkCellularGatewayDhcpParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkCellularGatewayDhcp.

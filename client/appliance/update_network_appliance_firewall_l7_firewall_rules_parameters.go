@@ -52,14 +52,19 @@ func NewUpdateNetworkApplianceFirewallL7FirewallRulesParamsWithHTTPClient(client
 	}
 }
 
-/* UpdateNetworkApplianceFirewallL7FirewallRulesParams contains all the parameters to send to the API endpoint
-   for the update network appliance firewall l7 firewall rules operation.
+/*
+UpdateNetworkApplianceFirewallL7FirewallRulesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network appliance firewall l7 firewall rules operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkApplianceFirewallL7FirewallRulesParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkApplianceFirewallL7FirewallRules.

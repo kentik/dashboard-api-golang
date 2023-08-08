@@ -14,6 +14,7 @@ import (
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // NewDeleteNetworkMerakiAuthUserParams creates a new DeleteNetworkMerakiAuthUserParams object,
@@ -52,17 +53,31 @@ func NewDeleteNetworkMerakiAuthUserParamsWithHTTPClient(client *http.Client) *De
 	}
 }
 
-/* DeleteNetworkMerakiAuthUserParams contains all the parameters to send to the API endpoint
-   for the delete network meraki auth user operation.
+/*
+DeleteNetworkMerakiAuthUserParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete network meraki auth user operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteNetworkMerakiAuthUserParams struct {
 
-	// MerakiAuthUserID.
+	/* Delete.
+
+	   If the ID supplied is for a splash guest or client VPN user, and that user is not authorized for any other networks in the organization, then also delete the user. 802.1X RADIUS users are always deleted regardless of this optional attribute.
+	*/
+	Delete *bool
+
+	/* MerakiAuthUserID.
+
+	   Meraki auth user ID
+	*/
 	MerakiAuthUserID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration
@@ -118,6 +133,17 @@ func (o *DeleteNetworkMerakiAuthUserParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithDelete adds the delete to the delete network meraki auth user params
+func (o *DeleteNetworkMerakiAuthUserParams) WithDelete(delete *bool) *DeleteNetworkMerakiAuthUserParams {
+	o.SetDelete(delete)
+	return o
+}
+
+// SetDelete adds the delete to the delete network meraki auth user params
+func (o *DeleteNetworkMerakiAuthUserParams) SetDelete(delete *bool) {
+	o.Delete = delete
+}
+
 // WithMerakiAuthUserID adds the merakiAuthUserID to the delete network meraki auth user params
 func (o *DeleteNetworkMerakiAuthUserParams) WithMerakiAuthUserID(merakiAuthUserID string) *DeleteNetworkMerakiAuthUserParams {
 	o.SetMerakiAuthUserID(merakiAuthUserID)
@@ -147,6 +173,23 @@ func (o *DeleteNetworkMerakiAuthUserParams) WriteToRequest(r runtime.ClientReque
 		return err
 	}
 	var res []error
+
+	if o.Delete != nil {
+
+		// query param delete
+		var qrDelete bool
+
+		if o.Delete != nil {
+			qrDelete = *o.Delete
+		}
+		qDelete := swag.FormatBool(qrDelete)
+		if qDelete != "" {
+
+			if err := r.SetQueryParam("delete", qDelete); err != nil {
+				return err
+			}
+		}
+	}
 
 	// path param merakiAuthUserId
 	if err := r.SetPathParam("merakiAuthUserId", o.MerakiAuthUserID); err != nil {

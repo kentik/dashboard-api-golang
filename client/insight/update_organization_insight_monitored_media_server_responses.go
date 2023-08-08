@@ -30,7 +30,7 @@ func (o *UpdateOrganizationInsightMonitoredMediaServerReader) ReadResponse(respo
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /organizations/{organizationId}/insight/monitoredMediaServers/{monitoredMediaServerId}] updateOrganizationInsightMonitoredMediaServer", response, response.Code())
 	}
 }
 
@@ -39,7 +39,8 @@ func NewUpdateOrganizationInsightMonitoredMediaServerOK() *UpdateOrganizationIns
 	return &UpdateOrganizationInsightMonitoredMediaServerOK{}
 }
 
-/* UpdateOrganizationInsightMonitoredMediaServerOK describes a response with status code 200, with default header values.
+/*
+UpdateOrganizationInsightMonitoredMediaServerOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -72,6 +73,11 @@ func (o *UpdateOrganizationInsightMonitoredMediaServerOK) IsCode(code int) bool 
 	return code == 200
 }
 
+// Code gets the status code for the update organization insight monitored media server o k response
+func (o *UpdateOrganizationInsightMonitoredMediaServerOK) Code() int {
+	return 200
+}
+
 func (o *UpdateOrganizationInsightMonitoredMediaServerOK) Error() string {
 	return fmt.Sprintf("[PUT /organizations/{organizationId}/insight/monitoredMediaServers/{monitoredMediaServerId}][%d] updateOrganizationInsightMonitoredMediaServerOK  %+v", 200, o.Payload)
 }
@@ -94,7 +100,8 @@ func (o *UpdateOrganizationInsightMonitoredMediaServerOK) readResponse(response 
 	return nil
 }
 
-/*UpdateOrganizationInsightMonitoredMediaServerBody update organization insight monitored media server body
+/*
+UpdateOrganizationInsightMonitoredMediaServerBody update organization insight monitored media server body
 // Example: {"address":"123.123.123.1","bestEffortMonitoringEnabled":true,"name":"Sample VoIP Provider"}
 swagger:model UpdateOrganizationInsightMonitoredMediaServerBody
 */

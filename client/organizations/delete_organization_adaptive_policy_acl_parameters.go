@@ -52,17 +52,25 @@ func NewDeleteOrganizationAdaptivePolicyACLParamsWithHTTPClient(client *http.Cli
 	}
 }
 
-/* DeleteOrganizationAdaptivePolicyACLParams contains all the parameters to send to the API endpoint
-   for the delete organization adaptive policy Acl operation.
+/*
+DeleteOrganizationAdaptivePolicyACLParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete organization adaptive policy Acl operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteOrganizationAdaptivePolicyACLParams struct {
 
-	// ID.
-	ID string
+	/* ACLID.
 
-	// OrganizationID.
+	   Acl ID
+	*/
+	ACLID string
+
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration
@@ -118,15 +126,15 @@ func (o *DeleteOrganizationAdaptivePolicyACLParams) SetHTTPClient(client *http.C
 	o.HTTPClient = client
 }
 
-// WithID adds the id to the delete organization adaptive policy Acl params
-func (o *DeleteOrganizationAdaptivePolicyACLParams) WithID(id string) *DeleteOrganizationAdaptivePolicyACLParams {
-	o.SetID(id)
+// WithACLID adds the aCLID to the delete organization adaptive policy Acl params
+func (o *DeleteOrganizationAdaptivePolicyACLParams) WithACLID(aCLID string) *DeleteOrganizationAdaptivePolicyACLParams {
+	o.SetACLID(aCLID)
 	return o
 }
 
-// SetID adds the id to the delete organization adaptive policy Acl params
-func (o *DeleteOrganizationAdaptivePolicyACLParams) SetID(id string) {
-	o.ID = id
+// SetACLID adds the aclId to the delete organization adaptive policy Acl params
+func (o *DeleteOrganizationAdaptivePolicyACLParams) SetACLID(aCLID string) {
+	o.ACLID = aCLID
 }
 
 // WithOrganizationID adds the organizationID to the delete organization adaptive policy Acl params
@@ -148,8 +156,8 @@ func (o *DeleteOrganizationAdaptivePolicyACLParams) WriteToRequest(r runtime.Cli
 	}
 	var res []error
 
-	// path param id
-	if err := r.SetPathParam("id", o.ID); err != nil {
+	// path param aclId
+	if err := r.SetPathParam("aclId", o.ACLID); err != nil {
 		return err
 	}
 

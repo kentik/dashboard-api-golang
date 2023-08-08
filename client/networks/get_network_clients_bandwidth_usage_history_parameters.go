@@ -53,10 +53,12 @@ func NewGetNetworkClientsBandwidthUsageHistoryParamsWithHTTPClient(client *http.
 	}
 }
 
-/* GetNetworkClientsBandwidthUsageHistoryParams contains all the parameters to send to the API endpoint
-   for the get network clients bandwidth usage history operation.
+/*
+GetNetworkClientsBandwidthUsageHistoryParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network clients bandwidth usage history operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkClientsBandwidthUsageHistoryParams struct {
 
@@ -66,7 +68,10 @@ type GetNetworkClientsBandwidthUsageHistoryParams struct {
 	*/
 	EndingBefore *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* PerPage.

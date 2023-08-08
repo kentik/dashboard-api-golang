@@ -52,14 +52,19 @@ func NewRemoveNetworkDevicesParamsWithHTTPClient(client *http.Client) *RemoveNet
 	}
 }
 
-/* RemoveNetworkDevicesParams contains all the parameters to send to the API endpoint
-   for the remove network devices operation.
+/*
+RemoveNetworkDevicesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the remove network devices operation.
+
+	Typically these are written to a http.Request.
 */
 type RemoveNetworkDevicesParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// RemoveNetworkDevices.

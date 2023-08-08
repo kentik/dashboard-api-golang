@@ -52,20 +52,31 @@ func NewUpdateNetworkSwitchStackRoutingInterfaceDhcpParamsWithHTTPClient(client 
 	}
 }
 
-/* UpdateNetworkSwitchStackRoutingInterfaceDhcpParams contains all the parameters to send to the API endpoint
-   for the update network switch stack routing interface dhcp operation.
+/*
+UpdateNetworkSwitchStackRoutingInterfaceDhcpParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network switch stack routing interface dhcp operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkSwitchStackRoutingInterfaceDhcpParams struct {
 
-	// InterfaceID.
+	/* InterfaceID.
+
+	   Interface ID
+	*/
 	InterfaceID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// SwitchStackID.
+	/* SwitchStackID.
+
+	   Switch stack ID
+	*/
 	SwitchStackID string
 
 	// UpdateNetworkSwitchStackRoutingInterfaceDhcp.

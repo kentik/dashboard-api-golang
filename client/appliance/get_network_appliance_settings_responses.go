@@ -6,11 +6,16 @@ package appliance
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // GetNetworkApplianceSettingsReader is a Reader for the GetNetworkApplianceSettings structure.
@@ -28,7 +33,7 @@ func (o *GetNetworkApplianceSettingsReader) ReadResponse(response runtime.Client
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/appliance/settings] getNetworkApplianceSettings", response, response.Code())
 	}
 }
 
@@ -37,12 +42,13 @@ func NewGetNetworkApplianceSettingsOK() *GetNetworkApplianceSettingsOK {
 	return &GetNetworkApplianceSettingsOK{}
 }
 
-/* GetNetworkApplianceSettingsOK describes a response with status code 200, with default header values.
+/*
+GetNetworkApplianceSettingsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkApplianceSettingsOK struct {
-	Payload interface{}
+	Payload *GetNetworkApplianceSettingsOKBody
 }
 
 // IsSuccess returns true when this get network appliance settings o k response has a 2xx status code
@@ -70,6 +76,11 @@ func (o *GetNetworkApplianceSettingsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network appliance settings o k response
+func (o *GetNetworkApplianceSettingsOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkApplianceSettingsOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/appliance/settings][%d] getNetworkApplianceSettingsOK  %+v", 200, o.Payload)
 }
@@ -78,16 +89,261 @@ func (o *GetNetworkApplianceSettingsOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/appliance/settings][%d] getNetworkApplianceSettingsOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkApplianceSettingsOK) GetPayload() interface{} {
+func (o *GetNetworkApplianceSettingsOK) GetPayload() *GetNetworkApplianceSettingsOKBody {
 	return o.Payload
 }
 
 func (o *GetNetworkApplianceSettingsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetNetworkApplianceSettingsOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkApplianceSettingsOKBody get network appliance settings o k body
+swagger:model GetNetworkApplianceSettingsOKBody
+*/
+type GetNetworkApplianceSettingsOKBody struct {
+
+	// Client tracking method of a network
+	// Enum: [IP address MAC address Unique client identifier]
+	ClientTrackingMethod string `json:"clientTrackingMethod,omitempty"`
+
+	// Deployment mode of a network
+	// Enum: [passthrough routed]
+	DeploymentMode string `json:"deploymentMode,omitempty"`
+
+	// dynamic Dns
+	DynamicDNS *GetNetworkApplianceSettingsOKBodyDynamicDNS `json:"dynamicDns,omitempty"`
+}
+
+// Validate validates this get network appliance settings o k body
+func (o *GetNetworkApplianceSettingsOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateClientTrackingMethod(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateDeploymentMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateDynamicDNS(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var getNetworkApplianceSettingsOKBodyTypeClientTrackingMethodPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["IP address","MAC address","Unique client identifier"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getNetworkApplianceSettingsOKBodyTypeClientTrackingMethodPropEnum = append(getNetworkApplianceSettingsOKBodyTypeClientTrackingMethodPropEnum, v)
+	}
+}
+
+const (
+
+	// GetNetworkApplianceSettingsOKBodyClientTrackingMethodIPAddress captures enum value "IP address"
+	GetNetworkApplianceSettingsOKBodyClientTrackingMethodIPAddress string = "IP address"
+
+	// GetNetworkApplianceSettingsOKBodyClientTrackingMethodMACAddress captures enum value "MAC address"
+	GetNetworkApplianceSettingsOKBodyClientTrackingMethodMACAddress string = "MAC address"
+
+	// GetNetworkApplianceSettingsOKBodyClientTrackingMethodUniqueClientIdentifier captures enum value "Unique client identifier"
+	GetNetworkApplianceSettingsOKBodyClientTrackingMethodUniqueClientIdentifier string = "Unique client identifier"
+)
+
+// prop value enum
+func (o *GetNetworkApplianceSettingsOKBody) validateClientTrackingMethodEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getNetworkApplianceSettingsOKBodyTypeClientTrackingMethodPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetNetworkApplianceSettingsOKBody) validateClientTrackingMethod(formats strfmt.Registry) error {
+	if swag.IsZero(o.ClientTrackingMethod) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateClientTrackingMethodEnum("getNetworkApplianceSettingsOK"+"."+"clientTrackingMethod", "body", o.ClientTrackingMethod); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var getNetworkApplianceSettingsOKBodyTypeDeploymentModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["passthrough","routed"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getNetworkApplianceSettingsOKBodyTypeDeploymentModePropEnum = append(getNetworkApplianceSettingsOKBodyTypeDeploymentModePropEnum, v)
+	}
+}
+
+const (
+
+	// GetNetworkApplianceSettingsOKBodyDeploymentModePassthrough captures enum value "passthrough"
+	GetNetworkApplianceSettingsOKBodyDeploymentModePassthrough string = "passthrough"
+
+	// GetNetworkApplianceSettingsOKBodyDeploymentModeRouted captures enum value "routed"
+	GetNetworkApplianceSettingsOKBodyDeploymentModeRouted string = "routed"
+)
+
+// prop value enum
+func (o *GetNetworkApplianceSettingsOKBody) validateDeploymentModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getNetworkApplianceSettingsOKBodyTypeDeploymentModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetNetworkApplianceSettingsOKBody) validateDeploymentMode(formats strfmt.Registry) error {
+	if swag.IsZero(o.DeploymentMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateDeploymentModeEnum("getNetworkApplianceSettingsOK"+"."+"deploymentMode", "body", o.DeploymentMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *GetNetworkApplianceSettingsOKBody) validateDynamicDNS(formats strfmt.Registry) error {
+	if swag.IsZero(o.DynamicDNS) { // not required
+		return nil
+	}
+
+	if o.DynamicDNS != nil {
+		if err := o.DynamicDNS.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkApplianceSettingsOK" + "." + "dynamicDns")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkApplianceSettingsOK" + "." + "dynamicDns")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network appliance settings o k body based on the context it is used
+func (o *GetNetworkApplianceSettingsOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateDynamicDNS(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkApplianceSettingsOKBody) contextValidateDynamicDNS(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.DynamicDNS != nil {
+
+		if swag.IsZero(o.DynamicDNS) { // not required
+			return nil
+		}
+
+		if err := o.DynamicDNS.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkApplianceSettingsOK" + "." + "dynamicDns")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkApplianceSettingsOK" + "." + "dynamicDns")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkApplianceSettingsOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkApplianceSettingsOKBody) UnmarshalBinary(b []byte) error {
+	var res GetNetworkApplianceSettingsOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkApplianceSettingsOKBodyDynamicDNS Dynamic DNS settings for a network
+swagger:model GetNetworkApplianceSettingsOKBodyDynamicDNS
+*/
+type GetNetworkApplianceSettingsOKBodyDynamicDNS struct {
+
+	// Dynamic DNS enabled
+	Enabled bool `json:"enabled,omitempty"`
+
+	// Dynamic DNS url prefix. DDNS must be enabled to update
+	Prefix string `json:"prefix,omitempty"`
+
+	// Dynamic DNS url. DDNS must be enabled to update
+	URL string `json:"url,omitempty"`
+}
+
+// Validate validates this get network appliance settings o k body dynamic DNS
+func (o *GetNetworkApplianceSettingsOKBodyDynamicDNS) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network appliance settings o k body dynamic DNS based on context it is used
+func (o *GetNetworkApplianceSettingsOKBodyDynamicDNS) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkApplianceSettingsOKBodyDynamicDNS) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkApplianceSettingsOKBodyDynamicDNS) UnmarshalBinary(b []byte) error {
+	var res GetNetworkApplianceSettingsOKBodyDynamicDNS
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

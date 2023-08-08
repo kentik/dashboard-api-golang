@@ -52,14 +52,19 @@ func NewGetNetworkHealthAlertsParamsWithHTTPClient(client *http.Client) *GetNetw
 	}
 }
 
-/* GetNetworkHealthAlertsParams contains all the parameters to send to the API endpoint
-   for the get network health alerts operation.
+/*
+GetNetworkHealthAlertsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network health alerts operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkHealthAlertsParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

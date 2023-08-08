@@ -52,14 +52,19 @@ func NewGetNetworkSwitchRoutingMulticastRendezvousPointsParamsWithHTTPClient(cli
 	}
 }
 
-/* GetNetworkSwitchRoutingMulticastRendezvousPointsParams contains all the parameters to send to the API endpoint
-   for the get network switch routing multicast rendezvous points operation.
+/*
+GetNetworkSwitchRoutingMulticastRendezvousPointsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network switch routing multicast rendezvous points operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSwitchRoutingMulticastRendezvousPointsParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

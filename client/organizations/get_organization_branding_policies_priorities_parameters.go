@@ -52,14 +52,19 @@ func NewGetOrganizationBrandingPoliciesPrioritiesParamsWithHTTPClient(client *ht
 	}
 }
 
-/* GetOrganizationBrandingPoliciesPrioritiesParams contains all the parameters to send to the API endpoint
-   for the get organization branding policies priorities operation.
+/*
+GetOrganizationBrandingPoliciesPrioritiesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization branding policies priorities operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationBrandingPoliciesPrioritiesParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

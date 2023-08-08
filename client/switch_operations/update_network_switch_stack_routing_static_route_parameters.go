@@ -52,20 +52,31 @@ func NewUpdateNetworkSwitchStackRoutingStaticRouteParamsWithHTTPClient(client *h
 	}
 }
 
-/* UpdateNetworkSwitchStackRoutingStaticRouteParams contains all the parameters to send to the API endpoint
-   for the update network switch stack routing static route operation.
+/*
+UpdateNetworkSwitchStackRoutingStaticRouteParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network switch stack routing static route operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkSwitchStackRoutingStaticRouteParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// StaticRouteID.
+	/* StaticRouteID.
+
+	   Static route ID
+	*/
 	StaticRouteID string
 
-	// SwitchStackID.
+	/* SwitchStackID.
+
+	   Switch stack ID
+	*/
 	SwitchStackID string
 
 	// UpdateNetworkSwitchStackRoutingStaticRoute.

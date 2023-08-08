@@ -30,7 +30,7 @@ func (o *CreateOrganizationCameraCustomAnalyticsArtifactReader) ReadResponse(res
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /organizations/{organizationId}/camera/customAnalytics/artifacts] createOrganizationCameraCustomAnalyticsArtifact", response, response.Code())
 	}
 }
 
@@ -39,7 +39,8 @@ func NewCreateOrganizationCameraCustomAnalyticsArtifactCreated() *CreateOrganiza
 	return &CreateOrganizationCameraCustomAnalyticsArtifactCreated{}
 }
 
-/* CreateOrganizationCameraCustomAnalyticsArtifactCreated describes a response with status code 201, with default header values.
+/*
+CreateOrganizationCameraCustomAnalyticsArtifactCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
@@ -72,6 +73,11 @@ func (o *CreateOrganizationCameraCustomAnalyticsArtifactCreated) IsCode(code int
 	return code == 201
 }
 
+// Code gets the status code for the create organization camera custom analytics artifact created response
+func (o *CreateOrganizationCameraCustomAnalyticsArtifactCreated) Code() int {
+	return 201
+}
+
 func (o *CreateOrganizationCameraCustomAnalyticsArtifactCreated) Error() string {
 	return fmt.Sprintf("[POST /organizations/{organizationId}/camera/customAnalytics/artifacts][%d] createOrganizationCameraCustomAnalyticsArtifactCreated  %+v", 201, o.Payload)
 }
@@ -94,7 +100,8 @@ func (o *CreateOrganizationCameraCustomAnalyticsArtifactCreated) readResponse(re
 	return nil
 }
 
-/*CreateOrganizationCameraCustomAnalyticsArtifactBody create organization camera custom analytics artifact body
+/*
+CreateOrganizationCameraCustomAnalyticsArtifactBody create organization camera custom analytics artifact body
 // Example: {"name":"example"}
 swagger:model CreateOrganizationCameraCustomAnalyticsArtifactBody
 */

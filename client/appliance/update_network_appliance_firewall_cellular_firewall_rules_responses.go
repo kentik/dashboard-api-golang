@@ -34,7 +34,7 @@ func (o *UpdateNetworkApplianceFirewallCellularFirewallRulesReader) ReadResponse
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/appliance/firewall/cellularFirewallRules] updateNetworkApplianceFirewallCellularFirewallRules", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewUpdateNetworkApplianceFirewallCellularFirewallRulesOK() *UpdateNetworkAp
 	return &UpdateNetworkApplianceFirewallCellularFirewallRulesOK{}
 }
 
-/* UpdateNetworkApplianceFirewallCellularFirewallRulesOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkApplianceFirewallCellularFirewallRulesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *UpdateNetworkApplianceFirewallCellularFirewallRulesOK) IsCode(code int)
 	return code == 200
 }
 
+// Code gets the status code for the update network appliance firewall cellular firewall rules o k response
+func (o *UpdateNetworkApplianceFirewallCellularFirewallRulesOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkApplianceFirewallCellularFirewallRulesOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/appliance/firewall/cellularFirewallRules][%d] updateNetworkApplianceFirewallCellularFirewallRulesOK  %+v", 200, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *UpdateNetworkApplianceFirewallCellularFirewallRulesOK) readResponse(res
 	return nil
 }
 
-/*UpdateNetworkApplianceFirewallCellularFirewallRulesBody update network appliance firewall cellular firewall rules body
+/*
+UpdateNetworkApplianceFirewallCellularFirewallRulesBody update network appliance firewall cellular firewall rules body
 // Example: {"rules":[{"comment":"Allow TCP traffic to subnet with HTTP servers.","destCidr":"192.168.1.0/24","destPort":"443","policy":"allow","protocol":"tcp","srcCidr":"Any","srcPort":"Any","syslogEnabled":false}]}
 swagger:model UpdateNetworkApplianceFirewallCellularFirewallRulesBody
 */
@@ -167,6 +174,11 @@ func (o *UpdateNetworkApplianceFirewallCellularFirewallRulesBody) contextValidat
 	for i := 0; i < len(o.Rules); i++ {
 
 		if o.Rules[i] != nil {
+
+			if swag.IsZero(o.Rules[i]) { // not required
+				return nil
+			}
+
 			if err := o.Rules[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkApplianceFirewallCellularFirewallRules" + "." + "rules" + "." + strconv.Itoa(i))
@@ -200,7 +212,8 @@ func (o *UpdateNetworkApplianceFirewallCellularFirewallRulesBody) UnmarshalBinar
 	return nil
 }
 
-/*UpdateNetworkApplianceFirewallCellularFirewallRulesParamsBodyRulesItems0 update network appliance firewall cellular firewall rules params body rules items0
+/*
+UpdateNetworkApplianceFirewallCellularFirewallRulesParamsBodyRulesItems0 update network appliance firewall cellular firewall rules params body rules items0
 swagger:model UpdateNetworkApplianceFirewallCellularFirewallRulesParamsBodyRulesItems0
 */
 type UpdateNetworkApplianceFirewallCellularFirewallRulesParamsBodyRulesItems0 struct {
@@ -222,7 +235,7 @@ type UpdateNetworkApplianceFirewallCellularFirewallRulesParamsBodyRulesItems0 st
 
 	// The type of protocol (must be 'tcp', 'udp', 'icmp', 'icmp6' or 'any')
 	// Required: true
-	// Enum: [tcp udp icmp icmp6 any]
+	// Enum: [any icmp icmp6 tcp udp]
 	Protocol *string `json:"protocol"`
 
 	// Comma-separated list of source IP address(es) (in IP or CIDR notation), or 'any' (note: FQDN not supported for source addresses)
@@ -318,7 +331,7 @@ var updateNetworkApplianceFirewallCellularFirewallRulesParamsBodyRulesItems0Type
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["tcp","udp","icmp","icmp6","any"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["any","icmp","icmp6","tcp","udp"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -328,11 +341,8 @@ func init() {
 
 const (
 
-	// UpdateNetworkApplianceFirewallCellularFirewallRulesParamsBodyRulesItems0ProtocolTCP captures enum value "tcp"
-	UpdateNetworkApplianceFirewallCellularFirewallRulesParamsBodyRulesItems0ProtocolTCP string = "tcp"
-
-	// UpdateNetworkApplianceFirewallCellularFirewallRulesParamsBodyRulesItems0ProtocolUDP captures enum value "udp"
-	UpdateNetworkApplianceFirewallCellularFirewallRulesParamsBodyRulesItems0ProtocolUDP string = "udp"
+	// UpdateNetworkApplianceFirewallCellularFirewallRulesParamsBodyRulesItems0ProtocolAny captures enum value "any"
+	UpdateNetworkApplianceFirewallCellularFirewallRulesParamsBodyRulesItems0ProtocolAny string = "any"
 
 	// UpdateNetworkApplianceFirewallCellularFirewallRulesParamsBodyRulesItems0ProtocolIcmp captures enum value "icmp"
 	UpdateNetworkApplianceFirewallCellularFirewallRulesParamsBodyRulesItems0ProtocolIcmp string = "icmp"
@@ -340,8 +350,11 @@ const (
 	// UpdateNetworkApplianceFirewallCellularFirewallRulesParamsBodyRulesItems0ProtocolIcmp6 captures enum value "icmp6"
 	UpdateNetworkApplianceFirewallCellularFirewallRulesParamsBodyRulesItems0ProtocolIcmp6 string = "icmp6"
 
-	// UpdateNetworkApplianceFirewallCellularFirewallRulesParamsBodyRulesItems0ProtocolAny captures enum value "any"
-	UpdateNetworkApplianceFirewallCellularFirewallRulesParamsBodyRulesItems0ProtocolAny string = "any"
+	// UpdateNetworkApplianceFirewallCellularFirewallRulesParamsBodyRulesItems0ProtocolTCP captures enum value "tcp"
+	UpdateNetworkApplianceFirewallCellularFirewallRulesParamsBodyRulesItems0ProtocolTCP string = "tcp"
+
+	// UpdateNetworkApplianceFirewallCellularFirewallRulesParamsBodyRulesItems0ProtocolUDP captures enum value "udp"
+	UpdateNetworkApplianceFirewallCellularFirewallRulesParamsBodyRulesItems0ProtocolUDP string = "udp"
 )
 
 // prop value enum

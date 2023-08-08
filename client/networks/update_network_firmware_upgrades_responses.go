@@ -10,6 +10,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
@@ -33,7 +34,7 @@ func (o *UpdateNetworkFirmwareUpgradesReader) ReadResponse(response runtime.Clie
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/firmwareUpgrades] updateNetworkFirmwareUpgrades", response, response.Code())
 	}
 }
 
@@ -42,12 +43,13 @@ func NewUpdateNetworkFirmwareUpgradesOK() *UpdateNetworkFirmwareUpgradesOK {
 	return &UpdateNetworkFirmwareUpgradesOK{}
 }
 
-/* UpdateNetworkFirmwareUpgradesOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkFirmwareUpgradesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateNetworkFirmwareUpgradesOK struct {
-	Payload interface{}
+	Payload *UpdateNetworkFirmwareUpgradesOKBody
 }
 
 // IsSuccess returns true when this update network firmware upgrades o k response has a 2xx status code
@@ -75,6 +77,11 @@ func (o *UpdateNetworkFirmwareUpgradesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network firmware upgrades o k response
+func (o *UpdateNetworkFirmwareUpgradesOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkFirmwareUpgradesOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/firmwareUpgrades][%d] updateNetworkFirmwareUpgradesOK  %+v", 200, o.Payload)
 }
@@ -83,22 +90,25 @@ func (o *UpdateNetworkFirmwareUpgradesOK) String() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/firmwareUpgrades][%d] updateNetworkFirmwareUpgradesOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateNetworkFirmwareUpgradesOK) GetPayload() interface{} {
+func (o *UpdateNetworkFirmwareUpgradesOK) GetPayload() *UpdateNetworkFirmwareUpgradesOKBody {
 	return o.Payload
 }
 
 func (o *UpdateNetworkFirmwareUpgradesOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateNetworkFirmwareUpgradesOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesBody update network firmware upgrades body
-// Example: {"products":{"switch":{"nextUpgrade":{"toVersion":{"id":"7857"}}}}}
+/*
+UpdateNetworkFirmwareUpgradesBody update network firmware upgrades body
+// Example: {"products":{"appliance":{"nextUpgrade":{"time":"2019-03-17T17:22:52Z","toVersion":{"id":"1001"}},"participateInNextBetaRelease":false},"camera":{"nextUpgrade":{"time":"2019-03-17T17:22:52Z","toVersion":{"id":"1003"}},"participateInNextBetaRelease":false},"cellularGateway":{"nextUpgrade":{"time":"2019-03-17T17:22:52Z","toVersion":{"id":"1004"}},"participateInNextBetaRelease":false},"cloudGateway":{"nextUpgrade":{"time":"2019-03-17T17:22:52Z","toVersion":{"id":"1006"}},"participateInNextBetaRelease":false},"sensor":{"nextUpgrade":{"time":"2019-03-17T17:22:52Z","toVersion":{"id":"1005"}},"participateInNextBetaRelease":false},"switch":{"nextUpgrade":{"time":"2019-03-17T17:22:52Z","toVersion":{"id":"1002"}},"participateInNextBetaRelease":false},"switchCatalyst":{"nextUpgrade":{"time":"2019-03-17T17:22:52Z","toVersion":{"id":"1234"}},"participateInNextBetaRelease":false},"wireless":{"nextUpgrade":{"time":"2019-03-17T17:22:52Z","toVersion":{"id":"1000"}},"participateInNextBetaRelease":false}},"timezone":"America/Los_Angeles","upgradeWindow":{"dayOfWeek":"sun","hourOfDay":"4:00"}}
 swagger:model UpdateNetworkFirmwareUpgradesBody
 */
 type UpdateNetworkFirmwareUpgradesBody struct {
@@ -190,6 +200,11 @@ func (o *UpdateNetworkFirmwareUpgradesBody) ContextValidate(ctx context.Context,
 func (o *UpdateNetworkFirmwareUpgradesBody) contextValidateProducts(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Products != nil {
+
+		if swag.IsZero(o.Products) { // not required
+			return nil
+		}
+
 		if err := o.Products.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products")
@@ -206,6 +221,11 @@ func (o *UpdateNetworkFirmwareUpgradesBody) contextValidateProducts(ctx context.
 func (o *UpdateNetworkFirmwareUpgradesBody) contextValidateUpgradeWindow(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.UpgradeWindow != nil {
+
+		if swag.IsZero(o.UpgradeWindow) { // not required
+			return nil
+		}
+
 		if err := o.UpgradeWindow.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "upgradeWindow")
@@ -237,7 +257,7144 @@ func (o *UpdateNetworkFirmwareUpgradesBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesParamsBodyProducts Contains information about the network to update
+/*
+UpdateNetworkFirmwareUpgradesOKBody update network firmware upgrades o k body
+swagger:model UpdateNetworkFirmwareUpgradesOKBody
+*/
+type UpdateNetworkFirmwareUpgradesOKBody struct {
+
+	// products
+	Products *UpdateNetworkFirmwareUpgradesOKBodyProducts `json:"products,omitempty"`
+
+	// The timezone for the network
+	Timezone string `json:"timezone,omitempty"`
+
+	// upgrade window
+	UpgradeWindow *UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindow `json:"upgradeWindow,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body
+func (o *UpdateNetworkFirmwareUpgradesOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateProducts(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateUpgradeWindow(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBody) validateProducts(formats strfmt.Registry) error {
+	if swag.IsZero(o.Products) { // not required
+		return nil
+	}
+
+	if o.Products != nil {
+		if err := o.Products.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBody) validateUpgradeWindow(formats strfmt.Registry) error {
+	if swag.IsZero(o.UpgradeWindow) { // not required
+		return nil
+	}
+
+	if o.UpgradeWindow != nil {
+		if err := o.UpgradeWindow.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "upgradeWindow")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "upgradeWindow")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades o k body based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateProducts(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateUpgradeWindow(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBody) contextValidateProducts(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Products != nil {
+
+		if swag.IsZero(o.Products) { // not required
+			return nil
+		}
+
+		if err := o.Products.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBody) contextValidateUpgradeWindow(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.UpgradeWindow != nil {
+
+		if swag.IsZero(o.UpgradeWindow) { // not required
+			return nil
+		}
+
+		if err := o.UpgradeWindow.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "upgradeWindow")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "upgradeWindow")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProducts The network devices to be updated
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProducts
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProducts struct {
+
+	// appliance
+	Appliance *UpdateNetworkFirmwareUpgradesOKBodyProductsAppliance `json:"appliance,omitempty"`
+
+	// camera
+	Camera *UpdateNetworkFirmwareUpgradesOKBodyProductsCamera `json:"camera,omitempty"`
+
+	// cellular gateway
+	CellularGateway *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGateway `json:"cellularGateway,omitempty"`
+
+	// cloud gateway
+	CloudGateway *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGateway `json:"cloudGateway,omitempty"`
+
+	// sensor
+	Sensor *UpdateNetworkFirmwareUpgradesOKBodyProductsSensor `json:"sensor,omitempty"`
+
+	// switch
+	Switch *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitch `json:"switch,omitempty"`
+
+	// wireless
+	Wireless *UpdateNetworkFirmwareUpgradesOKBodyProductsWireless `json:"wireless,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProducts) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateAppliance(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateCamera(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateCellularGateway(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateCloudGateway(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSensor(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSwitch(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateWireless(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProducts) validateAppliance(formats strfmt.Registry) error {
+	if swag.IsZero(o.Appliance) { // not required
+		return nil
+	}
+
+	if o.Appliance != nil {
+		if err := o.Appliance.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProducts) validateCamera(formats strfmt.Registry) error {
+	if swag.IsZero(o.Camera) { // not required
+		return nil
+	}
+
+	if o.Camera != nil {
+		if err := o.Camera.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProducts) validateCellularGateway(formats strfmt.Registry) error {
+	if swag.IsZero(o.CellularGateway) { // not required
+		return nil
+	}
+
+	if o.CellularGateway != nil {
+		if err := o.CellularGateway.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProducts) validateCloudGateway(formats strfmt.Registry) error {
+	if swag.IsZero(o.CloudGateway) { // not required
+		return nil
+	}
+
+	if o.CloudGateway != nil {
+		if err := o.CloudGateway.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProducts) validateSensor(formats strfmt.Registry) error {
+	if swag.IsZero(o.Sensor) { // not required
+		return nil
+	}
+
+	if o.Sensor != nil {
+		if err := o.Sensor.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProducts) validateSwitch(formats strfmt.Registry) error {
+	if swag.IsZero(o.Switch) { // not required
+		return nil
+	}
+
+	if o.Switch != nil {
+		if err := o.Switch.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProducts) validateWireless(formats strfmt.Registry) error {
+	if swag.IsZero(o.Wireless) { // not required
+		return nil
+	}
+
+	if o.Wireless != nil {
+		if err := o.Wireless.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades o k body products based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProducts) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateAppliance(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateCamera(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateCellularGateway(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateCloudGateway(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateSensor(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateSwitch(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateWireless(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProducts) contextValidateAppliance(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Appliance != nil {
+
+		if swag.IsZero(o.Appliance) { // not required
+			return nil
+		}
+
+		if err := o.Appliance.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProducts) contextValidateCamera(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Camera != nil {
+
+		if swag.IsZero(o.Camera) { // not required
+			return nil
+		}
+
+		if err := o.Camera.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProducts) contextValidateCellularGateway(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.CellularGateway != nil {
+
+		if swag.IsZero(o.CellularGateway) { // not required
+			return nil
+		}
+
+		if err := o.CellularGateway.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProducts) contextValidateCloudGateway(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.CloudGateway != nil {
+
+		if swag.IsZero(o.CloudGateway) { // not required
+			return nil
+		}
+
+		if err := o.CloudGateway.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProducts) contextValidateSensor(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Sensor != nil {
+
+		if swag.IsZero(o.Sensor) { // not required
+			return nil
+		}
+
+		if err := o.Sensor.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProducts) contextValidateSwitch(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Switch != nil {
+
+		if swag.IsZero(o.Switch) { // not required
+			return nil
+		}
+
+		if err := o.Switch.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProducts) contextValidateWireless(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Wireless != nil {
+
+		if swag.IsZero(o.Wireless) { // not required
+			return nil
+		}
+
+		if err := o.Wireless.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProducts) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProducts) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProducts
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsAppliance The network device to be updated
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsAppliance
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsAppliance struct {
+
+	// Firmware versions available for upgrade
+	AvailableVersions []*UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceAvailableVersionsItems0 `json:"availableVersions"`
+
+	// current version
+	CurrentVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceCurrentVersion `json:"currentVersion,omitempty"`
+
+	// last upgrade
+	LastUpgrade *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgrade `json:"lastUpgrade,omitempty"`
+
+	// next upgrade
+	NextUpgrade *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceNextUpgrade `json:"nextUpgrade,omitempty"`
+
+	// Whether or not the network wants beta firmware
+	ParticipateInNextBetaRelease bool `json:"participateInNextBetaRelease,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products appliance
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsAppliance) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateAvailableVersions(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateCurrentVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateLastUpgrade(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNextUpgrade(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsAppliance) validateAvailableVersions(formats strfmt.Registry) error {
+	if swag.IsZero(o.AvailableVersions) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.AvailableVersions); i++ {
+		if swag.IsZero(o.AvailableVersions[i]) { // not required
+			continue
+		}
+
+		if o.AvailableVersions[i] != nil {
+			if err := o.AvailableVersions[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsAppliance) validateCurrentVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.CurrentVersion) { // not required
+		return nil
+	}
+
+	if o.CurrentVersion != nil {
+		if err := o.CurrentVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "currentVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "currentVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsAppliance) validateLastUpgrade(formats strfmt.Registry) error {
+	if swag.IsZero(o.LastUpgrade) { // not required
+		return nil
+	}
+
+	if o.LastUpgrade != nil {
+		if err := o.LastUpgrade.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "lastUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "lastUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsAppliance) validateNextUpgrade(formats strfmt.Registry) error {
+	if swag.IsZero(o.NextUpgrade) { // not required
+		return nil
+	}
+
+	if o.NextUpgrade != nil {
+		if err := o.NextUpgrade.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "nextUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "nextUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades o k body products appliance based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsAppliance) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateAvailableVersions(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateCurrentVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateLastUpgrade(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateNextUpgrade(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsAppliance) contextValidateAvailableVersions(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.AvailableVersions); i++ {
+
+		if o.AvailableVersions[i] != nil {
+
+			if swag.IsZero(o.AvailableVersions[i]) { // not required
+				return nil
+			}
+
+			if err := o.AvailableVersions[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsAppliance) contextValidateCurrentVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.CurrentVersion != nil {
+
+		if swag.IsZero(o.CurrentVersion) { // not required
+			return nil
+		}
+
+		if err := o.CurrentVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "currentVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "currentVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsAppliance) contextValidateLastUpgrade(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.LastUpgrade != nil {
+
+		if swag.IsZero(o.LastUpgrade) { // not required
+			return nil
+		}
+
+		if err := o.LastUpgrade.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "lastUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "lastUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsAppliance) contextValidateNextUpgrade(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.NextUpgrade != nil {
+
+		if swag.IsZero(o.NextUpgrade) { // not required
+			return nil
+		}
+
+		if err := o.NextUpgrade.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "nextUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "nextUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsAppliance) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsAppliance) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsAppliance
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceAvailableVersionsItems0 update network firmware upgrades o k body products appliance available versions items0
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceAvailableVersionsItems0
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceAvailableVersionsItems0 struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products appliance available versions items0
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceAvailableVersionsItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceAvailableVersionsItems0) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products appliance available versions items0 based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceAvailableVersionsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceAvailableVersionsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceAvailableVersionsItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceAvailableVersionsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceCurrentVersion Details of the current version on the device
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceCurrentVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceCurrentVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products appliance current version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceCurrentVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceCurrentVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"appliance"+"."+"currentVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products appliance current version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceCurrentVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceCurrentVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceCurrentVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceCurrentVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgrade Details of the last firmware upgrade on the device
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgrade
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgrade struct {
+
+	// from version
+	FromVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgradeFromVersion `json:"fromVersion,omitempty"`
+
+	// Timestamp of the last successful firmware upgrade
+	// Format: date-time
+	Time strfmt.DateTime `json:"time,omitempty"`
+
+	// to version
+	ToVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgradeToVersion `json:"toVersion,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products appliance last upgrade
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgrade) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateFromVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTime(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateToVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgrade) validateFromVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.FromVersion) { // not required
+		return nil
+	}
+
+	if o.FromVersion != nil {
+		if err := o.FromVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "lastUpgrade" + "." + "fromVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "lastUpgrade" + "." + "fromVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgrade) validateTime(formats strfmt.Registry) error {
+	if swag.IsZero(o.Time) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"appliance"+"."+"lastUpgrade"+"."+"time", "body", "date-time", o.Time.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgrade) validateToVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.ToVersion) { // not required
+		return nil
+	}
+
+	if o.ToVersion != nil {
+		if err := o.ToVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "lastUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "lastUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades o k body products appliance last upgrade based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgrade) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateFromVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateToVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgrade) contextValidateFromVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.FromVersion != nil {
+
+		if swag.IsZero(o.FromVersion) { // not required
+			return nil
+		}
+
+		if err := o.FromVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "lastUpgrade" + "." + "fromVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "lastUpgrade" + "." + "fromVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
+		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "lastUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "lastUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgrade) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgrade) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgrade
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgradeFromVersion Details of the version the device upgraded from
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgradeFromVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgradeFromVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products appliance last upgrade from version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgradeFromVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgradeFromVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"appliance"+"."+"lastUpgrade"+"."+"fromVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products appliance last upgrade from version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgradeFromVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgradeFromVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgradeFromVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgradeFromVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgradeToVersion Details of the version the device upgraded to
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgradeToVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgradeToVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products appliance last upgrade to version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgradeToVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgradeToVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"appliance"+"."+"lastUpgrade"+"."+"toVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products appliance last upgrade to version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgradeToVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgradeToVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgradeToVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceLastUpgradeToVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceNextUpgrade Details of the next firmware upgrade on the device
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceNextUpgrade
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceNextUpgrade struct {
+
+	// Timestamp of the next scheduled firmware upgrade
+	// Format: date-time
+	Time strfmt.DateTime `json:"time,omitempty"`
+
+	// to version
+	ToVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceNextUpgradeToVersion `json:"toVersion,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products appliance next upgrade
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceNextUpgrade) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateTime(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateToVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceNextUpgrade) validateTime(formats strfmt.Registry) error {
+	if swag.IsZero(o.Time) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"appliance"+"."+"nextUpgrade"+"."+"time", "body", "date-time", o.Time.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceNextUpgrade) validateToVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.ToVersion) { // not required
+		return nil
+	}
+
+	if o.ToVersion != nil {
+		if err := o.ToVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "nextUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "nextUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades o k body products appliance next upgrade based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceNextUpgrade) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateToVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceNextUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
+		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "nextUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "appliance" + "." + "nextUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceNextUpgrade) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceNextUpgrade) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceNextUpgrade
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceNextUpgradeToVersion Details of the version the device will upgrade to if it exists
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceNextUpgradeToVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceNextUpgradeToVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products appliance next upgrade to version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceNextUpgradeToVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceNextUpgradeToVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"appliance"+"."+"nextUpgrade"+"."+"toVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products appliance next upgrade to version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceNextUpgradeToVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceNextUpgradeToVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceNextUpgradeToVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsApplianceNextUpgradeToVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCamera The network device to be updated
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCamera
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCamera struct {
+
+	// Firmware versions available for upgrade
+	AvailableVersions []*UpdateNetworkFirmwareUpgradesOKBodyProductsCameraAvailableVersionsItems0 `json:"availableVersions"`
+
+	// current version
+	CurrentVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraCurrentVersion `json:"currentVersion,omitempty"`
+
+	// last upgrade
+	LastUpgrade *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgrade `json:"lastUpgrade,omitempty"`
+
+	// next upgrade
+	NextUpgrade *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraNextUpgrade `json:"nextUpgrade,omitempty"`
+
+	// Whether or not the network wants beta firmware
+	ParticipateInNextBetaRelease bool `json:"participateInNextBetaRelease,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products camera
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCamera) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateAvailableVersions(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateCurrentVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateLastUpgrade(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNextUpgrade(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCamera) validateAvailableVersions(formats strfmt.Registry) error {
+	if swag.IsZero(o.AvailableVersions) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.AvailableVersions); i++ {
+		if swag.IsZero(o.AvailableVersions[i]) { // not required
+			continue
+		}
+
+		if o.AvailableVersions[i] != nil {
+			if err := o.AvailableVersions[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCamera) validateCurrentVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.CurrentVersion) { // not required
+		return nil
+	}
+
+	if o.CurrentVersion != nil {
+		if err := o.CurrentVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "currentVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "currentVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCamera) validateLastUpgrade(formats strfmt.Registry) error {
+	if swag.IsZero(o.LastUpgrade) { // not required
+		return nil
+	}
+
+	if o.LastUpgrade != nil {
+		if err := o.LastUpgrade.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "lastUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "lastUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCamera) validateNextUpgrade(formats strfmt.Registry) error {
+	if swag.IsZero(o.NextUpgrade) { // not required
+		return nil
+	}
+
+	if o.NextUpgrade != nil {
+		if err := o.NextUpgrade.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "nextUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "nextUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades o k body products camera based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCamera) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateAvailableVersions(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateCurrentVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateLastUpgrade(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateNextUpgrade(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCamera) contextValidateAvailableVersions(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.AvailableVersions); i++ {
+
+		if o.AvailableVersions[i] != nil {
+
+			if swag.IsZero(o.AvailableVersions[i]) { // not required
+				return nil
+			}
+
+			if err := o.AvailableVersions[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCamera) contextValidateCurrentVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.CurrentVersion != nil {
+
+		if swag.IsZero(o.CurrentVersion) { // not required
+			return nil
+		}
+
+		if err := o.CurrentVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "currentVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "currentVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCamera) contextValidateLastUpgrade(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.LastUpgrade != nil {
+
+		if swag.IsZero(o.LastUpgrade) { // not required
+			return nil
+		}
+
+		if err := o.LastUpgrade.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "lastUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "lastUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCamera) contextValidateNextUpgrade(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.NextUpgrade != nil {
+
+		if swag.IsZero(o.NextUpgrade) { // not required
+			return nil
+		}
+
+		if err := o.NextUpgrade.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "nextUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "nextUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCamera) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCamera) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCamera
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCameraAvailableVersionsItems0 update network firmware upgrades o k body products camera available versions items0
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCameraAvailableVersionsItems0
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCameraAvailableVersionsItems0 struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products camera available versions items0
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraAvailableVersionsItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraAvailableVersionsItems0) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products camera available versions items0 based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraAvailableVersionsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraAvailableVersionsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraAvailableVersionsItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCameraAvailableVersionsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCameraCurrentVersion Details of the current version on the device
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCameraCurrentVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCameraCurrentVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products camera current version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraCurrentVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraCurrentVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"camera"+"."+"currentVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products camera current version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraCurrentVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraCurrentVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraCurrentVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCameraCurrentVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgrade Details of the last firmware upgrade on the device
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgrade
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgrade struct {
+
+	// from version
+	FromVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgradeFromVersion `json:"fromVersion,omitempty"`
+
+	// Timestamp of the last successful firmware upgrade
+	// Format: date-time
+	Time strfmt.DateTime `json:"time,omitempty"`
+
+	// to version
+	ToVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgradeToVersion `json:"toVersion,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products camera last upgrade
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgrade) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateFromVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTime(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateToVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgrade) validateFromVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.FromVersion) { // not required
+		return nil
+	}
+
+	if o.FromVersion != nil {
+		if err := o.FromVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "lastUpgrade" + "." + "fromVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "lastUpgrade" + "." + "fromVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgrade) validateTime(formats strfmt.Registry) error {
+	if swag.IsZero(o.Time) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"camera"+"."+"lastUpgrade"+"."+"time", "body", "date-time", o.Time.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgrade) validateToVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.ToVersion) { // not required
+		return nil
+	}
+
+	if o.ToVersion != nil {
+		if err := o.ToVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "lastUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "lastUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades o k body products camera last upgrade based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgrade) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateFromVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateToVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgrade) contextValidateFromVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.FromVersion != nil {
+
+		if swag.IsZero(o.FromVersion) { // not required
+			return nil
+		}
+
+		if err := o.FromVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "lastUpgrade" + "." + "fromVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "lastUpgrade" + "." + "fromVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
+		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "lastUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "lastUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgrade) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgrade) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgrade
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgradeFromVersion Details of the version the device upgraded from
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgradeFromVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgradeFromVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products camera last upgrade from version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgradeFromVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgradeFromVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"camera"+"."+"lastUpgrade"+"."+"fromVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products camera last upgrade from version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgradeFromVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgradeFromVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgradeFromVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgradeFromVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgradeToVersion Details of the version the device upgraded to
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgradeToVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgradeToVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products camera last upgrade to version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgradeToVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgradeToVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"camera"+"."+"lastUpgrade"+"."+"toVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products camera last upgrade to version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgradeToVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgradeToVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgradeToVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCameraLastUpgradeToVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCameraNextUpgrade Details of the next firmware upgrade on the device
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCameraNextUpgrade
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCameraNextUpgrade struct {
+
+	// Timestamp of the next scheduled firmware upgrade
+	// Format: date-time
+	Time strfmt.DateTime `json:"time,omitempty"`
+
+	// to version
+	ToVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraNextUpgradeToVersion `json:"toVersion,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products camera next upgrade
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraNextUpgrade) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateTime(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateToVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraNextUpgrade) validateTime(formats strfmt.Registry) error {
+	if swag.IsZero(o.Time) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"camera"+"."+"nextUpgrade"+"."+"time", "body", "date-time", o.Time.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraNextUpgrade) validateToVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.ToVersion) { // not required
+		return nil
+	}
+
+	if o.ToVersion != nil {
+		if err := o.ToVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "nextUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "nextUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades o k body products camera next upgrade based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraNextUpgrade) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateToVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraNextUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
+		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "nextUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "camera" + "." + "nextUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraNextUpgrade) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraNextUpgrade) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCameraNextUpgrade
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCameraNextUpgradeToVersion Details of the version the device will upgrade to if it exists
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCameraNextUpgradeToVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCameraNextUpgradeToVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products camera next upgrade to version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraNextUpgradeToVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraNextUpgradeToVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"camera"+"."+"nextUpgrade"+"."+"toVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products camera next upgrade to version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraNextUpgradeToVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraNextUpgradeToVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCameraNextUpgradeToVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCameraNextUpgradeToVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGateway The network device to be updated
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGateway
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGateway struct {
+
+	// Firmware versions available for upgrade
+	AvailableVersions []*UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayAvailableVersionsItems0 `json:"availableVersions"`
+
+	// current version
+	CurrentVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayCurrentVersion `json:"currentVersion,omitempty"`
+
+	// last upgrade
+	LastUpgrade *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgrade `json:"lastUpgrade,omitempty"`
+
+	// next upgrade
+	NextUpgrade *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayNextUpgrade `json:"nextUpgrade,omitempty"`
+
+	// Whether or not the network wants beta firmware
+	ParticipateInNextBetaRelease bool `json:"participateInNextBetaRelease,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products cellular gateway
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGateway) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateAvailableVersions(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateCurrentVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateLastUpgrade(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNextUpgrade(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGateway) validateAvailableVersions(formats strfmt.Registry) error {
+	if swag.IsZero(o.AvailableVersions) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.AvailableVersions); i++ {
+		if swag.IsZero(o.AvailableVersions[i]) { // not required
+			continue
+		}
+
+		if o.AvailableVersions[i] != nil {
+			if err := o.AvailableVersions[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGateway) validateCurrentVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.CurrentVersion) { // not required
+		return nil
+	}
+
+	if o.CurrentVersion != nil {
+		if err := o.CurrentVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "currentVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "currentVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGateway) validateLastUpgrade(formats strfmt.Registry) error {
+	if swag.IsZero(o.LastUpgrade) { // not required
+		return nil
+	}
+
+	if o.LastUpgrade != nil {
+		if err := o.LastUpgrade.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "lastUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "lastUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGateway) validateNextUpgrade(formats strfmt.Registry) error {
+	if swag.IsZero(o.NextUpgrade) { // not required
+		return nil
+	}
+
+	if o.NextUpgrade != nil {
+		if err := o.NextUpgrade.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "nextUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "nextUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades o k body products cellular gateway based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGateway) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateAvailableVersions(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateCurrentVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateLastUpgrade(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateNextUpgrade(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGateway) contextValidateAvailableVersions(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.AvailableVersions); i++ {
+
+		if o.AvailableVersions[i] != nil {
+
+			if swag.IsZero(o.AvailableVersions[i]) { // not required
+				return nil
+			}
+
+			if err := o.AvailableVersions[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGateway) contextValidateCurrentVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.CurrentVersion != nil {
+
+		if swag.IsZero(o.CurrentVersion) { // not required
+			return nil
+		}
+
+		if err := o.CurrentVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "currentVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "currentVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGateway) contextValidateLastUpgrade(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.LastUpgrade != nil {
+
+		if swag.IsZero(o.LastUpgrade) { // not required
+			return nil
+		}
+
+		if err := o.LastUpgrade.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "lastUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "lastUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGateway) contextValidateNextUpgrade(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.NextUpgrade != nil {
+
+		if swag.IsZero(o.NextUpgrade) { // not required
+			return nil
+		}
+
+		if err := o.NextUpgrade.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "nextUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "nextUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGateway) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGateway) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGateway
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayAvailableVersionsItems0 update network firmware upgrades o k body products cellular gateway available versions items0
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayAvailableVersionsItems0
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayAvailableVersionsItems0 struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products cellular gateway available versions items0
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayAvailableVersionsItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayAvailableVersionsItems0) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products cellular gateway available versions items0 based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayAvailableVersionsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayAvailableVersionsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayAvailableVersionsItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayAvailableVersionsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayCurrentVersion Details of the current version on the device
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayCurrentVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayCurrentVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products cellular gateway current version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayCurrentVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayCurrentVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"cellularGateway"+"."+"currentVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products cellular gateway current version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayCurrentVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayCurrentVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayCurrentVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayCurrentVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgrade Details of the last firmware upgrade on the device
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgrade
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgrade struct {
+
+	// from version
+	FromVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgradeFromVersion `json:"fromVersion,omitempty"`
+
+	// Timestamp of the last successful firmware upgrade
+	// Format: date-time
+	Time strfmt.DateTime `json:"time,omitempty"`
+
+	// to version
+	ToVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgradeToVersion `json:"toVersion,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products cellular gateway last upgrade
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgrade) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateFromVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTime(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateToVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgrade) validateFromVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.FromVersion) { // not required
+		return nil
+	}
+
+	if o.FromVersion != nil {
+		if err := o.FromVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "lastUpgrade" + "." + "fromVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "lastUpgrade" + "." + "fromVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgrade) validateTime(formats strfmt.Registry) error {
+	if swag.IsZero(o.Time) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"cellularGateway"+"."+"lastUpgrade"+"."+"time", "body", "date-time", o.Time.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgrade) validateToVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.ToVersion) { // not required
+		return nil
+	}
+
+	if o.ToVersion != nil {
+		if err := o.ToVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "lastUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "lastUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades o k body products cellular gateway last upgrade based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgrade) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateFromVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateToVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgrade) contextValidateFromVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.FromVersion != nil {
+
+		if swag.IsZero(o.FromVersion) { // not required
+			return nil
+		}
+
+		if err := o.FromVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "lastUpgrade" + "." + "fromVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "lastUpgrade" + "." + "fromVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
+		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "lastUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "lastUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgrade) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgrade) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgrade
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgradeFromVersion Details of the version the device upgraded from
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgradeFromVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgradeFromVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products cellular gateway last upgrade from version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgradeFromVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgradeFromVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"cellularGateway"+"."+"lastUpgrade"+"."+"fromVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products cellular gateway last upgrade from version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgradeFromVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgradeFromVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgradeFromVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgradeFromVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgradeToVersion Details of the version the device upgraded to
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgradeToVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgradeToVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products cellular gateway last upgrade to version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgradeToVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgradeToVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"cellularGateway"+"."+"lastUpgrade"+"."+"toVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products cellular gateway last upgrade to version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgradeToVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgradeToVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgradeToVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayLastUpgradeToVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayNextUpgrade Details of the next firmware upgrade on the device
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayNextUpgrade
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayNextUpgrade struct {
+
+	// Timestamp of the next scheduled firmware upgrade
+	// Format: date-time
+	Time strfmt.DateTime `json:"time,omitempty"`
+
+	// to version
+	ToVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayNextUpgradeToVersion `json:"toVersion,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products cellular gateway next upgrade
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayNextUpgrade) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateTime(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateToVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayNextUpgrade) validateTime(formats strfmt.Registry) error {
+	if swag.IsZero(o.Time) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"cellularGateway"+"."+"nextUpgrade"+"."+"time", "body", "date-time", o.Time.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayNextUpgrade) validateToVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.ToVersion) { // not required
+		return nil
+	}
+
+	if o.ToVersion != nil {
+		if err := o.ToVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "nextUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "nextUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades o k body products cellular gateway next upgrade based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayNextUpgrade) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateToVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayNextUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
+		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "nextUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cellularGateway" + "." + "nextUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayNextUpgrade) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayNextUpgrade) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayNextUpgrade
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayNextUpgradeToVersion Details of the version the device will upgrade to if it exists
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayNextUpgradeToVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayNextUpgradeToVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products cellular gateway next upgrade to version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayNextUpgradeToVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayNextUpgradeToVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"cellularGateway"+"."+"nextUpgrade"+"."+"toVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products cellular gateway next upgrade to version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayNextUpgradeToVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayNextUpgradeToVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayNextUpgradeToVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCellularGatewayNextUpgradeToVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGateway The network device to be updated
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGateway
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGateway struct {
+
+	// Firmware versions available for upgrade
+	AvailableVersions []*UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayAvailableVersionsItems0 `json:"availableVersions"`
+
+	// current version
+	CurrentVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayCurrentVersion `json:"currentVersion,omitempty"`
+
+	// last upgrade
+	LastUpgrade *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgrade `json:"lastUpgrade,omitempty"`
+
+	// next upgrade
+	NextUpgrade *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayNextUpgrade `json:"nextUpgrade,omitempty"`
+
+	// Whether or not the network wants beta firmware
+	ParticipateInNextBetaRelease bool `json:"participateInNextBetaRelease,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products cloud gateway
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGateway) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateAvailableVersions(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateCurrentVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateLastUpgrade(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNextUpgrade(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGateway) validateAvailableVersions(formats strfmt.Registry) error {
+	if swag.IsZero(o.AvailableVersions) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.AvailableVersions); i++ {
+		if swag.IsZero(o.AvailableVersions[i]) { // not required
+			continue
+		}
+
+		if o.AvailableVersions[i] != nil {
+			if err := o.AvailableVersions[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGateway) validateCurrentVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.CurrentVersion) { // not required
+		return nil
+	}
+
+	if o.CurrentVersion != nil {
+		if err := o.CurrentVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "currentVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "currentVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGateway) validateLastUpgrade(formats strfmt.Registry) error {
+	if swag.IsZero(o.LastUpgrade) { // not required
+		return nil
+	}
+
+	if o.LastUpgrade != nil {
+		if err := o.LastUpgrade.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "lastUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "lastUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGateway) validateNextUpgrade(formats strfmt.Registry) error {
+	if swag.IsZero(o.NextUpgrade) { // not required
+		return nil
+	}
+
+	if o.NextUpgrade != nil {
+		if err := o.NextUpgrade.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "nextUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "nextUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades o k body products cloud gateway based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGateway) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateAvailableVersions(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateCurrentVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateLastUpgrade(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateNextUpgrade(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGateway) contextValidateAvailableVersions(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.AvailableVersions); i++ {
+
+		if o.AvailableVersions[i] != nil {
+
+			if swag.IsZero(o.AvailableVersions[i]) { // not required
+				return nil
+			}
+
+			if err := o.AvailableVersions[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGateway) contextValidateCurrentVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.CurrentVersion != nil {
+
+		if swag.IsZero(o.CurrentVersion) { // not required
+			return nil
+		}
+
+		if err := o.CurrentVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "currentVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "currentVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGateway) contextValidateLastUpgrade(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.LastUpgrade != nil {
+
+		if swag.IsZero(o.LastUpgrade) { // not required
+			return nil
+		}
+
+		if err := o.LastUpgrade.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "lastUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "lastUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGateway) contextValidateNextUpgrade(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.NextUpgrade != nil {
+
+		if swag.IsZero(o.NextUpgrade) { // not required
+			return nil
+		}
+
+		if err := o.NextUpgrade.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "nextUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "nextUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGateway) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGateway) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGateway
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayAvailableVersionsItems0 update network firmware upgrades o k body products cloud gateway available versions items0
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayAvailableVersionsItems0
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayAvailableVersionsItems0 struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products cloud gateway available versions items0
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayAvailableVersionsItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayAvailableVersionsItems0) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products cloud gateway available versions items0 based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayAvailableVersionsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayAvailableVersionsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayAvailableVersionsItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayAvailableVersionsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayCurrentVersion Details of the current version on the device
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayCurrentVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayCurrentVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products cloud gateway current version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayCurrentVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayCurrentVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"cloudGateway"+"."+"currentVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products cloud gateway current version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayCurrentVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayCurrentVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayCurrentVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayCurrentVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgrade Details of the last firmware upgrade on the device
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgrade
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgrade struct {
+
+	// from version
+	FromVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgradeFromVersion `json:"fromVersion,omitempty"`
+
+	// Timestamp of the last successful firmware upgrade
+	// Format: date-time
+	Time strfmt.DateTime `json:"time,omitempty"`
+
+	// to version
+	ToVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgradeToVersion `json:"toVersion,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products cloud gateway last upgrade
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgrade) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateFromVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTime(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateToVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgrade) validateFromVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.FromVersion) { // not required
+		return nil
+	}
+
+	if o.FromVersion != nil {
+		if err := o.FromVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "lastUpgrade" + "." + "fromVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "lastUpgrade" + "." + "fromVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgrade) validateTime(formats strfmt.Registry) error {
+	if swag.IsZero(o.Time) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"cloudGateway"+"."+"lastUpgrade"+"."+"time", "body", "date-time", o.Time.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgrade) validateToVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.ToVersion) { // not required
+		return nil
+	}
+
+	if o.ToVersion != nil {
+		if err := o.ToVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "lastUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "lastUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades o k body products cloud gateway last upgrade based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgrade) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateFromVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateToVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgrade) contextValidateFromVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.FromVersion != nil {
+
+		if swag.IsZero(o.FromVersion) { // not required
+			return nil
+		}
+
+		if err := o.FromVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "lastUpgrade" + "." + "fromVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "lastUpgrade" + "." + "fromVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
+		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "lastUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "lastUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgrade) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgrade) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgrade
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgradeFromVersion Details of the version the device upgraded from
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgradeFromVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgradeFromVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products cloud gateway last upgrade from version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgradeFromVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgradeFromVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"cloudGateway"+"."+"lastUpgrade"+"."+"fromVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products cloud gateway last upgrade from version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgradeFromVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgradeFromVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgradeFromVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgradeFromVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgradeToVersion Details of the version the device upgraded to
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgradeToVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgradeToVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products cloud gateway last upgrade to version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgradeToVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgradeToVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"cloudGateway"+"."+"lastUpgrade"+"."+"toVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products cloud gateway last upgrade to version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgradeToVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgradeToVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgradeToVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayLastUpgradeToVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayNextUpgrade Details of the next firmware upgrade on the device
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayNextUpgrade
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayNextUpgrade struct {
+
+	// Timestamp of the next scheduled firmware upgrade
+	// Format: date-time
+	Time strfmt.DateTime `json:"time,omitempty"`
+
+	// to version
+	ToVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayNextUpgradeToVersion `json:"toVersion,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products cloud gateway next upgrade
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayNextUpgrade) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateTime(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateToVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayNextUpgrade) validateTime(formats strfmt.Registry) error {
+	if swag.IsZero(o.Time) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"cloudGateway"+"."+"nextUpgrade"+"."+"time", "body", "date-time", o.Time.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayNextUpgrade) validateToVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.ToVersion) { // not required
+		return nil
+	}
+
+	if o.ToVersion != nil {
+		if err := o.ToVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "nextUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "nextUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades o k body products cloud gateway next upgrade based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayNextUpgrade) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateToVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayNextUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
+		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "nextUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "cloudGateway" + "." + "nextUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayNextUpgrade) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayNextUpgrade) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayNextUpgrade
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayNextUpgradeToVersion Details of the version the device will upgrade to if it exists
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayNextUpgradeToVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayNextUpgradeToVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products cloud gateway next upgrade to version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayNextUpgradeToVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayNextUpgradeToVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"cloudGateway"+"."+"nextUpgrade"+"."+"toVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products cloud gateway next upgrade to version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayNextUpgradeToVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayNextUpgradeToVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayNextUpgradeToVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsCloudGatewayNextUpgradeToVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsSensor The network device to be updated
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsSensor
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsSensor struct {
+
+	// Firmware versions available for upgrade
+	AvailableVersions []*UpdateNetworkFirmwareUpgradesOKBodyProductsSensorAvailableVersionsItems0 `json:"availableVersions"`
+
+	// current version
+	CurrentVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorCurrentVersion `json:"currentVersion,omitempty"`
+
+	// last upgrade
+	LastUpgrade *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgrade `json:"lastUpgrade,omitempty"`
+
+	// next upgrade
+	NextUpgrade *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorNextUpgrade `json:"nextUpgrade,omitempty"`
+
+	// Whether or not the network wants beta firmware
+	ParticipateInNextBetaRelease bool `json:"participateInNextBetaRelease,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products sensor
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensor) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateAvailableVersions(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateCurrentVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateLastUpgrade(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNextUpgrade(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensor) validateAvailableVersions(formats strfmt.Registry) error {
+	if swag.IsZero(o.AvailableVersions) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.AvailableVersions); i++ {
+		if swag.IsZero(o.AvailableVersions[i]) { // not required
+			continue
+		}
+
+		if o.AvailableVersions[i] != nil {
+			if err := o.AvailableVersions[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensor) validateCurrentVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.CurrentVersion) { // not required
+		return nil
+	}
+
+	if o.CurrentVersion != nil {
+		if err := o.CurrentVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "currentVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "currentVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensor) validateLastUpgrade(formats strfmt.Registry) error {
+	if swag.IsZero(o.LastUpgrade) { // not required
+		return nil
+	}
+
+	if o.LastUpgrade != nil {
+		if err := o.LastUpgrade.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "lastUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "lastUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensor) validateNextUpgrade(formats strfmt.Registry) error {
+	if swag.IsZero(o.NextUpgrade) { // not required
+		return nil
+	}
+
+	if o.NextUpgrade != nil {
+		if err := o.NextUpgrade.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "nextUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "nextUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades o k body products sensor based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensor) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateAvailableVersions(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateCurrentVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateLastUpgrade(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateNextUpgrade(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensor) contextValidateAvailableVersions(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.AvailableVersions); i++ {
+
+		if o.AvailableVersions[i] != nil {
+
+			if swag.IsZero(o.AvailableVersions[i]) { // not required
+				return nil
+			}
+
+			if err := o.AvailableVersions[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensor) contextValidateCurrentVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.CurrentVersion != nil {
+
+		if swag.IsZero(o.CurrentVersion) { // not required
+			return nil
+		}
+
+		if err := o.CurrentVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "currentVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "currentVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensor) contextValidateLastUpgrade(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.LastUpgrade != nil {
+
+		if swag.IsZero(o.LastUpgrade) { // not required
+			return nil
+		}
+
+		if err := o.LastUpgrade.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "lastUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "lastUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensor) contextValidateNextUpgrade(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.NextUpgrade != nil {
+
+		if swag.IsZero(o.NextUpgrade) { // not required
+			return nil
+		}
+
+		if err := o.NextUpgrade.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "nextUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "nextUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensor) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensor) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsSensor
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsSensorAvailableVersionsItems0 update network firmware upgrades o k body products sensor available versions items0
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsSensorAvailableVersionsItems0
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsSensorAvailableVersionsItems0 struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products sensor available versions items0
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorAvailableVersionsItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorAvailableVersionsItems0) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products sensor available versions items0 based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorAvailableVersionsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorAvailableVersionsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorAvailableVersionsItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsSensorAvailableVersionsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsSensorCurrentVersion Details of the current version on the device
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsSensorCurrentVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsSensorCurrentVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products sensor current version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorCurrentVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorCurrentVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"sensor"+"."+"currentVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products sensor current version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorCurrentVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorCurrentVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorCurrentVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsSensorCurrentVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgrade Details of the last firmware upgrade on the device
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgrade
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgrade struct {
+
+	// from version
+	FromVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgradeFromVersion `json:"fromVersion,omitempty"`
+
+	// Timestamp of the last successful firmware upgrade
+	// Format: date-time
+	Time strfmt.DateTime `json:"time,omitempty"`
+
+	// to version
+	ToVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgradeToVersion `json:"toVersion,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products sensor last upgrade
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgrade) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateFromVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTime(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateToVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgrade) validateFromVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.FromVersion) { // not required
+		return nil
+	}
+
+	if o.FromVersion != nil {
+		if err := o.FromVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "lastUpgrade" + "." + "fromVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "lastUpgrade" + "." + "fromVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgrade) validateTime(formats strfmt.Registry) error {
+	if swag.IsZero(o.Time) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"sensor"+"."+"lastUpgrade"+"."+"time", "body", "date-time", o.Time.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgrade) validateToVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.ToVersion) { // not required
+		return nil
+	}
+
+	if o.ToVersion != nil {
+		if err := o.ToVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "lastUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "lastUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades o k body products sensor last upgrade based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgrade) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateFromVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateToVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgrade) contextValidateFromVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.FromVersion != nil {
+
+		if swag.IsZero(o.FromVersion) { // not required
+			return nil
+		}
+
+		if err := o.FromVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "lastUpgrade" + "." + "fromVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "lastUpgrade" + "." + "fromVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
+		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "lastUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "lastUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgrade) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgrade) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgrade
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgradeFromVersion Details of the version the device upgraded from
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgradeFromVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgradeFromVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products sensor last upgrade from version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgradeFromVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgradeFromVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"sensor"+"."+"lastUpgrade"+"."+"fromVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products sensor last upgrade from version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgradeFromVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgradeFromVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgradeFromVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgradeFromVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgradeToVersion Details of the version the device upgraded to
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgradeToVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgradeToVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products sensor last upgrade to version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgradeToVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgradeToVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"sensor"+"."+"lastUpgrade"+"."+"toVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products sensor last upgrade to version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgradeToVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgradeToVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgradeToVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsSensorLastUpgradeToVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsSensorNextUpgrade Details of the next firmware upgrade on the device
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsSensorNextUpgrade
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsSensorNextUpgrade struct {
+
+	// Timestamp of the next scheduled firmware upgrade
+	// Format: date-time
+	Time strfmt.DateTime `json:"time,omitempty"`
+
+	// to version
+	ToVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorNextUpgradeToVersion `json:"toVersion,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products sensor next upgrade
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorNextUpgrade) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateTime(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateToVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorNextUpgrade) validateTime(formats strfmt.Registry) error {
+	if swag.IsZero(o.Time) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"sensor"+"."+"nextUpgrade"+"."+"time", "body", "date-time", o.Time.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorNextUpgrade) validateToVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.ToVersion) { // not required
+		return nil
+	}
+
+	if o.ToVersion != nil {
+		if err := o.ToVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "nextUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "nextUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades o k body products sensor next upgrade based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorNextUpgrade) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateToVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorNextUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
+		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "nextUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "sensor" + "." + "nextUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorNextUpgrade) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorNextUpgrade) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsSensorNextUpgrade
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsSensorNextUpgradeToVersion Details of the version the device will upgrade to if it exists
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsSensorNextUpgradeToVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsSensorNextUpgradeToVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products sensor next upgrade to version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorNextUpgradeToVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorNextUpgradeToVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"sensor"+"."+"nextUpgrade"+"."+"toVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products sensor next upgrade to version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorNextUpgradeToVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorNextUpgradeToVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSensorNextUpgradeToVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsSensorNextUpgradeToVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsSwitch The network device to be updated
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsSwitch
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsSwitch struct {
+
+	// Firmware versions available for upgrade
+	AvailableVersions []*UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchAvailableVersionsItems0 `json:"availableVersions"`
+
+	// current version
+	CurrentVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchCurrentVersion `json:"currentVersion,omitempty"`
+
+	// last upgrade
+	LastUpgrade *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgrade `json:"lastUpgrade,omitempty"`
+
+	// next upgrade
+	NextUpgrade *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchNextUpgrade `json:"nextUpgrade,omitempty"`
+
+	// Whether or not the network wants beta firmware
+	ParticipateInNextBetaRelease bool `json:"participateInNextBetaRelease,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products switch
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitch) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateAvailableVersions(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateCurrentVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateLastUpgrade(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNextUpgrade(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitch) validateAvailableVersions(formats strfmt.Registry) error {
+	if swag.IsZero(o.AvailableVersions) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.AvailableVersions); i++ {
+		if swag.IsZero(o.AvailableVersions[i]) { // not required
+			continue
+		}
+
+		if o.AvailableVersions[i] != nil {
+			if err := o.AvailableVersions[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitch) validateCurrentVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.CurrentVersion) { // not required
+		return nil
+	}
+
+	if o.CurrentVersion != nil {
+		if err := o.CurrentVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "currentVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "currentVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitch) validateLastUpgrade(formats strfmt.Registry) error {
+	if swag.IsZero(o.LastUpgrade) { // not required
+		return nil
+	}
+
+	if o.LastUpgrade != nil {
+		if err := o.LastUpgrade.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "lastUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "lastUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitch) validateNextUpgrade(formats strfmt.Registry) error {
+	if swag.IsZero(o.NextUpgrade) { // not required
+		return nil
+	}
+
+	if o.NextUpgrade != nil {
+		if err := o.NextUpgrade.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "nextUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "nextUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades o k body products switch based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitch) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateAvailableVersions(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateCurrentVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateLastUpgrade(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateNextUpgrade(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitch) contextValidateAvailableVersions(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.AvailableVersions); i++ {
+
+		if o.AvailableVersions[i] != nil {
+
+			if swag.IsZero(o.AvailableVersions[i]) { // not required
+				return nil
+			}
+
+			if err := o.AvailableVersions[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitch) contextValidateCurrentVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.CurrentVersion != nil {
+
+		if swag.IsZero(o.CurrentVersion) { // not required
+			return nil
+		}
+
+		if err := o.CurrentVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "currentVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "currentVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitch) contextValidateLastUpgrade(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.LastUpgrade != nil {
+
+		if swag.IsZero(o.LastUpgrade) { // not required
+			return nil
+		}
+
+		if err := o.LastUpgrade.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "lastUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "lastUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitch) contextValidateNextUpgrade(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.NextUpgrade != nil {
+
+		if swag.IsZero(o.NextUpgrade) { // not required
+			return nil
+		}
+
+		if err := o.NextUpgrade.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "nextUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "nextUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitch) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitch) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsSwitch
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchAvailableVersionsItems0 update network firmware upgrades o k body products switch available versions items0
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchAvailableVersionsItems0
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchAvailableVersionsItems0 struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products switch available versions items0
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchAvailableVersionsItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchAvailableVersionsItems0) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products switch available versions items0 based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchAvailableVersionsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchAvailableVersionsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchAvailableVersionsItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchAvailableVersionsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchCurrentVersion Details of the current version on the device
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchCurrentVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchCurrentVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products switch current version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchCurrentVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchCurrentVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"switch"+"."+"currentVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products switch current version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchCurrentVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchCurrentVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchCurrentVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchCurrentVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgrade Details of the last firmware upgrade on the device
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgrade
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgrade struct {
+
+	// from version
+	FromVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgradeFromVersion `json:"fromVersion,omitempty"`
+
+	// Timestamp of the last successful firmware upgrade
+	// Format: date-time
+	Time strfmt.DateTime `json:"time,omitempty"`
+
+	// to version
+	ToVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgradeToVersion `json:"toVersion,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products switch last upgrade
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgrade) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateFromVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTime(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateToVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgrade) validateFromVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.FromVersion) { // not required
+		return nil
+	}
+
+	if o.FromVersion != nil {
+		if err := o.FromVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "lastUpgrade" + "." + "fromVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "lastUpgrade" + "." + "fromVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgrade) validateTime(formats strfmt.Registry) error {
+	if swag.IsZero(o.Time) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"switch"+"."+"lastUpgrade"+"."+"time", "body", "date-time", o.Time.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgrade) validateToVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.ToVersion) { // not required
+		return nil
+	}
+
+	if o.ToVersion != nil {
+		if err := o.ToVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "lastUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "lastUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades o k body products switch last upgrade based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgrade) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateFromVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateToVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgrade) contextValidateFromVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.FromVersion != nil {
+
+		if swag.IsZero(o.FromVersion) { // not required
+			return nil
+		}
+
+		if err := o.FromVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "lastUpgrade" + "." + "fromVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "lastUpgrade" + "." + "fromVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
+		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "lastUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "lastUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgrade) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgrade) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgrade
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgradeFromVersion Details of the version the device upgraded from
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgradeFromVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgradeFromVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products switch last upgrade from version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgradeFromVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgradeFromVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"switch"+"."+"lastUpgrade"+"."+"fromVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products switch last upgrade from version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgradeFromVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgradeFromVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgradeFromVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgradeFromVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgradeToVersion Details of the version the device upgraded to
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgradeToVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgradeToVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products switch last upgrade to version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgradeToVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgradeToVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"switch"+"."+"lastUpgrade"+"."+"toVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products switch last upgrade to version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgradeToVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgradeToVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgradeToVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchLastUpgradeToVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchNextUpgrade Details of the next firmware upgrade on the device
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchNextUpgrade
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchNextUpgrade struct {
+
+	// Timestamp of the next scheduled firmware upgrade
+	// Format: date-time
+	Time strfmt.DateTime `json:"time,omitempty"`
+
+	// to version
+	ToVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchNextUpgradeToVersion `json:"toVersion,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products switch next upgrade
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchNextUpgrade) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateTime(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateToVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchNextUpgrade) validateTime(formats strfmt.Registry) error {
+	if swag.IsZero(o.Time) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"switch"+"."+"nextUpgrade"+"."+"time", "body", "date-time", o.Time.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchNextUpgrade) validateToVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.ToVersion) { // not required
+		return nil
+	}
+
+	if o.ToVersion != nil {
+		if err := o.ToVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "nextUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "nextUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades o k body products switch next upgrade based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchNextUpgrade) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateToVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchNextUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
+		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "nextUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "switch" + "." + "nextUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchNextUpgrade) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchNextUpgrade) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchNextUpgrade
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchNextUpgradeToVersion Details of the version the device will upgrade to if it exists
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchNextUpgradeToVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchNextUpgradeToVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products switch next upgrade to version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchNextUpgradeToVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchNextUpgradeToVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"switch"+"."+"nextUpgrade"+"."+"toVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products switch next upgrade to version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchNextUpgradeToVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchNextUpgradeToVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchNextUpgradeToVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsSwitchNextUpgradeToVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsWireless The network device to be updated
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsWireless
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsWireless struct {
+
+	// Firmware versions available for upgrade
+	AvailableVersions []*UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessAvailableVersionsItems0 `json:"availableVersions"`
+
+	// current version
+	CurrentVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessCurrentVersion `json:"currentVersion,omitempty"`
+
+	// last upgrade
+	LastUpgrade *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgrade `json:"lastUpgrade,omitempty"`
+
+	// next upgrade
+	NextUpgrade *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessNextUpgrade `json:"nextUpgrade,omitempty"`
+
+	// Whether or not the network wants beta firmware
+	ParticipateInNextBetaRelease bool `json:"participateInNextBetaRelease,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products wireless
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWireless) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateAvailableVersions(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateCurrentVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateLastUpgrade(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNextUpgrade(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWireless) validateAvailableVersions(formats strfmt.Registry) error {
+	if swag.IsZero(o.AvailableVersions) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.AvailableVersions); i++ {
+		if swag.IsZero(o.AvailableVersions[i]) { // not required
+			continue
+		}
+
+		if o.AvailableVersions[i] != nil {
+			if err := o.AvailableVersions[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWireless) validateCurrentVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.CurrentVersion) { // not required
+		return nil
+	}
+
+	if o.CurrentVersion != nil {
+		if err := o.CurrentVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "currentVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "currentVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWireless) validateLastUpgrade(formats strfmt.Registry) error {
+	if swag.IsZero(o.LastUpgrade) { // not required
+		return nil
+	}
+
+	if o.LastUpgrade != nil {
+		if err := o.LastUpgrade.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "lastUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "lastUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWireless) validateNextUpgrade(formats strfmt.Registry) error {
+	if swag.IsZero(o.NextUpgrade) { // not required
+		return nil
+	}
+
+	if o.NextUpgrade != nil {
+		if err := o.NextUpgrade.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "nextUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "nextUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades o k body products wireless based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWireless) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateAvailableVersions(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateCurrentVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateLastUpgrade(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateNextUpgrade(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWireless) contextValidateAvailableVersions(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.AvailableVersions); i++ {
+
+		if o.AvailableVersions[i] != nil {
+
+			if swag.IsZero(o.AvailableVersions[i]) { // not required
+				return nil
+			}
+
+			if err := o.AvailableVersions[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "availableVersions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWireless) contextValidateCurrentVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.CurrentVersion != nil {
+
+		if swag.IsZero(o.CurrentVersion) { // not required
+			return nil
+		}
+
+		if err := o.CurrentVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "currentVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "currentVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWireless) contextValidateLastUpgrade(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.LastUpgrade != nil {
+
+		if swag.IsZero(o.LastUpgrade) { // not required
+			return nil
+		}
+
+		if err := o.LastUpgrade.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "lastUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "lastUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWireless) contextValidateNextUpgrade(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.NextUpgrade != nil {
+
+		if swag.IsZero(o.NextUpgrade) { // not required
+			return nil
+		}
+
+		if err := o.NextUpgrade.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "nextUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "nextUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWireless) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWireless) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsWireless
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessAvailableVersionsItems0 update network firmware upgrades o k body products wireless available versions items0
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessAvailableVersionsItems0
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessAvailableVersionsItems0 struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products wireless available versions items0
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessAvailableVersionsItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessAvailableVersionsItems0) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products wireless available versions items0 based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessAvailableVersionsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessAvailableVersionsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessAvailableVersionsItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessAvailableVersionsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessCurrentVersion Details of the current version on the device
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessCurrentVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessCurrentVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products wireless current version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessCurrentVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessCurrentVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"wireless"+"."+"currentVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products wireless current version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessCurrentVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessCurrentVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessCurrentVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessCurrentVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgrade Details of the last firmware upgrade on the device
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgrade
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgrade struct {
+
+	// from version
+	FromVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgradeFromVersion `json:"fromVersion,omitempty"`
+
+	// Timestamp of the last successful firmware upgrade
+	// Format: date-time
+	Time strfmt.DateTime `json:"time,omitempty"`
+
+	// to version
+	ToVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgradeToVersion `json:"toVersion,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products wireless last upgrade
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgrade) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateFromVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTime(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateToVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgrade) validateFromVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.FromVersion) { // not required
+		return nil
+	}
+
+	if o.FromVersion != nil {
+		if err := o.FromVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "lastUpgrade" + "." + "fromVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "lastUpgrade" + "." + "fromVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgrade) validateTime(formats strfmt.Registry) error {
+	if swag.IsZero(o.Time) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"wireless"+"."+"lastUpgrade"+"."+"time", "body", "date-time", o.Time.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgrade) validateToVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.ToVersion) { // not required
+		return nil
+	}
+
+	if o.ToVersion != nil {
+		if err := o.ToVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "lastUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "lastUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades o k body products wireless last upgrade based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgrade) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateFromVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateToVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgrade) contextValidateFromVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.FromVersion != nil {
+
+		if swag.IsZero(o.FromVersion) { // not required
+			return nil
+		}
+
+		if err := o.FromVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "lastUpgrade" + "." + "fromVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "lastUpgrade" + "." + "fromVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
+		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "lastUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "lastUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgrade) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgrade) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgrade
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgradeFromVersion Details of the version the device upgraded from
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgradeFromVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgradeFromVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products wireless last upgrade from version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgradeFromVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgradeFromVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"wireless"+"."+"lastUpgrade"+"."+"fromVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products wireless last upgrade from version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgradeFromVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgradeFromVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgradeFromVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgradeFromVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgradeToVersion Details of the version the device upgraded to
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgradeToVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgradeToVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products wireless last upgrade to version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgradeToVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgradeToVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"wireless"+"."+"lastUpgrade"+"."+"toVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products wireless last upgrade to version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgradeToVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgradeToVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgradeToVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessLastUpgradeToVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessNextUpgrade Details of the next firmware upgrade on the device
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessNextUpgrade
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessNextUpgrade struct {
+
+	// Timestamp of the next scheduled firmware upgrade
+	// Format: date-time
+	Time strfmt.DateTime `json:"time,omitempty"`
+
+	// to version
+	ToVersion *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessNextUpgradeToVersion `json:"toVersion,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products wireless next upgrade
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessNextUpgrade) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateTime(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateToVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessNextUpgrade) validateTime(formats strfmt.Registry) error {
+	if swag.IsZero(o.Time) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"wireless"+"."+"nextUpgrade"+"."+"time", "body", "date-time", o.Time.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessNextUpgrade) validateToVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.ToVersion) { // not required
+		return nil
+	}
+
+	if o.ToVersion != nil {
+		if err := o.ToVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "nextUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "nextUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades o k body products wireless next upgrade based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessNextUpgrade) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateToVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessNextUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
+		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "nextUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgradesOK" + "." + "products" + "." + "wireless" + "." + "nextUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessNextUpgrade) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessNextUpgrade) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessNextUpgrade
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessNextUpgradeToVersion Details of the version the device will upgrade to if it exists
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessNextUpgradeToVersion
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessNextUpgradeToVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body products wireless next upgrade to version
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessNextUpgradeToVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessNextUpgradeToVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateNetworkFirmwareUpgradesOK"+"."+"products"+"."+"wireless"+"."+"nextUpgrade"+"."+"toVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body products wireless next upgrade to version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessNextUpgradeToVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessNextUpgradeToVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessNextUpgradeToVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyProductsWirelessNextUpgradeToVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindow Upgrade window for devices in network
+swagger:model UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindow
+*/
+type UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindow struct {
+
+	// Day of the week
+	// Enum: [fri friday mon monday sat saturday sun sunday thu thursday tue tuesday wed wednesday]
+	DayOfWeek string `json:"dayOfWeek,omitempty"`
+
+	// Hour of the day
+	// Enum: [0:00 10:00 11:00 12:00 13:00 14:00 15:00 16:00 17:00 18:00 19:00 1:00 20:00 21:00 22:00 23:00 2:00 3:00 4:00 5:00 6:00 7:00 8:00 9:00]
+	HourOfDay string `json:"hourOfDay,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades o k body upgrade window
+func (o *UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindow) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateDayOfWeek(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateHourOfDay(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkFirmwareUpgradesOKBodyUpgradeWindowTypeDayOfWeekPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["fri","friday","mon","monday","sat","saturday","sun","sunday","thu","thursday","tue","tuesday","wed","wednesday"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkFirmwareUpgradesOKBodyUpgradeWindowTypeDayOfWeekPropEnum = append(updateNetworkFirmwareUpgradesOKBodyUpgradeWindowTypeDayOfWeekPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekFri captures enum value "fri"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekFri string = "fri"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekFriday captures enum value "friday"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekFriday string = "friday"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekMon captures enum value "mon"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekMon string = "mon"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekMonday captures enum value "monday"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekMonday string = "monday"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekSat captures enum value "sat"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekSat string = "sat"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekSaturday captures enum value "saturday"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekSaturday string = "saturday"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekSun captures enum value "sun"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekSun string = "sun"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekSunday captures enum value "sunday"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekSunday string = "sunday"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekThu captures enum value "thu"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekThu string = "thu"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekThursday captures enum value "thursday"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekThursday string = "thursday"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekTue captures enum value "tue"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekTue string = "tue"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekTuesday captures enum value "tuesday"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekTuesday string = "tuesday"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekWed captures enum value "wed"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekWed string = "wed"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekWednesday captures enum value "wednesday"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowDayOfWeekWednesday string = "wednesday"
+)
+
+// prop value enum
+func (o *UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindow) validateDayOfWeekEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkFirmwareUpgradesOKBodyUpgradeWindowTypeDayOfWeekPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindow) validateDayOfWeek(formats strfmt.Registry) error {
+	if swag.IsZero(o.DayOfWeek) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateDayOfWeekEnum("updateNetworkFirmwareUpgradesOK"+"."+"upgradeWindow"+"."+"dayOfWeek", "body", o.DayOfWeek); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var updateNetworkFirmwareUpgradesOKBodyUpgradeWindowTypeHourOfDayPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["0:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","1:00","20:00","21:00","22:00","23:00","2:00","3:00","4:00","5:00","6:00","7:00","8:00","9:00"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkFirmwareUpgradesOKBodyUpgradeWindowTypeHourOfDayPropEnum = append(updateNetworkFirmwareUpgradesOKBodyUpgradeWindowTypeHourOfDayPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr000 captures enum value "0:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr000 string = "0:00"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr1000 captures enum value "10:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr1000 string = "10:00"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr1100 captures enum value "11:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr1100 string = "11:00"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr1200 captures enum value "12:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr1200 string = "12:00"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr1300 captures enum value "13:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr1300 string = "13:00"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr1400 captures enum value "14:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr1400 string = "14:00"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr1500 captures enum value "15:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr1500 string = "15:00"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr1600 captures enum value "16:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr1600 string = "16:00"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr1700 captures enum value "17:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr1700 string = "17:00"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr1800 captures enum value "18:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr1800 string = "18:00"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr1900 captures enum value "19:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr1900 string = "19:00"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr100 captures enum value "1:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr100 string = "1:00"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr2000 captures enum value "20:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr2000 string = "20:00"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr2100 captures enum value "21:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr2100 string = "21:00"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr2200 captures enum value "22:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr2200 string = "22:00"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr2300 captures enum value "23:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr2300 string = "23:00"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr200 captures enum value "2:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr200 string = "2:00"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr300 captures enum value "3:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr300 string = "3:00"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr400 captures enum value "4:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr400 string = "4:00"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr500 captures enum value "5:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr500 string = "5:00"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr600 captures enum value "6:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr600 string = "6:00"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr700 captures enum value "7:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr700 string = "7:00"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr800 captures enum value "8:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr800 string = "8:00"
+
+	// UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr900 captures enum value "9:00"
+	UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindowHourOfDayNr900 string = "9:00"
+)
+
+// prop value enum
+func (o *UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindow) validateHourOfDayEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkFirmwareUpgradesOKBodyUpgradeWindowTypeHourOfDayPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindow) validateHourOfDay(formats strfmt.Registry) error {
+	if swag.IsZero(o.HourOfDay) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateHourOfDayEnum("updateNetworkFirmwareUpgradesOK"+"."+"upgradeWindow"+"."+"hourOfDay", "body", o.HourOfDay); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades o k body upgrade window based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindow) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindow) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindow) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesOKBodyUpgradeWindow
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProducts Contains information about the network to update
 swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProducts
 */
 type UpdateNetworkFirmwareUpgradesParamsBodyProducts struct {
@@ -251,8 +7408,8 @@ type UpdateNetworkFirmwareUpgradesParamsBodyProducts struct {
 	// cellular gateway
 	CellularGateway *UpdateNetworkFirmwareUpgradesParamsBodyProductsCellularGateway `json:"cellularGateway,omitempty"`
 
-	// environmental
-	Environmental *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmental `json:"environmental,omitempty"`
+	// cloud gateway
+	CloudGateway *UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGateway `json:"cloudGateway,omitempty"`
 
 	// sensor
 	Sensor *UpdateNetworkFirmwareUpgradesParamsBodyProductsSensor `json:"sensor,omitempty"`
@@ -260,8 +7417,8 @@ type UpdateNetworkFirmwareUpgradesParamsBodyProducts struct {
 	// switch
 	Switch *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitch `json:"switch,omitempty"`
 
-	// vmx host
-	VmxHost *UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHost `json:"vmxHost,omitempty"`
+	// switch catalyst
+	SwitchCatalyst *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalyst `json:"switchCatalyst,omitempty"`
 
 	// wireless
 	Wireless *UpdateNetworkFirmwareUpgradesParamsBodyProductsWireless `json:"wireless,omitempty"`
@@ -283,7 +7440,7 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) Validate(formats strfm
 		res = append(res, err)
 	}
 
-	if err := o.validateEnvironmental(formats); err != nil {
+	if err := o.validateCloudGateway(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -295,7 +7452,7 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) Validate(formats strfm
 		res = append(res, err)
 	}
 
-	if err := o.validateVmxHost(formats); err != nil {
+	if err := o.validateSwitchCatalyst(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -366,17 +7523,17 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) validateCellularGatewa
 	return nil
 }
 
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) validateEnvironmental(formats strfmt.Registry) error {
-	if swag.IsZero(o.Environmental) { // not required
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) validateCloudGateway(formats strfmt.Registry) error {
+	if swag.IsZero(o.CloudGateway) { // not required
 		return nil
 	}
 
-	if o.Environmental != nil {
-		if err := o.Environmental.Validate(formats); err != nil {
+	if o.CloudGateway != nil {
+		if err := o.CloudGateway.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "environmental")
+				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "cloudGateway")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "environmental")
+				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "cloudGateway")
 			}
 			return err
 		}
@@ -423,17 +7580,17 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) validateSwitch(formats
 	return nil
 }
 
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) validateVmxHost(formats strfmt.Registry) error {
-	if swag.IsZero(o.VmxHost) { // not required
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) validateSwitchCatalyst(formats strfmt.Registry) error {
+	if swag.IsZero(o.SwitchCatalyst) { // not required
 		return nil
 	}
 
-	if o.VmxHost != nil {
-		if err := o.VmxHost.Validate(formats); err != nil {
+	if o.SwitchCatalyst != nil {
+		if err := o.SwitchCatalyst.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "vmxHost")
+				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "switchCatalyst")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "vmxHost")
+				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "switchCatalyst")
 			}
 			return err
 		}
@@ -477,7 +7634,7 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) ContextValidate(ctx co
 		res = append(res, err)
 	}
 
-	if err := o.contextValidateEnvironmental(ctx, formats); err != nil {
+	if err := o.contextValidateCloudGateway(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -489,7 +7646,7 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) ContextValidate(ctx co
 		res = append(res, err)
 	}
 
-	if err := o.contextValidateVmxHost(ctx, formats); err != nil {
+	if err := o.contextValidateSwitchCatalyst(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -506,6 +7663,11 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) ContextValidate(ctx co
 func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) contextValidateAppliance(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Appliance != nil {
+
+		if swag.IsZero(o.Appliance) { // not required
+			return nil
+		}
+
 		if err := o.Appliance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "appliance")
@@ -522,6 +7684,11 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) contextValidateApplian
 func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) contextValidateCamera(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Camera != nil {
+
+		if swag.IsZero(o.Camera) { // not required
+			return nil
+		}
+
 		if err := o.Camera.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "camera")
@@ -538,6 +7705,11 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) contextValidateCamera(
 func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) contextValidateCellularGateway(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.CellularGateway != nil {
+
+		if swag.IsZero(o.CellularGateway) { // not required
+			return nil
+		}
+
 		if err := o.CellularGateway.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "cellularGateway")
@@ -551,14 +7723,19 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) contextValidateCellula
 	return nil
 }
 
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) contextValidateEnvironmental(ctx context.Context, formats strfmt.Registry) error {
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) contextValidateCloudGateway(ctx context.Context, formats strfmt.Registry) error {
 
-	if o.Environmental != nil {
-		if err := o.Environmental.ContextValidate(ctx, formats); err != nil {
+	if o.CloudGateway != nil {
+
+		if swag.IsZero(o.CloudGateway) { // not required
+			return nil
+		}
+
+		if err := o.CloudGateway.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "environmental")
+				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "cloudGateway")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "environmental")
+				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "cloudGateway")
 			}
 			return err
 		}
@@ -570,6 +7747,11 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) contextValidateEnviron
 func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) contextValidateSensor(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Sensor != nil {
+
+		if swag.IsZero(o.Sensor) { // not required
+			return nil
+		}
+
 		if err := o.Sensor.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "sensor")
@@ -586,6 +7768,11 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) contextValidateSensor(
 func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) contextValidateSwitch(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Switch != nil {
+
+		if swag.IsZero(o.Switch) { // not required
+			return nil
+		}
+
 		if err := o.Switch.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "switch")
@@ -599,14 +7786,19 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) contextValidateSwitch(
 	return nil
 }
 
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) contextValidateVmxHost(ctx context.Context, formats strfmt.Registry) error {
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) contextValidateSwitchCatalyst(ctx context.Context, formats strfmt.Registry) error {
 
-	if o.VmxHost != nil {
-		if err := o.VmxHost.ContextValidate(ctx, formats); err != nil {
+	if o.SwitchCatalyst != nil {
+
+		if swag.IsZero(o.SwitchCatalyst) { // not required
+			return nil
+		}
+
+		if err := o.SwitchCatalyst.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "vmxHost")
+				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "switchCatalyst")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "vmxHost")
+				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "switchCatalyst")
 			}
 			return err
 		}
@@ -618,6 +7810,11 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) contextValidateVmxHost
 func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) contextValidateWireless(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Wireless != nil {
+
+		if swag.IsZero(o.Wireless) { // not required
+			return nil
+		}
+
 		if err := o.Wireless.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "wireless")
@@ -649,7 +7846,8 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProducts) UnmarshalBinary(b []by
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsAppliance The network device to be updated
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsAppliance The network device to be updated
 swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsAppliance
 */
 type UpdateNetworkFirmwareUpgradesParamsBodyProductsAppliance struct {
@@ -711,6 +7909,11 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsAppliance) ContextValida
 func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsAppliance) contextValidateNextUpgrade(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.NextUpgrade != nil {
+
+		if swag.IsZero(o.NextUpgrade) { // not required
+			return nil
+		}
+
 		if err := o.NextUpgrade.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "appliance" + "." + "nextUpgrade")
@@ -742,7 +7945,8 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsAppliance) UnmarshalBina
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsApplianceNextUpgrade The pending firmware upgrade if it exists
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsApplianceNextUpgrade The pending firmware upgrade if it exists
 swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsApplianceNextUpgrade
 */
 type UpdateNetworkFirmwareUpgradesParamsBodyProductsApplianceNextUpgrade struct {
@@ -804,6 +8008,11 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsApplianceNextUpgrade) Co
 func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsApplianceNextUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
 		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "appliance" + "." + "nextUpgrade" + "." + "toVersion")
@@ -835,7 +8044,8 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsApplianceNextUpgrade) Un
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsApplianceNextUpgradeToVersion The version to be updated to
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsApplianceNextUpgradeToVersion The version to be updated to
 swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsApplianceNextUpgradeToVersion
 */
 type UpdateNetworkFirmwareUpgradesParamsBodyProductsApplianceNextUpgradeToVersion struct {
@@ -872,7 +8082,8 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsApplianceNextUpgradeToVe
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsCamera The network device to be updated
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsCamera The network device to be updated
 swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsCamera
 */
 type UpdateNetworkFirmwareUpgradesParamsBodyProductsCamera struct {
@@ -934,6 +8145,11 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCamera) ContextValidate(
 func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCamera) contextValidateNextUpgrade(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.NextUpgrade != nil {
+
+		if swag.IsZero(o.NextUpgrade) { // not required
+			return nil
+		}
+
 		if err := o.NextUpgrade.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "camera" + "." + "nextUpgrade")
@@ -965,7 +8181,8 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCamera) UnmarshalBinary(
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsCameraNextUpgrade The pending firmware upgrade if it exists
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsCameraNextUpgrade The pending firmware upgrade if it exists
 swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsCameraNextUpgrade
 */
 type UpdateNetworkFirmwareUpgradesParamsBodyProductsCameraNextUpgrade struct {
@@ -1027,6 +8244,11 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCameraNextUpgrade) Conte
 func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCameraNextUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
 		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "camera" + "." + "nextUpgrade" + "." + "toVersion")
@@ -1058,7 +8280,8 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCameraNextUpgrade) Unmar
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsCameraNextUpgradeToVersion The version to be updated to
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsCameraNextUpgradeToVersion The version to be updated to
 swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsCameraNextUpgradeToVersion
 */
 type UpdateNetworkFirmwareUpgradesParamsBodyProductsCameraNextUpgradeToVersion struct {
@@ -1095,7 +8318,8 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCameraNextUpgradeToVersi
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsCellularGateway The network device to be updated
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsCellularGateway The network device to be updated
 swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsCellularGateway
 */
 type UpdateNetworkFirmwareUpgradesParamsBodyProductsCellularGateway struct {
@@ -1157,6 +8381,11 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCellularGateway) Context
 func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCellularGateway) contextValidateNextUpgrade(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.NextUpgrade != nil {
+
+		if swag.IsZero(o.NextUpgrade) { // not required
+			return nil
+		}
+
 		if err := o.NextUpgrade.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "cellularGateway" + "." + "nextUpgrade")
@@ -1188,7 +8417,8 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCellularGateway) Unmarsh
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsCellularGatewayNextUpgrade The pending firmware upgrade if it exists
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsCellularGatewayNextUpgrade The pending firmware upgrade if it exists
 swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsCellularGatewayNextUpgrade
 */
 type UpdateNetworkFirmwareUpgradesParamsBodyProductsCellularGatewayNextUpgrade struct {
@@ -1250,6 +8480,11 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCellularGatewayNextUpgra
 func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCellularGatewayNextUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
 		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "cellularGateway" + "." + "nextUpgrade" + "." + "toVersion")
@@ -1281,7 +8516,8 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCellularGatewayNextUpgra
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsCellularGatewayNextUpgradeToVersion The version to be updated to
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsCellularGatewayNextUpgradeToVersion The version to be updated to
 swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsCellularGatewayNextUpgradeToVersion
 */
 type UpdateNetworkFirmwareUpgradesParamsBodyProductsCellularGatewayNextUpgradeToVersion struct {
@@ -1318,20 +8554,21 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCellularGatewayNextUpgra
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmental The network device to be updated
-swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmental
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGateway The network device to be updated
+swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGateway
 */
-type UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmental struct {
+type UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGateway struct {
 
 	// next upgrade
-	NextUpgrade *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgrade `json:"nextUpgrade,omitempty"`
+	NextUpgrade *UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGatewayNextUpgrade `json:"nextUpgrade,omitempty"`
 
 	// Whether or not the network wants beta firmware
 	ParticipateInNextBetaRelease bool `json:"participateInNextBetaRelease,omitempty"`
 }
 
-// Validate validates this update network firmware upgrades params body products environmental
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmental) Validate(formats strfmt.Registry) error {
+// Validate validates this update network firmware upgrades params body products cloud gateway
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGateway) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := o.validateNextUpgrade(formats); err != nil {
@@ -1344,7 +8581,7 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmental) Validate(
 	return nil
 }
 
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmental) validateNextUpgrade(formats strfmt.Registry) error {
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGateway) validateNextUpgrade(formats strfmt.Registry) error {
 	if swag.IsZero(o.NextUpgrade) { // not required
 		return nil
 	}
@@ -1352,9 +8589,9 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmental) validateN
 	if o.NextUpgrade != nil {
 		if err := o.NextUpgrade.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "environmental" + "." + "nextUpgrade")
+				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "cloudGateway" + "." + "nextUpgrade")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "environmental" + "." + "nextUpgrade")
+				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "cloudGateway" + "." + "nextUpgrade")
 			}
 			return err
 		}
@@ -1363,8 +8600,8 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmental) validateN
 	return nil
 }
 
-// ContextValidate validate this update network firmware upgrades params body products environmental based on the context it is used
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmental) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validate this update network firmware upgrades params body products cloud gateway based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGateway) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
 	if err := o.contextValidateNextUpgrade(ctx, formats); err != nil {
@@ -1377,14 +8614,19 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmental) ContextVa
 	return nil
 }
 
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmental) contextValidateNextUpgrade(ctx context.Context, formats strfmt.Registry) error {
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGateway) contextValidateNextUpgrade(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.NextUpgrade != nil {
+
+		if swag.IsZero(o.NextUpgrade) { // not required
+			return nil
+		}
+
 		if err := o.NextUpgrade.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "environmental" + "." + "nextUpgrade")
+				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "cloudGateway" + "." + "nextUpgrade")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "environmental" + "." + "nextUpgrade")
+				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "cloudGateway" + "." + "nextUpgrade")
 			}
 			return err
 		}
@@ -1394,7 +8636,7 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmental) contextVa
 }
 
 // MarshalBinary interface implementation
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmental) MarshalBinary() ([]byte, error) {
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGateway) MarshalBinary() ([]byte, error) {
 	if o == nil {
 		return nil, nil
 	}
@@ -1402,8 +8644,8 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmental) MarshalBi
 }
 
 // UnmarshalBinary interface implementation
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmental) UnmarshalBinary(b []byte) error {
-	var res UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmental
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGateway) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGateway
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}
@@ -1411,20 +8653,21 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmental) Unmarshal
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgrade The pending firmware upgrade if it exists
-swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgrade
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGatewayNextUpgrade The pending firmware upgrade if it exists
+swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGatewayNextUpgrade
 */
-type UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgrade struct {
+type UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGatewayNextUpgrade struct {
 
 	// The time of the last successful upgrade
 	Time string `json:"time,omitempty"`
 
 	// to version
-	ToVersion *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgradeToVersion `json:"toVersion,omitempty"`
+	ToVersion *UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGatewayNextUpgradeToVersion `json:"toVersion,omitempty"`
 }
 
-// Validate validates this update network firmware upgrades params body products environmental next upgrade
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgrade) Validate(formats strfmt.Registry) error {
+// Validate validates this update network firmware upgrades params body products cloud gateway next upgrade
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGatewayNextUpgrade) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := o.validateToVersion(formats); err != nil {
@@ -1437,7 +8680,7 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgrade
 	return nil
 }
 
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgrade) validateToVersion(formats strfmt.Registry) error {
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGatewayNextUpgrade) validateToVersion(formats strfmt.Registry) error {
 	if swag.IsZero(o.ToVersion) { // not required
 		return nil
 	}
@@ -1445,9 +8688,9 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgrade
 	if o.ToVersion != nil {
 		if err := o.ToVersion.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "environmental" + "." + "nextUpgrade" + "." + "toVersion")
+				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "cloudGateway" + "." + "nextUpgrade" + "." + "toVersion")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "environmental" + "." + "nextUpgrade" + "." + "toVersion")
+				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "cloudGateway" + "." + "nextUpgrade" + "." + "toVersion")
 			}
 			return err
 		}
@@ -1456,8 +8699,8 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgrade
 	return nil
 }
 
-// ContextValidate validate this update network firmware upgrades params body products environmental next upgrade based on the context it is used
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgrade) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validate this update network firmware upgrades params body products cloud gateway next upgrade based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGatewayNextUpgrade) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
 	if err := o.contextValidateToVersion(ctx, formats); err != nil {
@@ -1470,14 +8713,19 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgrade
 	return nil
 }
 
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGatewayNextUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
 		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "environmental" + "." + "nextUpgrade" + "." + "toVersion")
+				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "cloudGateway" + "." + "nextUpgrade" + "." + "toVersion")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "environmental" + "." + "nextUpgrade" + "." + "toVersion")
+				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "cloudGateway" + "." + "nextUpgrade" + "." + "toVersion")
 			}
 			return err
 		}
@@ -1487,7 +8735,7 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgrade
 }
 
 // MarshalBinary interface implementation
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgrade) MarshalBinary() ([]byte, error) {
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGatewayNextUpgrade) MarshalBinary() ([]byte, error) {
 	if o == nil {
 		return nil, nil
 	}
@@ -1495,8 +8743,8 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgrade
 }
 
 // UnmarshalBinary interface implementation
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgrade) UnmarshalBinary(b []byte) error {
-	var res UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgrade
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGatewayNextUpgrade) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGatewayNextUpgrade
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}
@@ -1504,27 +8752,28 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgrade
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgradeToVersion The version to be updated to
-swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgradeToVersion
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGatewayNextUpgradeToVersion The version to be updated to
+swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGatewayNextUpgradeToVersion
 */
-type UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgradeToVersion struct {
+type UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGatewayNextUpgradeToVersion struct {
 
 	// The version ID
 	ID string `json:"id,omitempty"`
 }
 
-// Validate validates this update network firmware upgrades params body products environmental next upgrade to version
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgradeToVersion) Validate(formats strfmt.Registry) error {
+// Validate validates this update network firmware upgrades params body products cloud gateway next upgrade to version
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGatewayNextUpgradeToVersion) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-// ContextValidate validates this update network firmware upgrades params body products environmental next upgrade to version based on context it is used
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgradeToVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validates this update network firmware upgrades params body products cloud gateway next upgrade to version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGatewayNextUpgradeToVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgradeToVersion) MarshalBinary() ([]byte, error) {
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGatewayNextUpgradeToVersion) MarshalBinary() ([]byte, error) {
 	if o == nil {
 		return nil, nil
 	}
@@ -1532,8 +8781,8 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgrade
 }
 
 // UnmarshalBinary interface implementation
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgradeToVersion) UnmarshalBinary(b []byte) error {
-	var res UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgradeToVersion
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGatewayNextUpgradeToVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesParamsBodyProductsCloudGatewayNextUpgradeToVersion
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}
@@ -1541,7 +8790,8 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsEnvironmentalNextUpgrade
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsSensor The network device to be updated
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsSensor The network device to be updated
 swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsSensor
 */
 type UpdateNetworkFirmwareUpgradesParamsBodyProductsSensor struct {
@@ -1603,6 +8853,11 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSensor) ContextValidate(
 func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSensor) contextValidateNextUpgrade(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.NextUpgrade != nil {
+
+		if swag.IsZero(o.NextUpgrade) { // not required
+			return nil
+		}
+
 		if err := o.NextUpgrade.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "sensor" + "." + "nextUpgrade")
@@ -1634,7 +8889,8 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSensor) UnmarshalBinary(
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsSensorNextUpgrade The pending firmware upgrade if it exists
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsSensorNextUpgrade The pending firmware upgrade if it exists
 swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsSensorNextUpgrade
 */
 type UpdateNetworkFirmwareUpgradesParamsBodyProductsSensorNextUpgrade struct {
@@ -1696,6 +8952,11 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSensorNextUpgrade) Conte
 func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSensorNextUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
 		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "sensor" + "." + "nextUpgrade" + "." + "toVersion")
@@ -1727,7 +8988,8 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSensorNextUpgrade) Unmar
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsSensorNextUpgradeToVersion The version to be updated to
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsSensorNextUpgradeToVersion The version to be updated to
 swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsSensorNextUpgradeToVersion
 */
 type UpdateNetworkFirmwareUpgradesParamsBodyProductsSensorNextUpgradeToVersion struct {
@@ -1764,7 +9026,8 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSensorNextUpgradeToVersi
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitch The network device to be updated
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitch The network device to be updated
 swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitch
 */
 type UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitch struct {
@@ -1826,6 +9089,11 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitch) ContextValidate(
 func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitch) contextValidateNextUpgrade(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.NextUpgrade != nil {
+
+		if swag.IsZero(o.NextUpgrade) { // not required
+			return nil
+		}
+
 		if err := o.NextUpgrade.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "switch" + "." + "nextUpgrade")
@@ -1857,7 +9125,244 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitch) UnmarshalBinary(
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchNextUpgrade The pending firmware upgrade if it exists
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalyst The network device to be updated
+swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalyst
+*/
+type UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalyst struct {
+
+	// next upgrade
+	NextUpgrade *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalystNextUpgrade `json:"nextUpgrade,omitempty"`
+
+	// Whether or not the network wants beta firmware
+	ParticipateInNextBetaRelease bool `json:"participateInNextBetaRelease,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades params body products switch catalyst
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalyst) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateNextUpgrade(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalyst) validateNextUpgrade(formats strfmt.Registry) error {
+	if swag.IsZero(o.NextUpgrade) { // not required
+		return nil
+	}
+
+	if o.NextUpgrade != nil {
+		if err := o.NextUpgrade.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "switchCatalyst" + "." + "nextUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "switchCatalyst" + "." + "nextUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades params body products switch catalyst based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalyst) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateNextUpgrade(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalyst) contextValidateNextUpgrade(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.NextUpgrade != nil {
+
+		if swag.IsZero(o.NextUpgrade) { // not required
+			return nil
+		}
+
+		if err := o.NextUpgrade.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "switchCatalyst" + "." + "nextUpgrade")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "switchCatalyst" + "." + "nextUpgrade")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalyst) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalyst) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalyst
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalystNextUpgrade The pending firmware upgrade if it exists
+swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalystNextUpgrade
+*/
+type UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalystNextUpgrade struct {
+
+	// The time of the last successful upgrade
+	Time string `json:"time,omitempty"`
+
+	// to version
+	ToVersion *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalystNextUpgradeToVersion `json:"toVersion,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades params body products switch catalyst next upgrade
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalystNextUpgrade) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateToVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalystNextUpgrade) validateToVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.ToVersion) { // not required
+		return nil
+	}
+
+	if o.ToVersion != nil {
+		if err := o.ToVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "switchCatalyst" + "." + "nextUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "switchCatalyst" + "." + "nextUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network firmware upgrades params body products switch catalyst next upgrade based on the context it is used
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalystNextUpgrade) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateToVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalystNextUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
+		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "switchCatalyst" + "." + "nextUpgrade" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "switchCatalyst" + "." + "nextUpgrade" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalystNextUpgrade) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalystNextUpgrade) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalystNextUpgrade
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalystNextUpgradeToVersion The version to be updated to
+swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalystNextUpgradeToVersion
+*/
+type UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalystNextUpgradeToVersion struct {
+
+	// The version ID
+	ID string `json:"id,omitempty"`
+}
+
+// Validate validates this update network firmware upgrades params body products switch catalyst next upgrade to version
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalystNextUpgradeToVersion) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update network firmware upgrades params body products switch catalyst next upgrade to version based on context it is used
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalystNextUpgradeToVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalystNextUpgradeToVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalystNextUpgradeToVersion) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchCatalystNextUpgradeToVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchNextUpgrade The pending firmware upgrade if it exists
 swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchNextUpgrade
 */
 type UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchNextUpgrade struct {
@@ -1919,6 +9424,11 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchNextUpgrade) Conte
 func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchNextUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
 		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "switch" + "." + "nextUpgrade" + "." + "toVersion")
@@ -1950,7 +9460,8 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchNextUpgrade) Unmar
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchNextUpgradeToVersion The version to be updated to
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchNextUpgradeToVersion The version to be updated to
 swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchNextUpgradeToVersion
 */
 type UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchNextUpgradeToVersion struct {
@@ -1987,230 +9498,8 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsSwitchNextUpgradeToVersi
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHost The network device to be updated
-swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHost
-*/
-type UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHost struct {
-
-	// next upgrade
-	NextUpgrade *UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHostNextUpgrade `json:"nextUpgrade,omitempty"`
-
-	// Whether or not the network wants beta firmware
-	ParticipateInNextBetaRelease bool `json:"participateInNextBetaRelease,omitempty"`
-}
-
-// Validate validates this update network firmware upgrades params body products vmx host
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHost) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := o.validateNextUpgrade(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHost) validateNextUpgrade(formats strfmt.Registry) error {
-	if swag.IsZero(o.NextUpgrade) { // not required
-		return nil
-	}
-
-	if o.NextUpgrade != nil {
-		if err := o.NextUpgrade.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "vmxHost" + "." + "nextUpgrade")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "vmxHost" + "." + "nextUpgrade")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-// ContextValidate validate this update network firmware upgrades params body products vmx host based on the context it is used
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHost) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := o.contextValidateNextUpgrade(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHost) contextValidateNextUpgrade(ctx context.Context, formats strfmt.Registry) error {
-
-	if o.NextUpgrade != nil {
-		if err := o.NextUpgrade.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "vmxHost" + "." + "nextUpgrade")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "vmxHost" + "." + "nextUpgrade")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-// MarshalBinary interface implementation
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHost) MarshalBinary() ([]byte, error) {
-	if o == nil {
-		return nil, nil
-	}
-	return swag.WriteJSON(o)
-}
-
-// UnmarshalBinary interface implementation
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHost) UnmarshalBinary(b []byte) error {
-	var res UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHost
-	if err := swag.ReadJSON(b, &res); err != nil {
-		return err
-	}
-	*o = res
-	return nil
-}
-
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHostNextUpgrade The pending firmware upgrade if it exists
-swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHostNextUpgrade
-*/
-type UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHostNextUpgrade struct {
-
-	// The time of the last successful upgrade
-	Time string `json:"time,omitempty"`
-
-	// to version
-	ToVersion *UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHostNextUpgradeToVersion `json:"toVersion,omitempty"`
-}
-
-// Validate validates this update network firmware upgrades params body products vmx host next upgrade
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHostNextUpgrade) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := o.validateToVersion(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHostNextUpgrade) validateToVersion(formats strfmt.Registry) error {
-	if swag.IsZero(o.ToVersion) { // not required
-		return nil
-	}
-
-	if o.ToVersion != nil {
-		if err := o.ToVersion.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "vmxHost" + "." + "nextUpgrade" + "." + "toVersion")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "vmxHost" + "." + "nextUpgrade" + "." + "toVersion")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-// ContextValidate validate this update network firmware upgrades params body products vmx host next upgrade based on the context it is used
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHostNextUpgrade) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := o.contextValidateToVersion(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHostNextUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
-
-	if o.ToVersion != nil {
-		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "vmxHost" + "." + "nextUpgrade" + "." + "toVersion")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "vmxHost" + "." + "nextUpgrade" + "." + "toVersion")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-// MarshalBinary interface implementation
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHostNextUpgrade) MarshalBinary() ([]byte, error) {
-	if o == nil {
-		return nil, nil
-	}
-	return swag.WriteJSON(o)
-}
-
-// UnmarshalBinary interface implementation
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHostNextUpgrade) UnmarshalBinary(b []byte) error {
-	var res UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHostNextUpgrade
-	if err := swag.ReadJSON(b, &res); err != nil {
-		return err
-	}
-	*o = res
-	return nil
-}
-
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHostNextUpgradeToVersion The version to be updated to
-swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHostNextUpgradeToVersion
-*/
-type UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHostNextUpgradeToVersion struct {
-
-	// The version ID
-	ID string `json:"id,omitempty"`
-}
-
-// Validate validates this update network firmware upgrades params body products vmx host next upgrade to version
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHostNextUpgradeToVersion) Validate(formats strfmt.Registry) error {
-	return nil
-}
-
-// ContextValidate validates this update network firmware upgrades params body products vmx host next upgrade to version based on context it is used
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHostNextUpgradeToVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	return nil
-}
-
-// MarshalBinary interface implementation
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHostNextUpgradeToVersion) MarshalBinary() ([]byte, error) {
-	if o == nil {
-		return nil, nil
-	}
-	return swag.WriteJSON(o)
-}
-
-// UnmarshalBinary interface implementation
-func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHostNextUpgradeToVersion) UnmarshalBinary(b []byte) error {
-	var res UpdateNetworkFirmwareUpgradesParamsBodyProductsVmxHostNextUpgradeToVersion
-	if err := swag.ReadJSON(b, &res); err != nil {
-		return err
-	}
-	*o = res
-	return nil
-}
-
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsWireless The network device to be updated
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsWireless The network device to be updated
 swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsWireless
 */
 type UpdateNetworkFirmwareUpgradesParamsBodyProductsWireless struct {
@@ -2272,6 +9561,11 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsWireless) ContextValidat
 func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsWireless) contextValidateNextUpgrade(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.NextUpgrade != nil {
+
+		if swag.IsZero(o.NextUpgrade) { // not required
+			return nil
+		}
+
 		if err := o.NextUpgrade.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "wireless" + "." + "nextUpgrade")
@@ -2303,7 +9597,8 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsWireless) UnmarshalBinar
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsWirelessNextUpgrade The pending firmware upgrade if it exists
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsWirelessNextUpgrade The pending firmware upgrade if it exists
 swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsWirelessNextUpgrade
 */
 type UpdateNetworkFirmwareUpgradesParamsBodyProductsWirelessNextUpgrade struct {
@@ -2365,6 +9660,11 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsWirelessNextUpgrade) Con
 func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsWirelessNextUpgrade) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
 		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkFirmwareUpgrades" + "." + "products" + "." + "wireless" + "." + "nextUpgrade" + "." + "toVersion")
@@ -2396,7 +9696,8 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsWirelessNextUpgrade) Unm
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesParamsBodyProductsWirelessNextUpgradeToVersion The version to be updated to
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyProductsWirelessNextUpgradeToVersion The version to be updated to
 swagger:model UpdateNetworkFirmwareUpgradesParamsBodyProductsWirelessNextUpgradeToVersion
 */
 type UpdateNetworkFirmwareUpgradesParamsBodyProductsWirelessNextUpgradeToVersion struct {
@@ -2433,17 +9734,18 @@ func (o *UpdateNetworkFirmwareUpgradesParamsBodyProductsWirelessNextUpgradeToVer
 	return nil
 }
 
-/*UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindow Upgrade window for devices in network
+/*
+UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindow Upgrade window for devices in network
 swagger:model UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindow
 */
 type UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindow struct {
 
 	// Day of the week
-	// Enum: [sun mon tue wed thu fri sat sunday monday tuesday wednesday thursday friday saturday]
+	// Enum: [fri friday mon monday sat saturday sun sunday thu thursday tue tuesday wed wednesday]
 	DayOfWeek string `json:"dayOfWeek,omitempty"`
 
 	// Hour of the day
-	// Enum: [0:00 1:00 2:00 3:00 4:00 5:00 6:00 7:00 8:00 9:00 10:00 11:00 12:00 13:00 14:00 15:00 16:00 17:00 18:00 19:00 20:00 21:00 22:00 23:00]
+	// Enum: [0:00 10:00 11:00 12:00 13:00 14:00 15:00 16:00 17:00 18:00 19:00 1:00 20:00 21:00 22:00 23:00 2:00 3:00 4:00 5:00 6:00 7:00 8:00 9:00]
 	HourOfDay string `json:"hourOfDay,omitempty"`
 }
 
@@ -2469,7 +9771,7 @@ var updateNetworkFirmwareUpgradesParamsBodyUpgradeWindowTypeDayOfWeekPropEnum []
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["sun","mon","tue","wed","thu","fri","sat","sunday","monday","tuesday","wednesday","thursday","friday","saturday"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["fri","friday","mon","monday","sat","saturday","sun","sunday","thu","thursday","tue","tuesday","wed","wednesday"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -2479,47 +9781,47 @@ func init() {
 
 const (
 
-	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekSun captures enum value "sun"
-	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekSun string = "sun"
-
-	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekMon captures enum value "mon"
-	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekMon string = "mon"
-
-	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekTue captures enum value "tue"
-	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekTue string = "tue"
-
-	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekWed captures enum value "wed"
-	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekWed string = "wed"
-
-	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekThu captures enum value "thu"
-	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekThu string = "thu"
-
 	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekFri captures enum value "fri"
 	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekFri string = "fri"
-
-	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekSat captures enum value "sat"
-	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekSat string = "sat"
-
-	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekSunday captures enum value "sunday"
-	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekSunday string = "sunday"
-
-	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekMonday captures enum value "monday"
-	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekMonday string = "monday"
-
-	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekTuesday captures enum value "tuesday"
-	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekTuesday string = "tuesday"
-
-	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekWednesday captures enum value "wednesday"
-	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekWednesday string = "wednesday"
-
-	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekThursday captures enum value "thursday"
-	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekThursday string = "thursday"
 
 	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekFriday captures enum value "friday"
 	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekFriday string = "friday"
 
+	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekMon captures enum value "mon"
+	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekMon string = "mon"
+
+	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekMonday captures enum value "monday"
+	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekMonday string = "monday"
+
+	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekSat captures enum value "sat"
+	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekSat string = "sat"
+
 	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekSaturday captures enum value "saturday"
 	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekSaturday string = "saturday"
+
+	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekSun captures enum value "sun"
+	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekSun string = "sun"
+
+	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekSunday captures enum value "sunday"
+	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekSunday string = "sunday"
+
+	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekThu captures enum value "thu"
+	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekThu string = "thu"
+
+	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekThursday captures enum value "thursday"
+	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekThursday string = "thursday"
+
+	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekTue captures enum value "tue"
+	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekTue string = "tue"
+
+	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekTuesday captures enum value "tuesday"
+	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekTuesday string = "tuesday"
+
+	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekWed captures enum value "wed"
+	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekWed string = "wed"
+
+	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekWednesday captures enum value "wednesday"
+	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowDayOfWeekWednesday string = "wednesday"
 )
 
 // prop value enum
@@ -2547,7 +9849,7 @@ var updateNetworkFirmwareUpgradesParamsBodyUpgradeWindowTypeHourOfDayPropEnum []
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["0:00","1:00","2:00","3:00","4:00","5:00","6:00","7:00","8:00","9:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["0:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","1:00","20:00","21:00","22:00","23:00","2:00","3:00","4:00","5:00","6:00","7:00","8:00","9:00"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -2559,33 +9861,6 @@ const (
 
 	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr000 captures enum value "0:00"
 	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr000 string = "0:00"
-
-	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr100 captures enum value "1:00"
-	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr100 string = "1:00"
-
-	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr200 captures enum value "2:00"
-	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr200 string = "2:00"
-
-	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr300 captures enum value "3:00"
-	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr300 string = "3:00"
-
-	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr400 captures enum value "4:00"
-	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr400 string = "4:00"
-
-	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr500 captures enum value "5:00"
-	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr500 string = "5:00"
-
-	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr600 captures enum value "6:00"
-	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr600 string = "6:00"
-
-	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr700 captures enum value "7:00"
-	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr700 string = "7:00"
-
-	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr800 captures enum value "8:00"
-	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr800 string = "8:00"
-
-	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr900 captures enum value "9:00"
-	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr900 string = "9:00"
 
 	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr1000 captures enum value "10:00"
 	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr1000 string = "10:00"
@@ -2617,6 +9892,9 @@ const (
 	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr1900 captures enum value "19:00"
 	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr1900 string = "19:00"
 
+	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr100 captures enum value "1:00"
+	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr100 string = "1:00"
+
 	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr2000 captures enum value "20:00"
 	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr2000 string = "20:00"
 
@@ -2628,6 +9906,30 @@ const (
 
 	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr2300 captures enum value "23:00"
 	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr2300 string = "23:00"
+
+	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr200 captures enum value "2:00"
+	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr200 string = "2:00"
+
+	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr300 captures enum value "3:00"
+	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr300 string = "3:00"
+
+	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr400 captures enum value "4:00"
+	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr400 string = "4:00"
+
+	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr500 captures enum value "5:00"
+	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr500 string = "5:00"
+
+	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr600 captures enum value "6:00"
+	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr600 string = "6:00"
+
+	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr700 captures enum value "7:00"
+	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr700 string = "7:00"
+
+	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr800 captures enum value "8:00"
+	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr800 string = "8:00"
+
+	// UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr900 captures enum value "9:00"
+	UpdateNetworkFirmwareUpgradesParamsBodyUpgradeWindowHourOfDayNr900 string = "9:00"
 )
 
 // prop value enum

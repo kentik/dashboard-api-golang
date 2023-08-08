@@ -34,7 +34,7 @@ func (o *UpdateNetworkWirelessAlternateManagementInterfaceReader) ReadResponse(r
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/wireless/alternateManagementInterface] updateNetworkWirelessAlternateManagementInterface", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewUpdateNetworkWirelessAlternateManagementInterfaceOK() *UpdateNetworkWire
 	return &UpdateNetworkWirelessAlternateManagementInterfaceOK{}
 }
 
-/* UpdateNetworkWirelessAlternateManagementInterfaceOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkWirelessAlternateManagementInterfaceOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *UpdateNetworkWirelessAlternateManagementInterfaceOK) IsCode(code int) b
 	return code == 200
 }
 
+// Code gets the status code for the update network wireless alternate management interface o k response
+func (o *UpdateNetworkWirelessAlternateManagementInterfaceOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkWirelessAlternateManagementInterfaceOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/wireless/alternateManagementInterface][%d] updateNetworkWirelessAlternateManagementInterfaceOK  %+v", 200, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *UpdateNetworkWirelessAlternateManagementInterfaceOK) readResponse(respo
 	return nil
 }
 
-/*UpdateNetworkWirelessAlternateManagementInterfaceBody update network wireless alternate management interface body
+/*
+UpdateNetworkWirelessAlternateManagementInterfaceBody update network wireless alternate management interface body
 // Example: {"accessPoints":[{"alternateManagementIp":"1.2.3.4","dns1":"8.8.8.8","dns2":"8.8.4.4","gateway":"1.2.3.5","serial":"Q234-ABCD-5678","subnetMask":"255.255.255.0"}],"enabled":true,"protocols":["radius","snmp","syslog","ldap"],"vlanId":100}
 swagger:model UpdateNetworkWirelessAlternateManagementInterfaceBody
 */
@@ -165,7 +172,7 @@ var updateNetworkWirelessAlternateManagementInterfaceBodyProtocolsItemsEnum []in
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["radius","snmp","syslog","ldap"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["ldap","radius","snmp","syslog"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -216,6 +223,11 @@ func (o *UpdateNetworkWirelessAlternateManagementInterfaceBody) contextValidateA
 	for i := 0; i < len(o.AccessPoints); i++ {
 
 		if o.AccessPoints[i] != nil {
+
+			if swag.IsZero(o.AccessPoints[i]) { // not required
+				return nil
+			}
+
 			if err := o.AccessPoints[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkWirelessAlternateManagementInterface" + "." + "accessPoints" + "." + strconv.Itoa(i))
@@ -249,7 +261,8 @@ func (o *UpdateNetworkWirelessAlternateManagementInterfaceBody) UnmarshalBinary(
 	return nil
 }
 
-/*UpdateNetworkWirelessAlternateManagementInterfaceParamsBodyAccessPointsItems0 update network wireless alternate management interface params body access points items0
+/*
+UpdateNetworkWirelessAlternateManagementInterfaceParamsBodyAccessPointsItems0 update network wireless alternate management interface params body access points items0
 swagger:model UpdateNetworkWirelessAlternateManagementInterfaceParamsBodyAccessPointsItems0
 */
 type UpdateNetworkWirelessAlternateManagementInterfaceParamsBodyAccessPointsItems0 struct {

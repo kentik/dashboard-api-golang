@@ -52,17 +52,25 @@ func NewUpdateOrganizationConfigTemplateParamsWithHTTPClient(client *http.Client
 	}
 }
 
-/* UpdateOrganizationConfigTemplateParams contains all the parameters to send to the API endpoint
-   for the update organization config template operation.
+/*
+UpdateOrganizationConfigTemplateParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update organization config template operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateOrganizationConfigTemplateParams struct {
 
-	// ConfigTemplateID.
+	/* ConfigTemplateID.
+
+	   Config template ID
+	*/
 	ConfigTemplateID string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	// UpdateOrganizationConfigTemplate.

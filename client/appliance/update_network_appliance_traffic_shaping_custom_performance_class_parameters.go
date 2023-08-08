@@ -52,17 +52,25 @@ func NewUpdateNetworkApplianceTrafficShapingCustomPerformanceClassParamsWithHTTP
 	}
 }
 
-/* UpdateNetworkApplianceTrafficShapingCustomPerformanceClassParams contains all the parameters to send to the API endpoint
-   for the update network appliance traffic shaping custom performance class operation.
+/*
+UpdateNetworkApplianceTrafficShapingCustomPerformanceClassParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network appliance traffic shaping custom performance class operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkApplianceTrafficShapingCustomPerformanceClassParams struct {
 
-	// CustomPerformanceClassID.
+	/* CustomPerformanceClassID.
+
+	   Custom performance class ID
+	*/
 	CustomPerformanceClassID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkApplianceTrafficShapingCustomPerformanceClass.

@@ -52,14 +52,19 @@ func NewUpdateDeviceWirelessBluetoothSettingsParamsWithHTTPClient(client *http.C
 	}
 }
 
-/* UpdateDeviceWirelessBluetoothSettingsParams contains all the parameters to send to the API endpoint
-   for the update device wireless bluetooth settings operation.
+/*
+UpdateDeviceWirelessBluetoothSettingsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update device wireless bluetooth settings operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateDeviceWirelessBluetoothSettingsParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	// UpdateDeviceWirelessBluetoothSettings.

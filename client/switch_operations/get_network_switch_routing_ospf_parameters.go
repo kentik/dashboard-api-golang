@@ -52,14 +52,19 @@ func NewGetNetworkSwitchRoutingOspfParamsWithHTTPClient(client *http.Client) *Ge
 	}
 }
 
-/* GetNetworkSwitchRoutingOspfParams contains all the parameters to send to the API endpoint
-   for the get network switch routing ospf operation.
+/*
+GetNetworkSwitchRoutingOspfParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network switch routing ospf operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSwitchRoutingOspfParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

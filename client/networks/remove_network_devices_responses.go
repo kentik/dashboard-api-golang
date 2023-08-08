@@ -31,7 +31,7 @@ func (o *RemoveNetworkDevicesReader) ReadResponse(response runtime.ClientRespons
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/devices/remove] removeNetworkDevices", response, response.Code())
 	}
 }
 
@@ -40,7 +40,8 @@ func NewRemoveNetworkDevicesNoContent() *RemoveNetworkDevicesNoContent {
 	return &RemoveNetworkDevicesNoContent{}
 }
 
-/* RemoveNetworkDevicesNoContent describes a response with status code 204, with default header values.
+/*
+RemoveNetworkDevicesNoContent describes a response with status code 204, with default header values.
 
 Successful operation
 */
@@ -72,6 +73,11 @@ func (o *RemoveNetworkDevicesNoContent) IsCode(code int) bool {
 	return code == 204
 }
 
+// Code gets the status code for the remove network devices no content response
+func (o *RemoveNetworkDevicesNoContent) Code() int {
+	return 204
+}
+
 func (o *RemoveNetworkDevicesNoContent) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/devices/remove][%d] removeNetworkDevicesNoContent ", 204)
 }
@@ -85,7 +91,8 @@ func (o *RemoveNetworkDevicesNoContent) readResponse(response runtime.ClientResp
 	return nil
 }
 
-/*RemoveNetworkDevicesBody remove network devices body
+/*
+RemoveNetworkDevicesBody remove network devices body
 // Example: {"serial":"Q234-ABCD-5678"}
 swagger:model RemoveNetworkDevicesBody
 */

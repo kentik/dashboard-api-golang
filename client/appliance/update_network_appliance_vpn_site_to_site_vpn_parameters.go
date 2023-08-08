@@ -52,14 +52,19 @@ func NewUpdateNetworkApplianceVpnSiteToSiteVpnParamsWithHTTPClient(client *http.
 	}
 }
 
-/* UpdateNetworkApplianceVpnSiteToSiteVpnParams contains all the parameters to send to the API endpoint
-   for the update network appliance vpn site to site vpn operation.
+/*
+UpdateNetworkApplianceVpnSiteToSiteVpnParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network appliance vpn site to site vpn operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkApplianceVpnSiteToSiteVpnParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkApplianceVpnSiteToSiteVpn.

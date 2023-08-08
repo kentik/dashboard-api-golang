@@ -30,7 +30,7 @@ func (o *CheckinNetworkSmDevicesReader) ReadResponse(response runtime.ClientResp
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/sm/devices/checkin] checkinNetworkSmDevices", response, response.Code())
 	}
 }
 
@@ -39,7 +39,8 @@ func NewCheckinNetworkSmDevicesOK() *CheckinNetworkSmDevicesOK {
 	return &CheckinNetworkSmDevicesOK{}
 }
 
-/* CheckinNetworkSmDevicesOK describes a response with status code 200, with default header values.
+/*
+CheckinNetworkSmDevicesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -72,6 +73,11 @@ func (o *CheckinNetworkSmDevicesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the checkin network sm devices o k response
+func (o *CheckinNetworkSmDevicesOK) Code() int {
+	return 200
+}
+
 func (o *CheckinNetworkSmDevicesOK) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/sm/devices/checkin][%d] checkinNetworkSmDevicesOK  %+v", 200, o.Payload)
 }
@@ -96,7 +102,8 @@ func (o *CheckinNetworkSmDevicesOK) readResponse(response runtime.ClientResponse
 	return nil
 }
 
-/*CheckinNetworkSmDevicesBody checkin network sm devices body
+/*
+CheckinNetworkSmDevicesBody checkin network sm devices body
 // Example: {"ids":["1284392014819","2983092129865"],"scope":["withAny","tag1","tag2"],"serials":["Q234-ABCD-0001","Q234-ABCD-0002","Q234-ABCD-0003"],"wifiMacs":["00:11:22:33:44:55"]}
 swagger:model CheckinNetworkSmDevicesBody
 */
@@ -143,7 +150,8 @@ func (o *CheckinNetworkSmDevicesBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*CheckinNetworkSmDevicesOKBody checkin network sm devices o k body
+/*
+CheckinNetworkSmDevicesOKBody checkin network sm devices o k body
 swagger:model CheckinNetworkSmDevicesOKBody
 */
 type CheckinNetworkSmDevicesOKBody struct {

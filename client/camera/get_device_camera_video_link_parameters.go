@@ -52,14 +52,19 @@ func NewGetDeviceCameraVideoLinkParamsWithHTTPClient(client *http.Client) *GetDe
 	}
 }
 
-/* GetDeviceCameraVideoLinkParams contains all the parameters to send to the API endpoint
-   for the get device camera video link operation.
+/*
+GetDeviceCameraVideoLinkParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get device camera video link operation.
+
+	Typically these are written to a http.Request.
 */
 type GetDeviceCameraVideoLinkParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	/* Timestamp.

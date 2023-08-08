@@ -33,7 +33,7 @@ func (o *VmxNetworkDevicesClaimReader) ReadResponse(response runtime.ClientRespo
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/devices/claim/vmx] vmxNetworkDevicesClaim", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewVmxNetworkDevicesClaimOK() *VmxNetworkDevicesClaimOK {
 	return &VmxNetworkDevicesClaimOK{}
 }
 
-/* VmxNetworkDevicesClaimOK describes a response with status code 200, with default header values.
+/*
+VmxNetworkDevicesClaimOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *VmxNetworkDevicesClaimOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the vmx network devices claim o k response
+func (o *VmxNetworkDevicesClaimOK) Code() int {
+	return 200
+}
+
 func (o *VmxNetworkDevicesClaimOK) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/devices/claim/vmx][%d] vmxNetworkDevicesClaimOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *VmxNetworkDevicesClaimOK) readResponse(response runtime.ClientResponse,
 	return nil
 }
 
-/*VmxNetworkDevicesClaimBody vmx network devices claim body
+/*
+VmxNetworkDevicesClaimBody vmx network devices claim body
 // Example: {"size":"small"}
 swagger:model VmxNetworkDevicesClaimBody
 */
@@ -105,7 +112,7 @@ type VmxNetworkDevicesClaimBody struct {
 
 	// The size of the vMX you claim. It can be one of: small, medium, large, 100
 	// Required: true
-	// Enum: [small medium large 100]
+	// Enum: [100 large medium small]
 	Size *string `json:"size"`
 }
 
@@ -127,7 +134,7 @@ var vmxNetworkDevicesClaimBodyTypeSizePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["small","medium","large","100"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["100","large","medium","small"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -137,17 +144,17 @@ func init() {
 
 const (
 
-	// VmxNetworkDevicesClaimBodySizeSmall captures enum value "small"
-	VmxNetworkDevicesClaimBodySizeSmall string = "small"
-
-	// VmxNetworkDevicesClaimBodySizeMedium captures enum value "medium"
-	VmxNetworkDevicesClaimBodySizeMedium string = "medium"
+	// VmxNetworkDevicesClaimBodySizeNr100 captures enum value "100"
+	VmxNetworkDevicesClaimBodySizeNr100 string = "100"
 
 	// VmxNetworkDevicesClaimBodySizeLarge captures enum value "large"
 	VmxNetworkDevicesClaimBodySizeLarge string = "large"
 
-	// VmxNetworkDevicesClaimBodySizeNr100 captures enum value "100"
-	VmxNetworkDevicesClaimBodySizeNr100 string = "100"
+	// VmxNetworkDevicesClaimBodySizeMedium captures enum value "medium"
+	VmxNetworkDevicesClaimBodySizeMedium string = "medium"
+
+	// VmxNetworkDevicesClaimBodySizeSmall captures enum value "small"
+	VmxNetworkDevicesClaimBodySizeSmall string = "small"
 )
 
 // prop value enum

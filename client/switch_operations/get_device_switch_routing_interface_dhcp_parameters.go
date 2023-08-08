@@ -52,17 +52,25 @@ func NewGetDeviceSwitchRoutingInterfaceDhcpParamsWithHTTPClient(client *http.Cli
 	}
 }
 
-/* GetDeviceSwitchRoutingInterfaceDhcpParams contains all the parameters to send to the API endpoint
-   for the get device switch routing interface dhcp operation.
+/*
+GetDeviceSwitchRoutingInterfaceDhcpParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get device switch routing interface dhcp operation.
+
+	Typically these are written to a http.Request.
 */
 type GetDeviceSwitchRoutingInterfaceDhcpParams struct {
 
-	// InterfaceID.
+	/* InterfaceID.
+
+	   Interface ID
+	*/
 	InterfaceID string
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	timeout    time.Duration

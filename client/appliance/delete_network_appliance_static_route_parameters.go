@@ -52,17 +52,25 @@ func NewDeleteNetworkApplianceStaticRouteParamsWithHTTPClient(client *http.Clien
 	}
 }
 
-/* DeleteNetworkApplianceStaticRouteParams contains all the parameters to send to the API endpoint
-   for the delete network appliance static route operation.
+/*
+DeleteNetworkApplianceStaticRouteParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete network appliance static route operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteNetworkApplianceStaticRouteParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// StaticRouteID.
+	/* StaticRouteID.
+
+	   Static route ID
+	*/
 	StaticRouteID string
 
 	timeout    time.Duration

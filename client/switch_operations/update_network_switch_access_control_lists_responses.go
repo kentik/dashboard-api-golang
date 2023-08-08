@@ -34,7 +34,7 @@ func (o *UpdateNetworkSwitchAccessControlListsReader) ReadResponse(response runt
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/switch/accessControlLists] updateNetworkSwitchAccessControlLists", response, response.Code())
 	}
 }
 
@@ -43,12 +43,13 @@ func NewUpdateNetworkSwitchAccessControlListsOK() *UpdateNetworkSwitchAccessCont
 	return &UpdateNetworkSwitchAccessControlListsOK{}
 }
 
-/* UpdateNetworkSwitchAccessControlListsOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSwitchAccessControlListsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateNetworkSwitchAccessControlListsOK struct {
-	Payload interface{}
+	Payload *UpdateNetworkSwitchAccessControlListsOKBody
 }
 
 // IsSuccess returns true when this update network switch access control lists o k response has a 2xx status code
@@ -76,6 +77,11 @@ func (o *UpdateNetworkSwitchAccessControlListsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network switch access control lists o k response
+func (o *UpdateNetworkSwitchAccessControlListsOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSwitchAccessControlListsOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/switch/accessControlLists][%d] updateNetworkSwitchAccessControlListsOK  %+v", 200, o.Payload)
 }
@@ -84,21 +90,24 @@ func (o *UpdateNetworkSwitchAccessControlListsOK) String() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/switch/accessControlLists][%d] updateNetworkSwitchAccessControlListsOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateNetworkSwitchAccessControlListsOK) GetPayload() interface{} {
+func (o *UpdateNetworkSwitchAccessControlListsOK) GetPayload() *UpdateNetworkSwitchAccessControlListsOKBody {
 	return o.Payload
 }
 
 func (o *UpdateNetworkSwitchAccessControlListsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateNetworkSwitchAccessControlListsOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateNetworkSwitchAccessControlListsBody update network switch access control lists body
+/*
+UpdateNetworkSwitchAccessControlListsBody update network switch access control lists body
 // Example: {"rules":[{"comment":"Deny SSH","dstCidr":"172.16.30/24","dstPort":"22","ipVersion":"ipv4","policy":"deny","protocol":"tcp","srcCidr":"10.1.10.0/24","srcPort":"any","vlan":"10"}]}
 swagger:model UpdateNetworkSwitchAccessControlListsBody
 */
@@ -169,6 +178,11 @@ func (o *UpdateNetworkSwitchAccessControlListsBody) contextValidateRules(ctx con
 	for i := 0; i < len(o.Rules); i++ {
 
 		if o.Rules[i] != nil {
+
+			if swag.IsZero(o.Rules[i]) { // not required
+				return nil
+			}
+
 			if err := o.Rules[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkSwitchAccessControlLists" + "." + "rules" + "." + strconv.Itoa(i))
@@ -202,7 +216,329 @@ func (o *UpdateNetworkSwitchAccessControlListsBody) UnmarshalBinary(b []byte) er
 	return nil
 }
 
-/*UpdateNetworkSwitchAccessControlListsParamsBodyRulesItems0 update network switch access control lists params body rules items0
+/*
+UpdateNetworkSwitchAccessControlListsOKBody update network switch access control lists o k body
+swagger:model UpdateNetworkSwitchAccessControlListsOKBody
+*/
+type UpdateNetworkSwitchAccessControlListsOKBody struct {
+
+	// An ordered array of the access control list rules
+	Rules []*UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0 `json:"rules"`
+}
+
+// Validate validates this update network switch access control lists o k body
+func (o *UpdateNetworkSwitchAccessControlListsOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateRules(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkSwitchAccessControlListsOKBody) validateRules(formats strfmt.Registry) error {
+	if swag.IsZero(o.Rules) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Rules); i++ {
+		if swag.IsZero(o.Rules[i]) { // not required
+			continue
+		}
+
+		if o.Rules[i] != nil {
+			if err := o.Rules[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkSwitchAccessControlListsOK" + "." + "rules" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkSwitchAccessControlListsOK" + "." + "rules" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update network switch access control lists o k body based on the context it is used
+func (o *UpdateNetworkSwitchAccessControlListsOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateRules(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateNetworkSwitchAccessControlListsOKBody) contextValidateRules(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Rules); i++ {
+
+		if o.Rules[i] != nil {
+
+			if swag.IsZero(o.Rules[i]) { // not required
+				return nil
+			}
+
+			if err := o.Rules[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateNetworkSwitchAccessControlListsOK" + "." + "rules" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateNetworkSwitchAccessControlListsOK" + "." + "rules" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkSwitchAccessControlListsOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkSwitchAccessControlListsOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkSwitchAccessControlListsOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0 update network switch access control lists o k body rules items0
+swagger:model UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0
+*/
+type UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0 struct {
+
+	// Description of the rule (optional)
+	Comment string `json:"comment,omitempty"`
+
+	// Destination IP address (in IP or CIDR notation)
+	DstCidr string `json:"dstCidr,omitempty"`
+
+	// Destination port
+	DstPort string `json:"dstPort,omitempty"`
+
+	// IP address version
+	// Enum: [any ipv4 ipv6]
+	IPVersion string `json:"ipVersion,omitempty"`
+
+	// 'allow' or 'deny' traffic specified by this rule
+	// Enum: [allow deny]
+	Policy string `json:"policy,omitempty"`
+
+	// The type of protocol
+	// Enum: [any tcp udp]
+	Protocol string `json:"protocol,omitempty"`
+
+	// Source IP address (in IP or CIDR notation)
+	SrcCidr string `json:"srcCidr,omitempty"`
+
+	// Source port
+	SrcPort string `json:"srcPort,omitempty"`
+
+	// ncoming traffic VLAN
+	Vlan string `json:"vlan,omitempty"`
+}
+
+// Validate validates this update network switch access control lists o k body rules items0
+func (o *UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateIPVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validatePolicy(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateProtocol(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateNetworkSwitchAccessControlListsOKBodyRulesItems0TypeIPVersionPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["any","ipv4","ipv6"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkSwitchAccessControlListsOKBodyRulesItems0TypeIPVersionPropEnum = append(updateNetworkSwitchAccessControlListsOKBodyRulesItems0TypeIPVersionPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0IPVersionAny captures enum value "any"
+	UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0IPVersionAny string = "any"
+
+	// UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0IPVersionIPV4 captures enum value "ipv4"
+	UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0IPVersionIPV4 string = "ipv4"
+
+	// UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0IPVersionIPV6 captures enum value "ipv6"
+	UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0IPVersionIPV6 string = "ipv6"
+)
+
+// prop value enum
+func (o *UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0) validateIPVersionEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkSwitchAccessControlListsOKBodyRulesItems0TypeIPVersionPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0) validateIPVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.IPVersion) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateIPVersionEnum("ipVersion", "body", o.IPVersion); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var updateNetworkSwitchAccessControlListsOKBodyRulesItems0TypePolicyPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["allow","deny"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkSwitchAccessControlListsOKBodyRulesItems0TypePolicyPropEnum = append(updateNetworkSwitchAccessControlListsOKBodyRulesItems0TypePolicyPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0PolicyAllow captures enum value "allow"
+	UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0PolicyAllow string = "allow"
+
+	// UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0PolicyDeny captures enum value "deny"
+	UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0PolicyDeny string = "deny"
+)
+
+// prop value enum
+func (o *UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0) validatePolicyEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkSwitchAccessControlListsOKBodyRulesItems0TypePolicyPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0) validatePolicy(formats strfmt.Registry) error {
+	if swag.IsZero(o.Policy) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validatePolicyEnum("policy", "body", o.Policy); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var updateNetworkSwitchAccessControlListsOKBodyRulesItems0TypeProtocolPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["any","tcp","udp"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateNetworkSwitchAccessControlListsOKBodyRulesItems0TypeProtocolPropEnum = append(updateNetworkSwitchAccessControlListsOKBodyRulesItems0TypeProtocolPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0ProtocolAny captures enum value "any"
+	UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0ProtocolAny string = "any"
+
+	// UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0ProtocolTCP captures enum value "tcp"
+	UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0ProtocolTCP string = "tcp"
+
+	// UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0ProtocolUDP captures enum value "udp"
+	UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0ProtocolUDP string = "udp"
+)
+
+// prop value enum
+func (o *UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0) validateProtocolEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateNetworkSwitchAccessControlListsOKBodyRulesItems0TypeProtocolPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0) validateProtocol(formats strfmt.Registry) error {
+	if swag.IsZero(o.Protocol) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateProtocolEnum("protocol", "body", o.Protocol); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this update network switch access control lists o k body rules items0 based on context it is used
+func (o *UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateNetworkSwitchAccessControlListsOKBodyRulesItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateNetworkSwitchAccessControlListsParamsBodyRulesItems0 update network switch access control lists params body rules items0
 swagger:model UpdateNetworkSwitchAccessControlListsParamsBodyRulesItems0
 */
 type UpdateNetworkSwitchAccessControlListsParamsBodyRulesItems0 struct {
@@ -228,7 +564,7 @@ type UpdateNetworkSwitchAccessControlListsParamsBodyRulesItems0 struct {
 
 	// The type of protocol (must be 'tcp', 'udp', or 'any').
 	// Required: true
-	// Enum: [tcp udp any]
+	// Enum: [any tcp udp]
 	Protocol *string `json:"protocol"`
 
 	// Source IP address (in IP or CIDR notation) or 'any'.
@@ -373,7 +709,7 @@ var updateNetworkSwitchAccessControlListsParamsBodyRulesItems0TypeProtocolPropEn
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["tcp","udp","any"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["any","tcp","udp"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -383,14 +719,14 @@ func init() {
 
 const (
 
+	// UpdateNetworkSwitchAccessControlListsParamsBodyRulesItems0ProtocolAny captures enum value "any"
+	UpdateNetworkSwitchAccessControlListsParamsBodyRulesItems0ProtocolAny string = "any"
+
 	// UpdateNetworkSwitchAccessControlListsParamsBodyRulesItems0ProtocolTCP captures enum value "tcp"
 	UpdateNetworkSwitchAccessControlListsParamsBodyRulesItems0ProtocolTCP string = "tcp"
 
 	// UpdateNetworkSwitchAccessControlListsParamsBodyRulesItems0ProtocolUDP captures enum value "udp"
 	UpdateNetworkSwitchAccessControlListsParamsBodyRulesItems0ProtocolUDP string = "udp"
-
-	// UpdateNetworkSwitchAccessControlListsParamsBodyRulesItems0ProtocolAny captures enum value "any"
-	UpdateNetworkSwitchAccessControlListsParamsBodyRulesItems0ProtocolAny string = "any"
 )
 
 // prop value enum

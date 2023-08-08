@@ -52,10 +52,12 @@ func NewGetNetworkPiiSmOwnersForKeyParamsWithHTTPClient(client *http.Client) *Ge
 	}
 }
 
-/* GetNetworkPiiSmOwnersForKeyParams contains all the parameters to send to the API endpoint
-   for the get network pii sm owners for key operation.
+/*
+GetNetworkPiiSmOwnersForKeyParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network pii sm owners for key operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkPiiSmOwnersForKeyParams struct {
 
@@ -83,7 +85,10 @@ type GetNetworkPiiSmOwnersForKeyParams struct {
 	*/
 	Mac *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* Serial.

@@ -27,7 +27,7 @@ func (o *DeleteOrganizationAdaptivePolicyPolicyReader) ReadResponse(response run
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[DELETE /organizations/{organizationId}/adaptivePolicy/policies/{id}] deleteOrganizationAdaptivePolicyPolicy", response, response.Code())
 	}
 }
 
@@ -36,7 +36,8 @@ func NewDeleteOrganizationAdaptivePolicyPolicyNoContent() *DeleteOrganizationAda
 	return &DeleteOrganizationAdaptivePolicyPolicyNoContent{}
 }
 
-/* DeleteOrganizationAdaptivePolicyPolicyNoContent describes a response with status code 204, with default header values.
+/*
+DeleteOrganizationAdaptivePolicyPolicyNoContent describes a response with status code 204, with default header values.
 
 Successful operation
 */
@@ -68,12 +69,17 @@ func (o *DeleteOrganizationAdaptivePolicyPolicyNoContent) IsCode(code int) bool 
 	return code == 204
 }
 
+// Code gets the status code for the delete organization adaptive policy policy no content response
+func (o *DeleteOrganizationAdaptivePolicyPolicyNoContent) Code() int {
+	return 204
+}
+
 func (o *DeleteOrganizationAdaptivePolicyPolicyNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /organizations/{organizationId}/adaptivePolicy/policies/{adaptivePolicyId}][%d] deleteOrganizationAdaptivePolicyPolicyNoContent ", 204)
+	return fmt.Sprintf("[DELETE /organizations/{organizationId}/adaptivePolicy/policies/{id}][%d] deleteOrganizationAdaptivePolicyPolicyNoContent ", 204)
 }
 
 func (o *DeleteOrganizationAdaptivePolicyPolicyNoContent) String() string {
-	return fmt.Sprintf("[DELETE /organizations/{organizationId}/adaptivePolicy/policies/{adaptivePolicyId}][%d] deleteOrganizationAdaptivePolicyPolicyNoContent ", 204)
+	return fmt.Sprintf("[DELETE /organizations/{organizationId}/adaptivePolicy/policies/{id}][%d] deleteOrganizationAdaptivePolicyPolicyNoContent ", 204)
 }
 
 func (o *DeleteOrganizationAdaptivePolicyPolicyNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

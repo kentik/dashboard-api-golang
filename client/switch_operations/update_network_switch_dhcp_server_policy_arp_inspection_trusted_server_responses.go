@@ -31,7 +31,7 @@ func (o *UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerReader) Re
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/switch/dhcpServerPolicy/arpInspection/trustedServers/{trustedServerId}] updateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServer", response, response.Code())
 	}
 }
 
@@ -40,7 +40,8 @@ func NewUpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerOK() *Updat
 	return &UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerOK{}
 }
 
-/* UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -73,6 +74,11 @@ func (o *UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerOK) IsCode
 	return code == 200
 }
 
+// Code gets the status code for the update network switch dhcp server policy arp inspection trusted server o k response
+func (o *UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/switch/dhcpServerPolicy/arpInspection/trustedServers/{trustedServerId}][%d] updateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerOK) readRe
 	return nil
 }
 
-/*UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerBody update network switch dhcp server policy arp inspection trusted server body
+/*
+UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerBody update network switch dhcp server policy arp inspection trusted server body
 // Example: {"ipv4":{"address":"1.2.3.4"},"mac":"00:11:22:33:44:55","vlan":100}
 swagger:model UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerBody
 */
@@ -163,6 +170,11 @@ func (o *UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerBody) Cont
 func (o *UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerBody) contextValidateIPV4(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.IPV4 != nil {
+
+		if swag.IsZero(o.IPV4) { // not required
+			return nil
+		}
+
 		if err := o.IPV4.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServer" + "." + "ipv4")
@@ -194,7 +206,8 @@ func (o *UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerBody) Unma
 	return nil
 }
 
-/*UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerOKBody update network switch dhcp server policy arp inspection trusted server o k body
+/*
+UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerOKBody update network switch dhcp server policy arp inspection trusted server o k body
 swagger:model UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerOKBody
 */
 type UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerOKBody struct {
@@ -262,6 +275,11 @@ func (o *UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerOKBody) Co
 func (o *UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerOKBody) contextValidateIPV4(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.IPV4 != nil {
+
+		if swag.IsZero(o.IPV4) { // not required
+			return nil
+		}
+
 		if err := o.IPV4.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerOK" + "." + "ipv4")
@@ -293,7 +311,8 @@ func (o *UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerOKBody) Un
 	return nil
 }
 
-/*UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerOKBodyIPV4 IPv4 attributes of the trusted server.
+/*
+UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerOKBodyIPV4 IPv4 attributes of the trusted server.
 swagger:model UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerOKBodyIPV4
 */
 type UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerOKBodyIPV4 struct {
@@ -330,7 +349,8 @@ func (o *UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerOKBodyIPV4
 	return nil
 }
 
-/*UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerParamsBodyIPV4 The updated IPv4 attributes of the trusted server
+/*
+UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerParamsBodyIPV4 The updated IPv4 attributes of the trusted server
 swagger:model UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerParamsBodyIPV4
 */
 type UpdateNetworkSwitchDhcpServerPolicyArpInspectionTrustedServerParamsBodyIPV4 struct {

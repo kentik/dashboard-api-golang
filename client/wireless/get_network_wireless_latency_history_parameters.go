@@ -53,10 +53,12 @@ func NewGetNetworkWirelessLatencyHistoryParamsWithHTTPClient(client *http.Client
 	}
 }
 
-/* GetNetworkWirelessLatencyHistoryParams contains all the parameters to send to the API endpoint
-   for the get network wireless latency history operation.
+/*
+GetNetworkWirelessLatencyHistoryParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network wireless latency history operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkWirelessLatencyHistoryParams struct {
 
@@ -96,7 +98,10 @@ type GetNetworkWirelessLatencyHistoryParams struct {
 	*/
 	DeviceSerial *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* Resolution.

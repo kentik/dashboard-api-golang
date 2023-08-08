@@ -28,7 +28,7 @@ func (o *GetDeviceCameraWirelessProfilesReader) ReadResponse(response runtime.Cl
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /devices/{serial}/camera/wirelessProfiles] getDeviceCameraWirelessProfiles", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetDeviceCameraWirelessProfilesOK() *GetDeviceCameraWirelessProfilesOK {
 	return &GetDeviceCameraWirelessProfilesOK{}
 }
 
-/* GetDeviceCameraWirelessProfilesOK describes a response with status code 200, with default header values.
+/*
+GetDeviceCameraWirelessProfilesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetDeviceCameraWirelessProfilesOK) IsServerError() bool {
 // IsCode returns true when this get device camera wireless profiles o k response a status code equal to that given
 func (o *GetDeviceCameraWirelessProfilesOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get device camera wireless profiles o k response
+func (o *GetDeviceCameraWirelessProfilesOK) Code() int {
+	return 200
 }
 
 func (o *GetDeviceCameraWirelessProfilesOK) Error() string {

@@ -52,17 +52,22 @@ func NewCreateNetworkCameraWirelessProfileParamsWithHTTPClient(client *http.Clie
 	}
 }
 
-/* CreateNetworkCameraWirelessProfileParams contains all the parameters to send to the API endpoint
-   for the create network camera wireless profile operation.
+/*
+CreateNetworkCameraWirelessProfileParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create network camera wireless profile operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateNetworkCameraWirelessProfileParams struct {
 
 	// CreateNetworkCameraWirelessProfile.
 	CreateNetworkCameraWirelessProfile CreateNetworkCameraWirelessProfileBody
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

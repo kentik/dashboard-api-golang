@@ -52,17 +52,25 @@ func NewGetOrganizationCameraCustomAnalyticsArtifactParamsWithHTTPClient(client 
 	}
 }
 
-/* GetOrganizationCameraCustomAnalyticsArtifactParams contains all the parameters to send to the API endpoint
-   for the get organization camera custom analytics artifact operation.
+/*
+GetOrganizationCameraCustomAnalyticsArtifactParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization camera custom analytics artifact operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationCameraCustomAnalyticsArtifactParams struct {
 
-	// ArtifactID.
+	/* ArtifactID.
+
+	   Artifact ID
+	*/
 	ArtifactID string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

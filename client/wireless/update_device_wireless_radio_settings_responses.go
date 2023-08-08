@@ -33,7 +33,7 @@ func (o *UpdateDeviceWirelessRadioSettingsReader) ReadResponse(response runtime.
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /devices/{serial}/wireless/radio/settings] updateDeviceWirelessRadioSettings", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateDeviceWirelessRadioSettingsOK() *UpdateDeviceWirelessRadioSettings
 	return &UpdateDeviceWirelessRadioSettingsOK{}
 }
 
-/* UpdateDeviceWirelessRadioSettingsOK describes a response with status code 200, with default header values.
+/*
+UpdateDeviceWirelessRadioSettingsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateDeviceWirelessRadioSettingsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update device wireless radio settings o k response
+func (o *UpdateDeviceWirelessRadioSettingsOK) Code() int {
+	return 200
+}
+
 func (o *UpdateDeviceWirelessRadioSettingsOK) Error() string {
 	return fmt.Sprintf("[PUT /devices/{serial}/wireless/radio/settings][%d] updateDeviceWirelessRadioSettingsOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateDeviceWirelessRadioSettingsOK) readResponse(response runtime.Clie
 	return nil
 }
 
-/*UpdateDeviceWirelessRadioSettingsBody update device wireless radio settings body
+/*
+UpdateDeviceWirelessRadioSettingsBody update device wireless radio settings body
 // Example: {"fiveGhzSettings":{"channel":149,"channelWidth":20,"targetPower":15},"rfProfileId":"1234","twoFourGhzSettings":{"channel":11,"targetPower":21}}
 swagger:model UpdateDeviceWirelessRadioSettingsBody
 */
@@ -190,6 +197,11 @@ func (o *UpdateDeviceWirelessRadioSettingsBody) ContextValidate(ctx context.Cont
 func (o *UpdateDeviceWirelessRadioSettingsBody) contextValidateFiveGhzSettings(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.FiveGhzSettings != nil {
+
+		if swag.IsZero(o.FiveGhzSettings) { // not required
+			return nil
+		}
+
 		if err := o.FiveGhzSettings.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateDeviceWirelessRadioSettings" + "." + "fiveGhzSettings")
@@ -206,6 +218,11 @@ func (o *UpdateDeviceWirelessRadioSettingsBody) contextValidateFiveGhzSettings(c
 func (o *UpdateDeviceWirelessRadioSettingsBody) contextValidateTwoFourGhzSettings(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.TwoFourGhzSettings != nil {
+
+		if swag.IsZero(o.TwoFourGhzSettings) { // not required
+			return nil
+		}
+
 		if err := o.TwoFourGhzSettings.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateDeviceWirelessRadioSettings" + "." + "twoFourGhzSettings")
@@ -237,7 +254,8 @@ func (o *UpdateDeviceWirelessRadioSettingsBody) UnmarshalBinary(b []byte) error 
 	return nil
 }
 
-/*UpdateDeviceWirelessRadioSettingsParamsBodyFiveGhzSettings Manual radio settings for 5 GHz.
+/*
+UpdateDeviceWirelessRadioSettingsParamsBodyFiveGhzSettings Manual radio settings for 5 GHz.
 swagger:model UpdateDeviceWirelessRadioSettingsParamsBodyFiveGhzSettings
 */
 type UpdateDeviceWirelessRadioSettingsParamsBodyFiveGhzSettings struct {
@@ -361,7 +379,8 @@ func (o *UpdateDeviceWirelessRadioSettingsParamsBodyFiveGhzSettings) UnmarshalBi
 	return nil
 }
 
-/*UpdateDeviceWirelessRadioSettingsParamsBodyTwoFourGhzSettings Manual radio settings for 2.4 GHz.
+/*
+UpdateDeviceWirelessRadioSettingsParamsBodyTwoFourGhzSettings Manual radio settings for 2.4 GHz.
 swagger:model UpdateDeviceWirelessRadioSettingsParamsBodyTwoFourGhzSettings
 */
 type UpdateDeviceWirelessRadioSettingsParamsBodyTwoFourGhzSettings struct {

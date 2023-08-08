@@ -52,14 +52,19 @@ func NewGetNetworkSwitchQosRulesOrderParamsWithHTTPClient(client *http.Client) *
 	}
 }
 
-/* GetNetworkSwitchQosRulesOrderParams contains all the parameters to send to the API endpoint
-   for the get network switch qos rules order operation.
+/*
+GetNetworkSwitchQosRulesOrderParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network switch qos rules order operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSwitchQosRulesOrderParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

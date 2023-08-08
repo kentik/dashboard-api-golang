@@ -52,17 +52,25 @@ func NewGetOrganizationSamlIdpParamsWithHTTPClient(client *http.Client) *GetOrga
 	}
 }
 
-/* GetOrganizationSamlIdpParams contains all the parameters to send to the API endpoint
-   for the get organization saml idp operation.
+/*
+GetOrganizationSamlIdpParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization saml idp operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationSamlIdpParams struct {
 
-	// IdpID.
+	/* IdpID.
+
+	   Idp ID
+	*/
 	IdpID string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

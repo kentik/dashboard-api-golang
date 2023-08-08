@@ -52,14 +52,19 @@ func NewUpdateOrganizationBrandingPoliciesPrioritiesParamsWithHTTPClient(client 
 	}
 }
 
-/* UpdateOrganizationBrandingPoliciesPrioritiesParams contains all the parameters to send to the API endpoint
-   for the update organization branding policies priorities operation.
+/*
+UpdateOrganizationBrandingPoliciesPrioritiesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update organization branding policies priorities operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateOrganizationBrandingPoliciesPrioritiesParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	// UpdateOrganizationBrandingPoliciesPriorities.

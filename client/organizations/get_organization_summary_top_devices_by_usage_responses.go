@@ -31,7 +31,7 @@ func (o *GetOrganizationSummaryTopDevicesByUsageReader) ReadResponse(response ru
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/summary/top/devices/byUsage] getOrganizationSummaryTopDevicesByUsage", response, response.Code())
 	}
 }
 
@@ -40,7 +40,8 @@ func NewGetOrganizationSummaryTopDevicesByUsageOK() *GetOrganizationSummaryTopDe
 	return &GetOrganizationSummaryTopDevicesByUsageOK{}
 }
 
-/* GetOrganizationSummaryTopDevicesByUsageOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationSummaryTopDevicesByUsageOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -73,6 +74,11 @@ func (o *GetOrganizationSummaryTopDevicesByUsageOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get organization summary top devices by usage o k response
+func (o *GetOrganizationSummaryTopDevicesByUsageOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationSummaryTopDevicesByUsageOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/summary/top/devices/byUsage][%d] getOrganizationSummaryTopDevicesByUsageOK  %+v", 200, o.Payload)
 }
@@ -95,7 +101,8 @@ func (o *GetOrganizationSummaryTopDevicesByUsageOK) readResponse(response runtim
 	return nil
 }
 
-/*GetOrganizationSummaryTopDevicesByUsageOKBodyItems0 get organization summary top devices by usage o k body items0
+/*
+GetOrganizationSummaryTopDevicesByUsageOKBodyItems0 get organization summary top devices by usage o k body items0
 swagger:model GetOrganizationSummaryTopDevicesByUsageOKBodyItems0
 */
 type GetOrganizationSummaryTopDevicesByUsageOKBodyItems0 struct {
@@ -229,6 +236,11 @@ func (o *GetOrganizationSummaryTopDevicesByUsageOKBodyItems0) ContextValidate(ct
 func (o *GetOrganizationSummaryTopDevicesByUsageOKBodyItems0) contextValidateClients(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Clients != nil {
+
+		if swag.IsZero(o.Clients) { // not required
+			return nil
+		}
+
 		if err := o.Clients.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("clients")
@@ -245,6 +257,11 @@ func (o *GetOrganizationSummaryTopDevicesByUsageOKBodyItems0) contextValidateCli
 func (o *GetOrganizationSummaryTopDevicesByUsageOKBodyItems0) contextValidateNetwork(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Network != nil {
+
+		if swag.IsZero(o.Network) { // not required
+			return nil
+		}
+
 		if err := o.Network.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("network")
@@ -261,6 +278,11 @@ func (o *GetOrganizationSummaryTopDevicesByUsageOKBodyItems0) contextValidateNet
 func (o *GetOrganizationSummaryTopDevicesByUsageOKBodyItems0) contextValidateUsage(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Usage != nil {
+
+		if swag.IsZero(o.Usage) { // not required
+			return nil
+		}
+
 		if err := o.Usage.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("usage")
@@ -292,7 +314,8 @@ func (o *GetOrganizationSummaryTopDevicesByUsageOKBodyItems0) UnmarshalBinary(b 
 	return nil
 }
 
-/*GetOrganizationSummaryTopDevicesByUsageOKBodyItems0Clients Clients
+/*
+GetOrganizationSummaryTopDevicesByUsageOKBodyItems0Clients Clients
 swagger:model GetOrganizationSummaryTopDevicesByUsageOKBodyItems0Clients
 */
 type GetOrganizationSummaryTopDevicesByUsageOKBodyItems0Clients struct {
@@ -351,6 +374,11 @@ func (o *GetOrganizationSummaryTopDevicesByUsageOKBodyItems0Clients) ContextVali
 func (o *GetOrganizationSummaryTopDevicesByUsageOKBodyItems0Clients) contextValidateCounts(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Counts != nil {
+
+		if swag.IsZero(o.Counts) { // not required
+			return nil
+		}
+
 		if err := o.Counts.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("clients" + "." + "counts")
@@ -382,7 +410,8 @@ func (o *GetOrganizationSummaryTopDevicesByUsageOKBodyItems0Clients) UnmarshalBi
 	return nil
 }
 
-/*GetOrganizationSummaryTopDevicesByUsageOKBodyItems0ClientsCounts Counts of clients
+/*
+GetOrganizationSummaryTopDevicesByUsageOKBodyItems0ClientsCounts Counts of clients
 swagger:model GetOrganizationSummaryTopDevicesByUsageOKBodyItems0ClientsCounts
 */
 type GetOrganizationSummaryTopDevicesByUsageOKBodyItems0ClientsCounts struct {
@@ -419,7 +448,8 @@ func (o *GetOrganizationSummaryTopDevicesByUsageOKBodyItems0ClientsCounts) Unmar
 	return nil
 }
 
-/*GetOrganizationSummaryTopDevicesByUsageOKBodyItems0Network Network info
+/*
+GetOrganizationSummaryTopDevicesByUsageOKBodyItems0Network Network info
 swagger:model GetOrganizationSummaryTopDevicesByUsageOKBodyItems0Network
 */
 type GetOrganizationSummaryTopDevicesByUsageOKBodyItems0Network struct {
@@ -459,7 +489,8 @@ func (o *GetOrganizationSummaryTopDevicesByUsageOKBodyItems0Network) UnmarshalBi
 	return nil
 }
 
-/*GetOrganizationSummaryTopDevicesByUsageOKBodyItems0Usage Data usage of the device
+/*
+GetOrganizationSummaryTopDevicesByUsageOKBodyItems0Usage Data usage of the device
 swagger:model GetOrganizationSummaryTopDevicesByUsageOKBodyItems0Usage
 */
 type GetOrganizationSummaryTopDevicesByUsageOKBodyItems0Usage struct {

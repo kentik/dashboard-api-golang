@@ -52,14 +52,19 @@ func NewUpdateDeviceCellularGatewayLanParamsWithHTTPClient(client *http.Client) 
 	}
 }
 
-/* UpdateDeviceCellularGatewayLanParams contains all the parameters to send to the API endpoint
-   for the update device cellular gateway lan operation.
+/*
+UpdateDeviceCellularGatewayLanParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update device cellular gateway lan operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateDeviceCellularGatewayLanParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	// UpdateDeviceCellularGatewayLan.

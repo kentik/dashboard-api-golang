@@ -52,17 +52,25 @@ func NewUpdateNetworkWirelessSsidBonjourForwardingParamsWithHTTPClient(client *h
 	}
 }
 
-/* UpdateNetworkWirelessSsidBonjourForwardingParams contains all the parameters to send to the API endpoint
-   for the update network wireless ssid bonjour forwarding operation.
+/*
+UpdateNetworkWirelessSsidBonjourForwardingParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network wireless ssid bonjour forwarding operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkWirelessSsidBonjourForwardingParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// Number.
+	/* Number.
+
+	   Number
+	*/
 	Number string
 
 	// UpdateNetworkWirelessSsidBonjourForwarding.

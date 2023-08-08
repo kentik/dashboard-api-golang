@@ -52,14 +52,19 @@ func NewRenewOrganizationLicensesSeatsParamsWithHTTPClient(client *http.Client) 
 	}
 }
 
-/* RenewOrganizationLicensesSeatsParams contains all the parameters to send to the API endpoint
-   for the renew organization licenses seats operation.
+/*
+RenewOrganizationLicensesSeatsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the renew organization licenses seats operation.
+
+	Typically these are written to a http.Request.
 */
 type RenewOrganizationLicensesSeatsParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	// RenewOrganizationLicensesSeats.

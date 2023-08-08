@@ -52,17 +52,25 @@ func NewUpdateNetworkSwitchLinkAggregationParamsWithHTTPClient(client *http.Clie
 	}
 }
 
-/* UpdateNetworkSwitchLinkAggregationParams contains all the parameters to send to the API endpoint
-   for the update network switch link aggregation operation.
+/*
+UpdateNetworkSwitchLinkAggregationParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network switch link aggregation operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkSwitchLinkAggregationParams struct {
 
-	// LinkAggregationID.
+	/* LinkAggregationID.
+
+	   Link aggregation ID
+	*/
 	LinkAggregationID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkSwitchLinkAggregation.

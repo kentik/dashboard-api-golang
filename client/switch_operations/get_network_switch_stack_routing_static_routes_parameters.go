@@ -52,17 +52,25 @@ func NewGetNetworkSwitchStackRoutingStaticRoutesParamsWithHTTPClient(client *htt
 	}
 }
 
-/* GetNetworkSwitchStackRoutingStaticRoutesParams contains all the parameters to send to the API endpoint
-   for the get network switch stack routing static routes operation.
+/*
+GetNetworkSwitchStackRoutingStaticRoutesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network switch stack routing static routes operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSwitchStackRoutingStaticRoutesParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// SwitchStackID.
+	/* SwitchStackID.
+
+	   Switch stack ID
+	*/
 	SwitchStackID string
 
 	timeout    time.Duration

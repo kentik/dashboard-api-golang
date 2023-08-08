@@ -33,7 +33,7 @@ func (o *UpdateNetworkSwitchLinkAggregationReader) ReadResponse(response runtime
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/switch/linkAggregations/{linkAggregationId}] updateNetworkSwitchLinkAggregation", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateNetworkSwitchLinkAggregationOK() *UpdateNetworkSwitchLinkAggregati
 	return &UpdateNetworkSwitchLinkAggregationOK{}
 }
 
-/* UpdateNetworkSwitchLinkAggregationOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSwitchLinkAggregationOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateNetworkSwitchLinkAggregationOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network switch link aggregation o k response
+func (o *UpdateNetworkSwitchLinkAggregationOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSwitchLinkAggregationOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/switch/linkAggregations/{linkAggregationId}][%d] updateNetworkSwitchLinkAggregationOK  %+v", 200, o.Payload)
 }
@@ -97,7 +103,8 @@ func (o *UpdateNetworkSwitchLinkAggregationOK) readResponse(response runtime.Cli
 	return nil
 }
 
-/*UpdateNetworkSwitchLinkAggregationBody update network switch link aggregation body
+/*
+UpdateNetworkSwitchLinkAggregationBody update network switch link aggregation body
 // Example: {"id":"NDU2N18yXzM=","switchPorts":[{"portId":"1","serial":"Q234-ABCD-0001"},{"portId":"2","serial":"Q234-ABCD-0002"},{"portId":"3","serial":"Q234-ABCD-0003"},{"portId":"4","serial":"Q234-ABCD-0004"},{"portId":"5","serial":"Q234-ABCD-0005"},{"portId":"6","serial":"Q234-ABCD-0006"},{"portId":"7","serial":"Q234-ABCD-0007"},{"portId":"8","serial":"Q234-ABCD-0008"}]}
 swagger:model UpdateNetworkSwitchLinkAggregationBody
 */
@@ -203,6 +210,11 @@ func (o *UpdateNetworkSwitchLinkAggregationBody) contextValidateSwitchPorts(ctx 
 	for i := 0; i < len(o.SwitchPorts); i++ {
 
 		if o.SwitchPorts[i] != nil {
+
+			if swag.IsZero(o.SwitchPorts[i]) { // not required
+				return nil
+			}
+
 			if err := o.SwitchPorts[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkSwitchLinkAggregation" + "." + "switchPorts" + "." + strconv.Itoa(i))
@@ -223,6 +235,11 @@ func (o *UpdateNetworkSwitchLinkAggregationBody) contextValidateSwitchProfilePor
 	for i := 0; i < len(o.SwitchProfilePorts); i++ {
 
 		if o.SwitchProfilePorts[i] != nil {
+
+			if swag.IsZero(o.SwitchProfilePorts[i]) { // not required
+				return nil
+			}
+
 			if err := o.SwitchProfilePorts[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkSwitchLinkAggregation" + "." + "switchProfilePorts" + "." + strconv.Itoa(i))
@@ -256,7 +273,8 @@ func (o *UpdateNetworkSwitchLinkAggregationBody) UnmarshalBinary(b []byte) error
 	return nil
 }
 
-/*UpdateNetworkSwitchLinkAggregationParamsBodySwitchPortsItems0 update network switch link aggregation params body switch ports items0
+/*
+UpdateNetworkSwitchLinkAggregationParamsBodySwitchPortsItems0 update network switch link aggregation params body switch ports items0
 swagger:model UpdateNetworkSwitchLinkAggregationParamsBodySwitchPortsItems0
 */
 type UpdateNetworkSwitchLinkAggregationParamsBodySwitchPortsItems0 struct {
@@ -329,7 +347,8 @@ func (o *UpdateNetworkSwitchLinkAggregationParamsBodySwitchPortsItems0) Unmarsha
 	return nil
 }
 
-/*UpdateNetworkSwitchLinkAggregationParamsBodySwitchProfilePortsItems0 update network switch link aggregation params body switch profile ports items0
+/*
+UpdateNetworkSwitchLinkAggregationParamsBodySwitchProfilePortsItems0 update network switch link aggregation params body switch profile ports items0
 swagger:model UpdateNetworkSwitchLinkAggregationParamsBodySwitchProfilePortsItems0
 */
 type UpdateNetworkSwitchLinkAggregationParamsBodySwitchProfilePortsItems0 struct {

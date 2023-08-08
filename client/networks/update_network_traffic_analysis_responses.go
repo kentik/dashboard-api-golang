@@ -34,7 +34,7 @@ func (o *UpdateNetworkTrafficAnalysisReader) ReadResponse(response runtime.Clien
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/trafficAnalysis] updateNetworkTrafficAnalysis", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewUpdateNetworkTrafficAnalysisOK() *UpdateNetworkTrafficAnalysisOK {
 	return &UpdateNetworkTrafficAnalysisOK{}
 }
 
-/* UpdateNetworkTrafficAnalysisOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkTrafficAnalysisOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *UpdateNetworkTrafficAnalysisOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network traffic analysis o k response
+func (o *UpdateNetworkTrafficAnalysisOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkTrafficAnalysisOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/trafficAnalysis][%d] updateNetworkTrafficAnalysisOK  %+v", 200, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *UpdateNetworkTrafficAnalysisOK) readResponse(response runtime.ClientRes
 	return nil
 }
 
-/*UpdateNetworkTrafficAnalysisBody update network traffic analysis body
+/*
+UpdateNetworkTrafficAnalysisBody update network traffic analysis body
 // Example: {"customPieChartItems":[{"name":"Item from hostname","type":"host","value":"example.com"},{"name":"Item from port","type":"port","value":"440"},{"name":"Item from IP","type":"ipRange","value":"192.1.0.0"},{"name":"Item from IP range (CIDR)","type":"ipRange","value":"192.2.0.0/16"},{"name":"Item from IP range with port","type":"ipRange","value":"192.3.0.0/16:80"}],"mode":"detailed"}
 swagger:model UpdateNetworkTrafficAnalysisBody
 */
@@ -110,7 +117,7 @@ type UpdateNetworkTrafficAnalysisBody struct {
 	//     The traffic analysis mode for the network. Can be one of 'disabled' (do not collect traffic types),
 	//     'basic' (collect generic traffic categories), or 'detailed' (collect destination hostnames).
 	//
-	// Enum: [disabled basic detailed]
+	// Enum: [basic detailed disabled]
 	Mode string `json:"mode,omitempty"`
 }
 
@@ -162,7 +169,7 @@ var updateNetworkTrafficAnalysisBodyTypeModePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["disabled","basic","detailed"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["basic","detailed","disabled"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -172,14 +179,14 @@ func init() {
 
 const (
 
-	// UpdateNetworkTrafficAnalysisBodyModeDisabled captures enum value "disabled"
-	UpdateNetworkTrafficAnalysisBodyModeDisabled string = "disabled"
-
 	// UpdateNetworkTrafficAnalysisBodyModeBasic captures enum value "basic"
 	UpdateNetworkTrafficAnalysisBodyModeBasic string = "basic"
 
 	// UpdateNetworkTrafficAnalysisBodyModeDetailed captures enum value "detailed"
 	UpdateNetworkTrafficAnalysisBodyModeDetailed string = "detailed"
+
+	// UpdateNetworkTrafficAnalysisBodyModeDisabled captures enum value "disabled"
+	UpdateNetworkTrafficAnalysisBodyModeDisabled string = "disabled"
 )
 
 // prop value enum
@@ -222,6 +229,11 @@ func (o *UpdateNetworkTrafficAnalysisBody) contextValidateCustomPieChartItems(ct
 	for i := 0; i < len(o.CustomPieChartItems); i++ {
 
 		if o.CustomPieChartItems[i] != nil {
+
+			if swag.IsZero(o.CustomPieChartItems[i]) { // not required
+				return nil
+			}
+
 			if err := o.CustomPieChartItems[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkTrafficAnalysis" + "." + "customPieChartItems" + "." + strconv.Itoa(i))
@@ -255,7 +267,8 @@ func (o *UpdateNetworkTrafficAnalysisBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateNetworkTrafficAnalysisParamsBodyCustomPieChartItemsItems0 update network traffic analysis params body custom pie chart items items0
+/*
+UpdateNetworkTrafficAnalysisParamsBodyCustomPieChartItemsItems0 update network traffic analysis params body custom pie chart items items0
 swagger:model UpdateNetworkTrafficAnalysisParamsBodyCustomPieChartItemsItems0
 */
 type UpdateNetworkTrafficAnalysisParamsBodyCustomPieChartItemsItems0 struct {
@@ -267,7 +280,7 @@ type UpdateNetworkTrafficAnalysisParamsBodyCustomPieChartItemsItems0 struct {
 	//     The signature type for the custom pie chart item. Can be one of 'host', 'port' or 'ipRange'.
 	//
 	// Required: true
-	// Enum: [host port ipRange]
+	// Enum: [host ipRange port]
 	Type *string `json:"type"`
 
 	//     The value of the custom pie chart item. Valid syntax depends on the signature type of the chart item
@@ -312,7 +325,7 @@ var updateNetworkTrafficAnalysisParamsBodyCustomPieChartItemsItems0TypeTypePropE
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["host","port","ipRange"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["host","ipRange","port"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -325,11 +338,11 @@ const (
 	// UpdateNetworkTrafficAnalysisParamsBodyCustomPieChartItemsItems0TypeHost captures enum value "host"
 	UpdateNetworkTrafficAnalysisParamsBodyCustomPieChartItemsItems0TypeHost string = "host"
 
-	// UpdateNetworkTrafficAnalysisParamsBodyCustomPieChartItemsItems0TypePort captures enum value "port"
-	UpdateNetworkTrafficAnalysisParamsBodyCustomPieChartItemsItems0TypePort string = "port"
-
 	// UpdateNetworkTrafficAnalysisParamsBodyCustomPieChartItemsItems0TypeIPRange captures enum value "ipRange"
 	UpdateNetworkTrafficAnalysisParamsBodyCustomPieChartItemsItems0TypeIPRange string = "ipRange"
+
+	// UpdateNetworkTrafficAnalysisParamsBodyCustomPieChartItemsItems0TypePort captures enum value "port"
+	UpdateNetworkTrafficAnalysisParamsBodyCustomPieChartItemsItems0TypePort string = "port"
 )
 
 // prop value enum

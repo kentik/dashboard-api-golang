@@ -52,17 +52,25 @@ func NewDeleteNetworkFloorPlanParamsWithHTTPClient(client *http.Client) *DeleteN
 	}
 }
 
-/* DeleteNetworkFloorPlanParams contains all the parameters to send to the API endpoint
-   for the delete network floor plan operation.
+/*
+DeleteNetworkFloorPlanParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete network floor plan operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteNetworkFloorPlanParams struct {
 
-	// FloorPlanID.
+	/* FloorPlanID.
+
+	   Floor plan ID
+	*/
 	FloorPlanID string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

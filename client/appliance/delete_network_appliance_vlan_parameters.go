@@ -52,17 +52,25 @@ func NewDeleteNetworkApplianceVlanParamsWithHTTPClient(client *http.Client) *Del
 	}
 }
 
-/* DeleteNetworkApplianceVlanParams contains all the parameters to send to the API endpoint
-   for the delete network appliance vlan operation.
+/*
+DeleteNetworkApplianceVlanParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete network appliance vlan operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteNetworkApplianceVlanParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
-	// VlanID.
+	/* VlanID.
+
+	   Vlan ID
+	*/
 	VlanID string
 
 	timeout    time.Duration

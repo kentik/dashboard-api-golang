@@ -6,11 +6,15 @@ package appliance
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
+	"strconv"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetNetworkApplianceVpnSiteToSiteVpnReader is a Reader for the GetNetworkApplianceVpnSiteToSiteVpn structure.
@@ -28,7 +32,7 @@ func (o *GetNetworkApplianceVpnSiteToSiteVpnReader) ReadResponse(response runtim
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/appliance/vpn/siteToSiteVpn] getNetworkApplianceVpnSiteToSiteVpn", response, response.Code())
 	}
 }
 
@@ -37,12 +41,13 @@ func NewGetNetworkApplianceVpnSiteToSiteVpnOK() *GetNetworkApplianceVpnSiteToSit
 	return &GetNetworkApplianceVpnSiteToSiteVpnOK{}
 }
 
-/* GetNetworkApplianceVpnSiteToSiteVpnOK describes a response with status code 200, with default header values.
+/*
+GetNetworkApplianceVpnSiteToSiteVpnOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkApplianceVpnSiteToSiteVpnOK struct {
-	Payload interface{}
+	Payload *GetNetworkApplianceVpnSiteToSiteVpnOKBody
 }
 
 // IsSuccess returns true when this get network appliance vpn site to site vpn o k response has a 2xx status code
@@ -70,6 +75,11 @@ func (o *GetNetworkApplianceVpnSiteToSiteVpnOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network appliance vpn site to site vpn o k response
+func (o *GetNetworkApplianceVpnSiteToSiteVpnOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkApplianceVpnSiteToSiteVpnOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/appliance/vpn/siteToSiteVpn][%d] getNetworkApplianceVpnSiteToSiteVpnOK  %+v", 200, o.Payload)
 }
@@ -78,16 +88,272 @@ func (o *GetNetworkApplianceVpnSiteToSiteVpnOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/appliance/vpn/siteToSiteVpn][%d] getNetworkApplianceVpnSiteToSiteVpnOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkApplianceVpnSiteToSiteVpnOK) GetPayload() interface{} {
+func (o *GetNetworkApplianceVpnSiteToSiteVpnOK) GetPayload() *GetNetworkApplianceVpnSiteToSiteVpnOKBody {
 	return o.Payload
 }
 
 func (o *GetNetworkApplianceVpnSiteToSiteVpnOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetNetworkApplianceVpnSiteToSiteVpnOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkApplianceVpnSiteToSiteVpnOKBody get network appliance vpn site to site vpn o k body
+swagger:model GetNetworkApplianceVpnSiteToSiteVpnOKBody
+*/
+type GetNetworkApplianceVpnSiteToSiteVpnOKBody struct {
+
+	// The list of VPN hubs, in order of preference.
+	Hubs []*GetNetworkApplianceVpnSiteToSiteVpnOKBodyHubsItems0 `json:"hubs"`
+
+	// The site-to-site VPN mode.
+	Mode string `json:"mode,omitempty"`
+
+	// The list of subnets and their VPN presence.
+	Subnets []*GetNetworkApplianceVpnSiteToSiteVpnOKBodySubnetsItems0 `json:"subnets"`
+}
+
+// Validate validates this get network appliance vpn site to site vpn o k body
+func (o *GetNetworkApplianceVpnSiteToSiteVpnOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateHubs(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSubnets(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkApplianceVpnSiteToSiteVpnOKBody) validateHubs(formats strfmt.Registry) error {
+	if swag.IsZero(o.Hubs) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Hubs); i++ {
+		if swag.IsZero(o.Hubs[i]) { // not required
+			continue
+		}
+
+		if o.Hubs[i] != nil {
+			if err := o.Hubs[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkApplianceVpnSiteToSiteVpnOK" + "." + "hubs" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkApplianceVpnSiteToSiteVpnOK" + "." + "hubs" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *GetNetworkApplianceVpnSiteToSiteVpnOKBody) validateSubnets(formats strfmt.Registry) error {
+	if swag.IsZero(o.Subnets) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Subnets); i++ {
+		if swag.IsZero(o.Subnets[i]) { // not required
+			continue
+		}
+
+		if o.Subnets[i] != nil {
+			if err := o.Subnets[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkApplianceVpnSiteToSiteVpnOK" + "." + "subnets" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkApplianceVpnSiteToSiteVpnOK" + "." + "subnets" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network appliance vpn site to site vpn o k body based on the context it is used
+func (o *GetNetworkApplianceVpnSiteToSiteVpnOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateHubs(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateSubnets(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkApplianceVpnSiteToSiteVpnOKBody) contextValidateHubs(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Hubs); i++ {
+
+		if o.Hubs[i] != nil {
+
+			if swag.IsZero(o.Hubs[i]) { // not required
+				return nil
+			}
+
+			if err := o.Hubs[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkApplianceVpnSiteToSiteVpnOK" + "." + "hubs" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkApplianceVpnSiteToSiteVpnOK" + "." + "hubs" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *GetNetworkApplianceVpnSiteToSiteVpnOKBody) contextValidateSubnets(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Subnets); i++ {
+
+		if o.Subnets[i] != nil {
+
+			if swag.IsZero(o.Subnets[i]) { // not required
+				return nil
+			}
+
+			if err := o.Subnets[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkApplianceVpnSiteToSiteVpnOK" + "." + "subnets" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkApplianceVpnSiteToSiteVpnOK" + "." + "subnets" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkApplianceVpnSiteToSiteVpnOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkApplianceVpnSiteToSiteVpnOKBody) UnmarshalBinary(b []byte) error {
+	var res GetNetworkApplianceVpnSiteToSiteVpnOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkApplianceVpnSiteToSiteVpnOKBodyHubsItems0 get network appliance vpn site to site vpn o k body hubs items0
+swagger:model GetNetworkApplianceVpnSiteToSiteVpnOKBodyHubsItems0
+*/
+type GetNetworkApplianceVpnSiteToSiteVpnOKBodyHubsItems0 struct {
+
+	// The network ID of the hub.
+	HubID string `json:"hubId,omitempty"`
+
+	// Indicates whether default route traffic should be sent to this hub.
+	UseDefaultRoute bool `json:"useDefaultRoute,omitempty"`
+}
+
+// Validate validates this get network appliance vpn site to site vpn o k body hubs items0
+func (o *GetNetworkApplianceVpnSiteToSiteVpnOKBodyHubsItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network appliance vpn site to site vpn o k body hubs items0 based on context it is used
+func (o *GetNetworkApplianceVpnSiteToSiteVpnOKBodyHubsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkApplianceVpnSiteToSiteVpnOKBodyHubsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkApplianceVpnSiteToSiteVpnOKBodyHubsItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkApplianceVpnSiteToSiteVpnOKBodyHubsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkApplianceVpnSiteToSiteVpnOKBodySubnetsItems0 get network appliance vpn site to site vpn o k body subnets items0
+swagger:model GetNetworkApplianceVpnSiteToSiteVpnOKBodySubnetsItems0
+*/
+type GetNetworkApplianceVpnSiteToSiteVpnOKBodySubnetsItems0 struct {
+
+	// The CIDR notation subnet used within the VPN
+	LocalSubnet string `json:"localSubnet,omitempty"`
+
+	// Indicates the presence of the subnet in the VPN
+	UseVpn bool `json:"useVpn,omitempty"`
+}
+
+// Validate validates this get network appliance vpn site to site vpn o k body subnets items0
+func (o *GetNetworkApplianceVpnSiteToSiteVpnOKBodySubnetsItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network appliance vpn site to site vpn o k body subnets items0 based on context it is used
+func (o *GetNetworkApplianceVpnSiteToSiteVpnOKBodySubnetsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkApplianceVpnSiteToSiteVpnOKBodySubnetsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkApplianceVpnSiteToSiteVpnOKBodySubnetsItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkApplianceVpnSiteToSiteVpnOKBodySubnetsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

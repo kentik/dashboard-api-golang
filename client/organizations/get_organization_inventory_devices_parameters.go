@@ -53,10 +53,12 @@ func NewGetOrganizationInventoryDevicesParamsWithHTTPClient(client *http.Client)
 	}
 }
 
-/* GetOrganizationInventoryDevicesParams contains all the parameters to send to the API endpoint
-   for the get organization inventory devices operation.
+/*
+GetOrganizationInventoryDevicesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization inventory devices operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationInventoryDevicesParams struct {
 
@@ -84,7 +86,16 @@ type GetOrganizationInventoryDevicesParams struct {
 	*/
 	NetworkIds []string
 
-	// OrganizationID.
+	/* OrderNumbers.
+
+	   Search for devices in inventory based on order numbers.
+	*/
+	OrderNumbers []string
+
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	/* PerPage.
@@ -95,7 +106,7 @@ type GetOrganizationInventoryDevicesParams struct {
 
 	/* ProductTypes.
 
-	   Optional parameter to filter devices by product type. Valid types are wireless, appliance, switch, systemsManager, camera, cellularGateway, and sensor.
+	   Filter devices by product type. Accepted values are appliance, camera, cellularGateway, cloudGateway, sensor, switch, systemsManager, and wireless.
 	*/
 	ProductTypes []string
 
@@ -119,13 +130,13 @@ type GetOrganizationInventoryDevicesParams struct {
 
 	/* Tags.
 
-	   An optional parameter to filter devices by tags. The filtering is case-sensitive. If tags are included, 'tagsFilterType' should also be included (see below).
+	   Filter devices by tags. The filtering is case-sensitive. If tags are included, 'tagsFilterType' should also be included (see below).
 	*/
 	Tags []string
 
 	/* TagsFilterType.
 
-	   An optional parameter of value 'withAnyTags' or 'withAllTags' to indicate whether to return devices which contain ANY or ALL of the included tags. If no type is included, 'withAnyTags' will be selected.
+	   To use with 'tags' parameter, to filter devices which contain ANY or ALL given tags. Accepted values are 'withAnyTags' or 'withAllTags', default is 'withAnyTags'.
 	*/
 	TagsFilterType *string
 
@@ -230,6 +241,17 @@ func (o *GetOrganizationInventoryDevicesParams) WithNetworkIds(networkIds []stri
 // SetNetworkIds adds the networkIds to the get organization inventory devices params
 func (o *GetOrganizationInventoryDevicesParams) SetNetworkIds(networkIds []string) {
 	o.NetworkIds = networkIds
+}
+
+// WithOrderNumbers adds the orderNumbers to the get organization inventory devices params
+func (o *GetOrganizationInventoryDevicesParams) WithOrderNumbers(orderNumbers []string) *GetOrganizationInventoryDevicesParams {
+	o.SetOrderNumbers(orderNumbers)
+	return o
+}
+
+// SetOrderNumbers adds the orderNumbers to the get organization inventory devices params
+func (o *GetOrganizationInventoryDevicesParams) SetOrderNumbers(orderNumbers []string) {
+	o.OrderNumbers = orderNumbers
 }
 
 // WithOrganizationID adds the organizationID to the get organization inventory devices params
@@ -385,6 +407,17 @@ func (o *GetOrganizationInventoryDevicesParams) WriteToRequest(r runtime.ClientR
 
 		// query array param networkIds
 		if err := r.SetQueryParam("networkIds", joinedNetworkIds...); err != nil {
+			return err
+		}
+	}
+
+	if o.OrderNumbers != nil {
+
+		// binding items for orderNumbers
+		joinedOrderNumbers := o.bindParamOrderNumbers(reg)
+
+		// query array param orderNumbers
+		if err := r.SetQueryParam("orderNumbers", joinedOrderNumbers...); err != nil {
 			return err
 		}
 	}
@@ -567,6 +600,23 @@ func (o *GetOrganizationInventoryDevicesParams) bindParamNetworkIds(formats strf
 	networkIdsIS := swag.JoinByFormat(networkIdsIC, "")
 
 	return networkIdsIS
+}
+
+// bindParamGetOrganizationInventoryDevices binds the parameter orderNumbers
+func (o *GetOrganizationInventoryDevicesParams) bindParamOrderNumbers(formats strfmt.Registry) []string {
+	orderNumbersIR := o.OrderNumbers
+
+	var orderNumbersIC []string
+	for _, orderNumbersIIR := range orderNumbersIR { // explode []string
+
+		orderNumbersIIV := orderNumbersIIR // string as string
+		orderNumbersIC = append(orderNumbersIC, orderNumbersIIV)
+	}
+
+	// items.CollectionFormat: ""
+	orderNumbersIS := swag.JoinByFormat(orderNumbersIC, "")
+
+	return orderNumbersIS
 }
 
 // bindParamGetOrganizationInventoryDevices binds the parameter productTypes

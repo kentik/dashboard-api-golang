@@ -32,7 +32,7 @@ func (o *GetNetworkWirelessClientCountHistoryReader) ReadResponse(response runti
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/wireless/clientCountHistory] getNetworkWirelessClientCountHistory", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewGetNetworkWirelessClientCountHistoryOK() *GetNetworkWirelessClientCountH
 	return &GetNetworkWirelessClientCountHistoryOK{}
 }
 
-/* GetNetworkWirelessClientCountHistoryOK describes a response with status code 200, with default header values.
+/*
+GetNetworkWirelessClientCountHistoryOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *GetNetworkWirelessClientCountHistoryOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network wireless client count history o k response
+func (o *GetNetworkWirelessClientCountHistoryOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkWirelessClientCountHistoryOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/wireless/clientCountHistory][%d] getNetworkWirelessClientCountHistoryOK  %+v", 200, o.Payload)
 }
@@ -96,7 +102,8 @@ func (o *GetNetworkWirelessClientCountHistoryOK) readResponse(response runtime.C
 	return nil
 }
 
-/*GetNetworkWirelessClientCountHistoryOKBodyItems0 get network wireless client count history o k body items0
+/*
+GetNetworkWirelessClientCountHistoryOKBodyItems0 get network wireless client count history o k body items0
 swagger:model GetNetworkWirelessClientCountHistoryOKBodyItems0
 */
 type GetNetworkWirelessClientCountHistoryOKBodyItems0 struct {

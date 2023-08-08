@@ -33,7 +33,7 @@ func (o *CreateOrganizationBrandingPolicyReader) ReadResponse(response runtime.C
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /organizations/{organizationId}/brandingPolicies] createOrganizationBrandingPolicy", response, response.Code())
 	}
 }
 
@@ -42,12 +42,13 @@ func NewCreateOrganizationBrandingPolicyCreated() *CreateOrganizationBrandingPol
 	return &CreateOrganizationBrandingPolicyCreated{}
 }
 
-/* CreateOrganizationBrandingPolicyCreated describes a response with status code 201, with default header values.
+/*
+CreateOrganizationBrandingPolicyCreated describes a response with status code 201, with default header values.
 
 Successful operation
 */
 type CreateOrganizationBrandingPolicyCreated struct {
-	Payload interface{}
+	Payload *CreateOrganizationBrandingPolicyCreatedBody
 }
 
 // IsSuccess returns true when this create organization branding policy created response has a 2xx status code
@@ -75,6 +76,11 @@ func (o *CreateOrganizationBrandingPolicyCreated) IsCode(code int) bool {
 	return code == 201
 }
 
+// Code gets the status code for the create organization branding policy created response
+func (o *CreateOrganizationBrandingPolicyCreated) Code() int {
+	return 201
+}
+
 func (o *CreateOrganizationBrandingPolicyCreated) Error() string {
 	return fmt.Sprintf("[POST /organizations/{organizationId}/brandingPolicies][%d] createOrganizationBrandingPolicyCreated  %+v", 201, o.Payload)
 }
@@ -83,43 +89,43 @@ func (o *CreateOrganizationBrandingPolicyCreated) String() string {
 	return fmt.Sprintf("[POST /organizations/{organizationId}/brandingPolicies][%d] createOrganizationBrandingPolicyCreated  %+v", 201, o.Payload)
 }
 
-func (o *CreateOrganizationBrandingPolicyCreated) GetPayload() interface{} {
+func (o *CreateOrganizationBrandingPolicyCreated) GetPayload() *CreateOrganizationBrandingPolicyCreatedBody {
 	return o.Payload
 }
 
 func (o *CreateOrganizationBrandingPolicyCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(CreateOrganizationBrandingPolicyCreatedBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*CreateOrganizationBrandingPolicyBody create organization branding policy body
-// Example: {"adminSettings":{"appliesTo":"All admins of networks...","values":["N_1234","L_5678"]},"brandingPolicyId":"456","customLogo":{"enabled":true,"image":{"preview":{"expiresAt":"2022-04-06T06:19:27-07:00","url":"https://meraki-na.s3.amazonaws.com/org-assets/my-image.png"}}},"enabled":true,"helpSettings":{"apiDocsSubtab":"default or inherit","casesSubtab":"hide","ciscoMerakiProductDocumentation":"show","communitySubtab":"show","dataProtectionRequestsSubtab":"default or inherit","firewallInfoSubtab":"hide","getHelpSubtab":"default or inherit","getHelpSubtabKnowledgeBaseSearch":"\u003ch1\u003eSome custom HTML content\u003c/h1\u003e","hardwareReplacementsSubtab":"hide","helpTab":"show","newFeaturesSubtab":"show","smForums":"hide","supportContactInfo":"show","universalSearchKnowledgeBaseSearch":"hide"},"name":"My Branding Policy"}
+/*
+CreateOrganizationBrandingPolicyBody create organization branding policy body
+// Example: {"adminSettings":{"appliesTo":"All admins of networks...","values":["N_1234","L_5678"]},"customLogo":{"enabled":true,"image":{"contents":"Hyperg26C8F4h8CvcoUqpA==","format":"jpg"}},"enabled":true,"helpSettings":{"apiDocsSubtab":"default or inherit","casesSubtab":"hide","ciscoMerakiProductDocumentation":"show","communitySubtab":"show","dataProtectionRequestsSubtab":"default or inherit","firewallInfoSubtab":"hide","getHelpSubtab":"default or inherit","getHelpSubtabKnowledgeBaseSearch":"\u003ch1\u003eSome custom HTML content\u003c/h1\u003e","hardwareReplacementsSubtab":"hide","helpTab":"show","helpWidget":"hide","newFeaturesSubtab":"show","smForums":"hide","supportContactInfo":"show","universalSearchKnowledgeBaseSearch":"hide"},"name":"My Branding Policy"}
 swagger:model CreateOrganizationBrandingPolicyBody
 */
 type CreateOrganizationBrandingPolicyBody struct {
 
 	// admin settings
-	// Required: true
-	AdminSettings *CreateOrganizationBrandingPolicyParamsBodyAdminSettings `json:"adminSettings"`
+	AdminSettings *CreateOrganizationBrandingPolicyParamsBodyAdminSettings `json:"adminSettings,omitempty"`
 
 	// custom logo
 	CustomLogo *CreateOrganizationBrandingPolicyParamsBodyCustomLogo `json:"customLogo,omitempty"`
 
 	// Boolean indicating whether this policy is enabled.
-	// Required: true
-	Enabled *bool `json:"enabled"`
+	Enabled bool `json:"enabled,omitempty"`
 
 	// help settings
 	HelpSettings *CreateOrganizationBrandingPolicyParamsBodyHelpSettings `json:"helpSettings,omitempty"`
 
 	// Name of the Dashboard branding policy.
-	// Required: true
-	Name *string `json:"name"`
+	Name string `json:"name,omitempty"`
 }
 
 // Validate validates this create organization branding policy body
@@ -134,15 +140,7 @@ func (o *CreateOrganizationBrandingPolicyBody) Validate(formats strfmt.Registry)
 		res = append(res, err)
 	}
 
-	if err := o.validateEnabled(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := o.validateHelpSettings(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := o.validateName(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -153,9 +151,8 @@ func (o *CreateOrganizationBrandingPolicyBody) Validate(formats strfmt.Registry)
 }
 
 func (o *CreateOrganizationBrandingPolicyBody) validateAdminSettings(formats strfmt.Registry) error {
-
-	if err := validate.Required("createOrganizationBrandingPolicy"+"."+"adminSettings", "body", o.AdminSettings); err != nil {
-		return err
+	if swag.IsZero(o.AdminSettings) { // not required
+		return nil
 	}
 
 	if o.AdminSettings != nil {
@@ -191,15 +188,6 @@ func (o *CreateOrganizationBrandingPolicyBody) validateCustomLogo(formats strfmt
 	return nil
 }
 
-func (o *CreateOrganizationBrandingPolicyBody) validateEnabled(formats strfmt.Registry) error {
-
-	if err := validate.Required("createOrganizationBrandingPolicy"+"."+"enabled", "body", o.Enabled); err != nil {
-		return err
-	}
-
-	return nil
-}
-
 func (o *CreateOrganizationBrandingPolicyBody) validateHelpSettings(formats strfmt.Registry) error {
 	if swag.IsZero(o.HelpSettings) { // not required
 		return nil
@@ -214,15 +202,6 @@ func (o *CreateOrganizationBrandingPolicyBody) validateHelpSettings(formats strf
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (o *CreateOrganizationBrandingPolicyBody) validateName(formats strfmt.Registry) error {
-
-	if err := validate.Required("createOrganizationBrandingPolicy"+"."+"name", "body", o.Name); err != nil {
-		return err
 	}
 
 	return nil
@@ -253,6 +232,11 @@ func (o *CreateOrganizationBrandingPolicyBody) ContextValidate(ctx context.Conte
 func (o *CreateOrganizationBrandingPolicyBody) contextValidateAdminSettings(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.AdminSettings != nil {
+
+		if swag.IsZero(o.AdminSettings) { // not required
+			return nil
+		}
+
 		if err := o.AdminSettings.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createOrganizationBrandingPolicy" + "." + "adminSettings")
@@ -269,6 +253,11 @@ func (o *CreateOrganizationBrandingPolicyBody) contextValidateAdminSettings(ctx 
 func (o *CreateOrganizationBrandingPolicyBody) contextValidateCustomLogo(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.CustomLogo != nil {
+
+		if swag.IsZero(o.CustomLogo) { // not required
+			return nil
+		}
+
 		if err := o.CustomLogo.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createOrganizationBrandingPolicy" + "." + "customLogo")
@@ -285,6 +274,11 @@ func (o *CreateOrganizationBrandingPolicyBody) contextValidateCustomLogo(ctx con
 func (o *CreateOrganizationBrandingPolicyBody) contextValidateHelpSettings(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.HelpSettings != nil {
+
+		if swag.IsZero(o.HelpSettings) { // not required
+			return nil
+		}
+
 		if err := o.HelpSettings.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createOrganizationBrandingPolicy" + "." + "helpSettings")
@@ -316,19 +310,1312 @@ func (o *CreateOrganizationBrandingPolicyBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*CreateOrganizationBrandingPolicyParamsBodyAdminSettings Settings for describing which kinds of admins this policy applies to.
+/*
+CreateOrganizationBrandingPolicyCreatedBody create organization branding policy created body
+swagger:model CreateOrganizationBrandingPolicyCreatedBody
+*/
+type CreateOrganizationBrandingPolicyCreatedBody struct {
+
+	// admin settings
+	AdminSettings *CreateOrganizationBrandingPolicyCreatedBodyAdminSettings `json:"adminSettings,omitempty"`
+
+	// custom logo
+	CustomLogo *CreateOrganizationBrandingPolicyCreatedBodyCustomLogo `json:"customLogo,omitempty"`
+
+	// Boolean indicating whether this policy is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// help settings
+	HelpSettings *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings `json:"helpSettings,omitempty"`
+
+	// Name of the Dashboard branding policy.
+	Name string `json:"name,omitempty"`
+}
+
+// Validate validates this create organization branding policy created body
+func (o *CreateOrganizationBrandingPolicyCreatedBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateAdminSettings(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateCustomLogo(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateHelpSettings(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBody) validateAdminSettings(formats strfmt.Registry) error {
+	if swag.IsZero(o.AdminSettings) { // not required
+		return nil
+	}
+
+	if o.AdminSettings != nil {
+		if err := o.AdminSettings.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createOrganizationBrandingPolicyCreated" + "." + "adminSettings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createOrganizationBrandingPolicyCreated" + "." + "adminSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBody) validateCustomLogo(formats strfmt.Registry) error {
+	if swag.IsZero(o.CustomLogo) { // not required
+		return nil
+	}
+
+	if o.CustomLogo != nil {
+		if err := o.CustomLogo.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createOrganizationBrandingPolicyCreated" + "." + "customLogo")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createOrganizationBrandingPolicyCreated" + "." + "customLogo")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBody) validateHelpSettings(formats strfmt.Registry) error {
+	if swag.IsZero(o.HelpSettings) { // not required
+		return nil
+	}
+
+	if o.HelpSettings != nil {
+		if err := o.HelpSettings.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createOrganizationBrandingPolicyCreated" + "." + "helpSettings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createOrganizationBrandingPolicyCreated" + "." + "helpSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this create organization branding policy created body based on the context it is used
+func (o *CreateOrganizationBrandingPolicyCreatedBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateAdminSettings(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateCustomLogo(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateHelpSettings(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBody) contextValidateAdminSettings(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.AdminSettings != nil {
+
+		if swag.IsZero(o.AdminSettings) { // not required
+			return nil
+		}
+
+		if err := o.AdminSettings.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createOrganizationBrandingPolicyCreated" + "." + "adminSettings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createOrganizationBrandingPolicyCreated" + "." + "adminSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBody) contextValidateCustomLogo(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.CustomLogo != nil {
+
+		if swag.IsZero(o.CustomLogo) { // not required
+			return nil
+		}
+
+		if err := o.CustomLogo.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createOrganizationBrandingPolicyCreated" + "." + "customLogo")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createOrganizationBrandingPolicyCreated" + "." + "customLogo")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBody) contextValidateHelpSettings(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.HelpSettings != nil {
+
+		if swag.IsZero(o.HelpSettings) { // not required
+			return nil
+		}
+
+		if err := o.HelpSettings.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createOrganizationBrandingPolicyCreated" + "." + "helpSettings")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createOrganizationBrandingPolicyCreated" + "." + "helpSettings")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateOrganizationBrandingPolicyCreatedBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateOrganizationBrandingPolicyCreatedBody) UnmarshalBinary(b []byte) error {
+	var res CreateOrganizationBrandingPolicyCreatedBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateOrganizationBrandingPolicyCreatedBodyAdminSettings Settings for describing which kinds of admins this policy applies to.
+swagger:model CreateOrganizationBrandingPolicyCreatedBodyAdminSettings
+*/
+type CreateOrganizationBrandingPolicyCreatedBodyAdminSettings struct {
+
+	// Which kinds of admins this policy applies to. Can be one of 'All organization admins', 'All enterprise admins', 'All network admins', 'All admins of networks...', 'All admins of networks tagged...', 'Specific admins...', 'All admins' or 'All SAML admins'.
+	// Enum: [All SAML admins All admins All admins of networks tagged... All admins of networks... All enterprise admins All network admins All organization admins Specific admins...]
+	AppliesTo string `json:"appliesTo,omitempty"`
+
+	//       If 'appliesTo' is set to one of 'Specific admins...', 'All admins of networks...' or 'All admins of networks tagged...', then you must specify this 'values' property to provide the set of
+	//       entities to apply the branding policy to. For 'Specific admins...', specify an array of admin IDs. For 'All admins of
+	//       networks...', specify an array of network IDs and/or configuration template IDs. For 'All admins of networks tagged...',
+	//       specify an array of tag names.
+	//
+	Values []string `json:"values"`
+}
+
+// Validate validates this create organization branding policy created body admin settings
+func (o *CreateOrganizationBrandingPolicyCreatedBodyAdminSettings) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateAppliesTo(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var createOrganizationBrandingPolicyCreatedBodyAdminSettingsTypeAppliesToPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["All SAML admins","All admins","All admins of networks tagged...","All admins of networks...","All enterprise admins","All network admins","All organization admins","Specific admins..."]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createOrganizationBrandingPolicyCreatedBodyAdminSettingsTypeAppliesToPropEnum = append(createOrganizationBrandingPolicyCreatedBodyAdminSettingsTypeAppliesToPropEnum, v)
+	}
+}
+
+const (
+
+	// CreateOrganizationBrandingPolicyCreatedBodyAdminSettingsAppliesToAllSAMLAdmins captures enum value "All SAML admins"
+	CreateOrganizationBrandingPolicyCreatedBodyAdminSettingsAppliesToAllSAMLAdmins string = "All SAML admins"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyAdminSettingsAppliesToAllAdmins captures enum value "All admins"
+	CreateOrganizationBrandingPolicyCreatedBodyAdminSettingsAppliesToAllAdmins string = "All admins"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyAdminSettingsAppliesToAllAdminsOfNetworksTaggedDotDotDot captures enum value "All admins of networks tagged..."
+	CreateOrganizationBrandingPolicyCreatedBodyAdminSettingsAppliesToAllAdminsOfNetworksTaggedDotDotDot string = "All admins of networks tagged..."
+
+	// CreateOrganizationBrandingPolicyCreatedBodyAdminSettingsAppliesToAllAdminsOfNetworksDotDotDot captures enum value "All admins of networks..."
+	CreateOrganizationBrandingPolicyCreatedBodyAdminSettingsAppliesToAllAdminsOfNetworksDotDotDot string = "All admins of networks..."
+
+	// CreateOrganizationBrandingPolicyCreatedBodyAdminSettingsAppliesToAllEnterpriseAdmins captures enum value "All enterprise admins"
+	CreateOrganizationBrandingPolicyCreatedBodyAdminSettingsAppliesToAllEnterpriseAdmins string = "All enterprise admins"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyAdminSettingsAppliesToAllNetworkAdmins captures enum value "All network admins"
+	CreateOrganizationBrandingPolicyCreatedBodyAdminSettingsAppliesToAllNetworkAdmins string = "All network admins"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyAdminSettingsAppliesToAllOrganizationAdmins captures enum value "All organization admins"
+	CreateOrganizationBrandingPolicyCreatedBodyAdminSettingsAppliesToAllOrganizationAdmins string = "All organization admins"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyAdminSettingsAppliesToSpecificAdminsDotDotDot captures enum value "Specific admins..."
+	CreateOrganizationBrandingPolicyCreatedBodyAdminSettingsAppliesToSpecificAdminsDotDotDot string = "Specific admins..."
+)
+
+// prop value enum
+func (o *CreateOrganizationBrandingPolicyCreatedBodyAdminSettings) validateAppliesToEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, createOrganizationBrandingPolicyCreatedBodyAdminSettingsTypeAppliesToPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBodyAdminSettings) validateAppliesTo(formats strfmt.Registry) error {
+	if swag.IsZero(o.AppliesTo) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateAppliesToEnum("createOrganizationBrandingPolicyCreated"+"."+"adminSettings"+"."+"appliesTo", "body", o.AppliesTo); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this create organization branding policy created body admin settings based on context it is used
+func (o *CreateOrganizationBrandingPolicyCreatedBodyAdminSettings) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateOrganizationBrandingPolicyCreatedBodyAdminSettings) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateOrganizationBrandingPolicyCreatedBodyAdminSettings) UnmarshalBinary(b []byte) error {
+	var res CreateOrganizationBrandingPolicyCreatedBodyAdminSettings
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateOrganizationBrandingPolicyCreatedBodyCustomLogo Properties describing the custom logo attached to the branding policy.
+swagger:model CreateOrganizationBrandingPolicyCreatedBodyCustomLogo
+*/
+type CreateOrganizationBrandingPolicyCreatedBodyCustomLogo struct {
+
+	// Whether or not there is a custom logo enabled.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// image
+	Image *CreateOrganizationBrandingPolicyCreatedBodyCustomLogoImage `json:"image,omitempty"`
+}
+
+// Validate validates this create organization branding policy created body custom logo
+func (o *CreateOrganizationBrandingPolicyCreatedBodyCustomLogo) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateImage(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBodyCustomLogo) validateImage(formats strfmt.Registry) error {
+	if swag.IsZero(o.Image) { // not required
+		return nil
+	}
+
+	if o.Image != nil {
+		if err := o.Image.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createOrganizationBrandingPolicyCreated" + "." + "customLogo" + "." + "image")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createOrganizationBrandingPolicyCreated" + "." + "customLogo" + "." + "image")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this create organization branding policy created body custom logo based on the context it is used
+func (o *CreateOrganizationBrandingPolicyCreatedBodyCustomLogo) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateImage(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBodyCustomLogo) contextValidateImage(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Image != nil {
+
+		if swag.IsZero(o.Image) { // not required
+			return nil
+		}
+
+		if err := o.Image.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createOrganizationBrandingPolicyCreated" + "." + "customLogo" + "." + "image")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createOrganizationBrandingPolicyCreated" + "." + "customLogo" + "." + "image")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateOrganizationBrandingPolicyCreatedBodyCustomLogo) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateOrganizationBrandingPolicyCreatedBodyCustomLogo) UnmarshalBinary(b []byte) error {
+	var res CreateOrganizationBrandingPolicyCreatedBodyCustomLogo
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateOrganizationBrandingPolicyCreatedBodyCustomLogoImage Properties of the image.
+swagger:model CreateOrganizationBrandingPolicyCreatedBodyCustomLogoImage
+*/
+type CreateOrganizationBrandingPolicyCreatedBodyCustomLogoImage struct {
+
+	// preview
+	Preview *CreateOrganizationBrandingPolicyCreatedBodyCustomLogoImagePreview `json:"preview,omitempty"`
+}
+
+// Validate validates this create organization branding policy created body custom logo image
+func (o *CreateOrganizationBrandingPolicyCreatedBodyCustomLogoImage) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validatePreview(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBodyCustomLogoImage) validatePreview(formats strfmt.Registry) error {
+	if swag.IsZero(o.Preview) { // not required
+		return nil
+	}
+
+	if o.Preview != nil {
+		if err := o.Preview.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createOrganizationBrandingPolicyCreated" + "." + "customLogo" + "." + "image" + "." + "preview")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createOrganizationBrandingPolicyCreated" + "." + "customLogo" + "." + "image" + "." + "preview")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this create organization branding policy created body custom logo image based on the context it is used
+func (o *CreateOrganizationBrandingPolicyCreatedBodyCustomLogoImage) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidatePreview(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBodyCustomLogoImage) contextValidatePreview(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Preview != nil {
+
+		if swag.IsZero(o.Preview) { // not required
+			return nil
+		}
+
+		if err := o.Preview.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createOrganizationBrandingPolicyCreated" + "." + "customLogo" + "." + "image" + "." + "preview")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createOrganizationBrandingPolicyCreated" + "." + "customLogo" + "." + "image" + "." + "preview")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateOrganizationBrandingPolicyCreatedBodyCustomLogoImage) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateOrganizationBrandingPolicyCreatedBodyCustomLogoImage) UnmarshalBinary(b []byte) error {
+	var res CreateOrganizationBrandingPolicyCreatedBodyCustomLogoImage
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateOrganizationBrandingPolicyCreatedBodyCustomLogoImagePreview Preview of the image
+swagger:model CreateOrganizationBrandingPolicyCreatedBodyCustomLogoImagePreview
+*/
+type CreateOrganizationBrandingPolicyCreatedBodyCustomLogoImagePreview struct {
+
+	// Timestamp of the preview image
+	// Format: date-time
+	ExpiresAt strfmt.DateTime `json:"expiresAt,omitempty"`
+
+	// Url of the preview image
+	URL string `json:"url,omitempty"`
+}
+
+// Validate validates this create organization branding policy created body custom logo image preview
+func (o *CreateOrganizationBrandingPolicyCreatedBodyCustomLogoImagePreview) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateExpiresAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBodyCustomLogoImagePreview) validateExpiresAt(formats strfmt.Registry) error {
+	if swag.IsZero(o.ExpiresAt) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("createOrganizationBrandingPolicyCreated"+"."+"customLogo"+"."+"image"+"."+"preview"+"."+"expiresAt", "body", "date-time", o.ExpiresAt.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this create organization branding policy created body custom logo image preview based on context it is used
+func (o *CreateOrganizationBrandingPolicyCreatedBodyCustomLogoImagePreview) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateOrganizationBrandingPolicyCreatedBodyCustomLogoImagePreview) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateOrganizationBrandingPolicyCreatedBodyCustomLogoImagePreview) UnmarshalBinary(b []byte) error {
+	var res CreateOrganizationBrandingPolicyCreatedBodyCustomLogoImagePreview
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateOrganizationBrandingPolicyCreatedBodyHelpSettings       Settings for describing the modifications to various Help page features. Each property in this object accepts one of
+//       'default or inherit' (do not modify functionality), 'hide' (remove the section from Dashboard), or 'show' (always show
+//       the section on Dashboard). Some properties in this object also accept custom HTML used to replace the section on
+//       Dashboard; see the documentation for each property to see the allowed values.
+//  Each property defaults to 'default or inherit' when not provided.
+swagger:model CreateOrganizationBrandingPolicyCreatedBodyHelpSettings
+*/
+type CreateOrganizationBrandingPolicyCreatedBodyHelpSettings struct {
+
+	//       The 'Help -> API docs' subtab where a detailed description of the Dashboard API is listed. Can be one of
+	//       'default or inherit', 'hide' or 'show'.
+	//
+	// Enum: [default or inherit hide show]
+	APIDocsSubtab string `json:"apiDocsSubtab,omitempty"`
+
+	//       The 'Help -> Cases' Dashboard subtab on which Cisco Meraki support cases for this organization can be managed. Can be one
+	//       of 'default or inherit', 'hide' or 'show'.
+	//
+	// Enum: [default or inherit hide show]
+	CasesSubtab string `json:"casesSubtab,omitempty"`
+
+	//       The 'Product Manuals' section of the 'Help -> Get Help' subtab. Can be one of 'default or inherit', 'hide', 'show', or a replacement custom HTML string.
+	//
+	CiscoMerakiProductDocumentation string `json:"ciscoMerakiProductDocumentation,omitempty"`
+
+	//       The 'Help -> Community' subtab which provides a link to Meraki Community. Can be one of 'default or inherit', 'hide' or 'show'.
+	//
+	// Enum: [default or inherit hide show]
+	CommunitySubtab string `json:"communitySubtab,omitempty"`
+
+	//       The 'Help -> Data protection requests' Dashboard subtab on which requests to delete, restrict, or export end-user data can
+	//       be audited. Can be one of 'default or inherit', 'hide' or 'show'.
+	//
+	// Enum: [default or inherit hide show]
+	DataProtectionRequestsSubtab string `json:"dataProtectionRequestsSubtab,omitempty"`
+
+	//       The 'Help -> Firewall info' subtab where necessary upstream firewall rules for communication to the Cisco Meraki cloud are
+	//       listed. Can be one of 'default or inherit', 'hide' or 'show'.
+	//
+	// Enum: [default or inherit hide show]
+	FirewallInfoSubtab string `json:"firewallInfoSubtab,omitempty"`
+
+	//       The 'Help -> Get Help' subtab on which Cisco Meraki KB, Product Manuals, and Support/Case Information are displayed. Note
+	//       that if this subtab is hidden, branding customizations for the KB on 'Get help', Cisco Meraki product documentation,
+	//       and support contact info will not be visible. Can be one of 'default or inherit', 'hide' or 'show'.
+	//
+	// Enum: [default or inherit hide show]
+	GetHelpSubtab string `json:"getHelpSubtab,omitempty"`
+
+	//       The KB search box which appears on the Help page. Can be one of 'default or inherit', 'hide', 'show', or a replacement custom HTML string.
+	//
+	GetHelpSubtabKnowledgeBaseSearch string `json:"getHelpSubtabKnowledgeBaseSearch,omitempty"`
+
+	//       The 'Help -> Replacement info' subtab where important information regarding device replacements is detailed. Can be one of
+	//       'default or inherit', 'hide' or 'show'.
+	//
+	// Enum: [default or inherit hide show]
+	HardwareReplacementsSubtab string `json:"hardwareReplacementsSubtab,omitempty"`
+
+	//       The Help tab, under which all support information resides. If this tab is hidden, no other 'Help' branding
+	//       customizations will be visible. Can be one of 'default or inherit', 'hide' or 'show'.
+	//
+	// Enum: [default or inherit hide show]
+	HelpTab string `json:"helpTab,omitempty"`
+
+	//       The 'Help Widget' is a support widget which provides access to live chat, documentation links, Sales contact info,
+	//       and other contact avenues to reach Meraki Support. Can be one of 'default or inherit', 'hide' or 'show'.
+	//
+	// Enum: [default or inherit hide show]
+	HelpWidget string `json:"helpWidget,omitempty"`
+
+	//       The 'Help -> New features' subtab where new Dashboard features are detailed. Can be one of 'default or inherit', 'hide' or 'show'.
+	//
+	// Enum: [default or inherit hide show]
+	NewFeaturesSubtab string `json:"newFeaturesSubtab,omitempty"`
+
+	//       The 'SM Forums' subtab which links to community-based support for Cisco Meraki Systems Manager. Only configurable for
+	//       organizations that contain Systems Manager networks. Can be one of 'default or inherit', 'hide' or 'show'.
+	//
+	// Enum: [default or inherit hide show]
+	SmForums string `json:"smForums,omitempty"`
+
+	//       The 'Contact Meraki Support' section of the 'Help -> Get Help' subtab. Can be one of 'default or inherit', 'hide', 'show', or a replacement custom HTML string.
+	//
+	SupportContactInfo string `json:"supportContactInfo,omitempty"`
+
+	//       The universal search box always visible on Dashboard will, by default, present results from the Meraki KB. This configures
+	//       whether these Meraki KB results should be returned. Can be one of 'default or inherit', 'hide' or 'show'.
+	//
+	// Enum: [default or inherit hide show]
+	UniversalSearchKnowledgeBaseSearch string `json:"universalSearchKnowledgeBaseSearch,omitempty"`
+}
+
+// Validate validates this create organization branding policy created body help settings
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateAPIDocsSubtab(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateCasesSubtab(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateCommunitySubtab(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateDataProtectionRequestsSubtab(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateFirewallInfoSubtab(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateGetHelpSubtab(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateHardwareReplacementsSubtab(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateHelpTab(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateHelpWidget(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNewFeaturesSubtab(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSmForums(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateUniversalSearchKnowledgeBaseSearch(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeAPIDocsSubtabPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["default or inherit","hide","show"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeAPIDocsSubtabPropEnum = append(createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeAPIDocsSubtabPropEnum, v)
+	}
+}
+
+const (
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsAPIDocsSubtabDefaultOrInherit captures enum value "default or inherit"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsAPIDocsSubtabDefaultOrInherit string = "default or inherit"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsAPIDocsSubtabHide captures enum value "hide"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsAPIDocsSubtabHide string = "hide"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsAPIDocsSubtabShow captures enum value "show"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsAPIDocsSubtabShow string = "show"
+)
+
+// prop value enum
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateAPIDocsSubtabEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeAPIDocsSubtabPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateAPIDocsSubtab(formats strfmt.Registry) error {
+	if swag.IsZero(o.APIDocsSubtab) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateAPIDocsSubtabEnum("createOrganizationBrandingPolicyCreated"+"."+"helpSettings"+"."+"apiDocsSubtab", "body", o.APIDocsSubtab); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeCasesSubtabPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["default or inherit","hide","show"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeCasesSubtabPropEnum = append(createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeCasesSubtabPropEnum, v)
+	}
+}
+
+const (
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsCasesSubtabDefaultOrInherit captures enum value "default or inherit"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsCasesSubtabDefaultOrInherit string = "default or inherit"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsCasesSubtabHide captures enum value "hide"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsCasesSubtabHide string = "hide"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsCasesSubtabShow captures enum value "show"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsCasesSubtabShow string = "show"
+)
+
+// prop value enum
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateCasesSubtabEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeCasesSubtabPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateCasesSubtab(formats strfmt.Registry) error {
+	if swag.IsZero(o.CasesSubtab) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateCasesSubtabEnum("createOrganizationBrandingPolicyCreated"+"."+"helpSettings"+"."+"casesSubtab", "body", o.CasesSubtab); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeCommunitySubtabPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["default or inherit","hide","show"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeCommunitySubtabPropEnum = append(createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeCommunitySubtabPropEnum, v)
+	}
+}
+
+const (
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsCommunitySubtabDefaultOrInherit captures enum value "default or inherit"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsCommunitySubtabDefaultOrInherit string = "default or inherit"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsCommunitySubtabHide captures enum value "hide"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsCommunitySubtabHide string = "hide"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsCommunitySubtabShow captures enum value "show"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsCommunitySubtabShow string = "show"
+)
+
+// prop value enum
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateCommunitySubtabEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeCommunitySubtabPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateCommunitySubtab(formats strfmt.Registry) error {
+	if swag.IsZero(o.CommunitySubtab) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateCommunitySubtabEnum("createOrganizationBrandingPolicyCreated"+"."+"helpSettings"+"."+"communitySubtab", "body", o.CommunitySubtab); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeDataProtectionRequestsSubtabPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["default or inherit","hide","show"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeDataProtectionRequestsSubtabPropEnum = append(createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeDataProtectionRequestsSubtabPropEnum, v)
+	}
+}
+
+const (
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsDataProtectionRequestsSubtabDefaultOrInherit captures enum value "default or inherit"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsDataProtectionRequestsSubtabDefaultOrInherit string = "default or inherit"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsDataProtectionRequestsSubtabHide captures enum value "hide"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsDataProtectionRequestsSubtabHide string = "hide"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsDataProtectionRequestsSubtabShow captures enum value "show"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsDataProtectionRequestsSubtabShow string = "show"
+)
+
+// prop value enum
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateDataProtectionRequestsSubtabEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeDataProtectionRequestsSubtabPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateDataProtectionRequestsSubtab(formats strfmt.Registry) error {
+	if swag.IsZero(o.DataProtectionRequestsSubtab) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateDataProtectionRequestsSubtabEnum("createOrganizationBrandingPolicyCreated"+"."+"helpSettings"+"."+"dataProtectionRequestsSubtab", "body", o.DataProtectionRequestsSubtab); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeFirewallInfoSubtabPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["default or inherit","hide","show"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeFirewallInfoSubtabPropEnum = append(createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeFirewallInfoSubtabPropEnum, v)
+	}
+}
+
+const (
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsFirewallInfoSubtabDefaultOrInherit captures enum value "default or inherit"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsFirewallInfoSubtabDefaultOrInherit string = "default or inherit"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsFirewallInfoSubtabHide captures enum value "hide"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsFirewallInfoSubtabHide string = "hide"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsFirewallInfoSubtabShow captures enum value "show"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsFirewallInfoSubtabShow string = "show"
+)
+
+// prop value enum
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateFirewallInfoSubtabEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeFirewallInfoSubtabPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateFirewallInfoSubtab(formats strfmt.Registry) error {
+	if swag.IsZero(o.FirewallInfoSubtab) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateFirewallInfoSubtabEnum("createOrganizationBrandingPolicyCreated"+"."+"helpSettings"+"."+"firewallInfoSubtab", "body", o.FirewallInfoSubtab); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeGetHelpSubtabPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["default or inherit","hide","show"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeGetHelpSubtabPropEnum = append(createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeGetHelpSubtabPropEnum, v)
+	}
+}
+
+const (
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsGetHelpSubtabDefaultOrInherit captures enum value "default or inherit"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsGetHelpSubtabDefaultOrInherit string = "default or inherit"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsGetHelpSubtabHide captures enum value "hide"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsGetHelpSubtabHide string = "hide"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsGetHelpSubtabShow captures enum value "show"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsGetHelpSubtabShow string = "show"
+)
+
+// prop value enum
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateGetHelpSubtabEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeGetHelpSubtabPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateGetHelpSubtab(formats strfmt.Registry) error {
+	if swag.IsZero(o.GetHelpSubtab) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateGetHelpSubtabEnum("createOrganizationBrandingPolicyCreated"+"."+"helpSettings"+"."+"getHelpSubtab", "body", o.GetHelpSubtab); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeHardwareReplacementsSubtabPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["default or inherit","hide","show"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeHardwareReplacementsSubtabPropEnum = append(createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeHardwareReplacementsSubtabPropEnum, v)
+	}
+}
+
+const (
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsHardwareReplacementsSubtabDefaultOrInherit captures enum value "default or inherit"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsHardwareReplacementsSubtabDefaultOrInherit string = "default or inherit"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsHardwareReplacementsSubtabHide captures enum value "hide"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsHardwareReplacementsSubtabHide string = "hide"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsHardwareReplacementsSubtabShow captures enum value "show"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsHardwareReplacementsSubtabShow string = "show"
+)
+
+// prop value enum
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateHardwareReplacementsSubtabEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeHardwareReplacementsSubtabPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateHardwareReplacementsSubtab(formats strfmt.Registry) error {
+	if swag.IsZero(o.HardwareReplacementsSubtab) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateHardwareReplacementsSubtabEnum("createOrganizationBrandingPolicyCreated"+"."+"helpSettings"+"."+"hardwareReplacementsSubtab", "body", o.HardwareReplacementsSubtab); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeHelpTabPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["default or inherit","hide","show"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeHelpTabPropEnum = append(createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeHelpTabPropEnum, v)
+	}
+}
+
+const (
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsHelpTabDefaultOrInherit captures enum value "default or inherit"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsHelpTabDefaultOrInherit string = "default or inherit"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsHelpTabHide captures enum value "hide"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsHelpTabHide string = "hide"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsHelpTabShow captures enum value "show"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsHelpTabShow string = "show"
+)
+
+// prop value enum
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateHelpTabEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeHelpTabPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateHelpTab(formats strfmt.Registry) error {
+	if swag.IsZero(o.HelpTab) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateHelpTabEnum("createOrganizationBrandingPolicyCreated"+"."+"helpSettings"+"."+"helpTab", "body", o.HelpTab); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeHelpWidgetPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["default or inherit","hide","show"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeHelpWidgetPropEnum = append(createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeHelpWidgetPropEnum, v)
+	}
+}
+
+const (
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsHelpWidgetDefaultOrInherit captures enum value "default or inherit"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsHelpWidgetDefaultOrInherit string = "default or inherit"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsHelpWidgetHide captures enum value "hide"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsHelpWidgetHide string = "hide"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsHelpWidgetShow captures enum value "show"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsHelpWidgetShow string = "show"
+)
+
+// prop value enum
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateHelpWidgetEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeHelpWidgetPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateHelpWidget(formats strfmt.Registry) error {
+	if swag.IsZero(o.HelpWidget) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateHelpWidgetEnum("createOrganizationBrandingPolicyCreated"+"."+"helpSettings"+"."+"helpWidget", "body", o.HelpWidget); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeNewFeaturesSubtabPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["default or inherit","hide","show"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeNewFeaturesSubtabPropEnum = append(createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeNewFeaturesSubtabPropEnum, v)
+	}
+}
+
+const (
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsNewFeaturesSubtabDefaultOrInherit captures enum value "default or inherit"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsNewFeaturesSubtabDefaultOrInherit string = "default or inherit"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsNewFeaturesSubtabHide captures enum value "hide"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsNewFeaturesSubtabHide string = "hide"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsNewFeaturesSubtabShow captures enum value "show"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsNewFeaturesSubtabShow string = "show"
+)
+
+// prop value enum
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateNewFeaturesSubtabEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeNewFeaturesSubtabPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateNewFeaturesSubtab(formats strfmt.Registry) error {
+	if swag.IsZero(o.NewFeaturesSubtab) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateNewFeaturesSubtabEnum("createOrganizationBrandingPolicyCreated"+"."+"helpSettings"+"."+"newFeaturesSubtab", "body", o.NewFeaturesSubtab); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeSmForumsPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["default or inherit","hide","show"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeSmForumsPropEnum = append(createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeSmForumsPropEnum, v)
+	}
+}
+
+const (
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsSmForumsDefaultOrInherit captures enum value "default or inherit"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsSmForumsDefaultOrInherit string = "default or inherit"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsSmForumsHide captures enum value "hide"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsSmForumsHide string = "hide"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsSmForumsShow captures enum value "show"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsSmForumsShow string = "show"
+)
+
+// prop value enum
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateSmForumsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeSmForumsPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateSmForums(formats strfmt.Registry) error {
+	if swag.IsZero(o.SmForums) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateSmForumsEnum("createOrganizationBrandingPolicyCreated"+"."+"helpSettings"+"."+"smForums", "body", o.SmForums); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeUniversalSearchKnowledgeBaseSearchPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["default or inherit","hide","show"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeUniversalSearchKnowledgeBaseSearchPropEnum = append(createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeUniversalSearchKnowledgeBaseSearchPropEnum, v)
+	}
+}
+
+const (
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsUniversalSearchKnowledgeBaseSearchDefaultOrInherit captures enum value "default or inherit"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsUniversalSearchKnowledgeBaseSearchDefaultOrInherit string = "default or inherit"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsUniversalSearchKnowledgeBaseSearchHide captures enum value "hide"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsUniversalSearchKnowledgeBaseSearchHide string = "hide"
+
+	// CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsUniversalSearchKnowledgeBaseSearchShow captures enum value "show"
+	CreateOrganizationBrandingPolicyCreatedBodyHelpSettingsUniversalSearchKnowledgeBaseSearchShow string = "show"
+)
+
+// prop value enum
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateUniversalSearchKnowledgeBaseSearchEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, createOrganizationBrandingPolicyCreatedBodyHelpSettingsTypeUniversalSearchKnowledgeBaseSearchPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) validateUniversalSearchKnowledgeBaseSearch(formats strfmt.Registry) error {
+	if swag.IsZero(o.UniversalSearchKnowledgeBaseSearch) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateUniversalSearchKnowledgeBaseSearchEnum("createOrganizationBrandingPolicyCreated"+"."+"helpSettings"+"."+"universalSearchKnowledgeBaseSearch", "body", o.UniversalSearchKnowledgeBaseSearch); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this create organization branding policy created body help settings based on context it is used
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateOrganizationBrandingPolicyCreatedBodyHelpSettings) UnmarshalBinary(b []byte) error {
+	var res CreateOrganizationBrandingPolicyCreatedBodyHelpSettings
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateOrganizationBrandingPolicyParamsBodyAdminSettings Settings for describing which kinds of admins this policy applies to.
 swagger:model CreateOrganizationBrandingPolicyParamsBodyAdminSettings
 */
 type CreateOrganizationBrandingPolicyParamsBodyAdminSettings struct {
 
 	// Which kinds of admins this policy applies to. Can be one of 'All organization admins', 'All enterprise admins', 'All network admins', 'All admins of networks...', 'All admins of networks tagged...', 'Specific admins...', 'All admins' or 'All SAML admins'.
-	// Enum: [All organization admins All enterprise admins All network admins All admins of networks... All admins of networks tagged... Specific admins... All admins All SAML admins]
+	// Enum: [All SAML admins All admins All admins of networks tagged... All admins of networks... All enterprise admins All network admins All organization admins Specific admins...]
 	AppliesTo string `json:"appliesTo,omitempty"`
 
-	//     If 'appliesTo' is set to one of 'Specific admins...', 'All admins of networks...' or 'All admins of networks tagged...', then you must specify this 'values' property to provide the set of
-	//     entities to apply the branding policy to. For 'Specific admins...', specify an array of admin IDs. For 'All admins of
-	//     networks...', specify an array of network IDs and/or configuration template IDs. For 'All admins of networks tagged...',
-	//     specify an array of tag names.
+	//       If 'appliesTo' is set to one of 'Specific admins...', 'All admins of networks...' or 'All admins of networks tagged...', then you must specify this 'values' property to provide the set of
+	//       entities to apply the branding policy to. For 'Specific admins...', specify an array of admin IDs. For 'All admins of
+	//       networks...', specify an array of network IDs and/or configuration template IDs. For 'All admins of networks tagged...',
+	//       specify an array of tag names.
 	//
 	Values []string `json:"values"`
 }
@@ -351,7 +1638,7 @@ var createOrganizationBrandingPolicyParamsBodyAdminSettingsTypeAppliesToPropEnum
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["All organization admins","All enterprise admins","All network admins","All admins of networks...","All admins of networks tagged...","Specific admins...","All admins","All SAML admins"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["All SAML admins","All admins","All admins of networks tagged...","All admins of networks...","All enterprise admins","All network admins","All organization admins","Specific admins..."]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -361,8 +1648,17 @@ func init() {
 
 const (
 
-	// CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllOrganizationAdmins captures enum value "All organization admins"
-	CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllOrganizationAdmins string = "All organization admins"
+	// CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllSAMLAdmins captures enum value "All SAML admins"
+	CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllSAMLAdmins string = "All SAML admins"
+
+	// CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllAdmins captures enum value "All admins"
+	CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllAdmins string = "All admins"
+
+	// CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllAdminsOfNetworksTaggedDotDotDot captures enum value "All admins of networks tagged..."
+	CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllAdminsOfNetworksTaggedDotDotDot string = "All admins of networks tagged..."
+
+	// CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllAdminsOfNetworksDotDotDot captures enum value "All admins of networks..."
+	CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllAdminsOfNetworksDotDotDot string = "All admins of networks..."
 
 	// CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllEnterpriseAdmins captures enum value "All enterprise admins"
 	CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllEnterpriseAdmins string = "All enterprise admins"
@@ -370,20 +1666,11 @@ const (
 	// CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllNetworkAdmins captures enum value "All network admins"
 	CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllNetworkAdmins string = "All network admins"
 
-	// CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllAdminsOfNetworksDotDotDot captures enum value "All admins of networks..."
-	CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllAdminsOfNetworksDotDotDot string = "All admins of networks..."
-
-	// CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllAdminsOfNetworksTaggedDotDotDot captures enum value "All admins of networks tagged..."
-	CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllAdminsOfNetworksTaggedDotDotDot string = "All admins of networks tagged..."
+	// CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllOrganizationAdmins captures enum value "All organization admins"
+	CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllOrganizationAdmins string = "All organization admins"
 
 	// CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToSpecificAdminsDotDotDot captures enum value "Specific admins..."
 	CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToSpecificAdminsDotDotDot string = "Specific admins..."
-
-	// CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllAdmins captures enum value "All admins"
-	CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllAdmins string = "All admins"
-
-	// CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllSAMLAdmins captures enum value "All SAML admins"
-	CreateOrganizationBrandingPolicyParamsBodyAdminSettingsAppliesToAllSAMLAdmins string = "All SAML admins"
 )
 
 // prop value enum
@@ -430,31 +1717,24 @@ func (o *CreateOrganizationBrandingPolicyParamsBodyAdminSettings) UnmarshalBinar
 	return nil
 }
 
-/*CreateOrganizationBrandingPolicyParamsBodyCustomLogo Properties describing the custom logo attached to the branding policy.
+/*
+CreateOrganizationBrandingPolicyParamsBodyCustomLogo Properties describing the custom logo attached to the branding policy.
 swagger:model CreateOrganizationBrandingPolicyParamsBodyCustomLogo
 */
 type CreateOrganizationBrandingPolicyParamsBodyCustomLogo struct {
 
-	// The file contents (a base 64 encoded string) of your new logo.
-	// Format: byte
-	Contents strfmt.Base64 `json:"contents,omitempty"`
-
 	// Whether or not there is a custom logo enabled.
 	Enabled bool `json:"enabled,omitempty"`
 
-	// The format of the encoded contents.  Supported formats are 'png', 'gif', and jpg'. Note that all images are saved as PNG files, regardless of the format they are uploaded in.
-	// Enum: [gif png jpg]
-	Format string `json:"format,omitempty"`
-
-	// Properties for setting the image.
-	Image interface{} `json:"image,omitempty"`
+	// image
+	Image *CreateOrganizationBrandingPolicyParamsBodyCustomLogoImage `json:"image,omitempty"`
 }
 
 // Validate validates this create organization branding policy params body custom logo
 func (o *CreateOrganizationBrandingPolicyParamsBodyCustomLogo) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := o.validateFormat(formats); err != nil {
+	if err := o.validateImage(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -464,53 +1744,57 @@ func (o *CreateOrganizationBrandingPolicyParamsBodyCustomLogo) Validate(formats 
 	return nil
 }
 
-var createOrganizationBrandingPolicyParamsBodyCustomLogoTypeFormatPropEnum []interface{}
-
-func init() {
-	var res []string
-	if err := json.Unmarshal([]byte(`["gif","png","jpg"]`), &res); err != nil {
-		panic(err)
-	}
-	for _, v := range res {
-		createOrganizationBrandingPolicyParamsBodyCustomLogoTypeFormatPropEnum = append(createOrganizationBrandingPolicyParamsBodyCustomLogoTypeFormatPropEnum, v)
-	}
-}
-
-const (
-
-	// CreateOrganizationBrandingPolicyParamsBodyCustomLogoFormatGif captures enum value "gif"
-	CreateOrganizationBrandingPolicyParamsBodyCustomLogoFormatGif string = "gif"
-
-	// CreateOrganizationBrandingPolicyParamsBodyCustomLogoFormatPng captures enum value "png"
-	CreateOrganizationBrandingPolicyParamsBodyCustomLogoFormatPng string = "png"
-
-	// CreateOrganizationBrandingPolicyParamsBodyCustomLogoFormatJpg captures enum value "jpg"
-	CreateOrganizationBrandingPolicyParamsBodyCustomLogoFormatJpg string = "jpg"
-)
-
-// prop value enum
-func (o *CreateOrganizationBrandingPolicyParamsBodyCustomLogo) validateFormatEnum(path, location string, value string) error {
-	if err := validate.EnumCase(path, location, value, createOrganizationBrandingPolicyParamsBodyCustomLogoTypeFormatPropEnum, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *CreateOrganizationBrandingPolicyParamsBodyCustomLogo) validateFormat(formats strfmt.Registry) error {
-	if swag.IsZero(o.Format) { // not required
+func (o *CreateOrganizationBrandingPolicyParamsBodyCustomLogo) validateImage(formats strfmt.Registry) error {
+	if swag.IsZero(o.Image) { // not required
 		return nil
 	}
 
-	// value enum
-	if err := o.validateFormatEnum("createOrganizationBrandingPolicy"+"."+"customLogo"+"."+"format", "body", o.Format); err != nil {
-		return err
+	if o.Image != nil {
+		if err := o.Image.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createOrganizationBrandingPolicy" + "." + "customLogo" + "." + "image")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createOrganizationBrandingPolicy" + "." + "customLogo" + "." + "image")
+			}
+			return err
+		}
 	}
 
 	return nil
 }
 
-// ContextValidate validates this create organization branding policy params body custom logo based on context it is used
+// ContextValidate validate this create organization branding policy params body custom logo based on the context it is used
 func (o *CreateOrganizationBrandingPolicyParamsBodyCustomLogo) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateImage(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyParamsBodyCustomLogo) contextValidateImage(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Image != nil {
+
+		if swag.IsZero(o.Image) { // not required
+			return nil
+		}
+
+		if err := o.Image.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createOrganizationBrandingPolicy" + "." + "customLogo" + "." + "image")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createOrganizationBrandingPolicy" + "." + "customLogo" + "." + "image")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -532,88 +1816,192 @@ func (o *CreateOrganizationBrandingPolicyParamsBodyCustomLogo) UnmarshalBinary(b
 	return nil
 }
 
-/*CreateOrganizationBrandingPolicyParamsBodyHelpSettings     Settings for describing the modifications to various Help page features. Each property in this object accepts one of
-//     'default or inherit' (do not modify functionality), 'hide' (remove the section from Dashboard), or 'show' (always show
-//     the section on Dashboard). Some properties in this object also accept custom HTML used to replace the section on
-//     Dashboard; see the documentation for each property to see the allowed values.
+/*
+CreateOrganizationBrandingPolicyParamsBodyCustomLogoImage Properties for setting the image.
+swagger:model CreateOrganizationBrandingPolicyParamsBodyCustomLogoImage
+*/
+type CreateOrganizationBrandingPolicyParamsBodyCustomLogoImage struct {
+
+	// The file contents (a base 64 encoded string) of your new logo.
+	// Format: byte
+	Contents strfmt.Base64 `json:"contents,omitempty"`
+
+	// The format of the encoded contents.  Supported formats are 'png', 'gif', and jpg'.
+	// Enum: [gif jpg png]
+	Format string `json:"format,omitempty"`
+}
+
+// Validate validates this create organization branding policy params body custom logo image
+func (o *CreateOrganizationBrandingPolicyParamsBodyCustomLogoImage) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateFormat(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var createOrganizationBrandingPolicyParamsBodyCustomLogoImageTypeFormatPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["gif","jpg","png"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createOrganizationBrandingPolicyParamsBodyCustomLogoImageTypeFormatPropEnum = append(createOrganizationBrandingPolicyParamsBodyCustomLogoImageTypeFormatPropEnum, v)
+	}
+}
+
+const (
+
+	// CreateOrganizationBrandingPolicyParamsBodyCustomLogoImageFormatGif captures enum value "gif"
+	CreateOrganizationBrandingPolicyParamsBodyCustomLogoImageFormatGif string = "gif"
+
+	// CreateOrganizationBrandingPolicyParamsBodyCustomLogoImageFormatJpg captures enum value "jpg"
+	CreateOrganizationBrandingPolicyParamsBodyCustomLogoImageFormatJpg string = "jpg"
+
+	// CreateOrganizationBrandingPolicyParamsBodyCustomLogoImageFormatPng captures enum value "png"
+	CreateOrganizationBrandingPolicyParamsBodyCustomLogoImageFormatPng string = "png"
+)
+
+// prop value enum
+func (o *CreateOrganizationBrandingPolicyParamsBodyCustomLogoImage) validateFormatEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, createOrganizationBrandingPolicyParamsBodyCustomLogoImageTypeFormatPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyParamsBodyCustomLogoImage) validateFormat(formats strfmt.Registry) error {
+	if swag.IsZero(o.Format) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateFormatEnum("createOrganizationBrandingPolicy"+"."+"customLogo"+"."+"image"+"."+"format", "body", o.Format); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this create organization branding policy params body custom logo image based on context it is used
+func (o *CreateOrganizationBrandingPolicyParamsBodyCustomLogoImage) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateOrganizationBrandingPolicyParamsBodyCustomLogoImage) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateOrganizationBrandingPolicyParamsBodyCustomLogoImage) UnmarshalBinary(b []byte) error {
+	var res CreateOrganizationBrandingPolicyParamsBodyCustomLogoImage
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateOrganizationBrandingPolicyParamsBodyHelpSettings       Settings for describing the modifications to various Help page features. Each property in this object accepts one of
+//       'default or inherit' (do not modify functionality), 'hide' (remove the section from Dashboard), or 'show' (always show
+//       the section on Dashboard). Some properties in this object also accept custom HTML used to replace the section on
+//       Dashboard; see the documentation for each property to see the allowed values.
 //  Each property defaults to 'default or inherit' when not provided.
 swagger:model CreateOrganizationBrandingPolicyParamsBodyHelpSettings
 */
 type CreateOrganizationBrandingPolicyParamsBodyHelpSettings struct {
 
-	//     The 'Help -> API docs' subtab where a detailed description of the Dashboard API is listed. Can be one of
-	//     'default or inherit', 'hide' or 'show'.
+	//       The 'Help -> API docs' subtab where a detailed description of the Dashboard API is listed. Can be one of
+	//       'default or inherit', 'hide' or 'show'.
 	//
 	// Enum: [default or inherit hide show]
 	APIDocsSubtab string `json:"apiDocsSubtab,omitempty"`
 
-	//     The 'Help -> Cases' Dashboard subtab on which Cisco Meraki support cases for this organization can be managed. Can be one
-	//     of 'default or inherit', 'hide' or 'show'.
+	//       The 'Help -> Cases' Dashboard subtab on which Cisco Meraki support cases for this organization can be managed. Can be one
+	//       of 'default or inherit', 'hide' or 'show'.
 	//
 	// Enum: [default or inherit hide show]
 	CasesSubtab string `json:"casesSubtab,omitempty"`
 
-	//     The 'Product Manuals' section of the 'Help -> Get Help' subtab. Can be one of 'default or inherit', 'hide', 'show', or a replacement custom HTML string.
+	//       The 'Product Manuals' section of the 'Help -> Get Help' subtab. Can be one of 'default or inherit', 'hide', 'show', or a replacement custom HTML string.
 	//
 	CiscoMerakiProductDocumentation string `json:"ciscoMerakiProductDocumentation,omitempty"`
 
-	//     The 'Help -> Community' subtab which provides a link to Meraki Community. Can be one of 'default or inherit', 'hide' or 'show'.
+	//       The 'Help -> Community' subtab which provides a link to Meraki Community. Can be one of 'default or inherit', 'hide' or 'show'.
 	//
 	// Enum: [default or inherit hide show]
 	CommunitySubtab string `json:"communitySubtab,omitempty"`
 
-	//     The 'Help -> Data protection requests' Dashboard subtab on which requests to delete, restrict, or export end-user data can
-	//     be audited. Can be one of 'default or inherit', 'hide' or 'show'.
+	//       The 'Help -> Data protection requests' Dashboard subtab on which requests to delete, restrict, or export end-user data can
+	//       be audited. Can be one of 'default or inherit', 'hide' or 'show'.
 	//
 	// Enum: [default or inherit hide show]
 	DataProtectionRequestsSubtab string `json:"dataProtectionRequestsSubtab,omitempty"`
 
-	//     The 'Help -> Firewall info' subtab where necessary upstream firewall rules for communication to the Cisco Meraki cloud are
-	//     listed. Can be one of 'default or inherit', 'hide' or 'show'.
+	//       The 'Help -> Firewall info' subtab where necessary upstream firewall rules for communication to the Cisco Meraki cloud are
+	//       listed. Can be one of 'default or inherit', 'hide' or 'show'.
 	//
 	// Enum: [default or inherit hide show]
 	FirewallInfoSubtab string `json:"firewallInfoSubtab,omitempty"`
 
-	//     The 'Help -> Get Help' subtab on which Cisco Meraki KB, Product Manuals, and Support/Case Information are displayed. Note
-	//     that if this subtab is hidden, branding customizations for the KB on 'Get help', Cisco Meraki product documentation,
-	//     and support contact info will not be visible. Can be one of 'default or inherit', 'hide' or 'show'.
+	//       The 'Help -> Get Help' subtab on which Cisco Meraki KB, Product Manuals, and Support/Case Information are displayed. Note
+	//       that if this subtab is hidden, branding customizations for the KB on 'Get help', Cisco Meraki product documentation,
+	//       and support contact info will not be visible. Can be one of 'default or inherit', 'hide' or 'show'.
 	//
 	// Enum: [default or inherit hide show]
 	GetHelpSubtab string `json:"getHelpSubtab,omitempty"`
 
-	//     The KB search box which appears on the Help page. Can be one of 'default or inherit', 'hide', 'show', or a replacement custom HTML string.
+	//       The KB search box which appears on the Help page. Can be one of 'default or inherit', 'hide', 'show', or a replacement custom HTML string.
 	//
 	GetHelpSubtabKnowledgeBaseSearch string `json:"getHelpSubtabKnowledgeBaseSearch,omitempty"`
 
-	//     The 'Help -> Replacement info' subtab where important information regarding device replacements is detailed. Can be one of
-	//     'default or inherit', 'hide' or 'show'.
+	//       The 'Help -> Replacement info' subtab where important information regarding device replacements is detailed. Can be one of
+	//       'default or inherit', 'hide' or 'show'.
 	//
 	// Enum: [default or inherit hide show]
 	HardwareReplacementsSubtab string `json:"hardwareReplacementsSubtab,omitempty"`
 
-	//     The Help tab, under which all support information resides. If this tab is hidden, no other 'Help' branding
-	//     customizations will be visible. Can be one of 'default or inherit', 'hide' or 'show'.
+	//       The Help tab, under which all support information resides. If this tab is hidden, no other 'Help' branding
+	//       customizations will be visible. Can be one of 'default or inherit', 'hide' or 'show'.
 	//
 	// Enum: [default or inherit hide show]
 	HelpTab string `json:"helpTab,omitempty"`
 
-	//     The 'Help -> New features' subtab where new Dashboard features are detailed. Can be one of 'default or inherit', 'hide' or 'show'.
+	//       The 'Help Widget' is a support widget which provides access to live chat, documentation links, Sales contact info,
+	//       and other contact avenues to reach Meraki Support. Can be one of 'default or inherit', 'hide' or 'show'.
+	//
+	// Enum: [default or inherit hide show]
+	HelpWidget string `json:"helpWidget,omitempty"`
+
+	//       The 'Help -> New features' subtab where new Dashboard features are detailed. Can be one of 'default or inherit', 'hide' or 'show'.
 	//
 	// Enum: [default or inherit hide show]
 	NewFeaturesSubtab string `json:"newFeaturesSubtab,omitempty"`
 
-	//     The 'SM Forums' subtab which links to community-based support for Cisco Meraki Systems Manager. Only configurable for
-	//     organizations that contain Systems Manager networks. Can be one of 'default or inherit', 'hide' or 'show'.
+	//       The 'SM Forums' subtab which links to community-based support for Cisco Meraki Systems Manager. Only configurable for
+	//       organizations that contain Systems Manager networks. Can be one of 'default or inherit', 'hide' or 'show'.
 	//
 	// Enum: [default or inherit hide show]
 	SmForums string `json:"smForums,omitempty"`
 
-	//     The 'Contact Meraki Support' section of the 'Help -> Get Help' subtab. Can be one of 'default or inherit', 'hide', 'show', or a replacement custom HTML string.
+	//       The 'Contact Meraki Support' section of the 'Help -> Get Help' subtab. Can be one of 'default or inherit', 'hide', 'show', or a replacement custom HTML string.
 	//
 	SupportContactInfo string `json:"supportContactInfo,omitempty"`
 
-	//     The universal search box always visible on Dashboard will, by default, present results from the Meraki KB. This configures
-	//     whether these Meraki KB results should be returned. Can be one of 'default or inherit', 'hide' or 'show'.
+	//       The universal search box always visible on Dashboard will, by default, present results from the Meraki KB. This configures
+	//       whether these Meraki KB results should be returned. Can be one of 'default or inherit', 'hide' or 'show'.
 	//
 	// Enum: [default or inherit hide show]
 	UniversalSearchKnowledgeBaseSearch string `json:"universalSearchKnowledgeBaseSearch,omitempty"`
@@ -652,6 +2040,10 @@ func (o *CreateOrganizationBrandingPolicyParamsBodyHelpSettings) Validate(format
 	}
 
 	if err := o.validateHelpTab(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateHelpWidget(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -1027,6 +2419,51 @@ func (o *CreateOrganizationBrandingPolicyParamsBodyHelpSettings) validateHelpTab
 
 	// value enum
 	if err := o.validateHelpTabEnum("createOrganizationBrandingPolicy"+"."+"helpSettings"+"."+"helpTab", "body", o.HelpTab); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var createOrganizationBrandingPolicyParamsBodyHelpSettingsTypeHelpWidgetPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["default or inherit","hide","show"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createOrganizationBrandingPolicyParamsBodyHelpSettingsTypeHelpWidgetPropEnum = append(createOrganizationBrandingPolicyParamsBodyHelpSettingsTypeHelpWidgetPropEnum, v)
+	}
+}
+
+const (
+
+	// CreateOrganizationBrandingPolicyParamsBodyHelpSettingsHelpWidgetDefaultOrInherit captures enum value "default or inherit"
+	CreateOrganizationBrandingPolicyParamsBodyHelpSettingsHelpWidgetDefaultOrInherit string = "default or inherit"
+
+	// CreateOrganizationBrandingPolicyParamsBodyHelpSettingsHelpWidgetHide captures enum value "hide"
+	CreateOrganizationBrandingPolicyParamsBodyHelpSettingsHelpWidgetHide string = "hide"
+
+	// CreateOrganizationBrandingPolicyParamsBodyHelpSettingsHelpWidgetShow captures enum value "show"
+	CreateOrganizationBrandingPolicyParamsBodyHelpSettingsHelpWidgetShow string = "show"
+)
+
+// prop value enum
+func (o *CreateOrganizationBrandingPolicyParamsBodyHelpSettings) validateHelpWidgetEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, createOrganizationBrandingPolicyParamsBodyHelpSettingsTypeHelpWidgetPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CreateOrganizationBrandingPolicyParamsBodyHelpSettings) validateHelpWidget(formats strfmt.Registry) error {
+	if swag.IsZero(o.HelpWidget) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateHelpWidgetEnum("createOrganizationBrandingPolicy"+"."+"helpSettings"+"."+"helpWidget", "body", o.HelpWidget); err != nil {
 		return err
 	}
 

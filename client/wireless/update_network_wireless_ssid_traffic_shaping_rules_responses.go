@@ -34,7 +34,7 @@ func (o *UpdateNetworkWirelessSsidTrafficShapingRulesReader) ReadResponse(respon
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/wireless/ssids/{number}/trafficShaping/rules] updateNetworkWirelessSsidTrafficShapingRules", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewUpdateNetworkWirelessSsidTrafficShapingRulesOK() *UpdateNetworkWirelessS
 	return &UpdateNetworkWirelessSsidTrafficShapingRulesOK{}
 }
 
-/* UpdateNetworkWirelessSsidTrafficShapingRulesOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkWirelessSsidTrafficShapingRulesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *UpdateNetworkWirelessSsidTrafficShapingRulesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network wireless ssid traffic shaping rules o k response
+func (o *UpdateNetworkWirelessSsidTrafficShapingRulesOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkWirelessSsidTrafficShapingRulesOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/wireless/ssids/{number}/trafficShaping/rules][%d] updateNetworkWirelessSsidTrafficShapingRulesOK  %+v", 200, o.Payload)
 }
@@ -98,7 +104,8 @@ func (o *UpdateNetworkWirelessSsidTrafficShapingRulesOK) readResponse(response r
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidTrafficShapingRulesBody update network wireless ssid traffic shaping rules body
+/*
+UpdateNetworkWirelessSsidTrafficShapingRulesBody update network wireless ssid traffic shaping rules body
 // Example: {"defaultRulesEnabled":true,"rules":[{"definitions":[{"type":"host","value":"google.com"},{"type":"port","value":"9090"},{"type":"ipRange","value":"192.1.0.0"},{"type":"ipRange","value":"192.1.0.0/16"},{"type":"ipRange","value":"10.1.0.0/16:80"},{"type":"localNet","value":"192.168.0.0/16"}],"dscpTagValue":0,"pcpTagValue":0,"perClientBandwidthLimits":{"bandwidthLimits":{"limitDown":1000000,"limitUp":1000000},"settings":"custom"}}],"trafficShapingEnabled":true}
 swagger:model UpdateNetworkWirelessSsidTrafficShapingRulesBody
 */
@@ -176,6 +183,11 @@ func (o *UpdateNetworkWirelessSsidTrafficShapingRulesBody) contextValidateRules(
 	for i := 0; i < len(o.Rules); i++ {
 
 		if o.Rules[i] != nil {
+
+			if swag.IsZero(o.Rules[i]) { // not required
+				return nil
+			}
+
 			if err := o.Rules[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkWirelessSsidTrafficShapingRules" + "." + "rules" + "." + strconv.Itoa(i))
@@ -209,7 +221,8 @@ func (o *UpdateNetworkWirelessSsidTrafficShapingRulesBody) UnmarshalBinary(b []b
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0 update network wireless ssid traffic shaping rules params body rules items0
+/*
+UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0 update network wireless ssid traffic shaping rules params body rules items0
 swagger:model UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0
 */
 type UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0 struct {
@@ -320,6 +333,11 @@ func (o *UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0) cont
 	for i := 0; i < len(o.Definitions); i++ {
 
 		if o.Definitions[i] != nil {
+
+			if swag.IsZero(o.Definitions[i]) { // not required
+				return nil
+			}
+
 			if err := o.Definitions[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("definitions" + "." + strconv.Itoa(i))
@@ -338,6 +356,11 @@ func (o *UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0) cont
 func (o *UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0) contextValidatePerClientBandwidthLimits(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.PerClientBandwidthLimits != nil {
+
+		if swag.IsZero(o.PerClientBandwidthLimits) { // not required
+			return nil
+		}
+
 		if err := o.PerClientBandwidthLimits.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("perClientBandwidthLimits")
@@ -369,14 +392,15 @@ func (o *UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0) Unma
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0 update network wireless ssid traffic shaping rules params body rules items0 definitions items0
+/*
+UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0 update network wireless ssid traffic shaping rules params body rules items0 definitions items0
 swagger:model UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0
 */
 type UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0 struct {
 
 	// The type of definition. Can be one of 'application', 'applicationCategory', 'host', 'port', 'ipRange' or 'localNet'.
 	// Required: true
-	// Enum: [application applicationCategory host port ipRange localNet]
+	// Enum: [application applicationCategory host ipRange localNet port]
 	Type *string `json:"type"`
 
 	//     If "type" is 'host', 'port', 'ipRange' or 'localNet', then "value" must be a string, matching either
@@ -414,7 +438,7 @@ var updateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0Definitions
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["application","applicationCategory","host","port","ipRange","localNet"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["application","applicationCategory","host","ipRange","localNet","port"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -433,14 +457,14 @@ const (
 	// UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0TypeHost captures enum value "host"
 	UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0TypeHost string = "host"
 
-	// UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0TypePort captures enum value "port"
-	UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0TypePort string = "port"
-
 	// UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0TypeIPRange captures enum value "ipRange"
 	UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0TypeIPRange string = "ipRange"
 
 	// UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0TypeLocalNet captures enum value "localNet"
 	UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0TypeLocalNet string = "localNet"
+
+	// UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0TypePort captures enum value "port"
+	UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0DefinitionsItems0TypePort string = "port"
 )
 
 // prop value enum
@@ -497,7 +521,8 @@ func (o *UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0Defini
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0PerClientBandwidthLimits     An object describing the bandwidth settings for your rule.
+/*
+UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0PerClientBandwidthLimits     An object describing the bandwidth settings for your rule.
 //
 swagger:model UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0PerClientBandwidthLimits
 */
@@ -560,6 +585,11 @@ func (o *UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0PerCli
 func (o *UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0PerClientBandwidthLimits) contextValidateBandwidthLimits(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.BandwidthLimits != nil {
+
+		if swag.IsZero(o.BandwidthLimits) { // not required
+			return nil
+		}
+
 		if err := o.BandwidthLimits.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("perClientBandwidthLimits" + "." + "bandwidthLimits")
@@ -591,7 +621,8 @@ func (o *UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0PerCli
 	return nil
 }
 
-/*UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0PerClientBandwidthLimitsBandwidthLimits The bandwidth limits object, specifying the upload ('limitUp') and download ('limitDown') speed in Kbps. These are only enforced if 'settings' is set to 'custom'.
+/*
+UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0PerClientBandwidthLimitsBandwidthLimits The bandwidth limits object, specifying the upload ('limitUp') and download ('limitDown') speed in Kbps. These are only enforced if 'settings' is set to 'custom'.
 swagger:model UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0PerClientBandwidthLimitsBandwidthLimits
 */
 type UpdateNetworkWirelessSsidTrafficShapingRulesParamsBodyRulesItems0PerClientBandwidthLimitsBandwidthLimits struct {

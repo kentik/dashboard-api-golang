@@ -32,7 +32,7 @@ func (o *UpdateNetworkSmDevicesFieldsReader) ReadResponse(response runtime.Clien
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/sm/devices/fields] updateNetworkSmDevicesFields", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewUpdateNetworkSmDevicesFieldsOK() *UpdateNetworkSmDevicesFieldsOK {
 	return &UpdateNetworkSmDevicesFieldsOK{}
 }
 
-/* UpdateNetworkSmDevicesFieldsOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSmDevicesFieldsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *UpdateNetworkSmDevicesFieldsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network sm devices fields o k response
+func (o *UpdateNetworkSmDevicesFieldsOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSmDevicesFieldsOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/sm/devices/fields][%d] updateNetworkSmDevicesFieldsOK  %+v", 200, o.Payload)
 }
@@ -96,7 +102,8 @@ func (o *UpdateNetworkSmDevicesFieldsOK) readResponse(response runtime.ClientRes
 	return nil
 }
 
-/*UpdateNetworkSmDevicesFieldsBody update network sm devices fields body
+/*
+UpdateNetworkSmDevicesFieldsBody update network sm devices fields body
 // Example: {"deviceFields":{"name":"Miles's phone","notes":"Here's some info about my device"},"id":"1284392014819","serial":"Q234-ABCD-5678","wifiMac":"00:11:22:33:44:55"}
 swagger:model UpdateNetworkSmDevicesFieldsBody
 */
@@ -167,6 +174,7 @@ func (o *UpdateNetworkSmDevicesFieldsBody) ContextValidate(ctx context.Context, 
 func (o *UpdateNetworkSmDevicesFieldsBody) contextValidateDeviceFields(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.DeviceFields != nil {
+
 		if err := o.DeviceFields.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("updateNetworkSmDevicesFields" + "." + "deviceFields")
@@ -198,7 +206,8 @@ func (o *UpdateNetworkSmDevicesFieldsBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateNetworkSmDevicesFieldsOKBodyItems0 update network sm devices fields o k body items0
+/*
+UpdateNetworkSmDevicesFieldsOKBodyItems0 update network sm devices fields o k body items0
 swagger:model UpdateNetworkSmDevicesFieldsOKBodyItems0
 */
 type UpdateNetworkSmDevicesFieldsOKBodyItems0 struct {
@@ -247,7 +256,8 @@ func (o *UpdateNetworkSmDevicesFieldsOKBodyItems0) UnmarshalBinary(b []byte) err
 	return nil
 }
 
-/*UpdateNetworkSmDevicesFieldsParamsBodyDeviceFields The new fields of the device. Each field of this object is optional.
+/*
+UpdateNetworkSmDevicesFieldsParamsBodyDeviceFields The new fields of the device. Each field of this object is optional.
 swagger:model UpdateNetworkSmDevicesFieldsParamsBodyDeviceFields
 */
 type UpdateNetworkSmDevicesFieldsParamsBodyDeviceFields struct {

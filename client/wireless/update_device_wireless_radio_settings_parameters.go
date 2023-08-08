@@ -52,14 +52,19 @@ func NewUpdateDeviceWirelessRadioSettingsParamsWithHTTPClient(client *http.Clien
 	}
 }
 
-/* UpdateDeviceWirelessRadioSettingsParams contains all the parameters to send to the API endpoint
-   for the update device wireless radio settings operation.
+/*
+UpdateDeviceWirelessRadioSettingsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update device wireless radio settings operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateDeviceWirelessRadioSettingsParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	// UpdateDeviceWirelessRadioSettings.

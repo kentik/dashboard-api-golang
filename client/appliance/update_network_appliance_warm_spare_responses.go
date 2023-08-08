@@ -32,7 +32,7 @@ func (o *UpdateNetworkApplianceWarmSpareReader) ReadResponse(response runtime.Cl
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/appliance/warmSpare] updateNetworkApplianceWarmSpare", response, response.Code())
 	}
 }
 
@@ -41,7 +41,8 @@ func NewUpdateNetworkApplianceWarmSpareOK() *UpdateNetworkApplianceWarmSpareOK {
 	return &UpdateNetworkApplianceWarmSpareOK{}
 }
 
-/* UpdateNetworkApplianceWarmSpareOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkApplianceWarmSpareOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -74,6 +75,11 @@ func (o *UpdateNetworkApplianceWarmSpareOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network appliance warm spare o k response
+func (o *UpdateNetworkApplianceWarmSpareOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkApplianceWarmSpareOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/appliance/warmSpare][%d] updateNetworkApplianceWarmSpareOK  %+v", 200, o.Payload)
 }
@@ -96,7 +102,8 @@ func (o *UpdateNetworkApplianceWarmSpareOK) readResponse(response runtime.Client
 	return nil
 }
 
-/*UpdateNetworkApplianceWarmSpareBody update network appliance warm spare body
+/*
+UpdateNetworkApplianceWarmSpareBody update network appliance warm spare body
 // Example: {"enabled":true,"spareSerial":"Q234-ABCD-5678","uplinkMode":"virtual","virtualIp1":"1.2.3.4","virtualIp2":"1.2.3.4"}
 swagger:model UpdateNetworkApplianceWarmSpareBody
 */

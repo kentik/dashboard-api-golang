@@ -28,7 +28,7 @@ func (o *GetDeviceApplianceDhcpSubnetsReader) ReadResponse(response runtime.Clie
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /devices/{serial}/appliance/dhcp/subnets] getDeviceApplianceDhcpSubnets", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetDeviceApplianceDhcpSubnetsOK() *GetDeviceApplianceDhcpSubnetsOK {
 	return &GetDeviceApplianceDhcpSubnetsOK{}
 }
 
-/* GetDeviceApplianceDhcpSubnetsOK describes a response with status code 200, with default header values.
+/*
+GetDeviceApplianceDhcpSubnetsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetDeviceApplianceDhcpSubnetsOK) IsServerError() bool {
 // IsCode returns true when this get device appliance dhcp subnets o k response a status code equal to that given
 func (o *GetDeviceApplianceDhcpSubnetsOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get device appliance dhcp subnets o k response
+func (o *GetDeviceApplianceDhcpSubnetsOK) Code() int {
+	return 200
 }
 
 func (o *GetDeviceApplianceDhcpSubnetsOK) Error() string {

@@ -6,11 +6,15 @@ package networks
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // GetNetworkSettingsReader is a Reader for the GetNetworkSettings structure.
@@ -28,7 +32,7 @@ func (o *GetNetworkSettingsReader) ReadResponse(response runtime.ClientResponse,
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/settings] getNetworkSettings", response, response.Code())
 	}
 }
 
@@ -37,12 +41,13 @@ func NewGetNetworkSettingsOK() *GetNetworkSettingsOK {
 	return &GetNetworkSettingsOK{}
 }
 
-/* GetNetworkSettingsOK describes a response with status code 200, with default header values.
+/*
+GetNetworkSettingsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkSettingsOK struct {
-	Payload interface{}
+	Payload *GetNetworkSettingsOKBody
 }
 
 // IsSuccess returns true when this get network settings o k response has a 2xx status code
@@ -70,6 +75,11 @@ func (o *GetNetworkSettingsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network settings o k response
+func (o *GetNetworkSettingsOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkSettingsOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/settings][%d] getNetworkSettingsOK  %+v", 200, o.Payload)
 }
@@ -78,16 +88,657 @@ func (o *GetNetworkSettingsOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/settings][%d] getNetworkSettingsOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkSettingsOK) GetPayload() interface{} {
+func (o *GetNetworkSettingsOK) GetPayload() *GetNetworkSettingsOKBody {
 	return o.Payload
 }
 
 func (o *GetNetworkSettingsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetNetworkSettingsOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkSettingsOKBody get network settings o k body
+swagger:model GetNetworkSettingsOKBody
+*/
+type GetNetworkSettingsOKBody struct {
+
+	// client privacy
+	ClientPrivacy *GetNetworkSettingsOKBodyClientPrivacy `json:"clientPrivacy,omitempty"`
+
+	// fips
+	Fips *GetNetworkSettingsOKBodyFips `json:"fips,omitempty"`
+
+	// local status page
+	LocalStatusPage *GetNetworkSettingsOKBodyLocalStatusPage `json:"localStatusPage,omitempty"`
+
+	// Enables / disables the local device status pages (<a target='_blank' href='http://my.meraki.com/'>my.meraki.com, </a><a target='_blank' href='http://ap.meraki.com/'>ap.meraki.com, </a><a target='_blank' href='http://switch.meraki.com/'>switch.meraki.com, </a><a target='_blank' href='http://wired.meraki.com/'>wired.meraki.com</a>). Optional (defaults to false)
+	LocalStatusPageEnabled bool `json:"localStatusPageEnabled,omitempty"`
+
+	// named vlans
+	NamedVlans *GetNetworkSettingsOKBodyNamedVlans `json:"namedVlans,omitempty"`
+
+	// Enables / disables access to the device status page (<a target='_blank'>http://[device's LAN IP])</a>. Optional. Can only be set if localStatusPageEnabled is set to true
+	RemoteStatusPageEnabled bool `json:"remoteStatusPageEnabled,omitempty"`
+
+	// secure port
+	SecurePort *GetNetworkSettingsOKBodySecurePort `json:"securePort,omitempty"`
+}
+
+// Validate validates this get network settings o k body
+func (o *GetNetworkSettingsOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateClientPrivacy(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateFips(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateLocalStatusPage(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNamedVlans(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateSecurePort(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkSettingsOKBody) validateClientPrivacy(formats strfmt.Registry) error {
+	if swag.IsZero(o.ClientPrivacy) { // not required
+		return nil
+	}
+
+	if o.ClientPrivacy != nil {
+		if err := o.ClientPrivacy.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkSettingsOK" + "." + "clientPrivacy")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkSettingsOK" + "." + "clientPrivacy")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSettingsOKBody) validateFips(formats strfmt.Registry) error {
+	if swag.IsZero(o.Fips) { // not required
+		return nil
+	}
+
+	if o.Fips != nil {
+		if err := o.Fips.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkSettingsOK" + "." + "fips")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkSettingsOK" + "." + "fips")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSettingsOKBody) validateLocalStatusPage(formats strfmt.Registry) error {
+	if swag.IsZero(o.LocalStatusPage) { // not required
+		return nil
+	}
+
+	if o.LocalStatusPage != nil {
+		if err := o.LocalStatusPage.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkSettingsOK" + "." + "localStatusPage")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkSettingsOK" + "." + "localStatusPage")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSettingsOKBody) validateNamedVlans(formats strfmt.Registry) error {
+	if swag.IsZero(o.NamedVlans) { // not required
+		return nil
+	}
+
+	if o.NamedVlans != nil {
+		if err := o.NamedVlans.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkSettingsOK" + "." + "namedVlans")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkSettingsOK" + "." + "namedVlans")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSettingsOKBody) validateSecurePort(formats strfmt.Registry) error {
+	if swag.IsZero(o.SecurePort) { // not required
+		return nil
+	}
+
+	if o.SecurePort != nil {
+		if err := o.SecurePort.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkSettingsOK" + "." + "securePort")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkSettingsOK" + "." + "securePort")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network settings o k body based on the context it is used
+func (o *GetNetworkSettingsOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateClientPrivacy(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateFips(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateLocalStatusPage(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateNamedVlans(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateSecurePort(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkSettingsOKBody) contextValidateClientPrivacy(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ClientPrivacy != nil {
+
+		if swag.IsZero(o.ClientPrivacy) { // not required
+			return nil
+		}
+
+		if err := o.ClientPrivacy.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkSettingsOK" + "." + "clientPrivacy")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkSettingsOK" + "." + "clientPrivacy")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSettingsOKBody) contextValidateFips(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Fips != nil {
+
+		if swag.IsZero(o.Fips) { // not required
+			return nil
+		}
+
+		if err := o.Fips.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkSettingsOK" + "." + "fips")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkSettingsOK" + "." + "fips")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSettingsOKBody) contextValidateLocalStatusPage(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.LocalStatusPage != nil {
+
+		if swag.IsZero(o.LocalStatusPage) { // not required
+			return nil
+		}
+
+		if err := o.LocalStatusPage.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkSettingsOK" + "." + "localStatusPage")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkSettingsOK" + "." + "localStatusPage")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSettingsOKBody) contextValidateNamedVlans(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.NamedVlans != nil {
+
+		if swag.IsZero(o.NamedVlans) { // not required
+			return nil
+		}
+
+		if err := o.NamedVlans.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkSettingsOK" + "." + "namedVlans")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkSettingsOK" + "." + "namedVlans")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (o *GetNetworkSettingsOKBody) contextValidateSecurePort(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.SecurePort != nil {
+
+		if swag.IsZero(o.SecurePort) { // not required
+			return nil
+		}
+
+		if err := o.SecurePort.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkSettingsOK" + "." + "securePort")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkSettingsOK" + "." + "securePort")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSettingsOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSettingsOKBody) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSettingsOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSettingsOKBodyClientPrivacy Privacy settings
+swagger:model GetNetworkSettingsOKBodyClientPrivacy
+*/
+type GetNetworkSettingsOKBodyClientPrivacy struct {
+
+	// The date to expire the data before
+	// Format: date-time
+	ExpireDataBefore strfmt.DateTime `json:"expireDataBefore,omitempty"`
+
+	// The number of days, weeks, or months in Epoch time to expire the data before
+	ExpireDataOlderThan int64 `json:"expireDataOlderThan,omitempty"`
+}
+
+// Validate validates this get network settings o k body client privacy
+func (o *GetNetworkSettingsOKBodyClientPrivacy) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateExpireDataBefore(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkSettingsOKBodyClientPrivacy) validateExpireDataBefore(formats strfmt.Registry) error {
+	if swag.IsZero(o.ExpireDataBefore) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("getNetworkSettingsOK"+"."+"clientPrivacy"+"."+"expireDataBefore", "body", "date-time", o.ExpireDataBefore.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this get network settings o k body client privacy based on context it is used
+func (o *GetNetworkSettingsOKBodyClientPrivacy) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSettingsOKBodyClientPrivacy) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSettingsOKBodyClientPrivacy) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSettingsOKBodyClientPrivacy
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSettingsOKBodyFips A hash of FIPS options applied to the Network
+swagger:model GetNetworkSettingsOKBodyFips
+*/
+type GetNetworkSettingsOKBodyFips struct {
+
+	// Enables / disables FIPS on the network.
+	Enabled bool `json:"enabled,omitempty"`
+}
+
+// Validate validates this get network settings o k body fips
+func (o *GetNetworkSettingsOKBodyFips) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network settings o k body fips based on context it is used
+func (o *GetNetworkSettingsOKBodyFips) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSettingsOKBodyFips) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSettingsOKBodyFips) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSettingsOKBodyFips
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSettingsOKBodyLocalStatusPage A hash of Local Status page(s)' authentication options applied to the Network.
+swagger:model GetNetworkSettingsOKBodyLocalStatusPage
+*/
+type GetNetworkSettingsOKBodyLocalStatusPage struct {
+
+	// authentication
+	Authentication *GetNetworkSettingsOKBodyLocalStatusPageAuthentication `json:"authentication,omitempty"`
+}
+
+// Validate validates this get network settings o k body local status page
+func (o *GetNetworkSettingsOKBodyLocalStatusPage) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateAuthentication(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkSettingsOKBodyLocalStatusPage) validateAuthentication(formats strfmt.Registry) error {
+	if swag.IsZero(o.Authentication) { // not required
+		return nil
+	}
+
+	if o.Authentication != nil {
+		if err := o.Authentication.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkSettingsOK" + "." + "localStatusPage" + "." + "authentication")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkSettingsOK" + "." + "localStatusPage" + "." + "authentication")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network settings o k body local status page based on the context it is used
+func (o *GetNetworkSettingsOKBodyLocalStatusPage) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateAuthentication(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkSettingsOKBodyLocalStatusPage) contextValidateAuthentication(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Authentication != nil {
+
+		if swag.IsZero(o.Authentication) { // not required
+			return nil
+		}
+
+		if err := o.Authentication.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getNetworkSettingsOK" + "." + "localStatusPage" + "." + "authentication")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getNetworkSettingsOK" + "." + "localStatusPage" + "." + "authentication")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSettingsOKBodyLocalStatusPage) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSettingsOKBodyLocalStatusPage) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSettingsOKBodyLocalStatusPage
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSettingsOKBodyLocalStatusPageAuthentication A hash of Local Status page(s)' authentication options applied to the Network.
+swagger:model GetNetworkSettingsOKBodyLocalStatusPageAuthentication
+*/
+type GetNetworkSettingsOKBodyLocalStatusPageAuthentication struct {
+
+	// Enables / disables the authentication on Local Status page(s).
+	Enabled bool `json:"enabled,omitempty"`
+
+	// The username used for Local Status Page(s).
+	Username string `json:"username,omitempty"`
+}
+
+// Validate validates this get network settings o k body local status page authentication
+func (o *GetNetworkSettingsOKBodyLocalStatusPageAuthentication) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network settings o k body local status page authentication based on context it is used
+func (o *GetNetworkSettingsOKBodyLocalStatusPageAuthentication) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSettingsOKBodyLocalStatusPageAuthentication) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSettingsOKBodyLocalStatusPageAuthentication) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSettingsOKBodyLocalStatusPageAuthentication
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSettingsOKBodyNamedVlans A hash of Named VLANs options applied to the Network.
+swagger:model GetNetworkSettingsOKBodyNamedVlans
+*/
+type GetNetworkSettingsOKBodyNamedVlans struct {
+
+	// Enables / disables Named VLANs on the Network.
+	// Required: true
+	Enabled *bool `json:"enabled"`
+}
+
+// Validate validates this get network settings o k body named vlans
+func (o *GetNetworkSettingsOKBodyNamedVlans) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateEnabled(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkSettingsOKBodyNamedVlans) validateEnabled(formats strfmt.Registry) error {
+
+	if err := validate.Required("getNetworkSettingsOK"+"."+"namedVlans"+"."+"enabled", "body", o.Enabled); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this get network settings o k body named vlans based on context it is used
+func (o *GetNetworkSettingsOKBodyNamedVlans) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSettingsOKBodyNamedVlans) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSettingsOKBodyNamedVlans) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSettingsOKBodyNamedVlans
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkSettingsOKBodySecurePort A hash of SecureConnect options applied to the Network.
+swagger:model GetNetworkSettingsOKBodySecurePort
+*/
+type GetNetworkSettingsOKBodySecurePort struct {
+
+	// Enables / disables SecureConnect on the network. Optional.
+	Enabled bool `json:"enabled,omitempty"`
+}
+
+// Validate validates this get network settings o k body secure port
+func (o *GetNetworkSettingsOKBodySecurePort) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network settings o k body secure port based on context it is used
+func (o *GetNetworkSettingsOKBodySecurePort) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkSettingsOKBodySecurePort) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkSettingsOKBodySecurePort) UnmarshalBinary(b []byte) error {
+	var res GetNetworkSettingsOKBodySecurePort
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

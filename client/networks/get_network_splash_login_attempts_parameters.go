@@ -53,10 +53,12 @@ func NewGetNetworkSplashLoginAttemptsParamsWithHTTPClient(client *http.Client) *
 	}
 }
 
-/* GetNetworkSplashLoginAttemptsParams contains all the parameters to send to the API endpoint
-   for the get network splash login attempts operation.
+/*
+GetNetworkSplashLoginAttemptsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network splash login attempts operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSplashLoginAttemptsParams struct {
 
@@ -66,7 +68,10 @@ type GetNetworkSplashLoginAttemptsParams struct {
 	*/
 	LoginIdentifier *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* SsidNumber.

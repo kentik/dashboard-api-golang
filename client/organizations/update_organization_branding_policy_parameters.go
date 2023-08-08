@@ -52,17 +52,25 @@ func NewUpdateOrganizationBrandingPolicyParamsWithHTTPClient(client *http.Client
 	}
 }
 
-/* UpdateOrganizationBrandingPolicyParams contains all the parameters to send to the API endpoint
-   for the update organization branding policy operation.
+/*
+UpdateOrganizationBrandingPolicyParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update organization branding policy operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateOrganizationBrandingPolicyParams struct {
 
-	// BrandingPolicyID.
+	/* BrandingPolicyID.
+
+	   Branding policy ID
+	*/
 	BrandingPolicyID string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	// UpdateOrganizationBrandingPolicy.

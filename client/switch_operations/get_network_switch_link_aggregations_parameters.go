@@ -52,14 +52,19 @@ func NewGetNetworkSwitchLinkAggregationsParamsWithHTTPClient(client *http.Client
 	}
 }
 
-/* GetNetworkSwitchLinkAggregationsParams contains all the parameters to send to the API endpoint
-   for the get network switch link aggregations operation.
+/*
+GetNetworkSwitchLinkAggregationsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network switch link aggregations operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSwitchLinkAggregationsParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

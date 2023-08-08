@@ -52,17 +52,22 @@ func NewCreateOrganizationNetworkParamsWithHTTPClient(client *http.Client) *Crea
 	}
 }
 
-/* CreateOrganizationNetworkParams contains all the parameters to send to the API endpoint
-   for the create organization network operation.
+/*
+CreateOrganizationNetworkParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create organization network operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateOrganizationNetworkParams struct {
 
 	// CreateOrganizationNetwork.
 	CreateOrganizationNetwork CreateOrganizationNetworkBody
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

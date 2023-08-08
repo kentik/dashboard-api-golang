@@ -30,7 +30,7 @@ func (o *UpdateNetworkSwitchStackRoutingStaticRouteReader) ReadResponse(response
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/switch/stacks/{switchStackId}/routing/staticRoutes/{staticRouteId}] updateNetworkSwitchStackRoutingStaticRoute", response, response.Code())
 	}
 }
 
@@ -39,7 +39,8 @@ func NewUpdateNetworkSwitchStackRoutingStaticRouteOK() *UpdateNetworkSwitchStack
 	return &UpdateNetworkSwitchStackRoutingStaticRouteOK{}
 }
 
-/* UpdateNetworkSwitchStackRoutingStaticRouteOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSwitchStackRoutingStaticRouteOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -72,6 +73,11 @@ func (o *UpdateNetworkSwitchStackRoutingStaticRouteOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network switch stack routing static route o k response
+func (o *UpdateNetworkSwitchStackRoutingStaticRouteOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSwitchStackRoutingStaticRouteOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/switch/stacks/{switchStackId}/routing/staticRoutes/{staticRouteId}][%d] updateNetworkSwitchStackRoutingStaticRouteOK  %+v", 200, o.Payload)
 }
@@ -94,7 +100,8 @@ func (o *UpdateNetworkSwitchStackRoutingStaticRouteOK) readResponse(response run
 	return nil
 }
 
-/*UpdateNetworkSwitchStackRoutingStaticRouteBody update network switch stack routing static route body
+/*
+UpdateNetworkSwitchStackRoutingStaticRouteBody update network switch stack routing static route body
 // Example: {"advertiseViaOspfEnabled":false,"name":"My route","nextHopIp":"1.2.3.4","preferOverOspfRoutesEnabled":false,"subnet":"192.168.1.0/24"}
 swagger:model UpdateNetworkSwitchStackRoutingStaticRouteBody
 */

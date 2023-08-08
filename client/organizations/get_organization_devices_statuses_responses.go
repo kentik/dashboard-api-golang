@@ -31,7 +31,7 @@ func (o *GetOrganizationDevicesStatusesReader) ReadResponse(response runtime.Cli
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/devices/statuses] getOrganizationDevicesStatuses", response, response.Code())
 	}
 }
 
@@ -40,7 +40,8 @@ func NewGetOrganizationDevicesStatusesOK() *GetOrganizationDevicesStatusesOK {
 	return &GetOrganizationDevicesStatusesOK{}
 }
 
-/* GetOrganizationDevicesStatusesOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationDevicesStatusesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -50,7 +51,7 @@ type GetOrganizationDevicesStatusesOK struct {
 	 */
 	Link string
 
-	Payload *GetOrganizationDevicesStatusesOKBody
+	Payload []*GetOrganizationDevicesStatusesOKBodyItems0
 }
 
 // IsSuccess returns true when this get organization devices statuses o k response has a 2xx status code
@@ -78,6 +79,11 @@ func (o *GetOrganizationDevicesStatusesOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get organization devices statuses o k response
+func (o *GetOrganizationDevicesStatusesOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationDevicesStatusesOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/devices/statuses][%d] getOrganizationDevicesStatusesOK  %+v", 200, o.Payload)
 }
@@ -86,7 +92,7 @@ func (o *GetOrganizationDevicesStatusesOK) String() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/devices/statuses][%d] getOrganizationDevicesStatusesOK  %+v", 200, o.Payload)
 }
 
-func (o *GetOrganizationDevicesStatusesOK) GetPayload() *GetOrganizationDevicesStatusesOKBody {
+func (o *GetOrganizationDevicesStatusesOK) GetPayload() []*GetOrganizationDevicesStatusesOKBodyItems0 {
 	return o.Payload
 }
 
@@ -99,23 +105,22 @@ func (o *GetOrganizationDevicesStatusesOK) readResponse(response runtime.ClientR
 		o.Link = hdrLink
 	}
 
-	o.Payload = new(GetOrganizationDevicesStatusesOKBody)
-
 	// response payload
-	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*GetOrganizationDevicesStatusesOKBody get organization devices statuses o k body
-swagger:model GetOrganizationDevicesStatusesOKBody
+/*
+GetOrganizationDevicesStatusesOKBodyItems0 get organization devices statuses o k body items0
+swagger:model GetOrganizationDevicesStatusesOKBodyItems0
 */
-type GetOrganizationDevicesStatusesOKBody struct {
+type GetOrganizationDevicesStatusesOKBodyItems0 struct {
 
 	// components
-	Components *GetOrganizationDevicesStatusesOKBodyComponents `json:"components,omitempty"`
+	Components *GetOrganizationDevicesStatusesOKBodyItems0Components `json:"components,omitempty"`
 
 	// IP Gateway
 	Gateway string `json:"gateway,omitempty"`
@@ -163,8 +168,8 @@ type GetOrganizationDevicesStatusesOKBody struct {
 	Tags []string `json:"tags"`
 }
 
-// Validate validates this get organization devices statuses o k body
-func (o *GetOrganizationDevicesStatusesOKBody) Validate(formats strfmt.Registry) error {
+// Validate validates this get organization devices statuses o k body items0
+func (o *GetOrganizationDevicesStatusesOKBodyItems0) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := o.validateComponents(formats); err != nil {
@@ -177,7 +182,7 @@ func (o *GetOrganizationDevicesStatusesOKBody) Validate(formats strfmt.Registry)
 	return nil
 }
 
-func (o *GetOrganizationDevicesStatusesOKBody) validateComponents(formats strfmt.Registry) error {
+func (o *GetOrganizationDevicesStatusesOKBodyItems0) validateComponents(formats strfmt.Registry) error {
 	if swag.IsZero(o.Components) { // not required
 		return nil
 	}
@@ -185,9 +190,9 @@ func (o *GetOrganizationDevicesStatusesOKBody) validateComponents(formats strfmt
 	if o.Components != nil {
 		if err := o.Components.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("getOrganizationDevicesStatusesOK" + "." + "components")
+				return ve.ValidateName("components")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("getOrganizationDevicesStatusesOK" + "." + "components")
+				return ce.ValidateName("components")
 			}
 			return err
 		}
@@ -196,8 +201,8 @@ func (o *GetOrganizationDevicesStatusesOKBody) validateComponents(formats strfmt
 	return nil
 }
 
-// ContextValidate validate this get organization devices statuses o k body based on the context it is used
-func (o *GetOrganizationDevicesStatusesOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validate this get organization devices statuses o k body items0 based on the context it is used
+func (o *GetOrganizationDevicesStatusesOKBodyItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
 	if err := o.contextValidateComponents(ctx, formats); err != nil {
@@ -210,14 +215,19 @@ func (o *GetOrganizationDevicesStatusesOKBody) ContextValidate(ctx context.Conte
 	return nil
 }
 
-func (o *GetOrganizationDevicesStatusesOKBody) contextValidateComponents(ctx context.Context, formats strfmt.Registry) error {
+func (o *GetOrganizationDevicesStatusesOKBodyItems0) contextValidateComponents(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Components != nil {
+
+		if swag.IsZero(o.Components) { // not required
+			return nil
+		}
+
 		if err := o.Components.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("getOrganizationDevicesStatusesOK" + "." + "components")
+				return ve.ValidateName("components")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("getOrganizationDevicesStatusesOK" + "." + "components")
+				return ce.ValidateName("components")
 			}
 			return err
 		}
@@ -227,7 +237,7 @@ func (o *GetOrganizationDevicesStatusesOKBody) contextValidateComponents(ctx con
 }
 
 // MarshalBinary interface implementation
-func (o *GetOrganizationDevicesStatusesOKBody) MarshalBinary() ([]byte, error) {
+func (o *GetOrganizationDevicesStatusesOKBodyItems0) MarshalBinary() ([]byte, error) {
 	if o == nil {
 		return nil, nil
 	}
@@ -235,8 +245,8 @@ func (o *GetOrganizationDevicesStatusesOKBody) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (o *GetOrganizationDevicesStatusesOKBody) UnmarshalBinary(b []byte) error {
-	var res GetOrganizationDevicesStatusesOKBody
+func (o *GetOrganizationDevicesStatusesOKBodyItems0) UnmarshalBinary(b []byte) error {
+	var res GetOrganizationDevicesStatusesOKBodyItems0
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}
@@ -244,27 +254,28 @@ func (o *GetOrganizationDevicesStatusesOKBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*GetOrganizationDevicesStatusesOKBodyComponents Components
-swagger:model GetOrganizationDevicesStatusesOKBodyComponents
+/*
+GetOrganizationDevicesStatusesOKBodyItems0Components Components
+swagger:model GetOrganizationDevicesStatusesOKBodyItems0Components
 */
-type GetOrganizationDevicesStatusesOKBodyComponents struct {
+type GetOrganizationDevicesStatusesOKBodyItems0Components struct {
 
 	// Power Supplies
 	PowerSupplies []string `json:"powerSupplies"`
 }
 
-// Validate validates this get organization devices statuses o k body components
-func (o *GetOrganizationDevicesStatusesOKBodyComponents) Validate(formats strfmt.Registry) error {
+// Validate validates this get organization devices statuses o k body items0 components
+func (o *GetOrganizationDevicesStatusesOKBodyItems0Components) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-// ContextValidate validates this get organization devices statuses o k body components based on context it is used
-func (o *GetOrganizationDevicesStatusesOKBodyComponents) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validates this get organization devices statuses o k body items0 components based on context it is used
+func (o *GetOrganizationDevicesStatusesOKBodyItems0Components) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (o *GetOrganizationDevicesStatusesOKBodyComponents) MarshalBinary() ([]byte, error) {
+func (o *GetOrganizationDevicesStatusesOKBodyItems0Components) MarshalBinary() ([]byte, error) {
 	if o == nil {
 		return nil, nil
 	}
@@ -272,8 +283,8 @@ func (o *GetOrganizationDevicesStatusesOKBodyComponents) MarshalBinary() ([]byte
 }
 
 // UnmarshalBinary interface implementation
-func (o *GetOrganizationDevicesStatusesOKBodyComponents) UnmarshalBinary(b []byte) error {
-	var res GetOrganizationDevicesStatusesOKBodyComponents
+func (o *GetOrganizationDevicesStatusesOKBodyItems0Components) UnmarshalBinary(b []byte) error {
+	var res GetOrganizationDevicesStatusesOKBodyItems0Components
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

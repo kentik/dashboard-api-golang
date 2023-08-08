@@ -34,7 +34,7 @@ func (o *CreateNetworkFirmwareUpgradesRollbackReader) ReadResponse(response runt
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /networks/{networkId}/firmwareUpgrades/rollbacks] createNetworkFirmwareUpgradesRollback", response, response.Code())
 	}
 }
 
@@ -43,12 +43,13 @@ func NewCreateNetworkFirmwareUpgradesRollbackOK() *CreateNetworkFirmwareUpgrades
 	return &CreateNetworkFirmwareUpgradesRollbackOK{}
 }
 
-/* CreateNetworkFirmwareUpgradesRollbackOK describes a response with status code 200, with default header values.
+/*
+CreateNetworkFirmwareUpgradesRollbackOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type CreateNetworkFirmwareUpgradesRollbackOK struct {
-	Payload interface{}
+	Payload *CreateNetworkFirmwareUpgradesRollbackOKBody
 }
 
 // IsSuccess returns true when this create network firmware upgrades rollback o k response has a 2xx status code
@@ -76,6 +77,11 @@ func (o *CreateNetworkFirmwareUpgradesRollbackOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the create network firmware upgrades rollback o k response
+func (o *CreateNetworkFirmwareUpgradesRollbackOK) Code() int {
+	return 200
+}
+
 func (o *CreateNetworkFirmwareUpgradesRollbackOK) Error() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/firmwareUpgrades/rollbacks][%d] createNetworkFirmwareUpgradesRollbackOK  %+v", 200, o.Payload)
 }
@@ -84,28 +90,31 @@ func (o *CreateNetworkFirmwareUpgradesRollbackOK) String() string {
 	return fmt.Sprintf("[POST /networks/{networkId}/firmwareUpgrades/rollbacks][%d] createNetworkFirmwareUpgradesRollbackOK  %+v", 200, o.Payload)
 }
 
-func (o *CreateNetworkFirmwareUpgradesRollbackOK) GetPayload() interface{} {
+func (o *CreateNetworkFirmwareUpgradesRollbackOK) GetPayload() *CreateNetworkFirmwareUpgradesRollbackOKBody {
 	return o.Payload
 }
 
 func (o *CreateNetworkFirmwareUpgradesRollbackOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(CreateNetworkFirmwareUpgradesRollbackOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*CreateNetworkFirmwareUpgradesRollbackBody create network firmware upgrades rollback body
-// Example: {"product":"switch","reasons":[{"category":"performance","comment":"Network was slower with the upgrade"},{"category":"stability","comment":"We saw some errors in the logs we didn't expect"}],"time":"2020-10-21T02:00:00Z","toVersion":{"id":"7857"}}
+/*
+CreateNetworkFirmwareUpgradesRollbackBody create network firmware upgrades rollback body
+// Example: {"product":"switch","reasons":[{"category":"performance","comment":"Network was slower with the upgrade"}],"time":"2020-10-21T02:00:00Z","toVersion":{"id":"7857"}}
 swagger:model CreateNetworkFirmwareUpgradesRollbackBody
 */
 type CreateNetworkFirmwareUpgradesRollbackBody struct {
 
 	// Product type to rollback (if the network is a combined network)
-	// Enum: [wireless switch appliance camera vmxHost cellularGateway]
+	// Enum: [appliance camera cellularGateway cloudGateway switch switchCatalyst wireless]
 	Product string `json:"product,omitempty"`
 
 	// Reasons for the rollback
@@ -150,7 +159,7 @@ var createNetworkFirmwareUpgradesRollbackBodyTypeProductPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["wireless","switch","appliance","camera","vmxHost","cellularGateway"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["appliance","camera","cellularGateway","cloudGateway","switch","switchCatalyst","wireless"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -160,23 +169,26 @@ func init() {
 
 const (
 
-	// CreateNetworkFirmwareUpgradesRollbackBodyProductWireless captures enum value "wireless"
-	CreateNetworkFirmwareUpgradesRollbackBodyProductWireless string = "wireless"
-
-	// CreateNetworkFirmwareUpgradesRollbackBodyProductSwitch captures enum value "switch"
-	CreateNetworkFirmwareUpgradesRollbackBodyProductSwitch string = "switch"
-
 	// CreateNetworkFirmwareUpgradesRollbackBodyProductAppliance captures enum value "appliance"
 	CreateNetworkFirmwareUpgradesRollbackBodyProductAppliance string = "appliance"
 
 	// CreateNetworkFirmwareUpgradesRollbackBodyProductCamera captures enum value "camera"
 	CreateNetworkFirmwareUpgradesRollbackBodyProductCamera string = "camera"
 
-	// CreateNetworkFirmwareUpgradesRollbackBodyProductVmxHost captures enum value "vmxHost"
-	CreateNetworkFirmwareUpgradesRollbackBodyProductVmxHost string = "vmxHost"
-
 	// CreateNetworkFirmwareUpgradesRollbackBodyProductCellularGateway captures enum value "cellularGateway"
 	CreateNetworkFirmwareUpgradesRollbackBodyProductCellularGateway string = "cellularGateway"
+
+	// CreateNetworkFirmwareUpgradesRollbackBodyProductCloudGateway captures enum value "cloudGateway"
+	CreateNetworkFirmwareUpgradesRollbackBodyProductCloudGateway string = "cloudGateway"
+
+	// CreateNetworkFirmwareUpgradesRollbackBodyProductSwitch captures enum value "switch"
+	CreateNetworkFirmwareUpgradesRollbackBodyProductSwitch string = "switch"
+
+	// CreateNetworkFirmwareUpgradesRollbackBodyProductSwitchCatalyst captures enum value "switchCatalyst"
+	CreateNetworkFirmwareUpgradesRollbackBodyProductSwitchCatalyst string = "switchCatalyst"
+
+	// CreateNetworkFirmwareUpgradesRollbackBodyProductWireless captures enum value "wireless"
+	CreateNetworkFirmwareUpgradesRollbackBodyProductWireless string = "wireless"
 )
 
 // prop value enum
@@ -281,6 +293,11 @@ func (o *CreateNetworkFirmwareUpgradesRollbackBody) contextValidateReasons(ctx c
 	for i := 0; i < len(o.Reasons); i++ {
 
 		if o.Reasons[i] != nil {
+
+			if swag.IsZero(o.Reasons[i]) { // not required
+				return nil
+			}
+
 			if err := o.Reasons[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("createNetworkFirmwareUpgradesRollback" + "." + "reasons" + "." + strconv.Itoa(i))
@@ -299,6 +316,11 @@ func (o *CreateNetworkFirmwareUpgradesRollbackBody) contextValidateReasons(ctx c
 func (o *CreateNetworkFirmwareUpgradesRollbackBody) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
 		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("createNetworkFirmwareUpgradesRollback" + "." + "toVersion")
@@ -330,14 +352,494 @@ func (o *CreateNetworkFirmwareUpgradesRollbackBody) UnmarshalBinary(b []byte) er
 	return nil
 }
 
-/*CreateNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0 create network firmware upgrades rollback params body reasons items0
+/*
+CreateNetworkFirmwareUpgradesRollbackOKBody create network firmware upgrades rollback o k body
+swagger:model CreateNetworkFirmwareUpgradesRollbackOKBody
+*/
+type CreateNetworkFirmwareUpgradesRollbackOKBody struct {
+
+	// Product type to rollback (if the network is a combined network)
+	// Enum: [appliance camera cellularGateway cloudGateway switch switchCatalyst wireless]
+	Product string `json:"product,omitempty"`
+
+	// Reasons for the rollback
+	Reasons []*CreateNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0 `json:"reasons"`
+
+	// Status of the rollback
+	// Enum: [canceled completed in_progress pending]
+	Status string `json:"status,omitempty"`
+
+	// Scheduled time for the rollback
+	// Format: date-time
+	Time strfmt.DateTime `json:"time,omitempty"`
+
+	// to version
+	ToVersion *CreateNetworkFirmwareUpgradesRollbackOKBodyToVersion `json:"toVersion,omitempty"`
+
+	// Batch ID of the firmware rollback
+	UpgradeBatchID string `json:"upgradeBatchId,omitempty"`
+}
+
+// Validate validates this create network firmware upgrades rollback o k body
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateProduct(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateReasons(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateStatus(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTime(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateToVersion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var createNetworkFirmwareUpgradesRollbackOKBodyTypeProductPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["appliance","camera","cellularGateway","cloudGateway","switch","switchCatalyst","wireless"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createNetworkFirmwareUpgradesRollbackOKBodyTypeProductPropEnum = append(createNetworkFirmwareUpgradesRollbackOKBodyTypeProductPropEnum, v)
+	}
+}
+
+const (
+
+	// CreateNetworkFirmwareUpgradesRollbackOKBodyProductAppliance captures enum value "appliance"
+	CreateNetworkFirmwareUpgradesRollbackOKBodyProductAppliance string = "appliance"
+
+	// CreateNetworkFirmwareUpgradesRollbackOKBodyProductCamera captures enum value "camera"
+	CreateNetworkFirmwareUpgradesRollbackOKBodyProductCamera string = "camera"
+
+	// CreateNetworkFirmwareUpgradesRollbackOKBodyProductCellularGateway captures enum value "cellularGateway"
+	CreateNetworkFirmwareUpgradesRollbackOKBodyProductCellularGateway string = "cellularGateway"
+
+	// CreateNetworkFirmwareUpgradesRollbackOKBodyProductCloudGateway captures enum value "cloudGateway"
+	CreateNetworkFirmwareUpgradesRollbackOKBodyProductCloudGateway string = "cloudGateway"
+
+	// CreateNetworkFirmwareUpgradesRollbackOKBodyProductSwitch captures enum value "switch"
+	CreateNetworkFirmwareUpgradesRollbackOKBodyProductSwitch string = "switch"
+
+	// CreateNetworkFirmwareUpgradesRollbackOKBodyProductSwitchCatalyst captures enum value "switchCatalyst"
+	CreateNetworkFirmwareUpgradesRollbackOKBodyProductSwitchCatalyst string = "switchCatalyst"
+
+	// CreateNetworkFirmwareUpgradesRollbackOKBodyProductWireless captures enum value "wireless"
+	CreateNetworkFirmwareUpgradesRollbackOKBodyProductWireless string = "wireless"
+)
+
+// prop value enum
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBody) validateProductEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, createNetworkFirmwareUpgradesRollbackOKBodyTypeProductPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBody) validateProduct(formats strfmt.Registry) error {
+	if swag.IsZero(o.Product) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateProductEnum("createNetworkFirmwareUpgradesRollbackOK"+"."+"product", "body", o.Product); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBody) validateReasons(formats strfmt.Registry) error {
+	if swag.IsZero(o.Reasons) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Reasons); i++ {
+		if swag.IsZero(o.Reasons[i]) { // not required
+			continue
+		}
+
+		if o.Reasons[i] != nil {
+			if err := o.Reasons[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("createNetworkFirmwareUpgradesRollbackOK" + "." + "reasons" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("createNetworkFirmwareUpgradesRollbackOK" + "." + "reasons" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+var createNetworkFirmwareUpgradesRollbackOKBodyTypeStatusPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["canceled","completed","in_progress","pending"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createNetworkFirmwareUpgradesRollbackOKBodyTypeStatusPropEnum = append(createNetworkFirmwareUpgradesRollbackOKBodyTypeStatusPropEnum, v)
+	}
+}
+
+const (
+
+	// CreateNetworkFirmwareUpgradesRollbackOKBodyStatusCanceled captures enum value "canceled"
+	CreateNetworkFirmwareUpgradesRollbackOKBodyStatusCanceled string = "canceled"
+
+	// CreateNetworkFirmwareUpgradesRollbackOKBodyStatusCompleted captures enum value "completed"
+	CreateNetworkFirmwareUpgradesRollbackOKBodyStatusCompleted string = "completed"
+
+	// CreateNetworkFirmwareUpgradesRollbackOKBodyStatusInProgress captures enum value "in_progress"
+	CreateNetworkFirmwareUpgradesRollbackOKBodyStatusInProgress string = "in_progress"
+
+	// CreateNetworkFirmwareUpgradesRollbackOKBodyStatusPending captures enum value "pending"
+	CreateNetworkFirmwareUpgradesRollbackOKBodyStatusPending string = "pending"
+)
+
+// prop value enum
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBody) validateStatusEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, createNetworkFirmwareUpgradesRollbackOKBodyTypeStatusPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBody) validateStatus(formats strfmt.Registry) error {
+	if swag.IsZero(o.Status) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateStatusEnum("createNetworkFirmwareUpgradesRollbackOK"+"."+"status", "body", o.Status); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBody) validateTime(formats strfmt.Registry) error {
+	if swag.IsZero(o.Time) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("createNetworkFirmwareUpgradesRollbackOK"+"."+"time", "body", "date-time", o.Time.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBody) validateToVersion(formats strfmt.Registry) error {
+	if swag.IsZero(o.ToVersion) { // not required
+		return nil
+	}
+
+	if o.ToVersion != nil {
+		if err := o.ToVersion.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createNetworkFirmwareUpgradesRollbackOK" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createNetworkFirmwareUpgradesRollbackOK" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this create network firmware upgrades rollback o k body based on the context it is used
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateReasons(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateToVersion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBody) contextValidateReasons(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Reasons); i++ {
+
+		if o.Reasons[i] != nil {
+
+			if swag.IsZero(o.Reasons[i]) { // not required
+				return nil
+			}
+
+			if err := o.Reasons[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("createNetworkFirmwareUpgradesRollbackOK" + "." + "reasons" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("createNetworkFirmwareUpgradesRollbackOK" + "." + "reasons" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBody) contextValidateToVersion(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ToVersion != nil {
+
+		if swag.IsZero(o.ToVersion) { // not required
+			return nil
+		}
+
+		if err := o.ToVersion.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("createNetworkFirmwareUpgradesRollbackOK" + "." + "toVersion")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("createNetworkFirmwareUpgradesRollbackOK" + "." + "toVersion")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBody) UnmarshalBinary(b []byte) error {
+	var res CreateNetworkFirmwareUpgradesRollbackOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0 create network firmware upgrades rollback o k body reasons items0
+swagger:model CreateNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0
+*/
+type CreateNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0 struct {
+
+	// Reason for the rollback
+	// Enum: [broke old features other performance stability testing unifying networks versions]
+	Category string `json:"category,omitempty"`
+
+	// Additional comment about the rollback
+	Comment string `json:"comment,omitempty"`
+}
+
+// Validate validates this create network firmware upgrades rollback o k body reasons items0
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateCategory(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var createNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0TypeCategoryPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["broke old features","other","performance","stability","testing","unifying networks versions"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0TypeCategoryPropEnum = append(createNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0TypeCategoryPropEnum, v)
+	}
+}
+
+const (
+
+	// CreateNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0CategoryBrokeOldFeatures captures enum value "broke old features"
+	CreateNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0CategoryBrokeOldFeatures string = "broke old features"
+
+	// CreateNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0CategoryOther captures enum value "other"
+	CreateNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0CategoryOther string = "other"
+
+	// CreateNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0CategoryPerformance captures enum value "performance"
+	CreateNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0CategoryPerformance string = "performance"
+
+	// CreateNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0CategoryStability captures enum value "stability"
+	CreateNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0CategoryStability string = "stability"
+
+	// CreateNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0CategoryTesting captures enum value "testing"
+	CreateNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0CategoryTesting string = "testing"
+
+	// CreateNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0CategoryUnifyingNetworksVersions captures enum value "unifying networks versions"
+	CreateNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0CategoryUnifyingNetworksVersions string = "unifying networks versions"
+)
+
+// prop value enum
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0) validateCategoryEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, createNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0TypeCategoryPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0) validateCategory(formats strfmt.Registry) error {
+	if swag.IsZero(o.Category) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateCategoryEnum("category", "body", o.Category); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this create network firmware upgrades rollback o k body reasons items0 based on context it is used
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0) UnmarshalBinary(b []byte) error {
+	var res CreateNetworkFirmwareUpgradesRollbackOKBodyReasonsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateNetworkFirmwareUpgradesRollbackOKBodyToVersion Version to downgrade to (if the network has firmware flexibility)
+swagger:model CreateNetworkFirmwareUpgradesRollbackOKBodyToVersion
+*/
+type CreateNetworkFirmwareUpgradesRollbackOKBodyToVersion struct {
+
+	// Name of the firmware version
+	Firmware string `json:"firmware,omitempty"`
+
+	// Firmware version identifier
+	ID string `json:"id,omitempty"`
+
+	// Release date of the firmware version
+	// Format: date-time
+	ReleaseDate strfmt.DateTime `json:"releaseDate,omitempty"`
+
+	// Release type of the firmware version
+	ReleaseType string `json:"releaseType,omitempty"`
+
+	// Firmware version short name
+	ShortName string `json:"shortName,omitempty"`
+}
+
+// Validate validates this create network firmware upgrades rollback o k body to version
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBodyToVersion) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateReleaseDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBodyToVersion) validateReleaseDate(formats strfmt.Registry) error {
+	if swag.IsZero(o.ReleaseDate) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("createNetworkFirmwareUpgradesRollbackOK"+"."+"toVersion"+"."+"releaseDate", "body", "date-time", o.ReleaseDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this create network firmware upgrades rollback o k body to version based on context it is used
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBodyToVersion) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBodyToVersion) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateNetworkFirmwareUpgradesRollbackOKBodyToVersion) UnmarshalBinary(b []byte) error {
+	var res CreateNetworkFirmwareUpgradesRollbackOKBodyToVersion
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+CreateNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0 create network firmware upgrades rollback params body reasons items0
 swagger:model CreateNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0
 */
 type CreateNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0 struct {
 
 	// Reason for the rollback
 	// Required: true
-	// Enum: [performance stability broke old features unifying networks versions testing other]
+	// Enum: [broke old features other performance stability testing unifying networks versions]
 	Category *string `json:"category"`
 
 	// Additional comment about the rollback
@@ -367,7 +869,7 @@ var createNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0TypeCategoryProp
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["performance","stability","broke old features","unifying networks versions","testing","other"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["broke old features","other","performance","stability","testing","unifying networks versions"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -377,23 +879,23 @@ func init() {
 
 const (
 
+	// CreateNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0CategoryBrokeOldFeatures captures enum value "broke old features"
+	CreateNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0CategoryBrokeOldFeatures string = "broke old features"
+
+	// CreateNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0CategoryOther captures enum value "other"
+	CreateNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0CategoryOther string = "other"
+
 	// CreateNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0CategoryPerformance captures enum value "performance"
 	CreateNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0CategoryPerformance string = "performance"
 
 	// CreateNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0CategoryStability captures enum value "stability"
 	CreateNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0CategoryStability string = "stability"
 
-	// CreateNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0CategoryBrokeOldFeatures captures enum value "broke old features"
-	CreateNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0CategoryBrokeOldFeatures string = "broke old features"
-
-	// CreateNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0CategoryUnifyingNetworksVersions captures enum value "unifying networks versions"
-	CreateNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0CategoryUnifyingNetworksVersions string = "unifying networks versions"
-
 	// CreateNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0CategoryTesting captures enum value "testing"
 	CreateNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0CategoryTesting string = "testing"
 
-	// CreateNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0CategoryOther captures enum value "other"
-	CreateNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0CategoryOther string = "other"
+	// CreateNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0CategoryUnifyingNetworksVersions captures enum value "unifying networks versions"
+	CreateNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0CategoryUnifyingNetworksVersions string = "unifying networks versions"
 )
 
 // prop value enum
@@ -450,7 +952,8 @@ func (o *CreateNetworkFirmwareUpgradesRollbackParamsBodyReasonsItems0) Unmarshal
 	return nil
 }
 
-/*CreateNetworkFirmwareUpgradesRollbackParamsBodyToVersion Version to downgrade to (if the network has firmware flexibility)
+/*
+CreateNetworkFirmwareUpgradesRollbackParamsBodyToVersion Version to downgrade to (if the network has firmware flexibility)
 swagger:model CreateNetworkFirmwareUpgradesRollbackParamsBodyToVersion
 */
 type CreateNetworkFirmwareUpgradesRollbackParamsBodyToVersion struct {

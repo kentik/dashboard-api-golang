@@ -52,17 +52,25 @@ func NewGetOrganizationSamlRoleParamsWithHTTPClient(client *http.Client) *GetOrg
 	}
 }
 
-/* GetOrganizationSamlRoleParams contains all the parameters to send to the API endpoint
-   for the get organization saml role operation.
+/*
+GetOrganizationSamlRoleParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization saml role operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationSamlRoleParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
-	// SamlRoleID.
+	/* SamlRoleID.
+
+	   Saml role ID
+	*/
 	SamlRoleID string
 
 	timeout    time.Duration

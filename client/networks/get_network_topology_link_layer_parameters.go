@@ -52,14 +52,19 @@ func NewGetNetworkTopologyLinkLayerParamsWithHTTPClient(client *http.Client) *Ge
 	}
 }
 
-/* GetNetworkTopologyLinkLayerParams contains all the parameters to send to the API endpoint
-   for the get network topology link layer operation.
+/*
+GetNetworkTopologyLinkLayerParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network topology link layer operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkTopologyLinkLayerParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

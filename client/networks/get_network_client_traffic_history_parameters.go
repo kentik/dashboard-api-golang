@@ -53,14 +53,19 @@ func NewGetNetworkClientTrafficHistoryParamsWithHTTPClient(client *http.Client) 
 	}
 }
 
-/* GetNetworkClientTrafficHistoryParams contains all the parameters to send to the API endpoint
-   for the get network client traffic history operation.
+/*
+GetNetworkClientTrafficHistoryParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network client traffic history operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkClientTrafficHistoryParams struct {
 
-	// ClientID.
+	/* ClientID.
+
+	   Client ID
+	*/
 	ClientID string
 
 	/* EndingBefore.
@@ -69,7 +74,10 @@ type GetNetworkClientTrafficHistoryParams struct {
 	*/
 	EndingBefore *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* PerPage.

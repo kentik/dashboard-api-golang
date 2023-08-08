@@ -53,10 +53,12 @@ func NewGetOrganizationApplianceSecurityEventsParamsWithHTTPClient(client *http.
 	}
 }
 
-/* GetOrganizationApplianceSecurityEventsParams contains all the parameters to send to the API endpoint
-   for the get organization appliance security events operation.
+/*
+GetOrganizationApplianceSecurityEventsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization appliance security events operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationApplianceSecurityEventsParams struct {
 
@@ -66,7 +68,10 @@ type GetOrganizationApplianceSecurityEventsParams struct {
 	*/
 	EndingBefore *string
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	/* PerPage.

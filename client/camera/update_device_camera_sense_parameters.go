@@ -52,14 +52,19 @@ func NewUpdateDeviceCameraSenseParamsWithHTTPClient(client *http.Client) *Update
 	}
 }
 
-/* UpdateDeviceCameraSenseParams contains all the parameters to send to the API endpoint
-   for the update device camera sense operation.
+/*
+UpdateDeviceCameraSenseParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update device camera sense operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateDeviceCameraSenseParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	// UpdateDeviceCameraSense.

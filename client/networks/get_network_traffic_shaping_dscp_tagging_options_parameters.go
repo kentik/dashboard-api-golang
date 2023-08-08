@@ -52,14 +52,19 @@ func NewGetNetworkTrafficShapingDscpTaggingOptionsParamsWithHTTPClient(client *h
 	}
 }
 
-/* GetNetworkTrafficShapingDscpTaggingOptionsParams contains all the parameters to send to the API endpoint
-   for the get network traffic shaping dscp tagging options operation.
+/*
+GetNetworkTrafficShapingDscpTaggingOptionsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network traffic shaping dscp tagging options operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkTrafficShapingDscpTaggingOptionsParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

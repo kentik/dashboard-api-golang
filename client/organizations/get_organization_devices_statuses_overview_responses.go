@@ -6,11 +6,14 @@ package organizations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetOrganizationDevicesStatusesOverviewReader is a Reader for the GetOrganizationDevicesStatusesOverview structure.
@@ -28,7 +31,7 @@ func (o *GetOrganizationDevicesStatusesOverviewReader) ReadResponse(response run
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /organizations/{organizationId}/devices/statuses/overview] getOrganizationDevicesStatusesOverview", response, response.Code())
 	}
 }
 
@@ -37,12 +40,13 @@ func NewGetOrganizationDevicesStatusesOverviewOK() *GetOrganizationDevicesStatus
 	return &GetOrganizationDevicesStatusesOverviewOK{}
 }
 
-/* GetOrganizationDevicesStatusesOverviewOK describes a response with status code 200, with default header values.
+/*
+GetOrganizationDevicesStatusesOverviewOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetOrganizationDevicesStatusesOverviewOK struct {
-	Payload interface{}
+	Payload *GetOrganizationDevicesStatusesOverviewOKBody
 }
 
 // IsSuccess returns true when this get organization devices statuses overview o k response has a 2xx status code
@@ -70,6 +74,11 @@ func (o *GetOrganizationDevicesStatusesOverviewOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get organization devices statuses overview o k response
+func (o *GetOrganizationDevicesStatusesOverviewOK) Code() int {
+	return 200
+}
+
 func (o *GetOrganizationDevicesStatusesOverviewOK) Error() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/devices/statuses/overview][%d] getOrganizationDevicesStatusesOverviewOK  %+v", 200, o.Payload)
 }
@@ -78,16 +87,257 @@ func (o *GetOrganizationDevicesStatusesOverviewOK) String() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/devices/statuses/overview][%d] getOrganizationDevicesStatusesOverviewOK  %+v", 200, o.Payload)
 }
 
-func (o *GetOrganizationDevicesStatusesOverviewOK) GetPayload() interface{} {
+func (o *GetOrganizationDevicesStatusesOverviewOK) GetPayload() *GetOrganizationDevicesStatusesOverviewOKBody {
 	return o.Payload
 }
 
 func (o *GetOrganizationDevicesStatusesOverviewOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetOrganizationDevicesStatusesOverviewOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetOrganizationDevicesStatusesOverviewOKBody get organization devices statuses overview o k body
+swagger:model GetOrganizationDevicesStatusesOverviewOKBody
+*/
+type GetOrganizationDevicesStatusesOverviewOKBody struct {
+
+	// counts
+	Counts *GetOrganizationDevicesStatusesOverviewOKBodyCounts `json:"counts,omitempty"`
+}
+
+// Validate validates this get organization devices statuses overview o k body
+func (o *GetOrganizationDevicesStatusesOverviewOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateCounts(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetOrganizationDevicesStatusesOverviewOKBody) validateCounts(formats strfmt.Registry) error {
+	if swag.IsZero(o.Counts) { // not required
+		return nil
+	}
+
+	if o.Counts != nil {
+		if err := o.Counts.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getOrganizationDevicesStatusesOverviewOK" + "." + "counts")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getOrganizationDevicesStatusesOverviewOK" + "." + "counts")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get organization devices statuses overview o k body based on the context it is used
+func (o *GetOrganizationDevicesStatusesOverviewOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateCounts(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetOrganizationDevicesStatusesOverviewOKBody) contextValidateCounts(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.Counts != nil {
+
+		if swag.IsZero(o.Counts) { // not required
+			return nil
+		}
+
+		if err := o.Counts.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getOrganizationDevicesStatusesOverviewOK" + "." + "counts")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getOrganizationDevicesStatusesOverviewOK" + "." + "counts")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetOrganizationDevicesStatusesOverviewOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetOrganizationDevicesStatusesOverviewOKBody) UnmarshalBinary(b []byte) error {
+	var res GetOrganizationDevicesStatusesOverviewOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetOrganizationDevicesStatusesOverviewOKBodyCounts counts
+swagger:model GetOrganizationDevicesStatusesOverviewOKBodyCounts
+*/
+type GetOrganizationDevicesStatusesOverviewOKBodyCounts struct {
+
+	// by status
+	ByStatus *GetOrganizationDevicesStatusesOverviewOKBodyCountsByStatus `json:"byStatus,omitempty"`
+}
+
+// Validate validates this get organization devices statuses overview o k body counts
+func (o *GetOrganizationDevicesStatusesOverviewOKBodyCounts) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateByStatus(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetOrganizationDevicesStatusesOverviewOKBodyCounts) validateByStatus(formats strfmt.Registry) error {
+	if swag.IsZero(o.ByStatus) { // not required
+		return nil
+	}
+
+	if o.ByStatus != nil {
+		if err := o.ByStatus.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getOrganizationDevicesStatusesOverviewOK" + "." + "counts" + "." + "byStatus")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getOrganizationDevicesStatusesOverviewOK" + "." + "counts" + "." + "byStatus")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get organization devices statuses overview o k body counts based on the context it is used
+func (o *GetOrganizationDevicesStatusesOverviewOKBodyCounts) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateByStatus(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetOrganizationDevicesStatusesOverviewOKBodyCounts) contextValidateByStatus(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.ByStatus != nil {
+
+		if swag.IsZero(o.ByStatus) { // not required
+			return nil
+		}
+
+		if err := o.ByStatus.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getOrganizationDevicesStatusesOverviewOK" + "." + "counts" + "." + "byStatus")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getOrganizationDevicesStatusesOverviewOK" + "." + "counts" + "." + "byStatus")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetOrganizationDevicesStatusesOverviewOKBodyCounts) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetOrganizationDevicesStatusesOverviewOKBodyCounts) UnmarshalBinary(b []byte) error {
+	var res GetOrganizationDevicesStatusesOverviewOKBodyCounts
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetOrganizationDevicesStatusesOverviewOKBodyCountsByStatus byStatus
+swagger:model GetOrganizationDevicesStatusesOverviewOKBodyCountsByStatus
+*/
+type GetOrganizationDevicesStatusesOverviewOKBodyCountsByStatus struct {
+
+	// alerting count
+	Alerting int64 `json:"alerting,omitempty"`
+
+	// dormant count
+	Dormant int64 `json:"dormant,omitempty"`
+
+	// offline count
+	Offline int64 `json:"offline,omitempty"`
+
+	// online count
+	Online int64 `json:"online,omitempty"`
+}
+
+// Validate validates this get organization devices statuses overview o k body counts by status
+func (o *GetOrganizationDevicesStatusesOverviewOKBodyCountsByStatus) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get organization devices statuses overview o k body counts by status based on context it is used
+func (o *GetOrganizationDevicesStatusesOverviewOKBodyCountsByStatus) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetOrganizationDevicesStatusesOverviewOKBodyCountsByStatus) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetOrganizationDevicesStatusesOverviewOKBodyCountsByStatus) UnmarshalBinary(b []byte) error {
+	var res GetOrganizationDevicesStatusesOverviewOKBodyCountsByStatus
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

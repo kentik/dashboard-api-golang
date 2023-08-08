@@ -60,9 +60,9 @@ type ClientService interface {
 }
 
 /*
-  GetDeviceCellularGatewayLan shows the l a n settings of a m g
+GetDeviceCellularGatewayLan shows the l a n settings of a m g
 
-  Show the LAN Settings of a MG
+Show the LAN Settings of a MG
 */
 func (a *Client) GetDeviceCellularGatewayLan(params *GetDeviceCellularGatewayLanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceCellularGatewayLanOK, error) {
 	// TODO: Validate the params before sending
@@ -101,9 +101,9 @@ func (a *Client) GetDeviceCellularGatewayLan(params *GetDeviceCellularGatewayLan
 }
 
 /*
-  GetDeviceCellularGatewayPortForwardingRules returns the port forwarding rules for a single m g
+GetDeviceCellularGatewayPortForwardingRules returns the port forwarding rules for a single m g
 
-  Returns the port forwarding rules for a single MG.
+Returns the port forwarding rules for a single MG.
 */
 func (a *Client) GetDeviceCellularGatewayPortForwardingRules(params *GetDeviceCellularGatewayPortForwardingRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceCellularGatewayPortForwardingRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -142,9 +142,9 @@ func (a *Client) GetDeviceCellularGatewayPortForwardingRules(params *GetDeviceCe
 }
 
 /*
-  GetNetworkCellularGatewayConnectivityMonitoringDestinations returns the connectivity testing destinations for an m g network
+GetNetworkCellularGatewayConnectivityMonitoringDestinations returns the connectivity testing destinations for an m g network
 
-  Return the connectivity testing destinations for an MG network
+Return the connectivity testing destinations for an MG network
 */
 func (a *Client) GetNetworkCellularGatewayConnectivityMonitoringDestinations(params *GetNetworkCellularGatewayConnectivityMonitoringDestinationsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkCellularGatewayConnectivityMonitoringDestinationsOK, error) {
 	// TODO: Validate the params before sending
@@ -183,9 +183,9 @@ func (a *Client) GetNetworkCellularGatewayConnectivityMonitoringDestinations(par
 }
 
 /*
-  GetNetworkCellularGatewayDhcp lists common d h c p settings of m gs
+GetNetworkCellularGatewayDhcp lists common d h c p settings of m gs
 
-  List common DHCP settings of MGs
+List common DHCP settings of MGs
 */
 func (a *Client) GetNetworkCellularGatewayDhcp(params *GetNetworkCellularGatewayDhcpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkCellularGatewayDhcpOK, error) {
 	// TODO: Validate the params before sending
@@ -224,9 +224,9 @@ func (a *Client) GetNetworkCellularGatewayDhcp(params *GetNetworkCellularGateway
 }
 
 /*
-  GetNetworkCellularGatewaySubnetPool returns the subnet pool and mask configured for m gs in the network
+GetNetworkCellularGatewaySubnetPool returns the subnet pool and mask configured for m gs in the network
 
-  Return the subnet pool and mask configured for MGs in the network.
+Return the subnet pool and mask configured for MGs in the network.
 */
 func (a *Client) GetNetworkCellularGatewaySubnetPool(params *GetNetworkCellularGatewaySubnetPoolParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkCellularGatewaySubnetPoolOK, error) {
 	// TODO: Validate the params before sending
@@ -265,9 +265,9 @@ func (a *Client) GetNetworkCellularGatewaySubnetPool(params *GetNetworkCellularG
 }
 
 /*
-  GetNetworkCellularGatewayUplink returns the uplink settings for your m g network
+GetNetworkCellularGatewayUplink returns the uplink settings for your m g network
 
-  Returns the uplink settings for your MG network.
+Returns the uplink settings for your MG network.
 */
 func (a *Client) GetNetworkCellularGatewayUplink(params *GetNetworkCellularGatewayUplinkParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkCellularGatewayUplinkOK, error) {
 	// TODO: Validate the params before sending
@@ -306,9 +306,9 @@ func (a *Client) GetNetworkCellularGatewayUplink(params *GetNetworkCellularGatew
 }
 
 /*
-  GetOrganizationCellularGatewayUplinkStatuses lists the uplink status of every meraki m g cellular gateway in the organization
+GetOrganizationCellularGatewayUplinkStatuses lists the uplink status of every meraki m g cellular gateway in the organization
 
-  List the uplink status of every Meraki MG cellular gateway in the organization
+List the uplink status of every Meraki MG cellular gateway in the organization
 */
 func (a *Client) GetOrganizationCellularGatewayUplinkStatuses(params *GetOrganizationCellularGatewayUplinkStatusesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationCellularGatewayUplinkStatusesOK, error) {
 	// TODO: Validate the params before sending
@@ -347,9 +347,9 @@ func (a *Client) GetOrganizationCellularGatewayUplinkStatuses(params *GetOrganiz
 }
 
 /*
-  UpdateDeviceCellularGatewayLan updates the l a n settings for a single m g
+UpdateDeviceCellularGatewayLan updates the l a n settings for a single m g
 
-  Update the LAN Settings for a single MG.
+Update the LAN Settings for a single MG.
 */
 func (a *Client) UpdateDeviceCellularGatewayLan(params *UpdateDeviceCellularGatewayLanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceCellularGatewayLanOK, error) {
 	// TODO: Validate the params before sending
@@ -388,9 +388,9 @@ func (a *Client) UpdateDeviceCellularGatewayLan(params *UpdateDeviceCellularGate
 }
 
 /*
-  UpdateDeviceCellularGatewayPortForwardingRules updates the port forwarding rules for a single m g
+UpdateDeviceCellularGatewayPortForwardingRules updates the port forwarding rules for a single m g
 
-  Updates the port forwarding rules for a single MG.
+Updates the port forwarding rules for a single MG.
 */
 func (a *Client) UpdateDeviceCellularGatewayPortForwardingRules(params *UpdateDeviceCellularGatewayPortForwardingRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceCellularGatewayPortForwardingRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -429,9 +429,9 @@ func (a *Client) UpdateDeviceCellularGatewayPortForwardingRules(params *UpdateDe
 }
 
 /*
-  UpdateNetworkCellularGatewayConnectivityMonitoringDestinations updates the connectivity testing destinations for an m g network
+UpdateNetworkCellularGatewayConnectivityMonitoringDestinations updates the connectivity testing destinations for an m g network
 
-  Update the connectivity testing destinations for an MG network
+Update the connectivity testing destinations for an MG network
 */
 func (a *Client) UpdateNetworkCellularGatewayConnectivityMonitoringDestinations(params *UpdateNetworkCellularGatewayConnectivityMonitoringDestinationsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkCellularGatewayConnectivityMonitoringDestinationsOK, error) {
 	// TODO: Validate the params before sending
@@ -470,9 +470,9 @@ func (a *Client) UpdateNetworkCellularGatewayConnectivityMonitoringDestinations(
 }
 
 /*
-  UpdateNetworkCellularGatewayDhcp updates common d h c p settings of m gs
+UpdateNetworkCellularGatewayDhcp updates common d h c p settings of m gs
 
-  Update common DHCP settings of MGs
+Update common DHCP settings of MGs
 */
 func (a *Client) UpdateNetworkCellularGatewayDhcp(params *UpdateNetworkCellularGatewayDhcpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkCellularGatewayDhcpOK, error) {
 	// TODO: Validate the params before sending
@@ -511,9 +511,9 @@ func (a *Client) UpdateNetworkCellularGatewayDhcp(params *UpdateNetworkCellularG
 }
 
 /*
-  UpdateNetworkCellularGatewaySubnetPool updates the subnet pool and mask configuration for m gs in the network
+UpdateNetworkCellularGatewaySubnetPool updates the subnet pool and mask configuration for m gs in the network
 
-  Update the subnet pool and mask configuration for MGs in the network.
+Update the subnet pool and mask configuration for MGs in the network.
 */
 func (a *Client) UpdateNetworkCellularGatewaySubnetPool(params *UpdateNetworkCellularGatewaySubnetPoolParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkCellularGatewaySubnetPoolOK, error) {
 	// TODO: Validate the params before sending
@@ -552,9 +552,9 @@ func (a *Client) UpdateNetworkCellularGatewaySubnetPool(params *UpdateNetworkCel
 }
 
 /*
-  UpdateNetworkCellularGatewayUplink updates the uplink settings for your m g network
+UpdateNetworkCellularGatewayUplink updates the uplink settings for your m g network
 
-  Updates the uplink settings for your MG network.
+Updates the uplink settings for your MG network.
 */
 func (a *Client) UpdateNetworkCellularGatewayUplink(params *UpdateNetworkCellularGatewayUplinkParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkCellularGatewayUplinkOK, error) {
 	// TODO: Validate the params before sending

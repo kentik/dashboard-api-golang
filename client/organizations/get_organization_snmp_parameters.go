@@ -52,14 +52,19 @@ func NewGetOrganizationSnmpParamsWithHTTPClient(client *http.Client) *GetOrganiz
 	}
 }
 
-/* GetOrganizationSnmpParams contains all the parameters to send to the API endpoint
-   for the get organization snmp operation.
+/*
+GetOrganizationSnmpParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization snmp operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationSnmpParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

@@ -52,14 +52,19 @@ func NewUpdateNetworkApplianceVlansSettingsParamsWithHTTPClient(client *http.Cli
 	}
 }
 
-/* UpdateNetworkApplianceVlansSettingsParams contains all the parameters to send to the API endpoint
-   for the update network appliance vlans settings operation.
+/*
+UpdateNetworkApplianceVlansSettingsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network appliance vlans settings operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkApplianceVlansSettingsParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkApplianceVlansSettings.

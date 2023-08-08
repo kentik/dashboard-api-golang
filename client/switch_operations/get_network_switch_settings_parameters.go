@@ -52,14 +52,19 @@ func NewGetNetworkSwitchSettingsParamsWithHTTPClient(client *http.Client) *GetNe
 	}
 }
 
-/* GetNetworkSwitchSettingsParams contains all the parameters to send to the API endpoint
-   for the get network switch settings operation.
+/*
+GetNetworkSwitchSettingsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network switch settings operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkSwitchSettingsParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	timeout    time.Duration

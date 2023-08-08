@@ -33,7 +33,7 @@ func (o *UpdateNetworkSyslogServersReader) ReadResponse(response runtime.ClientR
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /networks/{networkId}/syslogServers] updateNetworkSyslogServers", response, response.Code())
 	}
 }
 
@@ -42,7 +42,8 @@ func NewUpdateNetworkSyslogServersOK() *UpdateNetworkSyslogServersOK {
 	return &UpdateNetworkSyslogServersOK{}
 }
 
-/* UpdateNetworkSyslogServersOK describes a response with status code 200, with default header values.
+/*
+UpdateNetworkSyslogServersOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -75,6 +76,11 @@ func (o *UpdateNetworkSyslogServersOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update network syslog servers o k response
+func (o *UpdateNetworkSyslogServersOK) Code() int {
+	return 200
+}
+
 func (o *UpdateNetworkSyslogServersOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{networkId}/syslogServers][%d] updateNetworkSyslogServersOK  %+v", 200, o.Payload)
 }
@@ -99,7 +105,8 @@ func (o *UpdateNetworkSyslogServersOK) readResponse(response runtime.ClientRespo
 	return nil
 }
 
-/*UpdateNetworkSyslogServersBody update network syslog servers body
+/*
+UpdateNetworkSyslogServersBody update network syslog servers body
 // Example: {"servers":[{"host":"1.2.3.4","port":443,"roles":["Wireless event log","URLs"]}]}
 swagger:model UpdateNetworkSyslogServersBody
 */
@@ -170,6 +177,11 @@ func (o *UpdateNetworkSyslogServersBody) contextValidateServers(ctx context.Cont
 	for i := 0; i < len(o.Servers); i++ {
 
 		if o.Servers[i] != nil {
+
+			if swag.IsZero(o.Servers[i]) { // not required
+				return nil
+			}
+
 			if err := o.Servers[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkSyslogServers" + "." + "servers" + "." + strconv.Itoa(i))
@@ -203,7 +215,8 @@ func (o *UpdateNetworkSyslogServersBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateNetworkSyslogServersOKBody update network syslog servers o k body
+/*
+UpdateNetworkSyslogServersOKBody update network syslog servers o k body
 swagger:model UpdateNetworkSyslogServersOKBody
 */
 type UpdateNetworkSyslogServersOKBody struct {
@@ -271,6 +284,11 @@ func (o *UpdateNetworkSyslogServersOKBody) contextValidateServers(ctx context.Co
 	for i := 0; i < len(o.Servers); i++ {
 
 		if o.Servers[i] != nil {
+
+			if swag.IsZero(o.Servers[i]) { // not required
+				return nil
+			}
+
 			if err := o.Servers[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateNetworkSyslogServersOK" + "." + "servers" + "." + strconv.Itoa(i))
@@ -304,7 +322,8 @@ func (o *UpdateNetworkSyslogServersOKBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateNetworkSyslogServersOKBodyServersItems0 update network syslog servers o k body servers items0
+/*
+UpdateNetworkSyslogServersOKBodyServersItems0 update network syslog servers o k body servers items0
 swagger:model UpdateNetworkSyslogServersOKBodyServersItems0
 */
 type UpdateNetworkSyslogServersOKBodyServersItems0 struct {
@@ -347,7 +366,8 @@ func (o *UpdateNetworkSyslogServersOKBodyServersItems0) UnmarshalBinary(b []byte
 	return nil
 }
 
-/*UpdateNetworkSyslogServersParamsBodyServersItems0 update network syslog servers params body servers items0
+/*
+UpdateNetworkSyslogServersParamsBodyServersItems0 update network syslog servers params body servers items0
 swagger:model UpdateNetworkSyslogServersParamsBodyServersItems0
 */
 type UpdateNetworkSyslogServersParamsBodyServersItems0 struct {

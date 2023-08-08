@@ -53,14 +53,19 @@ func NewGetOrganizationAPIRequestsOverviewParamsWithHTTPClient(client *http.Clie
 	}
 }
 
-/* GetOrganizationAPIRequestsOverviewParams contains all the parameters to send to the API endpoint
-   for the get organization Api requests overview operation.
+/*
+GetOrganizationAPIRequestsOverviewParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get organization Api requests overview operation.
+
+	Typically these are written to a http.Request.
 */
 type GetOrganizationAPIRequestsOverviewParams struct {
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	/* T0.

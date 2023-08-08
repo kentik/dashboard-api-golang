@@ -27,7 +27,7 @@ func (o *DeleteDeviceSwitchRoutingInterfaceReader) ReadResponse(response runtime
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[DELETE /devices/{serial}/switch/routing/interfaces/{interfaceId}] deleteDeviceSwitchRoutingInterface", response, response.Code())
 	}
 }
 
@@ -36,7 +36,8 @@ func NewDeleteDeviceSwitchRoutingInterfaceNoContent() *DeleteDeviceSwitchRouting
 	return &DeleteDeviceSwitchRoutingInterfaceNoContent{}
 }
 
-/* DeleteDeviceSwitchRoutingInterfaceNoContent describes a response with status code 204, with default header values.
+/*
+DeleteDeviceSwitchRoutingInterfaceNoContent describes a response with status code 204, with default header values.
 
 Successful operation
 */
@@ -66,6 +67,11 @@ func (o *DeleteDeviceSwitchRoutingInterfaceNoContent) IsServerError() bool {
 // IsCode returns true when this delete device switch routing interface no content response a status code equal to that given
 func (o *DeleteDeviceSwitchRoutingInterfaceNoContent) IsCode(code int) bool {
 	return code == 204
+}
+
+// Code gets the status code for the delete device switch routing interface no content response
+func (o *DeleteDeviceSwitchRoutingInterfaceNoContent) Code() int {
+	return 204
 }
 
 func (o *DeleteDeviceSwitchRoutingInterfaceNoContent) Error() string {

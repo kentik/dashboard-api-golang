@@ -52,14 +52,19 @@ func NewUpdateNetworkApplianceTrafficShapingParamsWithHTTPClient(client *http.Cl
 	}
 }
 
-/* UpdateNetworkApplianceTrafficShapingParams contains all the parameters to send to the API endpoint
-   for the update network appliance traffic shaping operation.
+/*
+UpdateNetworkApplianceTrafficShapingParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update network appliance traffic shaping operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateNetworkApplianceTrafficShapingParams struct {
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	// UpdateNetworkApplianceTrafficShaping.

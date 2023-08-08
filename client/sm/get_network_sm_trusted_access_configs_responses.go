@@ -7,6 +7,7 @@ package sm
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 
@@ -32,7 +33,7 @@ func (o *GetNetworkSmTrustedAccessConfigsReader) ReadResponse(response runtime.C
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/sm/trustedAccessConfigs] getNetworkSmTrustedAccessConfigs", response, response.Code())
 	}
 }
 
@@ -41,7 +42,8 @@ func NewGetNetworkSmTrustedAccessConfigsOK() *GetNetworkSmTrustedAccessConfigsOK
 	return &GetNetworkSmTrustedAccessConfigsOK{}
 }
 
-/* GetNetworkSmTrustedAccessConfigsOK describes a response with status code 200, with default header values.
+/*
+GetNetworkSmTrustedAccessConfigsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -79,6 +81,11 @@ func (o *GetNetworkSmTrustedAccessConfigsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network sm trusted access configs o k response
+func (o *GetNetworkSmTrustedAccessConfigsOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkSmTrustedAccessConfigsOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/sm/trustedAccessConfigs][%d] getNetworkSmTrustedAccessConfigsOK  %+v", 200, o.Payload)
 }
@@ -108,7 +115,8 @@ func (o *GetNetworkSmTrustedAccessConfigsOK) readResponse(response runtime.Clien
 	return nil
 }
 
-/*GetNetworkSmTrustedAccessConfigsOKBodyItems0 get network sm trusted access configs o k body items0
+/*
+GetNetworkSmTrustedAccessConfigsOKBodyItems0 get network sm trusted access configs o k body items0
 swagger:model GetNetworkSmTrustedAccessConfigsOKBodyItems0
 */
 type GetNetworkSmTrustedAccessConfigsOKBodyItems0 struct {
@@ -121,20 +129,33 @@ type GetNetworkSmTrustedAccessConfigsOKBodyItems0 struct {
 	// Format: date-time
 	AccessStartAt strfmt.DateTime `json:"accessStartAt,omitempty"`
 
+	// Optional email text
+	AdditionalEmailText string `json:"additionalEmailText,omitempty"`
+
 	// device ID
 	ID string `json:"id,omitempty"`
 
 	// device name
 	Name string `json:"name,omitempty"`
 
+	// Time before access expiration reminder email sends
+	NotifyTimeBeforeAccessEnds int64 `json:"notifyTimeBeforeAccessEnds,omitempty"`
+
 	// scope
 	Scope string `json:"scope,omitempty"`
+
+	// Send Email Notifications
+	SendExpirationEmails bool `json:"sendExpirationEmails,omitempty"`
 
 	// SSID name
 	SsidName string `json:"ssidName,omitempty"`
 
 	// device tags
 	Tags []string `json:"tags"`
+
+	// type of access period, either a static range or a dynamic period
+	// Enum: [dynamic static]
+	TimeboundType string `json:"timeboundType,omitempty"`
 }
 
 // Validate validates this get network sm trusted access configs o k body items0
@@ -146,6 +167,10 @@ func (o *GetNetworkSmTrustedAccessConfigsOKBodyItems0) Validate(formats strfmt.R
 	}
 
 	if err := o.validateAccessStartAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTimeboundType(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -173,6 +198,48 @@ func (o *GetNetworkSmTrustedAccessConfigsOKBodyItems0) validateAccessStartAt(for
 	}
 
 	if err := validate.FormatOf("accessStartAt", "body", "date-time", o.AccessStartAt.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var getNetworkSmTrustedAccessConfigsOKBodyItems0TypeTimeboundTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["dynamic","static"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getNetworkSmTrustedAccessConfigsOKBodyItems0TypeTimeboundTypePropEnum = append(getNetworkSmTrustedAccessConfigsOKBodyItems0TypeTimeboundTypePropEnum, v)
+	}
+}
+
+const (
+
+	// GetNetworkSmTrustedAccessConfigsOKBodyItems0TimeboundTypeDynamic captures enum value "dynamic"
+	GetNetworkSmTrustedAccessConfigsOKBodyItems0TimeboundTypeDynamic string = "dynamic"
+
+	// GetNetworkSmTrustedAccessConfigsOKBodyItems0TimeboundTypeStatic captures enum value "static"
+	GetNetworkSmTrustedAccessConfigsOKBodyItems0TimeboundTypeStatic string = "static"
+)
+
+// prop value enum
+func (o *GetNetworkSmTrustedAccessConfigsOKBodyItems0) validateTimeboundTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getNetworkSmTrustedAccessConfigsOKBodyItems0TypeTimeboundTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetNetworkSmTrustedAccessConfigsOKBodyItems0) validateTimeboundType(formats strfmt.Registry) error {
+	if swag.IsZero(o.TimeboundType) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateTimeboundTypeEnum("timeboundType", "body", o.TimeboundType); err != nil {
 		return err
 	}
 

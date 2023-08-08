@@ -6,11 +6,15 @@ package insight
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // GetNetworkInsightApplicationHealthByTimeReader is a Reader for the GetNetworkInsightApplicationHealthByTime structure.
@@ -28,7 +32,7 @@ func (o *GetNetworkInsightApplicationHealthByTimeReader) ReadResponse(response r
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/insight/applications/{applicationId}/healthByTime] getNetworkInsightApplicationHealthByTime", response, response.Code())
 	}
 }
 
@@ -37,12 +41,13 @@ func NewGetNetworkInsightApplicationHealthByTimeOK() *GetNetworkInsightApplicati
 	return &GetNetworkInsightApplicationHealthByTimeOK{}
 }
 
-/* GetNetworkInsightApplicationHealthByTimeOK describes a response with status code 200, with default header values.
+/*
+GetNetworkInsightApplicationHealthByTimeOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkInsightApplicationHealthByTimeOK struct {
-	Payload []interface{}
+	Payload []*GetNetworkInsightApplicationHealthByTimeOKBodyItems0
 }
 
 // IsSuccess returns true when this get network insight application health by time o k response has a 2xx status code
@@ -70,6 +75,11 @@ func (o *GetNetworkInsightApplicationHealthByTimeOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the get network insight application health by time o k response
+func (o *GetNetworkInsightApplicationHealthByTimeOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkInsightApplicationHealthByTimeOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/insight/applications/{applicationId}/healthByTime][%d] getNetworkInsightApplicationHealthByTimeOK  %+v", 200, o.Payload)
 }
@@ -78,7 +88,7 @@ func (o *GetNetworkInsightApplicationHealthByTimeOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/insight/applications/{applicationId}/healthByTime][%d] getNetworkInsightApplicationHealthByTimeOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkInsightApplicationHealthByTimeOK) GetPayload() []interface{} {
+func (o *GetNetworkInsightApplicationHealthByTimeOK) GetPayload() []*GetNetworkInsightApplicationHealthByTimeOKBodyItems0 {
 	return o.Payload
 }
 
@@ -89,5 +99,115 @@ func (o *GetNetworkInsightApplicationHealthByTimeOK) readResponse(response runti
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkInsightApplicationHealthByTimeOKBodyItems0 get network insight application health by time o k body items0
+swagger:model GetNetworkInsightApplicationHealthByTimeOKBodyItems0
+*/
+type GetNetworkInsightApplicationHealthByTimeOKBodyItems0 struct {
+
+	// The end time of the query range
+	// Format: date-time
+	EndTs strfmt.DateTime `json:"endTs,omitempty"`
+
+	// LAN goodput (Number of useful information bits delivered over a LAN per unit of time)
+	LanGoodput int64 `json:"lanGoodput,omitempty"`
+
+	// LAN latency in milliseconds
+	LanLatencyMs float32 `json:"lanLatencyMs,omitempty"`
+
+	// LAN loss percentage
+	LanLossPercent float32 `json:"lanLossPercent,omitempty"`
+
+	// Number of clients
+	NumClients int64 `json:"numClients,omitempty"`
+
+	// Received kilobytes-per-second
+	Recv int64 `json:"recv,omitempty"`
+
+	// Duration of the response, in milliseconds
+	ResponseDuration int64 `json:"responseDuration,omitempty"`
+
+	// Sent kilobytes-per-second
+	Sent int64 `json:"sent,omitempty"`
+
+	// The start time of the query range
+	// Format: date-time
+	StartTs strfmt.DateTime `json:"startTs,omitempty"`
+
+	// WAN goodput (Number of useful information bits delivered over a WAN per unit of time)
+	WanGoodput int64 `json:"wanGoodput,omitempty"`
+
+	// WAN latency in milliseconds
+	WanLatencyMs float32 `json:"wanLatencyMs,omitempty"`
+
+	// WAN loss percentage
+	WanLossPercent float32 `json:"wanLossPercent,omitempty"`
+}
+
+// Validate validates this get network insight application health by time o k body items0
+func (o *GetNetworkInsightApplicationHealthByTimeOKBodyItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateEndTs(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateStartTs(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkInsightApplicationHealthByTimeOKBodyItems0) validateEndTs(formats strfmt.Registry) error {
+	if swag.IsZero(o.EndTs) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("endTs", "body", "date-time", o.EndTs.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *GetNetworkInsightApplicationHealthByTimeOKBodyItems0) validateStartTs(formats strfmt.Registry) error {
+	if swag.IsZero(o.StartTs) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("startTs", "body", "date-time", o.StartTs.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this get network insight application health by time o k body items0 based on context it is used
+func (o *GetNetworkInsightApplicationHealthByTimeOKBodyItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkInsightApplicationHealthByTimeOKBodyItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkInsightApplicationHealthByTimeOKBodyItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkInsightApplicationHealthByTimeOKBodyItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

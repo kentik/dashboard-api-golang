@@ -52,14 +52,19 @@ func NewUpdateDeviceCellularGatewayPortForwardingRulesParamsWithHTTPClient(clien
 	}
 }
 
-/* UpdateDeviceCellularGatewayPortForwardingRulesParams contains all the parameters to send to the API endpoint
-   for the update device cellular gateway port forwarding rules operation.
+/*
+UpdateDeviceCellularGatewayPortForwardingRulesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update device cellular gateway port forwarding rules operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateDeviceCellularGatewayPortForwardingRulesParams struct {
 
-	// Serial.
+	/* Serial.
+
+	   Serial
+	*/
 	Serial string
 
 	// UpdateDeviceCellularGatewayPortForwardingRules.

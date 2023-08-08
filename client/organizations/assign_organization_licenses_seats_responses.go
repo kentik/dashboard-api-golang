@@ -34,7 +34,7 @@ func (o *AssignOrganizationLicensesSeatsReader) ReadResponse(response runtime.Cl
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /organizations/{organizationId}/licenses/assignSeats] assignOrganizationLicensesSeats", response, response.Code())
 	}
 }
 
@@ -43,7 +43,8 @@ func NewAssignOrganizationLicensesSeatsOK() *AssignOrganizationLicensesSeatsOK {
 	return &AssignOrganizationLicensesSeatsOK{}
 }
 
-/* AssignOrganizationLicensesSeatsOK describes a response with status code 200, with default header values.
+/*
+AssignOrganizationLicensesSeatsOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -76,6 +77,11 @@ func (o *AssignOrganizationLicensesSeatsOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the assign organization licenses seats o k response
+func (o *AssignOrganizationLicensesSeatsOK) Code() int {
+	return 200
+}
+
 func (o *AssignOrganizationLicensesSeatsOK) Error() string {
 	return fmt.Sprintf("[POST /organizations/{organizationId}/licenses/assignSeats][%d] assignOrganizationLicensesSeatsOK  %+v", 200, o.Payload)
 }
@@ -100,7 +106,8 @@ func (o *AssignOrganizationLicensesSeatsOK) readResponse(response runtime.Client
 	return nil
 }
 
-/*AssignOrganizationLicensesSeatsBody assign organization licenses seats body
+/*
+AssignOrganizationLicensesSeatsBody assign organization licenses seats body
 // Example: {"licenseId":"1234","networkId":"N_24329156","seatCount":20}
 swagger:model AssignOrganizationLicensesSeatsBody
 */
@@ -191,7 +198,8 @@ func (o *AssignOrganizationLicensesSeatsBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*AssignOrganizationLicensesSeatsOKBody assign organization licenses seats o k body
+/*
+AssignOrganizationLicensesSeatsOKBody assign organization licenses seats o k body
 swagger:model AssignOrganizationLicensesSeatsOKBody
 */
 type AssignOrganizationLicensesSeatsOKBody struct {
@@ -259,6 +267,11 @@ func (o *AssignOrganizationLicensesSeatsOKBody) contextValidateResultingLicenses
 	for i := 0; i < len(o.ResultingLicenses); i++ {
 
 		if o.ResultingLicenses[i] != nil {
+
+			if swag.IsZero(o.ResultingLicenses[i]) { // not required
+				return nil
+			}
+
 			if err := o.ResultingLicenses[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("assignOrganizationLicensesSeatsOK" + "." + "resultingLicenses" + "." + strconv.Itoa(i))
@@ -292,7 +305,8 @@ func (o *AssignOrganizationLicensesSeatsOKBody) UnmarshalBinary(b []byte) error 
 	return nil
 }
 
-/*AssignOrganizationLicensesSeatsOKBodyResultingLicensesItems0 assign organization licenses seats o k body resulting licenses items0
+/*
+AssignOrganizationLicensesSeatsOKBodyResultingLicensesItems0 assign organization licenses seats o k body resulting licenses items0
 swagger:model AssignOrganizationLicensesSeatsOKBodyResultingLicensesItems0
 */
 type AssignOrganizationLicensesSeatsOKBodyResultingLicensesItems0 struct {
@@ -312,6 +326,9 @@ type AssignOrganizationLicensesSeatsOKBodyResultingLicensesItems0 struct {
 	// The date the license will expire
 	ExpirationDate string `json:"expirationDate,omitempty"`
 
+	// The id of the head license this license is queued behind. If there is no head license, it returns nil.
+	HeadLicenseID string `json:"headLicenseId,omitempty"`
+
 	// License ID
 	ID string `json:"id,omitempty"`
 
@@ -327,14 +344,14 @@ type AssignOrganizationLicensesSeatsOKBodyResultingLicensesItems0 struct {
 	// Order number
 	OrderNumber string `json:"orderNumber,omitempty"`
 
-	// List of permanently queued licenses attached to the license
+	// DEPRECATED List of permanently queued licenses attached to the license. Instead, use /organizations/{organizationId}/licenses?deviceSerial= to retrieved queued licenses for a given device.
 	PermanentlyQueuedLicenses []*AssignOrganizationLicensesSeatsOKBodyResultingLicensesItems0PermanentlyQueuedLicensesItems0 `json:"permanentlyQueuedLicenses"`
 
 	// The number of seats of the license. Only applicable to SM licenses.
 	SeatCount int64 `json:"seatCount,omitempty"`
 
-	// The state of the license
-	// Enum: [active expired expiring unused unusedActive recentlyQueued]
+	// The state of the license. All queued licenses have a status of `recentlyQueued`.
+	// Enum: [active expired expiring recentlyQueued unused unusedActive]
 	State string `json:"state,omitempty"`
 
 	// The duration of the license plus all permanently queued licenses associated with it
@@ -389,7 +406,7 @@ var assignOrganizationLicensesSeatsOKBodyResultingLicensesItems0TypeStatePropEnu
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["active","expired","expiring","unused","unusedActive","recentlyQueued"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["active","expired","expiring","recentlyQueued","unused","unusedActive"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -408,14 +425,14 @@ const (
 	// AssignOrganizationLicensesSeatsOKBodyResultingLicensesItems0StateExpiring captures enum value "expiring"
 	AssignOrganizationLicensesSeatsOKBodyResultingLicensesItems0StateExpiring string = "expiring"
 
+	// AssignOrganizationLicensesSeatsOKBodyResultingLicensesItems0StateRecentlyQueued captures enum value "recentlyQueued"
+	AssignOrganizationLicensesSeatsOKBodyResultingLicensesItems0StateRecentlyQueued string = "recentlyQueued"
+
 	// AssignOrganizationLicensesSeatsOKBodyResultingLicensesItems0StateUnused captures enum value "unused"
 	AssignOrganizationLicensesSeatsOKBodyResultingLicensesItems0StateUnused string = "unused"
 
 	// AssignOrganizationLicensesSeatsOKBodyResultingLicensesItems0StateUnusedActive captures enum value "unusedActive"
 	AssignOrganizationLicensesSeatsOKBodyResultingLicensesItems0StateUnusedActive string = "unusedActive"
-
-	// AssignOrganizationLicensesSeatsOKBodyResultingLicensesItems0StateRecentlyQueued captures enum value "recentlyQueued"
-	AssignOrganizationLicensesSeatsOKBodyResultingLicensesItems0StateRecentlyQueued string = "recentlyQueued"
 )
 
 // prop value enum
@@ -458,6 +475,11 @@ func (o *AssignOrganizationLicensesSeatsOKBodyResultingLicensesItems0) contextVa
 	for i := 0; i < len(o.PermanentlyQueuedLicenses); i++ {
 
 		if o.PermanentlyQueuedLicenses[i] != nil {
+
+			if swag.IsZero(o.PermanentlyQueuedLicenses[i]) { // not required
+				return nil
+			}
+
 			if err := o.PermanentlyQueuedLicenses[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("permanentlyQueuedLicenses" + "." + strconv.Itoa(i))
@@ -491,7 +513,8 @@ func (o *AssignOrganizationLicensesSeatsOKBodyResultingLicensesItems0) Unmarshal
 	return nil
 }
 
-/*AssignOrganizationLicensesSeatsOKBodyResultingLicensesItems0PermanentlyQueuedLicensesItems0 assign organization licenses seats o k body resulting licenses items0 permanently queued licenses items0
+/*
+AssignOrganizationLicensesSeatsOKBodyResultingLicensesItems0PermanentlyQueuedLicensesItems0 assign organization licenses seats o k body resulting licenses items0 permanently queued licenses items0
 swagger:model AssignOrganizationLicensesSeatsOKBodyResultingLicensesItems0PermanentlyQueuedLicensesItems0
 */
 type AssignOrganizationLicensesSeatsOKBodyResultingLicensesItems0PermanentlyQueuedLicensesItems0 struct {

@@ -6,11 +6,15 @@ package appliance
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"fmt"
 	"io"
+	"strconv"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesReader is a Reader for the GetNetworkApplianceFirewallL7FirewallRulesApplicationCategories structure.
@@ -28,7 +32,7 @@ func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesReader) 
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /networks/{networkId}/appliance/firewall/l7FirewallRules/applicationCategories] getNetworkApplianceFirewallL7FirewallRulesApplicationCategories", response, response.Code())
 	}
 }
 
@@ -37,12 +41,13 @@ func NewGetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOK() *Get
 	return &GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOK{}
 }
 
-/* GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOK describes a response with status code 200, with default header values.
+/*
+GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOK struct {
-	Payload interface{}
+	Payload *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBody
 }
 
 // IsSuccess returns true when this get network appliance firewall l7 firewall rules application categories o k response has a 2xx status code
@@ -70,6 +75,11 @@ func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOK) IsCo
 	return code == 200
 }
 
+// Code gets the status code for the get network appliance firewall l7 firewall rules application categories o k response
+func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOK) Code() int {
+	return 200
+}
+
 func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/appliance/firewall/l7FirewallRules/applicationCategories][%d] getNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOK  %+v", 200, o.Payload)
 }
@@ -78,16 +88,279 @@ func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOK) Stri
 	return fmt.Sprintf("[GET /networks/{networkId}/appliance/firewall/l7FirewallRules/applicationCategories][%d] getNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOK) GetPayload() interface{} {
+func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOK) GetPayload() *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBody {
 	return o.Payload
 }
 
 func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
+	return nil
+}
+
+/*
+GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBody get network appliance firewall l7 firewall rules application categories o k body
+swagger:model GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBody
+*/
+type GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBody struct {
+
+	//  The L7 firewall application categories and their associated applications for an MX network
+	ApplicationCategories []*GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBodyApplicationCategoriesItems0 `json:"applicationCategories"`
+}
+
+// Validate validates this get network appliance firewall l7 firewall rules application categories o k body
+func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateApplicationCategories(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBody) validateApplicationCategories(formats strfmt.Registry) error {
+	if swag.IsZero(o.ApplicationCategories) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.ApplicationCategories); i++ {
+		if swag.IsZero(o.ApplicationCategories[i]) { // not required
+			continue
+		}
+
+		if o.ApplicationCategories[i] != nil {
+			if err := o.ApplicationCategories[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOK" + "." + "applicationCategories" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOK" + "." + "applicationCategories" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network appliance firewall l7 firewall rules application categories o k body based on the context it is used
+func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateApplicationCategories(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBody) contextValidateApplicationCategories(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.ApplicationCategories); i++ {
+
+		if o.ApplicationCategories[i] != nil {
+
+			if swag.IsZero(o.ApplicationCategories[i]) { // not required
+				return nil
+			}
+
+			if err := o.ApplicationCategories[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOK" + "." + "applicationCategories" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOK" + "." + "applicationCategories" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBody) UnmarshalBinary(b []byte) error {
+	var res GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBodyApplicationCategoriesItems0 get network appliance firewall l7 firewall rules application categories o k body application categories items0
+swagger:model GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBodyApplicationCategoriesItems0
+*/
+type GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBodyApplicationCategoriesItems0 struct {
+
+	// Details of the associated applications
+	Applications []*GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBodyApplicationCategoriesItems0ApplicationsItems0 `json:"applications"`
+
+	// The id of the category
+	ID string `json:"id,omitempty"`
+
+	// The name of the category
+	Name string `json:"name,omitempty"`
+}
+
+// Validate validates this get network appliance firewall l7 firewall rules application categories o k body application categories items0
+func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBodyApplicationCategoriesItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateApplications(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBodyApplicationCategoriesItems0) validateApplications(formats strfmt.Registry) error {
+	if swag.IsZero(o.Applications) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Applications); i++ {
+		if swag.IsZero(o.Applications[i]) { // not required
+			continue
+		}
+
+		if o.Applications[i] != nil {
+			if err := o.Applications[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("applications" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("applications" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get network appliance firewall l7 firewall rules application categories o k body application categories items0 based on the context it is used
+func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBodyApplicationCategoriesItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateApplications(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBodyApplicationCategoriesItems0) contextValidateApplications(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Applications); i++ {
+
+		if o.Applications[i] != nil {
+
+			if swag.IsZero(o.Applications[i]) { // not required
+				return nil
+			}
+
+			if err := o.Applications[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("applications" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("applications" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBodyApplicationCategoriesItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBodyApplicationCategoriesItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBodyApplicationCategoriesItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBodyApplicationCategoriesItems0ApplicationsItems0 get network appliance firewall l7 firewall rules application categories o k body application categories items0 applications items0
+swagger:model GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBodyApplicationCategoriesItems0ApplicationsItems0
+*/
+type GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBodyApplicationCategoriesItems0ApplicationsItems0 struct {
+
+	// The id of the application
+	ID string `json:"id,omitempty"`
+
+	// The name of the application
+	Name string `json:"name,omitempty"`
+}
+
+// Validate validates this get network appliance firewall l7 firewall rules application categories o k body application categories items0 applications items0
+func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBodyApplicationCategoriesItems0ApplicationsItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get network appliance firewall l7 firewall rules application categories o k body application categories items0 applications items0 based on context it is used
+func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBodyApplicationCategoriesItems0ApplicationsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBodyApplicationCategoriesItems0ApplicationsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBodyApplicationCategoriesItems0ApplicationsItems0) UnmarshalBinary(b []byte) error {
+	var res GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOKBodyApplicationCategoriesItems0ApplicationsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }

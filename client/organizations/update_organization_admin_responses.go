@@ -34,7 +34,7 @@ func (o *UpdateOrganizationAdminReader) ReadResponse(response runtime.ClientResp
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /organizations/{organizationId}/admins/{adminId}] updateOrganizationAdmin", response, response.Code())
 	}
 }
 
@@ -43,12 +43,13 @@ func NewUpdateOrganizationAdminOK() *UpdateOrganizationAdminOK {
 	return &UpdateOrganizationAdminOK{}
 }
 
-/* UpdateOrganizationAdminOK describes a response with status code 200, with default header values.
+/*
+UpdateOrganizationAdminOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
 type UpdateOrganizationAdminOK struct {
-	Payload interface{}
+	Payload *UpdateOrganizationAdminOKBody
 }
 
 // IsSuccess returns true when this update organization admin o k response has a 2xx status code
@@ -76,6 +77,11 @@ func (o *UpdateOrganizationAdminOK) IsCode(code int) bool {
 	return code == 200
 }
 
+// Code gets the status code for the update organization admin o k response
+func (o *UpdateOrganizationAdminOK) Code() int {
+	return 200
+}
+
 func (o *UpdateOrganizationAdminOK) Error() string {
 	return fmt.Sprintf("[PUT /organizations/{organizationId}/admins/{adminId}][%d] updateOrganizationAdminOK  %+v", 200, o.Payload)
 }
@@ -84,22 +90,25 @@ func (o *UpdateOrganizationAdminOK) String() string {
 	return fmt.Sprintf("[PUT /organizations/{organizationId}/admins/{adminId}][%d] updateOrganizationAdminOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateOrganizationAdminOK) GetPayload() interface{} {
+func (o *UpdateOrganizationAdminOK) GetPayload() *UpdateOrganizationAdminOKBody {
 	return o.Payload
 }
 
 func (o *UpdateOrganizationAdminOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(UpdateOrganizationAdminOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
 	return nil
 }
 
-/*UpdateOrganizationAdminBody update organization admin body
-// Example: {"name":"Miles Meraki","orgAccess":"none","tags":[{"access":"read-only","tag":"west"}]}
+/*
+UpdateOrganizationAdminBody update organization admin body
+// Example: {"name":"Miles Meraki","networks":[{"access":"full","id":"N_24329156"}],"orgAccess":"none","tags":[{"access":"read-only","tag":"west"}]}
 swagger:model UpdateOrganizationAdminBody
 */
 type UpdateOrganizationAdminBody struct {
@@ -111,7 +120,7 @@ type UpdateOrganizationAdminBody struct {
 	Networks []*UpdateOrganizationAdminParamsBodyNetworksItems0 `json:"networks"`
 
 	// The privilege of the dashboard administrator on the organization. Can be one of 'full', 'read-only', 'enterprise' or 'none'
-	// Enum: [full read-only enterprise none]
+	// Enum: [enterprise full none read-only]
 	OrgAccess string `json:"orgAccess,omitempty"`
 
 	// The list of tags that the dashboard administrator has privileges on
@@ -170,7 +179,7 @@ var updateOrganizationAdminBodyTypeOrgAccessPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["full","read-only","enterprise","none"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["enterprise","full","none","read-only"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -180,17 +189,17 @@ func init() {
 
 const (
 
-	// UpdateOrganizationAdminBodyOrgAccessFull captures enum value "full"
-	UpdateOrganizationAdminBodyOrgAccessFull string = "full"
-
-	// UpdateOrganizationAdminBodyOrgAccessReadDashOnly captures enum value "read-only"
-	UpdateOrganizationAdminBodyOrgAccessReadDashOnly string = "read-only"
-
 	// UpdateOrganizationAdminBodyOrgAccessEnterprise captures enum value "enterprise"
 	UpdateOrganizationAdminBodyOrgAccessEnterprise string = "enterprise"
 
+	// UpdateOrganizationAdminBodyOrgAccessFull captures enum value "full"
+	UpdateOrganizationAdminBodyOrgAccessFull string = "full"
+
 	// UpdateOrganizationAdminBodyOrgAccessNone captures enum value "none"
 	UpdateOrganizationAdminBodyOrgAccessNone string = "none"
+
+	// UpdateOrganizationAdminBodyOrgAccessReadDashOnly captures enum value "read-only"
+	UpdateOrganizationAdminBodyOrgAccessReadDashOnly string = "read-only"
 )
 
 // prop value enum
@@ -263,6 +272,11 @@ func (o *UpdateOrganizationAdminBody) contextValidateNetworks(ctx context.Contex
 	for i := 0; i < len(o.Networks); i++ {
 
 		if o.Networks[i] != nil {
+
+			if swag.IsZero(o.Networks[i]) { // not required
+				return nil
+			}
+
 			if err := o.Networks[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateOrganizationAdmin" + "." + "networks" + "." + strconv.Itoa(i))
@@ -283,6 +297,11 @@ func (o *UpdateOrganizationAdminBody) contextValidateTags(ctx context.Context, f
 	for i := 0; i < len(o.Tags); i++ {
 
 		if o.Tags[i] != nil {
+
+			if swag.IsZero(o.Tags[i]) { // not required
+				return nil
+			}
+
 			if err := o.Tags[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("updateOrganizationAdmin" + "." + "tags" + "." + strconv.Itoa(i))
@@ -316,14 +335,462 @@ func (o *UpdateOrganizationAdminBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*UpdateOrganizationAdminParamsBodyNetworksItems0 update organization admin params body networks items0
+/*
+UpdateOrganizationAdminOKBody update organization admin o k body
+swagger:model UpdateOrganizationAdminOKBody
+*/
+type UpdateOrganizationAdminOKBody struct {
+
+	// Status of the admin's account
+	// Enum: [locked ok pending unverified]
+	AccountStatus string `json:"accountStatus,omitempty"`
+
+	// Admin's authentication method
+	// Enum: [Cisco SecureX Sign-On Email]
+	AuthenticationMethod string `json:"authenticationMethod,omitempty"`
+
+	// Admin's email address
+	Email string `json:"email,omitempty"`
+
+	// Indicates whether the admin has an API key
+	HasAPIKey bool `json:"hasApiKey,omitempty"`
+
+	// Admin's ID
+	ID string `json:"id,omitempty"`
+
+	// Time when the admin was last active
+	// Format: date-time
+	LastActive strfmt.DateTime `json:"lastActive,omitempty"`
+
+	// Admin's username
+	Name string `json:"name,omitempty"`
+
+	// Admin network access information
+	Networks []*UpdateOrganizationAdminOKBodyNetworksItems0 `json:"networks"`
+
+	// Admin's level of access to the organization
+	// Enum: [enterprise full none read-only]
+	OrgAccess string `json:"orgAccess,omitempty"`
+
+	// Admin tag information
+	Tags []*UpdateOrganizationAdminOKBodyTagsItems0 `json:"tags"`
+
+	// Indicates whether two-factor authentication is enabled
+	TwoFactorAuthEnabled bool `json:"twoFactorAuthEnabled,omitempty"`
+}
+
+// Validate validates this update organization admin o k body
+func (o *UpdateOrganizationAdminOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateAccountStatus(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateAuthenticationMethod(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateLastActive(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateNetworks(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateOrgAccess(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTags(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var updateOrganizationAdminOKBodyTypeAccountStatusPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["locked","ok","pending","unverified"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateOrganizationAdminOKBodyTypeAccountStatusPropEnum = append(updateOrganizationAdminOKBodyTypeAccountStatusPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateOrganizationAdminOKBodyAccountStatusLocked captures enum value "locked"
+	UpdateOrganizationAdminOKBodyAccountStatusLocked string = "locked"
+
+	// UpdateOrganizationAdminOKBodyAccountStatusOk captures enum value "ok"
+	UpdateOrganizationAdminOKBodyAccountStatusOk string = "ok"
+
+	// UpdateOrganizationAdminOKBodyAccountStatusPending captures enum value "pending"
+	UpdateOrganizationAdminOKBodyAccountStatusPending string = "pending"
+
+	// UpdateOrganizationAdminOKBodyAccountStatusUnverified captures enum value "unverified"
+	UpdateOrganizationAdminOKBodyAccountStatusUnverified string = "unverified"
+)
+
+// prop value enum
+func (o *UpdateOrganizationAdminOKBody) validateAccountStatusEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateOrganizationAdminOKBodyTypeAccountStatusPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationAdminOKBody) validateAccountStatus(formats strfmt.Registry) error {
+	if swag.IsZero(o.AccountStatus) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateAccountStatusEnum("updateOrganizationAdminOK"+"."+"accountStatus", "body", o.AccountStatus); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var updateOrganizationAdminOKBodyTypeAuthenticationMethodPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Cisco SecureX Sign-On","Email"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateOrganizationAdminOKBodyTypeAuthenticationMethodPropEnum = append(updateOrganizationAdminOKBodyTypeAuthenticationMethodPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateOrganizationAdminOKBodyAuthenticationMethodCiscoSecureXSignDashOn captures enum value "Cisco SecureX Sign-On"
+	UpdateOrganizationAdminOKBodyAuthenticationMethodCiscoSecureXSignDashOn string = "Cisco SecureX Sign-On"
+
+	// UpdateOrganizationAdminOKBodyAuthenticationMethodEmail captures enum value "Email"
+	UpdateOrganizationAdminOKBodyAuthenticationMethodEmail string = "Email"
+)
+
+// prop value enum
+func (o *UpdateOrganizationAdminOKBody) validateAuthenticationMethodEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateOrganizationAdminOKBodyTypeAuthenticationMethodPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationAdminOKBody) validateAuthenticationMethod(formats strfmt.Registry) error {
+	if swag.IsZero(o.AuthenticationMethod) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateAuthenticationMethodEnum("updateOrganizationAdminOK"+"."+"authenticationMethod", "body", o.AuthenticationMethod); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateOrganizationAdminOKBody) validateLastActive(formats strfmt.Registry) error {
+	if swag.IsZero(o.LastActive) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updateOrganizationAdminOK"+"."+"lastActive", "body", "date-time", o.LastActive.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateOrganizationAdminOKBody) validateNetworks(formats strfmt.Registry) error {
+	if swag.IsZero(o.Networks) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Networks); i++ {
+		if swag.IsZero(o.Networks[i]) { // not required
+			continue
+		}
+
+		if o.Networks[i] != nil {
+			if err := o.Networks[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateOrganizationAdminOK" + "." + "networks" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateOrganizationAdminOK" + "." + "networks" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+var updateOrganizationAdminOKBodyTypeOrgAccessPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["enterprise","full","none","read-only"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		updateOrganizationAdminOKBodyTypeOrgAccessPropEnum = append(updateOrganizationAdminOKBodyTypeOrgAccessPropEnum, v)
+	}
+}
+
+const (
+
+	// UpdateOrganizationAdminOKBodyOrgAccessEnterprise captures enum value "enterprise"
+	UpdateOrganizationAdminOKBodyOrgAccessEnterprise string = "enterprise"
+
+	// UpdateOrganizationAdminOKBodyOrgAccessFull captures enum value "full"
+	UpdateOrganizationAdminOKBodyOrgAccessFull string = "full"
+
+	// UpdateOrganizationAdminOKBodyOrgAccessNone captures enum value "none"
+	UpdateOrganizationAdminOKBodyOrgAccessNone string = "none"
+
+	// UpdateOrganizationAdminOKBodyOrgAccessReadDashOnly captures enum value "read-only"
+	UpdateOrganizationAdminOKBodyOrgAccessReadDashOnly string = "read-only"
+)
+
+// prop value enum
+func (o *UpdateOrganizationAdminOKBody) validateOrgAccessEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, updateOrganizationAdminOKBodyTypeOrgAccessPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationAdminOKBody) validateOrgAccess(formats strfmt.Registry) error {
+	if swag.IsZero(o.OrgAccess) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateOrgAccessEnum("updateOrganizationAdminOK"+"."+"orgAccess", "body", o.OrgAccess); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *UpdateOrganizationAdminOKBody) validateTags(formats strfmt.Registry) error {
+	if swag.IsZero(o.Tags) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Tags); i++ {
+		if swag.IsZero(o.Tags[i]) { // not required
+			continue
+		}
+
+		if o.Tags[i] != nil {
+			if err := o.Tags[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateOrganizationAdminOK" + "." + "tags" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateOrganizationAdminOK" + "." + "tags" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update organization admin o k body based on the context it is used
+func (o *UpdateOrganizationAdminOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateNetworks(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.contextValidateTags(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *UpdateOrganizationAdminOKBody) contextValidateNetworks(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Networks); i++ {
+
+		if o.Networks[i] != nil {
+
+			if swag.IsZero(o.Networks[i]) { // not required
+				return nil
+			}
+
+			if err := o.Networks[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateOrganizationAdminOK" + "." + "networks" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateOrganizationAdminOK" + "." + "networks" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (o *UpdateOrganizationAdminOKBody) contextValidateTags(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Tags); i++ {
+
+		if o.Tags[i] != nil {
+
+			if swag.IsZero(o.Tags[i]) { // not required
+				return nil
+			}
+
+			if err := o.Tags[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("updateOrganizationAdminOK" + "." + "tags" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("updateOrganizationAdminOK" + "." + "tags" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateOrganizationAdminOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateOrganizationAdminOKBody) UnmarshalBinary(b []byte) error {
+	var res UpdateOrganizationAdminOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateOrganizationAdminOKBodyNetworksItems0 update organization admin o k body networks items0
+swagger:model UpdateOrganizationAdminOKBodyNetworksItems0
+*/
+type UpdateOrganizationAdminOKBodyNetworksItems0 struct {
+
+	// Admin's level of access to the network
+	Access string `json:"access,omitempty"`
+
+	// Network ID
+	ID string `json:"id,omitempty"`
+}
+
+// Validate validates this update organization admin o k body networks items0
+func (o *UpdateOrganizationAdminOKBodyNetworksItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update organization admin o k body networks items0 based on context it is used
+func (o *UpdateOrganizationAdminOKBodyNetworksItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateOrganizationAdminOKBodyNetworksItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateOrganizationAdminOKBodyNetworksItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateOrganizationAdminOKBodyNetworksItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateOrganizationAdminOKBodyTagsItems0 update organization admin o k body tags items0
+swagger:model UpdateOrganizationAdminOKBodyTagsItems0
+*/
+type UpdateOrganizationAdminOKBodyTagsItems0 struct {
+
+	// Access level for the tag
+	Access string `json:"access,omitempty"`
+
+	// Tag value
+	Tag string `json:"tag,omitempty"`
+}
+
+// Validate validates this update organization admin o k body tags items0
+func (o *UpdateOrganizationAdminOKBodyTagsItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this update organization admin o k body tags items0 based on context it is used
+func (o *UpdateOrganizationAdminOKBodyTagsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdateOrganizationAdminOKBodyTagsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdateOrganizationAdminOKBodyTagsItems0) UnmarshalBinary(b []byte) error {
+	var res UpdateOrganizationAdminOKBodyTagsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+UpdateOrganizationAdminParamsBodyNetworksItems0 update organization admin params body networks items0
 swagger:model UpdateOrganizationAdminParamsBodyNetworksItems0
 */
 type UpdateOrganizationAdminParamsBodyNetworksItems0 struct {
 
 	// The privilege of the dashboard administrator on the network. Can be one of 'full', 'read-only', 'guest-ambassador' or 'monitor-only'
 	// Required: true
-	// Enum: [full read-only guest-ambassador monitor-only]
 	Access *string `json:"access"`
 
 	// The network ID
@@ -349,49 +816,9 @@ func (o *UpdateOrganizationAdminParamsBodyNetworksItems0) Validate(formats strfm
 	return nil
 }
 
-var updateOrganizationAdminParamsBodyNetworksItems0TypeAccessPropEnum []interface{}
-
-func init() {
-	var res []string
-	if err := json.Unmarshal([]byte(`["full","read-only","guest-ambassador","monitor-only"]`), &res); err != nil {
-		panic(err)
-	}
-	for _, v := range res {
-		updateOrganizationAdminParamsBodyNetworksItems0TypeAccessPropEnum = append(updateOrganizationAdminParamsBodyNetworksItems0TypeAccessPropEnum, v)
-	}
-}
-
-const (
-
-	// UpdateOrganizationAdminParamsBodyNetworksItems0AccessFull captures enum value "full"
-	UpdateOrganizationAdminParamsBodyNetworksItems0AccessFull string = "full"
-
-	// UpdateOrganizationAdminParamsBodyNetworksItems0AccessReadDashOnly captures enum value "read-only"
-	UpdateOrganizationAdminParamsBodyNetworksItems0AccessReadDashOnly string = "read-only"
-
-	// UpdateOrganizationAdminParamsBodyNetworksItems0AccessGuestDashAmbassador captures enum value "guest-ambassador"
-	UpdateOrganizationAdminParamsBodyNetworksItems0AccessGuestDashAmbassador string = "guest-ambassador"
-
-	// UpdateOrganizationAdminParamsBodyNetworksItems0AccessMonitorDashOnly captures enum value "monitor-only"
-	UpdateOrganizationAdminParamsBodyNetworksItems0AccessMonitorDashOnly string = "monitor-only"
-)
-
-// prop value enum
-func (o *UpdateOrganizationAdminParamsBodyNetworksItems0) validateAccessEnum(path, location string, value string) error {
-	if err := validate.EnumCase(path, location, value, updateOrganizationAdminParamsBodyNetworksItems0TypeAccessPropEnum, true); err != nil {
-		return err
-	}
-	return nil
-}
-
 func (o *UpdateOrganizationAdminParamsBodyNetworksItems0) validateAccess(formats strfmt.Registry) error {
 
 	if err := validate.Required("access", "body", o.Access); err != nil {
-		return err
-	}
-
-	// value enum
-	if err := o.validateAccessEnum("access", "body", *o.Access); err != nil {
 		return err
 	}
 
@@ -430,14 +857,15 @@ func (o *UpdateOrganizationAdminParamsBodyNetworksItems0) UnmarshalBinary(b []by
 	return nil
 }
 
-/*UpdateOrganizationAdminParamsBodyTagsItems0 update organization admin params body tags items0
+/*
+UpdateOrganizationAdminParamsBodyTagsItems0 update organization admin params body tags items0
 swagger:model UpdateOrganizationAdminParamsBodyTagsItems0
 */
 type UpdateOrganizationAdminParamsBodyTagsItems0 struct {
 
 	// The privilege of the dashboard administrator on the tag. Can be one of 'full', 'read-only', 'guest-ambassador' or 'monitor-only'
 	// Required: true
-	// Enum: [full read-only guest-ambassador monitor-only]
+	// Enum: [full guest-ambassador monitor-only read-only]
 	Access *string `json:"access"`
 
 	// The name of the tag
@@ -467,7 +895,7 @@ var updateOrganizationAdminParamsBodyTagsItems0TypeAccessPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["full","read-only","guest-ambassador","monitor-only"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["full","guest-ambassador","monitor-only","read-only"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -480,14 +908,14 @@ const (
 	// UpdateOrganizationAdminParamsBodyTagsItems0AccessFull captures enum value "full"
 	UpdateOrganizationAdminParamsBodyTagsItems0AccessFull string = "full"
 
-	// UpdateOrganizationAdminParamsBodyTagsItems0AccessReadDashOnly captures enum value "read-only"
-	UpdateOrganizationAdminParamsBodyTagsItems0AccessReadDashOnly string = "read-only"
-
 	// UpdateOrganizationAdminParamsBodyTagsItems0AccessGuestDashAmbassador captures enum value "guest-ambassador"
 	UpdateOrganizationAdminParamsBodyTagsItems0AccessGuestDashAmbassador string = "guest-ambassador"
 
 	// UpdateOrganizationAdminParamsBodyTagsItems0AccessMonitorDashOnly captures enum value "monitor-only"
 	UpdateOrganizationAdminParamsBodyTagsItems0AccessMonitorDashOnly string = "monitor-only"
+
+	// UpdateOrganizationAdminParamsBodyTagsItems0AccessReadDashOnly captures enum value "read-only"
+	UpdateOrganizationAdminParamsBodyTagsItems0AccessReadDashOnly string = "read-only"
 )
 
 // prop value enum

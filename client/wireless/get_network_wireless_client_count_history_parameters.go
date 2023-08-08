@@ -53,10 +53,12 @@ func NewGetNetworkWirelessClientCountHistoryParamsWithHTTPClient(client *http.Cl
 	}
 }
 
-/* GetNetworkWirelessClientCountHistoryParams contains all the parameters to send to the API endpoint
-   for the get network wireless client count history operation.
+/*
+GetNetworkWirelessClientCountHistoryParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get network wireless client count history operation.
+
+	Typically these are written to a http.Request.
 */
 type GetNetworkWirelessClientCountHistoryParams struct {
 
@@ -90,7 +92,10 @@ type GetNetworkWirelessClientCountHistoryParams struct {
 	*/
 	DeviceSerial *string
 
-	// NetworkID.
+	/* NetworkID.
+
+	   Network ID
+	*/
 	NetworkID string
 
 	/* Resolution.

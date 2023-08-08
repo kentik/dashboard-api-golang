@@ -32,11 +32,19 @@ type ClientOption func(*runtime.ClientOperation)
 type ClientService interface {
 	CreateDeviceApplianceVmxAuthenticationToken(params *CreateDeviceApplianceVmxAuthenticationTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateDeviceApplianceVmxAuthenticationTokenCreated, error)
 
+	CreateNetworkAppliancePrefixesDelegatedStatic(params *CreateNetworkAppliancePrefixesDelegatedStaticParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkAppliancePrefixesDelegatedStaticCreated, error)
+
+	CreateNetworkApplianceRfProfile(params *CreateNetworkApplianceRfProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkApplianceRfProfileCreated, error)
+
 	CreateNetworkApplianceStaticRoute(params *CreateNetworkApplianceStaticRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkApplianceStaticRouteCreated, error)
 
 	CreateNetworkApplianceTrafficShapingCustomPerformanceClass(params *CreateNetworkApplianceTrafficShapingCustomPerformanceClassParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkApplianceTrafficShapingCustomPerformanceClassCreated, error)
 
 	CreateNetworkApplianceVlan(params *CreateNetworkApplianceVlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkApplianceVlanCreated, error)
+
+	DeleteNetworkAppliancePrefixesDelegatedStatic(params *DeleteNetworkAppliancePrefixesDelegatedStaticParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkAppliancePrefixesDelegatedStaticNoContent, error)
+
+	DeleteNetworkApplianceRfProfile(params *DeleteNetworkApplianceRfProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkApplianceRfProfileNoContent, error)
 
 	DeleteNetworkApplianceStaticRoute(params *DeleteNetworkApplianceStaticRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkApplianceStaticRouteNoContent, error)
 
@@ -47,6 +55,14 @@ type ClientService interface {
 	GetDeviceApplianceDhcpSubnets(params *GetDeviceApplianceDhcpSubnetsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceApplianceDhcpSubnetsOK, error)
 
 	GetDeviceAppliancePerformance(params *GetDeviceAppliancePerformanceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceAppliancePerformanceOK, error)
+
+	GetDeviceAppliancePrefixesDelegated(params *GetDeviceAppliancePrefixesDelegatedParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceAppliancePrefixesDelegatedOK, error)
+
+	GetDeviceAppliancePrefixesDelegatedVlanAssignments(params *GetDeviceAppliancePrefixesDelegatedVlanAssignmentsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceAppliancePrefixesDelegatedVlanAssignmentsOK, error)
+
+	GetDeviceApplianceRadioSettings(params *GetDeviceApplianceRadioSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceApplianceRadioSettingsOK, error)
+
+	GetDeviceApplianceUplinksSettings(params *GetDeviceApplianceUplinksSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceApplianceUplinksSettingsOK, error)
 
 	GetNetworkApplianceClientSecurityEvents(params *GetNetworkApplianceClientSecurityEventsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceClientSecurityEventsOK, error)
 
@@ -62,6 +78,8 @@ type ClientService interface {
 
 	GetNetworkApplianceFirewallFirewalledServices(params *GetNetworkApplianceFirewallFirewalledServicesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceFirewallFirewalledServicesOK, error)
 
+	GetNetworkApplianceFirewallInboundCellularFirewallRules(params *GetNetworkApplianceFirewallInboundCellularFirewallRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceFirewallInboundCellularFirewallRulesOK, error)
+
 	GetNetworkApplianceFirewallInboundFirewallRules(params *GetNetworkApplianceFirewallInboundFirewallRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceFirewallInboundFirewallRulesOK, error)
 
 	GetNetworkApplianceFirewallL3FirewallRules(params *GetNetworkApplianceFirewallL3FirewallRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceFirewallL3FirewallRulesOK, error)
@@ -76,9 +94,19 @@ type ClientService interface {
 
 	GetNetworkApplianceFirewallPortForwardingRules(params *GetNetworkApplianceFirewallPortForwardingRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceFirewallPortForwardingRulesOK, error)
 
+	GetNetworkApplianceFirewallSettings(params *GetNetworkApplianceFirewallSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceFirewallSettingsOK, error)
+
 	GetNetworkAppliancePort(params *GetNetworkAppliancePortParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkAppliancePortOK, error)
 
 	GetNetworkAppliancePorts(params *GetNetworkAppliancePortsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkAppliancePortsOK, error)
+
+	GetNetworkAppliancePrefixesDelegatedStatic(params *GetNetworkAppliancePrefixesDelegatedStaticParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkAppliancePrefixesDelegatedStaticOK, error)
+
+	GetNetworkAppliancePrefixesDelegatedStatics(params *GetNetworkAppliancePrefixesDelegatedStaticsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkAppliancePrefixesDelegatedStaticsOK, error)
+
+	GetNetworkApplianceRfProfile(params *GetNetworkApplianceRfProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceRfProfileOK, error)
+
+	GetNetworkApplianceRfProfiles(params *GetNetworkApplianceRfProfilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceRfProfilesOK, error)
 
 	GetNetworkApplianceSecurityEvents(params *GetNetworkApplianceSecurityEventsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceSecurityEventsOK, error)
 
@@ -89,6 +117,10 @@ type ClientService interface {
 	GetNetworkApplianceSettings(params *GetNetworkApplianceSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceSettingsOK, error)
 
 	GetNetworkApplianceSingleLan(params *GetNetworkApplianceSingleLanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceSingleLanOK, error)
+
+	GetNetworkApplianceSsid(params *GetNetworkApplianceSsidParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceSsidOK, error)
+
+	GetNetworkApplianceSsids(params *GetNetworkApplianceSsidsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceSsidsOK, error)
 
 	GetNetworkApplianceStaticRoute(params *GetNetworkApplianceStaticRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceStaticRouteOK, error)
 
@@ -126,6 +158,8 @@ type ClientService interface {
 
 	GetOrganizationApplianceUplinkStatuses(params *GetOrganizationApplianceUplinkStatusesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationApplianceUplinkStatusesOK, error)
 
+	GetOrganizationApplianceUplinksUsageByNetwork(params *GetOrganizationApplianceUplinksUsageByNetworkParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationApplianceUplinksUsageByNetworkOK, error)
+
 	GetOrganizationApplianceVpnStats(params *GetOrganizationApplianceVpnStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationApplianceVpnStatsOK, error)
 
 	GetOrganizationApplianceVpnStatuses(params *GetOrganizationApplianceVpnStatusesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationApplianceVpnStatusesOK, error)
@@ -136,6 +170,10 @@ type ClientService interface {
 
 	SwapNetworkApplianceWarmSpare(params *SwapNetworkApplianceWarmSpareParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*SwapNetworkApplianceWarmSpareOK, error)
 
+	UpdateDeviceApplianceRadioSettings(params *UpdateDeviceApplianceRadioSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceApplianceRadioSettingsOK, error)
+
+	UpdateDeviceApplianceUplinksSettings(params *UpdateDeviceApplianceUplinksSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceApplianceUplinksSettingsOK, error)
+
 	UpdateNetworkApplianceConnectivityMonitoringDestinations(params *UpdateNetworkApplianceConnectivityMonitoringDestinationsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceConnectivityMonitoringDestinationsOK, error)
 
 	UpdateNetworkApplianceContentFiltering(params *UpdateNetworkApplianceContentFilteringParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceContentFilteringOK, error)
@@ -143,6 +181,8 @@ type ClientService interface {
 	UpdateNetworkApplianceFirewallCellularFirewallRules(params *UpdateNetworkApplianceFirewallCellularFirewallRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceFirewallCellularFirewallRulesOK, error)
 
 	UpdateNetworkApplianceFirewallFirewalledService(params *UpdateNetworkApplianceFirewallFirewalledServiceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceFirewallFirewalledServiceOK, error)
+
+	UpdateNetworkApplianceFirewallInboundCellularFirewallRules(params *UpdateNetworkApplianceFirewallInboundCellularFirewallRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceFirewallInboundCellularFirewallRulesOK, error)
 
 	UpdateNetworkApplianceFirewallInboundFirewallRules(params *UpdateNetworkApplianceFirewallInboundFirewallRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceFirewallInboundFirewallRulesOK, error)
 
@@ -156,13 +196,23 @@ type ClientService interface {
 
 	UpdateNetworkApplianceFirewallPortForwardingRules(params *UpdateNetworkApplianceFirewallPortForwardingRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceFirewallPortForwardingRulesOK, error)
 
+	UpdateNetworkApplianceFirewallSettings(params *UpdateNetworkApplianceFirewallSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceFirewallSettingsOK, error)
+
 	UpdateNetworkAppliancePort(params *UpdateNetworkAppliancePortParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkAppliancePortOK, error)
+
+	UpdateNetworkAppliancePrefixesDelegatedStatic(params *UpdateNetworkAppliancePrefixesDelegatedStaticParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkAppliancePrefixesDelegatedStaticOK, error)
+
+	UpdateNetworkApplianceRfProfile(params *UpdateNetworkApplianceRfProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceRfProfileOK, error)
 
 	UpdateNetworkApplianceSecurityIntrusion(params *UpdateNetworkApplianceSecurityIntrusionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceSecurityIntrusionOK, error)
 
 	UpdateNetworkApplianceSecurityMalware(params *UpdateNetworkApplianceSecurityMalwareParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceSecurityMalwareOK, error)
 
+	UpdateNetworkApplianceSettings(params *UpdateNetworkApplianceSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceSettingsOK, error)
+
 	UpdateNetworkApplianceSingleLan(params *UpdateNetworkApplianceSingleLanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceSingleLanOK, error)
+
+	UpdateNetworkApplianceSsid(params *UpdateNetworkApplianceSsidParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceSsidOK, error)
 
 	UpdateNetworkApplianceStaticRoute(params *UpdateNetworkApplianceStaticRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceStaticRouteOK, error)
 
@@ -196,9 +246,9 @@ type ClientService interface {
 }
 
 /*
-  CreateDeviceApplianceVmxAuthenticationToken generates a new v m x authentication token
+CreateDeviceApplianceVmxAuthenticationToken generates a new v m x authentication token
 
-  Generate a new vMX authentication token
+Generate a new vMX authentication token
 */
 func (a *Client) CreateDeviceApplianceVmxAuthenticationToken(params *CreateDeviceApplianceVmxAuthenticationTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateDeviceApplianceVmxAuthenticationTokenCreated, error) {
 	// TODO: Validate the params before sending
@@ -237,9 +287,91 @@ func (a *Client) CreateDeviceApplianceVmxAuthenticationToken(params *CreateDevic
 }
 
 /*
-  CreateNetworkApplianceStaticRoute adds a static route for an m x or teleworker network
+CreateNetworkAppliancePrefixesDelegatedStatic adds a static delegated prefix from a network
 
-  Add a static route for an MX or teleworker network
+Add a static delegated prefix from a network
+*/
+func (a *Client) CreateNetworkAppliancePrefixesDelegatedStatic(params *CreateNetworkAppliancePrefixesDelegatedStaticParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkAppliancePrefixesDelegatedStaticCreated, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateNetworkAppliancePrefixesDelegatedStaticParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "createNetworkAppliancePrefixesDelegatedStatic",
+		Method:             "POST",
+		PathPattern:        "/networks/{networkId}/appliance/prefixes/delegated/statics",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &CreateNetworkAppliancePrefixesDelegatedStaticReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*CreateNetworkAppliancePrefixesDelegatedStaticCreated)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for createNetworkAppliancePrefixesDelegatedStatic: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+CreateNetworkApplianceRfProfile creates new r f profile for this network
+
+Creates new RF profile for this network
+*/
+func (a *Client) CreateNetworkApplianceRfProfile(params *CreateNetworkApplianceRfProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkApplianceRfProfileCreated, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateNetworkApplianceRfProfileParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "createNetworkApplianceRfProfile",
+		Method:             "POST",
+		PathPattern:        "/networks/{networkId}/appliance/rfProfiles",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &CreateNetworkApplianceRfProfileReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*CreateNetworkApplianceRfProfileCreated)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for createNetworkApplianceRfProfile: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+CreateNetworkApplianceStaticRoute adds a static route for an m x or teleworker network
+
+Add a static route for an MX or teleworker network
 */
 func (a *Client) CreateNetworkApplianceStaticRoute(params *CreateNetworkApplianceStaticRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkApplianceStaticRouteCreated, error) {
 	// TODO: Validate the params before sending
@@ -278,9 +410,9 @@ func (a *Client) CreateNetworkApplianceStaticRoute(params *CreateNetworkApplianc
 }
 
 /*
-  CreateNetworkApplianceTrafficShapingCustomPerformanceClass adds a custom performance class for an m x network
+CreateNetworkApplianceTrafficShapingCustomPerformanceClass adds a custom performance class for an m x network
 
-  Add a custom performance class for an MX network
+Add a custom performance class for an MX network
 */
 func (a *Client) CreateNetworkApplianceTrafficShapingCustomPerformanceClass(params *CreateNetworkApplianceTrafficShapingCustomPerformanceClassParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkApplianceTrafficShapingCustomPerformanceClassCreated, error) {
 	// TODO: Validate the params before sending
@@ -319,9 +451,9 @@ func (a *Client) CreateNetworkApplianceTrafficShapingCustomPerformanceClass(para
 }
 
 /*
-  CreateNetworkApplianceVlan adds a v l a n
+CreateNetworkApplianceVlan adds a v l a n
 
-  Add a VLAN
+Add a VLAN
 */
 func (a *Client) CreateNetworkApplianceVlan(params *CreateNetworkApplianceVlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNetworkApplianceVlanCreated, error) {
 	// TODO: Validate the params before sending
@@ -360,9 +492,91 @@ func (a *Client) CreateNetworkApplianceVlan(params *CreateNetworkApplianceVlanPa
 }
 
 /*
-  DeleteNetworkApplianceStaticRoute deletes a static route from an m x or teleworker network
+DeleteNetworkAppliancePrefixesDelegatedStatic deletes a static delegated prefix from a network
 
-  Delete a static route from an MX or teleworker network
+Delete a static delegated prefix from a network
+*/
+func (a *Client) DeleteNetworkAppliancePrefixesDelegatedStatic(params *DeleteNetworkAppliancePrefixesDelegatedStaticParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkAppliancePrefixesDelegatedStaticNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteNetworkAppliancePrefixesDelegatedStaticParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "deleteNetworkAppliancePrefixesDelegatedStatic",
+		Method:             "DELETE",
+		PathPattern:        "/networks/{networkId}/appliance/prefixes/delegated/statics/{staticDelegatedPrefixId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DeleteNetworkAppliancePrefixesDelegatedStaticReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DeleteNetworkAppliancePrefixesDelegatedStaticNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for deleteNetworkAppliancePrefixesDelegatedStatic: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+DeleteNetworkApplianceRfProfile deletes a r f profile
+
+Delete a RF Profile
+*/
+func (a *Client) DeleteNetworkApplianceRfProfile(params *DeleteNetworkApplianceRfProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkApplianceRfProfileNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteNetworkApplianceRfProfileParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "deleteNetworkApplianceRfProfile",
+		Method:             "DELETE",
+		PathPattern:        "/networks/{networkId}/appliance/rfProfiles/{rfProfileId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DeleteNetworkApplianceRfProfileReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DeleteNetworkApplianceRfProfileNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for deleteNetworkApplianceRfProfile: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+DeleteNetworkApplianceStaticRoute deletes a static route from an m x or teleworker network
+
+Delete a static route from an MX or teleworker network
 */
 func (a *Client) DeleteNetworkApplianceStaticRoute(params *DeleteNetworkApplianceStaticRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkApplianceStaticRouteNoContent, error) {
 	// TODO: Validate the params before sending
@@ -401,9 +615,9 @@ func (a *Client) DeleteNetworkApplianceStaticRoute(params *DeleteNetworkApplianc
 }
 
 /*
-  DeleteNetworkApplianceTrafficShapingCustomPerformanceClass deletes a custom performance class from an m x network
+DeleteNetworkApplianceTrafficShapingCustomPerformanceClass deletes a custom performance class from an m x network
 
-  Delete a custom performance class from an MX network
+Delete a custom performance class from an MX network
 */
 func (a *Client) DeleteNetworkApplianceTrafficShapingCustomPerformanceClass(params *DeleteNetworkApplianceTrafficShapingCustomPerformanceClassParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkApplianceTrafficShapingCustomPerformanceClassNoContent, error) {
 	// TODO: Validate the params before sending
@@ -442,9 +656,9 @@ func (a *Client) DeleteNetworkApplianceTrafficShapingCustomPerformanceClass(para
 }
 
 /*
-  DeleteNetworkApplianceVlan deletes a v l a n from a network
+DeleteNetworkApplianceVlan deletes a v l a n from a network
 
-  Delete a VLAN from a network
+Delete a VLAN from a network
 */
 func (a *Client) DeleteNetworkApplianceVlan(params *DeleteNetworkApplianceVlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNetworkApplianceVlanNoContent, error) {
 	// TODO: Validate the params before sending
@@ -483,9 +697,9 @@ func (a *Client) DeleteNetworkApplianceVlan(params *DeleteNetworkApplianceVlanPa
 }
 
 /*
-  GetDeviceApplianceDhcpSubnets returns the d h c p subnet information for an appliance
+GetDeviceApplianceDhcpSubnets returns the d h c p subnet information for an appliance
 
-  Return the DHCP subnet information for an appliance
+Return the DHCP subnet information for an appliance
 */
 func (a *Client) GetDeviceApplianceDhcpSubnets(params *GetDeviceApplianceDhcpSubnetsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceApplianceDhcpSubnetsOK, error) {
 	// TODO: Validate the params before sending
@@ -524,9 +738,9 @@ func (a *Client) GetDeviceApplianceDhcpSubnets(params *GetDeviceApplianceDhcpSub
 }
 
 /*
-  GetDeviceAppliancePerformance returns the performance score for a single m x
+GetDeviceAppliancePerformance returns the performance score for a single m x
 
-  Return the performance score for a single MX. Only primary MX devices supported. If no data is available, a 204 error code is returned.
+Return the performance score for a single MX. Only primary MX devices supported. If no data is available, a 204 error code is returned.
 */
 func (a *Client) GetDeviceAppliancePerformance(params *GetDeviceAppliancePerformanceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceAppliancePerformanceOK, error) {
 	// TODO: Validate the params before sending
@@ -565,9 +779,173 @@ func (a *Client) GetDeviceAppliancePerformance(params *GetDeviceAppliancePerform
 }
 
 /*
-  GetNetworkApplianceClientSecurityEvents lists the security events for a client
+GetDeviceAppliancePrefixesDelegated returns current delegated IPv6 prefixes on an appliance
 
-  List the security events for a client. Clients can be identified by a client key or either the MAC or IP depending on whether the network uses Track-by-IP.
+Return current delegated IPv6 prefixes on an appliance.
+*/
+func (a *Client) GetDeviceAppliancePrefixesDelegated(params *GetDeviceAppliancePrefixesDelegatedParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceAppliancePrefixesDelegatedOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetDeviceAppliancePrefixesDelegatedParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getDeviceAppliancePrefixesDelegated",
+		Method:             "GET",
+		PathPattern:        "/devices/{serial}/appliance/prefixes/delegated",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetDeviceAppliancePrefixesDelegatedReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetDeviceAppliancePrefixesDelegatedOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getDeviceAppliancePrefixesDelegated: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetDeviceAppliancePrefixesDelegatedVlanAssignments returns prefixes assigned to all IPv6 enabled v l a ns on an appliance
+
+Return prefixes assigned to all IPv6 enabled VLANs on an appliance.
+*/
+func (a *Client) GetDeviceAppliancePrefixesDelegatedVlanAssignments(params *GetDeviceAppliancePrefixesDelegatedVlanAssignmentsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceAppliancePrefixesDelegatedVlanAssignmentsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetDeviceAppliancePrefixesDelegatedVlanAssignmentsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getDeviceAppliancePrefixesDelegatedVlanAssignments",
+		Method:             "GET",
+		PathPattern:        "/devices/{serial}/appliance/prefixes/delegated/vlanAssignments",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetDeviceAppliancePrefixesDelegatedVlanAssignmentsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetDeviceAppliancePrefixesDelegatedVlanAssignmentsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getDeviceAppliancePrefixesDelegatedVlanAssignments: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetDeviceApplianceRadioSettings returns the radio settings of an appliance
+
+Return the radio settings of an appliance
+*/
+func (a *Client) GetDeviceApplianceRadioSettings(params *GetDeviceApplianceRadioSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceApplianceRadioSettingsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetDeviceApplianceRadioSettingsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getDeviceApplianceRadioSettings",
+		Method:             "GET",
+		PathPattern:        "/devices/{serial}/appliance/radio/settings",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetDeviceApplianceRadioSettingsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetDeviceApplianceRadioSettingsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getDeviceApplianceRadioSettings: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetDeviceApplianceUplinksSettings returns the uplink settings for an m x appliance
+
+Return the uplink settings for an MX appliance
+*/
+func (a *Client) GetDeviceApplianceUplinksSettings(params *GetDeviceApplianceUplinksSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDeviceApplianceUplinksSettingsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetDeviceApplianceUplinksSettingsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getDeviceApplianceUplinksSettings",
+		Method:             "GET",
+		PathPattern:        "/devices/{serial}/appliance/uplinks/settings",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetDeviceApplianceUplinksSettingsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetDeviceApplianceUplinksSettingsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getDeviceApplianceUplinksSettings: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetNetworkApplianceClientSecurityEvents lists the security events for a client
+
+List the security events for a client. Clients can be identified by a client key or either the MAC or IP depending on whether the network uses Track-by-IP.
 */
 func (a *Client) GetNetworkApplianceClientSecurityEvents(params *GetNetworkApplianceClientSecurityEventsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceClientSecurityEventsOK, error) {
 	// TODO: Validate the params before sending
@@ -606,9 +984,9 @@ func (a *Client) GetNetworkApplianceClientSecurityEvents(params *GetNetworkAppli
 }
 
 /*
-  GetNetworkApplianceConnectivityMonitoringDestinations returns the connectivity testing destinations for an m x network
+GetNetworkApplianceConnectivityMonitoringDestinations returns the connectivity testing destinations for an m x network
 
-  Return the connectivity testing destinations for an MX network
+Return the connectivity testing destinations for an MX network
 */
 func (a *Client) GetNetworkApplianceConnectivityMonitoringDestinations(params *GetNetworkApplianceConnectivityMonitoringDestinationsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceConnectivityMonitoringDestinationsOK, error) {
 	// TODO: Validate the params before sending
@@ -647,9 +1025,9 @@ func (a *Client) GetNetworkApplianceConnectivityMonitoringDestinations(params *G
 }
 
 /*
-  GetNetworkApplianceContentFiltering returns the content filtering settings for an m x network
+GetNetworkApplianceContentFiltering returns the content filtering settings for an m x network
 
-  Return the content filtering settings for an MX network
+Return the content filtering settings for an MX network
 */
 func (a *Client) GetNetworkApplianceContentFiltering(params *GetNetworkApplianceContentFilteringParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceContentFilteringOK, error) {
 	// TODO: Validate the params before sending
@@ -688,9 +1066,9 @@ func (a *Client) GetNetworkApplianceContentFiltering(params *GetNetworkAppliance
 }
 
 /*
-  GetNetworkApplianceContentFilteringCategories lists all available content filtering categories for an m x network
+GetNetworkApplianceContentFilteringCategories lists all available content filtering categories for an m x network
 
-  List all available content filtering categories for an MX network
+List all available content filtering categories for an MX network
 */
 func (a *Client) GetNetworkApplianceContentFilteringCategories(params *GetNetworkApplianceContentFilteringCategoriesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceContentFilteringCategoriesOK, error) {
 	// TODO: Validate the params before sending
@@ -729,9 +1107,9 @@ func (a *Client) GetNetworkApplianceContentFilteringCategories(params *GetNetwor
 }
 
 /*
-  GetNetworkApplianceFirewallCellularFirewallRules returns the cellular firewall rules for an m x network
+GetNetworkApplianceFirewallCellularFirewallRules returns the cellular firewall rules for an m x network
 
-  Return the cellular firewall rules for an MX network
+Return the cellular firewall rules for an MX network
 */
 func (a *Client) GetNetworkApplianceFirewallCellularFirewallRules(params *GetNetworkApplianceFirewallCellularFirewallRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceFirewallCellularFirewallRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -770,9 +1148,9 @@ func (a *Client) GetNetworkApplianceFirewallCellularFirewallRules(params *GetNet
 }
 
 /*
-  GetNetworkApplianceFirewallFirewalledService returns the accessibility settings of the given service i c m p web or s n m p
+GetNetworkApplianceFirewallFirewalledService returns the accessibility settings of the given service i c m p web or s n m p
 
-  Return the accessibility settings of the given service ('ICMP', 'web', or 'SNMP')
+Return the accessibility settings of the given service ('ICMP', 'web', or 'SNMP')
 */
 func (a *Client) GetNetworkApplianceFirewallFirewalledService(params *GetNetworkApplianceFirewallFirewalledServiceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceFirewallFirewalledServiceOK, error) {
 	// TODO: Validate the params before sending
@@ -811,9 +1189,9 @@ func (a *Client) GetNetworkApplianceFirewallFirewalledService(params *GetNetwork
 }
 
 /*
-  GetNetworkApplianceFirewallFirewalledServices lists the appliance services and their accessibility rules
+GetNetworkApplianceFirewallFirewalledServices lists the appliance services and their accessibility rules
 
-  List the appliance services and their accessibility rules
+List the appliance services and their accessibility rules
 */
 func (a *Client) GetNetworkApplianceFirewallFirewalledServices(params *GetNetworkApplianceFirewallFirewalledServicesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceFirewallFirewalledServicesOK, error) {
 	// TODO: Validate the params before sending
@@ -852,9 +1230,50 @@ func (a *Client) GetNetworkApplianceFirewallFirewalledServices(params *GetNetwor
 }
 
 /*
-  GetNetworkApplianceFirewallInboundFirewallRules returns the inbound firewall rules for an m x network
+GetNetworkApplianceFirewallInboundCellularFirewallRules returns the inbound cellular firewall rules for an m x network
 
-  Return the inbound firewall rules for an MX network
+Return the inbound cellular firewall rules for an MX network
+*/
+func (a *Client) GetNetworkApplianceFirewallInboundCellularFirewallRules(params *GetNetworkApplianceFirewallInboundCellularFirewallRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceFirewallInboundCellularFirewallRulesOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetNetworkApplianceFirewallInboundCellularFirewallRulesParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getNetworkApplianceFirewallInboundCellularFirewallRules",
+		Method:             "GET",
+		PathPattern:        "/networks/{networkId}/appliance/firewall/inboundCellularFirewallRules",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetNetworkApplianceFirewallInboundCellularFirewallRulesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetNetworkApplianceFirewallInboundCellularFirewallRulesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getNetworkApplianceFirewallInboundCellularFirewallRules: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetNetworkApplianceFirewallInboundFirewallRules returns the inbound firewall rules for an m x network
+
+Return the inbound firewall rules for an MX network
 */
 func (a *Client) GetNetworkApplianceFirewallInboundFirewallRules(params *GetNetworkApplianceFirewallInboundFirewallRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceFirewallInboundFirewallRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -893,9 +1312,9 @@ func (a *Client) GetNetworkApplianceFirewallInboundFirewallRules(params *GetNetw
 }
 
 /*
-  GetNetworkApplianceFirewallL3FirewallRules returns the l3 firewall rules for an m x network
+GetNetworkApplianceFirewallL3FirewallRules returns the l3 firewall rules for an m x network
 
-  Return the L3 firewall rules for an MX network
+Return the L3 firewall rules for an MX network
 */
 func (a *Client) GetNetworkApplianceFirewallL3FirewallRules(params *GetNetworkApplianceFirewallL3FirewallRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceFirewallL3FirewallRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -934,9 +1353,9 @@ func (a *Client) GetNetworkApplianceFirewallL3FirewallRules(params *GetNetworkAp
 }
 
 /*
-  GetNetworkApplianceFirewallL7FirewallRules lists the m x l7 firewall rules for an m x network
+GetNetworkApplianceFirewallL7FirewallRules lists the m x l7 firewall rules for an m x network
 
-  List the MX L7 firewall rules for an MX network
+List the MX L7 firewall rules for an MX network
 */
 func (a *Client) GetNetworkApplianceFirewallL7FirewallRules(params *GetNetworkApplianceFirewallL7FirewallRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceFirewallL7FirewallRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -975,9 +1394,9 @@ func (a *Client) GetNetworkApplianceFirewallL7FirewallRules(params *GetNetworkAp
 }
 
 /*
-  GetNetworkApplianceFirewallL7FirewallRulesApplicationCategories returns the l7 firewall application categories and their associated applications for an m x network
+GetNetworkApplianceFirewallL7FirewallRulesApplicationCategories returns the l7 firewall application categories and their associated applications for an m x network
 
-  Return the L7 firewall application categories and their associated applications for an MX network
+Return the L7 firewall application categories and their associated applications for an MX network
 */
 func (a *Client) GetNetworkApplianceFirewallL7FirewallRulesApplicationCategories(params *GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceFirewallL7FirewallRulesApplicationCategoriesOK, error) {
 	// TODO: Validate the params before sending
@@ -1016,9 +1435,9 @@ func (a *Client) GetNetworkApplianceFirewallL7FirewallRulesApplicationCategories
 }
 
 /*
-  GetNetworkApplianceFirewallOneToManyNatRules returns the 1 many n a t mapping rules for an m x network
+GetNetworkApplianceFirewallOneToManyNatRules returns the 1 many n a t mapping rules for an m x network
 
-  Return the 1:Many NAT mapping rules for an MX network
+Return the 1:Many NAT mapping rules for an MX network
 */
 func (a *Client) GetNetworkApplianceFirewallOneToManyNatRules(params *GetNetworkApplianceFirewallOneToManyNatRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceFirewallOneToManyNatRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -1057,9 +1476,9 @@ func (a *Client) GetNetworkApplianceFirewallOneToManyNatRules(params *GetNetwork
 }
 
 /*
-  GetNetworkApplianceFirewallOneToOneNatRules returns the 1 1 n a t mapping rules for an m x network
+GetNetworkApplianceFirewallOneToOneNatRules returns the 1 1 n a t mapping rules for an m x network
 
-  Return the 1:1 NAT mapping rules for an MX network
+Return the 1:1 NAT mapping rules for an MX network
 */
 func (a *Client) GetNetworkApplianceFirewallOneToOneNatRules(params *GetNetworkApplianceFirewallOneToOneNatRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceFirewallOneToOneNatRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -1098,9 +1517,9 @@ func (a *Client) GetNetworkApplianceFirewallOneToOneNatRules(params *GetNetworkA
 }
 
 /*
-  GetNetworkApplianceFirewallPortForwardingRules returns the port forwarding rules for an m x network
+GetNetworkApplianceFirewallPortForwardingRules returns the port forwarding rules for an m x network
 
-  Return the port forwarding rules for an MX network
+Return the port forwarding rules for an MX network
 */
 func (a *Client) GetNetworkApplianceFirewallPortForwardingRules(params *GetNetworkApplianceFirewallPortForwardingRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceFirewallPortForwardingRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -1139,9 +1558,50 @@ func (a *Client) GetNetworkApplianceFirewallPortForwardingRules(params *GetNetwo
 }
 
 /*
-  GetNetworkAppliancePort returns per port v l a n settings for a single m x port
+GetNetworkApplianceFirewallSettings returns the firewall settings for this network
 
-  Return per-port VLAN settings for a single MX port.
+Return the firewall settings for this network
+*/
+func (a *Client) GetNetworkApplianceFirewallSettings(params *GetNetworkApplianceFirewallSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceFirewallSettingsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetNetworkApplianceFirewallSettingsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getNetworkApplianceFirewallSettings",
+		Method:             "GET",
+		PathPattern:        "/networks/{networkId}/appliance/firewall/settings",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetNetworkApplianceFirewallSettingsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetNetworkApplianceFirewallSettingsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getNetworkApplianceFirewallSettings: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetNetworkAppliancePort returns per port v l a n settings for a single m x port
+
+Return per-port VLAN settings for a single MX port.
 */
 func (a *Client) GetNetworkAppliancePort(params *GetNetworkAppliancePortParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkAppliancePortOK, error) {
 	// TODO: Validate the params before sending
@@ -1180,9 +1640,9 @@ func (a *Client) GetNetworkAppliancePort(params *GetNetworkAppliancePortParams, 
 }
 
 /*
-  GetNetworkAppliancePorts lists per port v l a n settings for all ports of a m x
+GetNetworkAppliancePorts lists per port v l a n settings for all ports of a m x
 
-  List per-port VLAN settings for all ports of a MX.
+List per-port VLAN settings for all ports of a MX.
 */
 func (a *Client) GetNetworkAppliancePorts(params *GetNetworkAppliancePortsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkAppliancePortsOK, error) {
 	// TODO: Validate the params before sending
@@ -1221,9 +1681,173 @@ func (a *Client) GetNetworkAppliancePorts(params *GetNetworkAppliancePortsParams
 }
 
 /*
-  GetNetworkApplianceSecurityEvents lists the security events for a network
+GetNetworkAppliancePrefixesDelegatedStatic returns a static delegated prefix from a network
 
-  List the security events for a network
+Return a static delegated prefix from a network
+*/
+func (a *Client) GetNetworkAppliancePrefixesDelegatedStatic(params *GetNetworkAppliancePrefixesDelegatedStaticParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkAppliancePrefixesDelegatedStaticOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetNetworkAppliancePrefixesDelegatedStaticParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getNetworkAppliancePrefixesDelegatedStatic",
+		Method:             "GET",
+		PathPattern:        "/networks/{networkId}/appliance/prefixes/delegated/statics/{staticDelegatedPrefixId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetNetworkAppliancePrefixesDelegatedStaticReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetNetworkAppliancePrefixesDelegatedStaticOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getNetworkAppliancePrefixesDelegatedStatic: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetNetworkAppliancePrefixesDelegatedStatics lists static delegated prefixes for a network
+
+List static delegated prefixes for a network
+*/
+func (a *Client) GetNetworkAppliancePrefixesDelegatedStatics(params *GetNetworkAppliancePrefixesDelegatedStaticsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkAppliancePrefixesDelegatedStaticsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetNetworkAppliancePrefixesDelegatedStaticsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getNetworkAppliancePrefixesDelegatedStatics",
+		Method:             "GET",
+		PathPattern:        "/networks/{networkId}/appliance/prefixes/delegated/statics",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetNetworkAppliancePrefixesDelegatedStaticsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetNetworkAppliancePrefixesDelegatedStaticsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getNetworkAppliancePrefixesDelegatedStatics: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetNetworkApplianceRfProfile returns a r f profile
+
+Return a RF profile
+*/
+func (a *Client) GetNetworkApplianceRfProfile(params *GetNetworkApplianceRfProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceRfProfileOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetNetworkApplianceRfProfileParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getNetworkApplianceRfProfile",
+		Method:             "GET",
+		PathPattern:        "/networks/{networkId}/appliance/rfProfiles/{rfProfileId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetNetworkApplianceRfProfileReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetNetworkApplianceRfProfileOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getNetworkApplianceRfProfile: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetNetworkApplianceRfProfiles lists the r f profiles for this network
+
+List the RF profiles for this network
+*/
+func (a *Client) GetNetworkApplianceRfProfiles(params *GetNetworkApplianceRfProfilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceRfProfilesOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetNetworkApplianceRfProfilesParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getNetworkApplianceRfProfiles",
+		Method:             "GET",
+		PathPattern:        "/networks/{networkId}/appliance/rfProfiles",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetNetworkApplianceRfProfilesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetNetworkApplianceRfProfilesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getNetworkApplianceRfProfiles: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetNetworkApplianceSecurityEvents lists the security events for a network
+
+List the security events for a network
 */
 func (a *Client) GetNetworkApplianceSecurityEvents(params *GetNetworkApplianceSecurityEventsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceSecurityEventsOK, error) {
 	// TODO: Validate the params before sending
@@ -1262,9 +1886,9 @@ func (a *Client) GetNetworkApplianceSecurityEvents(params *GetNetworkApplianceSe
 }
 
 /*
-  GetNetworkApplianceSecurityIntrusion returns all supported intrusion settings for an m x network
+GetNetworkApplianceSecurityIntrusion returns all supported intrusion settings for an m x network
 
-  Returns all supported intrusion settings for an MX network
+Returns all supported intrusion settings for an MX network
 */
 func (a *Client) GetNetworkApplianceSecurityIntrusion(params *GetNetworkApplianceSecurityIntrusionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceSecurityIntrusionOK, error) {
 	// TODO: Validate the params before sending
@@ -1303,9 +1927,9 @@ func (a *Client) GetNetworkApplianceSecurityIntrusion(params *GetNetworkApplianc
 }
 
 /*
-  GetNetworkApplianceSecurityMalware returns all supported malware settings for an m x network
+GetNetworkApplianceSecurityMalware returns all supported malware settings for an m x network
 
-  Returns all supported malware settings for an MX network
+Returns all supported malware settings for an MX network
 */
 func (a *Client) GetNetworkApplianceSecurityMalware(params *GetNetworkApplianceSecurityMalwareParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceSecurityMalwareOK, error) {
 	// TODO: Validate the params before sending
@@ -1344,9 +1968,9 @@ func (a *Client) GetNetworkApplianceSecurityMalware(params *GetNetworkApplianceS
 }
 
 /*
-  GetNetworkApplianceSettings returns the appliance settings for a network
+GetNetworkApplianceSettings returns the appliance settings for a network
 
-  Return the appliance settings for a network
+Return the appliance settings for a network
 */
 func (a *Client) GetNetworkApplianceSettings(params *GetNetworkApplianceSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -1385,9 +2009,9 @@ func (a *Client) GetNetworkApplianceSettings(params *GetNetworkApplianceSettings
 }
 
 /*
-  GetNetworkApplianceSingleLan returns single l a n configuration
+GetNetworkApplianceSingleLan returns single l a n configuration
 
-  Return single LAN configuration
+Return single LAN configuration
 */
 func (a *Client) GetNetworkApplianceSingleLan(params *GetNetworkApplianceSingleLanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceSingleLanOK, error) {
 	// TODO: Validate the params before sending
@@ -1426,9 +2050,91 @@ func (a *Client) GetNetworkApplianceSingleLan(params *GetNetworkApplianceSingleL
 }
 
 /*
-  GetNetworkApplianceStaticRoute returns a static route for an m x or teleworker network
+GetNetworkApplianceSsid returns a single m x s s ID
 
-  Return a static route for an MX or teleworker network
+Return a single MX SSID
+*/
+func (a *Client) GetNetworkApplianceSsid(params *GetNetworkApplianceSsidParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceSsidOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetNetworkApplianceSsidParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getNetworkApplianceSsid",
+		Method:             "GET",
+		PathPattern:        "/networks/{networkId}/appliance/ssids/{number}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetNetworkApplianceSsidReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetNetworkApplianceSsidOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getNetworkApplianceSsid: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetNetworkApplianceSsids lists the m x s s i ds in a network
+
+List the MX SSIDs in a network
+*/
+func (a *Client) GetNetworkApplianceSsids(params *GetNetworkApplianceSsidsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceSsidsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetNetworkApplianceSsidsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getNetworkApplianceSsids",
+		Method:             "GET",
+		PathPattern:        "/networks/{networkId}/appliance/ssids",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetNetworkApplianceSsidsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetNetworkApplianceSsidsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getNetworkApplianceSsids: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetNetworkApplianceStaticRoute returns a static route for an m x or teleworker network
+
+Return a static route for an MX or teleworker network
 */
 func (a *Client) GetNetworkApplianceStaticRoute(params *GetNetworkApplianceStaticRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceStaticRouteOK, error) {
 	// TODO: Validate the params before sending
@@ -1467,9 +2173,9 @@ func (a *Client) GetNetworkApplianceStaticRoute(params *GetNetworkApplianceStati
 }
 
 /*
-  GetNetworkApplianceStaticRoutes lists the static routes for an m x or teleworker network
+GetNetworkApplianceStaticRoutes lists the static routes for an m x or teleworker network
 
-  List the static routes for an MX or teleworker network
+List the static routes for an MX or teleworker network
 */
 func (a *Client) GetNetworkApplianceStaticRoutes(params *GetNetworkApplianceStaticRoutesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceStaticRoutesOK, error) {
 	// TODO: Validate the params before sending
@@ -1508,9 +2214,9 @@ func (a *Client) GetNetworkApplianceStaticRoutes(params *GetNetworkApplianceStat
 }
 
 /*
-  GetNetworkApplianceTrafficShaping displays the traffic shaping settings for an m x network
+GetNetworkApplianceTrafficShaping displays the traffic shaping settings for an m x network
 
-  Display the traffic shaping settings for an MX network
+Display the traffic shaping settings for an MX network
 */
 func (a *Client) GetNetworkApplianceTrafficShaping(params *GetNetworkApplianceTrafficShapingParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceTrafficShapingOK, error) {
 	// TODO: Validate the params before sending
@@ -1549,9 +2255,9 @@ func (a *Client) GetNetworkApplianceTrafficShaping(params *GetNetworkApplianceTr
 }
 
 /*
-  GetNetworkApplianceTrafficShapingCustomPerformanceClass returns a custom performance class for an m x network
+GetNetworkApplianceTrafficShapingCustomPerformanceClass returns a custom performance class for an m x network
 
-  Return a custom performance class for an MX network
+Return a custom performance class for an MX network
 */
 func (a *Client) GetNetworkApplianceTrafficShapingCustomPerformanceClass(params *GetNetworkApplianceTrafficShapingCustomPerformanceClassParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceTrafficShapingCustomPerformanceClassOK, error) {
 	// TODO: Validate the params before sending
@@ -1590,9 +2296,9 @@ func (a *Client) GetNetworkApplianceTrafficShapingCustomPerformanceClass(params 
 }
 
 /*
-  GetNetworkApplianceTrafficShapingCustomPerformanceClasses lists all custom performance classes for an m x network
+GetNetworkApplianceTrafficShapingCustomPerformanceClasses lists all custom performance classes for an m x network
 
-  List all custom performance classes for an MX network
+List all custom performance classes for an MX network
 */
 func (a *Client) GetNetworkApplianceTrafficShapingCustomPerformanceClasses(params *GetNetworkApplianceTrafficShapingCustomPerformanceClassesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceTrafficShapingCustomPerformanceClassesOK, error) {
 	// TODO: Validate the params before sending
@@ -1631,9 +2337,9 @@ func (a *Client) GetNetworkApplianceTrafficShapingCustomPerformanceClasses(param
 }
 
 /*
-  GetNetworkApplianceTrafficShapingRules displays the traffic shaping settings rules for an m x network
+GetNetworkApplianceTrafficShapingRules displays the traffic shaping settings rules for an m x network
 
-  Display the traffic shaping settings rules for an MX network
+Display the traffic shaping settings rules for an MX network
 */
 func (a *Client) GetNetworkApplianceTrafficShapingRules(params *GetNetworkApplianceTrafficShapingRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceTrafficShapingRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -1672,9 +2378,9 @@ func (a *Client) GetNetworkApplianceTrafficShapingRules(params *GetNetworkApplia
 }
 
 /*
-  GetNetworkApplianceTrafficShapingUplinkBandwidth returns the uplink bandwidth settings for your m x network
+GetNetworkApplianceTrafficShapingUplinkBandwidth returns the uplink bandwidth limits for your m x network
 
-  Returns the uplink bandwidth settings for your MX network.
+Returns the uplink bandwidth limits for your MX network. This may not reflect the affected device's hardware capabilities.  For more information on your device's hardware capabilities, please consult our MX Family Datasheet - [https://meraki.cisco.com/product-collateral/mx-family-datasheet/?file]
 */
 func (a *Client) GetNetworkApplianceTrafficShapingUplinkBandwidth(params *GetNetworkApplianceTrafficShapingUplinkBandwidthParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceTrafficShapingUplinkBandwidthOK, error) {
 	// TODO: Validate the params before sending
@@ -1713,9 +2419,9 @@ func (a *Client) GetNetworkApplianceTrafficShapingUplinkBandwidth(params *GetNet
 }
 
 /*
-  GetNetworkApplianceTrafficShapingUplinkSelection shows uplink selection settings for an m x network
+GetNetworkApplianceTrafficShapingUplinkSelection shows uplink selection settings for an m x network
 
-  Show uplink selection settings for an MX network
+Show uplink selection settings for an MX network
 */
 func (a *Client) GetNetworkApplianceTrafficShapingUplinkSelection(params *GetNetworkApplianceTrafficShapingUplinkSelectionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceTrafficShapingUplinkSelectionOK, error) {
 	// TODO: Validate the params before sending
@@ -1754,9 +2460,9 @@ func (a *Client) GetNetworkApplianceTrafficShapingUplinkSelection(params *GetNet
 }
 
 /*
-  GetNetworkApplianceUplinksUsageHistory gets the sent and received bytes for each uplink of a network
+GetNetworkApplianceUplinksUsageHistory gets the sent and received bytes for each uplink of a network
 
-  Get the sent and received bytes for each uplink of a network.
+Get the sent and received bytes for each uplink of a network.
 */
 func (a *Client) GetNetworkApplianceUplinksUsageHistory(params *GetNetworkApplianceUplinksUsageHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceUplinksUsageHistoryOK, error) {
 	// TODO: Validate the params before sending
@@ -1795,9 +2501,9 @@ func (a *Client) GetNetworkApplianceUplinksUsageHistory(params *GetNetworkApplia
 }
 
 /*
-  GetNetworkApplianceVlan returns a v l a n
+GetNetworkApplianceVlan returns a v l a n
 
-  Return a VLAN
+Return a VLAN
 */
 func (a *Client) GetNetworkApplianceVlan(params *GetNetworkApplianceVlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceVlanOK, error) {
 	// TODO: Validate the params before sending
@@ -1836,9 +2542,9 @@ func (a *Client) GetNetworkApplianceVlan(params *GetNetworkApplianceVlanParams, 
 }
 
 /*
-  GetNetworkApplianceVlans lists the v l a ns for an m x network
+GetNetworkApplianceVlans lists the v l a ns for an m x network
 
-  List the VLANs for an MX network
+List the VLANs for an MX network
 */
 func (a *Client) GetNetworkApplianceVlans(params *GetNetworkApplianceVlansParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceVlansOK, error) {
 	// TODO: Validate the params before sending
@@ -1877,9 +2583,9 @@ func (a *Client) GetNetworkApplianceVlans(params *GetNetworkApplianceVlansParams
 }
 
 /*
-  GetNetworkApplianceVlansSettings returns the enabled status of v l a ns for the network
+GetNetworkApplianceVlansSettings returns the enabled status of v l a ns for the network
 
-  Returns the enabled status of VLANs for the network
+Returns the enabled status of VLANs for the network
 */
 func (a *Client) GetNetworkApplianceVlansSettings(params *GetNetworkApplianceVlansSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceVlansSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -1918,9 +2624,9 @@ func (a *Client) GetNetworkApplianceVlansSettings(params *GetNetworkApplianceVla
 }
 
 /*
-  GetNetworkApplianceVpnBgp returns a hub b g p configuration
+GetNetworkApplianceVpnBgp returns a hub b g p configuration
 
-  Return a Hub BGP Configuration
+Return a Hub BGP Configuration
 */
 func (a *Client) GetNetworkApplianceVpnBgp(params *GetNetworkApplianceVpnBgpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceVpnBgpOK, error) {
 	// TODO: Validate the params before sending
@@ -1959,9 +2665,9 @@ func (a *Client) GetNetworkApplianceVpnBgp(params *GetNetworkApplianceVpnBgpPara
 }
 
 /*
-  GetNetworkApplianceVpnSiteToSiteVpn returns the site to site v p n settings of a network
+GetNetworkApplianceVpnSiteToSiteVpn returns the site to site v p n settings of a network
 
-  Return the site-to-site VPN settings of a network. Only valid for MX networks.
+Return the site-to-site VPN settings of a network. Only valid for MX networks.
 */
 func (a *Client) GetNetworkApplianceVpnSiteToSiteVpn(params *GetNetworkApplianceVpnSiteToSiteVpnParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceVpnSiteToSiteVpnOK, error) {
 	// TODO: Validate the params before sending
@@ -2000,9 +2706,9 @@ func (a *Client) GetNetworkApplianceVpnSiteToSiteVpn(params *GetNetworkAppliance
 }
 
 /*
-  GetNetworkApplianceWarmSpare returns m x warm spare settings
+GetNetworkApplianceWarmSpare returns m x warm spare settings
 
-  Return MX warm spare settings
+Return MX warm spare settings
 */
 func (a *Client) GetNetworkApplianceWarmSpare(params *GetNetworkApplianceWarmSpareParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkApplianceWarmSpareOK, error) {
 	// TODO: Validate the params before sending
@@ -2041,9 +2747,9 @@ func (a *Client) GetNetworkApplianceWarmSpare(params *GetNetworkApplianceWarmSpa
 }
 
 /*
-  GetOrganizationApplianceSecurityEvents lists the security events for an organization
+GetOrganizationApplianceSecurityEvents lists the security events for an organization
 
-  List the security events for an organization
+List the security events for an organization
 */
 func (a *Client) GetOrganizationApplianceSecurityEvents(params *GetOrganizationApplianceSecurityEventsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationApplianceSecurityEventsOK, error) {
 	// TODO: Validate the params before sending
@@ -2082,9 +2788,9 @@ func (a *Client) GetOrganizationApplianceSecurityEvents(params *GetOrganizationA
 }
 
 /*
-  GetOrganizationApplianceSecurityIntrusion returns all supported intrusion settings for an organization
+GetOrganizationApplianceSecurityIntrusion returns all supported intrusion settings for an organization
 
-  Returns all supported intrusion settings for an organization
+Returns all supported intrusion settings for an organization
 */
 func (a *Client) GetOrganizationApplianceSecurityIntrusion(params *GetOrganizationApplianceSecurityIntrusionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationApplianceSecurityIntrusionOK, error) {
 	// TODO: Validate the params before sending
@@ -2123,9 +2829,9 @@ func (a *Client) GetOrganizationApplianceSecurityIntrusion(params *GetOrganizati
 }
 
 /*
-  GetOrganizationApplianceUplinkStatuses lists the uplink status of every meraki m x and z series appliances in the organization
+GetOrganizationApplianceUplinkStatuses lists the uplink status of every meraki m x and z series appliances in the organization
 
-  List the uplink status of every Meraki MX and Z series appliances in the organization
+List the uplink status of every Meraki MX and Z series appliances in the organization
 */
 func (a *Client) GetOrganizationApplianceUplinkStatuses(params *GetOrganizationApplianceUplinkStatusesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationApplianceUplinkStatusesOK, error) {
 	// TODO: Validate the params before sending
@@ -2164,9 +2870,50 @@ func (a *Client) GetOrganizationApplianceUplinkStatuses(params *GetOrganizationA
 }
 
 /*
-  GetOrganizationApplianceVpnStats shows v p n history stat for networks in an organization
+GetOrganizationApplianceUplinksUsageByNetwork gets the sent and received bytes for each uplink of all m x and z networks within an organization
 
-  Show VPN history stat for networks in an organization
+Get the sent and received bytes for each uplink of all MX and Z networks within an organization. If more than one device was active during the specified timespan, then the sent and received bytes will be aggregated by interface.
+*/
+func (a *Client) GetOrganizationApplianceUplinksUsageByNetwork(params *GetOrganizationApplianceUplinksUsageByNetworkParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationApplianceUplinksUsageByNetworkOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetOrganizationApplianceUplinksUsageByNetworkParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getOrganizationApplianceUplinksUsageByNetwork",
+		Method:             "GET",
+		PathPattern:        "/organizations/{organizationId}/appliance/uplinks/usage/byNetwork",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetOrganizationApplianceUplinksUsageByNetworkReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetOrganizationApplianceUplinksUsageByNetworkOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getOrganizationApplianceUplinksUsageByNetwork: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetOrganizationApplianceVpnStats shows v p n history stat for networks in an organization
+
+Show VPN history stat for networks in an organization
 */
 func (a *Client) GetOrganizationApplianceVpnStats(params *GetOrganizationApplianceVpnStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationApplianceVpnStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -2205,9 +2952,9 @@ func (a *Client) GetOrganizationApplianceVpnStats(params *GetOrganizationApplian
 }
 
 /*
-  GetOrganizationApplianceVpnStatuses shows v p n status for networks in an organization
+GetOrganizationApplianceVpnStatuses shows v p n status for networks in an organization
 
-  Show VPN status for networks in an organization
+Show VPN status for networks in an organization
 */
 func (a *Client) GetOrganizationApplianceVpnStatuses(params *GetOrganizationApplianceVpnStatusesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationApplianceVpnStatusesOK, error) {
 	// TODO: Validate the params before sending
@@ -2246,9 +2993,9 @@ func (a *Client) GetOrganizationApplianceVpnStatuses(params *GetOrganizationAppl
 }
 
 /*
-  GetOrganizationApplianceVpnThirdPartyVPNPeers returns the third party v p n peers for an organization
+GetOrganizationApplianceVpnThirdPartyVPNPeers returns the third party v p n peers for an organization
 
-  Return the third party VPN peers for an organization
+Return the third party VPN peers for an organization
 */
 func (a *Client) GetOrganizationApplianceVpnThirdPartyVPNPeers(params *GetOrganizationApplianceVpnThirdPartyVPNPeersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationApplianceVpnThirdPartyVPNPeersOK, error) {
 	// TODO: Validate the params before sending
@@ -2287,9 +3034,9 @@ func (a *Client) GetOrganizationApplianceVpnThirdPartyVPNPeers(params *GetOrgani
 }
 
 /*
-  GetOrganizationApplianceVpnVpnFirewallRules returns the firewall rules for an organization s site to site v p n
+GetOrganizationApplianceVpnVpnFirewallRules returns the firewall rules for an organization s site to site v p n
 
-  Return the firewall rules for an organization's site-to-site VPN
+Return the firewall rules for an organization's site-to-site VPN
 */
 func (a *Client) GetOrganizationApplianceVpnVpnFirewallRules(params *GetOrganizationApplianceVpnVpnFirewallRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOrganizationApplianceVpnVpnFirewallRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -2328,9 +3075,9 @@ func (a *Client) GetOrganizationApplianceVpnVpnFirewallRules(params *GetOrganiza
 }
 
 /*
-  SwapNetworkApplianceWarmSpare swaps m x primary and warm spare appliances
+SwapNetworkApplianceWarmSpare swaps m x primary and warm spare appliances
 
-  Swap MX primary and warm spare appliances
+Swap MX primary and warm spare appliances
 */
 func (a *Client) SwapNetworkApplianceWarmSpare(params *SwapNetworkApplianceWarmSpareParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*SwapNetworkApplianceWarmSpareOK, error) {
 	// TODO: Validate the params before sending
@@ -2369,9 +3116,91 @@ func (a *Client) SwapNetworkApplianceWarmSpare(params *SwapNetworkApplianceWarmS
 }
 
 /*
-  UpdateNetworkApplianceConnectivityMonitoringDestinations updates the connectivity testing destinations for an m x network
+UpdateDeviceApplianceRadioSettings updates the radio settings of an appliance
 
-  Update the connectivity testing destinations for an MX network
+Update the radio settings of an appliance
+*/
+func (a *Client) UpdateDeviceApplianceRadioSettings(params *UpdateDeviceApplianceRadioSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceApplianceRadioSettingsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateDeviceApplianceRadioSettingsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "updateDeviceApplianceRadioSettings",
+		Method:             "PUT",
+		PathPattern:        "/devices/{serial}/appliance/radio/settings",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateDeviceApplianceRadioSettingsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateDeviceApplianceRadioSettingsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for updateDeviceApplianceRadioSettings: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UpdateDeviceApplianceUplinksSettings updates the uplink settings for an m x appliance
+
+Update the uplink settings for an MX appliance
+*/
+func (a *Client) UpdateDeviceApplianceUplinksSettings(params *UpdateDeviceApplianceUplinksSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDeviceApplianceUplinksSettingsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateDeviceApplianceUplinksSettingsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "updateDeviceApplianceUplinksSettings",
+		Method:             "PUT",
+		PathPattern:        "/devices/{serial}/appliance/uplinks/settings",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateDeviceApplianceUplinksSettingsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateDeviceApplianceUplinksSettingsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for updateDeviceApplianceUplinksSettings: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UpdateNetworkApplianceConnectivityMonitoringDestinations updates the connectivity testing destinations for an m x network
+
+Update the connectivity testing destinations for an MX network
 */
 func (a *Client) UpdateNetworkApplianceConnectivityMonitoringDestinations(params *UpdateNetworkApplianceConnectivityMonitoringDestinationsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceConnectivityMonitoringDestinationsOK, error) {
 	// TODO: Validate the params before sending
@@ -2410,9 +3239,9 @@ func (a *Client) UpdateNetworkApplianceConnectivityMonitoringDestinations(params
 }
 
 /*
-  UpdateNetworkApplianceContentFiltering updates the content filtering settings for an m x network
+UpdateNetworkApplianceContentFiltering updates the content filtering settings for an m x network
 
-  Update the content filtering settings for an MX network
+Update the content filtering settings for an MX network
 */
 func (a *Client) UpdateNetworkApplianceContentFiltering(params *UpdateNetworkApplianceContentFilteringParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceContentFilteringOK, error) {
 	// TODO: Validate the params before sending
@@ -2451,9 +3280,9 @@ func (a *Client) UpdateNetworkApplianceContentFiltering(params *UpdateNetworkApp
 }
 
 /*
-  UpdateNetworkApplianceFirewallCellularFirewallRules updates the cellular firewall rules of an m x network
+UpdateNetworkApplianceFirewallCellularFirewallRules updates the cellular firewall rules of an m x network
 
-  Update the cellular firewall rules of an MX network
+Update the cellular firewall rules of an MX network
 */
 func (a *Client) UpdateNetworkApplianceFirewallCellularFirewallRules(params *UpdateNetworkApplianceFirewallCellularFirewallRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceFirewallCellularFirewallRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -2492,9 +3321,9 @@ func (a *Client) UpdateNetworkApplianceFirewallCellularFirewallRules(params *Upd
 }
 
 /*
-  UpdateNetworkApplianceFirewallFirewalledService updates the accessibility settings for the given service i c m p web or s n m p
+UpdateNetworkApplianceFirewallFirewalledService updates the accessibility settings for the given service i c m p web or s n m p
 
-  Updates the accessibility settings for the given service ('ICMP', 'web', or 'SNMP')
+Updates the accessibility settings for the given service ('ICMP', 'web', or 'SNMP')
 */
 func (a *Client) UpdateNetworkApplianceFirewallFirewalledService(params *UpdateNetworkApplianceFirewallFirewalledServiceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceFirewallFirewalledServiceOK, error) {
 	// TODO: Validate the params before sending
@@ -2533,9 +3362,50 @@ func (a *Client) UpdateNetworkApplianceFirewallFirewalledService(params *UpdateN
 }
 
 /*
-  UpdateNetworkApplianceFirewallInboundFirewallRules updates the inbound firewall rules of an m x network
+UpdateNetworkApplianceFirewallInboundCellularFirewallRules updates the inbound cellular firewall rules of an m x network
 
-  Update the inbound firewall rules of an MX network
+Update the inbound cellular firewall rules of an MX network
+*/
+func (a *Client) UpdateNetworkApplianceFirewallInboundCellularFirewallRules(params *UpdateNetworkApplianceFirewallInboundCellularFirewallRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceFirewallInboundCellularFirewallRulesOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateNetworkApplianceFirewallInboundCellularFirewallRulesParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "updateNetworkApplianceFirewallInboundCellularFirewallRules",
+		Method:             "PUT",
+		PathPattern:        "/networks/{networkId}/appliance/firewall/inboundCellularFirewallRules",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateNetworkApplianceFirewallInboundCellularFirewallRulesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateNetworkApplianceFirewallInboundCellularFirewallRulesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for updateNetworkApplianceFirewallInboundCellularFirewallRules: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UpdateNetworkApplianceFirewallInboundFirewallRules updates the inbound firewall rules of an m x network
+
+Update the inbound firewall rules of an MX network
 */
 func (a *Client) UpdateNetworkApplianceFirewallInboundFirewallRules(params *UpdateNetworkApplianceFirewallInboundFirewallRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceFirewallInboundFirewallRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -2574,9 +3444,9 @@ func (a *Client) UpdateNetworkApplianceFirewallInboundFirewallRules(params *Upda
 }
 
 /*
-  UpdateNetworkApplianceFirewallL3FirewallRules updates the l3 firewall rules of an m x network
+UpdateNetworkApplianceFirewallL3FirewallRules updates the l3 firewall rules of an m x network
 
-  Update the L3 firewall rules of an MX network
+Update the L3 firewall rules of an MX network
 */
 func (a *Client) UpdateNetworkApplianceFirewallL3FirewallRules(params *UpdateNetworkApplianceFirewallL3FirewallRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceFirewallL3FirewallRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -2615,9 +3485,9 @@ func (a *Client) UpdateNetworkApplianceFirewallL3FirewallRules(params *UpdateNet
 }
 
 /*
-  UpdateNetworkApplianceFirewallL7FirewallRules updates the m x l7 firewall rules for an m x network
+UpdateNetworkApplianceFirewallL7FirewallRules updates the m x l7 firewall rules for an m x network
 
-  Update the MX L7 firewall rules for an MX network
+Update the MX L7 firewall rules for an MX network
 */
 func (a *Client) UpdateNetworkApplianceFirewallL7FirewallRules(params *UpdateNetworkApplianceFirewallL7FirewallRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceFirewallL7FirewallRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -2656,9 +3526,9 @@ func (a *Client) UpdateNetworkApplianceFirewallL7FirewallRules(params *UpdateNet
 }
 
 /*
-  UpdateNetworkApplianceFirewallOneToManyNatRules sets the 1 many n a t mapping rules for an m x network
+UpdateNetworkApplianceFirewallOneToManyNatRules sets the 1 many n a t mapping rules for an m x network
 
-  Set the 1:Many NAT mapping rules for an MX network
+Set the 1:Many NAT mapping rules for an MX network
 */
 func (a *Client) UpdateNetworkApplianceFirewallOneToManyNatRules(params *UpdateNetworkApplianceFirewallOneToManyNatRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceFirewallOneToManyNatRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -2697,9 +3567,9 @@ func (a *Client) UpdateNetworkApplianceFirewallOneToManyNatRules(params *UpdateN
 }
 
 /*
-  UpdateNetworkApplianceFirewallOneToOneNatRules sets the 1 1 n a t mapping rules for an m x network
+UpdateNetworkApplianceFirewallOneToOneNatRules sets the 1 1 n a t mapping rules for an m x network
 
-  Set the 1:1 NAT mapping rules for an MX network
+Set the 1:1 NAT mapping rules for an MX network
 */
 func (a *Client) UpdateNetworkApplianceFirewallOneToOneNatRules(params *UpdateNetworkApplianceFirewallOneToOneNatRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceFirewallOneToOneNatRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -2738,9 +3608,9 @@ func (a *Client) UpdateNetworkApplianceFirewallOneToOneNatRules(params *UpdateNe
 }
 
 /*
-  UpdateNetworkApplianceFirewallPortForwardingRules updates the port forwarding rules for an m x network
+UpdateNetworkApplianceFirewallPortForwardingRules updates the port forwarding rules for an m x network
 
-  Update the port forwarding rules for an MX network
+Update the port forwarding rules for an MX network
 */
 func (a *Client) UpdateNetworkApplianceFirewallPortForwardingRules(params *UpdateNetworkApplianceFirewallPortForwardingRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceFirewallPortForwardingRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -2779,9 +3649,50 @@ func (a *Client) UpdateNetworkApplianceFirewallPortForwardingRules(params *Updat
 }
 
 /*
-  UpdateNetworkAppliancePort updates the per port v l a n settings for a single m x port
+UpdateNetworkApplianceFirewallSettings updates the firewall settings for this network
 
-  Update the per-port VLAN settings for a single MX port.
+Update the firewall settings for this network
+*/
+func (a *Client) UpdateNetworkApplianceFirewallSettings(params *UpdateNetworkApplianceFirewallSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceFirewallSettingsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateNetworkApplianceFirewallSettingsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "updateNetworkApplianceFirewallSettings",
+		Method:             "PUT",
+		PathPattern:        "/networks/{networkId}/appliance/firewall/settings",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateNetworkApplianceFirewallSettingsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateNetworkApplianceFirewallSettingsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for updateNetworkApplianceFirewallSettings: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UpdateNetworkAppliancePort updates the per port v l a n settings for a single m x port
+
+Update the per-port VLAN settings for a single MX port.
 */
 func (a *Client) UpdateNetworkAppliancePort(params *UpdateNetworkAppliancePortParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkAppliancePortOK, error) {
 	// TODO: Validate the params before sending
@@ -2820,9 +3731,91 @@ func (a *Client) UpdateNetworkAppliancePort(params *UpdateNetworkAppliancePortPa
 }
 
 /*
-  UpdateNetworkApplianceSecurityIntrusion sets the supported intrusion settings for an m x network
+UpdateNetworkAppliancePrefixesDelegatedStatic updates a static delegated prefix from a network
 
-  Set the supported intrusion settings for an MX network
+Update a static delegated prefix from a network
+*/
+func (a *Client) UpdateNetworkAppliancePrefixesDelegatedStatic(params *UpdateNetworkAppliancePrefixesDelegatedStaticParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkAppliancePrefixesDelegatedStaticOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateNetworkAppliancePrefixesDelegatedStaticParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "updateNetworkAppliancePrefixesDelegatedStatic",
+		Method:             "PUT",
+		PathPattern:        "/networks/{networkId}/appliance/prefixes/delegated/statics/{staticDelegatedPrefixId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateNetworkAppliancePrefixesDelegatedStaticReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateNetworkAppliancePrefixesDelegatedStaticOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for updateNetworkAppliancePrefixesDelegatedStatic: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UpdateNetworkApplianceRfProfile updates specified r f profile for this network
+
+Updates specified RF profile for this network
+*/
+func (a *Client) UpdateNetworkApplianceRfProfile(params *UpdateNetworkApplianceRfProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceRfProfileOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateNetworkApplianceRfProfileParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "updateNetworkApplianceRfProfile",
+		Method:             "PUT",
+		PathPattern:        "/networks/{networkId}/appliance/rfProfiles/{rfProfileId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateNetworkApplianceRfProfileReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateNetworkApplianceRfProfileOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for updateNetworkApplianceRfProfile: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UpdateNetworkApplianceSecurityIntrusion sets the supported intrusion settings for an m x network
+
+Set the supported intrusion settings for an MX network
 */
 func (a *Client) UpdateNetworkApplianceSecurityIntrusion(params *UpdateNetworkApplianceSecurityIntrusionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceSecurityIntrusionOK, error) {
 	// TODO: Validate the params before sending
@@ -2861,9 +3854,9 @@ func (a *Client) UpdateNetworkApplianceSecurityIntrusion(params *UpdateNetworkAp
 }
 
 /*
-  UpdateNetworkApplianceSecurityMalware sets the supported malware settings for an m x network
+UpdateNetworkApplianceSecurityMalware sets the supported malware settings for an m x network
 
-  Set the supported malware settings for an MX network
+Set the supported malware settings for an MX network
 */
 func (a *Client) UpdateNetworkApplianceSecurityMalware(params *UpdateNetworkApplianceSecurityMalwareParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceSecurityMalwareOK, error) {
 	// TODO: Validate the params before sending
@@ -2902,9 +3895,50 @@ func (a *Client) UpdateNetworkApplianceSecurityMalware(params *UpdateNetworkAppl
 }
 
 /*
-  UpdateNetworkApplianceSingleLan updates single l a n configuration
+UpdateNetworkApplianceSettings updates the appliance settings for a network
 
-  Update single LAN configuration
+Update the appliance settings for a network
+*/
+func (a *Client) UpdateNetworkApplianceSettings(params *UpdateNetworkApplianceSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceSettingsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateNetworkApplianceSettingsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "updateNetworkApplianceSettings",
+		Method:             "PUT",
+		PathPattern:        "/networks/{networkId}/appliance/settings",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateNetworkApplianceSettingsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateNetworkApplianceSettingsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for updateNetworkApplianceSettings: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UpdateNetworkApplianceSingleLan updates single l a n configuration
+
+Update single LAN configuration
 */
 func (a *Client) UpdateNetworkApplianceSingleLan(params *UpdateNetworkApplianceSingleLanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceSingleLanOK, error) {
 	// TODO: Validate the params before sending
@@ -2943,9 +3977,50 @@ func (a *Client) UpdateNetworkApplianceSingleLan(params *UpdateNetworkApplianceS
 }
 
 /*
-  UpdateNetworkApplianceStaticRoute updates a static route for an m x or teleworker network
+UpdateNetworkApplianceSsid updates the attributes of an m x s s ID
 
-  Update a static route for an MX or teleworker network
+Update the attributes of an MX SSID
+*/
+func (a *Client) UpdateNetworkApplianceSsid(params *UpdateNetworkApplianceSsidParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceSsidOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateNetworkApplianceSsidParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "updateNetworkApplianceSsid",
+		Method:             "PUT",
+		PathPattern:        "/networks/{networkId}/appliance/ssids/{number}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateNetworkApplianceSsidReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateNetworkApplianceSsidOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for updateNetworkApplianceSsid: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+UpdateNetworkApplianceStaticRoute updates a static route for an m x or teleworker network
+
+Update a static route for an MX or teleworker network
 */
 func (a *Client) UpdateNetworkApplianceStaticRoute(params *UpdateNetworkApplianceStaticRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceStaticRouteOK, error) {
 	// TODO: Validate the params before sending
@@ -2984,9 +4059,9 @@ func (a *Client) UpdateNetworkApplianceStaticRoute(params *UpdateNetworkApplianc
 }
 
 /*
-  UpdateNetworkApplianceTrafficShaping updates the traffic shaping settings for an m x network
+UpdateNetworkApplianceTrafficShaping updates the traffic shaping settings for an m x network
 
-  Update the traffic shaping settings for an MX network
+Update the traffic shaping settings for an MX network
 */
 func (a *Client) UpdateNetworkApplianceTrafficShaping(params *UpdateNetworkApplianceTrafficShapingParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceTrafficShapingOK, error) {
 	// TODO: Validate the params before sending
@@ -3025,9 +4100,9 @@ func (a *Client) UpdateNetworkApplianceTrafficShaping(params *UpdateNetworkAppli
 }
 
 /*
-  UpdateNetworkApplianceTrafficShapingCustomPerformanceClass updates a custom performance class for an m x network
+UpdateNetworkApplianceTrafficShapingCustomPerformanceClass updates a custom performance class for an m x network
 
-  Update a custom performance class for an MX network
+Update a custom performance class for an MX network
 */
 func (a *Client) UpdateNetworkApplianceTrafficShapingCustomPerformanceClass(params *UpdateNetworkApplianceTrafficShapingCustomPerformanceClassParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceTrafficShapingCustomPerformanceClassOK, error) {
 	// TODO: Validate the params before sending
@@ -3066,9 +4141,9 @@ func (a *Client) UpdateNetworkApplianceTrafficShapingCustomPerformanceClass(para
 }
 
 /*
-  UpdateNetworkApplianceTrafficShapingRules updates the traffic shaping settings rules for an m x network
+UpdateNetworkApplianceTrafficShapingRules updates the traffic shaping settings rules for an m x network
 
-  Update the traffic shaping settings rules for an MX network
+Update the traffic shaping settings rules for an MX network
 */
 func (a *Client) UpdateNetworkApplianceTrafficShapingRules(params *UpdateNetworkApplianceTrafficShapingRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceTrafficShapingRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -3107,9 +4182,9 @@ func (a *Client) UpdateNetworkApplianceTrafficShapingRules(params *UpdateNetwork
 }
 
 /*
-  UpdateNetworkApplianceTrafficShapingUplinkBandwidth updates the uplink bandwidth settings for your m x network
+UpdateNetworkApplianceTrafficShapingUplinkBandwidth updates the uplink bandwidth settings for your m x network
 
-  Updates the uplink bandwidth settings for your MX network.
+Updates the uplink bandwidth settings for your MX network.
 */
 func (a *Client) UpdateNetworkApplianceTrafficShapingUplinkBandwidth(params *UpdateNetworkApplianceTrafficShapingUplinkBandwidthParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceTrafficShapingUplinkBandwidthOK, error) {
 	// TODO: Validate the params before sending
@@ -3148,9 +4223,9 @@ func (a *Client) UpdateNetworkApplianceTrafficShapingUplinkBandwidth(params *Upd
 }
 
 /*
-  UpdateNetworkApplianceTrafficShapingUplinkSelection updates uplink selection settings for an m x network
+UpdateNetworkApplianceTrafficShapingUplinkSelection updates uplink selection settings for an m x network
 
-  Update uplink selection settings for an MX network
+Update uplink selection settings for an MX network
 */
 func (a *Client) UpdateNetworkApplianceTrafficShapingUplinkSelection(params *UpdateNetworkApplianceTrafficShapingUplinkSelectionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceTrafficShapingUplinkSelectionOK, error) {
 	// TODO: Validate the params before sending
@@ -3189,9 +4264,9 @@ func (a *Client) UpdateNetworkApplianceTrafficShapingUplinkSelection(params *Upd
 }
 
 /*
-  UpdateNetworkApplianceVlan updates a v l a n
+UpdateNetworkApplianceVlan updates a v l a n
 
-  Update a VLAN
+Update a VLAN
 */
 func (a *Client) UpdateNetworkApplianceVlan(params *UpdateNetworkApplianceVlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceVlanOK, error) {
 	// TODO: Validate the params before sending
@@ -3230,9 +4305,9 @@ func (a *Client) UpdateNetworkApplianceVlan(params *UpdateNetworkApplianceVlanPa
 }
 
 /*
-  UpdateNetworkApplianceVlansSettings enables disable v l a ns for the given network
+UpdateNetworkApplianceVlansSettings enables disable v l a ns for the given network
 
-  Enable/Disable VLANs for the given network
+Enable/Disable VLANs for the given network
 */
 func (a *Client) UpdateNetworkApplianceVlansSettings(params *UpdateNetworkApplianceVlansSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceVlansSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -3271,9 +4346,9 @@ func (a *Client) UpdateNetworkApplianceVlansSettings(params *UpdateNetworkApplia
 }
 
 /*
-  UpdateNetworkApplianceVpnBgp updates a hub b g p configuration
+UpdateNetworkApplianceVpnBgp updates a hub b g p configuration
 
-  Update a Hub BGP Configuration
+Update a Hub BGP Configuration
 */
 func (a *Client) UpdateNetworkApplianceVpnBgp(params *UpdateNetworkApplianceVpnBgpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceVpnBgpOK, error) {
 	// TODO: Validate the params before sending
@@ -3312,9 +4387,9 @@ func (a *Client) UpdateNetworkApplianceVpnBgp(params *UpdateNetworkApplianceVpnB
 }
 
 /*
-  UpdateNetworkApplianceVpnSiteToSiteVpn updates the site to site v p n settings of a network
+UpdateNetworkApplianceVpnSiteToSiteVpn updates the site to site v p n settings of a network
 
-  Update the site-to-site VPN settings of a network. Only valid for MX networks in NAT mode.
+Update the site-to-site VPN settings of a network. Only valid for MX networks in NAT mode.
 */
 func (a *Client) UpdateNetworkApplianceVpnSiteToSiteVpn(params *UpdateNetworkApplianceVpnSiteToSiteVpnParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceVpnSiteToSiteVpnOK, error) {
 	// TODO: Validate the params before sending
@@ -3353,9 +4428,9 @@ func (a *Client) UpdateNetworkApplianceVpnSiteToSiteVpn(params *UpdateNetworkApp
 }
 
 /*
-  UpdateNetworkApplianceWarmSpare updates m x warm spare settings
+UpdateNetworkApplianceWarmSpare updates m x warm spare settings
 
-  Update MX warm spare settings
+Update MX warm spare settings
 */
 func (a *Client) UpdateNetworkApplianceWarmSpare(params *UpdateNetworkApplianceWarmSpareParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNetworkApplianceWarmSpareOK, error) {
 	// TODO: Validate the params before sending
@@ -3394,9 +4469,9 @@ func (a *Client) UpdateNetworkApplianceWarmSpare(params *UpdateNetworkApplianceW
 }
 
 /*
-  UpdateOrganizationApplianceSecurityIntrusion sets supported intrusion settings for an organization
+UpdateOrganizationApplianceSecurityIntrusion sets supported intrusion settings for an organization
 
-  Sets supported intrusion settings for an organization
+Sets supported intrusion settings for an organization
 */
 func (a *Client) UpdateOrganizationApplianceSecurityIntrusion(params *UpdateOrganizationApplianceSecurityIntrusionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationApplianceSecurityIntrusionOK, error) {
 	// TODO: Validate the params before sending
@@ -3435,9 +4510,9 @@ func (a *Client) UpdateOrganizationApplianceSecurityIntrusion(params *UpdateOrga
 }
 
 /*
-  UpdateOrganizationApplianceVpnThirdPartyVPNPeers updates the third party v p n peers for an organization
+UpdateOrganizationApplianceVpnThirdPartyVPNPeers updates the third party v p n peers for an organization
 
-  Update the third party VPN peers for an organization
+Update the third party VPN peers for an organization
 */
 func (a *Client) UpdateOrganizationApplianceVpnThirdPartyVPNPeers(params *UpdateOrganizationApplianceVpnThirdPartyVPNPeersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationApplianceVpnThirdPartyVPNPeersOK, error) {
 	// TODO: Validate the params before sending
@@ -3476,9 +4551,9 @@ func (a *Client) UpdateOrganizationApplianceVpnThirdPartyVPNPeers(params *Update
 }
 
 /*
-  UpdateOrganizationApplianceVpnVpnFirewallRules updates the firewall rules of an organization s site to site v p n
+UpdateOrganizationApplianceVpnVpnFirewallRules updates the firewall rules of an organization s site to site v p n
 
-  Update the firewall rules of an organization's site-to-site VPN
+Update the firewall rules of an organization's site-to-site VPN
 */
 func (a *Client) UpdateOrganizationApplianceVpnVpnFirewallRules(params *UpdateOrganizationApplianceVpnVpnFirewallRulesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOrganizationApplianceVpnVpnFirewallRulesOK, error) {
 	// TODO: Validate the params before sending

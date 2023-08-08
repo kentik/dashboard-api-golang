@@ -52,17 +52,22 @@ func NewClaimIntoOrganizationInventoryParamsWithHTTPClient(client *http.Client) 
 	}
 }
 
-/* ClaimIntoOrganizationInventoryParams contains all the parameters to send to the API endpoint
-   for the claim into organization inventory operation.
+/*
+ClaimIntoOrganizationInventoryParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the claim into organization inventory operation.
+
+	Typically these are written to a http.Request.
 */
 type ClaimIntoOrganizationInventoryParams struct {
 
 	// ClaimIntoOrganizationInventory.
 	ClaimIntoOrganizationInventory ClaimIntoOrganizationInventoryBody
 
-	// OrganizationID.
+	/* OrganizationID.
+
+	   Organization ID
+	*/
 	OrganizationID string
 
 	timeout    time.Duration

@@ -28,7 +28,7 @@ func (o *GetDeviceLossAndLatencyHistoryReader) ReadResponse(response runtime.Cli
 		}
 		return result, nil
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /devices/{serial}/lossAndLatencyHistory] getDeviceLossAndLatencyHistory", response, response.Code())
 	}
 }
 
@@ -37,7 +37,8 @@ func NewGetDeviceLossAndLatencyHistoryOK() *GetDeviceLossAndLatencyHistoryOK {
 	return &GetDeviceLossAndLatencyHistoryOK{}
 }
 
-/* GetDeviceLossAndLatencyHistoryOK describes a response with status code 200, with default header values.
+/*
+GetDeviceLossAndLatencyHistoryOK describes a response with status code 200, with default header values.
 
 Successful operation
 */
@@ -68,6 +69,11 @@ func (o *GetDeviceLossAndLatencyHistoryOK) IsServerError() bool {
 // IsCode returns true when this get device loss and latency history o k response a status code equal to that given
 func (o *GetDeviceLossAndLatencyHistoryOK) IsCode(code int) bool {
 	return code == 200
+}
+
+// Code gets the status code for the get device loss and latency history o k response
+func (o *GetDeviceLossAndLatencyHistoryOK) Code() int {
+	return 200
 }
 
 func (o *GetDeviceLossAndLatencyHistoryOK) Error() string {
