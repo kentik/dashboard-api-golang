@@ -254,6 +254,19 @@ func (o *GetOrganizationDevicesStatusesOKBodyItems0) UnmarshalBinary(b []byte) e
 	return nil
 }
 
+type Poe struct {
+	Unit    string `json:"unit"`
+	Maximum int    `json:"maximum"`
+}
+
+type PowerSupply struct {
+	Slot   int    `json:"slot"`
+	Serial string `json:"serial"`
+	Model  string `json:"model"`
+	Status string `json:"status"`
+	Poe    Poe    `json:"poe"`
+}
+
 /*
 GetOrganizationDevicesStatusesOKBodyItems0Components Components
 swagger:model GetOrganizationDevicesStatusesOKBodyItems0Components
@@ -261,7 +274,7 @@ swagger:model GetOrganizationDevicesStatusesOKBodyItems0Components
 type GetOrganizationDevicesStatusesOKBodyItems0Components struct {
 
 	// Power Supplies
-	PowerSupplies []string `json:"powerSupplies"`
+	PowerSupplies []PowerSupply `json:"powerSupplies"`
 }
 
 // Validate validates this get organization devices statuses o k body items0 components
