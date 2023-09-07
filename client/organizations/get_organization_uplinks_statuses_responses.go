@@ -54,7 +54,7 @@ type GetOrganizationUplinksStatusesOK struct {
 	 */
 	Link string
 
-	Payload []*GetOrganizationUplinksStatusesOKBodyItems0
+	Payload interface{}
 }
 
 // IsSuccess returns true when this get organization uplinks statuses o k response has a 2xx status code
