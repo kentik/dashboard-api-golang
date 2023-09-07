@@ -95,7 +95,7 @@ func (o *GetOrganizationUplinksStatusesOK) String() string {
 	return fmt.Sprintf("[GET /organizations/{organizationId}/uplinks/statuses][%d] getOrganizationUplinksStatusesOK  %+v", 200, o.Payload)
 }
 
-func (o *GetOrganizationUplinksStatusesOK) GetPayload() []*GetOrganizationUplinksStatusesOKBodyItems0 {
+func (o *GetOrganizationUplinksStatusesOK) GetPayload() interface{} {
 	return o.Payload
 }
 
