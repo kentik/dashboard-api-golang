@@ -107,8 +107,6 @@ func (o *GetNetworkClientsOK) readResponse(response runtime.ClientResponse, cons
 		o.Link = hdrLink
 	}
 
-	o.Payload = new(GetNetworkClientsOKBody)
-
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
