@@ -53,7 +53,7 @@ type GetNetworkClientsOK struct {
 	 */
 	Link string
 
-	Payload *GetNetworkClientsOKBody
+	Payload []interface{}
 }
 
 // IsSuccess returns true when this get network clients o k response has a 2xx status code
@@ -94,7 +94,7 @@ func (o *GetNetworkClientsOK) String() string {
 	return fmt.Sprintf("[GET /networks/{networkId}/clients][%d] getNetworkClientsOK  %+v", 200, o.Payload)
 }
 
-func (o *GetNetworkClientsOK) GetPayload() *GetNetworkClientsOKBody {
+func (o *GetNetworkClientsOK) GetPayload() []interface{} {
 	return o.Payload
 }
 
